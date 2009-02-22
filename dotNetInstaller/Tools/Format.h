@@ -2,6 +2,13 @@
 #pragma once
 namespace DVLib
 {
+	inline CString FormatNumber(ULONG p_Number)
+	{
+		CString tmp;
+        tmp.Format(TEXT("%lu"), p_Number);
+        return tmp;
+    }
+
 	//Equivalente di StrFormatByteSizeA (che però non è supportata in Win95)
 	//       532 -> 532 bytes
 	//      1340 -> 1.3KB
@@ -26,4 +33,14 @@ namespace DVLib
 
 		return tmp;
 	}
+
+    inline CString FormatDateTime(const CTime& ts)
+    {
+        return ts.Format("%Y-%m-%d %H:%M:%S");
+    }
+
+    inline CString FormatCurrentDateTime()
+    {
+        return FormatDateTime(CTime::GetCurrentTime());
+    }
 }

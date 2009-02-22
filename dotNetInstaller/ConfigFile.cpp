@@ -37,7 +37,7 @@ void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::Down
 		if ( l_Node_download != NULL &&
 			strcmp(l_Node_download->Value(), "download") == 0 )
 		{
-			ApplicationLog.Write( TEXT("--Reading Download component ..."));
+			ApplicationLog.Write( TEXT("--Reading Download component"));
 
 			DVLib::DownloadComponentInfo l_DownloadComp;
 			l_DownloadComp.ComponentName = l_Node_download->AttributeT("componentname").data();
@@ -47,7 +47,7 @@ void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::Down
 			l_DownloadComp.AlwaysDownload = ConvBoolString(l_Node_download->Attribute("alwaysdownload"), true);
 			p_Configuration.Components.Add(l_DownloadComp);
 
-			ApplicationLog.Write( TEXT("--Read download component :"), l_DownloadComp.SourceURL );
+			ApplicationLog.Write( TEXT("--Finished reading download component: "), l_DownloadComp.SourceURL );
 		}
 	}
 
@@ -62,7 +62,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 {
 	DVLib::OperatingSystem l_CurrentOs = DVLib::GetOsVersion();
 
-	ApplicationLog.Write( TEXT("Start reading configuration attributes") );
+	ApplicationLog.Write( TEXT("Reading configuration attributes") );
 
     /* Daniel Doubrovkine - 2008-06-24: added auto-enabled log options */
     p_Setting.log_enabled = ConvBoolString(p_Node->Attribute("log_enabled"), false);
@@ -129,7 +129,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
     p_Setting.cab_dialog_message = p_Node->AttributeT("cab_dialog_message").data();
     p_Setting.cab_cancelled_message = p_Node->AttributeT("cab_cancelled_message").data();
 
-	ApplicationLog.Write( TEXT("End reading configuration attributes") );
+	ApplicationLog.Write( TEXT("Finished reading configuration attributes") );
 
 	//caricamento componenti
 	p_Setting.components.clear();
@@ -251,9 +251,9 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				// download dialog
 				l_new_component->ContainsDownloadComponent = false; //default viene messo a falso e poi guardo se è presente il nodo
 				TiXmlElement * l_Node_downloaddialog = l_Node_component->FirstChildElement("downloaddialog");
-				ApplicationLog.Write( TEXT("---Checking DownloadDialog: ") );
-				if (l_Node_downloaddialog!=NULL)
+				if (l_Node_downloaddialog != NULL)
 				{
+				    ApplicationLog.Write( TEXT("---Loading DownloadDialog") );
 					LoadDownloadConfiguration(l_Node_downloaddialog, l_new_component->DownloadDialogConfiguration, p_Setting);
 					l_new_component->ContainsDownloadComponent = true;
 				}
@@ -344,7 +344,7 @@ void LoadConfigsNode(TiXmlElement * p_Node, installerSetting & p_Setting, bool p
 			CString l_os_filter_smaller = l_Node_configuration->AttributeT("os_filter_smaller").data();
             CString l_processor_architecture_filter = l_Node_configuration->AttributeT("processor_architecture_filter").data();
 
-			ApplicationLog.Write( TEXT("Reading configuration node with LCID:"), l_Config_LCID);
+			ApplicationLog.Write( TEXT("Reading configuration node with LCID: "), l_Config_LCID);
 
 			// Matthew Sheets - 2007-09-25: Added OS Version to the configuration filter (in addition to LCID)
 			if (CheckConfigFilter(l_Config_LCID, l_os_filter_greater, l_os_filter_smaller, l_processor_architecture_filter))
@@ -370,7 +370,7 @@ void LoadConfigsNode(TiXmlElement * p_Node, installerSetting & p_Setting, bool p
 				CString l_type = l_Node_configuration->AttributeT("type").data();
 				if (l_type =="reference")
 				{
-					ApplicationLog.Write( TEXT("Loading reference configuration."));
+					ApplicationLog.Write( TEXT("Loading reference configuration"));
 
 					// Matthew Sheets - 2007-09-24: Load the reference config file and process recursively
 					TiXmlDocument l_RefDocument;
@@ -387,7 +387,7 @@ void LoadConfigsNode(TiXmlElement * p_Node, installerSetting & p_Setting, bool p
 				}
 				else if (l_type =="install")
 				{
-					ApplicationLog.Write( TEXT("Loading install configuration."));
+					ApplicationLog.Write( TEXT("Loading install configuration"));
 					LoadInstallConfigNode(l_Node_configuration, p_Setting);
 
 					// Matthew Sheets - 2007-09-24: Launch the installer dialog
@@ -462,8 +462,6 @@ bool CheckConfigFilter(
 
 bool LoadDocumentFromFile(const CString & p_FileName, TiXmlDocument & document)
 {
-	ApplicationLog.Write(TEXT("Calling CreateFile(GENERIC_READ) method."), p_FileName);
-
 	HANDLE l_hFile = CreateFile(p_FileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (l_hFile == INVALID_HANDLE_VALUE)
 		return false;
@@ -483,19 +481,19 @@ bool LoadDocumentFromFile(const CString & p_FileName, TiXmlDocument & document)
 	}
 	CloseHandle(l_hFile);
 
-	ApplicationLog.Write(TEXT("Calling XmlDocument::Parse method."));
+    ApplicationLog.Write(TEXT("Parsing "), DVLib::FormatNumberToBytes(l_Size));
 
 	document.Parse(l_Buffer);
 	if (document.Error())
 	{
-		ApplicationLog.Write(TEXT("Parsing error: "), DVLib::string2Tstring(document.ErrorDesc()).data() );
+		ApplicationLog.Write(TEXT("***Parsing error: "), DVLib::string2Tstring(document.ErrorDesc()).data() );
 
 		return false;
 	}
 
 	delete [] l_Buffer;
 
-	ApplicationLog.Write(TEXT("Parse OK."));
+    ApplicationLog.Write(TEXT("Successfully parsed: "), p_FileName);
 
 	return true;
 }
@@ -506,7 +504,7 @@ void LoadConfigFromFile(const CString & p_FileName, TiXmlDocument & p_Document)
 	bool l_ret = LoadDocumentFromFile(p_FileName, p_Document);
 	if (l_ret==false)
 	{
-		ApplicationLog.Write(TEXT("Failed to load configuration file."));
+        ApplicationLog.Write(TEXT("***Failed to load configuration file: "), p_FileName);
 
 		throw TEXT("Invalid configuration file, failed to parse XML elements.");
 	}
@@ -514,7 +512,7 @@ void LoadConfigFromFile(const CString & p_FileName, TiXmlDocument & p_Document)
 
 void LoadConfigFromResource(HMODULE p_Module, TiXmlDocument & p_Document)
 {
-	ApplicationLog.Write( TEXT("Loading configuration from resource ...") );
+	ApplicationLog.Write( TEXT("Loading configuration from resource") );
 
 	HRSRC l_res = FindResource(p_Module, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM"));
 	if (l_res == NULL)
@@ -534,11 +532,12 @@ void LoadConfigFromResource(HMODULE p_Module, TiXmlDocument & p_Document)
 	
 	if (p_Document.Error())
 	{
-		ApplicationLog.Write( TEXT("Failed parsing xml configuration from resource") );
+		ApplicationLog.Write( TEXT("***Failed parsing xml configuration from resource") );
+        delete [] l_bufferXml;
 		throw TEXT("Resource RES_CONFIGURATION is not a valid xml.");
 	}
 
-	ApplicationLog.Write( TEXT("Parse xml configuration from resource OK") );
+	ApplicationLog.Write( TEXT("Finished parsing xml configuration from resource") );
 
 	delete [] l_bufferXml;
 }

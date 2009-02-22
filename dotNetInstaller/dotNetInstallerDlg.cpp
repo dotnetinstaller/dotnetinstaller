@@ -227,7 +227,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 			{
 				if (m_Settings.components[i]->selected)
 				{
-					ApplicationLog.Write( TEXT("--Executing component :"), m_Settings.components[i]->description);
+					ApplicationLog.Write( TEXT("--Executing component: "), m_Settings.components[i]->description);
 
 					InstallComponentDlg l_dg;
 					l_dg.LoadComponent(&m_Settings, m_Settings.components[i]);
@@ -289,7 +289,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 							}
 							else //error restituito dal setup
 							{
-								ApplicationLog.Write( TEXT("---Component ERROR ON EXIT CODE") );
+                                ApplicationLog.Write( TEXT("***Component ERROR ON EXIT CODE: "), DVLib::FormatNumber(l_ExitCode));
 
 								l_retVal = false;
 							}
@@ -297,7 +297,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 					}
 					else //download non riuscito o eseguzione del setup non riuscita
 					{
-						ApplicationLog.Write( TEXT("---Component ERROR ON DOWNLOAD OR EXECUTING") );
+						ApplicationLog.Write( TEXT("***Component ERROR ON DOWNLOAD OR EXECUTING") );
 
 						l_retVal = false;
 					}
@@ -309,7 +309,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 			}
 			catch(...)
 			{
-				ApplicationLog.Write( TEXT("--ERROR on component"));
+				ApplicationLog.Write( TEXT("***ERROR on component"));
 
 				l_retVal = false;
 			}
@@ -330,7 +330,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		}
 		else
 		{
-			ApplicationLog.Write( TEXT("--dotNetInstaller is configured to auto execute on the next boot."));
+			ApplicationLog.Write( TEXT("--dotNetInstaller is configured to auto execute on the next boot"));
 		}
 
 		if (LoadComponentsList())
@@ -346,12 +346,12 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
     }
     catch(TCHAR * error)
     {
-		ApplicationLog.Write(error);
+		ApplicationLog.Write(TEXT("***"), error);
 		DniSilentMessageBox(error, MB_OK | MB_ICONSTOP);
     }
 	catch(...)
 	{
-		ApplicationLog.Write( TEXT("Failed to install one or more components"));
+		ApplicationLog.Write( TEXT("***Failed to install one or more components"));
 		DniSilentMessageBox(TEXT("Failed to install one or more components"), MB_OK|MB_ICONSTOP);
 	}
 }
@@ -415,7 +415,7 @@ void CdotNetInstallerDlg::OnDestroy()
 
 	try
 	{
-		ApplicationLog.Write( TEXT("Releasing components ..."));
+		ApplicationLog.Write( TEXT("Releasing components"));
 
 		for (size_t i = 0; i < m_Settings.components.size(); i++)
 		{
@@ -437,6 +437,8 @@ void CdotNetInstallerDlg::OnDestroy()
 		    ApplicationLog.Write(TEXT("Deleting temporary folder: ") + cabpath);
             DVLib::DeleteDirectoryDeep(cabpath);
         }
+
+		ApplicationLog.Write( TEXT("dotNetInstaller finished"));
 	}
     catch(TCHAR * error)
     {

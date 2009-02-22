@@ -5,6 +5,7 @@
 #include "ConfigFile.h"
 #include "dotNetInstaller.h"
 #include "dotNetInstallerDlg.h"
+#include <Version/Version.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,6 +46,12 @@ BOOL CdotNetInstallerApp::InitInstance()
 	//AfxEnableControlContainer();
 
 	ParseCommandLine(commandLineInfo);
+
+    ApplicationLog.Write(TEXT("-------------------------------------------------------------------"));
+    ApplicationLog.Write(TEXT("dotNetInstaller (DNI) started, version "), TEXT(VERSION_VALUE));
+    ApplicationLog.Write(TEXT(VERSION_LEGALCOPYRIGHT_VALUE));
+    ApplicationLog.Write(TEXT("Operating system: "), DVLib::GetOsVersionString());
+    ApplicationLog.Write(TEXT("-------------------------------------------------------------------"));
 
 	TiXmlDocument m_Document;
 	installerSetting m_Setting;

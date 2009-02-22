@@ -73,7 +73,7 @@ struct installedcheck_check_registry_value : public installedcheck
 			keypath.Append(L"\\");
 			keypath.Append(fieldname);
 
-			ApplicationLog.Write( TEXT("Reading Registry For: "), keypath);
+            ApplicationLog.Write( TEXT("Reading Registry: "), keypath);
 
 			HKEY l_HKey;
 			LONG l_result = 0;
@@ -87,13 +87,13 @@ struct installedcheck_check_registry_value : public installedcheck
 				//Indicates that an application on 64-bit Windows should operate on the 64-bit registry view.
 				if ("WOW64_64" == (wowoption.MakeUpper()))
 				{	
-					ApplicationLog.Write( TEXT("Opening 64-bit registry view (KEY_WOW64_64KEY)."));
+					ApplicationLog.Write( TEXT("Opening 64-bit registry view (KEY_WOW64_64KEY)"));
 					dwKeyOption |= KEY_WOW64_64KEY;
 				}
 				//Indicates that an application on 64-bit Windows should operate on the 32-bit registry view.
 				else if ("WOW64_32" == (wowoption.MakeUpper()))
 				{
-					ApplicationLog.Write( TEXT("Opening 32-bit registry view (KEY_WOW64_32KEY)."));
+					ApplicationLog.Write( TEXT("Opening 32-bit registry view (KEY_WOW64_32KEY)"));
 					dwKeyOption |= KEY_WOW64_32KEY;
 				}
 			}
@@ -102,11 +102,11 @@ struct installedcheck_check_registry_value : public installedcheck
 
 			if (l_result != ERROR_SUCCESS)
 			{
-				ApplicationLog.Write( TEXT("***No Registry Entry Found For: "), keypath);
+				ApplicationLog.Write( TEXT("***No Registry Entry Found: "), keypath);
 				return false;
 			}
 
-			ApplicationLog.Write( TEXT("Registry Entry Found For: "), keypath);
+			ApplicationLog.Write( TEXT("Registry Entry Found: "), keypath);
 			if (fieldtype == TEXT("REG_DWORD"))
 			{
 				DWORD wordValue;
@@ -531,7 +531,7 @@ struct msi_component : public process_component
 		//if (suppressreboot)
 		//	l_command += " REBOOT=ReallySuppress";
 
-        ApplicationLog.Write(TEXT("executing: "), l_command);
+        ApplicationLog.Write(TEXT("Executing: "), l_command);
 
 		return DVLib::ExecCmd(l_command, &m_process_info);
 	};
@@ -707,7 +707,7 @@ struct installerSetting
             DWORD dwExitCode = 0;
             if (! DVLib::ExecCmdAndWait(command, & dwExitCode))
             {
-                throw _wcsdup(TEXT("Error executing command: ") + command);
+                throw _wcsdup(TEXT("***Error executing complete command: ") + command);
 		    }
 		}
 		}

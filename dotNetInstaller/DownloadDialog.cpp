@@ -36,7 +36,7 @@ namespace DVLib
 		m_Components.Copy(p_Configuration.Components);
 		m_bAutoStartDownload = p_Configuration.AutoStartDownload;
 
-		ApplicationLog.Write( TEXT("Opening download dialog for: "), m_Caption);
+		ApplicationLog.Write( TEXT("Opening Download Dialog: "), m_Caption);
 	}
 
 	DownloadDialog::~DownloadDialog()
@@ -121,7 +121,7 @@ namespace DVLib
 
 	void DownloadDialog::OnBnClickedStart()
 	{
-		ApplicationLog.Write( TEXT("Starting download thread ..."));
+		ApplicationLog.Write( TEXT("Starting download thread"));
 
 		m_LabelHelpDownload.SetWindowText(m_HelpMessageDownloading);
 
@@ -167,7 +167,7 @@ namespace DVLib
 			}
 			else if (l_Param->Type == StatusType_Error) //ERROR
 			{
-				ApplicationLog.Write( TEXT("--Download ERROR"));
+				ApplicationLog.Write( TEXT("***Download ERROR"));
 
 				DniSilentMessageBox(l_Param->Error, MB_OK|MB_ICONSTOP);
 
@@ -176,14 +176,14 @@ namespace DVLib
 			}
 			else if (l_Param->Type == StatusType_Canceled) //CANCELED
 			{
-				ApplicationLog.Write( TEXT("--Download CANCELED"));
+				ApplicationLog.Write( TEXT("***Download CANCELED"));
 
 				DownloadStatusParam::Free(l_Param);
 				OnCancel();
 			}
 			else if (l_Param->Type == StatusType_Completed) //COMPLETED
 			{
-				ApplicationLog.Write( TEXT("--Download OK"));
+				ApplicationLog.Write( TEXT("---Download OK"));
 
 				m_bDownloadCompleted = true; //Download OK
 

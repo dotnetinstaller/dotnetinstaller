@@ -204,7 +204,7 @@ namespace DVLib
 			// call to FileExistsCustom deals with quoted paths correctly.  If the download dialog does
 			// get displayed when it shouldn't the log messages provide enough information so you can debug
 			// your process.
-			ApplicationLog.Write( TEXT("m_Component->DestinationPath: "), m_Component->DestinationPath);
+			ApplicationLog.Write( TEXT("DestinationPath: "), m_Component->DestinationPath);
 
 			//
 			// We need to make sure the destination path works with CABing.
@@ -214,7 +214,7 @@ namespace DVLib
 
 			BOOL fileExists = FileExistsCustom(l_destinationFullFileName);
 			CString fileExistsToString = (fileExists ? _T("True") : _T("False"));
-			ApplicationLog.Write( TEXT("fileExists: "), fileExistsToString);
+			ApplicationLog.Write( TEXT("FileExists: "), fileExistsToString);
 
 			// Matthew Sheets - 2007-08-10: Determine if the download dialog should be displayed
 			if (m_Component->AlwaysDownload || !fileExists)

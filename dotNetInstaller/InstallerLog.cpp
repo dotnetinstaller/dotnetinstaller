@@ -4,6 +4,7 @@
 #include "File.h"
 #include <string>
 #include "StringUtil.h"
+#include "Format.h"
 
 InstallerLog ApplicationLog;
 
@@ -35,7 +36,7 @@ void InstallerLog::Write(LPCTSTR message)
         }
 
         CString path = DVLib::GetPathFromFullFilePath(m_LogFile);
-        if (! DVLib::FileExistsCustom(path))
+        if (path.GetLength() && ! DVLib::FileExistsCustom(path))
         {
             if (! ::CreateDirectory(path, NULL))
                 throw TEXT("Failed to create log directory");
@@ -50,7 +51,10 @@ void InstallerLog::Write(LPCTSTR message)
 
 	DWORD l_BytesWritten = 0;
 
-	std::string strMessage = DVLib::Tstring2string(message);
+    std::string strMessage;
+    strMessage.append(DVLib::Tstring2string(DVLib::FormatCurrentDateTime()));
+    strMessage.append("\t");
+    strMessage.append(DVLib::Tstring2string(message));
 	strMessage.append("\r\n");
 
 	if (WriteFile(m_hFile, strMessage.data(), (DWORD)strMessage.length(), &l_BytesWritten, NULL) == FALSE)
