@@ -234,6 +234,10 @@ namespace InstallerEditor
 
             //			if (e.XmlElement.Attributes["type"]!=null)
             //				m_type = e.XmlElement.Attributes["type"].InnerText;
+
+            // Jason Biegel - 2008-04-22: new attributes added
+            if (e.XmlElement.Attributes["processor_architecture_filter"] != null)
+                m_processor_architecture_filter = e.XmlElement.Attributes["processor_architecture_filter"].InnerText;
         }
 
         private installedcheckCollection m_installchecks = new installedcheckCollection();
