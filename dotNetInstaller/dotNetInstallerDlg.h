@@ -33,6 +33,7 @@ protected:
 private:
 	bool m_additional_config;
 	installerSetting m_Settings;
+    void ExtractCab();
 public:
 	CButton m_btnSkip;
 	CButton m_btnInstall;

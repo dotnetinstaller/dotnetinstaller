@@ -37,6 +37,8 @@ There are three types of variables:
 		dialog_selector_cancel = "Abbrechen"
 		os_filter_not_match_message = "Dieses Setup kann nicht auf diesem Betriebssystem ausgeführt werden!"
 		processor_architecture_filter_not_match_message = "Dieses Setup kann nicht auf der aktuellen Prozessor!"
+  cab_dialog_message = ""
+  cab_dialog_caption = ""
 		>
 	</setupconfiguration>
 	

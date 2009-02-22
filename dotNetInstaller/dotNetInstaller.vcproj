@@ -302,6 +302,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ExtractCAB.h"
+				>
+			</File>
+			<File
 				RelativePath=".\HyperlinkStatic.h"
 				>
 			</File>
@@ -442,6 +446,14 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Tools\ProcessorIdentifier.h"
@@ -519,6 +531,38 @@
 				RelativePath=".\Tools\VersionCompare.h"
 				>
 			</File>
+			<Filter
+				Name="Cab"
+				>
+				<File
+					RelativePath=".\Tools\Cab\CompressT.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tools\Cab\ExtractMemoryT.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tools\Cab\ExtractResourceT.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tools\Cab\ExtractT.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tools\Cab\File.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tools\Cab\Map.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tools\Cab\UTF7.hpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\res\dotNetInstaller.manifest"

@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using CommandLine;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace InstallerEditor
 {
@@ -73,6 +75,39 @@ namespace InstallerEditor
 
             ResourceUpdate.UpdateResourceWithFile(args.output, "RES_BANNER", "CUSTOM", 0, args.banner);
             ResourceUpdate.UpdateResourceWithFile(args.output, "RES_CONFIGURATION", "CUSTOM", 0, args.config);
+
+            ConfigFile configfile = new ConfigFile();
+            configfile.Load(args.config);
+
+            if (args.embed)
+            {
+                CabLib.Compress cab = new CabLib.Compress();
+
+                string supportdir = string.IsNullOrEmpty(args.apppath)
+                    ? Path.GetDirectoryName(Path.GetFullPath(args.config))
+                    : args.apppath;
+
+                ArrayList files = new ArrayList();
+                foreach (Configuration c in configfile.Configurations)
+                {
+                    IList<string> c_files = c.GetFiles();
+                    foreach (string file in c_files)
+                    {
+                        string fullpath = file.Replace(@"#APPPATH", supportdir)
+                            .Replace(@"#TEMPPATH", supportdir);
+                        string relativepath = file.Replace(@"#APPPATH", string.Empty)
+                            .Replace(@"#TEMPPATH", string.Empty)
+                            .TrimStart(@"\/".ToCharArray());
+                        files.Add(new string[] { fullpath, relativepath });
+                    }
+                }
+
+                string cabname = Path.Combine(Path.GetDirectoryName(args.output), "Setup.cab");
+                cab.CompressFileList(files, cabname, true, 0);
+
+                ResourceUpdate.UpdateResourceWithFile(args.output, "RES_CAB", "CUSTOM", 0, cabname);
+                File.Delete(cabname);
+            }
         }
     }
 
@@ -86,6 +121,10 @@ namespace InstallerEditor
         public string banner;
         [Argument(ArgumentType.Required, HelpText = "XML configuration file", LongName = "Configuration", ShortName = "c")]
         public string config;
+        [Argument(ArgumentType.AtMostOnce, HelpText = "Embed support files", LongName = "Embed", ShortName = "e")]
+        public bool embed;
+        [Argument(ArgumentType.AtMostOnce, HelpText = "Location of support files for embedding", LongName = "AppPath", ShortName = "a")]
+        public string apppath;
 
         public void Validate()
         {
@@ -97,6 +136,9 @@ namespace InstallerEditor
 
             if (!File.Exists(config))
                 throw new FileNotFoundException(config);
+
+            if (! string.IsNullOrEmpty(apppath) && ! Directory.Exists(apppath))
+                throw new DirectoryNotFoundException(apppath);
         }
     }
 }

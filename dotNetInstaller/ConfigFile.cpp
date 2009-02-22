@@ -112,6 +112,10 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 		// Jason Biegel - 2008-04-23: default message if no message is defined
 		p_Setting.processor_architecture_filter_not_match_message = TEXT("This setup cannot run on the current processor!");
 	}
+
+    /* Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction */
+    p_Setting.cab_dialog_caption = p_Node->AttributeT("cab_dialog_caption").data();
+    p_Setting.cab_dialog_message = p_Node->AttributeT("cab_dialog_message").data();
 	
 	ApplicationLog.Write( TEXT("End reading configuration attributes") );
 

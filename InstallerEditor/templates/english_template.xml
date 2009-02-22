@@ -37,6 +37,8 @@ There are three types of variables:
 		dialog_selector_cancel = "Cancel"
 		os_filter_not_match_message = "This setup cannot run under the current operating system!"
 		processor_architecture_filter_not_match_message = "This setup cannot run on the current processor!"
+  cab_dialog_message = ""
+  cab_dialog_caption = ""
 		>
 	</setupconfiguration>
 	

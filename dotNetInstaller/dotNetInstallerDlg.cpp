@@ -16,6 +16,7 @@
 #include "InstallerLog.h"
 #include "DniMessageBox.h"
 #include "SilentInstall.h"
+#include "ExtractCAB.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -196,6 +197,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 {
 	try
 	{
+        ExtractCab();
 		InsertRegistryRun();
 		bool l_bRemoveRunOnce = true;
 
@@ -399,4 +401,16 @@ void CdotNetInstallerDlg::OnDestroy()
 void CdotNetInstallerDlg::OnBnClickedCancel()
 {
 	OnCancel();
+}
+
+void CdotNetInstallerDlg::ExtractCab()
+{
+    ExtractCABComponent e_component;
+    installerSetting e_setting;
+    e_setting.installing_component_wait = m_Settings.cab_dialog_message;
+    e_component.description = m_Settings.cab_dialog_caption;
+    InstallComponentDlg l_dg;
+	l_dg.LoadComponent(& e_setting, & e_component);
+    e_component.Init();
+	l_dg.DoModal();
 }

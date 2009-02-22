@@ -153,6 +153,6 @@ namespace DVLib
 				return types[i].p_Type;
         }
 
-        return "";
+        return L"";
     }
 }

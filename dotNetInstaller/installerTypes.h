@@ -486,6 +486,38 @@ struct openfile_component : public component
 	}
 };
 
+struct thread_component : public component
+{
+    HANDLE m_hThread;
+
+	virtual bool FileExists()
+	{
+        return false;
+    }
+
+	virtual DWORD GetExitCode()
+	{
+        return ERROR_SUCCESS;
+	}
+
+    virtual bool IsExecuting()
+	{
+        return (WAIT_TIMEOUT == WaitForSingleObject(m_hThread, 0));
+	}
+
+	static UINT ExecuteThread(LPVOID pParam)
+    {        
+        thread_component * pComponent = (thread_component *) pParam;
+        return pComponent->Exec() ? 0 : -1;
+    }
+
+	virtual void Init()
+	{
+        CWinThread * pThread = AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED);        
+        m_hThread = pThread->m_hThread;
+        pThread->ResumeThread();
+	}
+};
 
 struct installerSetting
 {
@@ -526,6 +558,10 @@ struct installerSetting
 	CString processor_architecture_filter;
 	/* Jason Biegel - 2008-04-23: added message for not matching the processor architecture filter */
 	CString processor_architecture_filter_not_match_message;
+
+    /* Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction */
+    CString cab_dialog_message;
+    CString cab_dialog_caption;
 
 	void ExecuteCompleteCode()
 	{
