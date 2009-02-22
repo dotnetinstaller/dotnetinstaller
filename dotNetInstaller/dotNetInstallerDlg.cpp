@@ -438,6 +438,6 @@ void CdotNetInstallerDlg::ExtractCab()
     e_component.description = m_Settings.cab_dialog_caption;
     InstallComponentDlg l_dg;
 	l_dg.LoadComponent(& e_setting, & e_component);
-    e_component.Init();
+    e_component.Init(& l_dg);
 	l_dg.DoModal();
 }
