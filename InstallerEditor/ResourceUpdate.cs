@@ -28,12 +28,12 @@ namespace InstallerEditor
 			 CharSet=CharSet.Unicode,
 			 ExactSpelling=true,
 			 CallingConvention=CallingConvention.StdCall)]
-		private static unsafe extern bool UpdateResource(
+		private static extern bool UpdateResource(
 			IntPtr hUpdate, // update-file handle
 			string lpType, // resource type (l'API è molto strana perchè puo prendere ho una stringa o un intero, vedi MAKEINTRESOURCE)
 			string lpName, // resource name
 			UInt16 wLanguage, // language identifier
-			void * lpData,  // resource data
+			byte[] lpData,  // resource data
 			UInt32 cbData    // length of resource data
 			);
 
@@ -54,7 +54,7 @@ namespace InstallerEditor
 		{
 		}
 
-		public static unsafe void UpdateResourceWithFile(string p_BinFileName, string p_ResourceName, string p_ResourceType, UInt16 p_ResourceLanguage, string p_UpdateSource)
+		public static void UpdateResourceWithFile(string p_BinFileName, string p_ResourceName, string p_ResourceType, UInt16 p_ResourceLanguage, string p_UpdateSource)
 		{
 			byte[] l_bmpBuffer;
 			using (System.IO.FileStream l_ImageStream = new System.IO.FileStream(p_UpdateSource,System.IO.FileMode.Open, System.IO.FileAccess.Read))
@@ -67,7 +67,7 @@ namespace InstallerEditor
 			UpdateResource(p_BinFileName, p_ResourceName, p_ResourceType, l_bmpBuffer, p_ResourceLanguage);
 		}
 
-		public static unsafe void UpdateResource(string p_BinFileName, string p_ResourceName, string p_ResourceType, byte[] p_Buffer, UInt16 p_ResourceLanguage)
+		public static void UpdateResource(string p_BinFileName, string p_ResourceName, string p_ResourceType, byte[] p_Buffer, UInt16 p_ResourceLanguage)
 		{
 			// Open the file to which you want to add the dialog box resource. 
 			IntPtr hUpdateRes = BeginUpdateResource(p_BinFileName, false); 
@@ -76,16 +76,13 @@ namespace InstallerEditor
 
 			bool l_retVal;
 
-			fixed (byte * l_BytePtr = p_Buffer)
-			{
-				// Add the dialog box resource to the update list. 
-				l_retVal = UpdateResource(hUpdateRes,       // update resource handle 
-					p_ResourceType,                   //  resource type
-					p_ResourceName,                  // resource name box name 
-					p_ResourceLanguage,  // neutral language, equivalente a MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL)
-					l_BytePtr,                   // ptr to resource info 
-					(UInt32)p_Buffer.Length); // size of resource info. 
-			}
+			// Add the dialog box resource to the update list. 
+			l_retVal = UpdateResource(hUpdateRes,       // update resource handle 
+				p_ResourceType,                   //  resource type
+				p_ResourceName,                  // resource name box name 
+				p_ResourceLanguage,  // neutral language, equivalente a MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL)
+                p_Buffer,                   // ptr to resource info 
+				(UInt32)p_Buffer.Length); // size of resource info. 
 
 			if (l_retVal == false) 
 				throw new ApplicationException("Could not add resource."); 
