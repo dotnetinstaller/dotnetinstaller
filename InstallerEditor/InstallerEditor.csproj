@@ -73,10 +73,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CabLib, Version=8.1.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\CabLib.dll</HintPath>
-    </Reference>
     <Reference Include="SourceGrid2">
       <Name>SourceGrid2</Name>
       <HintPath>References\SourceGrid2.dll</HintPath>
@@ -99,10 +95,6 @@
     </Reference>
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
-    </Reference>
-    <Reference Include="Vestris.ResourceLib, Version=1.0.1514.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\Vestris.ResourceLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
