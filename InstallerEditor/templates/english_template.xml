@@ -34,7 +34,8 @@ There are three types of variables:
 		dialog_selector_message = "Select the components to install."
 		dialog_selector_ok = "OK"
 		dialog_selector_cancel = "Cancel"
-		>
+		os_filter_not_match_message = "This setup cannot run under the current operating system!"
+		>"
 	</setupconfiguration>
 	
 	<!-- Available variables: ##COMPONENT_NAME -->	

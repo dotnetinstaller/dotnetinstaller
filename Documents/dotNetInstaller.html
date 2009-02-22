@@ -9,8 +9,8 @@
 	
 		<h1>dotNetInstaller - Setup Bootstrapper for .NET Application</h1>
 		
-        <small>Lib Version: 1.2.2.0 BETA<br />
-         Doc Version: 1.5 DRAFT</small>
+        <small>Lib Version: 1.3.2.0<br />
+         Doc Version: 1.6 DRAFT</small>
         <br />
         
         <ul>
@@ -20,16 +20,14 @@
         
 		<p><img alt="Sample Image - maximum width is 600 pixels" src="dotNetInstaller.JPG" /></p>
 
-        <div id="TOC"></div>	
-		
 		<h2>Introduction</h2>
 		<p>This application doesn't replace tool like InstallShield, Wise or Visual Studio Setup and Deployment Project; my goal is to create an application to help the users to installing the correct prerequisites components. 
 		<br />Today applications often need to install several components to work properly: Windows Service Pack, Internet Explorer, MDAC, .NET Framework, ... 
 		<br />With this tool the developer can define the application prerequisites and install the correct version of these components in the correct order based on the user operating system type and language, allow the user to download these components from the web or install these components directly from his media (usually a CDROM).</p>
 		<p>This project is composed with these components:</p>
 		<ul>
-			<li>dotNetInstaller.exe + Source Code: Main bootstrapper application, written with Visual Studio 2003 C++ and MFC.</li>
-			<li>InstallerEditor.exe + Source Code: Application for editing configurations files and edit dotNetInstaller.exe resources, written with Visual Studio 2003 C#</li>
+			<li>dotNetInstaller.exe + Source Code: Main bootstrapper application, written with Visual Studio 2005 C++ and MFC.</li>
+			<li>InstallerEditor.exe + Source Code: Application for editing configurations files and edit dotNetInstaller.exe resources, written with Visual Studio 2005 C# for .NET Framework 2.0.</li>
 			<li>Configuration samples and SupportFiles template.</li>
 		</ul>
 		<p>This project is based on 
@@ -42,7 +40,7 @@
 		
 		<p>A special thanks to Kevin Moore, Cho, Kyung-min, TinyXML project, Peter Mares, Bilou Gateux ( for helping me with the french translation), Wolfgang, Franz Wong, sambourton and a lot of other people who helped me with code, bugs report, new ideas and suggestions.</p>
 		
-		<p>I build this project with Windows XP, Visual Studio 2003 (C++ and C#) and Microsoft .NET Framework 1.1 . Check 
+		<p>I build this project with Windows XP, Visual Studio 2005 (C++ and C#) and Microsoft .NET Framework 2.0. Check 
 			for the latest version at: <a href="http://www.devage.com/" target="_blank">http://www.devage.com/</a>.
 			If you have any ideas or questions contact me at: webmaster@devage.com.</p>
 		<p>The installer, the editor and the configuration files are all UTF-8 compatible, the installer is compiled with UNICODE but you can use the Microsoft Layer for Unicode for using the installer with Win9x and ME operating system.</p>
@@ -380,837 +378,812 @@
 		<p>Is recommended to use the editor InstallerEditor to create or modify your configuration files or I suggest to use a normal text editor or xml editor compatible with UTF-8. The configuration file must be written using UTF-8 encoding.<br />
 		NOTE:If you want to insert the &quot; char in the XML manually you must write &amp;quot; .</p>
 		
-<!-- START table for XML configuration help -->
-<table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
+	<!-- START table for XML configuration help -->
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
         <tr>
-          <th bgcolor="#ccccff" colspan="2">configurations</th>
+           <th bgcolor="#ccccff" colspan="2">configurations</th>
         </tr>
         <tr>
-          <td colspan="2">Root element</td>
+           <td colspan="2">Root element</td>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-              </tbody>
-            </table>
-          </td>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody></tbody>
+              </table>
+           </td>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>configuration</b>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody>
+                    <tr>
+                       <td><b>configuration</b></td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
         </tr>
-      </tbody>
-    </table>
-    <br />
-    <table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
+     </tbody>
+  </table><br>
+  
+  	
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
         <tr>
-          <th bgcolor="#ccccff" colspan="2">configuration (type='install')</th>
-        </tr>
-        <tr>
-          <td colspan="2">A configuration used to install a collection of components.</td>
+           <th bgcolor="#ccccff" colspan="2">configuration (type='install')</th>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>type</b>
-                  </td>
-                  <td>'install' - Type of the configuration. Can be 'install' or 'reference'.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>lcid</b>
-                  </td>
-                  <td>A filter to install this configuration only on all operating system language equals or not equals than the LCID specified (see Help-&gt;LCID Table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter a specified component.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>dialog_caption</b>
-                  </td>
-                  <td>Main dialog title.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>dialog_message</b>
-                  </td>
-                  <td>Main message of the main dialog.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>dialog_bitmap</b>
-                  </td>
-                  <td>Bitmap file used in the left panel of the main dialog. If this file doesn't exist or this attribute is empty the application load the bitmap from the .exe resource. Can contains path constant (see Help-&gt;Path Constant).</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>install_caption</b>
-                  </td>
-                  <td>Caption of the Install button.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>cancel_caption</b>
-                  </td>
-                  <td>Caption of the Cancel button.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>reinstallflag_caption</b>
-                  </td>
-                  <td>Caption for the 'Reinstall all check box'.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>status_installed</b>
-                  </td>
-                  <td>The string used for indicating an installed component.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>status_notinstalled</b>
-                  </td>
-                  <td>The string used for indicating a not installed component.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>failed_exec_command_continue</b>
-                  </td>
-                  <td>The message used when a component cannot be installed and ask if the application can continue with others components (Yes/No message). Must contain one '%s' string where the application put the description of the component.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>installation_completed</b>
-                  </td>
-                  <td>Installation completed message.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>installing_component_wait</b>
-                  </td>
-                  <td>The message used when installing a component. Must contain one '%s' string where the application put the description of the component.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>reboot_required</b>
-                  </td>
-                  <td>The message used when the application need to restart and ask if restart now (with a Yes/No message).</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>advanced_caption</b>
-                  </td>
-                  <td>Caption of the Advanced button. Used to show the 'Component Selector' dialog with the complete list of components available to install. If empty the button Advanced is not available.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>dialog_selector_caption</b>
-                  </td>
-                  <td>Component Selector dialog title, this dialog shows the complete list of components available to install.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>dialog_selector_message</b>
-                  </td>
-                  <td>Component Selector dialog description, this dialog shows the complete list of components available to install.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>dialog_selector_cancel</b>
-                  </td>
-                  <td>Component Selector dialog Cancel caption button.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>dialog_otherinfo_caption</b>
-                  </td>
-                  <td>Caption of the link at the bottom of the main dialog that open the link specified in the dialog_otherinfo_link attribute. If empty the link is hidden. Usually used for help, readme or internet link. See also dialog_otherinfo_link attribute.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>dialog_otherinfo_link</b>
-                  </td>
-                  <td>Command to execute when the user click on the link at the bottom of the main installation dialog. Can be any valid command (executable, document, web page, ...) valid for the ShellExecute API. Must be defined the dialog_otherinfo_caption attribute. Can contains path constant (see Help-&gt;Path Constant).</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>complete_command</b>
-                  </td>
-                  <td>Command executed when all components are installed correctly; can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>auto_close_if_installed</b>
-                  </td>
-                  <td>If true auto close the dialog if all the components are already installed (before closing dotNetInstaller always execute the complete message box and execute the complete command).</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
+           <td colspan="2">A configuration used to install a collection of components.</td>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>components</b>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
-        <tr>
-          <th bgcolor="#ccccff" colspan="2">configuration (type='reference')</th>
-        </tr>
-        <tr>
-          <td colspan="2">A configuration used to download a configuration file from a specific URL.</td>
-        </tr>
-        <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>type</b>
-                  </td>
-                  <td>'reference' - Type of the configuration. Can be 'install' or 'reference'.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>lcid</b>
-                  </td>
-                  <td>A filter to install this configuration only on all operating system language equals or not equals than the LCID specified (see Help-&gt;LCID Table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter a specified component. If empty no filter is applied.</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>downloaddialog</b>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>configfile</b>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
-        <tr>
-          <th bgcolor="#ccccff" colspan="2">configfile</th>
-        </tr>
-        <tr>
-          <td colspan="2">The path to the configuration file downloaded.</td>
-        </tr>
-        <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>filename</b>
-                  </td>
-                  <td>The configuration file where the application can find the configuration. Usually this is the destination directory of the downloaded component. Can contains path constant (see Help-&gt;Path Constant).</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
-        <tr>
-          <th bgcolor="#ccccff" colspan="2">components</th>
-        </tr>
-        <tr>
-          <td colspan="2">A collection of elements of type 'component'.</td>
-        </tr>
-        <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>component</b>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
-        <tr>
-          <th bgcolor="#ccccff" colspan="2">component (see also specific help based on the 'type' attribute)</th>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody>
+                    <tr>
+                       <td><b>type</b></td>
+                       <td>'install' - Type of the configuration. Can be 'install' or 'reference'.</td>
+                    </tr>
+                    <tr>
+                       <td><b>lcid</b></td>
+                       <td>A filter to install this configuration only on all operating system language equals or not equals than the LCID specified
+                          (see Help-&gt;LCID Table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038'
+                          ). You can also filter a specified component.
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>dialog_caption</b></td>
+                       <td>Main dialog title.</td>
+                    </tr>
+                    <tr>
+                       <td><b>dialog_message</b></td>
+                       <td>Main message of the main dialog.</td>
+                    </tr>
+                    <tr>
+                       <td><b>dialog_bitmap</b></td>
+                       <td>Bitmap file used in the left panel of the main dialog. If this file doesn't exist or this attribute is empty the application
+                          load the bitmap from the .exe resource. Can contains path constant (see Help-&gt;Path Constant).
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>install_caption</b></td>
+                       <td>Caption of the Install button.</td>
+                    </tr>
+                    <tr>
+                       <td><b>cancel_caption</b></td>
+                       <td>Caption of the Cancel button.</td>
+                    </tr>
+                    <tr>
+                       <td><b>reinstallflag_caption</b></td>
+                       <td>Caption for the 'Reinstall all check box'.</td>
+                    </tr>
+                    <tr>
+                       <td><b>status_installed</b></td>
+                       <td>The string used for indicating an installed component.</td>
+                    </tr>
+                    <tr>
+                       <td><b>status_notinstalled</b></td>
+                       <td>The string used for indicating a not installed component.</td>
+                    </tr>
+                    <tr>
+                       <td><b>failed_exec_command_continue</b></td>
+                       <td>The message used when a component cannot be installed and ask if the application can continue with others components (Yes/No
+                          message). Must contain one '%s' string where the application put the description of the component.
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>installation_completed</b></td>
+                       <td>Installation completed message.</td>
+                    </tr>
+                    <tr>
+                       <td><b>installing_component_wait</b></td>
+                       <td>The message used when installing a component. Must contain one '%s' string where the application put the description of the
+                          component.
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>reboot_required</b></td>
+                       <td>The message used when the application need to restart and ask if restart now (with a Yes/No message).</td>
+                    </tr>
+                    <tr>
+                       <td><b>advanced_caption</b></td>
+                       <td>Caption of the Advanced button. Used to show the 'Component Selector' dialog with the complete list of components available
+                          to install. If empty the button Advanced is not available.
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>dialog_selector_caption</b></td>
+                       <td>Component Selector dialog title, this dialog shows the complete list of components available to install.</td>
+                    </tr>
+                    <tr>
+                       <td><b>dialog_selector_message</b></td>
+                       <td>Component Selector dialog description, this dialog shows the complete list of components available to install.</td>
+                    </tr>
+                    <tr>
+                       <td><b>dialog_selector_cancel</b></td>
+                       <td>Component Selector dialog Cancel caption button.</td>
+                    </tr>
+                    <tr>
+                       <td><b>dialog_otherinfo_caption</b></td>
+                       <td>Caption of the link at the bottom of the main dialog that open the link specified in the dialog_otherinfo_link attribute.
+                          If empty the link is hidden. Usually used for help, readme or internet link. See also dialog_otherinfo_link attribute.
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>dialog_otherinfo_link</b></td>
+                       <td>Command to execute when the user click on the link at the bottom of the main installation dialog. Can be any valid command
+                          (executable, document, web page, ...) valid for the ShellExecute API. Must be defined the dialog_otherinfo_caption attribute.
+                          Can contains path constant (see Help-&gt;Path Constant).
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>complete_command</b></td>
+                       <td>Command executed when all components are installed correctly; can be any executable, document or web page valid for ShellExecute
+                          API. Usually is a readme file, a web page or a startup file. If empty no command is executed.
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>auto_close_if_installed</b></td>
+                       <td>If true auto close the dialog if all the components are already installed (before closing dotNetInstaller always execute the
+                          complete message box and execute the complete command).
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>os_filter_greater</b></td>
+                       <td>Filter for minimum operating system version</td>
+                    </tr>
+                    <tr>
+                       <td><b>os_filter_smaller</b></td>
+                       <td>Filter for maximum operating system version</td>
+                    </tr>
+                    <tr>
+                       <td><b>os_filter_not_match_message</b></td>
+                       <td>Message if the current operating system does not match the operating system filter</td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
         </tr>
         <tr>
-          <td colspan="2">A component to be installed.</td>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody>
+                    <tr>
+                       <td><b>components</b></td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
+        </tr>
+     </tbody>
+  </table><br>
+  	
+  	
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
+        <tr>
+           <th bgcolor="#ccccff" colspan="2">configuration (type='reference')</th>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>type</b>
-                  </td>
-                  <td>The type of the component; can be 'cmd' for executing generic command line installation or 'msi' for installing Windows Installer MSI package or 'openfile' to open a file. Each type has his own attributes.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>os_filter_greater</b>
-                  </td>
-                  <td>A filter to install this component only on all operating system id greater than the id specified (see Help-&gt;Operating System Table). For example to install a component only in Windows 2000 or later write '44'.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>os_filter_smaller</b>
-                  </td>
-                  <td>A filter to install this component only on all operating system id smaller than the id specified (see operating system table). For example to install a component preceding Windows 2000 write '45'.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>os_filter_lcid</b>
-                  </td>
-                  <td>A filter to install this component only on all operating system language equals or not equals than the LCID specified (see Help-&gt;LCID table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter all the configuration element.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>installcompletemessage</b>
-                  </td>
-                  <td>The message used when a component is successfully installed. To disable this message leave this property empty.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>mustreboot</b>
-                  </td>
-                  <td>Indicates if ask to reboot after this component is installed successfully (True/False). Normally if the system must be restarted is automatically the component that tells this setup (with special return code) to stop and restart the system, but in special circumstances (for example in Windows 98) we must force a reboot to install correctly some components (for example the .NET Framework).</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>description</b>
-                  </td>
-                  <td>Description of this component. This value is used also in some message to replace the %s string.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>note</b>
-                  </td>
-                  <td>Note, not used by the setup.</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
+           <td colspan="2">A configuration used to download a configuration file from a specific URL.</td>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>installedcheck</b>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>downloaddialog</b>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
-        <tr>
-          <th bgcolor="#ccccff" colspan="2">component (type='cmd')</th>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody>
+                    <tr>
+                       <td><b>type</b></td>
+                       <td>'reference' - Type of the configuration. Can be 'install' or 'reference'.</td>
+                    </tr>
+                    <tr>
+                       <td><b>lcid</b></td>
+                       <td>A filter to install this configuration only on all operating system language equals or not equals than the LCID specified
+                          (see Help-&gt;LCID Table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038'
+                          ). You can also filter a specified component. If empty no filter is applied.
+                       </td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
         </tr>
         <tr>
-          <td colspan="2">A component that can be used to execute an .exe file like a setup application.</td>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody>
+                    <tr>
+                       <td><b>downloaddialog</b></td>
+                    </tr>
+                    <tr>
+                       <td><b>configfile</b></td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
+        </tr>
+     </tbody>
+  </table><br>
+  
+  	
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
+        <tr>
+           <th bgcolor="#ccccff" colspan="2">configfile</th>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-                <tr>
-                  <td>
-                    <b></b>
-                  </td>
-                  <td>see also 'component' element</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>type</b>
-                  </td>
-                  <td>'cmd'</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>command</b>
-                  </td>
-                  <td>Specifies the command to execute when installing this component. Must be a valid command for the 'CreateProcess' API. Can contain " char and path constant (see Help-&gt;Path Constant).</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
+           <td colspan="2">The path to the configuration file downloaded.</td>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
-        <tr>
-          <th bgcolor="#ccccff" colspan="2">component (type='msi')</th>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody>
+                    <tr>
+                       <td><b>filename</b></td>
+                       <td>The configuration file where the application can find the configuration. Usually this is the destination directory of the
+                          downloaded component. Can contains path constant (see Help-&gt;Path Constant).
+                       </td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
         </tr>
         <tr>
-          <td colspan="2">A component that can be used to install an msi package.</td>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody></tbody>
+              </table>
+           </td>
+        </tr>
+     </tbody>
+  </table><br>
+  	
+  	
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
+        <tr>
+           <th bgcolor="#ccccff" colspan="2">components</th>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-                <tr>
-                  <td>
-                    <b></b>
-                  </td>
-                  <td>see also 'component' element</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>type</b>
-                  </td>
-                  <td>'msi'</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>package</b>
-                  </td>
-                  <td>Specifies the path to the msi package to execute when installing this component. Can contain path constant (see Help-&gt;Path Constant).</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>cmdparameters</b>
-                  </td>
-                  <td>Specifies the command line parameters for the msiexec program. Can contain " char and path constant (see Help-&gt;Path Constant). See MSDN for the command line you can use with Windows Installer.</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
+           <td colspan="2">A collection of elements of type 'component'.</td>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
-        <tr>
-          <th bgcolor="#ccccff" colspan="2">component (type='openfile')</th>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody></tbody>
+              </table>
+           </td>
         </tr>
         <tr>
-          <td colspan="2">A component that can be used to open a web page, a readme file or execute any file during the installation process.</td>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody>
+                    <tr>
+                       <td><b>component</b></td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
+        </tr>
+     </tbody>
+  </table><br>
+  	
+  	
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
+        <tr>
+           <th bgcolor="#ccccff" colspan="2">component (see also specific help based on the 'type' attribute)</th>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-                <tr>
-                  <td>
-                    <b></b>
-                  </td>
-                  <td>see also 'component' element</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>type</b>
-                  </td>
-                  <td>'openfile'</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>file</b>
-                  </td>
-                  <td>Specifies the file to open when installing this component. Must be a valid command for the 'ShellExecute' API. Can contain " char and path constant (see Help-&gt;Path Constant). Can be for example a internet link.</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
+           <td colspan="2">A component to be installed.</td>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
-        <tr>
-          <th bgcolor="#ccccff" colspan="2">downloaddialog</th>
-        </tr>
-        <tr>
-          <td colspan="2">Represents a list of files to download and the configurations of the download dialog.</td>
-        </tr>
-        <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>dialog_caption</b>
-                  </td>
-                  <td>The caption of the download dialog.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>dialog_message</b>
-                  </td>
-                  <td>The initial message that appears in the download dialog before the user press the 'Start' button.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>autostartdownload</b>
-                  </td>
-                  <td>True to start the download without user interaction, False to let the user press the 'Start' button.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>dialog_message_downloading</b>
-                  </td>
-                  <td>The message that appears in the download dialog when the download process start.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>buttonstart_caption</b>
-                  </td>
-                  <td>Caption of the 'Start' button.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>buttoncancel_caption</b>
-                  </td>
-                  <td>Caption of the 'Cancel' button.</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody>
+                    <tr>
+                       <td><b>type</b></td>
+                       <td>The type of the component; can be 'cmd' for executing generic command line installation or 'msi' for installing Windows Installer
+                          MSI package or 'openfile' to open a file. Each type has his own attributes.
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>os_filter_greater</b></td>
+                       <td>A filter to install this component only on all operating system id greater than the id specified (see Help-&gt;Operating System
+                          Table). For example to install a component only in Windows 2000 or later write '44'.
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>os_filter_smaller</b></td>
+                       <td>A filter to install this component only on all operating system id smaller than the id specified (see operating system table).
+                          For example to install a component preceding Windows 2000 write '45'.
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>os_filter_lcid</b></td>
+                       <td>A filter to install this component only on all operating system language equals or not equals than the LCID specified (see
+                          Help-&gt;LCID table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ).
+                          You can also filter all the configuration element.
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>installcompletemessage</b></td>
+                       <td>The message used when a component is successfully installed. To disable this message leave this property empty.</td>
+                    </tr>
+                    <tr>
+                       <td><b>mustreboot</b></td>
+                       <td>Indicates if ask to reboot after this component is installed successfully (True/False). Normally if the system must be restarted
+                          is automatically the component that tells this setup (with special return code) to stop and restart the system, but in special
+                          circumstances (for example in Windows 98) we must force a reboot to install correctly some components (for example the .NET
+                          Framework).
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>description</b></td>
+                       <td>Description of this component. This value is used also in some message to replace the %s string.</td>
+                    </tr>
+                    <tr>
+                       <td><b>note</b></td>
+                       <td>Note, not used by the setup.</td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>downloads</b>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody>
+                    <tr>
+                       <td><b>installedcheck</b></td>
+                    </tr>
+                    <tr>
+                       <td><b>downloaddialog</b></td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
         </tr>
-      </tbody>
-    </table>
-    <br />
-    <table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
+     </tbody>
+  </table><br>
+  
+  	
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
         <tr>
-          <th bgcolor="#ccccff" colspan="2">downloads</th>
-        </tr>
-        <tr>
-          <td colspan="2">A collection of elements of type 'download'.</td>
-        </tr>
-        <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-              </tbody>
-            </table>
-          </td>
+           <th bgcolor="#ccccff" colspan="2">component (type='cmd')</th>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>download</b>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
-        <tr>
-          <th bgcolor="#ccccff" colspan="2">download</th>
+           <td colspan="2">A component that can be used to execute an .exe file like a setup application.</td>
         </tr>
         <tr>
-          <td colspan="2">Represent a single file to download.</td>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody>
+                    <tr>
+                       <td><b></b></td>
+                       <td>see also 'component' element</td>
+                    </tr>
+                    <tr>
+                       <td><b>type</b></td>
+                       <td>'cmd'</td>
+                    </tr>
+                    <tr>
+                       <td><b>command</b></td>
+                       <td>Specifies the command to execute when installing this component. Must be a valid command for the 'CreateProcess' API. Can
+                          contain " char and path constant (see Help-&gt;Path Constant).
+                       </td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>componentname</b>
-                  </td>
-                  <td>The description of the file to download.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>sourceurl</b>
-                  </td>
-                  <td>The complete source path of the file to download. For example 'http://www.yourwebsite.com/SetupX/Setup.exe' . Must be URL with http:// or ftp:// protocol</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>destinationpath</b>
-                  </td>
-                  <td>The complete destination path where the application copy the sourceurl file. Is recommended to use the TEMP path for destination like this: '#TEMPPATH\\APPLICATION_NAME' . Can contains path constant (see Help-&gt;Path Constant).</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>destinationfilename</b>
-                  </td>
-                  <td>New name of the downloaded file. Leave this value empty to use the same filename of the original filename.</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody></tbody>
+              </table>
+           </td>
+        </tr>
+     </tbody>
+  </table><br>
+  
+  	
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
+        <tr>
+           <th bgcolor="#ccccff" colspan="2">component (type='msi')</th>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
-        <tr>
-          <th bgcolor="#ccccff" colspan="2">installedcheck (type='check_file')</th>
+           <td colspan="2">A component that can be used to install an msi package.</td>
         </tr>
         <tr>
-          <td colspan="2">The application check if a component is installed looking for the specified registry information or file.</td>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody>
+                    <tr>
+                       <td><b></b></td>
+                       <td>see also 'component' element</td>
+                    </tr>
+                    <tr>
+                       <td><b>type</b></td>
+                       <td>'msi'</td>
+                    </tr>
+                    <tr>
+                       <td><b>package</b></td>
+                       <td>Specifies the path to the msi package to execute when installing this component. Can contain path constant (see Help-&gt;Path
+                          Constant).
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>cmdparameters</b></td>
+                       <td>Specifies the command line parameters for the msiexec program. Can contain " char and path constant (see Help-&gt;Path Constant).
+                          See MSDN for the command line you can use with Windows Installer.
+                       </td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>type</b>
-                  </td>
-                  <td>'check_file' - Type of the check, can be 'check_registry_value' to check for a specific value in the registry or 'check_file' to check for a specific file.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>filename</b>
-                  </td>
-                  <td>Specifies the file to search, if the application cannot find the specified file then the component must be installed. This attribute can contain path constant (see Help-&gt;Path Constant).</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>fileversion</b>
-                  </td>
-                  <td>The version of the file, can be used to perform version check based on comparison attribute. If empty the application check only for the presence of the file.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>comparison</b>
-                  </td>
-                  <td>Comparison mode, can be 'match' to check if the exact version of the file is present or 'version' to compare if a version equal or greater is present.</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody></tbody>
+              </table>
+           </td>
+        </tr>
+     </tbody>
+  </table><br>
+  
+  	
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
+        <tr>
+           <th bgcolor="#ccccff" colspan="2">component (type='openfile')</th>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <table cellpadding="0" cellspacing="0" border="1">
-      <tbody>
-        <tr>
-          <th bgcolor="#ccccff" colspan="2">installedcheck (type='check_registry_value')</th>
+           <td colspan="2">A component that can be used to open a web page, a readme file or execute any file during the installation process.</td>
         </tr>
         <tr>
-          <td colspan="2">The application check if a component is installed looking for the specified registry information or file.</td>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody>
+                    <tr>
+                       <td><b></b></td>
+                       <td>see also 'component' element</td>
+                    </tr>
+                    <tr>
+                       <td><b>type</b></td>
+                       <td>'openfile'</td>
+                    </tr>
+                    <tr>
+                       <td><b>file</b></td>
+                       <td>Specifies the file to open when installing this component. Must be a valid command for the 'ShellExecute' API. Can contain
+                          " char and path constant (see Help-&gt;Path Constant). Can be for example a internet link.
+                       </td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="1">
-              <tbody>
-                <tr>
-                  <td>
-                    <b>type</b>
-                  </td>
-                  <td>'check_registry_value' - Type of the check, can be 'check_registry_value' to check for a specific value in the registry or 'check_file' to check for a specific file.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>path</b>
-                  </td>
-                  <td>Specifies the registry path to search for the registry value specified, must be a path under HKEY_LOCAL_MACHINE like 'SOFTWARE\\MyCompany'.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>fieldname</b>
-                  </td>
-                  <td>The registry field name in the specified path, for example 'Installed'.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>fieldvalue</b>
-                  </td>
-                  <td>The registry value used to check if the component is installed, this value is converted based on the value type specified.</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>fieldtype</b>
-                  </td>
-                  <td>Specifies the type of the registry field, can be 'REG_DWORD' (for numeric value) or 'REG_SZ' (for string value).</td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>comparison</b>
-                  </td>
-                  <td>Comparison mode; can be 'match' to check if the exact value is present in the registry or 'version' to compare the registry version with the specified version and return true if the registry version is equal or greater then the version specified.</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody></tbody>
+              </table>
+           </td>
+        </tr>
+     </tbody>
+  </table><br>
+  	
+  	
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
+        <tr>
+           <th bgcolor="#ccccff" colspan="2">downloaddialog</th>
         </tr>
         <tr>
-          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-          <td>
-            <table cellpadding="0" cellspacing="0" border="0">
-              <tbody>
-              </tbody>
-            </table>
-          </td>
+           <td colspan="2">Represents a list of files to download and the configurations of the download dialog.</td>
         </tr>
-      </tbody>
-    </table>
-<!-- END table for XML configuration help -->
+        <tr>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody>
+                    <tr>
+                       <td><b>dialog_caption</b></td>
+                       <td>The caption of the download dialog.</td>
+                    </tr>
+                    <tr>
+                       <td><b>dialog_message</b></td>
+                       <td>The initial message that appears in the download dialog before the user press the 'Start' button.</td>
+                    </tr>
+                    <tr>
+                       <td><b>autostartdownload</b></td>
+                       <td>True to start the download without user interaction, False to let the user press the 'Start' button.</td>
+                    </tr>
+                    <tr>
+                       <td><b>dialog_message_downloading</b></td>
+                       <td>The message that appears in the download dialog when the download process start.</td>
+                    </tr>
+                    <tr>
+                       <td><b>buttonstart_caption</b></td>
+                       <td>Caption of the 'Start' button.</td>
+                    </tr>
+                    <tr>
+                       <td><b>buttoncancel_caption</b></td>
+                       <td>Caption of the 'Cancel' button.</td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
+        </tr>
+        <tr>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody>
+                    <tr>
+                       <td><b>downloads</b></td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
+        </tr>
+     </tbody>
+  </table><br>
+  	
+  	
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
+        <tr>
+           <th bgcolor="#ccccff" colspan="2">downloads</th>
+        </tr>
+        <tr>
+           <td colspan="2">A collection of elements of type 'download'.</td>
+        </tr>
+        <tr>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody></tbody>
+              </table>
+           </td>
+        </tr>
+        <tr>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody>
+                    <tr>
+                       <td><b>download</b></td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
+        </tr>
+     </tbody>
+  </table><br>
+  	
+  	
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
+        <tr>
+           <th bgcolor="#ccccff" colspan="2">download</th>
+        </tr>
+        <tr>
+           <td colspan="2">Represent a single file to download.</td>
+        </tr>
+        <tr>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody>
+                    <tr>
+                       <td><b>componentname</b></td>
+                       <td>The description of the file to download.</td>
+                    </tr>
+                    <tr>
+                       <td><b>sourceurl</b></td>
+                       <td>The complete source path of the file to download. For example 'http://www.yourwebsite.com/SetupX/Setup.exe' . Must be URL
+                          with http:// or ftp:// protocol
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>destinationpath</b></td>
+                       <td>The complete destination path where the application copy the sourceurl file. Is recommended to use the TEMP path for destination
+                          like this: '#TEMPPATH\\APPLICATION_NAME' . Can contains path constant (see Help-&gt;Path Constant).
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>destinationfilename</b></td>
+                       <td>New name of the downloaded file. Leave this value empty to use the same filename of the original filename.</td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
+        </tr>
+        <tr>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody></tbody>
+              </table>
+           </td>
+        </tr>
+     </tbody>
+  </table><br>
+  		
+  	
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
+        <tr>
+           <th bgcolor="#ccccff" colspan="2">installedcheck (type='check_file')</th>
+        </tr>
+        <tr>
+           <td colspan="2">The application check if a component is installed looking for the specified registry information or file.</td>
+        </tr>
+        <tr>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody>
+                    <tr>
+                       <td><b>type</b></td>
+                       <td>'check_file' - Type of the check, can be 'check_registry_value' to check for a specific value in the registry or 'check_file'
+                          to check for a specific file.
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>filename</b></td>
+                       <td>Specifies the file to search, if the application cannot find the specified file then the component must be installed. This
+                          attribute can contain path constant (see Help-&gt;Path Constant).
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>fileversion</b></td>
+                       <td>The version of the file, can be used to perform version check based on comparison attribute. If empty the application check
+                          only for the presence of the file.
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>comparison</b></td>
+                       <td>Comparison mode, can be 'match' to check if the exact version of the file is present or 'version' to compare if a version
+                          equal or greater is present.
+                       </td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
+        </tr>
+        <tr>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody></tbody>
+              </table>
+           </td>
+        </tr>
+     </tbody>
+  </table>
+		<br>
+
+
+			<table cellpadding="0" cellspacing="0" border="1">
+				<tbody>
+					<tr>
+						<th bgcolor="#ccccff" colspan="2">installedcheck (type='check_registry_value')</th>
+					</tr>
+					<tr>
+						<td colspan="2">The application check if a component is installed looking for the specified registry information or file.</td>
+					</tr>
+					<tr>
+						<td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+						<td>
+							<table cellpadding="0" cellspacing="0" border="1">
+								<tbody>
+									<tr>
+										<td>
+											<b>type</b>
+										</td>
+										<td>
+											'check_registry_value' - Type of the check, can be 'check_registry_value' to check for a specific value in the registry or
+											'check_file' to check for a specific file.
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<b>rootkey</b>
+										</td>
+										<td>The root key for the path property.</td>
+									</tr>
+									<tr>
+										<td>
+											<b>path</b>
+										</td>
+										<td>
+											Specifies the registry path to search for the registry value specified, the root of this path must be specified in the rootkey
+											property. Example for this property: 'SOFTWARE\\MyCompany'
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<b>fieldname</b>
+										</td>
+										<td>The registry field name in the specified path, for example 'Installed'.</td>
+									</tr>
+									<tr>
+										<td>
+											<b>fieldvalue</b>
+										</td>
+										<td>The registry value used to check if the component is installed, this value is converted based on the value type specified.</td>
+									</tr>
+									<tr>
+										<td>
+											<b>fieldtype</b>
+										</td>
+										<td>Specifies the type of the registry field, can be 'REG_DWORD' (for numeric value) or 'REG_SZ' (for string value).</td>
+									</tr>
+									<tr>
+										<td>
+											<b>comparison</b>
+										</td>
+										<td>
+											Comparison mode; can be 'exists' to check if the registy key exists; 'match' to check if the exact value is present in the
+											registry or 'version' to compare the registry version with the specified version and return true if the registry version is
+											equal or greater then the version specified.
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+						<td>
+							<table cellpadding="0" cellspacing="0" border="0">
+								<tbody></tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</br>
+		<!-- END table for XML configuration help -->
 		
+		<h3>1.2.0.0 to 1.3.2.0 changes of XML file</h3>
+		<p>
+			If you already have some files compatible with dotNetInstaller 1.2.0.0 you can open these files with the editor, the editor automatically adds the new attributes.<br />
+			New attributes:
+		</p>
+		<ul>
+			<li>configurations\configuration\os_filter_greater</li>
+			<li>configurations\configuration\os_filter_smaller</li>
+			<li>configurations\configuration\os_filter_not_match_message</li>
+			<li>configurations\configuration\components\component\installedcheck\rootkey</li>
+		</ul>
+		<p>Changed attributes:</p>
+		<ul>
+			<li>configurations\configuration\components\component\installedcheck\comparison can now have the value 'exists'</li>
+		</ul>
+
 		<h3>1.1.0.2 to 1.2.0.0 changes of XML file</h3>
 		<p>If you already have some files compatible with dotNetInstaller 1.1.0.2 you can open these files with the editor, the editor automatically removes the old attributes and adds the new attributes.<br />
 		Removed attributes:</p>
@@ -1527,7 +1500,18 @@
 			<li>Silent mode support.</li>
 		</ul>
 		<h2>History</h2>
-		
+
+		<h3>1.3.2.0 (Februar 2007)</h3>
+		<ul>
+			<li>Added OS filter functionality. You can now specify on witch OS your setup will be running.</li>
+			<li>In the complete_command you can now use environment variables (e.g. %Temp%)</li>
+			<li>A template for german language is available in the InstallerEditor\templates\ folder (Thanks to Rainer Halanek for the translation)</li>
+			<li>Converted the projects to Visual Studio 2005 format.</li>
+			<li>InstallerEditor runs now on top of .NET Framework 2.0.</li>
+			<li>For a registry search the root key is now selectable. (Thanks to Steve)</li>
+			<li>For a registry search you can check if a registry key exists. (Thanks to Steve)</li>
+		</ul>
+
 		<h3>1.2.2.0 (03 August 2004)</h3>
 		<ul>
 			<li>New article section: <a href="#Samples">Samples</a>.</li>

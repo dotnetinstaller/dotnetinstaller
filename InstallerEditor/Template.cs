@@ -126,6 +126,11 @@ namespace InstallerEditor
 			{
 				get{return m_tpl.GetAttribute("setupconfiguration/@dialog_selector_cancel").Replace(c_APPLICATION_NAME, m_ApplicationName);}
 			}
+      // Matthias Jentsch - 2007-02-06 added OS filter message to templates
+      public string os_filter_not_match_message
+      {
+        get { return m_tpl.GetAttribute("setupconfiguration/@os_filter_not_match_message").Replace(c_APPLICATION_NAME, m_ApplicationName); }
+      }
 		}
 
 		public class Template_component

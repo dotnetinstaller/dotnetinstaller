@@ -29,6 +29,7 @@ struct installedcheck
 	virtual bool IsInstalled() = 0;
 };
 
+
 struct installedcheck_check_registry_value : public installedcheck
 {
 	CString path; //percorso del registry
@@ -36,17 +37,26 @@ struct installedcheck_check_registry_value : public installedcheck
 	CString fieldvalue; //valore del registry bisogna convertirlo in base al tipo
 	CString fieldtype; //tipo del campo nel registry : REG_DWORD (long) o REG_SZ  (string)
 	CString comparison; //tipo di comparazione : match (verifica se le due stringhe sono uguali) version (che tratta le due stringhe come versioni e quindi se quella richiesta è minore bisogna installare altrimenti no)
+  CString rootkey;
+
+  HKEY GetRootKey()
+  {
+    if(rootkey == "HKEY_CLASSES_ROOT")   return HKEY_CLASSES_ROOT;
+    if(rootkey == "HKEY_CURRENT_USER")   return HKEY_CURRENT_USER;
+    if(rootkey == "HKEY_USERS")          return HKEY_USERS;
+    if(rootkey == "HKEY_CURRENT_CONFIG") return HKEY_CURRENT_CONFIG;
+
+    return HKEY_LOCAL_MACHINE;
+  }
+
+
 
 	virtual bool IsInstalled()
 	{
 		try
 		{
 			HKEY l_HKey;
-			LONG l_result = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
-						path,
-						0,
-						KEY_READ,
-						&l_HKey);
+			LONG l_result = RegOpenKeyEx(GetRootKey(), path, 0, KEY_READ, &l_HKey);
 
 			if (l_result != ERROR_SUCCESS)
 				return false;
@@ -85,6 +95,10 @@ struct installedcheck_check_registry_value : public installedcheck
 						return true;
 					else
 						return false;
+        }
+        else if (comparison == TEXT("exists"))
+        {
+          return true;  
 				}
 				else
 				{
@@ -132,6 +146,10 @@ struct installedcheck_check_registry_value : public installedcheck
 						return true;
 					else
 						return false;
+				}
+        else if (comparison == TEXT("exists"))
+        {
+          return true;  
 				}
 				else
 				{

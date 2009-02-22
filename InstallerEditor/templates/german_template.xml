@@ -19,21 +19,22 @@ There are three types of variables:
 	
 	<!-- Available variables: ##APPLICATION_NAME -->	
 	<setupconfiguration
-		cancel_caption = "Schließen"
-		dialog_caption = "##APPLICATION_NAME Installationsprogramm"
-		dialog_message = "Um ##APPLICATION_NAME zu installieren müssen Sie zuerst folgende Komponenten upgraden:"
-		failed_exec_command_continue = "Installation von %s fehlgeschlagen. Mit anderen Komponenten fortfahren?"
-		install_caption = "Installieren"
+		cancel_caption = "Abbrechen"
+		dialog_caption = "##APPLICATION_NAME Installer"
+		dialog_message = "Um ##APPLICATION_NAME zu installieren müssen Sie zuerst ein Upgrade der folgende Komponenten durchführen:"
+		failed_exec_command_continue = "Fehler beim Installieren von %s. Mit weiteren Komponenten fortfahren?"
+		install_caption = "Install"
 		installation_completed = "##APPLICATION_NAME wurde erfolgreich installiert!"
-		installing_component_wait = "Installiere %s. Bitte warten, diese Operation kann einige Zeit dauern ..."
-		reboot_required = "Um mit der Installation fortzufahren müssen Sie den Computer neu starten. Möchten Sie nun neu starten?"
+		installing_component_wait = "Installiere %s. Bitte warten. Dieser Vorgang kann einige Zeit in Anspruch nehmen ..."
+		reboot_required = "Um mit der Installation fortzufahren müssen Sie den Computer neu starten. Jetzt neustarten?"
 		status_installed = " (Installiert)"
 		status_notinstalled = ""
-		advanced_caption = "Erweitert"
+		advanced_caption = "Fortgeschritten"
 		dialog_selector_caption = "Komponentenliste"
-		dialog_selector_message = "Markieren Sie die Komponenten die Sie installieren möchten."
+		dialog_selector_message = "Wählen Sie die zu installierenden Komponenten."
 		dialog_selector_ok = "OK"
-		dialog_selector_cancel = "Abbruch"
+		dialog_selector_cancel = "Abbrechen"
+		os_filter_not_match_message = "Dieses Setup kann nicht auf diesem Betriebssystem ausgeführt werden!"
 		>
 	</setupconfiguration>
 	
@@ -49,8 +50,8 @@ There are three types of variables:
 		buttoncancel_caption = "Abbruch"
 		buttonstart_caption = "Start"
 		dialog_caption = "##COMPONENT_NAME - Herunterladen der Komponenten"
-		dialog_message = "Drücken Sie 'Start' um die benötigten Komponenten herunterzuladen um ##COMPONENT_NAME zu installieren."
-		dialog_message_downloading = "Download in Arbeit. Bitte warten..."
+		dialog_message = "Drücken Sie 'Start' um die benötigten Komponenten herunterzuladen für ##COMPONENT_NAME herunterzuladen."
+		dialog_message_downloading = "Dateien werden heruntergeladen. Bitte warten..."
 		>
 	</downloaddialog>
 </editortemplate>

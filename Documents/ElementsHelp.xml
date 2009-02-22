@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?> 
+<?xml version="1.0" encoding="utf-8" ?>
 <elements>
 	<element name="configurations" description="Root element">
 		<subelement name="configuration">
@@ -31,7 +31,10 @@
 		
 		<attribute name="complete_command" description="Command executed when all components are installed correctly; can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed." optional="true" />
 		<attribute name="auto_close_if_installed" description="If true auto close the dialog if all the components are already installed (before closing dotNetInstaller always execute the complete message box and execute the complete command)." />
-		
+		<attribute name="os_filter_greater" description="Filter for minimum operating system version" />
+		<attribute name="os_filter_smaller" description="Filter for maximum operating system version" />
+		<attribute name="os_filter_not_match_message" description="Message if the current operating system does not match the operating system filter" />
+
 		<subelement name="components" />
 	</element>
 	
@@ -117,11 +120,12 @@
 	
 	<element name="installedcheck (type='check_registry_value')" description="The application check if a component is installed looking for the specified registry information or file.">
 		<attribute name="type" description="'check_registry_value' - Type of the check, can be 'check_registry_value' to check for a specific value in the registry or 'check_file' to check for a specific file." />
-		<attribute name="path" description="Specifies the registry path to search for the registry value specified, must be a path under HKEY_LOCAL_MACHINE like 'SOFTWARE\\MyCompany'." />
+		<attribute name="rootkey" description="The root key for the path property." />
+		<attribute name="path" description="Specifies the registry path to search for the registry value specified, the root of this path must be specified in the rootkey property. Example for this property: 'SOFTWARE\\MyCompany'" />
 		<attribute name="fieldname" description="The registry field name in the specified path, for example 'Installed'." />
 		<attribute name="fieldvalue" description="The registry value used to check if the component is installed, this value is converted based on the value type specified." />
 		<attribute name="fieldtype" description="Specifies the type of the registry field, can be 'REG_DWORD' (for numeric value) or 'REG_SZ' (for string value)." />
-		<attribute name="comparison" description="Comparison mode; can be 'match' to check if the exact value is present in the registry or 'version' to compare the registry version with the specified version and return true if the registry version is equal or greater then the version specified." />
+		<attribute name="comparison" description="Comparison mode; can be 'exists' to check if the registy key exists; 'match' to check if the exact value is present in the registry or 'version' to compare the registry version with the specified version and return true if the registry version is equal or greater then the version specified." />
 	</element>
 	
 </elements>

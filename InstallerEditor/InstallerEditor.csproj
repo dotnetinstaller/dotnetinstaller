@@ -209,6 +209,7 @@
     <EmbeddedResource Include="templates\components.xml" />
     <EmbeddedResource Include="templates\english_template.xml" />
     <Content Include="App.ico" />
+    <None Include="templates\german_template.xml" />
     <None Include="bin\Release\InstallerEditor.exe" />
     <None Include="templates\french_template.xml" />
     <None Include="templates\italian_template.xml" />

@@ -36,6 +36,8 @@ namespace InstallerEditor
 			m_dialog_selector_message = tpl.dialog_selector_message;
 			m_dialog_selector_ok = tpl.dialog_selector_ok;
 			m_dialog_selector_cancel = tpl.dialog_selector_cancel;
+      // Matthias Jentsch - 2007-02-06: read OS filter message from template
+      m_os_filter_not_match_message = tpl.os_filter_not_match_message;
 
 //			if (LanguageUI.Language == SupportedLanguage.Italian)
 //			{
@@ -107,7 +109,13 @@ namespace InstallerEditor
 
 		private string m_complete_command;
 		private bool m_auto_close_if_installed = true;
-
+		/* Matthias Jentsch - 2006-03-06: added filter for minimal OS version */
+		private string m_os_filter_greater;
+    /* Matthias Jentsch - 2006-03-06: added filter for maximal OS version */
+    private string m_os_filter_smaller;
+    /* Matthias Jentsch - 2006-03-06: added message for not matching the OS filter */
+    private string m_os_filter_not_match_message;
+		
 		[Description("Main dialog title. (REQUIRED)")]
 		[Category("Main Dialog")]
 		public string dialog_caption
@@ -261,6 +269,31 @@ namespace InstallerEditor
 			get{return m_auto_close_if_installed;}
 			set{m_auto_close_if_installed = value;}
 		}
+
+    /* Matthias Jentsch - 2006-03-06: added filter for minimal OS version */
+    [Description("A filter to run this setup only on all operating system id greater than the id specified (see Help->Operating System Table). For example to run this setup only in Windows 2000 or later write '44'. (OPTIONAL)")]
+		public string os_filter_greater
+		{
+			get{return m_os_filter_greater;}
+			set{m_os_filter_greater = value;}
+		}
+
+    /* Matthias Jentsch - 2006-03-06: added filter for maximal OS version */
+    [Description("A filter to run this setup only on all operating system id smaller than the id specified (see operating system table). For example to run this setup preceding Windows 2000 write '45'. (OPTIONAL)")]
+		public string os_filter_smaller
+		{
+			get{return m_os_filter_smaller;}
+			set{m_os_filter_smaller = value;}
+		}
+
+    /* Matthias Jentsch - 2006-03-06: added message for not matching the OS filter */
+    [Description("A error message for the case that the operating system does not match the operating system filter (see os_filter_greater and os_filter_smaller). (OPTIONAL)")]
+		[Category("Messages")]
+		public string os_filter_not_match_message
+		{
+			get{return m_os_filter_not_match_message;}
+			set{m_os_filter_not_match_message = value;}
+		}
 		#endregion
 
 		protected override void OnXmlWriteTagConfiguration(XmlWriterEventArgs e)
@@ -293,7 +326,11 @@ namespace InstallerEditor
 
 			e.XmlWriter.WriteAttributeString("complete_command",m_complete_command);
 			e.XmlWriter.WriteAttributeString("auto_close_if_installed",m_auto_close_if_installed.ToString());
-
+			// Matthias Jentsch - 2006-03-06: new attributes added
+			e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
+			e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
+			e.XmlWriter.WriteAttributeString("os_filter_not_match_message", m_os_filter_not_match_message);
+			
 			e.XmlWriter.WriteStartElement("components");
 			foreach(Component c in Components)
 			{
@@ -378,7 +415,14 @@ namespace InstallerEditor
 			if (e.XmlElement.Attributes["auto_close_if_installed"] != null)
 				m_auto_close_if_installed = bool.Parse(e.XmlElement.Attributes["auto_close_if_installed"].InnerText);
 
-
+      // Matthias Jentsch - 2006-03-06: new attributes added
+      if (e.XmlElement.Attributes["os_filter_greater"] != null)
+				m_os_filter_greater = e.XmlElement.Attributes["os_filter_greater"].InnerText;
+			if (e.XmlElement.Attributes["os_filter_smaller"] != null)
+				m_os_filter_smaller = e.XmlElement.Attributes["os_filter_smaller"].InnerText;
+			if (e.XmlElement.Attributes["os_filter_not_match_message"] != null)
+				m_os_filter_not_match_message = e.XmlElement.Attributes["os_filter_not_match_message"].InnerText;
+			
 			XmlNodeList l_List = e.XmlElement.SelectNodes("components/component");
 			foreach (XmlElement l_XmlComp in l_List)
 			{

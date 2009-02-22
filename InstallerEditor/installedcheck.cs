@@ -64,7 +64,8 @@ namespace InstallerEditor
 	public enum installcheck_comparison
 	{
 		match,
-		version
+		version,
+		exists
 	}
 }
 

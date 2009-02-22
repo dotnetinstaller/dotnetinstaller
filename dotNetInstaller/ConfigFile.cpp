@@ -177,6 +177,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 						l_new_check_registry_value->fieldvalue = l_Node_installedcheck->AttributeT("fieldvalue").data();
 						l_new_check_registry_value->path = l_Node_installedcheck->AttributeT("path").data();
 						l_new_check_registry_value->comparison = l_Node_installedcheck->AttributeT("comparison").data();
+            l_new_check_registry_value->rootkey = l_Node_installedcheck->AttributeT("rootkey").data();
 
 						l_new_installedcheck = l_new_check_registry_value;
 

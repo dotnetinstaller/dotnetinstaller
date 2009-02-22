@@ -16,6 +16,7 @@ namespace InstallerEditor
 			m_fieldname = "Installed";
 			m_fieldtype = installcheck_registrytype.REG_DWORD;
 			m_fieldvalue = "1";
+			m_rootkey = installcheck_rootkey.HKEY_LOCAL_MACHINE;
 		}
 
 		private string m_path;
@@ -58,6 +59,14 @@ namespace InstallerEditor
 			set{m_comparison = value;}
 		}
 
+		private installcheck_rootkey m_rootkey;
+		[Description("Root key, from which to begin the registry search from")]
+		public installcheck_rootkey rootkey
+		{
+			get{return m_rootkey;}
+			set{m_rootkey = value;}
+		}
+		
 		protected override void OnXmlWriteTaginstalledcheck(XmlWriterEventArgs e)
 		{
 			base.OnXmlWriteTaginstalledcheck (e);
@@ -67,6 +76,7 @@ namespace InstallerEditor
 			e.XmlWriter.WriteAttributeString("fieldvalue",m_fieldvalue);
 			e.XmlWriter.WriteAttributeString("fieldtype",m_fieldtype.ToString());
 			e.XmlWriter.WriteAttributeString("comparison",m_comparison.ToString());
+			e.XmlWriter.WriteAttributeString("rootkey",rootkey.ToString());
 		}
 
 
@@ -88,7 +98,9 @@ namespace InstallerEditor
 
 			if (e.XmlElement.Attributes["comparison"] != null)
 				m_comparison = (installcheck_comparison)Enum.Parse(typeof(installcheck_comparison),e.XmlElement.Attributes["comparison"].InnerText, true);
-
+ 
+ 			if (e.XmlElement.Attributes["rootkey"] != null)
+				m_rootkey = (installcheck_rootkey)Enum.Parse(typeof(installcheck_rootkey),e.XmlElement.Attributes["rootkey"].InnerText, true);
 		}
 	}
 
@@ -96,5 +108,14 @@ namespace InstallerEditor
 	{
 		REG_DWORD,
 		REG_SZ
+	}
+	
+	public enum installcheck_rootkey
+	{
+	  HKEY_CLASSES_ROOT,
+	  HKEY_CURRENT_USER,
+	  HKEY_LOCAL_MACHINE, // default
+	  HKEY_USERS,
+	  HKEY_CURRENT_CONFIG
 	}
 }
