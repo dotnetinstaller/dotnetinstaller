@@ -649,14 +649,13 @@
   not automatic except for components with a <em>Download File</em> subcomponent.</p>
  <p>
   The simplest way to specify an individual file to be embedded is by using the <em>
-   /EmbedFile</em> InstallerLinker.exe command line option and specify a full path
-  to the file you want to be embedded. The value can be any directory and the file
-  will be extracted in the root of #CABPATH during installation. See the PackagedSetup
-  sample that uses this behavior.</p>
+   /EmbedFile</em> InstallerLinker.exe command line option and specify a relative
+  path from #APPPATH to the file you want to be embedded. The file will be extracted
+  under #CABPATH during installation. If the file was in a subdirectory under #APPPATH,
+  it will be extracted into the same subdirectory under #CABPATH.</p>
  <p>
-  For more complex scenarios, the recommended way to embed a file is to add a <em>Download
-   File</em> or a <em>Download Dialog</em> with a <em>Download File </em>to your dependency.
-  Because the file will be automatically extracted, no download will actually happen.
+  The embedding process automatically tries to embed files specified by the <em>Download
+   File</em> component.
   The Download File should have a <em>destinationpath</em> set to #CABPATH\Subdirectory.
   For example, if <em>msxml.msi</em> is in <em>SupportFiles\MSXML\English\msxml.msi</em>,
   set destinationpath to <em>#CABPATH\SupportFiles\MSXML\English</em>. This means
