@@ -256,21 +256,12 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 
 			if ( CheckConfigFilter(l_new_component->os_filter_lcid, l_new_component->os_filter_greater, l_new_component->os_filter_smaller, l_new_component->processor_architecture_filter) )
 			{
-                bool l_new_component_installed = l_new_component->IsInstalled();
-
-				if (! l_new_component_installed)
-                {
-					l_new_component->selected = true;
-                }
-
 				p_Setting.AddComponent(l_new_component);
-
-                ApplicationLog.Write( TEXT("--Component OK: "), l_new_component_installed ? TEXT("INSTALLED") : TEXT("NOT INSTALLED") );
+                ApplicationLog.Write( TEXT("--Component OK: "), l_new_component->description );
 			}
 			else
 			{
 				FreeComponent(l_new_component);
-
 				ApplicationLog.Write( TEXT("--Component SKIPPED") );
 			}
 

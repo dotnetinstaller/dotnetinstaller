@@ -416,6 +416,11 @@ bool CdotNetInstallerDlg::LoadComponentsList(void)
     for each(Component * component in m_Settings.GetComponents())
 	{
         bool component_installed = component->IsInstalled();
+        
+        ApplicationLog.Write( TEXT("-- ") + component->description + TEXT(": "), 
+            component_installed ? TEXT("INSTALLED") : TEXT("NOT INSTALLED"));
+
+        component->selected = ! component_installed;
 
         if (component->required)
         {
