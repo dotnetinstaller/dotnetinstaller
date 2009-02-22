@@ -5,6 +5,8 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using Vestris.ResourceLib;
 
 namespace InstallerEditor
 {
@@ -79,6 +81,28 @@ namespace InstallerEditor
             ConfigFile configfile = new ConfigFile();
             configfile.Load(args.config);
 
+            VersionResource rc = new VersionResource();
+            rc.LoadFrom(args.output);
+
+            /* Daniel Doubrovkine - 2008-06-27: added version information */
+            StringFileInfo stringFileInfo = (StringFileInfo)rc["StringFileInfo"];
+
+            if (!string.IsNullOrEmpty(configfile.productversion))
+            {
+                rc.ProductVersion = configfile.productversion;
+                stringFileInfo["ProductVersion"] = configfile.productversion;
+            }
+
+            if (!string.IsNullOrEmpty(configfile.fileversion))
+                rc.FileVersion = configfile.fileversion;
+
+            foreach (FileAttribute attr in configfile.fileattributes)
+            {
+                stringFileInfo[attr.name] = attr.data;
+            }
+
+            rc.SaveTo(args.output);
+
             if (args.embed)
             {
                 CabLib.Compress cab = new CabLib.Compress();
@@ -139,7 +163,7 @@ namespace InstallerEditor
             if (!File.Exists(config))
                 throw new FileNotFoundException(config);
 
-            if (! string.IsNullOrEmpty(apppath) && ! Directory.Exists(apppath))
+            if (!string.IsNullOrEmpty(apppath) && !Directory.Exists(apppath))
                 throw new DirectoryNotFoundException(apppath);
         }
     }

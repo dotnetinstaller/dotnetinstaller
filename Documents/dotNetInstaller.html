@@ -831,6 +831,18 @@
                                 <td>
                                     If true, run the install silently (without requiring user input)</td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <b>fileversion</b></td>
+                                <td>
+                                    Optional 4-part binary file version, eg. 1.0.0.0</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>productversion</b></td>
+                                <td>
+                                    Optional 4-part product version, also written as a ProductVersion string resource, eg. 1.0.0.0</td>
+                            </tr>
                         </tbody>
                     </table>
                 </td>
@@ -844,6 +856,10 @@
                             <tr>
                                 <td>
                                     <b>configuration</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>fileattributes</b></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1361,6 +1377,86 @@
                             </tr>
                         </tbody>
                     </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table border="1" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <th colspan="2" bgcolor="#ccccff">
+                    fileattributes</th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    A collection of elements of type 'fileattribute'.</td>
+            </tr>
+            <tr>
+                <td bgcolor="#ccccff" valign="top">
+                    ATTRIBUTES:</td>
+                <td>
+                    <table border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#ccccff" valign="top">
+                    CHILDREN:</td>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>fileattribute</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table border="1" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <th colspan="2" bgcolor="#ccccff">
+                    fileattribute</th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    A string fileattribute.</td>
+            </tr>
+            <tr>
+                <td bgcolor="#ccccff" valign="top">
+                    ATTRIBUTES:</td>
+                <td>
+                    <table border="1" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>name</b></td>
+                                <td>
+                                    The name of the attribute, eg. &quot;Copyright&quot;.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>value</b></td>
+                                <td>
+                                    The value of the attribyte, eg. &quot;DevAge - www.devage.com&quot;
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#ccccff" valign="top">
+                    CHILDREN:</td>
+                <td>
                 </td>
             </tr>
         </tbody>
@@ -1898,6 +1994,10 @@
         <li>configurations\configuration\cab_dialog_message</li>
         <li>configurations\configuration\cab_path</li>
         <li>configurations\configuration\cab_path_autodelete</li>
+        <li>fileversion</li>
+        <li>productversion</li>
+        <li>fileattributes\fileattribute\name</li>
+        <li>fileattributes\fileattribute\value</li>
     </ul>
     <h3>
         1.2.0.0 to 1.3.2.0 changes of XML file</h3>
@@ -2520,12 +2620,16 @@
          file parameter to specify the resulting full path to the log filename for the dotNetInstaller itself</li>
         <li>Added #CABPATH variable that can be used in path settings</li>
         <li>Added #GUID variable that represents a unique GUID across a single instance of dotNetInstaller</li>
-     <li>Added an MSBuild script that centrally versions, builds and packages dotNetInstaller
-      into target/Debug|Release, including a sample</li>
-     <li>Added a combined Visual Studio solution, dni.sln with automatic versioning (reqiures
-      <a href="http://msbuildtasks.tigris.org/">MSBuild Community Tasks</a>). The major
-      and minor version number can be incremented in dni.proj, the build number is the
-      latest SVN revision and the release number is a timestamp</li>
+        <li>Added an MSBuild script that centrally versions, builds and packages dotNetInstaller
+         into target/Debug|Release, including a sample</li>
+        <li>Added a combined Visual Studio solution, dni.sln with automatic versioning (reqiures
+         <a href="http://msbuildtasks.tigris.org/">MSBuild Community Tasks</a>). The major
+         and minor version number can be incremented in dni.proj, the build number is the
+         latest SVN revision and the release number is a timestamp</li>
+        <li>Added file and production version configuration attributes as well as free-formed string attributes
+         using <a href="http://www.codeproject.com/KB/library/ResourceLib.aspx">ResourceLib</a>. InstallerEditor
+         can now write a specific binary version as well as additional information, including copyright or company 
+         name to the target setup binary.</li>
     </ul>
     <h3>
         1.3.3.0 (19 March 2007)</h3>

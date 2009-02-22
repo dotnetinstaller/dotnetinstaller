@@ -30,6 +30,7 @@
   <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceLibrary.dll" />
   <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceGrid2.dll" />
   <Binaries Include="InstallerEditor\bin\$(Configuration)\CabLib.dll" />
+  <Binaries Include="InstallerEditor\bin\$(Configuration)\Vestris.ResourceLib.dll" />
  </ItemGroup>
  <Target Name="all">
   <Message Importance="high" Text="Building project ..." />
