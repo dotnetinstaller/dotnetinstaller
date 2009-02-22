@@ -111,6 +111,16 @@ namespace InstallerEditor
 			get{return m_note;}
 			set{m_note = value;}
 		}
+
+        /* Jason Biegel - 2008-04-28: added message for not matching the processor architecture filter */
+        private string m_processor_architecture_filter;
+        [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Seperate by commas, can use the NOT sign ('!') to exclude. (es. 'x86,x64' or '!x86'). (OPTIONAL)")]
+        public string processor_architecture_filter
+        {
+            get { return m_processor_architecture_filter; }
+            set { m_processor_architecture_filter = value; }
+        }
+
 		#endregion
 
 		protected void OnDescriptionChanged()
@@ -189,6 +199,9 @@ namespace InstallerEditor
 			e.XmlWriter.WriteAttributeString("description",m_description);
 			//e.XmlWriter.WriteAttributeString("installmessage",m_installmessage);
 			e.XmlWriter.WriteAttributeString("note",m_note);
+            // Jason Biegel - 2008-04-28: new attributes added
+            e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
+
 		}
 		protected virtual void OnXmlReadTagcomponent(XmlElementEventArgs e)
 		{

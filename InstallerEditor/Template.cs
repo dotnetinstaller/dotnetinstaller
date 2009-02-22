@@ -135,6 +135,12 @@ namespace InstallerEditor
       {
         get { return m_tpl.GetAttribute("setupconfiguration/@os_filter_not_match_message").Replace(c_APPLICATION_NAME, m_ApplicationName); }
       }
+
+            // Jason Biegel - 2008-04-22 added processor architecture message to templates
+            public string processor_architecture_filter_not_match_message
+            {
+                get { return m_tpl.GetAttribute("setupconfiguration/@processor_architecture_filter_not_match_message").Replace(c_APPLICATION_NAME, m_ApplicationName); }
+		}
 		}
 
 		public class Template_component

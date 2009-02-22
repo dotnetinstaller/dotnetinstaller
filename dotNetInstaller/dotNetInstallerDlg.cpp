@@ -11,6 +11,7 @@
 //user defined include
 #include <tchar.h>
 #include "OsIdentifier.h"
+#include "ProcessorIdentifier.h"
 #include "ConfigFile.h"
 #include "InstallerLog.h"
 #include "DniMessageBox.h"
@@ -82,7 +83,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	RemoveRegistryRun();
 
 	//determinating operating system
-	m_lblOperatingSystem.SetWindowText(DVLib::GetOsVersionString());
+    m_lblOperatingSystem.SetWindowText(DVLib::GetOsVersionString() + L" (" + DVLib::GetProcessorArchitectureString() + L")");
 
 	// Matthew Sheets - 2008-01-14: Hide the "Skip" button if there are no additional configurations
 	if (!m_additional_config)

@@ -25,7 +25,7 @@ void SaveAppState(configSetting & p_Config);
 
 void RestoreAppState(configSetting & p_Config);
 
-bool CheckConfigFilter(const CString & p_Config_LCID, const CString & p_os_filter_greater, const CString & p_os_filter_smaller);
+bool CheckConfigFilter(const CString & p_Config_LCID, const CString & p_os_filter_greater, const CString & p_os_filter_smaller, const CString & p_processor_architecture_filter);
 
 bool LoadDocumentFromFile(const CString & p_FileName, TiXmlDocument & document);
 

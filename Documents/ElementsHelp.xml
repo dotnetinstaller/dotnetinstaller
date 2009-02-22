@@ -36,8 +36,9 @@
 		<attribute name="os_filter_greater" description="Filter for minimum operating system version" />
 		<attribute name="os_filter_smaller" description="Filter for maximum operating system version" />
 		<attribute name="os_filter_not_match_message" description="Message if the current operating system does not match the operating system filter" />
+  <attribute name="processor_architecture_filter" description="Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Seperate by commas, can use the NOT sign ('!') to exclude. (es. 'x86,x64' or '!x86')." />
 
-		<subelement name="components" />
+  <subelement name="components" />
 	</element>
 	
 	<element name="configuration (type='reference')" description="A configuration used to download a configuration file from a specific URL.">
@@ -60,8 +61,9 @@
 		<attribute name="type" description="The type of the component; can be 'cmd' for executing generic command line installation or 'msi' for installing Windows Installer MSI package or 'openfile' to open a file. Each type has his own attributes." />
 		<attribute name="os_filter_greater" description="A filter to install this component only on all operating system id greater than the id specified (see Help->Operating System Table). For example to install a component only in Windows 2000 or later write '44'." optional="true" />
 		<attribute name="os_filter_smaller" description="A filter to install this component only on all operating system id smaller than the id specified (see operating system table). For example to install a component preceding Windows 2000 write '45'." optional="true" />
-		<attribute name="os_filter_lcid" description="A filter to install this component only on all operating system language equals or not equals than the LCID specified (see Help->LCID table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter all the configuration element." optional="true" />
-		<attribute name="installcompletemessage" description="The message used when a component is successfully installed. To disable this message leave this property empty." optional="true" />
+  <attribute name="os_filter_lcid" description="A filter to install this component only on all operating system language equals or not equals than the LCID specified (see Help->LCID table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter all the configuration element." optional="true" />
+  <attribute name="processor_architecture_filter" description="Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Seperate by commas, can use the NOT sign ('!') to exclude. (es. 'x86,x64' or '!x86')." />
+  <attribute name="installcompletemessage" description="The message used when a component is successfully installed. To disable this message leave this property empty." optional="true" />
 		<attribute name="mustreboot" description="Indicates if ask to reboot after this component is installed successfully (True/False). Normally if the system must be restarted is automatically the component that tells this setup (with special return code) to stop and restart the system, but in special circumstances (for example in Windows 98) we must force a reboot to install correctly some components (for example the .NET Framework)." />
 		<attribute name="description" description="Description of this component. This value is used also in some message to replace the %s string." />
 		<attribute name="note" description="Note, not used by the setup." optional="true" />

@@ -316,6 +316,8 @@ struct component
 	CString installcompletemessage;
 	//true per forzare il reboot al termine dell'installazione altrimenti false
 	bool mustreboot;
+	//Jason Biegel - 2008-04-28: added filter for processor architecture
+	CString processor_architecture_filter;
 
 	//classi per gestire la verifica se il componente è installato o no
 	std::vector<installedcheck*> installedchecks;
@@ -519,6 +521,11 @@ struct installerSetting
 	CString os_filter_smaller;
 	/* Matthias Jentsch - 2006-03-06: message if the current operating system does not match the operating system filter */
 	CString os_filter_not_match_message;
+
+	/* Jason Biegel - 2008-04-23: added filter for processor architecture */
+	CString processor_architecture_filter;
+	/* Jason Biegel - 2008-04-23: added message for not matching the processor architecture filter */
+	CString processor_architecture_filter_not_match_message;
 
 	void ExecuteCompleteCode()
 	{

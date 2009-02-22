@@ -4,6 +4,7 @@
 #include "DniMessageBox.h"
 #include "SilentInstall.h"
 #include "dotNetInstallerDlg.h"
+#include "ProcessorIdentifier.h"
 
 bool ConvBoolString(const char * p_BoolString, bool defaultValue = false)
 {
@@ -103,6 +104,15 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 		p_Setting.os_filter_not_match_message = TEXT("This setup cannot run under the current operating system!");
 	}
 	
+	// Jason Biegel - 2008-04-23: read additional attributes
+	p_Setting.processor_architecture_filter = p_Node->AttributeT("processor_architecture_filter").data();
+	p_Setting.processor_architecture_filter_not_match_message = p_Node->AttributeT("processor_architecture_filter_not_match_message").data();
+	if(p_Setting.processor_architecture_filter_not_match_message.GetLength() == 0)
+	{
+		// Jason Biegel - 2008-04-23: default message if no message is defined
+		p_Setting.processor_architecture_filter_not_match_message = TEXT("This setup cannot run on the current processor!");
+	}
+	
 	ApplicationLog.Write( TEXT("End reading configuration attributes") );
 
 	//caricamento componenti
@@ -168,6 +178,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				l_new_component->os_filter_lcid = l_Node_component->AttributeT("os_filter_lcid").data();
 				l_new_component->installcompletemessage = l_Node_component->AttributeT("installcompletemessage").data();
 				l_new_component->mustreboot = ConvBoolString(l_Node_component->Attribute("mustreboot"), false);
+			l_new_component->processor_architecture_filter = l_Node_component->AttributeT("processor_architecture_filter").data();
 
 				// installed checks
 				TiXmlNode * childInstalled = NULL;
@@ -228,9 +239,9 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 
 				l_new_component->selected = false;
 				//verifico che il componente sia supportato nel sistema operativo
-				if ( CheckConfigFilter(l_new_component->os_filter_lcid, l_new_component->os_filter_greater, l_new_component->os_filter_smaller) )
-				{
 
+				if ( CheckConfigFilter(l_new_component->os_filter_lcid, l_new_component->os_filter_greater, l_new_component->os_filter_smaller, l_new_component->processor_architecture_filter) )
+				{
 					if (l_new_component->IsInstalled() == false)
 						l_new_component->selected = true;
 
@@ -310,11 +321,12 @@ void LoadConfigsNode(TiXmlElement * p_Node, installerSetting & p_Setting, bool p
 			CString l_Config_LCID = l_Node_configuration->AttributeT("lcid").data();
 			CString l_os_filter_greater = l_Node_configuration->AttributeT("os_filter_greater").data();
 			CString l_os_filter_smaller = l_Node_configuration->AttributeT("os_filter_smaller").data();
+            CString l_processor_architecture_filter = l_Node_configuration->AttributeT("processor_architecture_filter").data();
 
 			ApplicationLog.Write( TEXT("Reading configuration node with LCID:"), l_Config_LCID);
 
 			// Matthew Sheets - 2007-09-25: Added OS Version to the configuration filter (in addition to LCID)
-			if (CheckConfigFilter(l_Config_LCID, l_os_filter_greater, l_os_filter_smaller))
+			if (CheckConfigFilter(l_Config_LCID, l_os_filter_greater, l_os_filter_smaller, l_processor_architecture_filter))
 			{
 				// Matthew Sheets - 2008-01-14: Peek ahead to determine
 				//	 if other config blocks exist that match the config filters
@@ -327,7 +339,8 @@ void LoadConfigsNode(TiXmlElement * p_Node, installerSetting & p_Setting, bool p
 						l_additional_config_found = CheckConfigFilter(
 								l_Node_next_configuration->AttributeT("lcid").data(),
 								l_Node_next_configuration->AttributeT("os_filter_greater").data(),
-								l_Node_next_configuration->AttributeT("os_filter_smaller").data());
+								l_Node_next_configuration->AttributeT("os_filter_smaller").data(),
+                                l_Node_next_configuration->AttributeT("processor_architecture_filter").data());
 					}
 					
 					l_Node_next_configuration = l_Node_next_configuration->NextSiblingElement();
@@ -415,9 +428,14 @@ void RestoreAppState(configSetting & p_Config)
 }
 
 // Matthew Sheets - 2008/01/14: Isolate Configuration filter checks to their own function
-bool CheckConfigFilter(const CString & p_Config_LCID, const CString & p_os_filter_greater, const CString & p_os_filter_smaller)
+bool CheckConfigFilter(
+    const CString & p_Config_LCID, 
+    const CString & p_os_filter_greater, 
+    const CString & p_os_filter_smaller,
+    const CString & p_processor_architecture_filter)
 {
 	return (DVLib::IsOperatingSystemLCID(p_Config_LCID) &&
+		DVLib::IsProcessorArchitecture(p_processor_architecture_filter) &&
 		DVLib::IsInRangedOs(DVLib::GetOsVersion(), p_os_filter_greater, p_os_filter_smaller));
 }
 

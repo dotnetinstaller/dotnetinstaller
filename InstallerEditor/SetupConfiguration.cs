@@ -40,6 +40,9 @@ namespace InstallerEditor
       // Matthias Jentsch - 2007-02-06: read OS filter message from template
       m_os_filter_not_match_message = tpl.os_filter_not_match_message;
 
+            // Jason Biegel - 2008-04-22: read processor architecture filter message from template
+            m_processor_architecture_filter_not_match_message = tpl.processor_architecture_filter_not_match_message;
+
 //			if (LanguageUI.Language == SupportedLanguage.Italian)
 //			{
 //				m_cancel_caption = "Chiudi";
@@ -118,6 +121,13 @@ namespace InstallerEditor
 		private string m_os_filter_smaller;
 		/* Matthias Jentsch - 2006-03-06: added message for not matching the OS filter */
 		private string m_os_filter_not_match_message;
+		
+		/* Jason Biegel - 2008-04-22: added filter for processor architecture */
+		private string m_processor_architecture_filter;
+        
+        /* Jason Biegel - 2008-04-22: added message for not matching the processor architecture filter */
+        
+        private string m_processor_architecture_filter_not_match_message;
 		
 		[Description("Main dialog title. (REQUIRED)")]
 		[Category("Main Dialog")]
@@ -304,6 +314,23 @@ namespace InstallerEditor
 			get{return m_os_filter_not_match_message;}
 			set{m_os_filter_not_match_message = value;}
 		}
+
+        /*Jason Biegel - 2008-04-22: added filter for processor architecture */
+        [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Separate by commas, can use the NOT sign ('!') to exclude. (es. 'x86,x64' or '!x86'). (OPTIONAL)")]
+        public string processor_architecture_filter
+        {
+            get { return m_processor_architecture_filter; }
+            set { m_processor_architecture_filter = value; }
+        }
+
+        /* Jason Biegel - 2008-04-22: added message for not matching the processor architecture filter */
+        [Description("An error message for the case that the processor architecture does not match the filter (see processor_architecture_filter). (OPTIONAL)")]
+        [Category("Messages")]
+        public string processor_architecture_filter_not_match_message
+        {
+            get { return m_processor_architecture_filter_not_match_message; }
+            set { m_processor_architecture_filter_not_match_message = value; }
+        }
 		#endregion
 
 		protected override void OnXmlWriteTagConfiguration(XmlWriterEventArgs e)
@@ -343,6 +370,10 @@ namespace InstallerEditor
 			e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
 			e.XmlWriter.WriteAttributeString("os_filter_not_match_message", m_os_filter_not_match_message);
 			
+            // Jason Biegel - 2008-04-22: new attributes added
+            e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
+            e.XmlWriter.WriteAttributeString("processor_architecture_filter_not_match_message", m_processor_architecture_filter_not_match_message);
+
 			e.XmlWriter.WriteStartElement("components");
 			foreach(Component c in Components)
 			{
@@ -437,6 +468,10 @@ namespace InstallerEditor
 				m_os_filter_smaller = e.XmlElement.Attributes["os_filter_smaller"].InnerText;
 			if (e.XmlElement.Attributes["os_filter_not_match_message"] != null)
 				m_os_filter_not_match_message = e.XmlElement.Attributes["os_filter_not_match_message"].InnerText;
+			
+            // Jason Biegel - 2008-04-22: new attributes added
+            if (e.XmlElement.Attributes["processor_architecture_filter"] != null)
+                m_processor_architecture_filter = e.XmlElement.Attributes["processor_architecture_filter"].InnerText;
 			
 			XmlNodeList l_List = e.XmlElement.SelectNodes("components/component");
 			foreach (XmlElement l_XmlComp in l_List)
