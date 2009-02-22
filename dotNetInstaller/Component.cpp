@@ -12,7 +12,7 @@ Component::Component()
     , cancelled(false)
     , required(true)
     , ContainsDownloadComponent(false)
-    , selected(false)
+    , selected(true)
 {
 
 }

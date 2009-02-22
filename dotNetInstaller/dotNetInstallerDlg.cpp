@@ -211,9 +211,10 @@ HCURSOR CdotNetInstallerDlg::OnQueryDragIcon()
 // Select components based on the list box selections.
 void CdotNetInstallerDlg::SelectComponents()
 {
-	for (size_t i = 0; i < m_Settings.GetComponents().size();i++)
+	for(int i = 0; i < m_ListBoxComponents.GetCount(); i++)
 	{
-        m_Settings.GetComponents()[i]->selected = (m_ListBoxComponents.GetCheck((int) i) == 1);
+		Component * pComponent = (Component *) m_ListBoxComponents.GetItemDataPtr(i);
+		pComponent->selected = (m_ListBoxComponents.GetCheck(i) == 1);
 	}
 }
 
@@ -425,7 +426,10 @@ bool CdotNetInstallerDlg::LoadComponentsList(void)
         ApplicationLog.Write( TEXT("-- ") + component->description + TEXT(": "), 
             component_installed ? TEXT("INSTALLED") : TEXT("NOT INSTALLED"));
 
-        component->selected = ! component_installed;
+		if (component_installed)
+		{
+			component->selected = false;
+		}
 
         if (component->required)
         {
@@ -445,6 +449,7 @@ bool CdotNetInstallerDlg::LoadComponentsList(void)
             continue;
 
 		int id = m_ListBoxComponents.AddString(l_descr);
+		m_ListBoxComponents.SetItemDataPtr(id, component);
 
         if (component->selected)
         {

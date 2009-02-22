@@ -252,9 +252,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 				l_new_component->ContainsDownloadComponent = true;
 			}
 
-			l_new_component->selected = false;
 			//verifico che il componente sia supportato nel sistema operativo
-
 			if ( CheckConfigFilter(l_new_component->os_filter_lcid, l_new_component->os_filter_greater, l_new_component->os_filter_smaller, l_new_component->processor_architecture_filter) )
 			{
 				p_Setting.AddComponent(l_new_component);
