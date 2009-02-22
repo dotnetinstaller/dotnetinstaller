@@ -15,11 +15,11 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("www.devage.com")]
 [assembly: AssemblyProduct("dotNetInstaller")]
-[assembly: AssemblyCopyright("Copyright (c) Davide Icardi, Matthias Jentsch (www.devage.com) 2008")]
+[assembly: AssemblyCopyright("Copyright (c) www.devage.com 2008")]
 [assembly: AssemblyTrademark("All Rights Reserved")]
 [assembly: CLSCompliant(true)]
 [assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.5.0.0")]
+[assembly: AssemblyFileVersion("1.5.0.0")]
 
 

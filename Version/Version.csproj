@@ -87,6 +87,7 @@
     <None Include="Version.h.template" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Version.h" />
     <Content Include="Version.rc" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
