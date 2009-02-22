@@ -128,17 +128,12 @@ BOOL InstallComponentDlg::OnInitDialog()
 	m_BusyControl.Recalc();
 	m_BusyControl.Start();
 
-	if (m_Setting!=NULL && m_Component != NULL)
-	{
-		SetWindowText(m_Component->description);
+	SetWindowText(m_Component->description);
 
-		CString l_tmp;
-		l_tmp.Format(m_Setting->installing_component_wait, m_Component->description);
-		m_InstallMessage.SetWindowText(l_tmp);
-
-		m_iTimer = this->SetTimer(1,1000,NULL);
-	}
-
+	CString l_tmp;
+	l_tmp.Format(m_Setting->installing_component_wait, m_Component->description);
+    m_InstallMessage.SetWindowText(l_tmp);
+    m_iTimer = this->SetTimer(1,1000,NULL);
 	return TRUE;
 }
 

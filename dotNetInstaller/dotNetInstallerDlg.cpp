@@ -432,6 +432,10 @@ void CdotNetInstallerDlg::OnBnClickedCancel()
 
 void CdotNetInstallerDlg::ExtractCab()
 {
+    HRSRC l_res = FindResource(AfxGetApp()->m_hInstance, TEXT("RES_CAB"), TEXT("CUSTOM"));
+    if (l_res == NULL)
+	    return;
+
     ExtractCABComponent e_component(m_Settings);
     installerSetting e_setting;
     e_setting.installing_component_wait = m_Settings.cab_dialog_message;
