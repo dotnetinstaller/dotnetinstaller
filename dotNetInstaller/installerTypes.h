@@ -41,10 +41,15 @@ inline void InsertRegistryRun()
 		// Matthew Sheets - 2007-11-27: Get the installer launcher command (if specified)
 		CString l_Cmd = DNILauncher.GetLauncherCmd();
 
-		// Matthew Sheets - 2007-11-27: If no launcher argument was specified, use the DNI executable name
+		// Matthew Sheets - 2007-11-27: If no launcher argument was specified, use the DNI command line
 		if (l_Cmd.GetLength() == 0)
 		{
-			l_Cmd = DVLib::GetAppFullName();
+			l_Cmd = _T("\"") + DVLib::GetAppFullName() + _T("\"");
+            if (__argc > 1)
+            {                
+                l_Cmd.Append(::GetCommandLineW() + wcslen(__targv[0]) 
+                    + (::GetCommandLineW()[0] == '\"' ? 2 : 0));
+            }
 		}
 
 		RegSetValueEx(l_HKey, c_dotNetInstaller,0,REG_SZ,(LPBYTE)(LPCTSTR)l_Cmd, (DWORD)(l_Cmd.GetLength()+1) * sizeof(TCHAR) );
