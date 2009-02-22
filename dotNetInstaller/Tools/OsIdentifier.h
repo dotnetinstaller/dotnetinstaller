@@ -36,7 +36,9 @@ namespace DVLib
 
 		winServer2003 = 90,
 
-		winLater = 100
+		winVista = 100,
+
+		winLater = 200
 	};
 
 	inline OperatingSystem GetOsVersion()
@@ -62,12 +64,18 @@ namespace DVLib
 			// Test for the Windows NT product family.
 			case VER_PLATFORM_WIN32_NT:
 
-				// NT Version
-				if ( (osvi.dwMajorVersion == 5 && osvi.dwMinorVersion > 2) || 
-					osvi.dwMajorVersion > 5)
+				// Windows Vista 
+				if ( (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion > 0) || 
+					osvi.dwMajorVersion > 6)
 				{
-					l_Os = winLater; //versione più nuova
+					l_Os = winLater; // Windows version later than what this program is able to test for
 				}
+				else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 )
+				{
+					l_Os = winVista;
+				}
+
+				// Windows NT or XP or Server 2003
 				else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 )
 				{
 					l_Os = winServer2003;
@@ -208,6 +216,8 @@ namespace DVLib
 			return TEXT("Windows XP Sp2");
 		case winServer2003:
 			return TEXT("Windows Server 2003");
+		case winVista:
+			return TEXT("Windows Vista");
 		case winLater:
 			return TEXT("Unknown Windows version");
 		default:
@@ -375,3 +385,4 @@ namespace DVLib
 		return l_bIsOperatingSystemLCID;
 	}
 }
+ 	  	 
