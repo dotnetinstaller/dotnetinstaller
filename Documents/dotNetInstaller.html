@@ -1886,6 +1886,8 @@
     </p>
     <ul>
         <li>configurations\silent_install</li>
+        <li>configurations\configuration\components\component[@type=cmd]\command_silent</li>
+        <li>configurations\configuration\components\component[@type=msi]\cmdparameters_silent</li>
         <li>configurations\configuration\log_enable</li>
         <li>configurations\configuration\log_file</li>
         <li>configurations\configuration\skip_caption</li>
@@ -2485,6 +2487,9 @@
     <ul>
         <li>Added support for silent installs; silent mode can be declared either in the
             configuration XML or from the command line</li>
+        <li>Added command_silent to the component of type "command" and cmdparameters_silent to the 
+            component of type "msi" that optionally replace command and cmdparameters parameters in a 
+            silent install</li>
         <li>Added an "alwaysdownload" configuration XML attribute to the download element; if
             this value is false, the file will not be download if it already exists locally
             (this enables using the same configuration XML for both online and offline installs)</li>

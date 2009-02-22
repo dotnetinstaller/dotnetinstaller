@@ -14,6 +14,7 @@
 #include "DniMessageBox.h"
 #include "InstallerLauncher.h"
 #include "InstallerLog.h"
+#include "SilentInstall.h"
 
 //in tutti i percorsi viene sostituito #APPPATH con il percorso dell'applicazione corrente, #SYSTEMPATH con la directory System del computer e #WINDOWSPATH con la directory di installazione di Windows, #TEMPPATH con la directory temporanea
 //in all the paths we replace the string constant #APPPATH with the current path of the application and #SYSTEMPATH with the system directory of the computer, #TEMPPATH with the temp directory
@@ -430,6 +431,7 @@ struct process_component : public component
 struct cmd_component : public process_component
 {
 	CString command;
+    CString command_silent;
 
 /*	virtual bool ExecWait(DWORD * pExitCodes)
 	{
@@ -438,7 +440,14 @@ struct cmd_component : public process_component
 
 	virtual bool Exec()
 	{
-		return DVLib::ExecCmd(command, &m_process_info);
+        if (QuietInstall.IsSilent() && command_silent.GetLength() > 0)
+        {
+		    return DVLib::ExecCmd(command_silent, &m_process_info);
+        }
+        else
+        {
+		    return DVLib::ExecCmd(command, &m_process_info);
+        }
 	};
 };
 
@@ -446,6 +455,7 @@ struct msi_component : public process_component
 {
 	CString package;
 	CString cmdparameters; // es. "/qn REBOOT=ReallySuppress"
+    CString cmdparameters_silent;
 
 	// msi install cmd-line
 	//const TCHAR g_tszMsiCmdLine[] = _T("Msiexec /I %s REBOOT=ReallySuppress");
@@ -473,9 +483,16 @@ struct msi_component : public process_component
 		l_command += package;
 		l_command += TEXT("\"");
 		l_command += TEXT(" ");
-		l_command += cmdparameters;
-		//if (silent)
-		//	l_command += " /qn";
+
+        if (QuietInstall.IsSilent() && cmdparameters_silent.GetLength())
+        {
+            l_command += cmdparameters_silent;
+        }
+        else
+        {
+		    l_command += cmdparameters;
+        }
+		
 		//if (suppressreboot)
 		//	l_command += " REBOOT=ReallySuppress";
 

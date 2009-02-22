@@ -25,6 +25,14 @@ namespace InstallerEditor
 			set{m_command = value;}
 		}
 
+        private string m_command_silent;
+        [Description("Specifies the command to execute on silent install. Defaults to command when blank. (OPTIONAL)")]
+        public string command_silent
+        {
+            get { return m_command_silent; }
+            set { m_command_silent = value; }
+        }
+
 		protected override void OnXmlWriteTagcomponent(XmlWriterEventArgs e)
 		{
 			base.OnXmlWriteTagcomponent (e);
@@ -39,7 +47,9 @@ namespace InstallerEditor
 
 			if (e.XmlElement.Attributes["command"] != null)
 				m_command = e.XmlElement.Attributes["command"].InnerText;
-		}
+            if (e.XmlElement.Attributes["command_silent"] != null)
+                m_command_silent = e.XmlElement.Attributes["command_silent"].InnerText;
+        }
 
 	}
 }

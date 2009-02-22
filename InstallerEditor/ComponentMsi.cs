@@ -32,6 +32,13 @@ namespace InstallerEditor
             set { m_cmdparameters = value; }
         }
 
+        private string m_cmdparameters_silent;
+        [Description("Specifies the command line parameters for the msiexec program when running a silent install. Defaults to cmdparameters if blank. Can contain \" char and path constant (see Help->Path Constant). See MSDN for the command line you can use with Windows Installer. (OPTIONAL)")]
+        public string cmdparameters_silent
+        {
+            get { return m_cmdparameters_silent; }
+            set { m_cmdparameters_silent = value; }
+        }
 
         protected override void OnXmlWriteTagcomponent(XmlWriterEventArgs e)
         {
@@ -39,8 +46,8 @@ namespace InstallerEditor
 
             e.XmlWriter.WriteAttributeString("package", m_package);
             e.XmlWriter.WriteAttributeString("cmdparameters", m_cmdparameters);
+            e.XmlWriter.WriteAttributeString("cmdparameters_silent", m_cmdparameters_silent);
         }
-
 
         protected override void OnXmlReadTagcomponent(XmlElementEventArgs e)
         {
@@ -51,6 +58,9 @@ namespace InstallerEditor
 
             if (e.XmlElement.Attributes["cmdparameters"] != null)
                 m_cmdparameters = e.XmlElement.Attributes["cmdparameters"].InnerText;
+
+            if (e.XmlElement.Attributes["cmdparameters_silent"] != null)
+                m_cmdparameters_silent = e.XmlElement.Attributes["cmdparameters_silent"].InnerText;
         }
 
         public override IList<string> GetFiles()

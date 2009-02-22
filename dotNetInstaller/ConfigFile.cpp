@@ -156,6 +156,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 					l_msi_Comp->package = p_Setting.ValidatePath(l_Node_component->AttributeT("package").data());
 					l_msi_Comp->type = msi;
 					l_msi_Comp->cmdparameters = p_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters").data());
+					l_msi_Comp->cmdparameters_silent = p_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters_silent").data());
 
 					l_new_component = l_msi_Comp;
 
@@ -165,6 +166,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				{
 					cmd_component * l_cmd_Comp = new cmd_component();
 					l_cmd_Comp->command = p_Setting.ValidatePath(l_Node_component->AttributeT("command").data());
+                    l_cmd_Comp->command_silent = p_Setting.ValidatePath(l_Node_component->AttributeT("command_silent").data());
 					l_cmd_Comp->type = cmd;
 
 					l_new_component = l_cmd_Comp;
