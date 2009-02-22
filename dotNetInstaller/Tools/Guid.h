@@ -10,7 +10,7 @@ namespace DVLib
 		if(0 == (len = ::StringFromGUID2(rguid, (LPOLESTR) & progid, sizeof(progid) - 1)))
             throw TEXT("StringFromGUID2 failed");
 
-        progid[len] = 0;
+        progid[len - 1] = 0;
         return CString(progid);
 	}
 
