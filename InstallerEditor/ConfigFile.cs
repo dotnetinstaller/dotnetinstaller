@@ -84,16 +84,16 @@ namespace InstallerEditor
                 l_XmlWriter.WriteAttributeString("fileversion", m_fileversion);
                 l_XmlWriter.WriteAttributeString("productversion", m_productversion);
 
+                //tag schema
+                l_XmlWriter.WriteStartElement("schema");
+                l_XmlWriter.WriteAttributeString("version", m_CurrentSchemaVersion.ToString());
+                l_XmlWriter.WriteEndElement();
+
                 l_XmlWriter.WriteStartElement("fileattributes");
                 foreach (FileAttribute a in fileattributes)
                 {
                     a.ToXml(l_XmlWriter);
                 }
-                l_XmlWriter.WriteEndElement();
-
-                //tag schema
-                l_XmlWriter.WriteStartElement("schema");
-                l_XmlWriter.WriteAttributeString("version", m_CurrentSchemaVersion.ToString());
                 l_XmlWriter.WriteEndElement();
 
                 foreach (Configuration c in Configurations)
