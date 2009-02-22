@@ -50,7 +50,10 @@ bool thread_component::Exec()
 {
     if (m_pThread != NULL)
     {
-        WaitForSingleObject(m_pThread->m_hThread, INFINITE);
+        if (WAIT_FAILED == WaitForSingleObject(m_pThread->m_hThread, INFINITE))
+		{
+			throw std::exception("WaitForSingleObject failed");
+		}
 
         if (m_Error.GetLength())
         {

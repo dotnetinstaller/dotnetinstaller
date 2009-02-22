@@ -14,8 +14,16 @@ ExtractCABProcessor::ExtractCABProcessor(ExtractCABComponent * pComponent)
 
 }
 
+void ExtractCABProcessor::OnAfterCopyFile(char* s8_File, WCHAR* u16_File, void* p_Param)
+{
+	ApplicationLog.Write( TEXT("Done: "), u16_File );
+    Cabinet::CExtractT<ExtractCABProcessor>::OnAfterCopyFile(s8_File, u16_File, p_Param);
+}
+
 BOOL ExtractCABProcessor::OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param)
 {
+	ApplicationLog.Write( TEXT("Extracting: "), k_FI.u16_FullPath );
+
     if (m_pComponent != NULL)
     {
         if (m_pComponent->m_pDialog != NULL)
@@ -39,6 +47,7 @@ BOOL ExtractCABProcessor::OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param
 UINT ExtractCABComponent::ExecOnThread()
 {
     ExtractCab(AfxGetApp()->m_hInstance, this);
+	ApplicationLog.Write( TEXT("ExtractCABComponent: extracted CAB") );
     return ERROR_SUCCESS;
 };
 
@@ -116,11 +125,13 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
 		HRSRC l_res = FindResource(p_Module, resname.c_str(), TEXT("BINARY"));
 		if (l_res == NULL)
 		{
+			ApplicationLog.Write( TEXT("Missing: "), resname.c_str() );
 			throw std::exception("Missing RES_CAB resource");
 		}
 
         if (cancelled)
         {
+			ApplicationLog.Write( TEXT("Cancelled: "), resname.c_str() );
             CString cancelled_message = m_Settings.cab_cancelled_message;
             if (cancelled_message.Trim().GetLength() == 0) cancelled_message = L"Cancelled by user";
             throw std::exception(DVLib::Tstring2string((LPCWSTR) cancelled_message).c_str());
@@ -129,12 +140,14 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
 		HGLOBAL l_hRes = LoadResource(p_Module, l_res);
 		if (l_hRes == NULL)
 		{
+			ApplicationLog.Write( TEXT("Error loading resource: "), resname.c_str() );
 			throw std::exception("Failed to load resource RES_CAB");
 		}
 
 		LPVOID l_buffer = LockResource(l_hRes);
 		if (l_buffer == NULL)
 		{
+			ApplicationLog.Write( TEXT("Failed to lock resource: "), resname.c_str() );
 			throw std::exception("Failed to lock resource RES_CAB");
 		}
 
@@ -143,24 +156,31 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
 
         if (! WriteFile(l_hFile, (char *) l_buffer, l_size, & dwWritten, NULL))
         {
+			ApplicationLog.Write( TEXT("Error writing file: "), resname.c_str() );
             CloseHandle(l_hFile);
             UnlockResource(l_buffer);
             throw std::exception("Failed to write setup.cab");
         }
 
 		UnlockResource(l_buffer);
+		ApplicationLog.Write( TEXT("Extracted: "), resname.c_str() );
     }
 
+	ApplicationLog.Write( TEXT("Extracted all segments") );
     CloseHandle(l_hFile);
 
     ExtractCABProcessor i_Extract(this);
     if (!i_Extract.CreateFDIContext()) 
     {
+		ApplicationLog.Write( TEXT("Failed to initialize CAB context") );
         throw std::exception("Failed to initialize CAB context");
     }
 
     if (!i_Extract.ExtractFileW(tempFile.GetBuffer(), cabpath.GetBuffer()))
     {
+		ApplicationLog.Write( TEXT("Failed to extract file:"), tempFile );
         throw std::exception("Error extracting files from setup.cab");
     }
+
+	ApplicationLog.Write( TEXT("Extracted CAB: "), tempFile );
 }
