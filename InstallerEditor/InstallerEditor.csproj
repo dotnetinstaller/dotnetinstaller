@@ -167,7 +167,6 @@
       <DependentUpon>TemplatesEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="templates\components.xml" />
     <Content Include="App.ico" />
     <None Include="bin\Release\InstallerEditor.exe" />
   </ItemGroup>
