@@ -15,7 +15,7 @@ There are three types of variables:
 
 
 -->
-<editortemplate>
+<editortemplate name="Français">
 	<schema version="1" />
 	
 	<!-- Available variables: ##APPLICATION_NAME -->	

@@ -1,22 +1,44 @@
 using System;
+using System.Reflection;
+using System.Collections.Generic;
 
 namespace InstallerLib
 {
     public class Template
     {
-        private static Template m_DefaultTemplate;
-        private static Template m_CurrentTemplate;
+        private static Template m_CurrentTemplate = null;
+        private static List<Template> m_EmbeddedTemplates = null;
 
         static Template()
         {
-            m_DefaultTemplate = new Template(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(
-                "InstallerLib.templates.english_template.xml"), "Default (English)");
-            m_CurrentTemplate = m_DefaultTemplate;
+            m_CurrentTemplate = EmbeddedTemplates[0];
         }
 
-        public static Template DefaultTemplate
+        public static List<Template> EmbeddedTemplates
         {
-            get { return m_DefaultTemplate; }
+            get
+            {
+                if (m_EmbeddedTemplates == null)
+                {
+                    m_EmbeddedTemplates = GetEmbeddedTemplates();
+                }
+                return m_EmbeddedTemplates;
+            }
+        }
+
+        private static List<Template> GetEmbeddedTemplates()
+        {
+            List<Template> templates = new List<Template>();
+            string[] names = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            foreach (string name in names)
+            {
+                if (name.StartsWith("InstallerLib.templates."))
+                {
+                    Template template = new Template(Assembly.GetExecutingAssembly().GetManifestResourceStream(name));
+                    templates.Add(template);
+                }
+            }
+            return templates;
         }
 
         public static Template CurrentTemplate
@@ -28,6 +50,16 @@ namespace InstallerLib
         private System.Xml.XmlDocument m_Document = new System.Xml.XmlDocument();
         private System.Xml.XmlNode m_editortemplate_Node;
         private string m_Name;
+
+        public Template(System.IO.Stream stream)
+            : this(stream, "Untitled")
+        {
+            if (m_editortemplate_Node.Attributes["name"] != null)
+            {
+                m_Name = m_editortemplate_Node.Attributes["name"].InnerText;
+            }
+        }
+
         public Template(System.IO.Stream stream, string pName)
         {
             m_Document.Load(stream);

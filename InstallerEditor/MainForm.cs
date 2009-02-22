@@ -1217,21 +1217,28 @@ namespace InstallerEditor
             try
             {
                 RefreshTemplateFilesMenu();
-
-                if (m_AppSetting.TemplateConfigFile != null &&
-                    m_AppSetting.TemplateConfigFile.Length > 0)
-                {
-                    System.IO.FileInfo fl = new System.IO.FileInfo(m_AppSetting.TemplateConfigFile);
-                    using (System.IO.Stream st = fl.OpenRead())
-                    {
-                        Template.CurrentTemplate = new Template(st, fl.Name);
-                    }
-                }
             }
             catch (Exception err)
             {
                 SourceLibrary.Windows.Forms.ErrorDialog.Show(err, "Error");
             }
+        }
+
+        /// <summary>
+        /// Select a template from previously saved settings.
+        /// </summary>
+        private void SelectTemplate()
+        {
+            foreach (MenuItemTemplate menuItem in mnLanguageForNewItem.MenuItems)
+            {
+                if (menuItem.AreEqual(m_AppSetting.TemplateConfigFile))
+                {
+                    menuItem.PerformClick();
+                    return;
+                }
+            }
+
+            mnLanguageForNewItem.MenuItems[0].PerformClick();
         }
 
         private void MainForm_Closed(object sender, System.EventArgs e)
@@ -1323,27 +1330,19 @@ namespace InstallerEditor
         {
             mnLanguageForNewItem.MenuItems.Clear();
 
-            MenuItem defTemplate = new MenuItem("Default (English)");
-            defTemplate.Click += new EventHandler(defTemplate_Click);
-            defTemplate.RadioCheck = true;
+            foreach (Template template in Template.EmbeddedTemplates)
+            {
+                MenuItemTemplateInstance templateMenuItem = new MenuItemTemplateInstance(m_AppSetting, template);
+                mnLanguageForNewItem.MenuItems.Add(templateMenuItem);
+            }
 
-            mnLanguageForNewItem.MenuItems.Add(defTemplate);
-
-            //mnLanguageForNewItem.MenuItems.Add(new MenuItem("-"));
-
-            bool foundTemplate = false;
-            for (int i = 0; i < m_AppSetting.AvailableTemplates.Count; i++)
+            foreach (string file in m_AppSetting.AvailableTemplates)
             {
                 try
                 {
-                    MenuItemTemplateFile tmpMenu = new MenuItemTemplateFile(m_AppSetting, m_AppSetting.AvailableTemplates[i]);
-                    mnLanguageForNewItem.MenuItems.Add(tmpMenu);
-
-                    if (m_AppSetting.AvailableTemplates[i] == m_AppSetting.TemplateConfigFile)
-                    {
-                        tmpMenu.Checked = true;
-                        foundTemplate = true;
-                    }
+                    MenuItemTemplateFile templateFileMenuItem = new MenuItemTemplateFile(
+                        m_AppSetting, file);
+                    mnLanguageForNewItem.MenuItems.Add(templateFileMenuItem);
                 }
                 catch (Exception err)
                 {
@@ -1351,20 +1350,7 @@ namespace InstallerEditor
                 }
             }
 
-            if (foundTemplate == false)
-            {
-                defTemplate.PerformClick();
-            }
-        }
-
-        private void defTemplate_Click(object sender, EventArgs e)
-        {
-            m_AppSetting.TemplateConfigFile = null;
-            ((MenuItem)sender).Checked = true;
-
-            foreach (System.Windows.Forms.MenuItem mn in ((MenuItem)sender).Parent.MenuItems)
-                if (mn != sender)
-                    mn.Checked = false;
+            SelectTemplate();
         }
 
         private void mnAddComponentWizard2_Click(object sender, System.EventArgs e)

@@ -126,6 +126,9 @@
     <Compile Include="MakeExe.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MenuItemTemplate.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MenuItemTemplateFile.cs">
       <SubType>Component</SubType>
     </Compile>
