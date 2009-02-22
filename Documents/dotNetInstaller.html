@@ -1,45 +1,57 @@
-<html>
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	<head>
-		<title>dotNetInstaller - Setup Bootstrapper for .NET Application</title><LINK href="style.css" type="text/css" rel="stylesheet"></head>
-	<body bgColor="#ffffff">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>dotNetInstaller - Setup Bootstrapper for .NET Application</title>
+        <link href="style.css" type="text/css" rel="stylesheet" />
+    </head>
+	<body>
 		<h1>dotNetInstaller - Setup Bootstrapper for .NET Application</h1>
-		<ul>
-			<li>
-				<A href="dotNetInstaller_source.zip">Download source and binary - 1.14 Mb </A>
-			</li>
-		</ul>
-		<p><IMG alt="Sample Image - maximum width is 600 pixels" src="dotNetInstaller.JPG"></p>
+        <small>Lib Version: 1.2.2.0 BETA<br />
+         Doc Version: 1.5 DRAFT</small>
+        <br />
+        
+        <ul>
+            <li><a href="http://sourceforge.net/projects/dotnetinstaller">Download binary and source</a></li>
+            <li><a href="http://www.devage.com/">Official Web Site</a></li>
+        </ul>
+        
+		<p><img alt="Sample Image - maximum width is 600 pixels" src="dotNetInstaller.JPG" /></p>
 		<!-------------------------------     START      --------------------------->
 		
 		<ul>
 			<li><a href="#Introduction">Introduction</a></li>
 			<li><a href="#Samples">Samples</a></li>
 			<li><a href="#TheEditor">The editor: InstallerEditor.exe</a></li>
-			<li><a href="#Tutorials">Tutorials</a></li>
-			<ul>
-				<li><a href="#StandaloneSetup">How to create a Standalone Setup to install .NET Framework and your msi setup</a></li>
-				<li><a href="#WebSetup">How to create a Web Setup to install .NET Framework and your msi setup</a></li>
-			</ul>
+			<li><a href="#Tutorials">Tutorials</a>
+			    <ul>
+				    <li><a href="#StandaloneSetup">How to create a Standalone Setup to install .NET Framework and your msi setup</a></li>
+				    <li><a href="#WebSetup">How to create a Web Setup to install .NET Framework and your msi setup</a></li>
+			    </ul>
+			</li>
 			<li><a href="#Pathvariables">Path variables</a></li>
 			<li><a href="#CheckInstalled">Check if the component is already installed</a></li>
 			<li><a href="#CheckOS">Check the operating system version</a></li>
-			<li><a href="#MultilanguageFeatures">Multilanguage features</a></li>
-			<ul>
-				<li><a href="#UTF8AndUnicode">UTF-8 and Unicode</a></li>
-			</ul>
+			<li><a href="#MultilanguageFeatures">Multilanguage features</a>
+			    <ul>
+				    <li><a href="#UTF8AndUnicode">UTF-8 and Unicode</a></li>
+			    </ul>
+			</li>
 			<li><a href="#DeploydotNetInstaller">Deploy dotNetInstaller</a></li>
-			<li><a href="#XMLConfigurationFile">XML configuration file</a></li>
-			<ul>
-				<li><a href="#1102to1200ChangesXML">1.1.0.2 to 1.2.0.0 changes of XML file</a></li>
-			</ul>
-			<li><a href="#SystemRequirementsNotes">Software Requirements</a></li>
-			<ul>
-				<li><a href="#dotNET">Microsoft .NET Framework 1.1</a></li>
-				<li><a href="#MDAC">Microsoft Data Access Components 2.8</a></li>
-				<li><a href="#IE6">Microsoft Internet Explorer 6 Service Pack 1</a></li>
-				<li><a href="#JET4">Microsoft JET 4.0 Service Pack 8</a></li>
-				<li><a href="#WindowsInstaller20">Windows Installer 2.0</a></li>
-			</ul>
+			<li><a href="#XMLConfigurationFile">XML configuration file</a>
+			    <ul>
+				    <li><a href="#1102to1200ChangesXML">1.1.0.2 to 1.2.0.0 changes of XML file</a></li>
+			    </ul>
+			</li>
+			<li><a href="#SystemRequirementsNotes">Software Requirements</a>
+			    <ul>
+				    <li><a href="#dotNET">Microsoft .NET Framework 1.1</a></li>
+				    <li><a href="#MDAC">Microsoft Data Access Components 2.8</a></li>
+				    <li><a href="#IE6">Microsoft Internet Explorer 6 Service Pack 1</a></li>
+				    <li><a href="#JET4">Microsoft JET 4.0 Service Pack 8</a></li>
+				    <li><a href="#WindowsInstaller20">Windows Installer 2.0</a></li>
+			    </ul>
+			</li>
 			<li><a href="#Notes">Notes</a></li>
 			<li><a href="#FutureWorks">Summary of future works</a></li>
 			<li><a href="#History">History</a></li>
@@ -48,8 +60,8 @@
 		
 		<h2><a name="Introduction">Introduction</a></h2>
 		<p>This application doesn't replace tool like InstallShield, Wise or Visual Studio Setup and Deployment Project; my goal is to create an application to help the users to installing the correct prerequisites components. 
-		<br>Today applications often need to install several components to work properly: Windows Service Pack, Internet Explorer, MDAC, .NET Framework, ... 
-		<br>With this tool the developer can define the application prerequisites and install the correct version of these components in the correct order based on the user operating system type and language, allow the user to download these components from the web or install these components directly from his media (usually a CDROM).</p>
+		<br />Today applications often need to install several components to work properly: Windows Service Pack, Internet Explorer, MDAC, .NET Framework, ... 
+		<br />With this tool the developer can define the application prerequisites and install the correct version of these components in the correct order based on the user operating system type and language, allow the user to download these components from the web or install these components directly from his media (usually a CDROM).</p>
 		<p>This project is composed with these components:</p>
 		<ul>
 			<li>dotNetInstaller.exe + Source Code: Main bootstrapper application, written with Visual Studio 2003 C++ and MFC.</li>
@@ -70,6 +82,13 @@
 			for the latest version at: <a href="http://www.devage.com/" target="_blank">http://www.devage.com/</a>.
 			If you have any ideas or questions contact me at: webmaster@devage.com.</p>
 		<p>The installer, the editor and the configuration files are all UTF-8 compatible, the installer is compiled with UNICODE but you can use the Microsoft Layer for Unicode for using the installer with Win9x and ME operating system.</p>
+
+        <p>
+        For more informations, a discussion forums, bug tracker system or to download the latest release go to the SourceForge page: 
+        <a href="http://sourceforge.net/projects/dotnetinstaller">http://sourceforge.net/projects/dotnetinstaller</a> or to my home page 
+        <a href="http://www.devage.com/">http://www.devage.com/</a>
+        </p>
+	
 	
 		<h2><a name="Samples">Samples</a></h2>
 		<p>In the attached zip file you can find 2 samples: a standalone setup and a web setup. Both setups are configured to correctly install these components:</p>
@@ -97,7 +116,7 @@
 		<p>For other samples or informations look at the attached zip file.</p>
 
 		<h2><a name="TheEditor">The editor: InstallerEditor.exe</a></h2>
-		<img src="InstallerEditor.JPG">
+		<img src="InstallerEditor.JPG" alt="InstallerEditor image" />
 		<p>You can create two types of configuration files with the editor: </p>
 		<ul>
 			<li>Standalone Configuration: A configuration that runs the components setups from a specified path, usually a relative path of the dotNetInstaller.exe file. Select this configuration if you want to distribute your application with a CDROM.</li>
@@ -117,7 +136,7 @@
 		<p>For example if you want to launch a file ('My App.exe') in the same folder of 
 			dotNetInstaller.exe you can write in the command string: &quot;#APPPATH\My App.exe&quot;
 		</p>
-		<p>Remember that the order of the components that you see in the editor is the same order that the setup use to install the same components, so be carefull to insert the components in the correct order. In this release you cannot change the order of the components from the editor, if you need this feature you must change the XML manually.<br>
+		<p>Remember that the order of the components that you see in the editor is the same order that the setup use to install the same components, so be carefull to insert the components in the correct order. In this release you cannot change the order of the components from the editor, if you need this feature you must change the XML manually.<br />
 		You can use the "Add ->Component Wizard ..." menu when adding new components to automatically add the most important components like: Service Pack 6a for NT4, Internet Explorer 6, .NET 1.1, MDAC 2.8, ...</p>
 		
 		<h2><a name="Tutorials">Tutorials</a></h2>
@@ -156,10 +175,10 @@
 		</ul>
 		<p>I included a SupportFiles directory with the required structure and some 
 			readme.txt files where you can find a link to download the required components 
-			(usually from microsoft web site).<br>
+			(usually from microsoft web site).<br />
 			Consider also that these components are present as wizard in the InstallerEditor, so you can easily use these components in your setup.</p>
 		<p>This is the diagram of a standalone setup project:</p>
-		<img src="StandaloneSetup.jpg">
+		<img src="StandaloneSetup.jpg" alt="StandaloneSetup image" />
 			
 			
 		<h3><a name="WebSetup">How to create a Web Setup to install .NET Framework and your msi setup</a></h3>
@@ -209,9 +228,9 @@
 			<li>Create a zip file 'MyWebSetup.zip' (or a Self Extracting File) with the name 'MyWebSetup.zip' or '.exe' with the contents of the directory 'MyWebSetup' (contents:'unicows.dll', 'dotnetInstaller.exe', 'banner.bml' and 'configuration.xml').</li>
 			<li>Copy 'MyWebSetup.zip' under your 'http://www.mysite.com/MyRelease/'.</li>
 		</ol>
-		<p>Now the user must only download the 'MyWebSetup.zip' (< 400 Kb) and execute dotNetInstaller (or using a Self Extractor file you can automatically run it), this application automatically download and install the required components, in this example .NET Framework and one MSI package.<br>
+		<p>Now the user must only download the 'MyWebSetup.zip' (< 400 Kb) and execute dotNetInstaller (or using a Self Extractor file you can automatically run it), this application automatically download and install the required components, in this example .NET Framework and one MSI package.<br />
 		This is the diagram of a web setup project:</p>
-		<img src="WebSetup.jpg">
+		<img src="WebSetup.jpg" alt="WebSetup image" />
 		<p>I create a web setup to install this editor, you can download the bootstrapper from: <a href="http://www.devage.com/dotNetInstaller/EditorSetup/InstallerEditorWebSetup.exe">http://www.devage.com/dotNetInstaller/EditorSetup/InstallerEditorWebSetup.exe</a>.</p>
 		
 		<h2><a name="Pathvariables">Path variables</a></h2>
@@ -228,139 +247,138 @@
 			component is already installed, for example you can check if the .NET Framework 
 			1.1 is installed by reading this registry key SOFTWARE\Microsoft\NET Framework 
 			Setup\NDP\v1.1.4322\Install = 1.</p>
-		<p>For now there are two type of install check:
-			<ul>
-				<li>'check_registry_value' - Check for a specific registry value.</li>
-				<li>'check_file' - Check for a specific file with a specific version.</li>
-			</ul>
-			There are two type of comparison when check for a registry value or file version: 'match' 
+		<p>For now there are two type of install check:</p>
+		<ul>
+			<li>'check_registry_value' - Check for a specific registry value.</li>
+			<li>'check_file' - Check for a specific file with a specific version.</li>
+		</ul>
+		<p>There are two type of comparison when check for a registry value or file version: 'match' 
 			(check if the exact value is present) or 'version' (check if the version is greater or equal).</p>
 		<p>You can look at the example to see the check used with the most common components: .NET Framework, Internet Explorer, MDAC, JET and more.</p>
 		
 		<h2><a name="CheckOS">Check the operating system version</a></h2>
 		<p>This is the operating system table used to install a component only in a 
-			specific operating system version.
-			<table border="1" ID="Table43">
-				<tr>
-					<th>
-						Operating System Name</th>
-					<th>
-						Enum</th>
-					<th>
-						Numeric Identifier</th>
-				</tr>
-				<tr>
-					<td>Not Valid</td>
-					<td>winNotValid</td>
-					<td>0</td>
-				</tr>
-				<tr>
-					<td>Windows 95</td>
-					<td>win95</td>
-					<td>5</td>
-				</tr>
-				<tr>
-					<td>Windows 95 OSR2</td>
-					<td>win95osr2</td>
-					<td>10</td>
-				</tr>
-				<tr>
-					<td>Windows 98</td>
-					<td>win98</td>
-					<td>15</td>
-				</tr>
-				<tr>
-					<td>Windows 98 Second Edition</td>
-					<td>win98se</td>
-					<td>20</td>
-				</tr>
-				<tr>
-					<td>Windows Millennium</td>
-					<td>winME</td>
-					<td>25</td>
-				</tr>
-				<tr>
-					<td>Windows NT4</td>
-					<td>winNT4</td>
-					<td>30</td>
-				</tr>
-				<tr>
-					<td>Windows NT4 Service Pack 6</td>
-					<td>winNT4sp6</td>
-					<td>35</td>
-				</tr>
-				<tr>
-					<td>Windows NT4 Service Pack 6a</td>
-					<td>winNT4sp6a</td>
-					<td>40</td>
-				</tr>
-				<tr>
-					<td>Windows 2000</td>
-					<td>win2000</td>
-					<td>45</td>
-				</tr>
-				<tr>
-					<td>Windows 2000 Service Pack 1</td>
-					<td>win2000sp1</td>
-					<td>50</td>
-				</tr>
-				<tr>
-					<td>Windows 2000 Service Pack 2</td>
-					<td>win2000sp2</td>
-					<td>55</td>
-				</tr>
-				<tr>
-					<td>Windows 2000 Service Pack 3</td>
-					<td>win2000sp3</td>
-					<td>60</td>
-				</tr>
-				<tr>
-					<td>Windows 2000 Service Pack 4</td>
-					<td>win2000sp4</td>
-					<td>65</td>
-				</tr>
-				<tr>
-					<td>Windows XP</td>
-					<td>winXP</td>
-					<td>75</td>
-				</tr>
-				<tr>
-					<td>Windows XP Service Pack 1</td>
-					<td>winXPsp1</td>
-					<td>80</td>
-				</tr>
-				<tr>
-					<td>Windows XP Service Pack 2</td>
-					<td>winXPsp2</td>
-					<td>82</td>
-				</tr>
-				<tr>
-					<td>Windows Server 2003</td>
-					<td>winServer2003</td>
-					<td>90</td>
-				</tr>
-				<tr>
-					<td>Next ....</td>
-					<td>winLater</td>
-					<td>100</td>
-				</tr>
-			</table>
-		</p>
+			specific operating system version.</p>
+		<table border="1">
+			<tr>
+				<th>
+					Operating System Name</th>
+				<th>
+					Enum</th>
+				<th>
+					Numeric Identifier</th>
+			</tr>
+			<tr>
+				<td>Not Valid</td>
+				<td>winNotValid</td>
+				<td>0</td>
+			</tr>
+			<tr>
+				<td>Windows 95</td>
+				<td>win95</td>
+				<td>5</td>
+			</tr>
+			<tr>
+				<td>Windows 95 OSR2</td>
+				<td>win95osr2</td>
+				<td>10</td>
+			</tr>
+			<tr>
+				<td>Windows 98</td>
+				<td>win98</td>
+				<td>15</td>
+			</tr>
+			<tr>
+				<td>Windows 98 Second Edition</td>
+				<td>win98se</td>
+				<td>20</td>
+			</tr>
+			<tr>
+				<td>Windows Millennium</td>
+				<td>winME</td>
+				<td>25</td>
+			</tr>
+			<tr>
+				<td>Windows NT4</td>
+				<td>winNT4</td>
+				<td>30</td>
+			</tr>
+			<tr>
+				<td>Windows NT4 Service Pack 6</td>
+				<td>winNT4sp6</td>
+				<td>35</td>
+			</tr>
+			<tr>
+				<td>Windows NT4 Service Pack 6a</td>
+				<td>winNT4sp6a</td>
+				<td>40</td>
+			</tr>
+			<tr>
+				<td>Windows 2000</td>
+				<td>win2000</td>
+				<td>45</td>
+			</tr>
+			<tr>
+				<td>Windows 2000 Service Pack 1</td>
+				<td>win2000sp1</td>
+				<td>50</td>
+			</tr>
+			<tr>
+				<td>Windows 2000 Service Pack 2</td>
+				<td>win2000sp2</td>
+				<td>55</td>
+			</tr>
+			<tr>
+				<td>Windows 2000 Service Pack 3</td>
+				<td>win2000sp3</td>
+				<td>60</td>
+			</tr>
+			<tr>
+				<td>Windows 2000 Service Pack 4</td>
+				<td>win2000sp4</td>
+				<td>65</td>
+			</tr>
+			<tr>
+				<td>Windows XP</td>
+				<td>winXP</td>
+				<td>75</td>
+			</tr>
+			<tr>
+				<td>Windows XP Service Pack 1</td>
+				<td>winXPsp1</td>
+				<td>80</td>
+			</tr>
+			<tr>
+				<td>Windows XP Service Pack 2</td>
+				<td>winXPsp2</td>
+				<td>82</td>
+			</tr>
+			<tr>
+				<td>Windows Server 2003</td>
+				<td>winServer2003</td>
+				<td>90</td>
+			</tr>
+			<tr>
+				<td>Next ....</td>
+				<td>winLater</td>
+				<td>100</td>
+			</tr>
+		</table>
+		
 		<p>Same examples:</p>
 		<ul>
 			<li>
-				Install a component only in Windows XP (with no service pack check) : <CODE lang="text">
-					os_filter_greater</CODE>='74', <CODE lang="text">os_filter_smaller</CODE>='90'.
+				Install a component only in Windows XP (with no service pack check) : <code lang="text">
+					os_filter_greater</code>='74', <code lang="text">os_filter_smaller</code>='90'.</li>
 			<li>
-				Install a component only in Windows 2000 or later : <CODE lang="text">os_filter_greater</CODE>='44',
-				<CODE lang="text">os_filter_smaller</CODE>='' .
+				Install a component only in Windows 2000 or later : <code lang="text">os_filter_greater</code>='44',
+				<code lang="text">os_filter_smaller</code>='' .</li>
 			<li>
-				Install a component only in Windows 98 (not in Windows 98 SE): <CODE lang="text">os_filter_greater</CODE>='14',
-				<CODE lang="text">os_filter_smaller</CODE>='16' .
+				Install a component only in Windows 98 (not in Windows 98 SE): <code lang="text">os_filter_greater</code>='14',
+				<code lang="text">os_filter_smaller</code>='16' .</li>
 			<li>
-				Install a component always: <CODE lang="text">os_filter_greater</CODE>='', <CODE lang="text">
-					os_filter_smaller</CODE>='' .
-			</li>
+				Install a component always: <code lang="text">os_filter_greater</code>='', <code lang="text">
+					os_filter_smaller</code>='' .</li>
 		</ul>
 		<p>Usually is best to use an install check to see if the component is already 
 			installed, but for some components is necessary to check the operating system 
@@ -368,38 +386,40 @@
 
 		<h2><a name="MultilanguageFeatures">Multilanguage features</a></h2>
 		<p>dotNetInstaller reads all the captions and messages from the configuration file; so to create your custom language you can easily edit the configuration file using your language.</p>
-		<p>With InstallerEditor you can easily create custom languages using template files. For now there are 3 default files: english_template.xml, french_template.xml and italian_template.xml. The editor can be configured to use one of these files so, when you create new items in the editor, default values are readed from the template selected.<br>
+		<p>With InstallerEditor you can easily create custom languages using template files. For now there are 3 default files: english_template.xml, french_template.xml and italian_template.xml. The editor can be configured to use one of these files so, when you create new items in the editor, default values are readed from the template selected.<br />
 		To configure the list of templates available you can use the "Tools->Customize Templates" menu. To select a template you can use the "Tools->Template for new Item" menu.</p>
 		<p>Of course you can create your custom template files following the xml structure of one of the existing files.</p>
 		
 		<h3><a name="UTF8AndUnicode">UTF-8 and Unicode</a></h3>
-		<p>To full support non english language the configuration file uses UTF-8 encoding.<br>
+		<p>To full support non english language the configuration file uses UTF-8 encoding.<br />
 		To read and use correclty this encoding I have compiled dotNetInstaller with UNICODE. The editor is already full compatible with unicode thanks to .NET that use always unicode strings. Remember that unicode is not supported on Windows 95, 98 and ME; so if you use one of these operating system you must copy Microsoft Layer for Unicode (<b>unicows.dll</b>) in the same path of dotNetInstaller.exe (see also Deploy dotNetInstaller section).</p>
 		<p>Microsoft Link: <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/mslu/winprog/microsoft_layer_for_unicode_on_windows_95_98_me_systems.asp">Microsoft Layer for Unicode on Windows 95/98/Me Systems</a></p>
 		
 		<h2><a name="DeploydotNetInstaller">Deploy dotNetInstaller</a></h2>
 		<p>You can deploy dotNetInstaller in 2 ways, these are the files that you must inlcude:</p>
 		<ul>
-			<li>Using directly dotNetInstaller.exe:</li>
-			<ul>
-				<li>dotNetInstaller.exe - Main bootstrapper executable</li>
-				<li><b>configuration.xml</b> - Configuration file</li>
-				<li>unicows.dll - Microsoft Layer for Unicode (this file is required only on Windows 95, 98 and ME).</li>
-			</ul>
-			<li>Create a custom executable using InstallerEditor (with the "File->Create Exe" method):</li>
-			<ul>
-				<li><b>dotNetInstaller.exe</b> - Main bootstrapper executable edited with InstallerEditor.</li>
-				<li>unicows.dll - Microsoft Layer for Unicode (this file is required only on Windows 95, 98 and ME).</li>
-			</ul>
+			<li>Using directly dotNetInstaller.exe:
+			    <ul>
+				    <li>dotNetInstaller.exe - Main bootstrapper executable</li>
+				    <li><b>configuration.xml</b> - Configuration file</li>
+				    <li>unicows.dll - Microsoft Layer for Unicode (this file is required only on Windows 95, 98 and ME).</li>
+			    </ul>
+			</li>
+			<li>Create a custom executable using InstallerEditor (with the "File->Create Exe" method):
+			    <ul>
+				    <li><b>dotNetInstaller.exe</b> - Main bootstrapper executable edited with InstallerEditor.</li>
+				    <li>unicows.dll - Microsoft Layer for Unicode (this file is required only on Windows 95, 98 and ME).</li>
+			    </ul>
+			</li>
 		</ul>
 		<p><b>IMPORTANT NOTE</b>: On Windows 95, 98 and ME operating system you must deploy unicows.dll in the same path of dotNetInstaller.exe (or of the executable generated by the editor).</p>
 			
 		<h2><a name="XMLConfigurationFile">XML configuration file</a></h2>
-		<p>Is recommended to use the editor InstallerEditor to create or modify your configuration files or I suggest to use a normal text editor or xml editor compatible with UTF-8. The configuration file must be written using UTF-8 encoding.<br>
+		<p>Is recommended to use the editor InstallerEditor to create or modify your configuration files or I suggest to use a normal text editor or xml editor compatible with UTF-8. The configuration file must be written using UTF-8 encoding.<br />
 		NOTE:If you want to insert the &quot; char in the XML manually you must write &amp;quot; .</p>
 		
 <!-- START table for XML configuration help -->
-<table cellpadding="0" cellspacing="0" border="1" ID="Table1">
+<table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">configurations</th>
@@ -410,7 +430,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table2">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
               </tbody>
             </table>
@@ -419,7 +439,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table3">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
                 <tr>
                   <td>
@@ -432,8 +452,8 @@
         </tr>
       </tbody>
     </table>
-    <br>
-    <table cellpadding="0" cellspacing="0" border="1" ID="Table4">
+    <br />
+    <table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">configuration (type='install')</th>
@@ -444,7 +464,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table5">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
                 <tr>
                   <td>
@@ -585,7 +605,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table6">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
                 <tr>
                   <td>
@@ -598,8 +618,8 @@
         </tr>
       </tbody>
     </table>
-    <br>
-    <table cellpadding="0" cellspacing="0" border="1" ID="Table7">
+    <br />
+    <table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">configuration (type='reference')</th>
@@ -610,7 +630,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table8">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
                 <tr>
                   <td>
@@ -631,7 +651,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table9">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
                 <tr>
                   <td>
@@ -649,8 +669,8 @@
         </tr>
       </tbody>
     </table>
-    <br>
-    <table cellpadding="0" cellspacing="0" border="1" ID="Table10">
+    <br />
+    <table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">configfile</th>
@@ -661,7 +681,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table11">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
                 <tr>
                   <td>
@@ -676,7 +696,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table12">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
               </tbody>
             </table>
@@ -684,8 +704,8 @@
         </tr>
       </tbody>
     </table>
-    <br>
-    <table cellpadding="0" cellspacing="0" border="1" ID="Table13">
+    <br />
+    <table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">components</th>
@@ -696,7 +716,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table14">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
               </tbody>
             </table>
@@ -705,7 +725,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table15">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
                 <tr>
                   <td>
@@ -718,8 +738,8 @@
         </tr>
       </tbody>
     </table>
-    <br>
-    <table cellpadding="0" cellspacing="0" border="1" ID="Table16">
+    <br />
+    <table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">component (see also specific help based on the 'type' attribute)</th>
@@ -730,7 +750,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table17">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
                 <tr>
                   <td>
@@ -787,7 +807,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table18">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
                 <tr>
                   <td>
@@ -805,8 +825,8 @@
         </tr>
       </tbody>
     </table>
-    <br>
-    <table cellpadding="0" cellspacing="0" border="1" ID="Table19">
+    <br />
+    <table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">component (type='cmd')</th>
@@ -817,7 +837,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table20">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
                 <tr>
                   <td>
@@ -844,7 +864,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table21">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
               </tbody>
             </table>
@@ -852,8 +872,8 @@
         </tr>
       </tbody>
     </table>
-    <br>
-    <table cellpadding="0" cellspacing="0" border="1" ID="Table22">
+    <br />
+    <table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">component (type='msi')</th>
@@ -864,7 +884,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table23">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
                 <tr>
                   <td>
@@ -897,7 +917,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table24">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
               </tbody>
             </table>
@@ -905,8 +925,8 @@
         </tr>
       </tbody>
     </table>
-    <br>
-    <table cellpadding="0" cellspacing="0" border="1" ID="Table25">
+    <br />
+    <table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">component (type='openfile')</th>
@@ -917,7 +937,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table26">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
                 <tr>
                   <td>
@@ -944,7 +964,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table27">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
               </tbody>
             </table>
@@ -952,8 +972,8 @@
         </tr>
       </tbody>
     </table>
-    <br>
-    <table cellpadding="0" cellspacing="0" border="1" ID="Table28">
+    <br />
+    <table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">downloaddialog</th>
@@ -964,7 +984,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table29">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
                 <tr>
                   <td>
@@ -1009,7 +1029,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table30">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
                 <tr>
                   <td>
@@ -1022,8 +1042,8 @@
         </tr>
       </tbody>
     </table>
-    <br>
-    <table cellpadding="0" cellspacing="0" border="1" ID="Table31">
+    <br />
+    <table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">downloads</th>
@@ -1034,7 +1054,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table32">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
               </tbody>
             </table>
@@ -1043,7 +1063,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table33">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
                 <tr>
                   <td>
@@ -1056,8 +1076,8 @@
         </tr>
       </tbody>
     </table>
-    <br>
-    <table cellpadding="0" cellspacing="0" border="1" ID="Table34">
+    <br />
+    <table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">download</th>
@@ -1068,7 +1088,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table35">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
                 <tr>
                   <td>
@@ -1101,7 +1121,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table36">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
               </tbody>
             </table>
@@ -1109,8 +1129,8 @@
         </tr>
       </tbody>
     </table>
-    <br>
-    <table cellpadding="0" cellspacing="0" border="1" ID="Table37">
+    <br />
+    <table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">installedcheck (type='check_file')</th>
@@ -1121,7 +1141,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table38">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
                 <tr>
                   <td>
@@ -1154,7 +1174,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table39">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
               </tbody>
             </table>
@@ -1162,8 +1182,8 @@
         </tr>
       </tbody>
     </table>
-    <br>
-    <table cellpadding="0" cellspacing="0" border="1" ID="Table40">
+    <br />
+    <table cellpadding="0" cellspacing="0" border="1">
       <tbody>
         <tr>
           <th bgcolor="#ccccff" colspan="2">installedcheck (type='check_registry_value')</th>
@@ -1174,7 +1194,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="1" ID="Table41">
+            <table cellpadding="0" cellspacing="0" border="1">
               <tbody>
                 <tr>
                   <td>
@@ -1219,7 +1239,7 @@
         <tr>
           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
           <td>
-            <table cellpadding="0" cellspacing="0" border="0" ID="Table42">
+            <table cellpadding="0" cellspacing="0" border="0">
               <tbody>
               </tbody>
             </table>
@@ -1230,7 +1250,7 @@
 <!-- END table for XML configuration help -->
 		
 		<h3><a name="1102to1200ChangesXML">1.1.0.2 to 1.2.0.0 changes of XML file</a></h3>
-		<p>If you already have some files compatible with dotNetInstaller 1.1.0.2 you can open these files with the editor, the editor automatically removes the old attributes and adds the new attributes.<br>
+		<p>If you already have some files compatible with dotNetInstaller 1.1.0.2 you can open these files with the editor, the editor automatically removes the old attributes and adds the new attributes.<br />
 		Removed attributes:</p>
 		<ul>
 			<li>configurations\configuration\components\component\installmessage</li>
@@ -1239,7 +1259,7 @@
 			<li>configurations\configuration\dialog_install_next</li>
 			<li>configurations\configuration\dialog_install_skip</li>
 		</ul>
-		New attributes:
+		<p>New attributes:</p>
 		<ul>
 			<li>configurations\configuration\advanced_caption</li>
 			<li>configurations\configuration\dialog_selector_caption</li>
@@ -1253,7 +1273,7 @@
 		</ul>
 		
 		<h2><a name="SystemRequirementsNotes">Software Requirements</a></h2>
-		<p>dotNetInstaller is compatible with Windows 98, Windows 98 Second Edition, Windows ME, Windows NT4, Windows 2000, Windows XP, Windows Server 2003.<br>
+		<p>dotNetInstaller is compatible with Windows 98, Windows 98 Second Edition, Windows ME, Windows NT4, Windows 2000, Windows XP, Windows Server 2003.<br />
 		Some other applications, like .NET Framework 1.1, require some system components. Here you can find some informations about common components requirements.</p>
 		
 		<p>Consider that these components are available also on the <a href="http://windowsupdate.microsoft.com/">Windows Update web site</a>.</p>
@@ -1271,7 +1291,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Windows 98 First Edition<br>
+				<td>Windows 98 First Edition<br />
 						Windows 98 Second Edition</td>
 				<td>
 					Microsoft Internet Explorer 5.01 or later
@@ -1280,13 +1300,13 @@
 			<tr>
 				<td>Windows NT 4.0</td>
 				<td>
-					Service Pack 6a<br>
+					Service Pack 6a<br />
 					Microsoft Internet Explorer 5.01 or later
 				</td>
 			</tr>
 			<tr>
-				<td>Windows ME<br>
-						Windows 2000<br>
+				<td>Windows ME<br />
+						Windows 2000<br />
 						Windows XP</td>
 				<td>
 					-
@@ -1302,14 +1322,14 @@
 		
 		<p><i>.NET Framework automatically installs Windows Installer 2. Microsoft Data Access Components 2.6 is required for data scenarios.</i></p>
 			
-		<p>Microsoft links:<br>
-		<a href="http://msdn.microsoft.com/netframework/technologyinfo/howtoget/default.aspx">Download</a><br>
-		<a href="http://msdn.microsoft.com/netframework/technologyinfo/sysreqs/default.aspx">System Requirements</a><br>
+		<p>Microsoft links:<br />
+		<a href="http://msdn.microsoft.com/netframework/technologyinfo/howtoget/default.aspx">Download</a><br />
+		<a href="http://msdn.microsoft.com/netframework/technologyinfo/sysreqs/default.aspx">System Requirements</a><br />
 		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyId=04DBAF2E-61ED-43F4-8D2A-CCB2BAB7B8EB&displaylang=en">Language Packs</a>
 		</p>
 		
 		<h3><a name="MDAC">Microsoft Data Access Components 2.7 Sp1 Refresh</a></h3>
-		<table border="1" cellpadding="0" cellspacing="0" ID="Table47">
+		<table border="1" cellpadding="0" cellspacing="0">
 			<tr>
 				<td><strong>OPERATING SYSTEM</strong></td>
 				<td><strong>REQUIREMENTS</strong></td>
@@ -1333,8 +1353,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Windows 98 Second Edition<br>
-					Windows ME<br>
+				<td>Windows 98 Second Edition<br />
+					Windows ME<br />
 					Windows 2000</td>
 				<td>
 					-
@@ -1354,9 +1374,9 @@
 			</tr>			
 		</table>
 		
-		<p>Microsoft links:<br>
-		<a href="http://msdn.microsoft.com/data/downloads/updates/default.aspx">Data Access Downloads</a><br>
-		<a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;271908">INFO: MDAC version 2.6 and later do not contain Jet or Desktop ODBC drivers</a><br>
+		<p>Microsoft links:<br />
+		<a href="http://msdn.microsoft.com/data/downloads/updates/default.aspx">Data Access Downloads</a><br />
+		<a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;271908">INFO: MDAC version 2.6 and later do not contain Jet or Desktop ODBC drivers</a><br />
 		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=9ad000f2-cae7-493d-b0f3-ae36c570ade8&displaylang=en">Download MDAC 2.7 Sp1 Refresh</a>
 		</p>
 		
@@ -1385,9 +1405,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Windows 98 Second Edition<br>
-					Windows ME<br>
-					Windows 2000<br>
+				<td>Windows 98 Second Edition<br />
+					Windows ME<br />
+					Windows 2000<br />
 					Windows XP</td>
 				<td>
 					-
@@ -1401,14 +1421,14 @@
 			</tr>
 		</table>
 		
-		<p>Microsoft links:<br>
-		<a href="http://msdn.microsoft.com/data/downloads/updates/default.aspx">Data Access Downloads</a><br>
-		<a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;271908">INFO: MDAC version 2.6 and later do not contain Jet or Desktop ODBC drivers</a><br>
+		<p>Microsoft links:<br />
+		<a href="http://msdn.microsoft.com/data/downloads/updates/default.aspx">Data Access Downloads</a><br />
+		<a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;271908">INFO: MDAC version 2.6 and later do not contain Jet or Desktop ODBC drivers</a><br />
 		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=6c050fe3-c795-4b7d-b037-185d0506396c&displaylang=en">Download MDAC 2.8</a>
 		</p>
 		
 		<h3><a name="IE6">Microsoft Internet Explorer 6 Service Pack 1</a></h3>
-		<table border="1" cellpadding="0" cellspacing="0" ID="Table44">
+		<table border="1" cellpadding="0" cellspacing="0">
 			<tr>
 				<td><strong>OPERATING SYSTEM</strong></td>
 				<td><strong>REQUIREMENTS</strong></td>
@@ -1421,10 +1441,10 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Windows 98 First Edition<br>
-						Windows 98 Second Edition<br>
-						Windows ME<br>
-						Windows 2000<br>
+				<td>Windows 98 First Edition<br />
+						Windows 98 Second Edition<br />
+						Windows ME<br />
+						Windows 2000<br />
 						Windows XP</td>
 				<td>
 					-
@@ -1437,7 +1457,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Windows XP Sp1<br>
+				<td>Windows XP Sp1<br />
 					Windows Server 2003</td>
 				<td>
 					Already Installed.
@@ -1445,27 +1465,27 @@
 			</tr>
 		</table>
 		
-		<p>Microsoft links:<br>
-		<a href="http://www.microsoft.com/windows/ie/downloads/critical/ie6sp1/default.mspx">Download</a><br>
-		<a href="http://www.microsoft.com/windows/ie/evaluation/sysreqs/default.mspx">System Requirements</a><br>
+		<p>Microsoft links:<br />
+		<a href="http://www.microsoft.com/windows/ie/downloads/critical/ie6sp1/default.mspx">Download</a><br />
+		<a href="http://www.microsoft.com/windows/ie/evaluation/sysreqs/default.mspx">System Requirements</a><br />
 		<a href="http://support.microsoft.com/default.aspx?scid=kb;en-us;164539">Internet Explorer Versions</a>
 		</p>
 		
 
 		<h3><a name="JET4">Microsoft JET 4.0 Service Pack 8</a></h3>
-		<table border="1" cellpadding="0" cellspacing="0" ID="Table45">
+		<table border="1" cellpadding="0" cellspacing="0">
 			<tr>
 				<td><strong>OPERATING SYSTEM</strong></td>
 				<td><strong>REQUIREMENTS</strong></td>
 			</tr>
 			<tr>
-				<td>Windows 95<br>
-					Windows 98 First Edition<br>
-					Windows 98 Second Edition<br>
-					Windows ME<br>
-					Windows NT 4<br>
-					Windows XP<br>
-					Windows Server 2003<br></td>
+				<td>Windows 95<br />
+					Windows 98 First Edition<br />
+					Windows 98 Second Edition<br />
+					Windows ME<br />
+					Windows NT 4<br />
+					Windows XP<br />
+					Windows Server 2003<br /></td>
 				<td>
 					-
 				</td>
@@ -1478,33 +1498,33 @@
 
 		<p><i>Consider that for Windows 2000, XP and Server 2003 you must use the right language of the JET update, for example to install JET in a Italian Windows XP you must install the Italian JET update.</i></p>
 
-		<p>Microsoft links:<br>
-		<a href="http://support.microsoft.com/?kbid=829558">Information about Jet 4.0 Service Pack 8</a><br>
-		<a href="http://msdn.microsoft.com/data/downloads/updates/default.aspx">Data Access Downloads</a><br>
-		<a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;271908">INFO: MDAC version 2.6 and later do not contain Jet or Desktop ODBC drivers</a><br>
+		<p>Microsoft links:<br />
+		<a href="http://support.microsoft.com/?kbid=829558">Information about Jet 4.0 Service Pack 8</a><br />
+		<a href="http://msdn.microsoft.com/data/downloads/updates/default.aspx">Data Access Downloads</a><br />
+		<a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;271908">INFO: MDAC version 2.6 and later do not contain Jet or Desktop ODBC drivers</a><br />
 		<a href="http://support.microsoft.com/default.aspx?scid=kb;en-us;239114">How to obtain the latest service pack for the Microsoft Jet 4.0 Database Engine</a>
 		</p>
 
 		<h3><a name="WindowsInstaller20">Windows Installer 2.0</a></h3>
-		<table border="1" cellpadding="0" cellspacing="0" ID="Table46">
+		<table border="1" cellpadding="0" cellspacing="0">
 			<tr>
 				<td><strong>OPERATING SYSTEM</strong></td>
 				<td><strong>REQUIREMENTS</strong></td>
 			</tr>
 			<tr>
-				<td>Windows 95<br>
-					Windows 98 First Edition<br>
-					Windows 98 Second Edition<br>
-					Windows ME<br>
-					Windows NT 4<br>
+				<td>Windows 95<br />
+					Windows 98 First Edition<br />
+					Windows 98 Second Edition<br />
+					Windows ME<br />
+					Windows NT 4<br />
 					Windows 2000</td>
 				<td>
 					-
 				</td>
 			</tr>
 			<tr>
-				<td>Windows XP<br>
-					Windows Server 2003<br></td>
+				<td>Windows XP<br />
+					Windows Server 2003<br /></td>
 				<td>
 					Already Installed.
 				</td>
@@ -1513,18 +1533,18 @@
 		
 		<p><i>.NET Framework automatically installs Windows Installer 2.</i></p>
 
-		<p>Microsoft links:<br>
-		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=4b6140f9-2d36-4977-8fa1-6f8a0f5dca8f&DisplayLang=en">Windows Installer 2.0 Redistributable for Windows NT 4.0 and 2000 Download</a><br>
+		<p>Microsoft links:<br />
+		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=4b6140f9-2d36-4977-8fa1-6f8a0f5dca8f&DisplayLang=en">Windows Installer 2.0 Redistributable for Windows NT 4.0 and 2000 Download</a><br />
 		<a href="http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=CEBBACD8-C094-4255-B702-DE3BB768148F">Windows Installer 2.0 Redistributable for Windows 95, 98, and Me Download</a>
 		</p>
 		
 		<h2><a name="Notes">Notes</a></h2>
-		<UL>
+		<ul>
 			<li>
 			If a component needs to restart the system the application automatically add a 
-			key in the HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run to reload the application at the next startup.
+			key in the HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run to reload the application at the next startup.</li>
 			<li>
-			You must run this application with Administrator privilege.
+			You must run this application with Administrator privilege.</li>
 			<li>
 			I have tested this setup with Windows 98, 98 SE, Millennium, 2000, XP.</li>
 			<li>Not yet tested with Windows NT 4 and with Terminal Server. Probably for NT4 you need at least Internet Explorer 4 or you can try to distribuite also URLMon.dll and shwapi.dll with dotNetInstaller.exe.</li>
@@ -1539,7 +1559,7 @@
 			<li>To change the resources of the exe file I use <code>BeginUpdateResourceW</code>, <code>UpdateResourceW</code> and <code>EndUpdateResourceW</code> API. These API are available only on Windows NT, 2000 and XP for this reason the editor cannot be used on Windows 98 (the bootstrapper is supported also on Windows 98 ). </li>
 			<li>You can use the "/log" command line parameter when executing dotNetInstaller.exe. This parameter create a log file during installation with some informations and errors usefull for debugging. You can find this file in the user temp directory with the name dotNetInstallerLog.txt (usually: "C:\Documents and Settings\YOUR_NAME\Local Settings\Temp\dotNetInstallerLog.txt")</li>
 			<li>Remember when installing service pack or other system update (like Jet for Win2000 and XP) you must use the same language of the destination operating system.</li>
-		</UL>
+		</ul>
 		<h2><a name="FutureWorks">Summary of future works</a></h2>
 		<ul>
 			<li>Silent mode support.</li>
@@ -1607,42 +1627,38 @@
 		<ul>
 			<li>Bug fixed on MDAC and JET components configuration file (registry check to REG_SZ and language support for JET). </li>
 		</ul>
-		<H3>1.0.7.0 (27 September 2003)</H3>
-		<UL>
+		<h3>1.0.7.0 (27 September 2003)</h3>
+		<ul>
 			<li>
 				First public release.
 			</li>
-		</UL>
-		<h2><a name="License">License</a></h2>
-		<P>dotNetInstaller - C++ Setup bootstrapper for .NET</P>
-		<P>Copyright (c) 2003, Davide Icardi</P>
-		<P>All rights reserved.</P>
-		<P>Redistribution and use in source and binary forms, with or without modification, 
-			are permitted provided that the following conditions are met:</P>
-		<UL>
-			<LI>
-			Redistributions of source code must retain the above copyright notice, this 
-			list of conditions and the following disclaimer.
-			<LI>
-			Redistributions in binary form must reproduce the above copyright notice, this 
-			list of conditions and the following disclaimer in the documentation and/or 
-			other materials provided with the distribution.
-			<LI>
-				Neither the name of the ORGANIZATION nor the names of its contributors may be 
-				used to endorse or promote products derived from this software without specific 
-				prior written permission.
-			</LI>
-		</UL>
-		<P>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
-			ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-			WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-			DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR 
-			ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
-			(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
-			LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
-			ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-			(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
-			SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</P>
+		</ul>
+		
+        <h2><a id="License">License</a></h2>
+        <p>
+            dotNetInstaller LICENSE (MIT style)<br />
+            <br />
+            Copyright (c) 2006 www.devage.com, Davide Icardi<br />
+            <br />
+            Permission is hereby granted, free of charge, to any person obtaining 
+            a copy of this software and associated documentation files (the "Software"),
+            to deal in the Software without restriction, including without limitation 
+            the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+            and/or sell copies of the Software, and to permit persons to whom the 
+            Software is furnished to do so, subject to the following conditions:<br />
+            <br />
+            The above copyright notice and this permission notice shall be included 
+            in all copies or substantial portions of the Software.<br />
+            <br />
+            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+            EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
+            OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+            IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
+            DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
+            ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+            DEALINGS IN THE SOFTWARE.<br />
+        </p>
+        
 		<!-------------------------------     END      --------------------------->
 	</body>
 </html>
