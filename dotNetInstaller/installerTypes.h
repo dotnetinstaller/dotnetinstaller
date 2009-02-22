@@ -340,6 +340,8 @@ struct component
 	bool mustreboot;
 	//Jason Biegel - 2008-04-28: added filter for processor architecture
 	CString processor_architecture_filter;
+    //cancelled by user
+    bool cancelled;
 
 	//classi per gestire la verifica se il componente è installato o no
 	std::vector<installedcheck*> installedchecks;
@@ -375,6 +377,7 @@ struct component
 	virtual void Init(CDialog * pDialog = NULL)
     {
         m_pDialog = pDialog;
+        cancelled = false;
     }
 
 	bool IsInstalled()
@@ -528,8 +531,9 @@ struct openfile_component : public component
 
 struct thread_component : public component
 {
-    HANDLE m_hThread;
+    CWinThread * m_pThread;
 	DWORD m_ExitCode;
+    CString m_Error;
 
 	virtual bool FileExists()
 	{
@@ -543,26 +547,29 @@ struct thread_component : public component
 
     virtual bool IsExecuting()
 	{
-        return (WAIT_TIMEOUT == WaitForSingleObject(m_hThread, 0));
+        if (m_pThread == NULL)
+            return false;
+
+        return (WAIT_TIMEOUT == WaitForSingleObject(m_pThread->m_hThread, 0));
 	}
+
+    virtual UINT ExecOnThread() = 0;
 
 	static UINT ExecuteThread(LPVOID pParam)
     {
 		thread_component * pComponent = (thread_component *) pParam;
 		try
 		{
-			pComponent->m_ExitCode = pComponent->Exec() ? 0 : -1;
+			pComponent->m_ExitCode = pComponent->ExecOnThread();
 		}
 		catch(TCHAR * error)
 		{
-			ApplicationLog.Write(error);
-			DniSilentMessageBox(error, MB_OK | MB_ICONSTOP);
+            pComponent->m_Error = error;
 			pComponent->m_ExitCode = -1;
 		}
 		catch(...)
 		{
-			ApplicationLog.Write( TEXT("Failed to execute threaded component"));
-			DniSilentMessageBox(TEXT("Failed to execute threaded component"), MB_OK | MB_ICONSTOP);
+            pComponent->m_Error = TEXT("Failed to execute threaded component");
 			pComponent->m_ExitCode = -1;
 		}
 		return pComponent->m_ExitCode;
@@ -572,10 +579,24 @@ struct thread_component : public component
 	{
 		m_ExitCode = 0;
         component::Init(pDialog);
-        CWinThread * pThread = AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED);
-        m_hThread = pThread->m_hThread;
-        pThread->ResumeThread();
+        m_pThread = AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED);
+        m_pThread->ResumeThread();
 	}
+
+    bool Exec()
+    {
+        if (m_pThread != NULL)
+        {
+            WaitForSingleObject(m_pThread->m_hThread, INFINITE);
+
+            if (m_Error.GetLength())
+            {
+                throw _wcsdup((LPCWSTR) m_Error);
+            }
+        }
+
+        return m_ExitCode == 0 ? true : false;
+    }
 };
 
 struct installerSetting
@@ -623,6 +644,7 @@ struct installerSetting
     /* Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction */
     CString cab_dialog_message;
     CString cab_dialog_caption;
+    CString cab_cancelled_message;
     CString cab_path;
     bool cab_path_autodelete;
 

@@ -126,6 +126,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
     /* Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction */
     p_Setting.cab_dialog_caption = p_Node->AttributeT("cab_dialog_caption").data();
     p_Setting.cab_dialog_message = p_Node->AttributeT("cab_dialog_message").data();
+    p_Setting.cab_cancelled_message = p_Node->AttributeT("cab_cancelled_message").data();
 
 	ApplicationLog.Write( TEXT("End reading configuration attributes") );
 

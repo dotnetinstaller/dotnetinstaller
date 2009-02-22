@@ -6,133 +6,26 @@
 #include "Tools/Guid.h"
 #include "Tools/Cab/ExtractT.hpp"
 
+struct ExtractCABComponent;
+
 class ExtractCABProcessor : public Cabinet::CExtractT<ExtractCABProcessor> 
 {
 private:
-    CDialog * m_StatusDialog;
+    ExtractCABComponent * m_pComponent;
 public:
-    ExtractCABProcessor(CDialog * statusDialog)
-        : m_StatusDialog(statusDialog)
-    {
-
-    }
-
-	BOOL OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param)
-	{
-        if (m_StatusDialog != NULL)
-        {
-            m_StatusDialog->PostMessage(WM_USER_SETSTATUSINSTALL, 
-                (WPARAM) InstallStatusParam::CreateStatus(k_FI.u16_File, k_FI.s32_Size / 1024, L"Kb"));
-        }
-
-        return Cabinet::CExtractT<ExtractCABProcessor>::OnBeforeCopyFile(k_FI, p_Param);
-	}
+    ExtractCABProcessor(ExtractCABComponent * pComponent);
+	BOOL OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param);
 };
 
 struct ExtractCABComponent : public thread_component
 {
+    friend class ExtractCABProcessor;
 public:
-
-	bool Exec()
-	{
-        ExtractCab(AfxGetApp()->m_hInstance, m_pDialog);
-        return true;
-	};
-
-    ExtractCABComponent(installerSetting& settings)
-        : m_Settings(settings)
-    {
-
-    }
-
+    ExtractCABComponent(installerSetting& settings);
 private:
-
     installerSetting& m_Settings;
-
-    void ExtractCab(HMODULE p_Module, CDialog * dlg)
-    {
-	    HRSRC l_res = FindResource(p_Module, TEXT("RES_CAB"), TEXT("CUSTOM"));
-	    if (l_res == NULL)
-		    return;
-
-	    ApplicationLog.Write( TEXT("Extracting setup.cab ...") );
-
-	    HGLOBAL l_hRes = LoadResource(p_Module, l_res);
-	    if (l_hRes == NULL)
-        {
-		    throw TEXT("Failed to load resource RES_CAB.");
-        }
-
-	    LPVOID l_buffer = LockResource(l_hRes);
-	    if (l_buffer == NULL)
-        {
-            CloseHandle(l_hRes);
-		    throw TEXT("Failed to lock resource RES_CAB.");
-        }
-
-	    DWORD l_size = SizeofResource(p_Module, l_res);
-
-        CString cabpath = (m_Settings.cab_path.GetLength() > 0) ? m_Settings.cab_path : DVLib::GetSessionTempPath();
-        cabpath = m_Settings.ValidatePath(cabpath);
-		ApplicationLog.Write( TEXT("cabpath is: "), cabpath );
-
-        if (! DVLib::FileExistsCustom(cabpath))
-        {
-		    if (! ::CreateDirectory(cabpath, NULL))
-            {
-                UnlockResource(l_buffer);
-                CloseHandle(l_hRes);
-                throw TEXT("Failed to create CABPATH directory");
-        }
-        }
-
-        CString tempFile = DVLib::PathCombineCustom(cabpath, TEXT("setup.cab") );
-
-		ApplicationLog.Write( TEXT("tempFile is: "), tempFile );
-	    HANDLE l_hFile = CreateFile(tempFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-	    if (l_hFile == INVALID_HANDLE_VALUE)
-        {
-		    throw TEXT("Failed to create temp file");
-        }
-
-        long l_current = 0;
-        long l_chunk = l_size / 10;
-        if (l_chunk == 0) l_chunk = l_size;
-        while (l_current < l_size)
-        {
-        DWORD dwWritten = 0;
-            l_chunk = min(l_chunk, l_size - l_current);
-            if (! WriteFile(l_hFile, (char *) l_buffer + l_current, l_chunk, & dwWritten, NULL))
-            {
-                CloseHandle(l_hFile);
-                UnlockResource(l_buffer);
-                CloseHandle(l_hRes);
-            throw TEXT("Failed to write setup.cab");
-            }
-
-            l_current += l_chunk;
-
-            if (dlg != NULL)
-            {
-                dlg->PostMessage(WM_USER_SETSTATUSINSTALL, 
-                    (WPARAM) InstallStatusParam::CreateStatus(L"Setup.cab", l_current / (l_size / 100), L"%"));
-            }
-        }
-
-        CloseHandle(l_hFile);
-        UnlockResource(l_buffer);
-
-        ExtractCABProcessor i_Extract(dlg);
-        if (!i_Extract.CreateFDIContext()) 
-        {
-            throw TEXT("Failed to initialize CAB context");
-        }
-
-        if (!i_Extract.ExtractFileW(tempFile.GetBuffer(), cabpath.GetBuffer()))
-        {
-            throw TEXT("Error extracting files from setup.cab");
-    }
-    }
+	UINT ExecOnThread();
+    void ExtractCab(HMODULE p_Module, component * pComponent);
 };
 
 

@@ -49,6 +49,7 @@ namespace InstallerLib
 
             // Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction
             m_cab_dialog_message = tpl.cab_dialog_message;
+            m_cab_cancelled_message = tpl.cab_cancelled_message;
             m_cab_dialog_caption = tpl.cab_dialog_caption;
             m_cab_path = tpl.cab_path;
             m_cab_path_autodelete = tpl.cab_path_autodelete;
@@ -144,6 +145,7 @@ namespace InstallerLib
 
         /* Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction */
         private string m_cab_dialog_message;
+        private string m_cab_cancelled_message;
         private string m_cab_dialog_caption;
 
         /* Daniel Doubrovkine - 2008-06-06: added path to use during CAB extraction */
@@ -365,6 +367,14 @@ namespace InstallerLib
             set { m_cab_dialog_message = value; }
         }
 
+        [Description("CAB cancelled message, this error shows if extraction operation has been aborted")]
+        [Category("Self-Extracting CAB")]
+        public string cab_cancelled_message
+        {
+            get { return m_cab_cancelled_message; }
+            set { m_cab_cancelled_message = value; }
+        }
+
         [Description("CAB dialog caption, this dialog shows when extracting an embedded CAB file")]
         [Category("Self-Extracting CAB")]
         public string cab_dialog_caption
@@ -453,6 +463,7 @@ namespace InstallerLib
 
             // Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction
             e.XmlWriter.WriteAttributeString("cab_dialog_message", m_cab_dialog_message);
+            e.XmlWriter.WriteAttributeString("cab_cancelled_message", m_cab_cancelled_message);
             e.XmlWriter.WriteAttributeString("cab_dialog_caption", m_cab_dialog_caption);
 
             // Daniel Doubrovkine - 2008-06-12: added CAB path
@@ -565,6 +576,9 @@ namespace InstallerLib
             // Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction
             if (e.XmlElement.Attributes["cab_dialog_message"] != null)
                 m_cab_dialog_message = e.XmlElement.Attributes["cab_dialog_message"].InnerText;
+
+            if (e.XmlElement.Attributes["cab_cancelled_message"] != null)
+                m_cab_cancelled_message = e.XmlElement.Attributes["cab_cancelled_message"].InnerText;
 
             if (e.XmlElement.Attributes["cab_dialog_caption"] != null)
                 m_cab_dialog_caption = e.XmlElement.Attributes["cab_dialog_caption"].InnerText;

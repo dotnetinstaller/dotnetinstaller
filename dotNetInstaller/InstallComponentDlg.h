@@ -39,6 +39,7 @@ private:
 public:
 	afx_msg void OnBnClickedSkip();
 	afx_msg void OnTimer(UINT nIDEvent);
+    void OnCancel();
 	CKCBusyProgressCtrl m_BusyControl;
 	afx_msg LRESULT OnSetStatusInstall(WPARAM wParam, LPARAM lParam);
 };
@@ -47,10 +48,10 @@ struct InstallStatusParam
 {
 	CString Status;
 
-	static InstallStatusParam * CreateStatus(CString p_Status, long size, LPCWSTR type = L"Kb")
+	static InstallStatusParam * CreateStatus(const CString& p_Status, const CString& p_Size)
 	{
 		InstallStatusParam * param = new InstallStatusParam();
-		param->Status.Format(L"%s, %d %s", (LPCWSTR) p_Status, size, type);
+		param->Status.Format(L"%s - %s", (LPCWSTR) p_Status, (LPCWSTR) p_Size);
 		return param;
 	}
 

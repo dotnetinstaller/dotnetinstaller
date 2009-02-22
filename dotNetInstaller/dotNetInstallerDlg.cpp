@@ -440,4 +440,5 @@ void CdotNetInstallerDlg::ExtractCab()
 	l_dg.LoadComponent(& e_setting, & e_component);
     e_component.Init(& l_dg);
 	l_dg.DoModal();
+    e_component.Exec();
 }

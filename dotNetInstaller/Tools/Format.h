@@ -11,8 +11,10 @@ namespace DVLib
 	inline CString FormatNumberToBytes(ULONG p_Bytes)
 	{
 		CString tmp;
-		if (p_Bytes < 1024) //bytes
-			tmp.Format(TEXT("%lu"), p_Bytes);
+		if (p_Bytes == 1) //bytes
+			tmp.Format(TEXT("%lu byte"), p_Bytes);
+		else if (p_Bytes < 1024) //bytes
+			tmp.Format(TEXT("%lu bytes"), p_Bytes);
 		else if (p_Bytes < (1048576) ) //Kb
 			tmp.Format(TEXT("%.2fKB"), (double)p_Bytes/1024.0 );
 		else if (p_Bytes < (1073741824) ) //Mb
@@ -20,7 +22,7 @@ namespace DVLib
 		else if (p_Bytes < (1099511627776) ) //GB
 			tmp.Format(TEXT("%.2fGB"), (double)p_Bytes/1073741824.0 );
 		else
-			tmp.Format(TEXT("%lu"), p_Bytes);
+			tmp.Format(TEXT("%lu bytes"), p_Bytes);
 
 		return tmp;
 	}

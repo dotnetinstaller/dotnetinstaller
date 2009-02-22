@@ -7,8 +7,8 @@
 </head>
 <body>
     <h1>
-        dotNetInstaller - Setup Bootstrapper for .NET Applications</h1>
-    <small>Lib Version: 1.3.3.0<br />
+        dotNetInstaller - Setup Bootstrapper</h1>
+    <small>Lib Version: 1.4<br />
         Doc Version: 1.7 DRAFT</small>
     <br />
     <ul>
@@ -90,12 +90,12 @@
         <li>Windows Server 2003</li>
     </ul>
     <p>
-        The configuration files also check and install all the requirements software. For
+        The configuration files also check and install all the required software. For
         more informations on software requirements look at the <a href="#SystemRequirementsNotes">
             Software Requirements</a> section.</p>
     <p>
-        I have created the configuration files for English and Italian operating system,
-        but you can include your custom language easily.</p>
+     You will find configuration files for English and Italian operating system, and
+     it is possible to include your custom language easily.</p>
  <p>
   The packaged setup is compiled with InstallerLinker into a single Setup.exe with
   all its dependencies, including a simple MSI setup package.</p>
@@ -114,42 +114,41 @@
             configuration over the web.</li>
     </ul>
     <p>
-        With the editor you can create these configurations files and then include these
-        files in the dotNetInstaller resources. With this solution you can only distribute
+        With the editor you can create these configurations files and then include all configuration
+     files in the dotNetInstaller resources and required files in a packaged CAB. With this solution you can only distribute
         one exe file.
     </p>
     <p>
         Another solution is to distribute in the same path of the dotNetInstaller.exe the
-        configuration file using the name 'configuration.xml' and if you want you can also
+        configuration file using the name 'configuration.xml'. You can optionally
         distribute a bitmap with the name "banner.bmp". dotNetInstaller first checks for
         this configuration file, if the file doesn't exist the application uses the configuration
         embedded in the exe.</p>
     <p>
-        In the XML configuration file you can use some path variables in all command or
+        In the XML configuration file you can use several path variables in all command or
         path settings. Is recommended to use " symbol in all the <code lang="xml">command</code>
         attributes that contains one or more space, in <code lang="xml">msi</code> component
         the " symbol is not supported and if needed the application adds this symbol automatically.
-        Is recommended to use #APPPATH variable in all the attributes with path value (like
+     It is recommended to use #APPPATH variable in all the attributes with path value (like
         <code lang="xml">command, dialog_bitmap, package</code>), this constant allows to
         write relative path string from the dotNetInstaller.exe folder; otherwise, all the
         paths are relative to the system's current directory.</p>
-    <p>
-        If you configure the application to download the components, I recommend using the
-        #TEMPPATH variable as destination directory and then running the components from
-        the same path. If you're embedding dependencies, you can also use #CABPATH which defaults to
-        #TEMPPATH\#GUID.</p>
-    <p>
+ <p>
         For example, if you want to launch a file ('My App.exe') in the same folder of dotNetInstaller.exe
-        you can write in the command string: "#APPPATH\My App.exe"
-    </p>
+        you can write in the command string: "#APPPATH\My App.exe".</p>
+    <p>
+        If you configure the application to download components, use the #TEMPPATH variable
+     as destination directory and then run the components from
+        the same path. If you're embedding dependencies, you can also use #CABPATH which defaults to #TEMPPATH\#GUID,
+     #GUID is a uniquely generated GUID for each install.</p>
     <p>
         Remember that the order of the components that you see in the editor is the same
-        order that the setup uses to install the same components, so be carefull to insert
+        order that the setup uses to install these components, so be careful to insert
         the components in the correct order. In this release you cannot change the order
         of the components from the editor, if you need this feature you must change the
         XML manually.</p>
  <p>
-        You can use the "Add -&gt;Component Wizard ..." menu when adding new components
+        You can use the "Add -&gt; Component Wizard ..." menu when adding new components
         to automatically add the most important components like: Service Pack 6a for NT4,
         Internet Explorer 6, .NET 1.1, MDAC 2.8, ...</p>
         
@@ -261,9 +260,9 @@
         <li>Sample application</li>
     </ul>
     <p>
-        I included a SupportFiles directory with the required structure and some readme.txt
+     The distribution package contains a SupportFiles directory with the required structure and some readme.txt
         files where you can find a link to download the required components (usually from
-        microsoft web site).<br />
+        microsoft web site).
         Consider also that these components are present as wizard in the InstallerEditor,
         so you can easily use these components in your setup.</p>
     <p>
@@ -359,13 +358,14 @@
         Now the user must only download the 'MyWebSetup.zip' (&lt; 400 Kb) and execute dotNetInstaller
         (or using a Self Extractor file you can automatically run it), this application
         automatically download and install the required components, in this example .NET
-        Framework and one MSI package.<br />
-        This is the diagram of a web setup project:</p>
+        Framework and one MSI package.</p>
+ <p>
+  This is the diagram of a web setup project:</p>
     <img src="WebSetup.jpg" alt="WebSetup image" />
     <h2>
         Path variables</h2>
     <p>
-        These are the variables that can be used in the configuration file in all the attribute
+     The following variables can be used in the configuration file in all the attribute
         that contains a path (<code lang="text">dialog_bitmap</code>,<code lang="text">command</code>,
         ...):</p>
     <ul>
@@ -378,10 +378,10 @@
             directory (using <code>GetWindowsDirectory()</code> API, usually c:\WINNT ).</li>
         <li><code lang="text">#TEMPPATH</code> - This string is replaced with the temp directory
             (using <code>GetTempPath()</code> API, usually C:\Documents and Settings\[User]\Local
-            Settings\Temp ).</li>
+         Settings\Temp). </li>
 
         <li><code lang="text">#GUID</code> - A unique GUID for this session of dotNetInstaller.</li>
-        <li><code lang="text">#CABPATH</code> - Defaults to #TEMPPATH\#GUID</li>
+        <li><code lang="text">#CABPATH</code> - Defaults to #TEMPPATH\#GUID.</li>
     </ul>
     <h2>
         Check if the component is already installed</h2>
@@ -641,18 +641,22 @@
   If you would like temporary files to be deleted after setup completes, use #CABPATH
   instead of #TEMPPATH and the cab_path_autodelete configuration option. #CABPATH
   defaults to #TEMPPATH\#GUID.</p>
+ <p>
+  When enabling logging, make sure not to output the log file into #CABPATH. This
+  will prevent the #CABPATH directory from being deleted since the installer still
+  attempts to write to the log file.</p>
     <h2>
-        Multilanguage features</h2>
+     Multilingual features</h2>
     <p>
-        dotNetInstaller reads all the captions and messages from the configuration file;
-        so to create your custom language you can easily edit the configuration file using
-        your language.</p>
+        dotNetInstaller reads all the captions and messages from the configuration file.
+     You can create installations in your custom language.</p>
     <p>
-        With InstallerEditor you can easily create custom languages using template files.
-        For now there are 3 default files: english_template.xml, french_template.xml and
+        With InstallerEditor you can easily create installations in custom languages using
+     template files. There are 3 default files provided: english_template.xml, french_template.xml and
         italian_template.xml. The editor can be configured to use one of these files so,
-        when you create new items in the editor, default values are readed from the template
-        selected.<br />
+        when you create new items in the editor, default values are read from the template
+        selected.</p>
+ <p>
         To configure the list of templates available you can use the "Tools-&gt;Customize
         Templates" menu. To select a template you can use the "Tools-&gt;Template for new
         Item" menu.</p>
@@ -662,16 +666,17 @@
     <h3>
         UTF-8 and Unicode</h3>
     <p>
-        To full support non english language the configuration file uses UTF-8 encoding.<br />
-        To read and use this encoding correctly, I have compiled dotNetInstaller with UNICODE.
+        To full support non english languages the configuration file uses UTF-8 encoding.</p>
+ <p>
+        To read and use this encoding correctly, dotNetInstaller is built UNICODE.
         The editor is already full compatible with unicode, thanks to .NET always using
-        unicode strings. Remember that unicode is not supported on Windows 95, 98 and ME;
-        so if you use one of these operating system you must copy Microsoft Layer for Unicode
+        unicode strings. But unicode is not supported on Windows 95, 98 and ME; so if you use one of these
+  operating system you must copy the Microsoft Layer for Unicode
         (<b>unicows.dll</b>) in the same path of dotNetInstaller.exe (see also Deploy dotNetInstaller
         section).</p>
     <p>
-        Microsoft Link: <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/mslu/winprog/microsoft_layer_for_unicode_on_windows_95_98_me_systems.asp">
-            Microsoft Layer for Unicode on Windows 95/98/Me Systems</a></p>
+     See <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/mslu/winprog/microsoft_layer_for_unicode_on_windows_95_98_me_systems.asp">
+            Microsoft Layer for Unicode on Windows 95/98/Me Systems</a> for more information.</p>
     <h2>
         Deploy dotNetInstaller</h2>
     <p>
@@ -681,7 +686,7 @@
             <ul>
                 <li>dotNetInstaller.exe - Main bootstrapper executable</li>
                 <li><b>configuration.xml</b> - Configuration file</li>
-                <li>unicows.dll - Microsoft Layer for Unicode (this file is required only on Windows
+                <li>unicows.dll - Microsoft Layer for Unicode (this file is required only for Windows
                     95, 98 and ME).</li>
             </ul>
         </li>
@@ -689,7 +694,7 @@
          method or InstallerLinker.exe):
             <ul>
                 <li><b>dotNetInstaller.exe</b> - Main bootstrapper executable edited with InstallerEditor.</li>
-                <li>unicows.dll - Microsoft Layer for Unicode (this file is required only on Windows
+                <li>unicows.dll - Microsoft Layer for Unicode (this file is required only for Windows
                     95, 98 and ME).</li>
             </ul>
         </li>
@@ -1056,6 +1061,10 @@
                             <tr>
                                 <td><b>cab_dialog_message</b></td>
                                 <td>CAB dialog caption, this dialog shows when extracting an embedded CAB file</td>
+                            </tr>
+                            <tr>
+                                <td><b>cab_cancelled_message</b></td>
+                                <td>Error message to display if CAB extraction is cancelled before completion</td>
                             </tr>
                             <tr>
                                 <td><b>cab_path</b></td>
@@ -1963,6 +1972,7 @@
         <li>configurations\configuration\components\component\processor_architecture_filter</li>
         <li>configurations\configuration\cab_dialog_caption</li>
         <li>configurations\configuration\cab_dialog_message</li>
+        <li>configurations\configuration\cab_cancelled_message</li>
         <li>configurations\configuration\cab_path</li>
         <li>configurations\configuration\cab_path_autodelete</li>
         <li>fileversion</li>
@@ -2582,6 +2592,11 @@
    CommandLineArguments</a>.</li>
  </ul>
  <p>
+  No (L)GPL code has been used in this project.
+ </p>
+ <p>
+ </p>
+ <p>
  </p>
  <h2>
         History</h2>
@@ -2616,7 +2631,7 @@
         <li>Added CABing, embedding of support files using <a href="http://www.codeproject.com/KB/files/CABCompressExtract.aspx">Elmü's CAB library</a>
          and a PackagedSetup sample</li>
         <li>Added InstallerLinker.exe with command line options /e (Embed) and /a (AppPath) and /v (Verbose) for using in build processes</li>
-        <li>Added cab_dialog_message, cab_dialog_caption, cap_path and cab_path_autodelete options</li>
+        <li>Added cab_dialog_message, cab_cancelled_message, cab_dialog_caption, cap_path and cab_path_autodelete options</li>
         <li>Temporary files (eg. downloaded files) will be deleted upon completion of dotNetInstaller</li>
         <li>Added /Log command-line option and log_enabled configuration file parameter that enables logging for dotNetInstaller and all MSI components executed</li>
         <li>Added /LogFile &lt;path\filename&gt; command-line option and a log_file configuration

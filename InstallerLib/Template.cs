@@ -145,6 +145,11 @@ namespace InstallerLib
                 get { return m_tpl.GetAttribute("setupconfiguration/@cab_dialog_message").Replace(c_APPLICATION_NAME, m_ApplicationName); }
             }
 
+            public string cab_cancelled_message
+            {
+                get { return m_tpl.GetAttribute("setupconfiguration/@cab_cancelled_message").Replace(c_APPLICATION_NAME, m_ApplicationName); }
+            }
+
             public string cab_dialog_caption
             {
                 get { return m_tpl.GetAttribute("setupconfiguration/@cab_dialog_caption").Replace(c_APPLICATION_NAME, m_ApplicationName); }

@@ -71,6 +71,14 @@ void InstallComponentDlg::OnBnClickedSkip()
 	OnCancel();
 }
 
+void InstallComponentDlg::OnCancel()
+{
+    if (m_Component != NULL)
+    {
+        m_Component->cancelled = true;
+    }
+}
+
 void InstallComponentDlg::OnTimer(UINT nIDEvent)
 {
 	try
