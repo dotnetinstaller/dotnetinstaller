@@ -57,6 +57,7 @@ bool thread_component::Exec()
 		}
 
 		delete m_pThread;
+		m_pThread = NULL;
 
         if (m_Error.GetLength())
         {

@@ -5,7 +5,8 @@ class CComponentsList :
 {
 	DECLARE_DYNAMIC(CComponentsList);
 protected: 
-	virtual void DrawItem(LPDRAWITEMSTRUCT /*lpDrawItemStruct*/); 
+	void PreDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
+	void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct); 
 	DECLARE_MESSAGE_MAP();
 public:
 	CComponentsList(void);
