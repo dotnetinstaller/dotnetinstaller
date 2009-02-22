@@ -6,11 +6,9 @@
 #define IDR_MAINFRAME                   128
 #define IDD_DIALOGINSTALL               131
 #define IDD_DOWNLOAD_DIALOG             132
-#define IDD_COMPONENTSELECTOR           146
 #define IDC_CUSTOM_HAND                 147
 #define IDC_INSTALL                     1000
 #define IDC_COMPONENTS_LIST             1001
-#define IDC_ADVANCED                    1002
 #define IDC_MESSAGE                     1003
 #define IDC_PICTUREBOX                  1004
 #define IDC_OPERATING_SYSTEM            1005

@@ -209,10 +209,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ComponentSelector.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\ConfigFile.cpp"
 				>
 			</File>
@@ -332,10 +328,6 @@
 			</File>
 			<File
 				RelativePath=".\Component.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ComponentSelector.h"
 				>
 			</File>
 			<File

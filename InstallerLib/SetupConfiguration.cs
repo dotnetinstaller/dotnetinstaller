@@ -36,11 +36,6 @@ namespace InstallerLib
             m_status_installed = tpl.status_installed;
             m_status_notinstalled = tpl.status_notinstalled;
 
-            m_advanced_caption = tpl.advanced_caption;
-            m_dialog_selector_caption = tpl.dialog_selector_caption;
-            m_dialog_selector_message = tpl.dialog_selector_message;
-            m_dialog_selector_ok = tpl.dialog_selector_ok;
-            m_dialog_selector_cancel = tpl.dialog_selector_cancel;
             // Matthias Jentsch - 2007-02-06: read OS filter message from template
             m_os_filter_not_match_message = tpl.os_filter_not_match_message;
 
@@ -168,51 +163,6 @@ namespace InstallerLib
             set { m_reboot_required = value; }
         }
 
-        private string m_advanced_caption;
-        [Description("Caption of the Advanced button. Used to show the 'Component Selector' dialog with the complete list of components available to install. If empty the button Advanced is not available. (OPTIONAL)")]
-        [Category("Main Dialog")]
-        public string advanced_caption
-        {
-            get { return m_advanced_caption; }
-            set { m_advanced_caption = value; }
-        }
-
-        private string m_dialog_selector_caption;
-        [Description("Component Selector dialog title, this dialog shows the complete list of components available to install. (REQUIRED)")]
-        [Category("Component Selector Dialog")]
-        public string dialog_selector_caption
-        {
-            get { return m_dialog_selector_caption; }
-            set { m_dialog_selector_caption = value; }
-        }
-
-        private string m_dialog_selector_message;
-        [Description("Component Selector dialog description, this dialog shows the complete list of components available to install. (REQUIRED)")]
-        [Category("Component Selector Dialog")]
-        public string dialog_selector_message
-        {
-            get { return m_dialog_selector_message; }
-            set { m_dialog_selector_message = value; }
-        }
-
-        private string m_dialog_selector_ok;
-        [Description("Component Selector dialog OK caption button. (REQUIRED)")]
-        [Category("Component Selector Dialog")]
-        public string dialog_selector_ok
-        {
-            get { return m_dialog_selector_ok; }
-            set { m_dialog_selector_ok = value; }
-        }
-
-        private string m_dialog_selector_cancel;
-        [Description("Component Selector dialog Cancel caption button. (REQUIRED)")]
-        [Category("Component Selector Dialog")]
-        public string dialog_selector_cancel
-        {
-            get { return m_dialog_selector_cancel; }
-            set { m_dialog_selector_cancel = value; }
-        }
-
         private string m_dialog_otherinfo_caption;
         [Description("Caption of the link at the bottom of the main dialog that open the link specified in the dialog_otherinfo_link attribute. If empty the link is hidden. (OPTIONAL)")]
         [Category("Main Dialog")]
@@ -229,6 +179,24 @@ namespace InstallerLib
         {
             get { return m_dialog_otherinfo_link; }
             set { m_dialog_otherinfo_link = value; }
+        }
+
+        private bool m_dialog_show_installed = true;
+        [Description("If true, show installed components. Installed components are greyed out and automatically de-selected.")]
+        [Category("Main Dialog")]
+        public bool dialog_show_installed
+        {
+            get { return m_dialog_show_installed; }
+            set { m_dialog_show_installed = value; }
+        }
+
+        private bool m_dialog_show_required = true;
+        [Description("If true, show required components. Required components are greyed out and automatically selected when not installed.")]
+        [Category("Main Dialog")]
+        public bool dialog_show_required
+        {
+            get { return m_dialog_show_required; }
+            set { m_dialog_show_required = value; }
         }
 
         private string m_complete_command;
@@ -400,12 +368,6 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("installing_component_wait", m_installing_component_wait);
             e.XmlWriter.WriteAttributeString("reboot_required", m_reboot_required);
 
-            e.XmlWriter.WriteAttributeString("advanced_caption", m_advanced_caption);
-            e.XmlWriter.WriteAttributeString("dialog_selector_cancel", m_dialog_selector_cancel);
-            e.XmlWriter.WriteAttributeString("dialog_selector_caption", m_dialog_selector_caption);
-            e.XmlWriter.WriteAttributeString("dialog_selector_message", m_dialog_selector_message);
-            e.XmlWriter.WriteAttributeString("dialog_selector_ok", m_dialog_selector_ok);
-
             e.XmlWriter.WriteAttributeString("dialog_otherinfo_caption", m_dialog_otherinfo_caption);
             e.XmlWriter.WriteAttributeString("dialog_otherinfo_link", m_dialog_otherinfo_link);
 
@@ -413,6 +375,8 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("complete_command_silent", m_complete_command_silent);
             e.XmlWriter.WriteAttributeString("auto_close_if_installed", m_auto_close_if_installed.ToString());
             e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
+            e.XmlWriter.WriteAttributeString("dialog_show_installed", m_dialog_show_installed.ToString());
+            e.XmlWriter.WriteAttributeString("dialog_show_required", m_dialog_show_required.ToString());
 
             // Matthias Jentsch - 2006-03-06: new attributes added
             e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
@@ -485,23 +449,6 @@ namespace InstallerLib
             if (e.XmlElement.Attributes["status_notinstalled"] != null)
                 m_status_notinstalled = e.XmlElement.Attributes["status_notinstalled"].InnerText;
 
-
-            if (e.XmlElement.Attributes["advanced_caption"] != null)
-                m_advanced_caption = e.XmlElement.Attributes["advanced_caption"].InnerText;
-
-            if (e.XmlElement.Attributes["dialog_selector_cancel"] != null)
-                m_dialog_selector_cancel = e.XmlElement.Attributes["dialog_selector_cancel"].InnerText;
-
-            if (e.XmlElement.Attributes["dialog_selector_caption"] != null)
-                m_dialog_selector_caption = e.XmlElement.Attributes["dialog_selector_caption"].InnerText;
-
-            if (e.XmlElement.Attributes["dialog_selector_message"] != null)
-                m_dialog_selector_message = e.XmlElement.Attributes["dialog_selector_message"].InnerText;
-
-            if (e.XmlElement.Attributes["dialog_selector_ok"] != null)
-                m_dialog_selector_ok = e.XmlElement.Attributes["dialog_selector_ok"].InnerText;
-
-
             if (e.XmlElement.Attributes["dialog_otherinfo_caption"] != null)
                 m_dialog_otherinfo_caption = e.XmlElement.Attributes["dialog_otherinfo_caption"].InnerText;
 
@@ -520,6 +467,11 @@ namespace InstallerLib
 
             if (e.XmlElement.Attributes["allow_continue_on_error"] != null)
                 allow_continue_on_error = bool.Parse(e.XmlElement.Attributes["allow_continue_on_error"].InnerText);
+
+            if (e.XmlElement.Attributes["dialog_show_installed"] != null)
+                m_dialog_show_installed = bool.Parse(e.XmlElement.Attributes["dialog_show_installed"].InnerText);
+            if (e.XmlElement.Attributes["dialog_show_required"] != null)
+                m_dialog_show_required = bool.Parse(e.XmlElement.Attributes["dialog_show_required"].InnerText);
 
             // Matthias Jentsch - 2006-03-06: new attributes added
             if (e.XmlElement.Attributes["os_filter_greater"] != null)

@@ -141,26 +141,7 @@ namespace InstallerLib
             {
                 get { return m_tpl.GetAttribute("setupconfiguration/@status_notinstalled").Replace(c_APPLICATION_NAME, m_ApplicationName); }
             }
-            public string advanced_caption
-            {
-                get { return m_tpl.GetAttribute("setupconfiguration/@advanced_caption").Replace(c_APPLICATION_NAME, m_ApplicationName); }
-            }
-            public string dialog_selector_caption
-            {
-                get { return m_tpl.GetAttribute("setupconfiguration/@dialog_selector_caption").Replace(c_APPLICATION_NAME, m_ApplicationName); }
-            }
-            public string dialog_selector_message
-            {
-                get { return m_tpl.GetAttribute("setupconfiguration/@dialog_selector_message").Replace(c_APPLICATION_NAME, m_ApplicationName); }
-            }
-            public string dialog_selector_ok
-            {
-                get { return m_tpl.GetAttribute("setupconfiguration/@dialog_selector_ok").Replace(c_APPLICATION_NAME, m_ApplicationName); }
-            }
-            public string dialog_selector_cancel
-            {
-                get { return m_tpl.GetAttribute("setupconfiguration/@dialog_selector_cancel").Replace(c_APPLICATION_NAME, m_ApplicationName); }
-            }
+
             // Matthias Jentsch - 2007-02-06 added OS filter message to templates
             public string os_filter_not_match_message
             {

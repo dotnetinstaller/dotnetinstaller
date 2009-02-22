@@ -97,12 +97,6 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 	p_Setting.reboot_required = p_Node->AttributeT("reboot_required").data();
 	p_Setting.installing_component_wait = p_Node->AttributeT("installing_component_wait").data();
 
-	p_Setting.advanced_caption = p_Node->AttributeT("advanced_caption").data();
-	p_Setting.dialog_selector_caption = p_Node->AttributeT("dialog_selector_caption").data();
-	p_Setting.dialog_selector_message = p_Node->AttributeT("dialog_selector_message").data();
-	p_Setting.dialog_selector_ok = p_Node->AttributeT("dialog_selector_ok").data();
-	p_Setting.dialog_selector_cancel = p_Node->AttributeT("dialog_selector_cancel").data();
-
 	p_Setting.dialog_otherinfo_caption = p_Node->AttributeT("dialog_otherinfo_caption").data();
 	p_Setting.dialog_otherinfo_link = p_Setting.ValidatePath(p_Node->AttributeT("dialog_otherinfo_link").data());
 
@@ -110,6 +104,8 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 	p_Setting.complete_command_silent = p_Setting.ValidatePath(p_Node->AttributeT("complete_command_silent").data());
 	p_Setting.auto_close_if_installed = ConvBoolString(p_Node->Attribute("auto_close_if_installed"), true);
     p_Setting.allow_continue_on_error = ConvBoolString(p_Node->Attribute("allow_continue_on_error"), true);
+    p_Setting.dialog_show_installed = ConvBoolString(p_Node->Attribute("dialog_show_installed"), true);
+    p_Setting.dialog_show_required = ConvBoolString(p_Node->Attribute("dialog_show_required"), true);
 
 	// Matthias Jentsch - 2006-03-06: read additional attributes
 	p_Setting.os_filter_greater = p_Node->AttributeT("os_filter_greater").data();

@@ -6,7 +6,6 @@
 #include "dotNetInstallerDlg.h"
 
 #include "InstallComponentDlg.h"
-#include "ComponentSelector.h"
 
 //user defined include
 #include <tchar.h>
@@ -44,7 +43,6 @@ void CdotNetInstallerDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMPONENTS_LIST, m_ListBoxComponents);
 	DDX_Control(pDX, IDC_PICTUREBOX, m_PictureBox);
 	DDX_Control(pDX, IDC_OPERATING_SYSTEM, m_lblOperatingSystem);
-	DDX_Control(pDX, IDC_ADVANCED, m_btAdvanced);
 	DDX_Control(pDX, IDC_INFO_LINK, m_InfoLink);
 }
 
@@ -54,7 +52,6 @@ BEGIN_MESSAGE_MAP(CdotNetInstallerDlg, CDialog)
 	//}}AFX_MSG_MAP
 	ON_BN_CLICKED(IDC_SKIP, OnBnClickedSkip)
 	ON_BN_CLICKED(IDC_INSTALL, OnBnClickedInstall)
-	ON_BN_CLICKED(IDC_ADVANCED, OnBnClickedAdvanced)
 	ON_WM_DESTROY()
 	ON_BN_CLICKED(IDCANCEL, OnBnClickedCancel)
 END_MESSAGE_MAP()
@@ -99,9 +96,6 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	m_btnSkip.SetWindowText(m_Settings.skip_caption);
 	m_btnInstall.SetWindowText(m_Settings.install_caption);
 	m_lblMessage.SetWindowText(m_Settings.dialog_message);
-	m_btAdvanced.SetWindowText(m_Settings.advanced_caption);
-	if (m_Settings.advanced_caption.GetLength() <= 0)
-		m_btAdvanced.ShowWindow(SW_HIDE);
 
 	m_InfoLink.SetCaption(m_Settings.dialog_otherinfo_caption);
 	m_InfoLink.SetHyperlink(m_Settings.dialog_otherinfo_link);
@@ -165,9 +159,8 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 		{
 			m_btnInstall.EnableWindow(FALSE);
 			m_btCancel.EnableWindow(FALSE);
-			m_btAdvanced.EnableWindow(FALSE);
 
-			m_InfoLink.EnableWindow(FALSE);
+            m_InfoLink.EnableWindow(FALSE);
 
 			// Run the button install click event
 			OnBnClickedInstall();
@@ -213,10 +206,20 @@ HCURSOR CdotNetInstallerDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+// Select components based on the list box selections.
+void CdotNetInstallerDlg::SelectComponents()
+{
+	for (size_t i = 0; i < m_Settings.GetComponents().size();i++)
+	{
+        m_Settings.GetComponents()[i]->selected = (m_ListBoxComponents.GetCheck((int) i) == 1);
+	}
+}
+
 void CdotNetInstallerDlg::OnBnClickedInstall()
 {
 	try
 	{
+        SelectComponents();
         ExtractCab();
 		InsertRegistryRun();
 		bool l_bRemoveRunOnce = true;
@@ -386,23 +389,44 @@ bool CdotNetInstallerDlg::LoadComponentsList(void)
 	bool l_AllInstalled = true;
     for each(Component * component in m_Settings.GetComponents())
 	{
-		if (component->selected)
-		{
-			m_ListBoxComponents.AddString(component->description);
+        bool component_installed = component->IsInstalled();
 
-            // a component is considered installed when it has an install check which results
-            // in a clear positive; if a component doesn't have any install checks, it cannot
-            // be required (there's no way to check whether the component was installed)
-            if (component->required)
-            {
-			    l_AllInstalled &= component->IsInstalled();
-            }
+        if (component->required)
+        {
+            l_AllInstalled &= component_installed;
+        }
 
-			CSize size = pDC->GetTextExtent(component->description);
-			if ((size.cx > 0) && (hScrollWidth < size.cx))
-				hScrollWidth = size.cx;
-		}
-	}
+		CString l_descr = component->description;
+	    l_descr += " ";
+        l_descr += component_installed
+            ? m_Settings.status_installed
+            : m_Settings.status_notinstalled;
+
+        if (! m_Settings.dialog_show_installed && component_installed)
+            continue;
+
+        if (! m_Settings.dialog_show_required && component->required)
+            continue;
+
+		int id = m_ListBoxComponents.AddString(l_descr);
+
+        if (component->selected)
+        {
+			m_ListBoxComponents.SetCheck(id, 1);
+        }
+
+        // a component is considered installed when it has an install check which results
+        // in a clear positive; if a component doesn't have any install checks, it cannot
+        // be required (there's no way to check whether the component was installed)
+        if (component->required || component_installed)
+        {
+            m_ListBoxComponents.Enable(id, 0);
+        }
+
+		CSize size = pDC->GetTextExtent(component->description);
+		if ((size.cx > 0) && (hScrollWidth < size.cx))
+			hScrollWidth = size.cx;
+    }
 
 	if (hScrollWidth > 0 )
 		m_ListBoxComponents.SetHorizontalExtent(hScrollWidth);
@@ -410,15 +434,6 @@ bool CdotNetInstallerDlg::LoadComponentsList(void)
 	m_ListBoxComponents.ReleaseDC(pDC); 
 
 	return l_AllInstalled;
-}
-
-void CdotNetInstallerDlg::OnBnClickedAdvanced()
-{
-	CComponentSelector l_dlgSlector(&m_Settings, this);
-	if (l_dlgSlector.DoModal() == IDOK )
-	{
-		LoadComponentsList();
-	}
 }
 
 // Matthew Sheets - 2008-01-14: Skip the current config section and go to the next valid one

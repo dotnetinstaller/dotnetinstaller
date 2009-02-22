@@ -1102,35 +1102,6 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <b>advanced_caption</b></td>
-                                <td>
-                                    Caption of the Advanced button. Used to show the 'Component Selector' dialog with
-                                    the complete list of components available to install. If empty the button Advanced
-                                    is not available.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <b>dialog_selector_caption</b></td>
-                                <td>
-                                    Component Selector dialog title, this dialog shows the complete list of components
-                                    available to install.</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <b>dialog_selector_message</b></td>
-                                <td>
-                                    Component Selector dialog description, this dialog shows the complete list of components
-                                    available to install.</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <b>dialog_selector_cancel</b></td>
-                                <td>
-                                    Component Selector dialog Cancel caption button.</td>
-                            </tr>
-                            <tr>
-                                <td>
                                     <b>dialog_otherinfo_caption</b></td>
                                 <td>
                                     Caption of the link at the bottom of the main dialog that open the link specified
@@ -1146,6 +1117,22 @@
                                     dialog. Can be any valid command (executable, document, web page, ...) valid for
                                     the ShellExecute API. Must be defined the dialog_otherinfo_caption attribute. Can
                                     contains path constant (see Help-&gt;Path Constant).
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>dialog_show_installed</b></td>
+                                <td>
+                                    Show installed components in the setup dialog. Installed components
+                                    are greyed out and de-selected by default.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>dialog_show_required</b></td>
+                                <td>
+                                    Show required components in the setup dialog. Required components are 
+                                    greyed out and are automatically selected unless installed.
                                 </td>
                             </tr>
                             <tr>
@@ -2218,10 +2205,16 @@
    can open these files with the editor. The editor automatically saves configuration
    files in the 1.6 format. The following changes have been introduced in the 1.6 schema.</p>
  <ul>
-  <li>configuration\component\installedcheck\description </li>
-  <li>configuration\component\installedcheckoperator </li>
+  <li>configurations\configuration\component\installedcheck\description </li>
+  <li>configurations\configuration\component\installedcheckoperator </li>
   <li>collapsed nesting, removed all collections: configurations, components, embedfiles</li>
-  <li>configuration\allow_continue_on_error</li>
+  <li>configurations\configuration\allow_continue_on_error</li>
+  <li>removed: configurations\configuration\dialog_selector_caption</li>
+  <li>removed: configurations\configuration\dialog_selector_message</li>
+  <li>removed: configurations\configuration\dialog_selector_ok</li>
+  <li>removed: configurations\configuration\dialog_selector_cancel</li>
+  <li>configurations\configuration\dialog_show_installed</li>
+  <li>configurations\configuration\dialog_show_required</li>
  </ul>
  <br />
  <!-- END table for XML configuration help -->
@@ -2900,6 +2893,12 @@
       a new configuration file (Ctrol+N), exit (Alt+F4) and refresh (F5).</li>
      <li>Added <span style="color: #b22222; font-family: Courier New">allow_continue_on_error</span>: when false
       user is no longer prompted to continue on error.</li>
+     <li>DotNetInstaller: merged functionality of the Advanced component selector into
+      the main window, removed the Advanced button.</li>
+     <li>Added <span style="color: #b22222; font-family: Courier New">dialog_show_required</span>:
+      when false, required components are hidden.</li>
+     <li>Added <span style="color: #b22222; font-family: Courier New">dialog_show_installed</span>:
+      when false, installed components are hidden.</li>
     </ul>
     <h3>
      1.5 (25 Oct 2008)</h3>

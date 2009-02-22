@@ -19,12 +19,6 @@ public:
 	CString installation_completed;
 	CString reboot_required;
 	CString installing_component_wait;
-	//gestione Component selector
-	CString advanced_caption;
-	CString dialog_selector_caption;
-	CString dialog_selector_message;
-	CString dialog_selector_ok;
-	CString dialog_selector_cancel;
 	//Link properties
 	CString dialog_otherinfo_caption;
 	CString dialog_otherinfo_link;
@@ -35,6 +29,10 @@ public:
 	CString complete_command_silent;
 	//If true auto close the dialog (display installation_completed message and execute the complete_command) if all the components are already installed. (REQUIRED)
 	bool auto_close_if_installed;
+    // If false, don't display installed components
+    bool dialog_show_installed;
+    // If false, don't display required components
+    bool dialog_show_required;
 	// Daniel Doubrovkine - 2008-12-30: allow user to continue on error
 	bool allow_continue_on_error;
 	/* Matthias Jentsch - 2006-03-06: added filter for minimum operating system version */
