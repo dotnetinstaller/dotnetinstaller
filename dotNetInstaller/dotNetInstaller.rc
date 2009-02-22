@@ -1,0 +1,266 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
+#ifdef _WIN32
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\dotNetInstaller.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DOTNETINSTALLER_DIALOG DIALOGEX 0, 0, 305, 156
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | 
+    WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION ".Net Installer"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Annulla",IDCANCEL,248,132,50,16
+    DEFPUSHBUTTON   "Install",IDC_INSTALL,188,132,50,16
+    LISTBOX         IDC_COMPONENTS_LIST,88,37,210,71,LBS_NOINTEGRALHEIGHT | 
+                    LBS_NOSEL | WS_VSCROLL | WS_TABSTOP
+    LTEXT           ".Net Installer",IDC_MESSAGE,87,7,211,24
+    CONTROL         "",IDC_PICTUREBOX,"Static",SS_BITMAP | SS_CENTERIMAGE,7,
+                    7,75,130
+    LTEXT           "Operating System",IDC_OPERATING_SYSTEM,7,140,179,8
+    PUSHBUTTON      "Advanced...",IDC_ADVANCED,248,109,50,16
+    LTEXT           "Info Link",IDC_INFO_LINK,87,110,157,12
+END
+
+IDD_DIALOGINSTALL DIALOGEX 0, 0, 209, 60
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Install Component"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Help Install",IDC_HELP_INSTALL,7,7,195,31
+    LTEXT           "Busy",IDC_BUSYCONTROL,7,45,195,8
+END
+
+IDD_DOWNLOAD_DIALOG DIALOGEX 0, 0, 233, 84
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Download components"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Cancel",IDC_CANCEL,176,63,50,14
+    CONTROL         "",IDC_PROGRESSDOWNLOAD,"msctls_progress32",WS_BORDER | 
+                    0x1,7,48,219,9
+    LTEXT           "Static",IDC_HELP_DOWNLOAD,7,7,219,25
+    DEFPUSHBUTTON   "Start",IDC_START,116,63,50,14
+    LTEXT           "Status .....",IDC_STATUS,7,37,219,8
+END
+
+IDD_COMPONENTSELECTOR DIALOGEX 0, 0, 199, 106
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,82,85,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,142,85,50,14
+    LISTBOX         IDC_LISTCOMPONENTS,7,27,185,54,LBS_OWNERDRAWFIXED | 
+                    LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Select the components to install",
+                    IDC_DESCRIPTIONSELECTOR,7,7,185,19
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,2,2,1
+ PRODUCTVERSION 1,2,2,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "000004e4"
+        BEGIN
+            VALUE "[ProductName]", "dotNet Installer"
+            VALUE "CompanyName", "Davide Icardi"
+            VALUE "FileDescription", "Installer for .Net Application"
+            VALUE "FileVersion", "1.2.2.1"
+            VALUE "InternalName", "dotNetInstaller.exe"
+            VALUE "LegalCopyright", "Davide Icardi. All rights reserved."
+            VALUE "OriginalFilename", "dotNetInstaller.exe"
+            VALUE "ProductVersion", "1.2.2.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DOTNETINSTALLER_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 298
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 148
+    END
+
+    IDD_DIALOGINSTALL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 202
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 53
+    END
+
+    IDD_DOWNLOAD_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 226
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 77
+    END
+
+    IDD_COMPONENTSELECTOR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 192
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 99
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// CUSTOM
+//
+
+RES_CONFIGURATION       CUSTOM                  "res\\configuration.xml"
+RES_BANNER              CUSTOM                  "res\\banner.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+IDC_CUSTOM_HAND         CURSOR                  "res\\Hand.cur"
+#endif    // Neutral resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Italian (Italy) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ITA)
+#ifdef _WIN32
+LANGUAGE LANG_ITALIAN, SUBLANG_ITALIAN
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ITA)\r\n"
+    "LANGUAGE 16, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\dotNetInstaller.rc2""  // risorse non Microsoft Visual C++ modificate\r\n"
+    "#include ""afxres.rc""         // Componenti standard\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Italian (Italy) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ITA)
+LANGUAGE 16, 1
+#pragma code_page(1252)
+#include "res\dotNetInstaller.rc2"  // risorse non Microsoft Visual C++ modificate
+#include "afxres.rc"         // Componenti standard
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

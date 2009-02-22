@@ -1,0 +1,1648 @@
+<html>
+	<head>
+		<title>dotNetInstaller - Setup Bootstrapper for .NET Application</title><LINK href="style.css" type="text/css" rel="stylesheet"></head>
+	<body bgColor="#ffffff">
+		<h1>dotNetInstaller - Setup Bootstrapper for .NET Application</h1>
+		<ul>
+			<li>
+				<A href="dotNetInstaller_source.zip">Download source and binary - 1.14 Mb </A>
+			</li>
+		</ul>
+		<p><IMG alt="Sample Image - maximum width is 600 pixels" src="dotNetInstaller.JPG"></p>
+		<!-------------------------------     START      --------------------------->
+		
+		<ul>
+			<li><a href="#Introduction">Introduction</a></li>
+			<li><a href="#Samples">Samples</a></li>
+			<li><a href="#TheEditor">The editor: InstallerEditor.exe</a></li>
+			<li><a href="#Tutorials">Tutorials</a></li>
+			<ul>
+				<li><a href="#StandaloneSetup">How to create a Standalone Setup to install .NET Framework and your msi setup</a></li>
+				<li><a href="#WebSetup">How to create a Web Setup to install .NET Framework and your msi setup</a></li>
+			</ul>
+			<li><a href="#Pathvariables">Path variables</a></li>
+			<li><a href="#CheckInstalled">Check if the component is already installed</a></li>
+			<li><a href="#CheckOS">Check the operating system version</a></li>
+			<li><a href="#MultilanguageFeatures">Multilanguage features</a></li>
+			<ul>
+				<li><a href="#UTF8AndUnicode">UTF-8 and Unicode</a></li>
+			</ul>
+			<li><a href="#DeploydotNetInstaller">Deploy dotNetInstaller</a></li>
+			<li><a href="#XMLConfigurationFile">XML configuration file</a></li>
+			<ul>
+				<li><a href="#1102to1200ChangesXML">1.1.0.2 to 1.2.0.0 changes of XML file</a></li>
+			</ul>
+			<li><a href="#SystemRequirementsNotes">Software Requirements</a></li>
+			<ul>
+				<li><a href="#dotNET">Microsoft .NET Framework 1.1</a></li>
+				<li><a href="#MDAC">Microsoft Data Access Components 2.8</a></li>
+				<li><a href="#IE6">Microsoft Internet Explorer 6 Service Pack 1</a></li>
+				<li><a href="#JET4">Microsoft JET 4.0 Service Pack 8</a></li>
+				<li><a href="#WindowsInstaller20">Windows Installer 2.0</a></li>
+			</ul>
+			<li><a href="#Notes">Notes</a></li>
+			<li><a href="#FutureWorks">Summary of future works</a></li>
+			<li><a href="#History">History</a></li>
+			<li><a href="#License">License</a></li>
+		</ul>
+		
+		<h2><a name="Introduction">Introduction</a></h2>
+		<p>This application doesn't replace tool like InstallShield, Wise or Visual Studio Setup and Deployment Project; my goal is to create an application to help the users to installing the correct prerequisites components. 
+		<br>Today applications often need to install several components to work properly: Windows Service Pack, Internet Explorer, MDAC, .NET Framework, ... 
+		<br>With this tool the developer can define the application prerequisites and install the correct version of these components in the correct order based on the user operating system type and language, allow the user to download these components from the web or install these components directly from his media (usually a CDROM).</p>
+		<p>This project is composed with these components:</p>
+		<ul>
+			<li>dotNetInstaller.exe + Source Code: Main bootstrapper application, written with Visual Studio 2003 C++ and MFC.</li>
+			<li>InstallerEditor.exe + Source Code: Application for editing configurations files and edit dotNetInstaller.exe resources, written with Visual Studio 2003 C#</li>
+			<li>Configuration samples and SupportFiles template.</li>
+		</ul>
+		<p>This project is based on 
+			Microsoft bootstrapper and Kevin Moore bootstrapper 'Enhanced .NET Bootstrap 
+			Setup' (<a href="http://www.codeproject.com/managedcpp/dotnetsetup.asp">http://www.codeproject.com/managedcpp/dotnetsetup.asp</a>).</p>
+		<p>All the settings are stored in a XML file parsed with TinyXml, a little but very good XML parser. You can find it at <a href="http://sourceforge.net/projects/tinyxml">http://sourceforge.net/projects/tinyxml</a>.</p>
+		
+		<p>In the previous version I have used a good parser by Cho, Kyung-min, XMLite: simple xml parser. <a href="http://www.codeproject.com/useritems/xmlite.asp">
+				http://www.codeproject.com/useritems/xmlite.asp</a> but unfortunately can't support very well UTF-8 so now I use TinyXml.</p>
+		
+		<p>A special thanks to Kevin Moore, Cho, Kyung-min, TinyXML project, Peter Mares, Bilou Gateux ( for helping me with the french translation), Wolfgang, Franz Wong, sambourton and a lot of other people who helped me with code, bugs report, new ideas and suggestions.</p>
+		
+		<p>I build this project with Windows XP, Visual Studio 2003 (C++ and C#) and Microsoft .NET Framework 1.1 . Check 
+			for the latest version at: <a href="http://www.devage.com/" target="_blank">http://www.devage.com/</a>.
+			If you have any ideas or questions contact me at: webmaster@devage.com.</p>
+		<p>The installer, the editor and the configuration files are all UTF-8 compatible, the installer is compiled with UNICODE but you can use the Microsoft Layer for Unicode for using the installer with Win9x and ME operating system.</p>
+	
+		<h2><a name="Samples">Samples</a></h2>
+		<p>In the attached zip file you can find 2 samples: a standalone setup and a web setup. Both setups are configured to correctly install these components:</p>
+		<ul>
+			<li>NT4 Sp6</li>
+			<li>Windows 2000 Sp4</li>
+			<li>MDAC 2.8</li>
+			<li>Jet 4.0 Sp8</li>
+			<li>.NET Framework 1.1</li>
+			<li>Your custom setup or windows installer package</li>
+		</ul>
+		<p>on these operating system:</p>
+		<ul>
+			<li>Windows 98</li>
+			<li>Windows 98se</li>
+			<li>Windows ME</li>
+			<li>Windows NT4</li>
+			<li>Windows 2000</li>
+			<li>Windows XP</li>
+			<li>Windows Server 2003</li>
+		</ul>
+		<p>The configuration files also check and install all the requirements software. For more informations on software requirements look at the <a href="#SystemRequirementsNotes">Software Requirements</a> section.</p>
+		<p>I have created the configuration files for English and Italian operating system, but you can include your custom language easily.</p>
+		<p>You can download and try dotNetInstaller with the web setup of InstallerEditor: <a href="http://www.devage.com/dotNetInstaller/EditorSetup/InstallerEditorWebSetup.exe">http://www.devage.com/dotNetInstaller/EditorSetup/InstallerEditorWebSetup.exe</a>. Note that this sample install only the english version of the components (because I don't have to much disk space on the web server) and I haven't included any service packs, so you must have an English OS with Windows 2000 or later.</p>
+		<p>For other samples or informations look at the attached zip file.</p>
+
+		<h2><a name="TheEditor">The editor: InstallerEditor.exe</a></h2>
+		<img src="InstallerEditor.JPG">
+		<p>You can create two types of configuration files with the editor: </p>
+		<ul>
+			<li>Standalone Configuration: A configuration that runs the components setups from a specified path, usually a relative path of the dotNetInstaller.exe file. Select this configuration if you want to distribute your application with a CDROM.</li>
+			<li>Web Configuration: A configuration that download and execute the required components from a specified web site. Select this configuration if you want to distribute the configuration over the web.</li>
+		</ul>
+		<p>With the editor you can create these configurations files and then include these files in the dotNetInstaller resources. With this solution you can only distribute one exe file. </p>
+		<p>Another solution is to distribute in the same path of the dotNetInstaller.exe the configuration file using the name 'configuration.xml' and if you want you can also distribute a bitmap with the name 'banner.bmp'. dotNetInstaller first checks for this configuration file, if the file doesn't exist the application use the configuration embedded into the exe.</p>
+		<p>In the XML configuration file you can use some path variables in all 
+			command or path settings. Is recommended to use &quot; symbol in all the <code lang="xml">command</code> attributes that contains one or more space, in <code lang="xml">msi</code>
+			component the &quot; symbol is not supported and if needed the application 
+			add this symbol automatically. Is recommended to use #APPPATH variable in all 
+			the attributes with path value (like <code lang="xml">command, dialog_bitmap, 
+				package</code>), this constant allows to write relative path string from 
+			the dotNetInstaller.exe folder otherwise all the path are relative to the 
+			system current directory.</p>
+		<p>If you configure the application to download the components, I recommend to use the #TEMPPATH variable as destination directory and then run the components from the same path.</p>
+		<p>For example if you want to launch a file ('My App.exe') in the same folder of 
+			dotNetInstaller.exe you can write in the command string: &quot;#APPPATH\My App.exe&quot;
+		</p>
+		<p>Remember that the order of the components that you see in the editor is the same order that the setup use to install the same components, so be carefull to insert the components in the correct order. In this release you cannot change the order of the components from the editor, if you need this feature you must change the XML manually.<br>
+		You can use the "Add ->Component Wizard ..." menu when adding new components to automatically add the most important components like: Service Pack 6a for NT4, Internet Explorer 6, .NET 1.1, MDAC 2.8, ...</p>
+		
+		<h2><a name="Tutorials">Tutorials</a></h2>
+		
+		<h3><a name="StandaloneSetup">How to create a Standalone Setup to install .NET Framework and your msi setup</a></h3>
+		<p>We create a CDROM with your MSI package, SupportFiles (like .NET Framework), configuration file configuration.xml) and a bitmap (banner.bmp). All these components are installed directly from the CDROM.</p>
+		<ol>
+			<li>Create a folder that represents your final distribution CDROM, for example 'c:\MyRelease\' .</li>
+			<li>Copy under 'c:\MyRelease\' the directory 'SupportFiles' that you can find in the project .zip .</li>
+			<li>In the SupportFiles replace all the readme.txt files with the real components files that your installation need; for example replace the 'SupportFiles\dotNet\v1.1\English\dotnetfx.exe.readme.txt' with the real dotnetfx.exe file that you can download from microsoft web site.</li>
+			<li>Copy your msi package (that you can create with Visual Studio .NET, InstallShield or others installation tool) under the 'c:\MyRelease\'.</li>
+			<li>Copy dotNetInstaller.exe under 'c:\MyRelease\'.</li>
+			<li>Copy unicows.dll under 'c:\MyRelease\'.</li>
+			<li>Create a bitmap (banner.bmp 110x208 pixels) with the name 'c:\MyRelease\banner.bmp' with the logo of your application.</li>
+			<li>Execute the InstallerEditor.exe file.</li>
+			<li>Select the menu 'File'->'New...' and create a new file with the name 'c:\MyRelease\configuration.xml' .</li>
+			<li>Select from the menu 'Tools'->'Template for New Item' the user interface language that you want. (the default language is English, but you can create you custom template and use it with "Tools->Customize Template" command. The templates are xml files that you can easily customize and update with your custom language or captions.)</li>
+			<li>Right click on the 'Config File' node and select 'Add'->'Setup Configuration'</li>
+			<li>Select the just created 'install:' node and customize the properties 'dialog_caption', 'dialog_message' and 'installation_completed' with the name of your application.</li>
+			<li>Right click on the 'install:' node and select 'Add'->'Component Wizard...'</li>
+			<li>Select 'Microsoft .NET Framework 1.1', 'Distributed with dotNetInstaller' and click the OK button.</li>
+			<li>Right click on the 'install:' node and select 'Add'->'Msi Component'</li>
+			<li>Select the just created node and customize the properties 'description' and 'package' with the name of your setup and msi package name. In the package path I use #APPPATH variable that represents the dotNetInstaller.exe path.</li>
+			<li>Select the menu 'File'->'Save'.</li>
+			<li>Write all the contents of the 'c:\MyRelease\' directory on your CDROM. If you want you can also create a 'autorun.inf' file that execute dotNetInstaller.exe.</li>
+		</ol>
+
+		<p>For others informations in the .zip you can find an example of a configuration.xml file configured to install these components for Windows 98, 98 SE, Millennium, NT4, 2000, XP, 2003:</p>
+		<ul>
+			<li>Service Pack 6a for Windows NT 4</li>
+			<li>Internet Explorer 6 Sp1</li>
+			<li>.NET Framework 1.1</li>
+			<li>Microsoft Data Access Component 2.7 (MDAC 2.7)</li>
+			<li>Microsoft JET 4.0 Service Pack 6</li>
+			<li>Sample application</li>
+		</ul>
+		<p>I included a SupportFiles directory with the required structure and some 
+			readme.txt files where you can find a link to download the required components 
+			(usually from microsoft web site).<br>
+			Consider also that these components are present as wizard in the InstallerEditor, so you can easily use these components in your setup.</p>
+		<p>This is the diagram of a standalone setup project:</p>
+		<img src="StandaloneSetup.jpg">
+			
+			
+		<h3><a name="WebSetup">How to create a Web Setup to install .NET Framework and your msi setup</a></h3>
+		
+		<h4>Create the support files directory</h4>
+		<p>We create a web site with your MSI package and all the support files (like .NET Framework).</p>
+		<ol>
+			<li>Create a folder that represents your final distribution web site, for example 'http://www.mysite.com/MyRelease/' .</li>
+			<li>Copy under 'http://www.mysite.com/MyRelease/' the directory 'SupportFiles' that you can find in the project .zip .</li>
+			<li>In the SupportFiles replace all the readme.txt files with the real components files that your installation need; for example replace the 'SupportFiles\dotNet\v1.1\English\dotnetfx.exe.readme.txt' with the real dotnetfx.exe file that you can download from microsoft web site.</li>
+			<li>Copy your msi package (that you can create with Visual Studio .NET, InstallShield or others installation tool) under the 'http://www.mysite.com/MyRelease/'.</li>
+		</ol>
+		
+		<h4>Create the main configuration file</h4>
+		<p>We create a configuration file that download and install the components from a web site (for .NET Framework and one MSI package).</p>
+		<ol>
+			<li>Execute the InstallerEditor.exe file.</li>
+			<li>Select the menu 'File'->'New...' and create a new file with the name 'configuration.xml' and save it in 'http://www.mysite.com/MyRelease/' .</li>
+			<li>Select from the menu 'Tools'->'Template for New Item' the user interface language that you want. (the default language is English, but you can create you custom template and use it with "Tools->Customize Template" command. The templates are xml files that you can easily customize and update with your custom language or captions.)</li>
+			<li>Right click on the 'Config File' node and select 'Add'->'Setup Configuration'</li>
+			<li>Select the just created 'install:' node and customize the properties 'dialog_caption', 'dialog_message' and 'installation_completed' with the name of your application.</li>
+			<li>Right click on the 'install:' node and select 'Add'->'Component Wizard...'</li>
+			<li>Select 'Microsoft .NET Framework 1.1', 'Downloaded from Internet', and replace 'http://www.myWebSite.com/MyApp/SupportFiles' with your web site for example 'http://www.mysite.com/MyRelease/SupportFiles' and click the OK button.</li>
+			<li>Right click on the 'install:' node and select 'Add'->'Msi Component'</li>
+			<li>Select the just created node and customize the properties 'description' and 'package' with the name of your setup and msi package name. Replace the #APPPATH\mysetup.msi with #TEMPPATH\MyApplicationName\mysetup.msi, this is download destination of the package.</li>
+			<li>Right click on the msi component and select 'Add'->'Download Dialog'</li>
+			<li>Select the just created node 'Download Dialog' and customize the properties 'dialog_caption' and 'dialog_message' with the name of your application.</li>
+			<li>Right click on the 'Download Dialog' node and select 'Add'->'Download File'</li>
+			<li>Select the just created node under 'Download Dialog' and customize the properties 'componentname', 'destinationpath' (write for example '#TEMPPATH\MyApplicationName\', must be the same path of the 'package' property) and 'sourceurl' (write 'http://www.mysite.com/MyRelease/mysetup.msi') .</li>
+			<li>Select the menu 'File'->'Save', and copy this configuration.xml file under 'http://www.mysite.com/MyRelease/'.</li>
+		</ol>
+		
+		<h4>Create the bootstrapper</h4>
+		<p>We create an executable that download and execute the main configuration file from a web site, changing the dotNetInstaller resources with our custom xml and bitmap.</p>
+		<ol>
+			<li>Create a bitmap (banner.bmp 110x208 pixels) with the logo of your application in a folder called 'MyWebSetup'.</li>
+			<li>Execute the InstallerEditor.exe file.</li>
+			<li>Select the menu 'File'->'New...' and create a new file with the name 'configuration.xml' in the folder 'MyWebSetup'.</li>
+			<li>Select from the menu 'Tools'->'Template for New Item' the user interface language that you want. (the default language is English, but you can create you custom template and use it with "Tools->Customize Template" command. The templates are xml files that you can easily customize and update with your custom language or captions.)</li>
+			<li>Right click on the 'Config File' node and select 'Add'->'Web Configuration'</li>
+			<li>Select the just created node 'reference:' and customize the properties 'referencefile' for example write '#TEMPPATH\MyApplicationName\configuration.xml'.</li>
+			<li>Select the node 'Download Dialog' under 'reference:' and customize the properties 'dialog_caption' and 'dialog_message'.</li>
+			<li>Right click on the 'Download Dialog' node and select 'Add'->'Download File'</li>
+			<li>Select the just created node under 'Download Dialog' and customize the properties 'componentname', 'destinationpath' (write for example '#TEMPPATH\MyApplicationName\', must be the same path of the 'referencefile' property) and 'sourceurl' (write 'http://www.mysite.com/MyRelease/configuration.xml', must be the URL where you can download the previously created configuration file) .</li>
+			<li>Select the menu 'File'->'Save' and copy this configuration.xml file under 'MyWebSetup'.</li>
+			<li>Copy in the directory 'MyWebSetup' 'unicows.dll' and 'dotNetInstaller.exe'.</li>
+			<li>Create a zip file 'MyWebSetup.zip' (or a Self Extracting File) with the name 'MyWebSetup.zip' or '.exe' with the contents of the directory 'MyWebSetup' (contents:'unicows.dll', 'dotnetInstaller.exe', 'banner.bml' and 'configuration.xml').</li>
+			<li>Copy 'MyWebSetup.zip' under your 'http://www.mysite.com/MyRelease/'.</li>
+		</ol>
+		<p>Now the user must only download the 'MyWebSetup.zip' (< 400 Kb) and execute dotNetInstaller (or using a Self Extractor file you can automatically run it), this application automatically download and install the required components, in this example .NET Framework and one MSI package.<br>
+		This is the diagram of a web setup project:</p>
+		<img src="WebSetup.jpg">
+		<p>I create a web setup to install this editor, you can download the bootstrapper from: <a href="http://www.devage.com/dotNetInstaller/EditorSetup/InstallerEditorWebSetup.exe">http://www.devage.com/dotNetInstaller/EditorSetup/InstallerEditorWebSetup.exe</a>.</p>
+		
+		<h2><a name="Pathvariables">Path variables</a></h2>
+		These are the variables that can be used in the configuration file in all the attribute that contains a path (<code lang="text">dialog_bitmap</code>,<code lang="text">command</code>, ...):
+		<ul>
+			<li><code lang="text">#APPPATH</code> - This string is replaced with the directory of dotNetInstaller.exe program.</li>
+			<li><code lang="text">#SYSTEMPATH</code> - This string is replaced with the windows system directory (using <code>GetSystemDirectory()</code> API, usually c:\WINNT\System32 ).</li>
+			<li><code lang="text">#WINDOWSPATH</code> - This string is replaced with the windows directory (using <code>GetWindowsDirectory()</code> API, usually c:\WINNT ).</li>
+			<li><code lang="text">#TEMPPATH</code> - This string is replaced with the temp directory (using <code>GetTempPath()</code> API, usually C:\Documents and Settings\[User]\Local Settings\Temp ).</li>
+		</ul>
+		
+		<h2><a name="CheckInstalled">Check if the component is already installed</a></h2>
+		<p>You can use the <code lang="text">installedcheck</code> element to check if a 
+			component is already installed, for example you can check if the .NET Framework 
+			1.1 is installed by reading this registry key SOFTWARE\Microsoft\NET Framework 
+			Setup\NDP\v1.1.4322\Install = 1.</p>
+		<p>For now there are two type of install check:
+			<ul>
+				<li>'check_registry_value' - Check for a specific registry value.</li>
+				<li>'check_file' - Check for a specific file with a specific version.</li>
+			</ul>
+			There are two type of comparison when check for a registry value or file version: 'match' 
+			(check if the exact value is present) or 'version' (check if the version is greater or equal).</p>
+		<p>You can look at the example to see the check used with the most common components: .NET Framework, Internet Explorer, MDAC, JET and more.</p>
+		
+		<h2><a name="CheckOS">Check the operating system version</a></h2>
+		<p>This is the operating system table used to install a component only in a 
+			specific operating system version.
+			<table border="1" ID="Table43">
+				<tr>
+					<th>
+						Operating System Name</th>
+					<th>
+						Enum</th>
+					<th>
+						Numeric Identifier</th>
+				</tr>
+				<tr>
+					<td>Not Valid</td>
+					<td>winNotValid</td>
+					<td>0</td>
+				</tr>
+				<tr>
+					<td>Windows 95</td>
+					<td>win95</td>
+					<td>5</td>
+				</tr>
+				<tr>
+					<td>Windows 95 OSR2</td>
+					<td>win95osr2</td>
+					<td>10</td>
+				</tr>
+				<tr>
+					<td>Windows 98</td>
+					<td>win98</td>
+					<td>15</td>
+				</tr>
+				<tr>
+					<td>Windows 98 Second Edition</td>
+					<td>win98se</td>
+					<td>20</td>
+				</tr>
+				<tr>
+					<td>Windows Millennium</td>
+					<td>winME</td>
+					<td>25</td>
+				</tr>
+				<tr>
+					<td>Windows NT4</td>
+					<td>winNT4</td>
+					<td>30</td>
+				</tr>
+				<tr>
+					<td>Windows NT4 Service Pack 6</td>
+					<td>winNT4sp6</td>
+					<td>35</td>
+				</tr>
+				<tr>
+					<td>Windows NT4 Service Pack 6a</td>
+					<td>winNT4sp6a</td>
+					<td>40</td>
+				</tr>
+				<tr>
+					<td>Windows 2000</td>
+					<td>win2000</td>
+					<td>45</td>
+				</tr>
+				<tr>
+					<td>Windows 2000 Service Pack 1</td>
+					<td>win2000sp1</td>
+					<td>50</td>
+				</tr>
+				<tr>
+					<td>Windows 2000 Service Pack 2</td>
+					<td>win2000sp2</td>
+					<td>55</td>
+				</tr>
+				<tr>
+					<td>Windows 2000 Service Pack 3</td>
+					<td>win2000sp3</td>
+					<td>60</td>
+				</tr>
+				<tr>
+					<td>Windows 2000 Service Pack 4</td>
+					<td>win2000sp4</td>
+					<td>65</td>
+				</tr>
+				<tr>
+					<td>Windows XP</td>
+					<td>winXP</td>
+					<td>75</td>
+				</tr>
+				<tr>
+					<td>Windows XP Service Pack 1</td>
+					<td>winXPsp1</td>
+					<td>80</td>
+				</tr>
+				<tr>
+					<td>Windows XP Service Pack 2</td>
+					<td>winXPsp2</td>
+					<td>82</td>
+				</tr>
+				<tr>
+					<td>Windows Server 2003</td>
+					<td>winServer2003</td>
+					<td>90</td>
+				</tr>
+				<tr>
+					<td>Next ....</td>
+					<td>winLater</td>
+					<td>100</td>
+				</tr>
+			</table>
+		</p>
+		<p>Same examples:</p>
+		<ul>
+			<li>
+				Install a component only in Windows XP (with no service pack check) : <CODE lang="text">
+					os_filter_greater</CODE>='74', <CODE lang="text">os_filter_smaller</CODE>='90'.
+			<li>
+				Install a component only in Windows 2000 or later : <CODE lang="text">os_filter_greater</CODE>='44',
+				<CODE lang="text">os_filter_smaller</CODE>='' .
+			<li>
+				Install a component only in Windows 98 (not in Windows 98 SE): <CODE lang="text">os_filter_greater</CODE>='14',
+				<CODE lang="text">os_filter_smaller</CODE>='16' .
+			<li>
+				Install a component always: <CODE lang="text">os_filter_greater</CODE>='', <CODE lang="text">
+					os_filter_smaller</CODE>='' .
+			</li>
+		</ul>
+		<p>Usually is best to use an install check to see if the component is already 
+			installed, but for some components is necessary to check the operating system 
+			version (especially for service pack or windows update).</p>
+
+		<h2><a name="MultilanguageFeatures">Multilanguage features</a></h2>
+		<p>dotNetInstaller reads all the captions and messages from the configuration file; so to create your custom language you can easily edit the configuration file using your language.</p>
+		<p>With InstallerEditor you can easily create custom languages using template files. For now there are 3 default files: english_template.xml, french_template.xml and italian_template.xml. The editor can be configured to use one of these files so, when you create new items in the editor, default values are readed from the template selected.<br>
+		To configure the list of templates available you can use the "Tools->Customize Templates" menu. To select a template you can use the "Tools->Template for new Item" menu.</p>
+		<p>Of course you can create your custom template files following the xml structure of one of the existing files.</p>
+		
+		<h3><a name="UTF8AndUnicode">UTF-8 and Unicode</a></h3>
+		<p>To full support non english language the configuration file uses UTF-8 encoding.<br>
+		To read and use correclty this encoding I have compiled dotNetInstaller with UNICODE. The editor is already full compatible with unicode thanks to .NET that use always unicode strings. Remember that unicode is not supported on Windows 95, 98 and ME; so if you use one of these operating system you must copy Microsoft Layer for Unicode (<b>unicows.dll</b>) in the same path of dotNetInstaller.exe (see also Deploy dotNetInstaller section).</p>
+		<p>Microsoft Link: <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/mslu/winprog/microsoft_layer_for_unicode_on_windows_95_98_me_systems.asp">Microsoft Layer for Unicode on Windows 95/98/Me Systems</a></p>
+		
+		<h2><a name="DeploydotNetInstaller">Deploy dotNetInstaller</a></h2>
+		<p>You can deploy dotNetInstaller in 2 ways, these are the files that you must inlcude:</p>
+		<ul>
+			<li>Using directly dotNetInstaller.exe:</li>
+			<ul>
+				<li>dotNetInstaller.exe - Main bootstrapper executable</li>
+				<li><b>configuration.xml</b> - Configuration file</li>
+				<li>unicows.dll - Microsoft Layer for Unicode (this file is required only on Windows 95, 98 and ME).</li>
+			</ul>
+			<li>Create a custom executable using InstallerEditor (with the "File->Create Exe" method):</li>
+			<ul>
+				<li><b>dotNetInstaller.exe</b> - Main bootstrapper executable edited with InstallerEditor.</li>
+				<li>unicows.dll - Microsoft Layer for Unicode (this file is required only on Windows 95, 98 and ME).</li>
+			</ul>
+		</ul>
+		<p><b>IMPORTANT NOTE</b>: On Windows 95, 98 and ME operating system you must deploy unicows.dll in the same path of dotNetInstaller.exe (or of the executable generated by the editor).</p>
+			
+		<h2><a name="XMLConfigurationFile">XML configuration file</a></h2>
+		<p>Is recommended to use the editor InstallerEditor to create or modify your configuration files or I suggest to use a normal text editor or xml editor compatible with UTF-8. The configuration file must be written using UTF-8 encoding.<br>
+		NOTE:If you want to insert the &quot; char in the XML manually you must write &amp;quot; .</p>
+		
+<!-- START table for XML configuration help -->
+<table cellpadding="0" cellspacing="0" border="1" ID="Table1">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">configurations</th>
+        </tr>
+        <tr>
+          <td colspan="2">Root element</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table2">
+              <tbody>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table3">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>configuration</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="1" ID="Table4">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">configuration (type='install')</th>
+        </tr>
+        <tr>
+          <td colspan="2">A configuration used to install a collection of components.</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table5">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>type</b>
+                  </td>
+                  <td>'install' - Type of the configuration. Can be 'install' or 'reference'.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>lcid</b>
+                  </td>
+                  <td>A filter to install this configuration only on all operating system language equals or not equals than the LCID specified (see Help-&gt;LCID Table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter a specified component.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>dialog_caption</b>
+                  </td>
+                  <td>Main dialog title.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>dialog_message</b>
+                  </td>
+                  <td>Main message of the main dialog.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>dialog_bitmap</b>
+                  </td>
+                  <td>Bitmap file used in the left panel of the main dialog. If this file doesn't exist or this attribute is empty the application load the bitmap from the .exe resource. Can contains path constant (see Help-&gt;Path Constant).</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>install_caption</b>
+                  </td>
+                  <td>Caption of the Install button.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>cancel_caption</b>
+                  </td>
+                  <td>Caption of the Cancel button.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>reinstallflag_caption</b>
+                  </td>
+                  <td>Caption for the 'Reinstall all check box'.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>status_installed</b>
+                  </td>
+                  <td>The string used for indicating an installed component.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>status_notinstalled</b>
+                  </td>
+                  <td>The string used for indicating a not installed component.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>failed_exec_command_continue</b>
+                  </td>
+                  <td>The message used when a component cannot be installed and ask if the application can continue with others components (Yes/No message). Must contain one '%s' string where the application put the description of the component.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>installation_completed</b>
+                  </td>
+                  <td>Installation completed message.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>installing_component_wait</b>
+                  </td>
+                  <td>The message used when installing a component. Must contain one '%s' string where the application put the description of the component.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>reboot_required</b>
+                  </td>
+                  <td>The message used when the application need to restart and ask if restart now (with a Yes/No message).</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>advanced_caption</b>
+                  </td>
+                  <td>Caption of the Advanced button. Used to show the 'Component Selector' dialog with the complete list of components available to install. If empty the button Advanced is not available.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>dialog_selector_caption</b>
+                  </td>
+                  <td>Component Selector dialog title, this dialog shows the complete list of components available to install.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>dialog_selector_message</b>
+                  </td>
+                  <td>Component Selector dialog description, this dialog shows the complete list of components available to install.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>dialog_selector_cancel</b>
+                  </td>
+                  <td>Component Selector dialog Cancel caption button.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>dialog_otherinfo_caption</b>
+                  </td>
+                  <td>Caption of the link at the bottom of the main dialog that open the link specified in the dialog_otherinfo_link attribute. If empty the link is hidden. Usually used for help, readme or internet link. See also dialog_otherinfo_link attribute.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>dialog_otherinfo_link</b>
+                  </td>
+                  <td>Command to execute when the user click on the link at the bottom of the main installation dialog. Can be any valid command (executable, document, web page, ...) valid for the ShellExecute API. Must be defined the dialog_otherinfo_caption attribute. Can contains path constant (see Help-&gt;Path Constant).</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>complete_command</b>
+                  </td>
+                  <td>Command executed when all components are installed correctly; can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>auto_close_if_installed</b>
+                  </td>
+                  <td>If true auto close the dialog if all the components are already installed (before closing dotNetInstaller always execute the complete message box and execute the complete command).</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table6">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>components</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="1" ID="Table7">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">configuration (type='reference')</th>
+        </tr>
+        <tr>
+          <td colspan="2">A configuration used to download a configuration file from a specific URL.</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table8">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>type</b>
+                  </td>
+                  <td>'reference' - Type of the configuration. Can be 'install' or 'reference'.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>lcid</b>
+                  </td>
+                  <td>A filter to install this configuration only on all operating system language equals or not equals than the LCID specified (see Help-&gt;LCID Table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter a specified component. If empty no filter is applied.</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table9">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>downloaddialog</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>configfile</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="1" ID="Table10">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">configfile</th>
+        </tr>
+        <tr>
+          <td colspan="2">The path to the configuration file downloaded.</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table11">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>filename</b>
+                  </td>
+                  <td>The configuration file where the application can find the configuration. Usually this is the destination directory of the downloaded component. Can contains path constant (see Help-&gt;Path Constant).</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table12">
+              <tbody>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="1" ID="Table13">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">components</th>
+        </tr>
+        <tr>
+          <td colspan="2">A collection of elements of type 'component'.</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table14">
+              <tbody>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table15">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>component</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="1" ID="Table16">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">component (see also specific help based on the 'type' attribute)</th>
+        </tr>
+        <tr>
+          <td colspan="2">A component to be installed.</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table17">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>type</b>
+                  </td>
+                  <td>The type of the component; can be 'cmd' for executing generic command line installation or 'msi' for installing Windows Installer MSI package or 'openfile' to open a file. Each type has his own attributes.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>os_filter_greater</b>
+                  </td>
+                  <td>A filter to install this component only on all operating system id greater than the id specified (see Help-&gt;Operating System Table). For example to install a component only in Windows 2000 or later write '44'.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>os_filter_smaller</b>
+                  </td>
+                  <td>A filter to install this component only on all operating system id smaller than the id specified (see operating system table). For example to install a component preceding Windows 2000 write '45'.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>os_filter_lcid</b>
+                  </td>
+                  <td>A filter to install this component only on all operating system language equals or not equals than the LCID specified (see Help-&gt;LCID table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter all the configuration element.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>installcompletemessage</b>
+                  </td>
+                  <td>The message used when a component is successfully installed. To disable this message leave this property empty.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>mustreboot</b>
+                  </td>
+                  <td>Indicates if ask to reboot after this component is installed successfully (True/False). Normally if the system must be restarted is automatically the component that tells this setup (with special return code) to stop and restart the system, but in special circumstances (for example in Windows 98) we must force a reboot to install correctly some components (for example the .NET Framework).</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>description</b>
+                  </td>
+                  <td>Description of this component. This value is used also in some message to replace the %s string.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>note</b>
+                  </td>
+                  <td>Note, not used by the setup.</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table18">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>installedcheck</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>downloaddialog</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="1" ID="Table19">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">component (type='cmd')</th>
+        </tr>
+        <tr>
+          <td colspan="2">A component that can be used to execute an .exe file like a setup application.</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table20">
+              <tbody>
+                <tr>
+                  <td>
+                    <b></b>
+                  </td>
+                  <td>see also 'component' element</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>type</b>
+                  </td>
+                  <td>'cmd'</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>command</b>
+                  </td>
+                  <td>Specifies the command to execute when installing this component. Must be a valid command for the 'CreateProcess' API. Can contain " char and path constant (see Help-&gt;Path Constant).</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table21">
+              <tbody>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="1" ID="Table22">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">component (type='msi')</th>
+        </tr>
+        <tr>
+          <td colspan="2">A component that can be used to install an msi package.</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table23">
+              <tbody>
+                <tr>
+                  <td>
+                    <b></b>
+                  </td>
+                  <td>see also 'component' element</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>type</b>
+                  </td>
+                  <td>'msi'</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>package</b>
+                  </td>
+                  <td>Specifies the path to the msi package to execute when installing this component. Can contain path constant (see Help-&gt;Path Constant).</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>cmdparameters</b>
+                  </td>
+                  <td>Specifies the command line parameters for the msiexec program. Can contain " char and path constant (see Help-&gt;Path Constant). See MSDN for the command line you can use with Windows Installer.</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table24">
+              <tbody>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="1" ID="Table25">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">component (type='openfile')</th>
+        </tr>
+        <tr>
+          <td colspan="2">A component that can be used to open a web page, a readme file or execute any file during the installation process.</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table26">
+              <tbody>
+                <tr>
+                  <td>
+                    <b></b>
+                  </td>
+                  <td>see also 'component' element</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>type</b>
+                  </td>
+                  <td>'openfile'</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>file</b>
+                  </td>
+                  <td>Specifies the file to open when installing this component. Must be a valid command for the 'ShellExecute' API. Can contain " char and path constant (see Help-&gt;Path Constant). Can be for example a internet link.</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table27">
+              <tbody>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="1" ID="Table28">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">downloaddialog</th>
+        </tr>
+        <tr>
+          <td colspan="2">Represents a list of files to download and the configurations of the download dialog.</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table29">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>dialog_caption</b>
+                  </td>
+                  <td>The caption of the download dialog.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>dialog_message</b>
+                  </td>
+                  <td>The initial message that appears in the download dialog before the user press the 'Start' button.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>autostartdownload</b>
+                  </td>
+                  <td>True to start the download without user interaction, False to let the user press the 'Start' button.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>dialog_message_downloading</b>
+                  </td>
+                  <td>The message that appears in the download dialog when the download process start.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>buttonstart_caption</b>
+                  </td>
+                  <td>Caption of the 'Start' button.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>buttoncancel_caption</b>
+                  </td>
+                  <td>Caption of the 'Cancel' button.</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table30">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>downloads</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="1" ID="Table31">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">downloads</th>
+        </tr>
+        <tr>
+          <td colspan="2">A collection of elements of type 'download'.</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table32">
+              <tbody>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table33">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>download</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="1" ID="Table34">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">download</th>
+        </tr>
+        <tr>
+          <td colspan="2">Represent a single file to download.</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table35">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>componentname</b>
+                  </td>
+                  <td>The description of the file to download.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>sourceurl</b>
+                  </td>
+                  <td>The complete source path of the file to download. For example 'http://www.yourwebsite.com/SetupX/Setup.exe' . Must be URL with http:// or ftp:// protocol</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>destinationpath</b>
+                  </td>
+                  <td>The complete destination path where the application copy the sourceurl file. Is recommended to use the TEMP path for destination like this: '#TEMPPATH\\APPLICATION_NAME' . Can contains path constant (see Help-&gt;Path Constant).</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>destinationfilename</b>
+                  </td>
+                  <td>New name of the downloaded file. Leave this value empty to use the same filename of the original filename.</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table36">
+              <tbody>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="1" ID="Table37">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">installedcheck (type='check_file')</th>
+        </tr>
+        <tr>
+          <td colspan="2">The application check if a component is installed looking for the specified registry information or file.</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table38">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>type</b>
+                  </td>
+                  <td>'check_file' - Type of the check, can be 'check_registry_value' to check for a specific value in the registry or 'check_file' to check for a specific file.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>filename</b>
+                  </td>
+                  <td>Specifies the file to search, if the application cannot find the specified file then the component must be installed. This attribute can contain path constant (see Help-&gt;Path Constant).</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>fileversion</b>
+                  </td>
+                  <td>The version of the file, can be used to perform version check based on comparison attribute. If empty the application check only for the presence of the file.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>comparison</b>
+                  </td>
+                  <td>Comparison mode, can be 'match' to check if the exact version of the file is present or 'version' to compare if a version equal or greater is present.</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table39">
+              <tbody>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="1" ID="Table40">
+      <tbody>
+        <tr>
+          <th bgcolor="#ccccff" colspan="2">installedcheck (type='check_registry_value')</th>
+        </tr>
+        <tr>
+          <td colspan="2">The application check if a component is installed looking for the specified registry information or file.</td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="1" ID="Table41">
+              <tbody>
+                <tr>
+                  <td>
+                    <b>type</b>
+                  </td>
+                  <td>'check_registry_value' - Type of the check, can be 'check_registry_value' to check for a specific value in the registry or 'check_file' to check for a specific file.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>path</b>
+                  </td>
+                  <td>Specifies the registry path to search for the registry value specified, must be a path under HKEY_LOCAL_MACHINE like 'SOFTWARE\\MyCompany'.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>fieldname</b>
+                  </td>
+                  <td>The registry field name in the specified path, for example 'Installed'.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>fieldvalue</b>
+                  </td>
+                  <td>The registry value used to check if the component is installed, this value is converted based on the value type specified.</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>fieldtype</b>
+                  </td>
+                  <td>Specifies the type of the registry field, can be 'REG_DWORD' (for numeric value) or 'REG_SZ' (for string value).</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>comparison</b>
+                  </td>
+                  <td>Comparison mode; can be 'match' to check if the exact value is present in the registry or 'version' to compare the registry version with the specified version and return true if the registry version is equal or greater then the version specified.</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" ID="Table42">
+              <tbody>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+<!-- END table for XML configuration help -->
+		
+		<h3><a name="1102to1200ChangesXML">1.1.0.2 to 1.2.0.0 changes of XML file</a></h3>
+		<p>If you already have some files compatible with dotNetInstaller 1.1.0.2 you can open these files with the editor, the editor automatically removes the old attributes and adds the new attributes.<br>
+		Removed attributes:</p>
+		<ul>
+			<li>configurations\configuration\components\component\installmessage</li>
+
+			<li>configurations\configuration\reinstallflag_caption</li>
+			<li>configurations\configuration\dialog_install_next</li>
+			<li>configurations\configuration\dialog_install_skip</li>
+		</ul>
+		New attributes:
+		<ul>
+			<li>configurations\configuration\advanced_caption</li>
+			<li>configurations\configuration\dialog_selector_caption</li>
+			<li>configurations\configuration\dialog_selector_message</li>
+			<li>configurations\configuration\dialog_selector_ok</li>
+			<li>configurations\configuration\dialog_selector_cancel</li>
+			<li>configurations\configuration\dialog_otherinfo_caption</li>
+			<li>configurations\configuration\dialog_otherinfo_link</li>
+			<li>configurations\configuration\complete_command</li>
+			<li>configurations\configuration\auto_close_if_installed</li>
+		</ul>
+		
+		<h2><a name="SystemRequirementsNotes">Software Requirements</a></h2>
+		<p>dotNetInstaller is compatible with Windows 98, Windows 98 Second Edition, Windows ME, Windows NT4, Windows 2000, Windows XP, Windows Server 2003.<br>
+		Some other applications, like .NET Framework 1.1, require some system components. Here you can find some informations about common components requirements.</p>
+		
+		<p>Consider that these components are available also on the <a href="http://windowsupdate.microsoft.com/">Windows Update web site</a>.</p>
+		
+		<h3><a name="dotNET">Microsoft .NET Framework 1.1</a></h3>
+		<table border="1" cellpadding="0" cellspacing="0">
+			<tr>
+				<td><strong>OPERATING SYSTEM</strong></td>
+				<td><strong>REQUIREMENTS</strong></td>
+			</tr>
+			<tr>
+				<td>Windows 95</td>
+				<td>
+					Not supported
+				</td>
+			</tr>
+			<tr>
+				<td>Windows 98 First Edition<br>
+						Windows 98 Second Edition</td>
+				<td>
+					Microsoft Internet Explorer 5.01 or later
+				</td>
+			</tr>
+			<tr>
+				<td>Windows NT 4.0</td>
+				<td>
+					Service Pack 6a<br>
+					Microsoft Internet Explorer 5.01 or later
+				</td>
+			</tr>
+			<tr>
+				<td>Windows ME<br>
+						Windows 2000<br>
+						Windows XP</td>
+				<td>
+					-
+				</td>
+			</tr>
+			<tr>
+				<td>Windows Server 2003</td>
+				<td>
+					Already Installed.
+				</td>
+			</tr>
+		</table>
+		
+		<p><i>.NET Framework automatically installs Windows Installer 2. Microsoft Data Access Components 2.6 is required for data scenarios.</i></p>
+			
+		<p>Microsoft links:<br>
+		<a href="http://msdn.microsoft.com/netframework/technologyinfo/howtoget/default.aspx">Download</a><br>
+		<a href="http://msdn.microsoft.com/netframework/technologyinfo/sysreqs/default.aspx">System Requirements</a><br>
+		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyId=04DBAF2E-61ED-43F4-8D2A-CCB2BAB7B8EB&displaylang=en">Language Packs</a>
+		</p>
+		
+		<h3><a name="MDAC">Microsoft Data Access Components 2.7 Sp1 Refresh</a></h3>
+		<table border="1" cellpadding="0" cellspacing="0" ID="Table47">
+			<tr>
+				<td><strong>OPERATING SYSTEM</strong></td>
+				<td><strong>REQUIREMENTS</strong></td>
+			</tr>
+			<tr>
+				<td>Windows 95</td>
+				<td>
+					Not supported
+				</td>
+			</tr>
+			<tr>
+				<td>Windows 98 First Edition</td>
+				<td>
+					Internet Explorer 4.01 Service Pack 2 (SP2) or later
+				</td>
+			</tr>
+			<tr>
+				<td>Windows NT 4.0</td>
+				<td>
+					Service Pack 6a
+				</td>
+			</tr>
+			<tr>
+				<td>Windows 98 Second Edition<br>
+					Windows ME<br>
+					Windows 2000</td>
+				<td>
+					-
+				</td>
+			</tr>
+			<tr>
+				<td>Windows XP</td>
+				<td>
+					Already Installed.
+				</td>
+			</tr>
+			<tr>
+				<td>Windows Server 2003</td>
+				<td>
+					Already Installed. (MDAC 2.8)
+				</td>
+			</tr>			
+		</table>
+		
+		<p>Microsoft links:<br>
+		<a href="http://msdn.microsoft.com/data/downloads/updates/default.aspx">Data Access Downloads</a><br>
+		<a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;271908">INFO: MDAC version 2.6 and later do not contain Jet or Desktop ODBC drivers</a><br>
+		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=9ad000f2-cae7-493d-b0f3-ae36c570ade8&displaylang=en">Download MDAC 2.7 Sp1 Refresh</a>
+		</p>
+		
+		<h3><a name="MDAC">Microsoft Data Access Components 2.8</a></h3>
+		<table border="1" cellpadding="0" cellspacing="0">
+			<tr>
+				<td><strong>OPERATING SYSTEM</strong></td>
+				<td><strong>REQUIREMENTS</strong></td>
+			</tr>
+			<tr>
+				<td>Windows 95</td>
+				<td>
+					Not supported
+				</td>
+			</tr>
+			<tr>
+				<td>Windows 98 First Edition</td>
+				<td>
+					Internet Explorer 4.01 Service Pack 2 (SP2) or later
+				</td>
+			</tr>
+			<tr>
+				<td>Windows NT 4.0</td>
+				<td>
+					Service Pack 6a
+				</td>
+			</tr>
+			<tr>
+				<td>Windows 98 Second Edition<br>
+					Windows ME<br>
+					Windows 2000<br>
+					Windows XP</td>
+				<td>
+					-
+				</td>
+			</tr>
+			<tr>
+				<td>Windows Server 2003</td>
+				<td>
+					Already Installed.
+				</td>
+			</tr>
+		</table>
+		
+		<p>Microsoft links:<br>
+		<a href="http://msdn.microsoft.com/data/downloads/updates/default.aspx">Data Access Downloads</a><br>
+		<a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;271908">INFO: MDAC version 2.6 and later do not contain Jet or Desktop ODBC drivers</a><br>
+		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=6c050fe3-c795-4b7d-b037-185d0506396c&displaylang=en">Download MDAC 2.8</a>
+		</p>
+		
+		<h3><a name="IE6">Microsoft Internet Explorer 6 Service Pack 1</a></h3>
+		<table border="1" cellpadding="0" cellspacing="0" ID="Table44">
+			<tr>
+				<td><strong>OPERATING SYSTEM</strong></td>
+				<td><strong>REQUIREMENTS</strong></td>
+			</tr>
+			
+			<tr>
+				<td>Windows 95</td>
+				<td>
+					Not supported
+				</td>
+			</tr>
+			<tr>
+				<td>Windows 98 First Edition<br>
+						Windows 98 Second Edition<br>
+						Windows ME<br>
+						Windows 2000<br>
+						Windows XP</td>
+				<td>
+					-
+				</td>
+			</tr>
+			<tr>
+				<td>Windows NT 4.0</td>
+				<td>
+					High Encryption Version of Service Pack 6a
+				</td>
+			</tr>
+			<tr>
+				<td>Windows XP Sp1<br>
+					Windows Server 2003</td>
+				<td>
+					Already Installed.
+				</td>
+			</tr>
+		</table>
+		
+		<p>Microsoft links:<br>
+		<a href="http://www.microsoft.com/windows/ie/downloads/critical/ie6sp1/default.mspx">Download</a><br>
+		<a href="http://www.microsoft.com/windows/ie/evaluation/sysreqs/default.mspx">System Requirements</a><br>
+		<a href="http://support.microsoft.com/default.aspx?scid=kb;en-us;164539">Internet Explorer Versions</a>
+		</p>
+		
+
+		<h3><a name="JET4">Microsoft JET 4.0 Service Pack 8</a></h3>
+		<table border="1" cellpadding="0" cellspacing="0" ID="Table45">
+			<tr>
+				<td><strong>OPERATING SYSTEM</strong></td>
+				<td><strong>REQUIREMENTS</strong></td>
+			</tr>
+			<tr>
+				<td>Windows 95<br>
+					Windows 98 First Edition<br>
+					Windows 98 Second Edition<br>
+					Windows ME<br>
+					Windows NT 4<br>
+					Windows XP<br>
+					Windows Server 2003<br></td>
+				<td>
+					-
+				</td>
+			</tr>
+			<tr>
+				<td>Windows 2000</td>
+				<td>Service Pack 3</td>
+			</tr>			
+		</table>
+
+		<p><i>Consider that for Windows 2000, XP and Server 2003 you must use the right language of the JET update, for example to install JET in a Italian Windows XP you must install the Italian JET update.</i></p>
+
+		<p>Microsoft links:<br>
+		<a href="http://support.microsoft.com/?kbid=829558">Information about Jet 4.0 Service Pack 8</a><br>
+		<a href="http://msdn.microsoft.com/data/downloads/updates/default.aspx">Data Access Downloads</a><br>
+		<a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;271908">INFO: MDAC version 2.6 and later do not contain Jet or Desktop ODBC drivers</a><br>
+		<a href="http://support.microsoft.com/default.aspx?scid=kb;en-us;239114">How to obtain the latest service pack for the Microsoft Jet 4.0 Database Engine</a>
+		</p>
+
+		<h3><a name="WindowsInstaller20">Windows Installer 2.0</a></h3>
+		<table border="1" cellpadding="0" cellspacing="0" ID="Table46">
+			<tr>
+				<td><strong>OPERATING SYSTEM</strong></td>
+				<td><strong>REQUIREMENTS</strong></td>
+			</tr>
+			<tr>
+				<td>Windows 95<br>
+					Windows 98 First Edition<br>
+					Windows 98 Second Edition<br>
+					Windows ME<br>
+					Windows NT 4<br>
+					Windows 2000</td>
+				<td>
+					-
+				</td>
+			</tr>
+			<tr>
+				<td>Windows XP<br>
+					Windows Server 2003<br></td>
+				<td>
+					Already Installed.
+				</td>
+			</tr>
+		</table>
+		
+		<p><i>.NET Framework automatically installs Windows Installer 2.</i></p>
+
+		<p>Microsoft links:<br>
+		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=4b6140f9-2d36-4977-8fa1-6f8a0f5dca8f&DisplayLang=en">Windows Installer 2.0 Redistributable for Windows NT 4.0 and 2000 Download</a><br>
+		<a href="http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=CEBBACD8-C094-4255-B702-DE3BB768148F">Windows Installer 2.0 Redistributable for Windows 95, 98, and Me Download</a>
+		</p>
+		
+		<h2><a name="Notes">Notes</a></h2>
+		<UL>
+			<li>
+			If a component needs to restart the system the application automatically add a 
+			key in the HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run to reload the application at the next startup.
+			<li>
+			You must run this application with Administrator privilege.
+			<li>
+			I have tested this setup with Windows 98, 98 SE, Millennium, 2000, XP.</li>
+			<li>Not yet tested with Windows NT 4 and with Terminal Server. Probably for NT4 you need at least Internet Explorer 4 or you can try to distribuite also URLMon.dll and shwapi.dll with dotNetInstaller.exe.</li>
+			<li>Is useful that also your setup write a little registry value where you can put some information about the installed version, this allows this application to check if your setup is already installed using a 'installedcheck' element.</li>
+			<li>In Windows 98 after installing .NET Framework I must force a reboot of the computer (with the 'mustreboot' attribute) otherwise some .NET Framework or Windows Installer components or not installed correctly.</li>
+			<li>The only way that I found to check if JET 4.0 is already installed is to search for Msjet40.dll file in the system directory with the version 4.0.7328.0 (for JET 4.0 Sp7) or 4.0.8015.0 (for JET 4.0 Sp8).</li>
+			<li>You can use this project also to launch multiple MSI or others setup at the same time, and can be used also for not .NET project (like Visual Basic, VC++, ...).</li>
+			<li>In Windows Millennium I had some strange problems if I rename the dotNetInstaller.exe to Setup.exe. If I launch Setup.exe I cannot detect anymore the right operating system version ( return Windows 98 version instead of Windows Millennium ). Anyway all you have to do is to leave the executable name dotNetInstaller.exe or use a name different from Setup.exe.</li>
+			<li>To find the operating system installed LCID I use the information provided in this article: <a href="http://support.microsoft.com/default.aspx?scid=http://support.microsoft.com:80/support/kb/articles/q181/6/04.asp&NoWebContent=1">Microsoft Knowledge Base Article - 181604. HOWTO: Determine Default Language ID of Windows 95 or WinNT</a></li>
+			<li>To download the components I use <code>URLDownloadToFile</code> API.</li>
+			<li>For now I don't delete the downloaded components, for this reason I recommended to use the TEMP path as a destination folder.</li>
+			<li>To change the resources of the exe file I use <code>BeginUpdateResourceW</code>, <code>UpdateResourceW</code> and <code>EndUpdateResourceW</code> API. These API are available only on Windows NT, 2000 and XP for this reason the editor cannot be used on Windows 98 (the bootstrapper is supported also on Windows 98 ). </li>
+			<li>You can use the "/log" command line parameter when executing dotNetInstaller.exe. This parameter create a log file during installation with some informations and errors usefull for debugging. You can find this file in the user temp directory with the name dotNetInstallerLog.txt (usually: "C:\Documents and Settings\YOUR_NAME\Local Settings\Temp\dotNetInstallerLog.txt")</li>
+			<li>Remember when installing service pack or other system update (like Jet for Win2000 and XP) you must use the same language of the destination operating system.</li>
+		</UL>
+		<h2><a name="FutureWorks">Summary of future works</a></h2>
+		<ul>
+			<li>Silent mode support.</li>
+		</ul>
+		<h2><a name="History">History</a></h2>
+		
+		<h3>1.2.2.0 (03 August 2004)</h3>
+		<ul>
+			<li>New article section: <a href="#Samples">Samples</a>.</li>
+			<li>Changed the timeout of the download to 20 seconds.</li>
+			<li>Fixed a bug when loading configuration file from the resources, used by the "Build Exe" features.</li>
+			<li>Added Win2000 Sp4 at "Component Wizard" list.</li>
+			<li>Added Win2000 Sp3 as requirements for Jet 4 Sp8.</li>
+			<li>Changed the samples with the service pack 4 of Win 2000 and used the auto download features with the Web Setup Sample.</li>
+			<li>Updated Sample directory in the zip file.</li>
+			<li>Fixed a bug when reading and writing unicode strings using RegQueryValueEx and RegSetValueEx (used for the autorun fetures and registry features)</li>
+			<li>Changed utility function FileExistsCustom using GetFileAttributes. This seems to be the best way to check if a file exist.</li>
+			<li>Added a new Component Wizard to InstallerEditor (Component Wizard 2) with the Italian version of the Components and an easier customization. The wizard use a resource file (components.xml) to populate the available components so you can add you custom component using this file. This change has no impact on the final configuration file.</li>
+			<li>Added NT4 Sp6 High Encryption, NT4 Sp6 Standard Encryption and MDAC 2.8 Italian to the directory of SupportFiles.</li>
+			<li>The configuration XML structure is the same as the previous release, you can use the same configuration files.</li>
+		</ul>
+		
+		<h3>1.2.0.0 (24 June 2004)</h3>
+		<ul>
+			<li>New article sections: "Multilanguage features", "1.1.0.2 to 1.2.0.0 changes of XML file", "Deploy dotNetInstaller" and "System Requirements Notes".</li>
+			<li>Improved dotNetInstaller userinterface for a better interaction and a more customizable setup for advanced users.</li>
+			<li>Changed structure of XML configuration file for new features, you can use the Installer Editor to update your old configuration files.</li>
+			<li>Before using the TEMP directory check if the directory exist and if not exist try to create it (see GetTempPath function on MSDN help).</li>
+			<li>Added a progress bar control when installing components, thanks to Peter Mares for <a href="http://www.codeproject.com/miscctrl/kcbusyprogress.asp">A new progress bar for all occassions..."</a></li>
+			<li>Now the editor can use a list of template files to customize the language of the intstaller.</li>
+			<li>Added a customizable link at the bottom of the main dialog, thanks to Franz Wong for <a href="http://www.codeguru.com/Cpp/controls/staticctrl/article.php/c5801/">Simple Hyperlink Static Control</a>.</li>
+			<li>Added full UTF-8 support fot the configuration file, the editor and the installer.</li>
+			<li>Now dotNetInstaller is compiled using UNICODE for full compatibility with non english language.</li>
+			<li><b>For Win 9x and ME now you must distribuite with dotNetInstaller.Exe the Microsoft Layer for Unicode, unicows.dll. For more informations see section "Multilanguage features".</b></li>
+			<li>Now I use TinyXml to parse XML file for best compatibility on UTF-8 and XML standards.</li>
+			<li>Added enum for Windows Xp Sp2 (winXPsp2 = 82).</li>
+			<li>Added "/log" command line parameters for dotNetInstaller to enable a basic log file during installation.</li>
+			<li>Now using auto_close_if_installed attribute and complete_command you can close automatically dotNetInstaller when all the components are installed and execute an optional commands.</li>
+			<li>Updated the structure of the SupportFiles directory and added MDAC 2.8, Jet4 Sp8.</li>
+			<li>Removed Y2K Update for Windows 98 in the list of requirements components.</li>
+			<li>Improved InstallerEditor and added wizard for MDAC 2.8, Internet Explorer 6Sp1, Jet 4 Sp8 and NT4 Sp6a.</li>
+			<li>Changed some steps of the tutorials to add unicows.dll and to zip the web setup.</li>
+			<li>Fixed command line parameters for MDAC installation quiet mode.</li>
+			<li>Changed the tutorials for 'How to create a Web Setup to install .NET Framework and your msi setup'.</li>
+		</ul>
+		
+		<h3>1.1.0.2 (06 January 2004)</h3>
+		<ul>
+			<li>Removed SourceCode control from the projects.</li>
+		</ul>
+		
+		<h3>1.1.0.2 (02 January 2004)</h3>
+		<ul>
+			<li>Added ability to download required components from the web.</li>
+			<li>Added #TEMPPATH path variable.</li>
+			<li>Editor to create and modify XML configuration file.</li>
+			<li>Many changes to the XML structure, old files are not compatible.</li>
+			<li>Fixed a bug on the function that read the operating system LCID and others small bugs fixing.</li>
+		</ul>
+		<h3>1.0.8.0 (05 November 2003)</h3>
+		<ul>
+			<li>Added #WINDOWSPATH path constant.</li>
+		</ul>
+		<h3>1.0.7.0 (28 September 2003)</h3>
+		<ul>
+			<li>Bug fixed on MDAC and JET components configuration file (registry check to REG_SZ and language support for JET). </li>
+		</ul>
+		<H3>1.0.7.0 (27 September 2003)</H3>
+		<UL>
+			<li>
+				First public release.
+			</li>
+		</UL>
+		<h2><a name="License">License</a></h2>
+		<P>dotNetInstaller - C++ Setup bootstrapper for .NET</P>
+		<P>Copyright (c) 2003, Davide Icardi</P>
+		<P>All rights reserved.</P>
+		<P>Redistribution and use in source and binary forms, with or without modification, 
+			are permitted provided that the following conditions are met:</P>
+		<UL>
+			<LI>
+			Redistributions of source code must retain the above copyright notice, this 
+			list of conditions and the following disclaimer.
+			<LI>
+			Redistributions in binary form must reproduce the above copyright notice, this 
+			list of conditions and the following disclaimer in the documentation and/or 
+			other materials provided with the distribution.
+			<LI>
+				Neither the name of the ORGANIZATION nor the names of its contributors may be 
+				used to endorse or promote products derived from this software without specific 
+				prior written permission.
+			</LI>
+		</UL>
+		<P>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+			ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+			WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+			DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR 
+			ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
+			(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+			LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
+			ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+			(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+			SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</P>
+		<!-------------------------------     END      --------------------------->
+	</body>
+</html>

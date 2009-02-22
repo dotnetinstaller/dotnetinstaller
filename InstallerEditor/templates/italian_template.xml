@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<!--
+There are three types of variables:
+
+1-dotNetInstaller static variables (begin with #): like #APPPATH
+	(the variable #APPPATH is resolved when installing in the user computer)
+	You can use this variables in all the path attributes in the destination configuration.xml.
+2-dotNetInstaller dynamic variables (begin with %): like %s of som settings
+	(the variable %s is resolved when installing and sobstituited with the name of the component to install).
+	Some attributes require these variable in the value, for example : failed_exec_command_continue, installing_component_wait
+3-InstallerEditor variable (begin with ##): ##APPLICATION_NAME, ##COMPONENT_NAME
+	(these variables are resolved by the InstallerEditor when new item are added.)
+	You can use these variables in this template file.
+
+
+-->
+<editortemplate>
+	<schema version="1" />
+	
+	<!-- Available variables: ##APPLICATION_NAME -->	
+	<setupconfiguration
+		cancel_caption = "Chiudi"
+		dialog_caption = "##APPLICATION_NAME Installer"
+		dialog_message = "Per installare ##APPLICATION_NAME è necessario aggiornare questi componenti:"
+		failed_exec_command_continue = "Impossibile installare %s. Continuare l'installazione?"
+		install_caption = "Installa"
+		installation_completed = "Installazione di ##APPLICATION_NAME completata !"
+		installing_component_wait = "Installazione di %s in corso. Attendere, l'operazione potrebbe richiedere alcuni minuti ..."
+		reboot_required = "Per completare l'installazione è necessario riavviare il computer. Riavviare ora?"
+		status_installed = " (Installato)"
+		status_notinstalled = ""
+		advanced_caption = "Avanzate"
+		dialog_selector_caption = "Selezione Componenti"
+		dialog_selector_message = "Seleziona i componenti da installare."
+		dialog_selector_ok = "OK"
+		dialog_selector_cancel = "Annulla"
+		>
+	</setupconfiguration>
+	
+	<!-- Available variables: ##COMPONENT_NAME -->	
+	<component
+		description = "##COMPONENT_NAME"
+		installcompletemessage = ""
+		>
+	</component>
+
+	<!-- Available variables: ##COMPONENT_NAME -->	
+	<downloaddialog
+		buttoncancel_caption = "Annulla"
+		buttonstart_caption = "Avanti"
+		dialog_caption = "##COMPONENT_NAME - Download Componenti"
+		dialog_message = "Premi 'Avanti' per scaricare i componenti necessari all'installazione di ##COMPONENT_NAME."
+		dialog_message_downloading = "Download in corso. Attendere..."
+		>
+	</downloaddialog>
+</editortemplate>

@@ -1,0 +1,27 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerEditor", "InstallerEditor.csproj", "{170AAA63-64CE-404F-8FDE-D0D64DA9214F}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "InstallerEditorSetup", "InstallerEditorSetup\InstallerEditorSetup.vdproj", "{DAED55DA-2970-4CC7-92BC-480D6828B12E}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{170AAA63-64CE-404F-8FDE-D0D64DA9214F}.Debug.ActiveCfg = Debug|.NET
+		{170AAA63-64CE-404F-8FDE-D0D64DA9214F}.Debug.Build.0 = Debug|.NET
+		{170AAA63-64CE-404F-8FDE-D0D64DA9214F}.Release.ActiveCfg = Release|.NET
+		{170AAA63-64CE-404F-8FDE-D0D64DA9214F}.Release.Build.0 = Release|.NET
+		{DAED55DA-2970-4CC7-92BC-480D6828B12E}.Debug.ActiveCfg = Debug
+		{DAED55DA-2970-4CC7-92BC-480D6828B12E}.Release.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

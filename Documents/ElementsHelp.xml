@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<elements>
+	<element name="configurations" description="Root element">
+		<subelement name="configuration">
+		</subelement>
+	</element>
+
+	<element name="configuration (type='install')" description="A configuration used to install a collection of components.">
+		<attribute name="type" description="'install' - Type of the configuration. Can be 'install' or 'reference'." />
+		<attribute name="lcid" description="A filter to install this configuration only on all operating system language equals or not equals than the LCID specified (see Help->LCID Table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter a specified component." optional="true" />
+		<attribute name="dialog_caption" description="Main dialog title." />
+		<attribute name="dialog_message" description="Main message of the main dialog." />
+		<attribute name="dialog_bitmap" description="Bitmap file used in the left panel of the main dialog. If this file doesn't exist or this attribute is empty the application load the bitmap from the .exe resource. Can contains path constant (see Help->Path Constant)." optional="true" />
+		<attribute name="install_caption" description="Caption of the Install button." />
+		<attribute name="cancel_caption" description="Caption of the Cancel button." />
+		<attribute name="reinstallflag_caption" description="Caption for the 'Reinstall all check box'." />
+		<attribute name="status_installed" description="The string used for indicating an installed component." optional="true" />
+		<attribute name="status_notinstalled" description="The string used for indicating a not installed component."  optional="true" />
+		<attribute name="failed_exec_command_continue" description="The message used when a component cannot be installed and ask if the application can continue with others components (Yes/No message). Must contain one '%s' string where the application put the description of the component." />
+		<attribute name="installation_completed" description="Installation completed message." />
+		<attribute name="installing_component_wait" description="The message used when installing a component. Must contain one '%s' string where the application put the description of the component." />
+		<attribute name="reboot_required" description="The message used when the application need to restart and ask if restart now (with a Yes/No message)." />
+
+		<attribute name="advanced_caption" description="Caption of the Advanced button. Used to show the 'Component Selector' dialog with the complete list of components available to install. If empty the button Advanced is not available." />
+		<attribute name="dialog_selector_caption" description="Component Selector dialog title, this dialog shows the complete list of components available to install." />
+		<attribute name="dialog_selector_message" description="Component Selector dialog description, this dialog shows the complete list of components available to install." />
+		<attribute name="dialog_selector_cancel" description="Component Selector dialog Cancel caption button." />
+				
+		<attribute name="dialog_otherinfo_caption" description="Caption of the link at the bottom of the main dialog that open the link specified in the dialog_otherinfo_link attribute. If empty the link is hidden. Usually used for help, readme or internet link. See also dialog_otherinfo_link attribute." optional="true" />
+		<attribute name="dialog_otherinfo_link" description="Command to execute when the user click on the link at the bottom of the main installation dialog. Can be any valid command (executable, document, web page, ...) valid for the ShellExecute API. Must be defined the dialog_otherinfo_caption attribute. Can contains path constant (see Help->Path Constant)." optional="true" />
+		
+		<attribute name="complete_command" description="Command executed when all components are installed correctly; can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed." optional="true" />
+		<attribute name="auto_close_if_installed" description="If true auto close the dialog if all the components are already installed (before closing dotNetInstaller always execute the complete message box and execute the complete command)." />
+		
+		<subelement name="components" />
+	</element>
+	
+	<element name="configuration (type='reference')" description="A configuration used to download a configuration file from a specific URL.">
+		<attribute name="type" description="'reference' - Type of the configuration. Can be 'install' or 'reference'." />
+		<attribute name="lcid" description="A filter to install this configuration only on all operating system language equals or not equals than the LCID specified (see Help->LCID Table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter a specified component. If empty no filter is applied." optional="true" />
+		
+		<subelement name="downloaddialog" />
+		<subelement name="configfile" />
+	</element>
+
+	<element name="configfile" description="The path to the configuration file downloaded.">
+		<attribute name="filename" description="The configuration file where the application can find the configuration. Usually this is the destination directory of the downloaded component. Can contains path constant (see Help->Path Constant)." />
+	</element>
+	
+	<element name="components" description="A collection of elements of type 'component'.">
+		<subelement name="component" />
+	</element>
+	
+	<element name="component (see also specific help based on the 'type' attribute)" description="A component to be installed.">
+		<attribute name="type" description="The type of the component; can be 'cmd' for executing generic command line installation or 'msi' for installing Windows Installer MSI package or 'openfile' to open a file. Each type has his own attributes." />
+		<attribute name="os_filter_greater" description="A filter to install this component only on all operating system id greater than the id specified (see Help->Operating System Table). For example to install a component only in Windows 2000 or later write '44'." optional="true" />
+		<attribute name="os_filter_smaller" description="A filter to install this component only on all operating system id smaller than the id specified (see operating system table). For example to install a component preceding Windows 2000 write '45'." optional="true" />
+		<attribute name="os_filter_lcid" description="A filter to install this component only on all operating system language equals or not equals than the LCID specified (see Help->LCID table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter all the configuration element." optional="true" />
+		<attribute name="installcompletemessage" description="The message used when a component is successfully installed. To disable this message leave this property empty." optional="true" />
+		<attribute name="mustreboot" description="Indicates if ask to reboot after this component is installed successfully (True/False). Normally if the system must be restarted is automatically the component that tells this setup (with special return code) to stop and restart the system, but in special circumstances (for example in Windows 98) we must force a reboot to install correctly some components (for example the .NET Framework)." />
+		<attribute name="description" description="Description of this component. This value is used also in some message to replace the %s string." />
+		<attribute name="note" description="Note, not used by the setup." optional="true" />
+		<subelement name="installedcheck" />
+		<subelement name="downloaddialog" />
+	</element>
+
+	<element name="component (type='cmd')" description="A component that can be used to execute an .exe file like a setup application.">
+		<attribute name="" description="see also 'component' element" />
+		<attribute name="type" description="'cmd'" />
+
+		<attribute name="command" description="Specifies the command to execute when installing this component. Must be a valid command for the 'CreateProcess' API. Can contain &quot; char and path constant (see Help->Path Constant)." />
+	</element>
+
+	<element name="component (type='msi')" description="A component that can be used to install an msi package.">
+		<attribute name="" description="see also 'component' element" />
+		<attribute name="type" description="'msi'" />
+
+		<attribute name="package" description="Specifies the path to the msi package to execute when installing this component. Can contain path constant (see Help->Path Constant)." />
+		<attribute name="cmdparameters" description="Specifies the command line parameters for the msiexec program. Can contain &quot; char and path constant (see Help->Path Constant). See MSDN for the command line you can use with Windows Installer." />
+	</element>
+
+	<element name="component (type='openfile')" description="A component that can be used to open a web page, a readme file or execute any file during the installation process.">
+		<attribute name="" description="see also 'component' element" />
+		<attribute name="type" description="'openfile'" />
+
+		<attribute name="file" description="Specifies the file to open when installing this component. Must be a valid command for the 'ShellExecute' API. Can contain &quot; char and path constant (see Help->Path Constant). Can be for example a internet link." />
+	</element>
+	
+	<element name="downloaddialog" description="Represents a list of files to download and the configurations of the download dialog.">
+		<attribute name="dialog_caption" description="The caption of the download dialog." />
+		<attribute name="dialog_message" description="The initial message that appears in the download dialog before the user press the 'Start' button." />
+		<attribute name="autostartdownload" description="True to start the download without user interaction, False to let the user press the 'Start' button." />
+		<attribute name="dialog_message_downloading" description="The message that appears in the download dialog when the download process start." />
+		<attribute name="buttonstart_caption" description="Caption of the 'Start' button." />
+		<attribute name="buttoncancel_caption" description="Caption of the 'Cancel' button." />
+		
+		<subelement name="downloads" />
+	</element>
+	
+	<element name="downloads" description="A collection of elements of type 'download'.">
+		<subelement name="download" />
+	</element>
+	
+	<element name="download" description="Represent a single file to download.">
+		<attribute name="componentname" description="The description of the file to download." />
+		<attribute name="sourceurl" description="The complete source path of the file to download. For example 'http://www.yourwebsite.com/SetupX/Setup.exe' . Must be URL with http:// or ftp:// protocol" />
+		<attribute name="destinationpath" description="The complete destination path where the application copy the sourceurl file. Is recommended to use the TEMP path for destination like this: '#TEMPPATH\\APPLICATION_NAME' . Can contains path constant (see Help->Path Constant)." />
+		<attribute name="destinationfilename" description="New name of the downloaded file. Leave this value empty to use the same filename of the original filename." />
+	</element>
+		
+	<element name="installedcheck (type='check_file')" description="The application check if a component is installed looking for the specified registry information or file.">
+		<attribute name="type" description="'check_file' - Type of the check, can be 'check_registry_value' to check for a specific value in the registry or 'check_file' to check for a specific file." />
+		<attribute name="filename" description="Specifies the file to search, if the application cannot find the specified file then the component must be installed. This attribute can contain path constant (see Help->Path Constant)." />
+		<attribute name="fileversion" description="The version of the file, can be used to perform version check based on comparison attribute. If empty the application check only for the presence of the file." optional="true" />
+		<attribute name="comparison" description="Comparison mode, can be 'match' to check if the exact version of the file is present or 'version' to compare if a version equal or greater is present." />
+	</element>
+	
+	<element name="installedcheck (type='check_registry_value')" description="The application check if a component is installed looking for the specified registry information or file.">
+		<attribute name="type" description="'check_registry_value' - Type of the check, can be 'check_registry_value' to check for a specific value in the registry or 'check_file' to check for a specific file." />
+		<attribute name="path" description="Specifies the registry path to search for the registry value specified, must be a path under HKEY_LOCAL_MACHINE like 'SOFTWARE\\MyCompany'." />
+		<attribute name="fieldname" description="The registry field name in the specified path, for example 'Installed'." />
+		<attribute name="fieldvalue" description="The registry value used to check if the component is installed, this value is converted based on the value type specified." />
+		<attribute name="fieldtype" description="Specifies the type of the registry field, can be 'REG_DWORD' (for numeric value) or 'REG_SZ' (for string value)." />
+		<attribute name="comparison" description="Comparison mode; can be 'match' to check if the exact value is present in the registry or 'version' to compare the registry version with the specified version and return true if the registry version is equal or greater then the version specified." />
+	</element>
+	
+</elements>
