@@ -40,7 +40,9 @@ namespace DVLib
 		winServer2003sp2 = 94, //or Later
 
 		winVista = 100,
-		winVistaSp1 = 102, //or Later
+		winVistaSp1 = 102, 
+
+		winServer2008 = 103, //or Later
 
 		winLater = 200
 	};
@@ -74,7 +76,12 @@ namespace DVLib
 				{
 					l_Os = winLater; // Windows version later than what this program is able to test for
 				}
-				else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 )
+				// Windows Server 2008
+				else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType == 3)
+				{
+					l_Os = winServer2008;
+				}
+				else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType == 1)
 				{
 					l_Os = winVista;
 
@@ -249,6 +256,8 @@ namespace DVLib
 			return TEXT("Windows Server 2003 Sp1");
 		case winServer2003sp2:
 			return TEXT("Windows Server 2003 Sp2");
+		case winServer2008:
+			return TEXT("Windows Server 2008");
 		case winVista:
 			return TEXT("Windows Vista");
 		case winVistaSp1:
