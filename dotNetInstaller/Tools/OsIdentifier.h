@@ -42,7 +42,7 @@ namespace DVLib
 		winVista = 100,
 		winVistaSp1 = 102, 
 
-		winServer2008 = 103, //or Later
+		winServer2008 = 110, //or Later
 
 		winLater = 200
 	};
