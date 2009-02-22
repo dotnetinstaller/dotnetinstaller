@@ -255,6 +255,14 @@ namespace InstallerLib
             set { m_auto_close_if_installed = value; }
         }
 
+        private bool m_allow_continue_on_error = true;
+        [Description("If true prompt the user to continue on error, otherwise an error is simply reported. Make sure to adjust failed_exec_command_continue if set to false.")]
+        public bool allow_continue_on_error
+        {
+            get { return m_allow_continue_on_error; }
+            set { m_allow_continue_on_error = value; }
+        }
+
         /* Matthias Jentsch - 2006-03-06: added filter for minimal OS version */
         private string m_os_filter_greater;
         [Description("A filter to run this setup only on all operating system id greater than the id specified (see Help->Operating System Table). For example to run this setup only in Windows 2000 or later write '44'. (OPTIONAL)")]
@@ -404,6 +412,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("complete_command", m_complete_command);
             e.XmlWriter.WriteAttributeString("complete_command_silent", m_complete_command_silent);
             e.XmlWriter.WriteAttributeString("auto_close_if_installed", m_auto_close_if_installed.ToString());
+            e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
 
             // Matthias Jentsch - 2006-03-06: new attributes added
             e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
@@ -508,6 +517,9 @@ namespace InstallerLib
 
             if (e.XmlElement.Attributes["auto_close_if_installed"] != null)
                 m_auto_close_if_installed = bool.Parse(e.XmlElement.Attributes["auto_close_if_installed"].InnerText);
+
+            if (e.XmlElement.Attributes["allow_continue_on_error"] != null)
+                allow_continue_on_error = bool.Parse(e.XmlElement.Attributes["allow_continue_on_error"].InnerText);
 
             // Matthias Jentsch - 2006-03-06: new attributes added
             if (e.XmlElement.Attributes["os_filter_greater"] != null)

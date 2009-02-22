@@ -322,8 +322,16 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 				CString l_msg;
 				l_msg.Format( m_Settings.failed_exec_command_continue, component->description );
 
-				if (DniMessageBox(l_msg, MB_YESNO, IDNO, MB_YESNO|MB_ICONEXCLAMATION) == IDNO )
-					break;
+                if (m_Settings.allow_continue_on_error)
+                {
+				    if (DniMessageBox(l_msg, MB_YESNO, IDNO, MB_YESNO|MB_ICONEXCLAMATION) == IDNO )
+					    break;
+                }
+                else
+                {
+                    DniMessageBox(l_msg, MB_OK, 0, MB_ICONEXCLAMATION);
+                    break;
+                }
 			}
 		}
 

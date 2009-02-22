@@ -1175,6 +1175,15 @@
                             </tr>
                             <tr>
                                 <td>
+                                    <b>allow_continue_on_error</b>
+                                </td>
+                                <td>
+                                    If true, the user will be prompted to continue when a component fails to install.
+                                    Otherwise the error is simply reported and the user returns to DNI.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <b>os_filter_greater</b></td>
                                 <td>
                                     Filter for minimum operating system version</td>
@@ -2212,6 +2221,7 @@
   <li>configuration\component\installedcheck\description </li>
   <li>configuration\component\installedcheckoperator </li>
   <li>collapsed nesting, removed all collections: configurations, components, embedfiles</li>
+  <li>configuration\allow_continue_on_error</li>
  </ul>
  <br />
  <!-- END table for XML configuration help -->
@@ -2864,30 +2874,32 @@
     <h2>History</h2>
     <h3>1.6 (TBD)</h3>
     <ul>
-        <li>Added OS filter identifiers for Windows Server 2008.</li>
-     <li>Added <span style="color: #b22222; font-family: Courier New">InstalledCheckOperator
-     </span>of 'And', 'Or' and 'Not' types that combine results from one or more <span
-      style="color: #b22222; font-family: Courier New">InstalledCheck <span style="color: #000000;
-       font-family: Verdana">and <span style="color: #b22222; font-family: Courier New">
-        InstalledCheckOperator <span style="color: #000000; font-family: Verdana">elements.</span></span></span></span></li>
-     <li>dotNetInstaller: Added <span style="color: #b22222; font-family: Courier New">/componentArgs "component description":"parameters"
-      <span style="color: #000000; font-family: Verdana">to dotNetInstaller.exe command
-       line. This enables passing additional parameters to specific components declared
-       in configuration.xml.</span></span></li>
-        <li>dotNetInstaller: Embedded CABs are now segmented into 32-megabyte chunks. This reduces the minimum
-            required memory for installers containing embedded CABs to about 48Mb, reduces paging and improves performance during extraction of large embedded
-         CABs.</li>
+     <li>Added OS filter identifiers for Windows Server 2008.</li>
+     <li>Added <span style="color: #b22222; font-family: Courier New">InstalledCheckOperator</span>
+      of 'And', 'Or' and 'Not' types that combine results from one or more 
+      <span style="color: #b22222; font-family: Courier New">InstalledCheck</span>
+      and <span style="color: #b22222; font-family: Courier New">InstalledCheckOperator</span>
+      elements.</li>
+     <li>dotNetInstaller: Added <span style="color: #b22222; font-family: Courier New">/componentArgs "component description":"parameters"</span>
+      to dotNetInstaller.exe command line. This enables passing additional parameters to specific components declared
+       in configuration.xml.
+     </li>
+     <li>dotNetInstaller: Embedded CABs are now segmented into 32-megabyte chunks. This reduces the minimum
+      required memory for installers containing embedded CABs to about 48Mb, reduces paging and improves performance 
+      during extraction of large embedded CABs.</li>
      <li>InstallerEditor: added support for configuration file XML comments and a text
       box where the developer can edit a comment, saved as an xml comment above
       the selected node.</li>
      <li>InstallerEditor: configuration tree now supports deletion of nodes with the keyboard
       Delete key and will popup the Add menu with the Insert key.</li>
-     <li>InstallerEditor: components can be dragged and dropped between nodes.&nbsp;</li>
+     <li>InstallerEditor: components can be dragged and dropped between nodes.</li>
      <li>InstallerEditor: the About box can be closed with the Escape key.</li>
      <li>InstallerEditor: added Expand All, Collapse All, Move, Move Up and Move Down context menu items.</li>
      <li>InstallerEditor: Shift+Up and Shift+Down arrows move components up and down.</li>
      <li>InstallerEditor: added shortcuts to open a configuratoin file (Ctrl+O), create
-      a new configuration file (Ctrol+N), exit (Alt+F4) and refresh (F5).&nbsp;</li>
+      a new configuration file (Ctrol+N), exit (Alt+F4) and refresh (F5).</li>
+     <li>Added <span style="color: #b22222; font-family: Courier New">allow_continue_on_error</span>: when false
+      user is no longer prompted to continue on error.</li>
     </ul>
     <h3>
      1.5 (25 Oct 2008)</h3>

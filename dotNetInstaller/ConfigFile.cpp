@@ -109,6 +109,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 	p_Setting.complete_command = p_Setting.ValidatePath(p_Node->AttributeT("complete_command").data());
 	p_Setting.complete_command_silent = p_Setting.ValidatePath(p_Node->AttributeT("complete_command_silent").data());
 	p_Setting.auto_close_if_installed = ConvBoolString(p_Node->Attribute("auto_close_if_installed"), true);
+    p_Setting.allow_continue_on_error = ConvBoolString(p_Node->Attribute("allow_continue_on_error"), true);
 
 	// Matthias Jentsch - 2006-03-06: read additional attributes
 	p_Setting.os_filter_greater = p_Node->AttributeT("os_filter_greater").data();

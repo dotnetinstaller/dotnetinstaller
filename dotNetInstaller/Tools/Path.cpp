@@ -5,17 +5,15 @@
 
 CString DVLib::GetAppFullName()
 {
-	TCHAR l_buffer[2000];
-	ZeroMemory(l_buffer,2000);
+    TCHAR l_buffer[MAX_PATH] = { 0 };
 
-	if (GetModuleFileName(NULL,l_buffer,2000) == 0)
+	if (GetModuleFileName(NULL, l_buffer, MAX_PATH) == 0)
 	{
 		_ASSERT(false);
         throw std::exception("GetModuleFileName failed");
 	}
 
-	CString tmp = l_buffer;
-	return tmp;
+	return l_buffer;
 }
 
 CString DVLib::GetAppPath()
