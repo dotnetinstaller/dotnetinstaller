@@ -24,6 +24,7 @@ namespace InstallerEditor
 			m_dialog_caption = tpl.dialog_caption;
 			m_dialog_message = tpl.dialog_message;
 			m_failed_exec_command_continue = tpl.failed_exec_command_continue;
+            m_skip_caption = tpl.skip_caption;
 			m_install_caption = tpl.install_caption;
 			m_installation_completed = tpl.installation_completed;
 			m_installing_component_wait = tpl.installing_component_wait;
@@ -89,6 +90,7 @@ namespace InstallerEditor
 		private string m_dialog_caption;
 		private string m_dialog_message;
 		private string m_dialog_bitmap;
+        private string m_skip_caption;
 		private string m_install_caption;
 		private string m_cancel_caption;
 		private string m_status_installed;
@@ -109,12 +111,13 @@ namespace InstallerEditor
 
 		private string m_complete_command;
 		private bool m_auto_close_if_installed = true;
+
 		/* Matthias Jentsch - 2006-03-06: added filter for minimal OS version */
 		private string m_os_filter_greater;
-    /* Matthias Jentsch - 2006-03-06: added filter for maximal OS version */
-    private string m_os_filter_smaller;
-    /* Matthias Jentsch - 2006-03-06: added message for not matching the OS filter */
-    private string m_os_filter_not_match_message;
+		/* Matthias Jentsch - 2006-03-06: added filter for maximal OS version */
+		private string m_os_filter_smaller;
+		/* Matthias Jentsch - 2006-03-06: added message for not matching the OS filter */
+		private string m_os_filter_not_match_message;
 		
 		[Description("Main dialog title. (REQUIRED)")]
 		[Category("Main Dialog")]
@@ -137,7 +140,14 @@ namespace InstallerEditor
 			get{return m_dialog_bitmap;}
 			set{m_dialog_bitmap = value;}
 		}
-		[Description("Caption of the Install button. (REQUIRED)")]
+        [Description("Caption of the Skip button. (REQUIRED)")]
+        [Category("Main Dialog")]
+        public string skip_caption
+        {
+            get { return m_skip_caption; }
+            set { m_skip_caption = value; }
+        }
+        [Description("Caption of the Install button. (REQUIRED)")]
 		[Category("Main Dialog")]
 		public string install_caption
 		{
@@ -270,24 +280,24 @@ namespace InstallerEditor
 			set{m_auto_close_if_installed = value;}
 		}
 
-    /* Matthias Jentsch - 2006-03-06: added filter for minimal OS version */
-    [Description("A filter to run this setup only on all operating system id greater than the id specified (see Help->Operating System Table). For example to run this setup only in Windows 2000 or later write '44'. (OPTIONAL)")]
+        /* Matthias Jentsch - 2006-03-06: added filter for minimal OS version */
+        [Description("A filter to run this setup only on all operating system id greater than the id specified (see Help->Operating System Table). For example to run this setup only in Windows 2000 or later write '44'. (OPTIONAL)")]
 		public string os_filter_greater
 		{
 			get{return m_os_filter_greater;}
 			set{m_os_filter_greater = value;}
 		}
 
-    /* Matthias Jentsch - 2006-03-06: added filter for maximal OS version */
-    [Description("A filter to run this setup only on all operating system id smaller than the id specified (see operating system table). For example to run this setup preceding Windows 2000 write '45'. (OPTIONAL)")]
+        /* Matthias Jentsch - 2006-03-06: added filter for maximal OS version */
+        [Description("A filter to run this setup only on all operating system id smaller than the id specified (see operating system table). For example to run this setup preceding Windows 2000 write '45'. (OPTIONAL)")]
 		public string os_filter_smaller
 		{
 			get{return m_os_filter_smaller;}
 			set{m_os_filter_smaller = value;}
 		}
 
-    /* Matthias Jentsch - 2006-03-06: added message for not matching the OS filter */
-    [Description("A error message for the case that the operating system does not match the operating system filter (see os_filter_greater and os_filter_smaller). (OPTIONAL)")]
+        /* Matthias Jentsch - 2006-03-06: added message for not matching the OS filter */
+        [Description("A error message for the case that the operating system does not match the operating system filter (see os_filter_greater and os_filter_smaller). (OPTIONAL)")]
 		[Category("Messages")]
 		public string os_filter_not_match_message
 		{
@@ -303,6 +313,7 @@ namespace InstallerEditor
 			e.XmlWriter.WriteAttributeString("dialog_caption",m_dialog_caption);
 			e.XmlWriter.WriteAttributeString("dialog_message",m_dialog_message);
 			e.XmlWriter.WriteAttributeString("dialog_bitmap",m_dialog_bitmap);
+            e.XmlWriter.WriteAttributeString("skip_caption",m_skip_caption);
 			e.XmlWriter.WriteAttributeString("install_caption",m_install_caption);
 			e.XmlWriter.WriteAttributeString("cancel_caption",m_cancel_caption);
 			//e.XmlWriter.WriteAttributeString("reinstallflag_caption",m_reinstallflag_caption);
@@ -326,6 +337,7 @@ namespace InstallerEditor
 
 			e.XmlWriter.WriteAttributeString("complete_command",m_complete_command);
 			e.XmlWriter.WriteAttributeString("auto_close_if_installed",m_auto_close_if_installed.ToString());
+
 			// Matthias Jentsch - 2006-03-06: new attributes added
 			e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
 			e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
@@ -364,7 +376,10 @@ namespace InstallerEditor
 			if (e.XmlElement.Attributes["failed_exec_command_continue"] != null)
 				m_failed_exec_command_continue = e.XmlElement.Attributes["failed_exec_command_continue"].InnerText;
 
-			if (e.XmlElement.Attributes["install_caption"] != null)
+            if (e.XmlElement.Attributes["skip_caption"] != null)
+                m_skip_caption = e.XmlElement.Attributes["skip_caption"].InnerText;
+
+            if (e.XmlElement.Attributes["install_caption"] != null)
 				m_install_caption = e.XmlElement.Attributes["install_caption"].InnerText;
 
 			if (e.XmlElement.Attributes["installation_completed"] != null)
@@ -415,8 +430,8 @@ namespace InstallerEditor
 			if (e.XmlElement.Attributes["auto_close_if_installed"] != null)
 				m_auto_close_if_installed = bool.Parse(e.XmlElement.Attributes["auto_close_if_installed"].InnerText);
 
-      // Matthias Jentsch - 2006-03-06: new attributes added
-      if (e.XmlElement.Attributes["os_filter_greater"] != null)
+            // Matthias Jentsch - 2006-03-06: new attributes added
+            if (e.XmlElement.Attributes["os_filter_greater"] != null)
 				m_os_filter_greater = e.XmlElement.Attributes["os_filter_greater"].InnerText;
 			if (e.XmlElement.Attributes["os_filter_smaller"] != null)
 				m_os_filter_smaller = e.XmlElement.Attributes["os_filter_smaller"].InnerText;

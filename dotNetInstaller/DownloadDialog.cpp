@@ -8,6 +8,8 @@
 #include "DownloadDialog.h"
 #include "downloaddialog.h"
 #include "InstallerLog.h"
+#include "DniMessageBox.h"
+#include "SilentInstall.h"
 
 #define WM_USER_SETSTATUSDOWNLOAD (WM_USER+1)
 
@@ -81,8 +83,16 @@ namespace DVLib
 		m_LabelStatus.SetWindowText(TEXT(""));
 		//m_ProgressControl.SetStep
 
-		if (m_bAutoStartDownload)
+		if (QuietInstall.IsSilent())
+		{
+			m_btStart.EnableWindow(FALSE);
+			m_btCancel.EnableWindow(FALSE);
 			OnBnClickedStart();
+		}
+		else if (m_bAutoStartDownload)
+		{
+			OnBnClickedStart();
+		}
 
 		return TRUE;
 	}
@@ -159,7 +169,7 @@ namespace DVLib
 			{
 				ApplicationLog.Write( TEXT("--Download ERROR"));
 
-				AfxMessageBox(l_Param->Error, MB_OK|MB_ICONSTOP);
+				DniSilentMessageBox(l_Param->Error, MB_OK|MB_ICONSTOP);
 
 				DownloadStatusParam::Free(l_Param);
 				OnCancel();
@@ -183,7 +193,7 @@ namespace DVLib
 		}
 		catch(...)
 		{
-			AfxMessageBox(TEXT("Failed to read OnSetStatusDownload parameters"), MB_OK|MB_ICONSTOP);
+			DniSilentMessageBox(TEXT("Failed to read OnSetStatusDownload parameters"), MB_OK|MB_ICONSTOP);
 			OnCancel();
 		}
 		return 0;

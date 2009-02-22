@@ -32,11 +32,15 @@ namespace DVLib
 
 		winXP = 75,
 		winXPsp1 = 80, 
-		winXPsp2 = 82,  //or Later
+		winXPsp2 = 82,
+		winXPsp3 = 84, //or Later
 
 		winServer2003 = 90,
+		winServer2003sp1 = 92,
+		winServer2003sp2 = 94, //or Later
 
 		winVista = 100,
+		winVistaSp1 = 102, //or Later
 
 		winLater = 200
 	};
@@ -73,18 +77,28 @@ namespace DVLib
 				else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 )
 				{
 					l_Os = winVista;
+
+					if (osvi.wServicePackMajor >= 1)
+						l_Os = winVistaSp1;
 				}
 
 				// Windows NT or XP or Server 2003
 				else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 )
 				{
 					l_Os = winServer2003;
+
+					if (osvi.wServicePackMajor >= 2)
+						l_Os = winServer2003sp2;
+					else if (osvi.wServicePackMajor == 1)
+						l_Os = winServer2003sp1;
 				}
 				else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1 )
 				{
 					l_Os = winXP;
 
-					if (osvi.wServicePackMajor >= 2)
+					if (osvi.wServicePackMajor >= 3)
+						l_Os = winXPsp3;
+					else if (osvi.wServicePackMajor == 2)
 						l_Os = winXPsp2;
 					else if (osvi.wServicePackMajor == 1)
 						l_Os = winXPsp1;
@@ -214,10 +228,18 @@ namespace DVLib
 			return TEXT("Windows XP Sp1");
 		case winXPsp2:
 			return TEXT("Windows XP Sp2");
+		case winXPsp3:
+			return TEXT("Windows XP Sp3");
 		case winServer2003:
 			return TEXT("Windows Server 2003");
+		case winServer2003sp1:
+			return TEXT("Windows Server 2003 Sp1");
+		case winServer2003sp2:
+			return TEXT("Windows Server 2003 Sp2");
 		case winVista:
 			return TEXT("Windows Vista");
+		case winVistaSp1:
+			return TEXT("Windows Vista Sp1");
 		case winLater:
 			return TEXT("Unknown Windows version");
 		default:

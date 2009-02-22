@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="dotNetInstaller"
 	ProjectGUID="{F4E74CF8-37CD-4023-8B89-05EF4B34D363}"
 	RootNamespace="dotNetInstaller"
@@ -208,6 +208,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DniMessageBox.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\dotNetInstaller.cpp"
 				>
 			</File>
@@ -232,11 +236,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstallerLauncher.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\InstallerLog.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\KCBusyProgressCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SilentInstall.cpp"
 				>
 			</File>
 			<File
@@ -274,6 +286,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DniMessageBox.h"
+				>
+			</File>
+			<File
 				RelativePath=".\dotNetInstaller.h"
 				>
 			</File>
@@ -298,6 +314,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstallerLauncher.h"
+				>
+			</File>
+			<File
 				RelativePath=".\InstallerLog.h"
 				>
 			</File>
@@ -311,6 +331,10 @@
 			</File>
 			<File
 				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SilentInstall.h"
 				>
 			</File>
 			<File

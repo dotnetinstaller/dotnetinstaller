@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Xml;
 
 namespace InstallerEditor
@@ -19,7 +20,17 @@ namespace InstallerEditor
 			set{m_FileName = value;}
 		}
 
-		public void Save()
+        /* Matthew Sheets - 2007-09-20: added flag for silent install */
+        private bool m_silent_install = false;
+        [Description("If true, run the install silently (without end-user input)")]
+        public bool silent_install
+        {
+            get { return m_silent_install; }
+            set { m_silent_install = value; }
+        }
+
+
+        public void Save()
 		{
 			if (m_FileName==null)
 				throw new ApplicationException("Invalid save filename");
@@ -36,6 +47,9 @@ namespace InstallerEditor
 				l_XmlWriter.WriteStartDocument();
 				
 				l_XmlWriter.WriteStartElement("configurations");
+
+                /* Matthew Sheets - 2007-08-10: added flag for silent install */
+                l_XmlWriter.WriteAttributeString("silent_install", m_silent_install.ToString());
 
 					//tag schema
 					l_XmlWriter.WriteStartElement("schema");
@@ -65,6 +79,12 @@ namespace InstallerEditor
 		{
 			XmlDocument l_XmlElement = new XmlDocument();
 			l_XmlElement.Load(p_FileName);
+
+            XmlNode l_Configurations = l_XmlElement.SelectSingleNode("//configurations");
+
+            /* Matthew Sheets - 2007-09-20: added flag for silent install */
+            if (l_Configurations.Attributes["silent_install"] != null)
+                m_silent_install = bool.Parse(l_Configurations.Attributes["silent_install"].InnerText);
 
 			XmlNodeList l_List = l_XmlElement.SelectNodes("//configurations/configuration");
 			foreach(XmlElement l_Element in l_List)

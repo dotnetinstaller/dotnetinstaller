@@ -24,6 +24,9 @@ namespace DVLib
 
 		//Nome visivo del componente
 		CString ComponentName;
+
+        // Matthew Sheets - 2007-08-28: added flag to enable bypassing download if the file already exists locally
+		bool AlwaysDownload;
 	};
 
 	typedef CArray<DownloadComponentInfo> DownloadComponentInfoVector;
@@ -194,9 +197,13 @@ namespace DVLib
 			
 			CreateDirectory(m_Component->DestinationPath,NULL); //cerco comunque di creare la directory
 
-			HRESULT l_hrRet = URLDownloadToFile(NULL, m_Component->SourceURL, l_destinationFullFileName, 0, this);
-			if (!SUCCEEDED(l_hrRet))
-				throw l_hrRet;
+			// Matthew Sheets - 2007-08-10: Determine if the download dialog should be displayed
+			if (m_Component->AlwaysDownload || (!FileExistsCustom(l_destinationFullFileName)))
+			{
+				HRESULT l_hrRet = URLDownloadToFile(NULL, m_Component->SourceURL, l_destinationFullFileName, 0, this);
+				if (!SUCCEEDED(l_hrRet))
+					throw l_hrRet;
+			}
 		}
 	};
 

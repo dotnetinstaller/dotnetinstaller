@@ -20,8 +20,49 @@ namespace DVLib
 		ZeroMemory(&si, sizeof(si)) ;
 		si.cb = sizeof(si) ;
 
+		// Matthias Jentsch - 2006-03-07: if environment variables are in the string for ExecCmd then
+		// replace these variables first.
+		// Using ShellExecuteEx API function with setting the flag SEE_MASK_DOENVSUBST does not working in this case
+		// because environment variables can also be placed in the parameters for the new process.
+		CString expandedCmd = pszCmd;
+		CString search;
+		CString environment;
+		CString replace;
+		int startPos = 0;
+		int endPos = 0;
+		
+		while (1)
+		{
+			// search first %
+			startPos = expandedCmd.Find(TEXT("%"), 0);
+			if (startPos != -1)
+			{
+				// search second %
+				endPos = expandedCmd.Find(TEXT("%"), startPos + 1);
+			}
+			else
+			{
+				// break if not found
+				break;
+			}
+			// second % found and minimum one character between the two % chars?
+			if (endPos != -1 && endPos - startPos > 1)
+			{
+				environment = expandedCmd.Mid(startPos + 1, endPos - startPos - 1);
+				search = expandedCmd.Mid(startPos, endPos - startPos + 1);
+				replace.GetEnvironmentVariable(environment);
+				expandedCmd.Replace(search, replace);
+			}
+			else
+			{
+				// break if it not so
+				break;
+			}
+		}
+		
+		// Matthew Sheets - 2007-10-26: Convert CString to LPTSTR Buffer, and then release the buffer
 		bReturnVal = CreateProcess(NULL, 
-								(LPTSTR)pszCmd, 
+								expandedCmd.GetBuffer(expandedCmd.GetLength()), 
 								NULL, 
 								NULL, 
 								FALSE, 
@@ -30,6 +71,8 @@ namespace DVLib
 								NULL, 
 								&si, 
 								process_info) ;
+
+		expandedCmd.ReleaseBuffer();
 
 		if (bReturnVal)
 		{

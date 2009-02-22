@@ -31,16 +31,17 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 private:
-	bool LoadXmlSettings(void);
-
+	bool m_additional_config;
 	installerSetting m_Settings;
 public:
+	CButton m_btnSkip;
 	CButton m_btnInstall;
 	CButton m_btCancel;
 	CStatic m_lblMessage;
 	CListBox m_ListBoxComponents;
 	CStatic m_PictureBox;
 	CStatic m_lblOperatingSystem;
+	INT_PTR RunDni(installerSetting & p_Setting, bool p_additional_config);
 	afx_msg void OnBnClickedInstall();
 	bool LoadComponentsList(void);
 	afx_msg void OnBnClickedAdvanced();
@@ -48,5 +49,6 @@ public:
 	CHyperlinkStatic m_InfoLink;
 	afx_msg void OnDestroy();
 	afx_msg void OnBnClickedCancel();
+	afx_msg void OnBnClickedSkip();
 };
 

@@ -14,6 +14,7 @@
 #define IDC_MESSAGE                     1003
 #define IDC_PICTUREBOX                  1004
 #define IDC_OPERATING_SYSTEM            1005
+#define IDC_SKIP                        1007
 #define IDC_HELP_INSTALL                1008
 #define IDC_CANCEL                      1010
 #define IDC_PROGRESSDOWNLOAD            1011

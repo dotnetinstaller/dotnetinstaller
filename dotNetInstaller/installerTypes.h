@@ -8,6 +8,8 @@
 #include "DownloadDialogSupport.h"
 #include "DownloadDialog.h"
 #include "StringUtil.h"
+#include "DniMessageBox.h"
+#include "InstallerLauncher.h"
 
 //in tutti i percorsi viene sostituito #APPPATH con il percorso dell'applicazione corrente, #SYSTEMPATH con la directory System del computer e #WINDOWSPATH con la directory di installazione di Windows, #TEMPPATH con la directory temporanea
 //in all the paths we replace the string constant #APPPATH with the current path of the application and #SYSTEMPATH with the system directory of the computer, #TEMPPATH with the temp directory
@@ -77,7 +79,7 @@ struct installedcheck_check_registry_value : public installedcheck
 				DWORD l_checkValue;
 				if (_stscanf(fieldvalue, TEXT("%d"), &l_checkValue) != 1)
 				{
-					AfxMessageBox(TEXT("Invalid registry value to check expected DWORD."), MB_OK|MB_ICONSTOP);
+					DniSilentMessageBox(TEXT("Invalid registry value to check expected DWORD."), MB_OK|MB_ICONSTOP);
 					return false;
 				}
 
@@ -94,14 +96,14 @@ struct installedcheck_check_registry_value : public installedcheck
 						return true;
 					else
 						return false;
-        }
-        else if (comparison == TEXT("exists"))
-        {
-          return true;  
+				}
+				else if (comparison == TEXT("exists"))
+				{
+					return true;  
 				}
 				else
 				{
-					AfxMessageBox(TEXT("Invalid comparison type, expected match or version."), MB_OK|MB_ICONSTOP);
+					DniSilentMessageBox(TEXT("Invalid comparison type; expected match, version, or exists."), MB_OK|MB_ICONSTOP);
 					return false;
 				}
 			}
@@ -146,9 +148,9 @@ struct installedcheck_check_registry_value : public installedcheck
 					else
 						return false;
 				}
-        else if (comparison == TEXT("exists"))
-        {
-          return true;
+				else if (comparison == TEXT("exists"))
+				{
+					return true;
 				}
 				else if (comparison == TEXT("contains"))
 				{
@@ -159,7 +161,7 @@ struct installedcheck_check_registry_value : public installedcheck
 				}
 				else
 				{
-					AfxMessageBox(TEXT("Invalid comparison type, expected match or version."), MB_OK|MB_ICONSTOP);
+					DniSilentMessageBox(TEXT("Invalid comparison type; expected match, version, exists, or contains."), MB_OK|MB_ICONSTOP);
 					return false;
 				}
 			}
@@ -216,8 +218,8 @@ struct installedcheck_check_registry_value : public installedcheck
 						return false;
 				}
 				else if (comparison == TEXT("exists"))
-        {
-          return true;
+				{
+					return true;
 				}
 				else if (comparison == TEXT("contains"))
 				{
@@ -229,7 +231,7 @@ struct installedcheck_check_registry_value : public installedcheck
 
 				else
 				{
-					AfxMessageBox(TEXT("Invalid comparison type, expected match or version."), MB_OK|MB_ICONSTOP);
+					DniSilentMessageBox(TEXT("Invalid comparison type; expected match, version, exists, or contains."), MB_OK|MB_ICONSTOP);
 					return false;
 				}
 			}
@@ -237,7 +239,7 @@ struct installedcheck_check_registry_value : public installedcheck
 			{
 				RegCloseKey(l_HKey);
 
-				AfxMessageBox(TEXT("Invalid registry type"), MB_OK|MB_ICONSTOP);
+				DniSilentMessageBox(TEXT("Invalid registry type"), MB_OK|MB_ICONSTOP);
 				return false;
 			}
 		}
@@ -260,33 +262,33 @@ struct installedcheck_check_file : public installedcheck
 		{
 			if (DVLib::FileExistsCustom(filename))
 			{
-				if (fileversion.GetLength()>0)
-				{
-					CString l_FileVersion = DVLib::GetFileVersionString(filename);
+				CString l_FileVersion = DVLib::GetFileVersionString(filename);
 
-					if (comparison == TEXT("match"))
+				if (fileversion.GetLength() > 0)
+				{
+					if (comparison == TEXT("exists"))
 					{
-						if (l_FileVersion == fileversion)
-							return true;
-						else
-							return false;
+						return DVLib::FileExistsCustom(filename);
+					}
+					else if (comparison == TEXT("match"))
+					{
+						return (l_FileVersion == fileversion);
 					}
 					else if (comparison == TEXT("version"))
 					{
 						//se la versione è uguale o maggiore
-						if (DVLib::stringVersionCompare(l_FileVersion, fileversion) >= 0)
-							return true;
-						else
-							return false;
+						return (DVLib::stringVersionCompare(l_FileVersion, fileversion) >= 0);
 					}
 					else
 					{
-						AfxMessageBox(TEXT("Invalid comparison type, expected match or version."), MB_OK|MB_ICONSTOP);
+						DniSilentMessageBox(TEXT("Invalid comparison type; expected match, version, or exists."), MB_OK|MB_ICONSTOP);
 						return false;
 					}
 				}
 				else
+				{
 					return true;
+				}
 			}
 			else
 				return false;
@@ -488,6 +490,7 @@ struct installerSetting
 	CString dialog_caption;
 	CString dialog_message;
 	CString dialog_bitmap;
+	CString skip_caption;
 	CString install_caption;
 	CString cancel_caption;
 	CString status_installed;
@@ -520,14 +523,42 @@ struct installerSetting
 	void ExecuteCompleteCode()
 	{
 		if (installation_completed.Trim().GetLength() > 0)
-			AfxMessageBox( installation_completed, MB_OK|MB_ICONINFORMATION);
+			DniMessageBox(installation_completed, MB_OK|MB_ICONINFORMATION);
 
 		if (complete_command.Trim().GetLength() > 0)
-			DVLib::ShellExecuteDefault(complete_command);
+		{
+			// Don't wait for the command to return
+			// DVLib::ShellExecuteDefault(complete_command);
+
+			// Wait for the command to return
+			PROCESS_INFORMATION l_process_info;
+			DVLib::ExecCmd(complete_command, &l_process_info);
+			WaitForSingleObject( l_process_info.hProcess, INFINITE );
+
+			//cmd_component * l_cmd_Comp = new cmd_component();
+			//l_cmd_Comp->command = complete_command;
+			//l_cmd_Comp->type = cmd;
+			//l_cmd_Comp->Exec();
+			//l_cmd_Comp->IsExecuting();
+			//DniMessageBox( TEXT("Execute Code Complete") );
+			//l_cmd_Comp->GetExitCode();
+
+			// Wait for the command to return
+			//DWORD l_ExitCodes;
+			//DVLib::ExecCmdAndWait(complete_command, & l_ExitCodes);
+		}
 	}
 
 	std::vector<component*> components;
 };
+
+
+// Matthew Sheets - 2007-09-24: Top-level configuration settings
+struct configSetting
+{
+	bool silent_install;
+};
+
 
 // HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce
 #define c_dotNetInstaller TEXT("dotNetInstallerBoot")
@@ -547,8 +578,16 @@ inline void InsertRegistryRun()
 		if (l_result != ERROR_SUCCESS)
 			return;
 
-		CString l_ExeName = DVLib::GetAppFullName();
-		RegSetValueEx(l_HKey, c_dotNetInstaller,0,REG_SZ,(LPBYTE)(LPCTSTR)l_ExeName, (DWORD)(l_ExeName.GetLength()+1) * sizeof(TCHAR) );
+		// Matthew Sheets - 2007-11-27: Get the installer launcher command (if specified)
+		CString l_Cmd = DNILauncher.GetLauncherCmd();
+
+		// Matthew Sheets - 2007-11-27: If no launcher argument was specified, use the DNI executable name
+		if (l_Cmd.GetLength() == 0)
+		{
+			l_Cmd = DVLib::GetAppFullName();
+		}
+
+		RegSetValueEx(l_HKey, c_dotNetInstaller,0,REG_SZ,(LPBYTE)(LPCTSTR)l_Cmd, (DWORD)(l_Cmd.GetLength()+1) * sizeof(TCHAR) );
 
 		RegCloseKey(l_HKey);
 	}

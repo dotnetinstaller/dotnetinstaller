@@ -17,16 +17,24 @@ void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::Down
 
 void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting);
 
-void LoadReferenceConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting, CWnd * p_Parent);
+bool LoadReferenceConfigNode(TiXmlElement * p_Node, TiXmlDocument & document, CWnd * p_Parent);
 
-void LoadConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting, CWnd * p_Parent);
+void LoadConfigsNode(TiXmlElement * p_Node, installerSetting & p_Setting, bool p_Caller_Has_Additional_Config);
 
-bool LoadDocumentFromFile(const CString & p_FileName, TiXmlDocument * document);
+void SaveAppState(configSetting & p_Config);
 
-void LoadConfigFile(const CString & p_FileName, installerSetting & p_Setting, CWnd * p_Parent);
+void RestoreAppState(configSetting & p_Config);
+
+bool CheckConfigFilter(const CString & p_Config_LCID, const CString & p_os_filter_greater, const CString & p_os_filter_smaller);
+
+bool LoadDocumentFromFile(const CString & p_FileName, TiXmlDocument & document);
+
+void LoadConfigFromFile(const CString & p_FileName, TiXmlDocument & p_Document);
+
+void LoadConfigFromResource(HMODULE p_Module, TiXmlDocument & p_Document);
 
 HBITMAP LoadBannerFromResource(HMODULE p_Module);
 
-void LoadConfigFromResource(HMODULE p_Module, installerSetting & p_Setting, CWnd * p_Parent);
+bool LoadXmlSettings(TiXmlDocument & p_Document);
 
 void FreeComponent(component * component);

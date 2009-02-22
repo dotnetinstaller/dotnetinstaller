@@ -23,6 +23,7 @@ There are three types of variables:
 		dialog_caption = "##APPLICATION_NAME Installer"
 		dialog_message = "Per installare ##APPLICATION_NAME è necessario aggiornare questi componenti:"
 		failed_exec_command_continue = "Impossibile installare %s. Continuare l'installazione?"
+		skip_caption = "Skip" 
 		install_caption = "Installa"
 		installation_completed = "Installazione di ##APPLICATION_NAME completata !"
 		installing_component_wait = "Installazione di %s in corso. Attendere, l'operazione potrebbe richiedere alcuni minuti ..."

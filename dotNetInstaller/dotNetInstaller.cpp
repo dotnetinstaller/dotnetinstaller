@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include "ConfigFile.h"
 #include "dotNetInstaller.h"
 #include "dotNetInstallerDlg.h"
 #include "InstallerCommandLineInfo.h"
@@ -49,17 +50,38 @@ BOOL CdotNetInstallerApp::InitInstance()
 	ParseCommandLine(commandLineInfo);
 
 
-	CdotNetInstallerDlg dlg;
-	m_pMainWnd = &dlg;
-	INT_PTR nResponse = dlg.DoModal();
-	if (nResponse == IDOK)
+	TiXmlDocument m_Document;
+	installerSetting m_Setting;
+
+	try
 	{
-		//  tramite il pulsante OK.
+		//load xml file
+		bool l_bLoadSuccess = LoadXmlSettings(m_Document);
+
+		if (l_bLoadSuccess)
+		{
+			// Process xml file ("additional config" parameter needs defaulted to false)
+			LoadConfigsNode(m_Document.FirstChildElement(), m_Setting, false);
+		}
+		else
+		{
+			DniSilentMessageBox(TEXT("Failed to read configuration file."), MB_OK|MB_ICONSTOP);
+			PostQuitMessage(-1);
+		}
+
+		return l_bLoadSuccess;
 	}
-	else if (nResponse == IDCANCEL)
+	catch(TCHAR * p_Message)
 	{
-		//  tramite il pulsante Annulla.
+		DniSilentMessageBox(p_Message, MB_OK|MB_ICONSTOP);
+		return false;
 	}
+	catch(...)
+	{
+		DniSilentMessageBox(TEXT("Error loading configuration file"), MB_OK|MB_ICONSTOP);
+		return false;
+	}
+
 
 	// Poiché la finestra di dialogo è stata chiusa, restituisce FALSE in modo che l'applicazione
 	//  venga terminata, anziché avviare la message pump dell'applicazione.

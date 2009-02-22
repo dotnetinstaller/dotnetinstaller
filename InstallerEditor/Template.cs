@@ -82,7 +82,11 @@ namespace InstallerEditor
 			{
 				get{return m_tpl.GetAttribute("setupconfiguration/@failed_exec_command_continue").Replace(c_APPLICATION_NAME, m_ApplicationName);}
 			}
-			public string install_caption
+            public string skip_caption
+            {
+                get{return m_tpl.GetAttribute("setupconfiguration/@skip_caption").Replace(c_APPLICATION_NAME, m_ApplicationName);}
+            }
+            public string install_caption
 			{
 				get{return m_tpl.GetAttribute("setupconfiguration/@install_caption").Replace(c_APPLICATION_NAME, m_ApplicationName);}
 			}

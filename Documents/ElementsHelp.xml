@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <elements>
 	<element name="configurations" description="Root element">
-		<subelement name="configuration">
-		</subelement>
+        <attribute name="silent_install" description="If true, run the install silently (without requiring user input)" optional="true" />
+        
+		<subelement name="configuration" />
 	</element>
 
 	<element name="configuration (type='install')" description="A configuration used to install a collection of components.">
@@ -11,6 +12,7 @@
 		<attribute name="dialog_caption" description="Main dialog title." />
 		<attribute name="dialog_message" description="Main message of the main dialog." />
 		<attribute name="dialog_bitmap" description="Bitmap file used in the left panel of the main dialog. If this file doesn't exist or this attribute is empty the application load the bitmap from the .exe resource. Can contains path constant (see Help->Path Constant)." optional="true" />
+		<attribute name="skip_caption" description="Caption of the Skip button." />
 		<attribute name="install_caption" description="Caption of the Install button." />
 		<attribute name="cancel_caption" description="Caption of the Cancel button." />
 		<attribute name="reinstallflag_caption" description="Caption for the 'Reinstall all check box'." />
@@ -63,6 +65,7 @@
 		<attribute name="mustreboot" description="Indicates if ask to reboot after this component is installed successfully (True/False). Normally if the system must be restarted is automatically the component that tells this setup (with special return code) to stop and restart the system, but in special circumstances (for example in Windows 98) we must force a reboot to install correctly some components (for example the .NET Framework)." />
 		<attribute name="description" description="Description of this component. This value is used also in some message to replace the %s string." />
 		<attribute name="note" description="Note, not used by the setup." optional="true" />
+        
 		<subelement name="installedcheck" />
 		<subelement name="downloaddialog" />
 	</element>
@@ -109,6 +112,7 @@
 		<attribute name="sourceurl" description="The complete source path of the file to download. For example 'http://www.yourwebsite.com/SetupX/Setup.exe' . Must be URL with http:// or ftp:// protocol" />
 		<attribute name="destinationpath" description="The complete destination path where the application copy the sourceurl file. Is recommended to use the TEMP path for destination like this: '#TEMPPATH\\APPLICATION_NAME' . Can contains path constant (see Help->Path Constant)." />
 		<attribute name="destinationfilename" description="New name of the downloaded file. Leave this value empty to use the same filename of the original filename." />
+        <attribute name="alwaysdownload" description="If true, always download the file; if false, do not download if the file already exists in the destination path" />
 	</element>
 		
 	<element name="installedcheck (type='check_file')" description="The application check if a component is installed looking for the specified registry information or file.">

@@ -18,6 +18,7 @@ namespace InstallerEditor
 			m_sourceurl = "http://www.yourwebsite.com/SetupX/Setup.exe";
 			m_destinationpath = "#TEMPPATH\\" + p_DownloadPath;
 			m_destinationfilename = "";
+            m_alwaysdownload = true;
 		}
 
 		private string m_componentname;
@@ -52,6 +53,15 @@ namespace InstallerEditor
 			set{m_destinationfilename = value;}
 		}
 
+        // Matthew Sheets - 2007-08-28: added flag to bypass download if the file already exists locally
+        private bool m_alwaysdownload;
+        [Description("If true, always download the file; if false, only download if the file does not exist locally.")]
+        public bool alwaysdownload
+        {
+            get{return m_alwaysdownload;}
+            set{m_alwaysdownload = value;}
+        }
+
 
 		#region IXmlClass Members
 
@@ -77,6 +87,7 @@ namespace InstallerEditor
 			e.XmlWriter.WriteAttributeString("sourceurl",m_sourceurl);
 			e.XmlWriter.WriteAttributeString("destinationpath",m_destinationpath);
 			e.XmlWriter.WriteAttributeString("destinationfilename",m_destinationfilename);
+            e.XmlWriter.WriteAttributeString("alwaysdownload",m_alwaysdownload.ToString());
 		}
 		protected virtual void OnXmlReadTagDownload(XmlElementEventArgs e)
 		{
@@ -91,6 +102,9 @@ namespace InstallerEditor
 
 			if (e.XmlElement.Attributes["sourceurl"] != null)
 				m_sourceurl = e.XmlElement.Attributes["sourceurl"].InnerText;
+
+            if (e.XmlElement.Attributes["alwaysdownload"] != null)
+                m_alwaysdownload = bool.Parse(e.XmlElement.Attributes["alwaysdownload"].InnerText);
 		}
 
 		protected virtual void OnComponentNameChanged(EventArgs e)

@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "dotNetInstaller.h"
 #include "dotNetInstallerDlg.h"
-#include ".\dotnetinstallerdlg.h"
 
 #include "InstallComponentDlg.h"
 #include "ComponentSelector.h"
@@ -14,6 +13,8 @@
 #include "OsIdentifier.h"
 #include "ConfigFile.h"
 #include "InstallerLog.h"
+#include "DniMessageBox.h"
+#include "SilentInstall.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -33,6 +34,7 @@ CdotNetInstallerDlg::CdotNetInstallerDlg(CWnd* pParent /*=NULL*/)
 void CdotNetInstallerDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_SKIP, m_btnSkip);
 	DDX_Control(pDX, IDC_INSTALL, m_btnInstall);
 	DDX_Control(pDX, IDCANCEL, m_btCancel);
 	DDX_Control(pDX, IDC_MESSAGE, m_lblMessage);
@@ -47,6 +49,7 @@ BEGIN_MESSAGE_MAP(CdotNetInstallerDlg, CDialog)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_SKIP, OnBnClickedSkip)
 	ON_BN_CLICKED(IDC_INSTALL, OnBnClickedInstall)
 	ON_BN_CLICKED(IDC_ADVANCED, OnBnClickedAdvanced)
 	ON_WM_DESTROY()
@@ -55,6 +58,15 @@ END_MESSAGE_MAP()
 
 
 // gestori di messaggi di CdotNetInstallerDlg
+
+INT_PTR CdotNetInstallerDlg::RunDni(installerSetting & p_Settings, bool p_additional_config)
+{
+	// p_Settings must be "in scope" through the duration of the dialog display
+	m_Settings = p_Settings;
+	m_additional_config = p_additional_config;
+
+	return this->DoModal();
+}
 
 BOOL CdotNetInstallerDlg::OnInitDialog()
 {
@@ -72,69 +84,73 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	//determinating operating system
 	m_lblOperatingSystem.SetWindowText(DVLib::GetOsVersionString());
 
-	//load xml file
-	if (LoadXmlSettings() == false)
+	// Matthew Sheets - 2008-01-14: Hide the "Skip" button if there are no additional configurations
+	if (!m_additional_config)
 	{
-		AfxMessageBox(TEXT("Failed to read configuration file."), MB_OK|MB_ICONSTOP);
-		PostQuitMessage(-1);
+		m_btnSkip.ShowWindow(SW_HIDE);
+	}
+
+	//load xml file
+	this->SetWindowText(m_Settings.dialog_caption);
+	m_btCancel.SetWindowText(m_Settings.cancel_caption);
+	m_btnSkip.SetWindowText(m_Settings.skip_caption);
+	m_btnInstall.SetWindowText(m_Settings.install_caption);
+	m_lblMessage.SetWindowText(m_Settings.dialog_message);
+	m_btAdvanced.SetWindowText(m_Settings.advanced_caption);
+	if (m_Settings.advanced_caption.GetLength() <= 0)
+		m_btAdvanced.ShowWindow(SW_HIDE);
+
+	m_InfoLink.SetCaption(m_Settings.dialog_otherinfo_caption);
+	m_InfoLink.SetHyperlink(m_Settings.dialog_otherinfo_link);
+	if (m_Settings.dialog_otherinfo_caption.GetLength() <= 0)
+		m_InfoLink.ShowWindow(SW_HIDE);
+
+	try
+	{
+		HBITMAP hBitmap;
+		if ( m_Settings.dialog_bitmap.GetLength() > 0 &&
+			DVLib::FileExistsCustom(m_Settings.dialog_bitmap) )
+		{
+			hBitmap = DVLib::LoadBitmapFromFile(m_Settings.dialog_bitmap);
+		}
+		else
+		{
+			//l'immagine non è inserita come risorsa tipo BITMAP perchè avevo dei problemi poi a chiamare UpdateResource
+			// è quindi inserita come risorsa di tipo CUSTOM e letta manualmente
+			//hBitmap = LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BANNER));
+			hBitmap = LoadBannerFromResource(AfxGetApp()->m_hInstance);
+		}
+
+		m_PictureBox.SetBitmap(hBitmap);
+	}
+	catch(...)
+	{
+		//errore nel caricamento dell'immagine
+	}
+
+	if (LoadComponentsList())
+	{
+		if (m_Settings.auto_close_if_installed || QuietInstall.IsSilent())
+		{
+			m_Settings.ExecuteCompleteCode();
+			OnOK();
+		}
 	}
 	else
 	{
-		// Matthias Jentsch - 2006-03-06: Checking operating system version ...
-		if (DVLib::IsInRangedOs(DVLib::GetOsVersion(), m_Settings.os_filter_greater, m_Settings.os_filter_smaller) == false)
+		// Matthew Sheets - 2007-08-21: Initiate component install(s) silently, without end-user input
+		if(QuietInstall.IsSilent())
 		{
-			// Matthias Jentsch - 2006-03-06: This setup can't run on the current operating system
-			AfxMessageBox(m_Settings.os_filter_not_match_message, MB_OK|MB_ICONSTOP);
-			PostQuitMessage(-1);
+			m_btnInstall.EnableWindow(FALSE);
+			m_btCancel.EnableWindow(FALSE);
+			m_btAdvanced.EnableWindow(FALSE);
+
+			m_InfoLink.EnableWindow(FALSE);
+
+			// Run the button install click event
+			OnBnClickedInstall();
 		}
-		else	// Matthias Jentsch - 2006-03-06: Checking of operating system version passed!
-		{
-			this->SetWindowText(m_Settings.dialog_caption);
-			m_btCancel.SetWindowText(m_Settings.cancel_caption);
-			m_btnInstall.SetWindowText(m_Settings.install_caption);
-			m_lblMessage.SetWindowText(m_Settings.dialog_message);
-			m_btAdvanced.SetWindowText(m_Settings.advanced_caption);
-			if (m_Settings.advanced_caption.GetLength() <= 0)
-				m_btAdvanced.ShowWindow(SW_HIDE);
-
-			m_InfoLink.SetCaption(m_Settings.dialog_otherinfo_caption);
-			m_InfoLink.SetHyperlink(m_Settings.dialog_otherinfo_link);
-			if (m_Settings.dialog_otherinfo_caption.GetLength() <= 0)
-				m_InfoLink.ShowWindow(SW_HIDE);
-
-			try
-			{
-				HBITMAP hBitmap;
-				if ( m_Settings.dialog_bitmap.GetLength() > 0 &&
-					DVLib::FileExistsCustom(m_Settings.dialog_bitmap) )
-				{
-					hBitmap = DVLib::LoadBitmapFromFile(m_Settings.dialog_bitmap);
-				}
-				else
-				{
-					//l'immagine non è inserita come risorsa tipo BITMAP perchè avevo dei problemi poi a chiamare UpdateResource
-					// è quindi inserita come risorsa di tipo CUSTOM e letta manualmente
-					//hBitmap = LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BANNER));
-					hBitmap = LoadBannerFromResource(AfxGetApp()->m_hInstance);
-				}
-
-				m_PictureBox.SetBitmap(hBitmap);
-			}
-			catch(...)
-			{
-				//errore nel caricamento dell'immagine
-			}
-
-			if (LoadComponentsList())
-			{
-				if (m_Settings.auto_close_if_installed)
-				{
-					m_Settings.ExecuteCompleteCode();
-					PostQuitMessage(0);
-				}
-			}
-		}
-	}	
+	}
 
 	return TRUE;  // restituisce TRUE a meno che non venga impostato lo stato attivo su un controllo.
 }
@@ -175,41 +191,6 @@ HCURSOR CdotNetInstallerDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-//returns true if the functions sucessfully load the setting m_Setting
-bool CdotNetInstallerDlg::LoadXmlSettings(void)
-{
-	try
-	{
-		//riferimento standard
-		CString l_SettingFile = DVLib::PathCombineCustom(DVLib::GetAppPath(), TEXT("configuration.xml"));
-
-		if (DVLib::FileExistsCustom(l_SettingFile))
-		{
-			ApplicationLog.Write(TEXT("Loading configuration from file: "), l_SettingFile);
-
-			LoadConfigFile(l_SettingFile, m_Settings, this); //riferimento
-		}
-		else
-		{
-			ApplicationLog.Write(TEXT("Loading configuration from resource."));
-
-			LoadConfigFromResource(AfxGetApp()->m_hInstance, m_Settings, this);
-		}
-
-		return true;
-	}
-	catch(TCHAR * p_Message)
-	{
-		AfxMessageBox(p_Message, MB_OK|MB_ICONSTOP);
-		return false;
-	}
-	catch(...)
-	{
-		AfxMessageBox(TEXT("Error loading configuration file"), MB_OK|MB_ICONSTOP);
-		return false;
-	}
-}
-
 void CdotNetInstallerDlg::OnBnClickedInstall()
 {
 	try
@@ -248,7 +229,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 								//se è presente un messaggio di completamento installazione
 								CString l_completeMsg = m_Settings.components[i]->installcompletemessage;
 								if (l_completeMsg.Trim().GetLength() > 0)
-									AfxMessageBox(l_completeMsg, MB_OK|MB_ICONINFORMATION);
+									DniMessageBox(l_completeMsg, MB_OK|MB_ICONINFORMATION);
 
 								if (m_Settings.components[i]->mustreboot ||
 									l_ExitCode == ERROR_SUCCESS_REBOOT_REQUIRED) //se l'installazione ha chiesto di riavviare non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
@@ -259,9 +240,11 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 									
 
 									//chiedo di riavviare
-									if (AfxMessageBox(m_Settings.reboot_required, MB_YESNO|MB_ICONQUESTION) == IDYES )
+									if (DniMessageBox(m_Settings.reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES )
 									{
 										InitiateReboot();
+										ApplicationLog.Write( TEXT("---Initiated REBOOT") );
+										PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);
 										break;
 									}
 									else
@@ -310,7 +293,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 				CString l_msg;
 				l_msg.Format( m_Settings.failed_exec_command_continue, m_Settings.components[i]->description );
 
-				if (AfxMessageBox(l_msg,MB_YESNO, MB_YESNO|MB_ICONEXCLAMATION) == IDNO )
+				if (DniMessageBox(l_msg, MB_YESNO, IDNO, MB_YESNO|MB_ICONEXCLAMATION) == IDNO )
 					break;
 			}
 		}
@@ -332,10 +315,24 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 
 			OnOK();
 		}
+		else
+		{
+			// Matthew Sheets - 2007-09-20
+			// TODO: Need to determine how to handle a still-populated LoadComponentsList
+			///   during silent installs, since components need not have install checks.
+			if (QuietInstall.IsSilent())
+			{
+				// TODO: (see above) For now, just continue
+				m_Settings.ExecuteCompleteCode();
+
+				OnOK();
+			}
+		}
 	}
 	catch(...)
 	{
-		AfxMessageBox(TEXT("Failed to install one or more components"), MB_OK|MB_ICONSTOP);
+		ApplicationLog.Write( TEXT("Failed to install one or more components"));
+		DniSilentMessageBox(TEXT("Failed to install one or more components"), MB_OK|MB_ICONSTOP);
 	}
 }
 
@@ -365,6 +362,12 @@ void CdotNetInstallerDlg::OnBnClickedAdvanced()
 	{
 		LoadComponentsList();
 	}
+}
+
+// Matthew Sheets - 2008-01-14: Skip the current config section and go to the next valid one
+void CdotNetInstallerDlg::OnBnClickedSkip()
+{
+	OnOK();
 }
 
 void CdotNetInstallerDlg::OnDestroy()
