@@ -134,6 +134,11 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	{
 		if (m_Settings.auto_close_if_installed || QuietInstall.IsSilent())
 		{
+            if (m_Settings.complete_command.Trim().GetLength())
+            {
+                ExtractCab(); // the command may need to execute a file
+            }
+
 			m_Settings.ExecuteCompleteCode();
 			OnOK();
 		}
@@ -210,11 +215,13 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 				{
 					ApplicationLog.Write( TEXT("--Executing component :"), m_Settings.components[i]->description);
 
+					InstallComponentDlg l_dg;
+					l_dg.LoadComponent(&m_Settings, m_Settings.components[i]);
+                    m_Settings.components[i]->Init(& l_dg);
+
 					if (m_Settings.components[i]->DownloadComponents(this) &&  //download component
 						m_Settings.components[i]->Exec()) //execute component
 					{
-						InstallComponentDlg l_dg;
-						l_dg.LoadComponent(&m_Settings, m_Settings.components[i]);
 						l_dg.DoModal();
 						
 						if (m_Settings.components[i]->IsExecuting()) // se l'installazione è ancora attiva non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
@@ -298,8 +305,8 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 
 				if (DniMessageBox(l_msg, MB_YESNO, IDNO, MB_YESNO|MB_ICONEXCLAMATION) == IDNO )
 					break;
+				}
 			}
-		}
 
 		if (l_bRemoveRunOnce)
 		{

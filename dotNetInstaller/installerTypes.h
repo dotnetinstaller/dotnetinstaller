@@ -322,6 +322,8 @@ struct installedcheck_check_file : public installedcheck
 
 struct component
 {
+    //dialog where to post messages to
+    CDialog * m_pDialog;
 	//tipo di componente: cmd, msi, openfile
 	component_type type;
 	//descrizione
@@ -370,7 +372,10 @@ struct component
 
 	virtual DWORD GetExitCode() = 0;
 	virtual bool IsExecuting() = 0;
-	virtual void Init() = 0;
+	virtual void Init(CDialog * pDialog = NULL)
+    {
+        m_pDialog = pDialog;
+    }
 
 	bool IsInstalled()
 	{
@@ -438,7 +443,7 @@ struct cmd_component : public process_component
 		return DVLib::ExecCmdAndWait(command, pExitCodes);
 	};*/
 
-	virtual bool Exec()
+	bool Exec()
 	{
         if (QuietInstall.IsSilent() && command_silent.GetLength() > 0)
         {
@@ -476,7 +481,7 @@ struct msi_component : public process_component
 		return DVLib::ExecCmdAndWait(l_command, pExitCodes);
 	};*/
 
-	virtual bool Exec()
+	bool Exec()
 	{
 		CString l_command = TEXT("msiexec /I ");
 		l_command += TEXT("\"");
@@ -507,26 +512,24 @@ struct openfile_component : public component
 {
 	CString file; //file to open. Can be a web link or a standard file
 
-	virtual bool Exec()
+	bool Exec()
 	{
 		return DVLib::ShellExecuteDefault(file);
 	}
-	virtual DWORD GetExitCode()
+	DWORD GetExitCode()
 	{
 		return ERROR_SUCCESS;
 	}
-	virtual bool IsExecuting()
+	bool IsExecuting()
 	{
 		return false;
-	}
-	virtual void Init()
-	{
 	}
 };
 
 struct thread_component : public component
 {
     HANDLE m_hThread;
+	DWORD m_ExitCode;
 
 	virtual bool FileExists()
 	{
@@ -535,7 +538,7 @@ struct thread_component : public component
 
 	virtual DWORD GetExitCode()
 	{
-        return ERROR_SUCCESS;
+        return m_ExitCode;
 	}
 
     virtual bool IsExecuting()
@@ -544,14 +547,32 @@ struct thread_component : public component
 	}
 
 	static UINT ExecuteThread(LPVOID pParam)
-    {        
-        thread_component * pComponent = (thread_component *) pParam;
-        return pComponent->Exec() ? 0 : -1;
+    {
+		thread_component * pComponent = (thread_component *) pParam;
+		try
+		{
+			pComponent->m_ExitCode = pComponent->Exec() ? 0 : -1;
+		}
+		catch(TCHAR * error)
+		{
+			ApplicationLog.Write(error);
+			DniSilentMessageBox(error, MB_OK | MB_ICONSTOP);
+			pComponent->m_ExitCode = -1;
+		}
+		catch(...)
+		{
+			ApplicationLog.Write( TEXT("Failed to execute threaded component"));
+			DniSilentMessageBox(TEXT("Failed to execute threaded component"), MB_OK | MB_ICONSTOP);
+			pComponent->m_ExitCode = -1;
+		}
+		return pComponent->m_ExitCode;
     }
 
-	virtual void Init()
+	void Init(CDialog * pDialog = NULL)
 	{
-        CWinThread * pThread = AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED);        
+		m_ExitCode = 0;
+        component::Init(pDialog);
+        CWinThread * pThread = AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED);
         m_hThread = pThread->m_hThread;
         pThread->ResumeThread();
 	}
@@ -583,6 +604,8 @@ struct installerSetting
 
 	//Complete command (executed when all components are installed correctly), can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed. (OPTIONAL)
 	CString complete_command;
+	// Daniel Doubrovkine - 2008-09-28: added complete command on silent install
+	CString complete_command_silent;
 	//If true auto close the dialog (display installation_completed message and execute the complete_command) if all the components are already installed. (REQUIRED)
 	bool auto_close_if_installed;
 	/* Matthias Jentsch - 2006-03-06: added filter for minimum operating system version */
@@ -634,7 +657,7 @@ struct installerSetting
 			//DWORD l_ExitCodes;
 			//DVLib::ExecCmdAndWait(complete_command, & l_ExitCodes);
 		}
-	}
+		}
 
     CString ValidatePath(LPCTSTR p_Path)
     {

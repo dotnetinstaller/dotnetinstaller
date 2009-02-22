@@ -31,9 +31,9 @@ void InstallComponentDlg::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(InstallComponentDlg, CDialog)
-	ON_WM_TIMER()
+	ON_MESSAGE(WM_USER_SETSTATUSINSTALL, OnSetStatusInstall)
+    ON_WM_TIMER()
 END_MESSAGE_MAP()
-
 
 // InstallComponentDlg message handlers
 
@@ -132,4 +132,19 @@ BOOL InstallComponentDlg::OnInitDialog()
 	}
 
 	return TRUE;
+}
+
+// WM_USER_SETSTATUSINSTALL
+afx_msg LRESULT InstallComponentDlg::OnSetStatusInstall(WPARAM wParam, LPARAM lParam)
+{
+    if (wParam != NULL)
+    {
+        InstallStatusParam * status = (InstallStatusParam *) wParam;
+		CString l_tmp;
+		l_tmp.Format(m_Setting->installing_component_wait, (LPCWSTR) status->Status);
+		m_InstallMessage.SetWindowText(l_tmp);
+        InstallStatusParam::Free(status);
+    }
+
+	return 0;
 }

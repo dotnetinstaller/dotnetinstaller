@@ -7,6 +7,8 @@
 
 // InstallComponentDlg dialog
 
+#define WM_USER_SETSTATUSINSTALL (WM_USER+1)
+
 class InstallComponentDlg : public CDialog
 {
 	DECLARE_DYNAMIC(InstallComponentDlg)
@@ -22,7 +24,7 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 public:
 	CStatic m_InstallMessage;
 	void LoadComponent(installerSetting * p_Setting, component * p_Component);
@@ -38,4 +40,22 @@ public:
 	afx_msg void OnBnClickedSkip();
 	afx_msg void OnTimer(UINT nIDEvent);
 	CKCBusyProgressCtrl m_BusyControl;
+	afx_msg LRESULT OnSetStatusInstall(WPARAM wParam, LPARAM lParam);
+};
+
+struct InstallStatusParam
+{
+	CString Status;
+
+	static InstallStatusParam * CreateStatus(CString p_Status, long size, LPCWSTR type = L"Kb")
+	{
+		InstallStatusParam * param = new InstallStatusParam();
+		param->Status.Format(L"%s, %d %s", (LPCWSTR) p_Status, size, type);
+		return param;
+	}
+
+	static void Free(InstallStatusParam * param)
+	{
+		delete param;
+	}
 };

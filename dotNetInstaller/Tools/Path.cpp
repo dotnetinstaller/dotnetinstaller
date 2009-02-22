@@ -120,7 +120,9 @@ void DVLib::DeleteDirectoryDeep(const CString& path)
 		    else
 		    {
 			    if (! ::DeleteFileW((LPCWSTR) sub))
-                    throw (LPCWSTR) sub;
+				{
+					throw _wcsdup((LPCWSTR) TEXT("Error deleting: ") + sub);
+				}
 		    }
 	    }
 
