@@ -215,12 +215,12 @@ namespace InstallerEditor
 				l_dg.DefaultExt = "exe";
 				if (l_dg.ShowDialog(this) == DialogResult.OK)
 				{
-					System.IO.File.Copy(txtTemplateFile.Text, l_dg.FileName, true);
-					System.IO.File.SetAttributes(l_dg.FileName, System.IO.FileAttributes.Normal);
-					
-					ResourceUpdate.UpdateResourceWithFile(l_dg.FileName, "RES_BANNER", "CUSTOM", 0, txtBannerBitmap.Text);
-					ResourceUpdate.UpdateResourceWithFile(l_dg.FileName, "RES_CONFIGURATION", "CUSTOM", 0, txtConfiguration.Text);
-
+                    InstallerArgs args = new InstallerArgs();
+                    args.banner = txtBannerBitmap.Text;
+                    args.config = txtConfiguration.Text;
+                    args.output = l_dg.FileName;
+                    args.template = txtTemplateFile.Text;
+                    InstallerEditor.CreateInstaller(args);
 					m_OutputFileName = l_dg.FileName;
 				}
 

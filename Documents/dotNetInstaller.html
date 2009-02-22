@@ -165,7 +165,52 @@
         You can use the "Add -&gt;Component Wizard ..." menu when adding new components
         to automatically add the most important components like: Service Pack 6a for NT4,
         Internet Explorer 6, .NET 1.1, MDAC 2.8, ...</p>
-    <h2>
+        
+    <h3>Command Line Usage</h2>
+    <p>
+     InstallerEditor can be used as the bootstrapper compiler and linker in a build process.
+    </p>
+    <h3>Command Line Parameters</h3>
+    <p>
+     <table border="1">
+      <thead>
+       <tr>
+        <th>Argument</th>
+        <th>Description</th>
+        <th>Required</th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr><td>/?</td><td>show help</td><td></td></tr>
+       <tr><td>/Output:filename</td><td>Generated installer file (short form /o)</td><td>yes</td></tr>
+       <tr><td>/Template:filename</td><td>Template installer executable (short form /t)</td><td>yes</td></tr>
+       <tr><td>/Banner:filename</td><td>Picture for the banner (short form /b)</td><td>yes</td></tr>
+       <tr><td>/Configuration:filename</td><td>XML configuration file (short form /c)</td><td>yes</td></tr>
+      </tbody>
+     </table>
+    </p>
+    <p>
+     In addition, you can pass a response file prefixed with @ for all options.
+     Run InstallerEditor.exe /? for detailed command-line usage.    
+    </p>    
+    <h3>Return Codes</h3>
+    <p>
+     <table border="1">
+      <thead>
+       <tr>
+        <th>Code</th>
+        <th>Description</th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr><td>0</td><td>Success</td></tr>
+       <tr><td>-1</td><td>Invalid command line argument(s)</td></tr>
+       <tr><td>-2</td><td>Error linking boostrapper: console output will contain detailed errors</td></tr>
+      </tbody>
+     </table>
+    </p>
+    
+     <h2>
         Tutorials</h2>
     <h3>
         How to create a Standalone Setup to install .NET Framework and your msi setup</h3>
@@ -2336,6 +2381,8 @@
         <li>Added optional configuration-level and component-level OS filter matching system architecture (x86, x84, etc).
             See "processor_architecture_filter". This filter restricts the entire boostrapper from running on non-supported
             processors and enables installation of different dependencies on different processor architectures.</li>
+        <li>Added support for command-line execution of InstallerEditor.exe, can now be used as a bootstrapper
+            compiler in a build process.</li>
     </ul>
     <h3>
         1.3.3.0 (19 March 2007)</h3>

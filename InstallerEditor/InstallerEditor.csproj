@@ -110,6 +110,7 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CommandLineArguments.cs" />
     <Compile Include="Component.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -161,6 +162,7 @@
     <Compile Include="installedcheck_registry.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="InstallerEditor.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

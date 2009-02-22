@@ -468,15 +468,6 @@ namespace InstallerEditor
 		}
 		#endregion
 
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		[STAThread]
-		static void Main() 
-		{
-			Application.Run(new MainForm());
-		}
-
 		private void mnExit_Click(object sender, System.EventArgs e)
 		{
 			Close();
