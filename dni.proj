@@ -1,0 +1,81 @@
+<Project DefaultTargets="all" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+ <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+ <PropertyGroup Condition="'$(Configuration)'==''">
+  <Configuration>Debug</Configuration>
+ </PropertyGroup>
+ <PropertyGroup>
+  <ProductName>dotNetInstaller</ProductName>
+  <CompanyName>www.devage.com</CompanyName>
+  <Copyright>Copyright (c) Davide Icardi, Matthias Jentsch (www.devage.com) 2008</Copyright>
+  <Trademark>All Rights Reserved</Trademark>
+  <ReleaseDir>target\$(Configuration)</ReleaseDir>
+ </PropertyGroup>
+ <ItemGroup>
+  <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.txt" />
+  <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.xml" />
+  <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.bmp" />
+ </ItemGroup>
+ <ItemGroup>
+  <SupportFiles Include="Samples/SupportFiles/**/*.txt" />
+ </ItemGroup>
+ <ItemGroup>
+  <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" />
+  <Binaries Include="InstallerEditor\bin\$(Configuration)\InstallerEditor.exe" />
+ </ItemGroup>
+ <Target Name="all">
+  <Message Importance="high" Text="Building project ..." />
+  <CallTarget Targets="clean" />
+  <CallTarget Targets="version" />
+  <CallTarget Targets="build" />
+  <CallTarget Targets="release" />
+ </Target>
+ <Target Name="version">
+  <Version Major="1" Minor="4">
+   <Output TaskParameter="Major" PropertyName="Major" />
+   <Output TaskParameter="Minor" PropertyName="Minor" />
+   <Output TaskParameter="Build" PropertyName="Build" />
+   <Output TaskParameter="Revision" PropertyName="Revision" />
+  </Version>
+  <Time Format="HHmm">
+   <Output TaskParameter="FormattedTime" PropertyName="Revision" />
+   <Output TaskParameter="FormattedTime" PropertyName="BuildTimestamp" />
+  </Time>
+  <SvnVersion LocalPath=".">
+   <Output TaskParameter="Revision" PropertyName="Build" />
+  </SvnVersion>
+  <CreateItem Include="Major" AdditionalMetadata="ReplacementValue=$(Major)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
+  <CreateItem Include="Minor" AdditionalMetadata="ReplacementValue=$(Minor)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
+  <CreateItem Include="Build" AdditionalMetadata="ReplacementValue=$(Build)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
+  <CreateItem Include="Revision" AdditionalMetadata="ReplacementValue=$(Revision)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
+  <CreateItem Include="ProductName" AdditionalMetadata="ReplacementValue=$(ProductName)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
+  <CreateItem Include="CompanyName" AdditionalMetadata="ReplacementValue=$(CompanyName)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
+  <CreateItem Include="Copyright" AdditionalMetadata="ReplacementValue=$(Copyright)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
+  <CreateItem Include="Trademark" AdditionalMetadata="ReplacementValue=$(Trademark)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
+  <CreateItem Include="BuildTimestamp" AdditionalMetadata="ReplacementValue=$(BuildTimestamp)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
+  <Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)"/>
+  <MakeDir Directories="Version" />
+  <AssemblyInfo CodeLanguage="CS" OutputFile="Version\GlobalAssemblyInfo.cs"
+   AssemblyCompany="$(CompanyName)" AssemblyProduct="$(ProductName)"
+   AssemblyCopyright="$(Copyright)" AssemblyTrademark="$(Trademark)"
+   CLSCompliant="true" AssemblyDelaySign="false" AssemblyKeyName="" AssemblyCulture=""
+   AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
+   AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)" />
+  <TemplateFile Template="Version\Version.h.template" OutputFilename="Version.h" Tokens="@(AssemblyInfoTokens)"/>
+ </Target>
+ <Target Name="clean">
+  <Delete Files="$(ReleaseDir)" />
+  <MSBuild Projects="Dni.sln" Targets="Clean" />
+ </Target>
+ <Target Name="build" DependsOnTargets="version">
+  <MSBuild Projects="Dni.sln" Targets="Build" />
+ </Target>
+ <Target Name="release" DependsOnTargets="version">
+  <Message Importance="high" Text="Collecting release files ..." />
+  <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)" /> 
+  <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Bin" />
+  <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples" />
+  <Copy SourceFiles="@(StandaloneSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\%(RecursiveDir)" />
+  <Copy SourceFiles="@(SupportFiles)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\SupportFiles\%(RecursiveDir)" />
+  <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup" />
+ </Target>
+</Project>

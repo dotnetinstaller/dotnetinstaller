@@ -85,45 +85,13 @@ BEGIN
     LTEXT           "Select the components to install",IDC_DESCRIPTIONSELECTOR,7,7,185,19
 END
 
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
 //
 
-VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,3,3,0
- PRODUCTVERSION 1,3,3,0
- FILEFLAGSMASK 0x3fL
-#ifdef _DEBUG
- FILEFLAGS 0x1L
-#else
- FILEFLAGS 0x0L
-#endif
- FILEOS 0x4L
- FILETYPE 0x1L
- FILESUBTYPE 0x0L
-BEGIN
-    BLOCK "StringFileInfo"
-    BEGIN
-        BLOCK "000004e4"
-        BEGIN
-            VALUE "[ProductName]", "dotNet Installer"
-            VALUE "CompanyName", "Davide Icardi / Matthias Jentsch"
-            VALUE "FileDescription", "Installer for .Net Application"
-            VALUE "FileVersion", "1.3.2.0"
-            VALUE "InternalName", "dotNetInstaller.exe"
-            VALUE "LegalCopyright", "Davide Icardi / Matthias Jentsch. All rights reserved."
-            VALUE "OriginalFilename", "dotNetInstaller.exe"
-            VALUE "ProductVersion", "1.3.3.0"
-        END
-    END
-    BLOCK "VarFileInfo"
-    BEGIN
-        VALUE "Translation", 0x0, 1252
-    END
-END
-
+#include <Version/Version.h>
+#include <Version/Version.rc>
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -254,4 +222,5 @@ LANGUAGE 16, 1
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
+
 

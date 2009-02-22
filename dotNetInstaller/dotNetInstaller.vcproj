@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="Tools"
+				AdditionalIncludeDirectories="Tools;&quot;$(SolutionDir)&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;WINVER=0x0400;_WIN32_IE=0x0400;_WIN32_WINNT=0x0400;TIXML_USE_STL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,7 +62,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
 				Culture="1040"
-				AdditionalIncludeDirectories="$(IntDir)"
+				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;&quot;$(SolutionDir)&quot;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -130,7 +130,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="Tools"
+				AdditionalIncludeDirectories="Tools;&quot;$(SolutionDir)&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;WINVER=0x0400;_WIN32_IE=0x0400;_WIN32_WINNT=0x0400;TIXML_USE_STL"
 				MinimalRebuild="false"
 				RuntimeLibrary="0"
@@ -147,7 +147,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
 				Culture="1040"
-				AdditionalIncludeDirectories="$(IntDir)"
+				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;&quot;$(SolutionDir)&quot;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -595,10 +595,6 @@
 					Name="VCCustomBuildTool"
 				/>
 			</FileConfiguration>
-		</File>
-		<File
-			RelativePath=".\ReadMe.txt"
-			>
 		</File>
 	</Files>
 	<Globals>
