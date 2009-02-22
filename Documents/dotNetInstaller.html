@@ -633,15 +633,43 @@
         for service pack or windows update).</p>
     <h2>Building a Single Executable Package</h2>
     <p>
-	dotNetInstaller supports embedding of dependencies into the same executable (Setup.exe) package. 
-	You don't need another self-extracting zip or additional packaging technology. 
-	Use TEMPPATH in all configuration settings instead of APPPATH. Extraction, as well as download 
-	happens into TEMPPPATH. When making an EXE, check the Embed Cab option to embed all support files. 
-	For the command line build, add the -e option and optionally -a to specify the location of support files.</p>
+        In certain deployment scenarios, it may be desirable to distribute an installation package
+        as a single, self-extracting executable. dotNetInstaller supports embedding
+     dependencies and producing a stand-alone packaged setup.exe. This is accomplished
+     by CAB-ing all dependencies into a single Setup.cab, embedding the result into your
+     setup.exe and extracting its contents at runtime. dotNetInstaller is also capable
+     of deleting extracted temporary files upon completion. No third-party packaging/zipping
+     technology is required.</p>
  <p>
+  In order to embed dependencies you must specify <em>/Embed</em> on the command line
+  of InstallerLinker.exe or check the appropriate option in the InstallerEditor Make
+  Exe dialog.</p>
+ <p>
+  Next, you must ensure that your dependency files are properly embedded. This is
+  not automatic except for components with a <em>Download File</em> subcomponent.</p>
+ <p>
+  The simplest way to specify an individual file to be embedded is by using the <em>
+   /EmbedFile</em> InstallerLinker.exe command line option and specify a full path
+  to the file you want to be embedded. The value can be any directory and the file
+  will be extracted in the root of #CABPATH during installation. See the PackagedSetup
+  sample that uses this behavior.</p>
+ <p>
+  For more complex scenarios, the recommended way to embed a file is to add a <em>Download
+   File</em> or a <em>Download Dialog</em> with a <em>Download File </em>to your dependency.
+  Because the file will be automatically extracted, no download will actually happen.
+  The Download File should have a <em>destinationpath</em> set to #CABPATH\Subdirectory.
+  For example, if <em>msxml.msi</em> is in <em>SupportFiles\MSXML\English\msxml.msi</em>,
+  set destinationpath to <em>#CABPATH\SupportFiles\MSXML\English</em>. This means
+  that at build time, InstallerLinker must find <em>SupportFiles\MSXML\English\msxml.msi</em>
+  under the current directory or the value specified by <em>/AppPath</em>. Set <em>
+   alwaysdownload</em> to <em>false</em> and ignore <em>sourceurl</em>.</p>
+ <p>
+  In order to test which files have been embedded, run your <em>Setup.exe /ExtractCab</em>.
+  This will output all CAB contents in the current folder.</p>
+ <p>
+  You may use #TEMPPATH everywhere instead of #CABPATH. #CABPATH defaults to #TEMPPATH\#GUID.
   If you would like temporary files to be deleted after setup completes, use #CABPATH
-  instead of #TEMPPATH and the cab_path_autodelete configuration option. #CABPATH
-  defaults to #TEMPPATH\#GUID.</p>
+  instead of #TEMPPATH and the cab_path_autodelete configuration option.</p>
  <p>
   When enabling logging, make sure not to output the log file into #CABPATH. This
   will prevent the #CABPATH directory from being deleted since the installer still
@@ -2493,13 +2521,11 @@
         <li>Remember when installing a service pack or other system update (like Jet for Win2000
             and XP) you must use the same language of the destination operating system.</li>
     </ul>
-    <h2>
-        How to: Create a Self-Extracting Setup Executable</h2>
+ <h2>
+        How to: Create a Self-Extracting Setup Executable with an External Packaging Tool</h2>
     <p>
-        In certain deployment scenarios, it may be desirable to distribute an installation package
-        as a single, self-extracting executable (SFX). dotNetInstaller supports embedding dependencies
-        since version 1.4 (/Embed+). This section describes an alternate way of packaging a single installer
-        with a 3rd party tool.</p>
+        This section describes an alternate way of packaging a single installer
+        with a 3rd party packaging tool instead of the /Embed options.</p>
     <p>
         The
  <a target=_blank href="http://7zsfx.org/">7zSFX project</a>, based on the
