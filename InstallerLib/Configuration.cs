@@ -8,7 +8,7 @@ namespace InstallerLib
     /// <summary>
     /// tag: configuration
     /// </summary>
-    public abstract class Configuration : IXmlClass
+    public abstract class Configuration : XmlClassImpl
     {
         public Configuration(string p_type)
         {
@@ -50,8 +50,10 @@ namespace InstallerLib
 
         #region IXmlClass Members
 
-        public void ToXml(XmlWriter p_Writer)
+        public override void ToXml(XmlWriter p_Writer)
         {
+            base.ToXml(p_Writer);
+
             p_Writer.WriteStartElement("configuration");
             p_Writer.WriteAttributeString("type", m_type);
             p_Writer.WriteAttributeString("lcid", m_lcid);
@@ -61,16 +63,20 @@ namespace InstallerLib
             p_Writer.WriteEndElement();
         }
 
-        public void FromXml(XmlElement p_Element)
+        public override void FromXml(XmlElement p_Element)
         {
+            base.FromXml(p_Element);
+
             if (p_Element.Attributes["type"] == null ||
                 p_Element.Attributes["type"].InnerText != m_type)
                 throw new ApplicationException("Invalid type");
+            
             if (p_Element.Attributes["lcid"] != null)
                 lcid = p_Element.Attributes["lcid"].InnerText;
 
             OnXmlReadTagConfiguration(new XmlElementEventArgs(p_Element));
         }
+
         #endregion
 
         protected virtual void OnXmlWriteTagConfiguration(XmlWriterEventArgs e)

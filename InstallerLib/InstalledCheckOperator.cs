@@ -14,7 +14,7 @@ namespace InstallerLib
     /// <summary>
     /// An installed check operator that can combine multiple checks.
     /// </summary>
-    public class InstalledCheckOperator
+    public class InstalledCheckOperator : XmlClassImpl
     {
         public InstalledCheckOperator()
         {
@@ -60,8 +60,10 @@ namespace InstallerLib
 
         #region IXmlClass Members
 
-        public void ToXml(XmlWriter p_Writer)
+        public override void ToXml(XmlWriter p_Writer)
         {
+            base.ToXml(p_Writer);
+
             p_Writer.WriteStartElement("installedcheckoperator");
             p_Writer.WriteAttributeString("type", m_type.ToString());
             p_Writer.WriteAttributeString("description", m_description.ToString());
@@ -79,8 +81,10 @@ namespace InstallerLib
             p_Writer.WriteEndElement();
         }
 
-        public void FromXml(XmlElement p_Element)
+        public override void FromXml(XmlElement p_Element)
         {
+            base.FromXml(p_Element);
+
             if (p_Element.Attributes["type"] != null)
             {
                 m_type = (InstalledCheckOperatorType)Enum.Parse(

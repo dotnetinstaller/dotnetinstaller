@@ -7,7 +7,7 @@ namespace InstallerLib
 	/// <summary>
 	/// Summary description for Download.
 	/// </summary>
-	public class Download : IXmlClass
+    public class Download : XmlClassImpl
 	{
 		public Download():this("APP_TEMP_DOWNLOADPATH")
 		{
@@ -65,21 +65,21 @@ namespace InstallerLib
 
 		#region IXmlClass Members
 
-		public void ToXml(XmlWriter p_Writer)
+		public override void ToXml(XmlWriter p_Writer)
 		{
+            base.ToXml(p_Writer);
 			p_Writer.WriteStartElement("download");
-
 			OnXmlWriteTagDownload(new XmlWriterEventArgs(p_Writer));
-
 			p_Writer.WriteEndElement();
 		}
 
-		public void FromXml(XmlElement p_Element)
+		public override void FromXml(XmlElement p_Element)
 		{
-			OnXmlReadTagDownload(new XmlElementEventArgs(p_Element));
+            base.FromXml(p_Element);
+            OnXmlReadTagDownload(new XmlElementEventArgs(p_Element));
 		}
-		#endregion
 
+		#endregion
 
 		protected virtual void OnXmlWriteTagDownload(XmlWriterEventArgs e)
 		{

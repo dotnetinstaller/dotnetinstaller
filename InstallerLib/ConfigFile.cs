@@ -8,7 +8,7 @@ namespace InstallerLib
     /// <summary>
     /// Summary description for ConfigFile.
     /// </summary>
-    public class ConfigFile
+    public class ConfigFile : XmlClassImpl
     {
         public ConfigFile()
         {
@@ -70,45 +70,50 @@ namespace InstallerLib
         public void SaveAs(string p_FileName)
         {
             XmlTextWriter l_XmlWriter = new XmlTextWriter(p_FileName, System.Text.Encoding.UTF8);
+            l_XmlWriter.Formatting = Formatting.Indented;
             try
             {
-                l_XmlWriter.Formatting = Formatting.Indented;
-                l_XmlWriter.WriteStartDocument();
-
-                l_XmlWriter.WriteStartElement("configurations");
-
-                /* Matthew Sheets - 2007-08-10: added flag for silent install */
-                l_XmlWriter.WriteAttributeString("silent_install", m_silent_install.ToString());
-
-                /* Daniel Doubrovkine - 2008-06-27: added version information */
-                l_XmlWriter.WriteAttributeString("fileversion", m_fileversion);
-                l_XmlWriter.WriteAttributeString("productversion", m_productversion);
-
-                //tag schema
-                l_XmlWriter.WriteStartElement("schema");
-                l_XmlWriter.WriteAttributeString("version", m_CurrentSchemaVersion.ToString());
-                l_XmlWriter.WriteEndElement();
-
-                l_XmlWriter.WriteStartElement("fileattributes");
-                foreach (FileAttribute a in fileattributes)
-                {
-                    a.ToXml(l_XmlWriter);
-                }
-                l_XmlWriter.WriteEndElement();
-
-                foreach (Configuration c in Configurations)
-                {
-                    c.ToXml(l_XmlWriter);
-                }
-
-                l_XmlWriter.WriteEndElement();
-
-                m_FileName = p_FileName;
+                ToXml(l_XmlWriter);
             }
             finally
             {
                 l_XmlWriter.Close();
             }
+            m_FileName = p_FileName;
+        }
+
+        public override void ToXml(XmlWriter l_XmlWriter)
+        {
+            l_XmlWriter.WriteStartDocument();
+
+            base.ToXml(l_XmlWriter);
+            l_XmlWriter.WriteStartElement("configurations");
+
+            /* Matthew Sheets - 2007-08-10: added flag for silent install */
+            l_XmlWriter.WriteAttributeString("silent_install", m_silent_install.ToString());
+
+            /* Daniel Doubrovkine - 2008-06-27: added version information */
+            l_XmlWriter.WriteAttributeString("fileversion", m_fileversion);
+            l_XmlWriter.WriteAttributeString("productversion", m_productversion);
+
+            //tag schema
+            l_XmlWriter.WriteStartElement("schema");
+            l_XmlWriter.WriteAttributeString("version", m_CurrentSchemaVersion.ToString());
+            l_XmlWriter.WriteEndElement();
+
+            l_XmlWriter.WriteStartElement("fileattributes");
+            foreach (FileAttribute a in fileattributes)
+            {
+                a.ToXml(l_XmlWriter);
+            }
+            l_XmlWriter.WriteEndElement();
+
+            foreach (Configuration c in Configurations)
+            {
+                c.ToXml(l_XmlWriter);
+            }
+
+            l_XmlWriter.WriteEndElement();
         }
 
         public void Create(string p_FileName)
@@ -122,6 +127,9 @@ namespace InstallerLib
             l_XmlElement.Load(p_FileName);
 
             XmlNode l_Configurations = l_XmlElement.SelectSingleNode("//configurations");
+
+            if (l_Configurations.PreviousSibling != null && l_Configurations.PreviousSibling.NodeType == XmlNodeType.Comment)
+                Comment = l_Configurations.PreviousSibling.InnerText;
 
             /* Matthew Sheets - 2007-09-20: added flag for silent install */
             if (l_Configurations.Attributes["silent_install"] != null)
@@ -231,8 +239,37 @@ namespace InstallerLib
 
     public interface IXmlClass
     {
+        string Comment { get; set; }
         void ToXml(XmlWriter p_Writer);
         void FromXml(XmlElement p_Element);
+    }
+
+    public class XmlClassImpl : IXmlClass
+    {
+        private string _comment = string.Empty;
+
+        [System.ComponentModel.Browsable(false)]
+        public string Comment
+        {
+            get { return _comment; }
+            set { _comment = value; }
+        }
+
+        public virtual void ToXml(XmlWriter p_Writer)
+        {
+            if (!string.IsNullOrEmpty(Comment))
+            {
+                p_Writer.WriteComment(Comment);
+            }
+        }
+
+        public virtual void FromXml(XmlElement p_Element)
+        {
+            if (p_Element.PreviousSibling != null && p_Element.PreviousSibling.NodeType == XmlNodeType.Comment)
+            {
+                Comment = p_Element.PreviousSibling.InnerText;
+            }
+        }
     }
 
     public class XmlWriterEventArgs : EventArgs
@@ -284,7 +321,8 @@ namespace InstallerLib
 
     public class ConfigFileFileEventArgs : ConfigFileEventArgs
     {
-		public ConfigFileFileEventArgs(string p_FileName, ConfigFile p_Config):base(p_Config)
+        public ConfigFileFileEventArgs(string p_FileName, ConfigFile p_Config)
+            : base(p_Config)
         {
             m_FileName = p_FileName;
         }
@@ -301,7 +339,8 @@ namespace InstallerLib
 
     public class ConfigFileXmlWriterEventArgs : ConfigFileFileEventArgs
     {
-		public ConfigFileXmlWriterEventArgs(XmlWriter p_XmlWriter, string p_FileName, ConfigFile p_Config):base(p_FileName, p_Config)
+        public ConfigFileXmlWriterEventArgs(XmlWriter p_XmlWriter, string p_FileName, ConfigFile p_Config)
+            : base(p_FileName, p_Config)
         {
             m_XmlWriter = p_XmlWriter;
         }
@@ -318,7 +357,8 @@ namespace InstallerLib
 
     public class ConfigFileXmlElementEventArgs : ConfigFileFileEventArgs
     {
-		public ConfigFileXmlElementEventArgs(XmlElement p_XmlElement, string p_FileName, ConfigFile p_Config):base(p_FileName, p_Config)
+        public ConfigFileXmlElementEventArgs(XmlElement p_XmlElement, string p_FileName, ConfigFile p_Config)
+            : base(p_FileName, p_Config)
         {
             m_XmlElement = p_XmlElement;
         }

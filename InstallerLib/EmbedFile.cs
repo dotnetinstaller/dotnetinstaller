@@ -8,7 +8,7 @@ namespace InstallerLib
     /// <summary>
     /// Summary description for EmbedFile.
     /// </summary>
-    public class EmbedFile : IXmlClass
+    public class EmbedFile : XmlClassImpl
     {
         public EmbedFile()
             : this("EmbedFile")
@@ -67,8 +67,10 @@ namespace InstallerLib
 
         #region IXmlClass Members
 
-        public void ToXml(XmlWriter p_Writer)
+        public override void ToXml(XmlWriter p_Writer)
         {
+            base.ToXml(p_Writer);
+
             p_Writer.WriteStartElement("embedfile");
 
             OnXmlWriteTagEmbedFile(new XmlWriterEventArgs(p_Writer));
@@ -76,8 +78,9 @@ namespace InstallerLib
             p_Writer.WriteEndElement();
         }
 
-        public void FromXml(XmlElement p_Element)
+        public override void FromXml(XmlElement p_Element)
         {
+            base.FromXml(p_Element);
             OnXmlReadTagEmbedFile(new XmlElementEventArgs(p_Element));
         }
         #endregion

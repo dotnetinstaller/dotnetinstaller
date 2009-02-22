@@ -9,7 +9,7 @@ namespace InstallerLib
     /// <summary>
     /// Summary description for Configuration.
     /// </summary>
-    public abstract class Component : IXmlClass
+    public abstract class Component : XmlClassImpl
     {
         public Component(string p_type)
             : this(p_type, "COMPONENT_NAME")
@@ -147,8 +147,10 @@ namespace InstallerLib
 
         #region IXmlClass Members
 
-        public void ToXml(XmlWriter p_Writer)
+        public override void ToXml(XmlWriter p_Writer)
         {
+            base.ToXml(p_Writer);
+
             p_Writer.WriteStartElement("component");
             OnXmlWriteTagcomponent(new XmlWriterEventArgs(p_Writer));
 
@@ -177,8 +179,10 @@ namespace InstallerLib
             p_Writer.WriteEndElement();
         }
 
-        public void FromXml(XmlElement p_Element)
+        public override void FromXml(XmlElement p_Element)
         {
+            base.FromXml(p_Element);
+
             if (p_Element.Attributes["type"] == null ||
                 p_Element.Attributes["type"].InnerText != m_type)
                 throw new ApplicationException("Invalid type");

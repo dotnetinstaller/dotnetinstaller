@@ -7,7 +7,7 @@ namespace InstallerLib
     /// <summary>
     /// Tag InstalledCheck
     /// </summary>
-    public class InstalledCheck
+    public class InstalledCheck : XmlClassImpl
     {
         public InstalledCheck(string p_type)
         {
@@ -45,8 +45,10 @@ namespace InstallerLib
 
         #region IXmlClass Members
 
-        public void ToXml(XmlWriter p_Writer)
+        public override void ToXml(XmlWriter p_Writer)
         {
+            base.ToXml(p_Writer);
+
             p_Writer.WriteStartElement("installedcheck");
             p_Writer.WriteAttributeString("type", m_type);
             p_Writer.WriteAttributeString("description", m_description);
@@ -54,8 +56,10 @@ namespace InstallerLib
             p_Writer.WriteEndElement();
         }
 
-        public void FromXml(XmlElement p_Element)
+        public override void FromXml(XmlElement p_Element)
         {
+            base.FromXml(p_Element);
+
             if (p_Element.Attributes["type"] == null ||
                 p_Element.Attributes["type"].InnerText != m_type)
                 throw new ApplicationException("Invalid type");
