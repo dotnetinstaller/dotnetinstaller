@@ -3,6 +3,7 @@
 #include "ConfigFile.h"
 #include "Tools/Cab/ExtractResourceT.hpp"
 #include "Tools/Cab/CompressT.hpp"
+#include "Tools/Guid.h"
 
 struct ExtractCABComponent : public thread_component
 {
@@ -32,7 +33,7 @@ private:
 		    throw TEXT("Failed to lock resource RES_CAB.");
 	    DWORD l_size = SizeofResource(p_Module, l_res);
 
-	    CString tempFile = DVLib::PathCombineCustom(DVLib::GetTempPathCustom(), TEXT("setup.cab") );
+        CString tempFile = DVLib::PathCombineCustom(DVLib::GetSessionTempPath(), TEXT("setup.cab") );
 
 	    HANDLE l_hFile = CreateFile(tempFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	    if (l_hFile == INVALID_HANDLE_VALUE)
@@ -50,7 +51,7 @@ private:
         if (!i_Extract.CreateFDIContext()) 
             throw TEXT("Failed to initialize CAB context");
 
-        if (!i_Extract.ExtractFileW(tempFile.GetBuffer(), DVLib::GetTempPathCustom().GetBuffer()))
+        if (!i_Extract.ExtractFileW(tempFile.GetBuffer(), DVLib::GetSessionTempPath().GetBuffer()))
             throw TEXT("Error extracting files from setup.cab");
     }
 };

@@ -727,16 +727,11 @@ inline CString ValidatePath(LPCTSTR p_Path)
 	ZeroMemory(l_bufferWindows,MAX_PATH+1);
 	GetWindowsDirectory(l_bufferWindows, MAX_PATH+1);
 
-	//TempPath
-	TCHAR l_bufferTempPath[MAX_PATH+1];
-	ZeroMemory(l_bufferTempPath,MAX_PATH+1);
-	GetTempPath(MAX_PATH+1, l_bufferTempPath);
-
 	CString tmp = p_Path;
 	tmp.Replace(c_APPPATH, l_CurrentPath);
 	tmp.Replace(c_SYSTEMPATH, l_bufferSystem);
 	tmp.Replace(c_WINDOWSPATH, l_bufferWindows);
-	tmp.Replace(c_TEMPPATH, l_bufferTempPath);
+    tmp.Replace(c_TEMPPATH, DVLib::GetSessionTempPath());
 
 	return tmp;
 }

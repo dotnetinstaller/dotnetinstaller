@@ -416,6 +416,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Tools\File.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Tools\File.h"
 				>
 			</File>
@@ -424,11 +428,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Tools\Guid.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Tools\Image.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Tools\OsIdentifier.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tools\Path.cpp"
 				>
 			</File>
 			<File

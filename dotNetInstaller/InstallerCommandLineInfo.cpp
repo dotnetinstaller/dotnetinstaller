@@ -16,11 +16,17 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam,
 											BOOL bFlag,
 											BOOL bLast)
 {
-	if (bFlag){
+	if (bFlag)
+    {
 		if (_tcsicmp(pszParam, TEXT("log")) == 0 )
 		{
 			m_lastArgFlag = log;
 			ApplicationLog.EnableLog();
+		}
+		// Daniel Doubrovkine - 2008-06-09: specify log filename
+		else if (_tcsicmp(pszParam, TEXT("logfile")) == 0)
+		{
+			m_lastArgFlag = logfile;
 		}
 		// Matthew Sheets - 2007-09-20: Enable silent installs from the command line
 		else if (_tcsicmp(pszParam, TEXT("q")) == 0)
@@ -59,6 +65,9 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam,
 				break;
 			case noSilent:
 				break;
+            case logfile:
+                ApplicationLog.EnableLog(pszParam);
+                break;
 			case launcher:
 				DNILauncher.SetLauncherPath(pszParam);
 				break;

@@ -391,6 +391,15 @@ void CdotNetInstallerDlg::OnDestroy()
 		m_Settings.components.clear();
 
 		ApplicationLog.Write( TEXT("Components released"));
+
+        // 2008-06-09 - Daniel Doubrovkine - delete temporary directory
+        // even if a reboot is required, the temporary folder is gone; next run will re-extract components
+        CString temppath = DVLib::GetSessionTempPath(true);
+        if (temppath.GetLength() && DVLib::FileExistsCustom(temppath))
+        {
+		    ApplicationLog.Write(TEXT("Deleting temporary folder: ") + temppath);
+            DVLib::DeleteDirectoryDeep(temppath);
+        }
 	}
 	catch(...)
 	{

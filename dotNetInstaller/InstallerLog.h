@@ -6,9 +6,10 @@ public:
 	InstallerLog(void);
 	~InstallerLog(void);
 
-	void EnableLog()
+	void EnableLog(LPCTSTR filename = NULL)
 	{
 		m_EnableLog = true;
+        m_LogFileName = filename; 
 	}
 
 	void DisableLog()
@@ -26,6 +27,8 @@ public:
 
 private:
 	bool m_EnableLog;
+    CString m_LogFileName;
+    HANDLE m_hFile;
 };
 
 extern InstallerLog ApplicationLog;

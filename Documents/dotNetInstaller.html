@@ -761,6 +761,13 @@
                     for debugging. You can find this file in the user temp directory with the name dotNetInstallerLog.txt
                     (usually: "C:\Documents and Settings\YOUR_NAME\Local Settings\Temp\dotNetInstallerLog.txt")</td>
             </tr>
+            <tr>
+                <td>
+                    <span style="font-weight: bold;">/LogFile &lt;filename&gt;</span></td>
+                <td>
+                    Creates a user-specified log file during installation with some informations and errors useful
+                    for debugging.</td>
+            </tr>
         </tbody>
     </table>
     <br />
@@ -2412,6 +2419,8 @@
         <li>Added CABing, embedding of support files using <a href="http://www.codeproject.com/KB/files/CABCompressExtract.aspx">Elmü's CAB library</a>.</li>
         <li>Added command line options -e (Embed) and -a (AppPath) for command line build.</li>
         <li>Added cab_dialog_message and cab_dialog_caption options.</li>
+        <li>Temporary files (eg. downloaded files) will be deleted upon completion of dotNetInstaller.</li>
+        <li>Added /LogFile &lt;filename&gt; option to the command line parameters to specify the resulting log file.</li>
     </ul>
     <h3>
         1.3.3.0 (19 March 2007)</h3>
