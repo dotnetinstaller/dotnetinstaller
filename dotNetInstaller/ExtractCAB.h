@@ -43,9 +43,11 @@ private:
 
         CString cabpath = (m_Settings.cab_path.GetLength() > 0) ? m_Settings.cab_path : DVLib::GetSessionTempPath();
         cabpath = m_Settings.ValidatePath(cabpath);
+		ApplicationLog.Write( TEXT("cabpath is: "), cabpath );
 
         CString tempFile = DVLib::PathCombineCustom(cabpath, TEXT("setup.cab") );
 
+		ApplicationLog.Write( TEXT("tempFile is: "), tempFile );
 	    HANDLE l_hFile = CreateFile(tempFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	    if (l_hFile == INVALID_HANDLE_VALUE)
 		    throw TEXT("Failed to create temp file");
@@ -66,4 +68,5 @@ private:
             throw TEXT("Error extracting files from setup.cab");
     }
 };
+
 

@@ -52,7 +52,7 @@ void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::Down
 			l_DownloadComp.AlwaysDownload = ConvBoolString(l_Node_download->Attribute("alwaysdownload"), true);
 			p_Configuration.Components.Add(l_DownloadComp);
 
-			ApplicationLog.Write( TEXT("--Readed download component :"), l_DownloadComp.SourceURL );
+			ApplicationLog.Write( TEXT("--Read download component :"), l_DownloadComp.SourceURL );
 		}
 	}
 
@@ -186,7 +186,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				l_new_component->os_filter_lcid = l_Node_component->AttributeT("os_filter_lcid").data();
 				l_new_component->installcompletemessage = l_Node_component->AttributeT("installcompletemessage").data();
 				l_new_component->mustreboot = ConvBoolString(l_Node_component->Attribute("mustreboot"), false);
-			l_new_component->processor_architecture_filter = l_Node_component->AttributeT("processor_architecture_filter").data();
+				l_new_component->processor_architecture_filter = l_Node_component->AttributeT("processor_architecture_filter").data();
 
 				// installed checks
 				TiXmlNode * childInstalled = NULL;
@@ -235,10 +235,11 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				}
 
 
-
+				//
 				// download dialog
 				l_new_component->ContainsDownloadComponent = false; //default viene messo a falso e poi guardo se è presente il nodo
 				TiXmlElement * l_Node_downloaddialog = l_Node_component->FirstChildElement("downloaddialog");
+				ApplicationLog.Write( TEXT("---Checking DownloadDialog: ") );
 				if (l_Node_downloaddialog!=NULL)
 				{
 					LoadDownloadConfiguration(l_Node_downloaddialog, l_new_component->DownloadDialogConfiguration, p_Setting);
@@ -615,4 +616,5 @@ void FreeComponent(component * c)
 		delete c;
 	}
 }
+
 

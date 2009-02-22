@@ -79,7 +79,13 @@ bool DVLib::ShellExecuteDefault(LPCTSTR file)
 //Can be used to check if a file or directory exists
 bool DVLib::FileExistsCustom(LPCTSTR filename)
 {
-	DWORD ret = GetFileAttributes(filename);
+	// Charles McDonald: 2008-06-16: Removing double quotes from the path ensures Win32 will validate a good path.
+	//
+	// Remove double quotes.
+	CString fileNameNoDoubleQuotes = CString(filename);
+	fileNameNoDoubleQuotes.Trim(_T('"'));
+
+	DWORD ret = GetFileAttributes(fileNameNoDoubleQuotes);
 	if (ret == INVALID_FILE_ATTRIBUTES)
 		return false;
 	else

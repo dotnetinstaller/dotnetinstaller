@@ -1,6 +1,9 @@
 #pragma once
 
 #include <vector>
+#include <windows.h>
+#include <strsafe.h>
+
 #include "ExecCmd.h"
 #include "VersionCompare.h"
 #include "Path.h"
@@ -10,6 +13,7 @@
 #include "StringUtil.h"
 #include "DniMessageBox.h"
 #include "InstallerLauncher.h"
+#include "InstallerLog.h"
 
 //in tutti i percorsi viene sostituito #APPPATH con il percorso dell'applicazione corrente, #SYSTEMPATH con la directory System del computer e #WINDOWSPATH con la directory di installazione di Windows, #TEMPPATH con la directory temporanea
 //in all the paths we replace the string constant #APPPATH with the current path of the application and #SYSTEMPATH with the system directory of the computer, #TEMPPATH with the temp directory
@@ -40,17 +44,17 @@ struct installedcheck_check_registry_value : public installedcheck
 	CString fieldvalue; //valore del registry bisogna convertirlo in base al tipo
 	CString fieldtype; //tipo del campo nel registry : REG_DWORD (long) o REG_SZ  (string)
 	CString comparison; //tipo di comparazione : match (verifica se le due stringhe sono uguali) version (che tratta le due stringhe come versioni e quindi se quella richiesta è minore bisogna installare altrimenti no)
-  CString rootkey;
+	CString rootkey;
 
-  HKEY GetRootKey()
-  {
-    if(rootkey == "HKEY_CLASSES_ROOT")   return HKEY_CLASSES_ROOT;
-    if(rootkey == "HKEY_CURRENT_USER")   return HKEY_CURRENT_USER;
-    if(rootkey == "HKEY_USERS")          return HKEY_USERS;
-    if(rootkey == "HKEY_CURRENT_CONFIG") return HKEY_CURRENT_CONFIG;
+	HKEY GetRootKey()
+	{
+	  if(rootkey == "HKEY_CLASSES_ROOT")   return HKEY_CLASSES_ROOT;
+	  if(rootkey == "HKEY_CURRENT_USER")   return HKEY_CURRENT_USER;
+	  if(rootkey == "HKEY_USERS")          return HKEY_USERS;
+	  if(rootkey == "HKEY_CURRENT_CONFIG") return HKEY_CURRENT_CONFIG;
 
-    return HKEY_LOCAL_MACHINE;
-  }
+	  return HKEY_LOCAL_MACHINE;
+	}
 
 
 
@@ -58,12 +62,25 @@ struct installedcheck_check_registry_value : public installedcheck
 	{
 		try
 		{
+			//
+			// Charles McDonald: 2008-06-19: Added some log entries and modified the way we check the registry.
+			// For 64 bit support we need to specifically check the 64 bit registry, otherwise, this check always
+			// determines that our 64 bit packages are not installed.
+			ApplicationLog.Write( TEXT("Reading Registry For: "), path);
 			HKEY l_HKey;
-			LONG l_result = RegOpenKeyEx(GetRootKey(), path, 0, KEY_READ, &l_HKey);
+
+			//
+			// When accessing a 64 bit registry key we need to modify the the third parameter (samDesired)
+			// by ORing both 0x0100 (KEY_WOW64_64KEY) and 0x0200 (KEY_WOW64_32KEY).
+			LONG l_result = RegOpenKeyEx(GetRootKey(), path, 0, KEY_READ | KEY_WOW64_64KEY | KEY_WOW64_32KEY, &l_HKey);
 
 			if (l_result != ERROR_SUCCESS)
+			{
+				ApplicationLog.Write( TEXT("***No Registry Entry Found For: "), path);
 				return false;
+			}
 
+			ApplicationLog.Write( TEXT("Registry Entry Found For: "), path);
 			if (fieldtype == TEXT("REG_DWORD"))
 			{
 				DWORD wordValue;
