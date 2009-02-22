@@ -81,9 +81,9 @@ namespace DVLib
 					if (osvi.wServicePackMajor >= 1)
 						l_Os = winVistaSp1;
 				}
-
-				// Windows NT or XP or Server 2003
-				else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 )
+				/* Arunkumar Viswanathan - 2008-08-27:  Added wProductType check for differentiating between Windows Server 2003 and Windows XP x64. */
+				// Windows Server 2003 versions
+				else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && osvi.wProductType == 3)
 				{
 					l_Os = winServer2003;
 
@@ -92,6 +92,17 @@ namespace DVLib
 					else if (osvi.wServicePackMajor == 1)
 						l_Os = winServer2003sp1;
 				}
+				// Windows XP 64 bit versions
+				else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && osvi.wProductType == 1)
+				{
+					l_Os = winXP;
+
+					if (osvi.wServicePackMajor == 2)
+						l_Os = winXPsp2;
+					else if (osvi.wServicePackMajor == 1)
+						l_Os = winXPsp1;
+				}
+				// Windows XP 32 bit versions
 				else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1 )
 				{
 					l_Os = winXP;
@@ -103,6 +114,7 @@ namespace DVLib
 					else if (osvi.wServicePackMajor == 1)
 						l_Os = winXPsp1;
 				}
+				// Windows 2000 versions
 				else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0 )
 				{
 					l_Os = win2000;
@@ -117,6 +129,7 @@ namespace DVLib
 						l_Os = win2000sp1;
 
 				}
+				// Windows NT versions
 				else if ( osvi.dwMajorVersion = 4 )
 				{
 					l_Os = winNT4;
