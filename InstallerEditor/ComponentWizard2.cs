@@ -190,7 +190,7 @@ namespace InstallerEditor
 
 			System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
 			System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-			doc.Load(assembly.GetManifestResourceStream("InstallerEditor.templates.components.xml"));
+            doc.Load(assembly.GetManifestResourceStream("InstallerEditor.wizardcomponents.xml"));
 
 			System.Xml.XmlNodeList list = doc.SelectNodes("//components/component");
 			foreach (System.Xml.XmlElement element in list)

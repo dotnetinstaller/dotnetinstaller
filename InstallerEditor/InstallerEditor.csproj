@@ -160,6 +160,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="App.ico" />
+    <EmbeddedResource Include="wizardcomponents.xml" />
     <None Include="bin\Release\InstallerEditor.exe" />
   </ItemGroup>
   <ItemGroup>
