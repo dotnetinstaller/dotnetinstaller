@@ -76,7 +76,6 @@
     <Reference Include="CabLib, Version=8.1.0.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\CabLib.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="SourceGrid2">
       <Name>SourceGrid2</Name>

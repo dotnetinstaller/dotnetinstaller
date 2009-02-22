@@ -94,9 +94,11 @@ namespace InstallerEditor
                     foreach (string file in c_files)
                     {
                         string fullpath = file.Replace(@"#APPPATH", supportdir)
-                            .Replace(@"#TEMPPATH", supportdir);
+                            .Replace(@"#TEMPPATH", supportdir)
+                            .Replace(@"#CABPATH", supportdir);
                         string relativepath = file.Replace(@"#APPPATH", string.Empty)
                             .Replace(@"#TEMPPATH", string.Empty)
+                            .Replace(@"#CABPATH", string.Empty)
                             .TrimStart(@"\/".ToCharArray());
                         files.Add(new string[] { fullpath, relativepath });
                     }
