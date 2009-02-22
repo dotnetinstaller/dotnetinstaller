@@ -27,7 +27,9 @@ BOOL ExtractCABProcessor::OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param
 
         if (m_pComponent->cancelled)
         {
-            throw _wcsdup((LPCWSTR) m_pComponent->m_Settings.cab_cancelled_message);
+            CString cancelled_message = m_pComponent->m_Settings.cab_cancelled_message;
+            if (cancelled_message.Trim().GetLength() == 0) cancelled_message = L"Cancelled by user";
+            throw _wcsdup((LPCWSTR) cancelled_message);
         }
     }
 
@@ -99,7 +101,9 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, component * pComponent)
     {
         if (cancelled)
         {
-            throw _wcsdup((LPCWSTR) m_Settings.cab_cancelled_message);
+            CString cancelled_message = m_Settings.cab_cancelled_message;
+            if (cancelled_message.Trim().GetLength() == 0) cancelled_message = L"Cancelled by user";
+            throw _wcsdup((LPCWSTR) cancelled_message);
         }
 
         DWORD dwWritten = 0;
