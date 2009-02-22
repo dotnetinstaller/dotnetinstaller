@@ -57,13 +57,23 @@ CString DVLib::GetTempPathCustom()
 	return l_bufferTempPath;
 }
 
+CString DVLib::GetSessionGUID()
+{
+    static CString s_GUID;
+    if (! s_GUID.GetLength())
+    {
+        s_GUID = DVLib::GenerateGUIDString();
+    }
+    return s_GUID;
+}
+
 CString DVLib::GetSessionTempPath(bool returnonly)
 {
     // not threadsafe
     static CString s_tempDirectory;
     if (s_tempDirectory.GetLength() == 0 && ! returnonly)
     {
-        s_tempDirectory = DVLib::PathCombineCustom(DVLib::GetTempPathCustom(), DVLib::GenerateGUIDString());
+        s_tempDirectory = DVLib::PathCombineCustom(DVLib::GetTempPathCustom(), DVLib::GetSessionGUID());
 	    if (DVLib::FileExistsCustom(s_tempDirectory) == false)
         {
 		    ::CreateDirectory(s_tempDirectory, NULL);

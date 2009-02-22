@@ -8,6 +8,8 @@ namespace DVLib
 	CString GetSystemPath();
 	CString GetWindowsPath();
 	CString GetTempPathCustom();
+    // get a unique guid for this run of dni
+    CString GetSessionGUID();
     // get a unique temporary directory for this run of dni
     CString GetSessionTempPath(bool returnonly = false);
 	CString GetTempFullFileName();

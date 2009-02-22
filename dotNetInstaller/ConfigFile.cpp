@@ -19,7 +19,7 @@ bool ConvBoolString(const char * p_BoolString, bool defaultValue = false)
 	}
 }
 
-void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::DownloadGroupConfiguration & p_Configuration)
+void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::DownloadGroupConfiguration & p_Configuration, installerSetting & p_Setting)
 {
 	ApplicationLog.Write( TEXT("Start reading download attributes") );
 
@@ -46,9 +46,9 @@ void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::Down
 
 			DVLib::DownloadComponentInfo l_DownloadComp;
 			l_DownloadComp.ComponentName = l_Node_download->AttributeT("componentname").data();
-			l_DownloadComp.SourceURL = ValidatePath(l_Node_download->AttributeT("sourceurl").data());
-			l_DownloadComp.DestinationPath = ValidatePath(l_Node_download->AttributeT("destinationpath").data());
-			l_DownloadComp.DestinationFileName = ValidatePath(l_Node_download->AttributeT("destinationfilename").data());
+			l_DownloadComp.SourceURL = p_Setting.ValidatePath(l_Node_download->AttributeT("sourceurl").data());
+			l_DownloadComp.DestinationPath = p_Setting.ValidatePath(l_Node_download->AttributeT("destinationpath").data());
+			l_DownloadComp.DestinationFileName = p_Setting.ValidatePath(l_Node_download->AttributeT("destinationfilename").data());
 			l_DownloadComp.AlwaysDownload = ConvBoolString(l_Node_download->Attribute("alwaysdownload"), true);
 			p_Configuration.Components.Add(l_DownloadComp);
 
@@ -69,8 +69,12 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 
 	ApplicationLog.Write( TEXT("Start reading configuration attributes") );
 
+    /* Daniel Doubrovkine - 2008-06-12: added CABBPATH that defines where to extract files */
+    p_Setting.cab_path = p_Node->AttributeT("cab_path").data();
+    p_Setting.cab_path_autodelete = ConvBoolString(p_Node->Attribute("cab_path_autodelete"), true);
+
 	p_Setting.cancel_caption = p_Node->AttributeT("cancel_caption").data();
-	p_Setting.dialog_bitmap = ValidatePath(p_Node->AttributeT("dialog_bitmap").data());
+	p_Setting.dialog_bitmap = p_Setting.ValidatePath(p_Node->AttributeT("dialog_bitmap").data());
 	p_Setting.dialog_caption = p_Node->AttributeT("dialog_caption").data();
 	p_Setting.dialog_message = p_Node->AttributeT("dialog_message").data();
 	p_Setting.skip_caption = p_Node->AttributeT("skip_caption").data();
@@ -89,9 +93,9 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 	p_Setting.dialog_selector_cancel = p_Node->AttributeT("dialog_selector_cancel").data();
 
 	p_Setting.dialog_otherinfo_caption = p_Node->AttributeT("dialog_otherinfo_caption").data();
-	p_Setting.dialog_otherinfo_link = ValidatePath(p_Node->AttributeT("dialog_otherinfo_link").data());
+	p_Setting.dialog_otherinfo_link = p_Setting.ValidatePath(p_Node->AttributeT("dialog_otherinfo_link").data());
 
-	p_Setting.complete_command = ValidatePath(p_Node->AttributeT("complete_command").data());
+	p_Setting.complete_command = p_Setting.ValidatePath(p_Node->AttributeT("complete_command").data());
 	p_Setting.auto_close_if_installed = ConvBoolString(p_Node->Attribute("auto_close_if_installed"), true);
 
 	// Matthias Jentsch - 2006-03-06: read additional attributes
@@ -116,7 +120,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
     /* Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction */
     p_Setting.cab_dialog_caption = p_Node->AttributeT("cab_dialog_caption").data();
     p_Setting.cab_dialog_message = p_Node->AttributeT("cab_dialog_message").data();
-	
+
 	ApplicationLog.Write( TEXT("End reading configuration attributes") );
 
 	//caricamento componenti
@@ -143,9 +147,9 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				if (l_comp_type == "msi")
 				{
 					msi_component * l_msi_Comp = new msi_component();
-					l_msi_Comp->package = ValidatePath(l_Node_component->AttributeT("package").data());
+					l_msi_Comp->package = p_Setting.ValidatePath(l_Node_component->AttributeT("package").data());
 					l_msi_Comp->type = msi;
-					l_msi_Comp->cmdparameters = ValidatePath(l_Node_component->AttributeT("cmdparameters").data());
+					l_msi_Comp->cmdparameters = p_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters").data());
 
 					l_new_component = l_msi_Comp;
 
@@ -154,7 +158,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				else if (l_comp_type == "cmd")
 				{
 					cmd_component * l_cmd_Comp = new cmd_component();
-					l_cmd_Comp->command = ValidatePath(l_Node_component->AttributeT("command").data());
+					l_cmd_Comp->command = p_Setting.ValidatePath(l_Node_component->AttributeT("command").data());
 					l_cmd_Comp->type = cmd;
 
 					l_new_component = l_cmd_Comp;
@@ -164,7 +168,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				else if (l_comp_type == "openfile")
 				{
 					openfile_component * l_openfile_Comp = new openfile_component();
-					l_openfile_Comp->file = ValidatePath(l_Node_component->AttributeT("file").data());
+					l_openfile_Comp->file = p_Setting.ValidatePath(l_Node_component->AttributeT("file").data());
 					l_openfile_Comp->type = openfile;
 
 					l_new_component = l_openfile_Comp;
@@ -213,7 +217,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 						{
 							installedcheck_check_file * l_new_check_file = new installedcheck_check_file;
 
-							l_new_check_file->filename = ValidatePath(l_Node_installedcheck->AttributeT("filename").data());
+							l_new_check_file->filename = p_Setting.ValidatePath(l_Node_installedcheck->AttributeT("filename").data());
 							l_new_check_file->fileversion = l_Node_installedcheck->AttributeT("fileversion").data();
 							l_new_check_file->comparison = l_Node_installedcheck->AttributeT("comparison").data();
 
@@ -237,7 +241,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				TiXmlElement * l_Node_downloaddialog = l_Node_component->FirstChildElement("downloaddialog");
 				if (l_Node_downloaddialog!=NULL)
 				{
-					LoadDownloadConfiguration(l_Node_downloaddialog, l_new_component->DownloadDialogConfiguration);
+					LoadDownloadConfiguration(l_Node_downloaddialog, l_new_component->DownloadDialogConfiguration, p_Setting);
 					l_new_component->ContainsDownloadComponent = true;
 				}
 
@@ -265,21 +269,21 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 	} // if l_Node_components != NULL
 }
 
-bool LoadReferenceConfigNode(TiXmlElement * p_Node, TiXmlDocument & p_Document, CWnd * p_Parent)
+bool LoadReferenceConfigNode(TiXmlElement * p_Node, TiXmlDocument & p_Document, CWnd * p_Parent, installerSetting & p_Setting)
 {
 	bool l_bSuccess = false;
 	TiXmlElement * l_NodeDownloadDialog = p_Node->FirstChildElement("downloaddialog");
 
 	DVLib::DownloadGroupConfiguration l_DownloadConfig;
-	LoadDownloadConfiguration(l_NodeDownloadDialog, l_DownloadConfig);
+	LoadDownloadConfiguration(l_NodeDownloadDialog, l_DownloadConfig, p_Setting);
 
 	l_bSuccess = RunDownloadDialog(l_DownloadConfig, p_Parent);
 	if (l_bSuccess)
 	{
 		TiXmlElement * l_Node_configfile = p_Node->FirstChildElement("configfile");
 
-		CString l_configfile_filename = ValidatePath(l_Node_configfile->AttributeT("filename").data());
-		//CString l_configfile_banner = ValidatePath(l_Node_configfile->GetAttrValue("banner"));
+		CString l_configfile_filename = p_Setting.ValidatePath(l_Node_configfile->AttributeT("filename").data());
+		//CString l_configfile_banner = p_Setting.ValidatePath(l_Node_configfile->GetAttrValue("banner"));
 
 		LoadConfigFromFile(l_configfile_filename, p_Document);
 	}
@@ -359,7 +363,7 @@ void LoadConfigsNode(TiXmlElement * p_Node, installerSetting & p_Setting, bool p
 					TiXmlDocument l_RefDocument;
 					installerSetting l_RefSetting;
 
-					if (LoadReferenceConfigNode(l_Node_configuration, l_RefDocument, &dlg))
+					if (LoadReferenceConfigNode(l_Node_configuration, l_RefDocument, &dlg, p_Setting))
 					{
 						LoadConfigsNode(l_RefDocument.FirstChildElement(), l_RefSetting, (l_additional_config_found | p_Caller_Has_Additional_Config));
 					}
@@ -611,3 +615,4 @@ void FreeComponent(component * c)
 		delete c;
 	}
 }
+

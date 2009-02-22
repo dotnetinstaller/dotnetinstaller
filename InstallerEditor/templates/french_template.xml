@@ -40,6 +40,8 @@ There are three types of variables:
 		processor_architecture_filter_not_match_message = "Cette configuration ne peut pas être exécuté sur le processeur!"
   cab_dialog_message = ""
   cab_dialog_caption = ""
+  cab_path = "#TEMPPATH\#GUID"
+  cab_path_autodelete = "True"
 		>
 	</setupconfiguration>
 	

@@ -395,7 +395,7 @@ void CdotNetInstallerDlg::OnDestroy()
         // 2008-06-09 - Daniel Doubrovkine - delete temporary directory
         // even if a reboot is required, the temporary folder is gone; next run will re-extract components
         CString temppath = DVLib::GetSessionTempPath(true);
-        if (temppath.GetLength() && DVLib::FileExistsCustom(temppath))
+        if (m_Settings.cab_path_autodelete && temppath.GetLength() && DVLib::FileExistsCustom(temppath))
         {
 		    ApplicationLog.Write(TEXT("Deleting temporary folder: ") + temppath);
             DVLib::DeleteDirectoryDeep(temppath);
@@ -414,7 +414,7 @@ void CdotNetInstallerDlg::OnBnClickedCancel()
 
 void CdotNetInstallerDlg::ExtractCab()
 {
-    ExtractCABComponent e_component;
+    ExtractCABComponent e_component(m_Settings);
     installerSetting e_setting;
     e_setting.installing_component_wait = m_Settings.cab_dialog_message;
     e_component.description = m_Settings.cab_dialog_caption;

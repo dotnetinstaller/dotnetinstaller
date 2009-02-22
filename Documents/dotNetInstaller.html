@@ -151,7 +151,8 @@
     <p>
         If you configure the application to download the components, I recommend using the
         #TEMPPATH variable as destination directory and then running the components from
-        the same path.</p>
+        the same path. If you're embedding dependencies, you can also use #CABPATH which defaults to
+        #TEMPPATH\#GUID.</p>
     <p>
         For example, if you want to launch a file ('My App.exe') in the same folder of dotNetInstaller.exe
         you can write in the command string: "#APPPATH\My App.exe"
@@ -387,6 +388,9 @@
         <li><code lang="text">#TEMPPATH</code> - This string is replaced with the temp directory
             (using <code>GetTempPath()</code> API, usually C:\Documents and Settings\[User]\Local
             Settings\Temp ).</li>
+
+        <li><code lang="text">#GUID</code> - A unique GUID for this session of dotNetInstaller.</li>
+        <li><code lang="text">#CABPATH</code> - Defaults to #TEMPPATH\#GUID</li>
     </ul>
     <h2>
         Check if the component is already installed</h2>
@@ -1041,6 +1045,14 @@
                             <tr>
                                 <td><b>cab_dialog_message</b></td>
                                 <td>CAB dialog caption, this dialog shows when extracting an embedded CAB file</td>
+                            </tr>
+                            <tr>
+                                <td><b>cab_path</b></td>
+                                <td>Optional location of the path where to extract the embedded CAB and its files; default is #TEMPPATH\#GUID</td>
+                            </tr>
+                            <tr>
+                                <td><b>cab_path_autodelete</b></td>
+                                <td>Auto-delete the path where the embedded CAB and its files were extracted upon completion of dotNetInstaller</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1842,6 +1854,8 @@
         <li>configurations\configuration\components\component\processor_architecture_filter</li>
         <li>configurations\configuration\cab_dialog_caption</li>
         <li>configurations\configuration\cab_dialog_message</li>
+        <li>configurations\configuration\cab_path</li>
+        <li>configurations\configuration\cab_path_autodelete</li>
     </ul>
     <h3>
         1.2.0.0 to 1.3.2.0 changes of XML file</h3>
@@ -2418,9 +2432,11 @@
             compiler in a build process.</li>
         <li>Added CABing, embedding of support files using <a href="http://www.codeproject.com/KB/files/CABCompressExtract.aspx">Elmü's CAB library</a>.</li>
         <li>Added command line options -e (Embed) and -a (AppPath) for command line build.</li>
-        <li>Added cab_dialog_message and cab_dialog_caption options.</li>
+        <li>Added cab_dialog_message, cab_dialog_caption, cap_path and cab_path_autodelete options.</li>
         <li>Temporary files (eg. downloaded files) will be deleted upon completion of dotNetInstaller.</li>
         <li>Added /LogFile &lt;filename&gt; option to the command line parameters to specify the resulting log file.</li>
+        <li>Added #CABPATH variable that can be used in path settings</li>
+        <li>Added #GUID variable that represents a unique GUID across a single instance of dotNetInstaller</li>
     </ul>
     <h3>
         1.3.3.0 (19 March 2007)</h3>

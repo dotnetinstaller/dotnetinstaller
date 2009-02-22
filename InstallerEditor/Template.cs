@@ -152,6 +152,18 @@ namespace InstallerEditor
             {
                 get { return m_tpl.GetAttribute("setupconfiguration/@cab_dialog_caption").Replace(c_APPLICATION_NAME, m_ApplicationName); }
             }
+
+            // Daniel Doubrovkine - 2008-06-06: added path to use during CAB extraction
+            public string cab_path
+            {
+                get { return m_tpl.GetAttribute("setupconfiguration/@cab_path"); }
+            }
+
+            public bool cab_path_autodelete
+            {
+                get { return bool.Parse(m_tpl.GetAttribute("setupconfiguration/@cab_path_autodelete")); }
+            }
+
         }
 
         public class Template_component

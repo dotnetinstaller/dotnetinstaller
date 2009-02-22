@@ -18,6 +18,8 @@
 #define c_SYSTEMPATH TEXT("#SYSTEMPATH")
 #define c_WINDOWSPATH TEXT("#WINDOWSPATH")
 #define c_TEMPPATH TEXT("#TEMPPATH")
+#define c_CABPATH TEXT("#CABPATH")
+#define c_GUID TEXT("#GUID")
 
 enum component_type
 {
@@ -562,6 +564,8 @@ struct installerSetting
     /* Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction */
     CString cab_dialog_message;
     CString cab_dialog_caption;
+    CString cab_path;
+    bool cab_path_autodelete;
 
 	void ExecuteCompleteCode()
 	{
@@ -591,6 +595,34 @@ struct installerSetting
 			//DVLib::ExecCmdAndWait(complete_command, & l_ExitCodes);
 		}
 	}
+
+    CString ValidatePath(LPCTSTR p_Path)
+    {
+	    //ApplicationPath
+	    CString l_CurrentPath = DVLib::GetAppPath();
+
+	    //SystemPath
+	    TCHAR l_bufferSystem[MAX_PATH+1];
+	    ZeroMemory(l_bufferSystem,MAX_PATH+1);
+	    GetSystemDirectory(l_bufferSystem, MAX_PATH+1);
+
+	    //WindowsPath
+	    TCHAR l_bufferWindows[MAX_PATH+1];
+	    ZeroMemory(l_bufferWindows,MAX_PATH+1);
+	    GetWindowsDirectory(l_bufferWindows, MAX_PATH+1);
+
+        //CabPath
+
+	    CString tmp = p_Path;
+        tmp.Replace(c_CABPATH, cab_path.GetLength() ? cab_path : DVLib::GetSessionTempPath());
+	    tmp.Replace(c_APPPATH, l_CurrentPath);
+	    tmp.Replace(c_SYSTEMPATH, l_bufferSystem);
+	    tmp.Replace(c_WINDOWSPATH, l_bufferWindows);
+        tmp.Replace(c_TEMPPATH, DVLib::GetTempPathCustom());
+        tmp.Replace(c_GUID, DVLib::GetSessionGUID());
+
+	    return tmp;
+    }
 
 	std::vector<component*> components;
 };
@@ -711,33 +743,3 @@ inline BOOL InitiateReboot()
     }
     return ExitWindowsEx( EWX_REBOOT, 0);
 }
-
-inline CString ValidatePath(LPCTSTR p_Path)
-{
-	//ApplicationPath
-	CString l_CurrentPath = DVLib::GetAppPath();
-
-	//SystemPath
-	TCHAR l_bufferSystem[MAX_PATH+1];
-	ZeroMemory(l_bufferSystem,MAX_PATH+1);
-	GetSystemDirectory(l_bufferSystem, MAX_PATH+1);
-
-	//WindowsPath
-	TCHAR l_bufferWindows[MAX_PATH+1];
-	ZeroMemory(l_bufferWindows,MAX_PATH+1);
-	GetWindowsDirectory(l_bufferWindows, MAX_PATH+1);
-
-	CString tmp = p_Path;
-	tmp.Replace(c_APPPATH, l_CurrentPath);
-	tmp.Replace(c_SYSTEMPATH, l_bufferSystem);
-	tmp.Replace(c_WINDOWSPATH, l_bufferWindows);
-    tmp.Replace(c_TEMPPATH, DVLib::GetSessionTempPath());
-
-	return tmp;
-}
-
-
-//inline CString ValidatePathUTF8(const char * strUtf8Path)
-//{
-//	return ValidatePath(DVLib::UTF8string2Tstring(strUtf8Path).data());
-//}

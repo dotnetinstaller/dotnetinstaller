@@ -49,6 +49,8 @@ namespace InstallerEditor
             // Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction
             m_cab_dialog_message = tpl.cab_dialog_message;
             m_cab_dialog_caption = tpl.cab_dialog_caption;
+            m_cab_path = tpl.cab_path;
+            m_cab_path_autodelete = tpl.cab_path_autodelete;
 
             //			if (LanguageUI.Language == SupportedLanguage.Italian)
             //			{
@@ -138,6 +140,10 @@ namespace InstallerEditor
         /* Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction */
         private string m_cab_dialog_message;
         private string m_cab_dialog_caption;
+
+        /* Daniel Doubrovkine - 2008-06-06: added path to use during CAB extraction */
+        private string m_cab_path;
+        private bool m_cab_path_autodelete = true;
 
         [Description("Main dialog title. (REQUIRED)")]
         [Category("Main Dialog")]
@@ -343,7 +349,7 @@ namespace InstallerEditor
         }
         /* Daniel Doubrovkine - 2008-06-03: added message and caption to show during CAB extraction */
         [Description("CAB dialog message, this dialog shows when extracting an embedded CAB file")]
-        [Category("Extracting CAB Dialog")]
+        [Category("Self-Extracting CAB")]
         public string cab_dialog_message
         {
             get { return m_cab_dialog_message; }
@@ -351,12 +357,30 @@ namespace InstallerEditor
         }
 
         [Description("CAB dialog caption, this dialog shows when extracting an embedded CAB file")]
-        [Category("Extracting CAB Dialog")]
+        [Category("Self-Extracting CAB")]
         public string cab_dialog_caption
         {
             get { return m_cab_dialog_caption; }
             set { m_cab_dialog_caption = value; }
         }
+
+        [Description("CAB path used when extracting an embedded CAB file")]
+        [DefaultValue("#TEMPPATH/#GUID")]
+        [Category("Self-Extracting CAB")]
+        public string cab_path
+        {
+            get { return m_cab_path; }
+            set { m_cab_path = value; }
+        }
+
+        [Description("Auto-Delete CAB path and all its subfolders upon installer completion")]
+        [Category("Self-Extracting CAB")]
+        public bool cab_path_autodelete
+        {
+            get { return m_cab_path_autodelete; }
+            set { m_cab_path_autodelete = value; }
+        }
+
         #endregion
 
         protected override void OnXmlWriteTagConfiguration(XmlWriterEventArgs e)
@@ -403,6 +427,10 @@ namespace InstallerEditor
             // Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction
             e.XmlWriter.WriteAttributeString("cab_dialog_message", m_cab_dialog_message);
             e.XmlWriter.WriteAttributeString("cab_dialog_caption", m_cab_dialog_caption);
+
+            // Daniel Doubrovkine - 2008-06-12: added CAB path
+            e.XmlWriter.WriteAttributeString("cab_path", m_cab_path);
+            e.XmlWriter.WriteAttributeString("cab_path_autodelete", m_cab_path_autodelete.ToString());
 
             e.XmlWriter.WriteStartElement("components");
             foreach (Component c in Components)
@@ -509,6 +537,14 @@ namespace InstallerEditor
 
             if (e.XmlElement.Attributes["cab_dialog_caption"] != null)
                 m_cab_dialog_caption = e.XmlElement.Attributes["cab_dialog_caption"].InnerText;
+
+            // Daniel Doubrovkine - 2008-06-12: added CAB path
+            if (e.XmlElement.Attributes["cab_path"] != null)
+                m_cab_path = e.XmlElement.Attributes["cab_path"].InnerText;
+
+            if (e.XmlElement.Attributes["cab_path_autodelete"] != null)
+                cab_path_autodelete = bool.Parse(e.XmlElement.Attributes["cab_path_autodelete"].InnerText);
+
 
             XmlNodeList l_List = e.XmlElement.SelectNodes("components/component");
             foreach (XmlElement l_XmlComp in l_List)

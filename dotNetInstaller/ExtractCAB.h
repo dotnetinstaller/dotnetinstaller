@@ -15,7 +15,15 @@ public:
         return true;
 	};
 
+    ExtractCABComponent(installerSetting& settings)
+        : m_Settings(settings)
+    {
+
+    }
+
 private:
+
+    installerSetting& m_Settings;
 
     void ExtractCab(HMODULE p_Module)
     {
@@ -33,7 +41,10 @@ private:
 		    throw TEXT("Failed to lock resource RES_CAB.");
 	    DWORD l_size = SizeofResource(p_Module, l_res);
 
-        CString tempFile = DVLib::PathCombineCustom(DVLib::GetSessionTempPath(), TEXT("setup.cab") );
+        CString cabpath = (m_Settings.cab_path.GetLength() > 0) ? m_Settings.cab_path : DVLib::GetSessionTempPath();
+        cabpath = m_Settings.ValidatePath(cabpath);
+
+        CString tempFile = DVLib::PathCombineCustom(cabpath, TEXT("setup.cab") );
 
 	    HANDLE l_hFile = CreateFile(tempFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	    if (l_hFile == INVALID_HANDLE_VALUE)
@@ -51,7 +62,7 @@ private:
         if (!i_Extract.CreateFDIContext()) 
             throw TEXT("Failed to initialize CAB context");
 
-        if (!i_Extract.ExtractFileW(tempFile.GetBuffer(), DVLib::GetSessionTempPath().GetBuffer()))
+        if (!i_Extract.ExtractFileW(tempFile.GetBuffer(), cabpath.GetBuffer()))
             throw TEXT("Error extracting files from setup.cab");
     }
 };
