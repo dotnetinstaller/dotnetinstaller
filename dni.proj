@@ -46,10 +46,8 @@
   <Version Major="1" Minor="4">
    <Output TaskParameter="Major" PropertyName="Major" />
    <Output TaskParameter="Minor" PropertyName="Minor" />
+   <Output TaskParameter="Revision" PropertyName="Revision"/>
   </Version>
-  <Time Format="HHmm">
-   <Output TaskParameter="FormattedTime" PropertyName="Revision" />
-  </Time>
   <SvnVersion LocalPath=".">
    <Output TaskParameter="Revision" PropertyName="Build" />
   </SvnVersion>
