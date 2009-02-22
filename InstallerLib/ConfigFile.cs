@@ -217,6 +217,16 @@ namespace InstallerLib
             get { return m_Configurations; }
             set { m_Configurations = value; }
         }
+
+        public EmbedFileCollection GetFiles()
+        {
+            EmbedFileCollection c_files = new EmbedFileCollection();
+            foreach (Configuration c in Configurations)
+            {
+                c_files.AddRange(c.GetFiles());
+            }
+            return c_files;
+        }
     }
 
     public interface IXmlClass

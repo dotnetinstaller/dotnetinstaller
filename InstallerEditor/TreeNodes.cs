@@ -50,6 +50,11 @@ namespace InstallerEditor
 				{
 					Nodes.Add(new TreeNodeComponent(c));
 				}
+
+                foreach (EmbedFile e in ((SetupConfiguration)p_Config).EmbedFiles)
+                {
+                    Nodes.Add(new TreeNodeEmbedFile(e));
+                }
 			}
 			else
 				throw new ApplicationException("Invalid configuration");
@@ -127,6 +132,34 @@ namespace InstallerEditor
 		}
 	}
 
+    public class TreeNodeEmbedFile : TreeNode
+    {
+        public TreeNodeEmbedFile(EmbedFile p_EmbedFile)
+        {
+            base.ImageIndex = 13;
+            base.SelectedImageIndex = 13;
+
+            m_EmbedFile = p_EmbedFile;
+
+            base.Tag = p_EmbedFile;
+            base.Text = p_EmbedFile.Name;
+
+            p_EmbedFile.SourceFilePathChanged += new EventHandler(p_EmbedFile_SourceFilePathChanged);
+        }
+
+        void p_EmbedFile_SourceFilePathChanged(object sender, EventArgs e)
+        {
+            Text = m_EmbedFile.Name;
+        }
+
+        private EmbedFile m_EmbedFile;
+        public EmbedFile EmbedFile
+        {
+            get { return m_EmbedFile; }
+            set { m_EmbedFile = value; }
+        }
+    }
+
 	public class TreeNodeComponent : TreeNode
 	{
 		public TreeNodeComponent(Component p_Component)
@@ -143,11 +176,17 @@ namespace InstallerEditor
 				base.ImageIndex = 4;
 				base.SelectedImageIndex = 4;
 			}
-			else if (p_Component is ComponentOpenFile)
-			{
-				base.ImageIndex = 12;
-				base.SelectedImageIndex = 12;
-			}
+            else if (p_Component is EmbedFile)
+            {
+                // TODO: add icons
+                base.ImageIndex = 11;
+                base.SelectedImageIndex = 11;
+            }
+            else if (p_Component is ComponentOpenFile)
+            {
+                base.ImageIndex = 12;
+                base.SelectedImageIndex = 12;
+            }
 
 			m_Component = p_Component;
 
@@ -162,6 +201,11 @@ namespace InstallerEditor
 
 			if (p_Component.DownloadDialog != null)
 				Nodes.Add(new TreeNodeDownloadDialog(p_Component.DownloadDialog));
+
+            foreach (EmbedFile e in p_Component.EmbedFiles)
+            {
+                Nodes.Add(new TreeNodeEmbedFile(e));
+            }
 		}
 
 		private Component m_Component;

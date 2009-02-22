@@ -1,6 +1,8 @@
 using System;
 using System.Xml;
 using System.ComponentModel;
+using System.Collections.Generic;
+using System.IO;
 
 namespace InstallerLib
 {
@@ -12,6 +14,7 @@ namespace InstallerLib
 		public DownloadDialog():this("COMPONENT_NAME")
 		{
 		}
+
 		public DownloadDialog(string p_ComponentName)
 		{
 			Template.Template_downloaddialog tpl = Template.CurrentTemplate.downloaddialog(p_ComponentName);
@@ -164,5 +167,16 @@ namespace InstallerLib
 			get{return m_Downloads;}
 			set{m_Downloads = value;}
 		}
+
+        public EmbedFileCollection GetFiles()
+        {
+            EmbedFileCollection files = new EmbedFileCollection();
+            foreach (Download dl in Downloads)
+            {
+                string filename = Path.Combine(dl.destinationpath, dl.destinationfilename);
+                files.Add(new EmbedFile(filename));
+            }
+            return files;
+        }
 	}
 }

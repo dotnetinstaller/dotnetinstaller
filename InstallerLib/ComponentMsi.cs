@@ -63,13 +63,10 @@ namespace InstallerLib
                 m_cmdparameters_silent = e.XmlElement.Attributes["cmdparameters_silent"].InnerText;
         }
 
-        public override IList<string> GetFiles()
+        public override EmbedFileCollection GetFiles()
         {
-            IList<string> files = base.GetFiles();
-            if (!files.Contains(package))
-            {
-                files.Add(package);
-            }
+            EmbedFileCollection files = base.GetFiles();
+            files.Add(new EmbedFile(package));
             return files;
         }
     }

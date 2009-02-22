@@ -78,33 +78,20 @@ namespace InstallerLib
 
                 args.WriteLine(string.Format("Compressing files from \"{0}\"", supportdir));
 
-                ArrayList files = new ArrayList();
-                foreach (Configuration c in configfile.Configurations)
-                {
-                    IList<string> c_files = c.GetFiles();
-                    foreach (string file in c_files)
-                    {
-                        string fullpath = file.Replace(@"#APPPATH", supportdir)
-                            .Replace(@"#TEMPPATH", supportdir)
-                            .Replace(@"#CABPATH", supportdir);
-                        string relativepath = file.Replace(@"#APPPATH", string.Empty)
-                            .Replace(@"#TEMPPATH", string.Empty)
-                            .Replace(@"#CABPATH", string.Empty)
-                            .TrimStart(@"\/".ToCharArray());
-                        
-                        args.WriteLine(string.Format(" {0}", relativepath));
-                        files.Add(new string[] { fullpath, relativepath });
-                    }
-                }
-
+                EmbedFileCollection c_files = configfile.GetFiles();
                 if (args.embedFiles != null)
                 {
                     foreach (string filename in args.embedFiles)
                     {
-                        args.WriteLine(string.Format(" {0}", filename));
                         string fullpath = Path.Combine(args.apppath, filename);
-                        files.Add(new string[] { fullpath, filename });
+                        c_files.Add(new EmbedFile(fullpath, filename));
                     }
+                }
+
+                ArrayList files = c_files.GetFilePairs(supportdir);
+                foreach (string[] filepair in files)
+                {
+                    args.WriteLine(string.Format(" {0}", filepair[1]));
                 }
 
                 string cabname = Path.Combine(Path.GetDirectoryName(args.output), "Setup.cab");

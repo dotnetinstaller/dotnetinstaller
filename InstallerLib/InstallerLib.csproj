@@ -49,6 +49,7 @@
     <Compile Include="ComponentCmd.cs">
     </Compile>
     <Compile Include="ComponentCollection.cs" />
+    <Compile Include="EmbedFile.cs" />
     <Compile Include="ComponentMsi.cs">
     </Compile>
     <Compile Include="ComponentOpenFile.cs">
@@ -59,6 +60,7 @@
     <Compile Include="Download.cs" />
     <Compile Include="DownloadCollection.cs" />
     <Compile Include="DownloadDialog.cs" />
+    <Compile Include="EmbedFileCollection.cs" />
     <Compile Include="FileAttribute.cs" />
     <Compile Include="FileAttributeCollection.cs" />
     <Compile Include="InstalledCheck.cs" />

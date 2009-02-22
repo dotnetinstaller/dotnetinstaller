@@ -55,6 +55,8 @@ namespace InstallerEditor
 		private System.Windows.Forms.MenuItem mnHelpAbout;
 		private System.Windows.Forms.MenuItem mnCustomizeTemplates;
 		private System.Windows.Forms.MenuItem mnAddComponentWizard2;
+        private MenuItem menuItem8;
+        private MenuItem mnAddEmbedFile;
 		private System.ComponentModel.IContainer components;
 
 		public MainForm()
@@ -128,6 +130,8 @@ namespace InstallerEditor
             this.menuItem6 = new System.Windows.Forms.MenuItem();
             this.mnAddInstalledCheckRegistry = new System.Windows.Forms.MenuItem();
             this.mnAddInstalledCheckFile = new System.Windows.Forms.MenuItem();
+            this.menuItem8 = new System.Windows.Forms.MenuItem();
+            this.mnAddEmbedFile = new System.Windows.Forms.MenuItem();
             this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.mnDelete = new System.Windows.Forms.MenuItem();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
@@ -318,7 +322,9 @@ namespace InstallerEditor
             this.mnAddOpenFileComponent,
             this.menuItem6,
             this.mnAddInstalledCheckRegistry,
-            this.mnAddInstalledCheckFile});
+            this.mnAddInstalledCheckFile,
+            this.menuItem8,
+            this.mnAddEmbedFile});
             this.mnAdd.Text = "Add";
             // 
             // mnAddSetupConfiguration
@@ -403,6 +409,17 @@ namespace InstallerEditor
             this.mnAddInstalledCheckFile.Text = "Installed Check File";
             this.mnAddInstalledCheckFile.Click += new System.EventHandler(this.mnInstalledCheckFile_Click);
             // 
+            // menuItem8
+            // 
+            this.menuItem8.Index = 14;
+            this.menuItem8.Text = "-";
+            // 
+            // mnAddEmbedFile
+            // 
+            this.mnAddEmbedFile.Index = 15;
+            this.mnAddEmbedFile.Text = "&Embed File";
+            this.mnAddEmbedFile.Click += new System.EventHandler(this.mnAddEmbedFile_Click);
+            // 
             // menuItem7
             // 
             this.menuItem7.Index = 1;
@@ -431,6 +448,7 @@ namespace InstallerEditor
             this.imageList.Images.SetKeyName(10, "");
             this.imageList.Images.SetKeyName(11, "");
             this.imageList.Images.SetKeyName(12, "");
+            this.imageList.Images.SetKeyName(13, "");
             // 
             // propertyGrid
             // 
@@ -460,9 +478,9 @@ namespace InstallerEditor
             this.Menu = this.mainMenu1;
             this.Name = "MainForm";
             this.Text = "Installer Editor";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.Closed += new System.EventHandler(this.MainForm_Closed);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 
 		}
@@ -714,12 +732,13 @@ namespace InstallerEditor
 				mnAddOpenFileComponent.Enabled = false;
 				mnAddComponentWizard.Enabled = false;
 				mnAddComponentWizard2.Enabled = false;
+                mnAddEmbedFile.Enabled = false;
 
 				if (treeView.SelectedNode.Tag is ConfigFile)
 				{
 					mnAddSetupConfiguration.Enabled = true;
 					mnAddWebConfiguration.Enabled = true;
-				}
+                }
 				else if (treeView.SelectedNode.Tag is WebConfiguration)
 				{
 					mnDelete.Enabled = true;
@@ -732,7 +751,8 @@ namespace InstallerEditor
 					mnAddOpenFileComponent.Enabled = true;
 					mnAddComponentWizard.Enabled = true;
 					mnAddComponentWizard2.Enabled = true;
-				}
+                    mnAddEmbedFile.Enabled = true;
+                }
 				else if (treeView.SelectedNode.Tag is DownloadDialog)
 				{
 					mnAddDownloadFile.Enabled = true;
@@ -741,14 +761,16 @@ namespace InstallerEditor
 				else if (treeView.SelectedNode.Tag is Download)
 				{
 					mnDelete.Enabled = true;
-				}
+                    mnAddEmbedFile.Enabled = true;
+                }
 				else if (treeView.SelectedNode.Tag is Component)
 				{
 					mnAddInstalledCheckRegistry.Enabled = true;
 					mnAddInstalledCheckFile.Enabled = true;
 					mnDelete.Enabled = true;
 					mnAddDownloadDialog.Enabled = true;
-				}
+                    mnAddEmbedFile.Enabled = true;
+                }
 				else if (treeView.SelectedNode.Tag is InstalledCheck)
 				{
 					mnDelete.Enabled = true;
@@ -762,48 +784,56 @@ namespace InstallerEditor
 			m_TreeNodeConfigFile.ConfigFile.Configurations.Add(l_Config);
 			return l_Config;
 		}
+
 		private Configuration AddSetupConfiguration()
 		{
 			SetupConfiguration l_Config = new SetupConfiguration();
 			m_TreeNodeConfigFile.ConfigFile.Configurations.Add(l_Config);
 			return l_Config;
 		}
+
 		private Download AddDownload(DownloadDialog p_Dialog)
 		{
 			Download d = new Download();
 			p_Dialog.Downloads.Add(d);
 			return d;
 		}
+
 		private Component AddMsiComponent(SetupConfiguration p_Config)
 		{
 			ComponentMsi l_Component = new ComponentMsi();
 			p_Config.Components.Add(l_Component);
 			return l_Component;
 		}
+
 		private Component AddCmdComponent(SetupConfiguration p_Config)
 		{
 			ComponentCmd l_Component = new ComponentCmd();
 			p_Config.Components.Add(l_Component);
 			return l_Component;
 		}
+
 		private Component AddOpenFileComponent(SetupConfiguration p_Config)
 		{
 			ComponentOpenFile l_Component = new ComponentOpenFile();
 			p_Config.Components.Add(l_Component);
 			return l_Component;
 		}
+
 		private InstalledCheck AddInstalledCheckRegistry(Component p_Component)
 		{
 			InstalledCheckRegistry l_Check = new InstalledCheckRegistry();
 			p_Component.installchecks.Add(l_Check);
 			return l_Check;
 		}
+
 		private InstalledCheck AddInstalledCheckFile(Component p_Component)
 		{
 			InstalledCheckFile l_Check = new InstalledCheckFile();
 			p_Component.installchecks.Add(l_Check);
 			return l_Check;
 		}
+
 		private DownloadDialog AddDownloadDIalogToComponetnt(Component p_Component)
 		{
 			if (p_Component.DownloadDialog != null)
@@ -812,6 +842,20 @@ namespace InstallerEditor
 			p_Component.DownloadDialog = l_DownloadDialog;
 			return l_DownloadDialog;
 		}
+
+        private EmbedFile AddEmbedFileSetupConfiguration(SetupConfiguration p_Config)
+        {
+            EmbedFile l_SetupConfigurationEmbedFile = new EmbedFile();
+            p_Config.EmbedFiles.Add(l_SetupConfigurationEmbedFile);
+            return l_SetupConfigurationEmbedFile;
+        }
+
+        private EmbedFile AddEmbedFileComponent(Component p_Component)
+        {
+            EmbedFile l_ComponentEmbedFile = new EmbedFile();
+            p_Component.EmbedFiles.Add(l_ComponentEmbedFile);
+            return l_ComponentEmbedFile;
+        }
 
 		private void mnAddSetupConfiguration_Click(object sender, System.EventArgs e)
 		{
@@ -1308,5 +1352,26 @@ namespace InstallerEditor
 				AppUtility.ShowError(this, err);
 			}
 		}
+
+        private void mnAddEmbedFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is SetupConfiguration)
+                {
+                    SetupConfiguration l_Setup = (SetupConfiguration)treeView.SelectedNode.Tag;
+                    treeView.SelectedNode.Nodes.Add(new TreeNodeEmbedFile(AddEmbedFileSetupConfiguration(l_Setup)));
+                }
+                else if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is Component)
+                {
+                    Component l_Component = (Component)treeView.SelectedNode.Tag;
+                    treeView.SelectedNode.Nodes.Add(new TreeNodeEmbedFile(AddEmbedFileComponent(l_Component)));
+                }
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
+        }
 	}
 }

@@ -81,9 +81,9 @@ namespace InstallerLib
         {
         }
 
-        public virtual IList<string> GetFiles()
+        public virtual EmbedFileCollection GetFiles()
         {
-            return new List<string>();
+            return new EmbedFileCollection();
         }
     }
 }

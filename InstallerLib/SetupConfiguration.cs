@@ -490,6 +490,13 @@ namespace InstallerLib
                 c.ToXml(e.XmlWriter);
             }
             e.XmlWriter.WriteEndElement();
+
+            e.XmlWriter.WriteStartElement("embedfiles");
+            foreach (EmbedFile embedFile in EmbedFiles)
+            {
+                embedFile.ToXml(e.XmlWriter);
+            }
+            e.XmlWriter.WriteEndElement();
         }
 
         protected override void OnXmlReadTagConfiguration(XmlElementEventArgs e)
@@ -622,6 +629,14 @@ namespace InstallerLib
                 else
                     throw new ApplicationException("Type cannot be null");
             }
+
+            XmlNodeList l_EmbedFilesList = e.XmlElement.SelectNodes("embedfiles/embedfile");
+            foreach (XmlElement l_XmlEmbedFile in l_EmbedFilesList)
+            {
+                EmbedFile l_EmbedFile = new EmbedFile();
+                l_EmbedFile.FromXml(l_XmlEmbedFile);
+                EmbedFiles.Add(l_EmbedFile);
+            }
         }
 
         private ComponentCollection m_Components = new ComponentCollection();
@@ -631,14 +646,23 @@ namespace InstallerLib
             set { m_Components = value; }
         }
 
-        public override IList<string> GetFiles()
+        public override EmbedFileCollection GetFiles()
         {
-            List<string> files = new List<string>();
+            EmbedFileCollection files = new EmbedFileCollection();
+            files.AddRange(EmbedFiles);
             foreach (Component component in Components)
             {
                 files.AddRange(component.GetFiles());
             }
             return files;
+        }
+
+        private EmbedFileCollection m_EmbedFiles = new EmbedFileCollection();
+        [System.ComponentModel.Browsable(false)]
+        public EmbedFileCollection EmbedFiles
+        {
+            get { return m_EmbedFiles; }
+            set { m_EmbedFiles = value; }
         }
     }
 }

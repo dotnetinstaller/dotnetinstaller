@@ -162,6 +162,13 @@ namespace InstallerLib
                 i.ToXml(p_Writer);
             }
 
+            p_Writer.WriteStartElement("embedfiles");
+            foreach (EmbedFile embedFile in EmbedFiles)
+            {
+                embedFile.ToXml(p_Writer);
+            }
+            p_Writer.WriteEndElement();
+
             p_Writer.WriteEndElement();
         }
 
@@ -197,6 +204,18 @@ namespace InstallerLib
                     l_check.FromXml(l_XmlCheck);
 
                     installchecks.Add(l_check);
+                }
+            }
+
+            XmlNode l_EmbedFiles = p_Element.SelectSingleNode("embedfiles");
+            if (l_EmbedFiles != null)
+            {
+                XmlNodeList l_EmbedFilesList = l_EmbedFiles.SelectNodes("embedfile");
+                foreach (XmlElement l in l_EmbedFilesList)
+                {
+                    EmbedFile f = new EmbedFile();
+                    f.FromXml(l);
+                    EmbedFiles.Add(f);
                 }
             }
         }
@@ -263,12 +282,28 @@ namespace InstallerLib
             set { m_installchecks = value; }
         }
 
+        private EmbedFileCollection m_embedfiles = new EmbedFileCollection();
+        [System.ComponentModel.Browsable(false)]
+        public EmbedFileCollection embedfiles
+        {
+            get { return m_embedfiles; }
+            set { m_embedfiles = value; }
+        }
+
         private DownloadDialog m_DownloadDialog = null; //di default non è presente
         [System.ComponentModel.Browsable(false)]
         public DownloadDialog DownloadDialog
         {
             get { return m_DownloadDialog; }
             set { m_DownloadDialog = value; }
+        }
+
+        private EmbedFileCollection m_EmbedFiles = new EmbedFileCollection();
+        [System.ComponentModel.Browsable(false)]
+        public EmbedFileCollection EmbedFiles
+        {
+            get { return m_EmbedFiles; }
+            set { m_EmbedFiles = value; }
         }
 
         public static Component CreateComponentFromXml(XmlElement element)
@@ -288,17 +323,11 @@ namespace InstallerLib
             return l_Comp;
         }
 
-        public virtual IList<string> GetFiles()
+        public virtual EmbedFileCollection GetFiles()
         {
-            List<string> files = new List<string>();
-            if (m_DownloadDialog != null)
-            {
-                foreach (Download dl in m_DownloadDialog.Downloads)
-                {
-                    string filename = Path.Combine(dl.destinationpath, dl.destinationfilename);
-                    if (!files.Contains(filename)) files.Add(filename);
-                }
-            }
+            EmbedFileCollection files = new EmbedFileCollection();
+            if (m_DownloadDialog != null) files.AddRange(m_DownloadDialog.GetFiles());
+            files.AddRange(EmbedFiles);
             return files;
         }
     }

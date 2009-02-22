@@ -38,13 +38,10 @@ namespace InstallerLib
                 m_file = e.XmlElement.Attributes["file"].InnerText;
         }
 
-        public override IList<string> GetFiles()
+        public override EmbedFileCollection GetFiles()
         {
-            IList<string> files = base.GetFiles();
-            if (!files.Contains(m_file))
-            {
-                files.Add(m_file);
-            }
+            EmbedFileCollection files = base.GetFiles();
+            files.Add(new EmbedFile(m_file));
             return files;
         }
     }

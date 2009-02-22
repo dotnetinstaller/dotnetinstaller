@@ -646,29 +646,43 @@
   Exe dialog.</p>
  <p>
   Next, you must ensure that your dependency files are properly embedded. This is
-  not automatic except for components with a <em>Download File</em> subcomponent.</p>
+  not automatic except for <em>Embed File</em> components, <em>msi</em> components
+  and components with a 
+  <em>Download File</em> subcomponent.</p>
  <p>
-  The simplest way to specify an individual file to be embedded is by using the <em>
-   /EmbedFile</em> InstallerLinker.exe command line option and specify a relative
-  path from #APPPATH to the file you want to be embedded. The file will be extracted
-  under #CABPATH during installation. If the file was in a subdirectory under #APPPATH,
-  it will be extracted into the same subdirectory under #CABPATH.</p>
+  The simplest way to specify an individual file to be embedded is by using the 
+  <em>EmbedFile</em> subcomponent. The <span style="color: #b22222; font-family: Courier New">
+   sourcefilepath</span> is the location of the file on your file system. The <span
+    style="color: #b22222; font-family: Courier New">targetfilepath</span> is a relative
+  destination path under #CABPATH of the extracted file during installation.</p>
  <p>
-  The embedding process automatically tries to embed files specified by the <em>Download
+  The embedding process automatically embeds files specified by the Msi component.
+  The <em>package</em> value for <em>Setup.msi</em> should be set to #CABPATH\SupportFiles\Setup.msi.</p>
+ <p>
+  The embedding process automatically embeds files specified by the <em>Download
    File</em> component.
-  The Download File should have a <em>destinationpath</em> set to #CABPATH\Subdirectory.
+  The Download File should have a <span style="color: #b22222;
+    font-family: Courier New">destinationpath </span>set to #CABPATH\SupportFiles.
+  Set <span style="color: #b22222; font-family: Courier New">alwaysdownload</span>
+  to <em>false</em> and ignore <span style="color: #b22222; font-family: Courier New">
+   sourceurl</span>.</p>
+ <p>
+  Same rules apply for all automatically embedded files.
   For example, if <em>msxml.msi</em> is in <em>SupportFiles\MSXML\English\msxml.msi</em>,
-  set destinationpath to <em>#CABPATH\SupportFiles\MSXML\English</em>. This means
+  set <span style="color: #b22222; font-family: Courier New">destinationpath</span>
+  of a <em>Download File</em> component and <em>package</em> for an <em>Msi</em> component
+  to <em>#CABPATH\SupportFiles\MSXML\English</em>. This means
   that at build time, InstallerLinker must find <em>SupportFiles\MSXML\English\msxml.msi</em>
-  under the current directory or the value specified by <em>/AppPath</em>. Set <em>
-   alwaysdownload</em> to <em>false</em> and ignore <em>sourceurl</em>.</p>
+  under the current directory or the value specified by <em>/AppPath</em>. 
+ </p>
  <p>
   In order to test which files have been embedded, run your <em>Setup.exe /ExtractCab</em>.
   This will output all CAB contents in the current folder.</p>
  <p>
   You may use #TEMPPATH everywhere instead of #CABPATH. #CABPATH defaults to #TEMPPATH\#GUID.
   If you would like temporary files to be deleted after setup completes, use #CABPATH
-  instead of #TEMPPATH and the cab_path_autodelete configuration option.</p>
+  instead of #TEMPPATH and the <span style="color: #b22222; font-family: Courier New">
+   cab_path_autodelete</span> configuration option.</p>
  <p>
   When enabling logging, make sure not to output the log file into #CABPATH. This
   will prevent the #CABPATH directory from being deleted since the installer still
@@ -2034,6 +2048,89 @@
             </tr>
         </tbody>
     </table>
+ <br />
+ <br />
+ <table border="1" cellpadding="0" cellspacing="0" id="TABLE1">
+  <tbody>
+   <tr>
+    <th colspan="2" bgcolor="#ccccff">
+     embedfiles</th>
+   </tr>
+   <tr>
+    <td colspan="2">
+     A collection of elements of type 'embedfile'.</td>
+   </tr>
+   <tr>
+    <td bgcolor="#ccccff" valign="top">
+     ATTRIBUTES:</td>
+    <td>
+     <table border="1" cellpadding="0" cellspacing="0">
+      <tbody>
+      </tbody>
+     </table>
+    </td>
+   </tr>
+   <tr>
+    <td bgcolor="#ccccff" valign="top">
+     CHILDREN:</td>
+    <td>
+     <table border="0" cellpadding="0" cellspacing="0">
+      <tbody>
+       <tr>
+        <td>
+         <b>embedfile</b></td>
+       </tr>
+      </tbody>
+     </table>
+    </td>
+   </tr>
+  </tbody>
+ </table>
+ <br />
+ <table border="1" cellpadding="0" cellspacing="0">
+  <tbody>
+   <tr>
+    <th colspan="2" bgcolor="#ccccff">
+     embedfile</th>
+   </tr>
+   <tr>
+    <td colspan="2">
+     Represent a single file to embed at link time.</td>
+   </tr>
+   <tr>
+    <td bgcolor="#ccccff" valign="top">
+     ATTRIBUTES:</td>
+    <td>
+     <table border="1" cellpadding="0" cellspacing="0">
+      <tbody>
+       <tr>
+        <td style="height: 15px">
+         <b>sourcefilepath</b></td>
+        <td style="height: 15px">
+         The source location of the file to embed.</td>
+       </tr>
+       <tr>
+        <td>
+         <b>targetfilepath</b></td>
+        <td>
+         The relative location of the file to extract at install time.</td>
+       </tr>
+      </tbody>
+     </table>
+    </td>
+   </tr>
+   <tr>
+    <td bgcolor="#ccccff" valign="top">
+     CHILDREN:</td>
+    <td>
+     <table border="0" cellpadding="0" cellspacing="0">
+      <tbody>
+      </tbody>
+     </table>
+    </td>
+   </tr>
+  </tbody>
+ </table>
     <br />
     <!-- END table for XML configuration help -->
     <h3>
@@ -2065,6 +2162,8 @@
         <li>fileattributes\fileattribute\name</li>
         <li>fileattributes\fileattribute\value</li>
         <li>configurations\configuration\components\component\installedcheck\wowoption</li>
+     <li>configurations\configuration\embedfiles\embedfile</li>
+     <li>configurations\configuration\components\component\embedfiles\embedfile</li>
     </ul>
     <h3>
         1.2.0.0 to 1.3.2.0 changes of XML file</h3>
@@ -2716,6 +2815,8 @@
             processors and enables installation of different dependencies on different processor architectures</li>
         <li>Added CABing, embedding of support files using <a href="http://www.codeproject.com/KB/files/CABCompressExtract.aspx">Elmü's CAB library</a>
             and a PackagedSetup sample</li>
+     <li>Added Embed File components, child of configuration and component, to embed support
+      files</li>
         <li>Added /ExtractCab command line option to dotNetInstaller.exe that extracts the
             embedded CAB file and its contents in the current directory</li>
         <li>Added InstallerLinker.exe with command line options /e (Embed) and /a (AppPath) and /v (Verbose) for using in build processes</li>
