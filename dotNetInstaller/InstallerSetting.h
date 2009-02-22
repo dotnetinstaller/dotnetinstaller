@@ -20,49 +20,44 @@ public:
     bool must_reboot_required;
 	CString reboot_required;
 	CString installing_component_wait;
-	//Link properties
+	// link properties
 	CString dialog_otherinfo_caption;
 	CString dialog_otherinfo_link;
-
-	//Complete command (executed when all components are installed correctly), can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed. (OPTIONAL)
+	// complete command (executed when all components are installed correctly)
 	CString complete_command;
-	// Daniel Doubrovkine - 2008-09-28: added complete command on silent install
+	// complete command on silent install
 	CString complete_command_silent;
-	//If true auto close the dialog (display installation_completed message and execute the complete_command) if all the components are already installed. (REQUIRED)
+	// if true auto close the dialog (display installation_completed message and execute the complete_command) if all the components are already installed
 	bool auto_close_if_installed;
-    // If false, don't display installed components
+    // if true, auto-close on error when the user chooses not to continue
+    bool auto_close_on_error;
+    // if false, don't display installed components
     bool dialog_show_installed;
-    // If false, don't display required components
+    // ff false, don't display required components
     bool dialog_show_required;
-	// Daniel Doubrovkine - 2008-12-30: allow user to continue on error
+	// allow user to continue on error
 	bool allow_continue_on_error;
-	/* Matthias Jentsch - 2006-03-06: added filter for minimum operating system version */
+	// filter for minimum operating system version
 	CString os_filter_greater;
-	/* Matthias Jentsch - 2006-03-06: added filter for maximum operating system version */
+	// filter for maximum operating system version
 	CString os_filter_smaller;
-	/* Matthias Jentsch - 2006-03-06: message if the current operating system does not match the operating system filter */
+	// message if the current operating system does not match the operating system filter
 	CString os_filter_not_match_message;
-
-	/* Jason Biegel - 2008-04-23: added filter for processor architecture */
+	// filter for processor architecture
 	CString processor_architecture_filter;
-	/* Jason Biegel - 2008-04-23: added message for not matching the processor architecture filter */
+	// message for not matching the processor architecture filter
 	CString processor_architecture_filter_not_match_message;
-
-    /* Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction */
+    // message and caption to show during CAB extraction
     CString cab_dialog_message;
     CString cab_dialog_caption;
     CString cab_cancelled_message;
     CString cab_path;
     bool cab_path_autodelete;
-
-    /* Daniel Doubrovkine - 2008-06-24: added auto-enabled log */
+    // auto-enabled log
     bool log_enabled;
     CString log_file;
-
 	void ExecuteCompleteCode() const;
     CString ValidatePath(LPCTSTR p_Path);
-
-    // components
 private:
     // a description-component map
     std::map<std::wstring, Component *> components_map;

@@ -223,7 +223,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
         ExtractCab();
 		InsertRegistryRun();
 		bool l_bRemoveRunOnce = true;
-		bool l_bShuttingDown = false;
+		bool l_bShutdownOrCancel = false;
 
 	    for each(Component * component in m_Settings.GetComponents())
 		{
@@ -288,7 +288,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 									if (l_bReboot)
 									{
 										InitiateReboot();
-										l_bShuttingDown = true;
+										l_bShutdownOrCancel = true;
 										ApplicationLog.Write( TEXT("---Initiated REBOOT") );
 										PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);
 										break;
@@ -339,14 +339,24 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 				CString l_msg;
 				l_msg.Format( m_Settings.failed_exec_command_continue, component->description );
 
-                if (m_Settings.allow_continue_on_error)
+                bool l_breakSequence = false;
+                if (m_Settings.allow_continue_on_error && component->allow_continue_on_error)
                 {
-				    if (DniMessageBox(l_msg, MB_YESNO, IDNO, MB_YESNO|MB_ICONEXCLAMATION) == IDNO )
-					    break;
+				    l_breakSequence = (DniMessageBox(l_msg, MB_YESNO, IDNO, MB_YESNO|MB_ICONEXCLAMATION) == IDNO);
                 }
                 else
                 {
                     DniMessageBox(l_msg, MB_OK, 0, MB_ICONEXCLAMATION);
+                    l_breakSequence = true;
+                }
+
+                if (l_breakSequence)
+                {
+                    if (m_Settings.auto_close_on_error)
+                    {
+                        l_bShutdownOrCancel = true;
+                    }
+                    
                     break;
                 }
 			}
@@ -361,7 +371,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 			ApplicationLog.Write( TEXT("--dotNetInstaller is configured to auto execute on the next boot"));
 		}
 
-		if (l_bShuttingDown)
+		if (l_bShutdownOrCancel)
 		{
 			OnOK();
 		}

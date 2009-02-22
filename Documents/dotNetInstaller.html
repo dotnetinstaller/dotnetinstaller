@@ -1171,11 +1171,22 @@
                             </tr>
                             <tr>
                                 <td>
+                                    <b>auto_close_on_error</b></td>
+                                <td>
+                                    If true auto close the dialog when a component fails to install and the user chooses
+                                    not to continue. If false, the component conditions will be re-evaluated and the updated
+                                    list of components will be shown.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <b>allow_continue_on_error</b>
                                 </td>
                                 <td>
                                     If true, the user will be prompted to continue when a component fails to install.
-                                    Otherwise the error is simply reported and the user returns to DNI.
+                                    Otherwise the error is simply reported and the user returns to the bootstrapper or quits depending
+                                    on the value of auto_close_on_error. Note that in order for a component to allow continuing on
+                                    error both the global and the component setting must be set to True.
                                 </td>
                             </tr>
                             <tr>
@@ -1454,6 +1465,16 @@
                                     Component setting for reboot behavior. When true, installation won't continue after this component
                                     required a reboot. The user will be told to reboot and he must do so. You should change the text 
                                     in the reboot_required option accordingly.</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>allow_continue_on_error</b></td>
+                                <td>
+                                    If true, the user will be prompted to continue when this component fails to install.
+                                    Otherwise the error is simply reported and the user returns to the bootstrapper or quits depending
+                                    on the value of auto_close_on_error. Note that in order for a component to allow continuing on
+                                    error both the global and the component setting must be set to True.
+                                </td>
                             </tr>
                             <tr>
                                 <td>
@@ -2231,6 +2252,7 @@
  <ul>
   <li>configurations\configuration\component\installedcheck\description </li>
   <li>configurations\configuration\component\installedcheckoperator </li>
+  <li>configurations\configuration\component\allow_continue_on_error</li>
   <li>collapsed nesting, removed all collections: configurations, components, embedfiles</li>
   <li>configurations\configuration\allow_continue_on_error</li>
   <li>removed: configurations\configuration\dialog_selector_caption</li>
@@ -2240,6 +2262,7 @@
   <li>configurations\configuration\dialog_show_installed</li>
   <li>configurations\configuration\dialog_show_required</li>
   <li>configurations\configuration\must_reboot_required</li>
+  <li>configurations\configuration\auto_close_on_error</li>
  </ul>
  <br />
  <!-- END table for XML configuration help -->
@@ -2916,21 +2939,24 @@
      <li>InstallerEditor: Shift+Up and Shift+Down arrows move components up and down.</li>
      <li>InstallerEditor: added shortcuts to open a configuratoin file (Ctrl+O), create
       a new configuration file (Ctrol+N), exit (Alt+F4) and refresh (F5).</li>
-     <li>Added <span style="color: #b22222; font-family: Courier New">allow_continue_on_error</span>: when false
-      user is no longer prompted to continue on error.</li>
+     <li>Added <span style="color: #b22222; font-family: Courier New">allow_continue_on_error</span> globally and per-component:
+      when false user is no longer prompted to continue on error, instead the user is informed of the failure and installation aborts.
+      Combine this option with <span style="color: #b22222; font-family: Courier New">auto_close_on_error</span> to get predictable
+      failure behavior as bootstrapper will close after an element of setup failed. Note that in order for a component to allow continuing on 
+      error both the global and the component setting must be set to True.</li>
      <li>DotNetInstaller: merged functionality of the Advanced component selector into
       the main window, removed the Advanced button.</li>
      <li>Added <span style="color: #b22222; font-family: Courier New">dialog_show_required</span>:
       when false, required components are hidden.</li>
      <li>Added <span style="color: #b22222; font-family: Courier New">dialog_show_installed</span>:
       when false, installed components are hidden.</li>
-     <li>Added optional <span style="color: #b22222; font-family: Courier New">must_reboot_required</span>:
-      per component.</li>
-     <li>Added <span style="color: #b22222; font-family: Courier New">must_reboot_required</span> globally:
-      sets <span style="color: #b22222; font-family: Courier New">must_reboot_required</span> for any component 
-      that requires a reboot.</li>
+     <li>Added <span style="color: #b22222; font-family: Courier New">must_reboot_required</span>:
+      globally and per-component. Setting this option to true will prevent users from
+      continuing when a reboot is required.</li>
      <li>Added optional <span style="color: #b22222; font-family: Courier New">reboot_required</span>:
-      message per component extending the global setting.</li>
+      a message that can be configured per component, extending the global setting.</li>
+     <li>Added <span style="color: #b22222; font-family: Courier New">auto_close_on_error</span>:
+      changes behavior on component error, now optionally closing the bootstrapper. </li>      
     </ul>
     <h3>
      1.5 (25 Oct 2008)</h3>

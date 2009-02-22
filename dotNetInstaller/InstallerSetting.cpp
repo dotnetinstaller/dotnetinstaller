@@ -7,6 +7,7 @@
 InstallerSetting::InstallerSetting()
     : must_reboot_required(false)
     , auto_close_if_installed(false)
+    , auto_close_on_error(false)
     , dialog_show_installed(false)
     , dialog_show_required(false)
     , allow_continue_on_error(false)

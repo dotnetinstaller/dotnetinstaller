@@ -104,6 +104,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 	p_Setting.complete_command = p_Setting.ValidatePath(p_Node->AttributeT("complete_command").data());
 	p_Setting.complete_command_silent = p_Setting.ValidatePath(p_Node->AttributeT("complete_command_silent").data());
 	p_Setting.auto_close_if_installed = ConvBoolString(p_Node->Attribute("auto_close_if_installed"), true);
+    p_Setting.auto_close_on_error = ConvBoolString(p_Node->Attribute("auto_close_on_error"), false);
     p_Setting.allow_continue_on_error = ConvBoolString(p_Node->Attribute("allow_continue_on_error"), true);
     p_Setting.dialog_show_installed = ConvBoolString(p_Node->Attribute("dialog_show_installed"), true);
     p_Setting.dialog_show_required = ConvBoolString(p_Node->Attribute("dialog_show_required"), true);
@@ -217,6 +218,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 			l_new_component->mustreboot = ConvBoolString(l_Node_component->Attribute("mustreboot"), false);
             l_new_component->reboot_required = l_Node_component->AttributeT("reboot_required").data();
 			l_new_component->must_reboot_required = ConvBoolString(l_Node_component->Attribute("must_reboot_required"), false);
+            l_new_component->allow_continue_on_error = ConvBoolString(l_Node_component->Attribute("allow_continue_on_error"), true);
 			l_new_component->required = ConvBoolString(l_Node_component->Attribute("required"), true);
 			l_new_component->processor_architecture_filter = l_Node_component->AttributeT("processor_architecture_filter").data();
 

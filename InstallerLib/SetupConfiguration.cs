@@ -232,6 +232,14 @@ namespace InstallerLib
             set { m_auto_close_if_installed = value; }
         }
 
+        private bool m_auto_close_on_error = false;
+        [Description("If true auto close the dialog when a component fails to install and the user chooses not to continue. If false, the component conditions will be re-evaluated and the updated list of components will be shown. (REQUIRED)")]
+        public bool auto_close_on_error
+        {
+            get { return m_auto_close_on_error; }
+            set { m_auto_close_on_error = value; }
+        }
+
         private bool m_allow_continue_on_error = true;
         [Description("If true prompt the user to continue on error, otherwise an error is simply reported. Make sure to adjust failed_exec_command_continue if set to false.")]
         public bool allow_continue_on_error
@@ -384,6 +392,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("complete_command", m_complete_command);
             e.XmlWriter.WriteAttributeString("complete_command_silent", m_complete_command_silent);
             e.XmlWriter.WriteAttributeString("auto_close_if_installed", m_auto_close_if_installed.ToString());
+            e.XmlWriter.WriteAttributeString("auto_close_on_error", m_auto_close_on_error.ToString());
             e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
             e.XmlWriter.WriteAttributeString("dialog_show_installed", m_dialog_show_installed.ToString());
             e.XmlWriter.WriteAttributeString("dialog_show_required", m_dialog_show_required.ToString());
@@ -477,6 +486,9 @@ namespace InstallerLib
 
             if (e.XmlElement.Attributes["auto_close_if_installed"] != null)
                 m_auto_close_if_installed = bool.Parse(e.XmlElement.Attributes["auto_close_if_installed"].InnerText);
+
+            if (e.XmlElement.Attributes["auto_close_on_error"] != null)
+                m_auto_close_on_error = bool.Parse(e.XmlElement.Attributes["auto_close_on_error"].InnerText);
 
             if (e.XmlElement.Attributes["allow_continue_on_error"] != null)
                 allow_continue_on_error = bool.Parse(e.XmlElement.Attributes["allow_continue_on_error"].InnerText);

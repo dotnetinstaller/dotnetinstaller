@@ -94,11 +94,19 @@ namespace InstallerLib
         }
 
         private bool m_must_reboot_required;
-        [Description("Component setting for reboot behavior. When true, installation won't continue after this component required a reboot. (OPTIONAL)")]
+        [Description("Component setting for reboot behavior. When true, installation won't continue after this component required a reboot. (REQUIRED)")]
         public bool must_reboot_required
         {
             get { return m_must_reboot_required; }
             set { m_must_reboot_required = value; }
+        }
+
+        private bool m_allow_continue_on_error;
+        [Description("If true, the user will be prompted to continue when a component fails to install. (REQUIRED)")]
+        public bool allow_continue_on_error
+        {
+            get { return m_allow_continue_on_error; }
+            set { m_allow_continue_on_error = value; }
         }
 
         private bool m_required;
@@ -171,6 +179,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("mustreboot", m_mustreboot.ToString());
             e.XmlWriter.WriteAttributeString("reboot_required", m_reboot_required);
             e.XmlWriter.WriteAttributeString("must_reboot_required", m_must_reboot_required.ToString());
+            e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
             e.XmlWriter.WriteAttributeString("required", m_required.ToString());
             e.XmlWriter.WriteAttributeString("description", m_description);
             //e.XmlWriter.WriteAttributeString("installmessage",m_installmessage);
@@ -199,6 +208,9 @@ namespace InstallerLib
 
             if (e.XmlElement.Attributes["must_reboot_required"] != null)
                 m_must_reboot_required = bool.Parse(e.XmlElement.Attributes["must_reboot_required"].InnerText);
+
+            if (e.XmlElement.Attributes["allow_continue_on_error"] != null)
+                m_allow_continue_on_error = bool.Parse(e.XmlElement.Attributes["allow_continue_on_error"].InnerText);
 
             if (e.XmlElement.Attributes["required"] != null)
                 m_required = bool.Parse(e.XmlElement.Attributes["required"].InnerText);
