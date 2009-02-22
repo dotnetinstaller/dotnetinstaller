@@ -36,13 +36,11 @@ void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::Down
 
 	p_Configuration.Components.RemoveAll();
 
-	TiXmlElement * l_Node_downloads = p_Node_downloaddialog->FirstChildElement("downloads");
 	TiXmlNode * child = NULL;
-	while ( (child = l_Node_downloads->IterateChildren(child)) != NULL)
+	while ( (child = p_Node_downloaddialog->IterateChildren("download", child)) != NULL)
 	{
 		TiXmlElement * l_Node_download = child->ToElement();
-		if ( l_Node_download != NULL &&
-			strcmp(l_Node_download->Value(), "download") == 0 )
+		if (l_Node_download != NULL)
 		{
 			ApplicationLog.Write( TEXT("--Reading Download component"));
 
@@ -141,150 +139,141 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 	//caricamento componenti
 	p_Setting.ClearComponents();
 
-	TiXmlElement * l_Node_components = p_Node->FirstChildElement("components");
-	if (NULL == l_Node_components)
+	TiXmlNode * child = NULL;
+	while ( (child = p_Node->IterateChildren("component", child)) != NULL)
 	{
-		throw std::exception("Invalid configuration file, no valid 'components' node found");
-	}
-	else
-	{
-		TiXmlNode * child = NULL;
-		while ( (child = l_Node_components->IterateChildren("component", child)) != NULL)
+		TiXmlElement * l_Node_component = child->ToElement();
+		if (l_Node_component != NULL)
 		{
-			TiXmlElement * l_Node_component = child->ToElement();
+			CString l_comp_type = l_Node_component->AttributeT("type").data();
 
-			if (l_Node_component != NULL)
+			Component * l_new_component;
+
+			if (l_comp_type == "msi")
 			{
-				CString l_comp_type = l_Node_component->AttributeT("type").data();
+				MsiComponent * l_msi_Comp = new MsiComponent();
+			    l_msi_Comp->description = l_Node_component->AttributeT("description").data();
+				l_msi_Comp->package = p_Setting.ValidatePath(l_Node_component->AttributeT("package").data());
+				l_msi_Comp->type = msi;
+				l_msi_Comp->cmdparameters = p_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters").data());
+				l_msi_Comp->cmdparameters_silent = p_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters_silent").data());
 
-				Component * l_new_component;
+                // additional command line parameters
+                std::map<std::wstring, std::wstring>::iterator cmdline = commandLineInfo.m_componentCmdArgs.find(l_msi_Comp->description.GetBuffer());
+                if (cmdline != commandLineInfo.m_componentCmdArgs.end())
+                {
+                    l_msi_Comp->cmdparameters += TEXT(" ");
+                    l_msi_Comp->cmdparameters += cmdline->second.c_str();
+                    l_msi_Comp->cmdparameters_silent += TEXT(" ");
+                    l_msi_Comp->cmdparameters_silent += cmdline->second.c_str();
+                    ApplicationLog.Write(TEXT("--Additional component arguments: "), cmdline->second.c_str());
+                }
 
-				if (l_comp_type == "msi")
+				l_new_component = l_msi_Comp;
+
+				ApplicationLog.Write(TEXT("--Reading MSI component: "), l_msi_Comp->package);
+			}
+			else if (l_comp_type == "cmd")
+			{
+				cmd_component * l_cmd_Comp = new cmd_component();
+			    l_cmd_Comp->description = l_Node_component->AttributeT("description").data();
+				l_cmd_Comp->command = p_Setting.ValidatePath(l_Node_component->AttributeT("command").data());
+                l_cmd_Comp->command_silent = p_Setting.ValidatePath(l_Node_component->AttributeT("command_silent").data());
+				l_cmd_Comp->type = cmd;
+
+                // additional command line parameters
+                std::map<std::wstring, std::wstring>::iterator cmdline = commandLineInfo.m_componentCmdArgs.find(l_cmd_Comp->description.GetBuffer());
+                if (cmdline != commandLineInfo.m_componentCmdArgs.end())
+                {
+                    l_cmd_Comp->command += TEXT(" ");
+                    l_cmd_Comp->command += cmdline->second.c_str();
+                    l_cmd_Comp->command_silent += TEXT(" ");
+                    l_cmd_Comp->command_silent += cmdline->second.c_str();
+                    ApplicationLog.Write(TEXT("--Additional component arguments: "), cmdline->second.c_str());
+                }
+
+				l_new_component = l_cmd_Comp;
+
+				ApplicationLog.Write(TEXT("--Reading COMMAND component: "), l_cmd_Comp->command);
+			}
+			else if (l_comp_type == "openfile")
+			{
+				OpenFileComponent * l_openfile_Comp = new OpenFileComponent();
+				l_openfile_Comp->file = p_Setting.ValidatePath(l_Node_component->AttributeT("file").data());
+				l_openfile_Comp->type = openfile;
+
+				l_new_component = l_openfile_Comp;
+
+				ApplicationLog.Write(TEXT("--Reading OPENFILE component: "), l_openfile_Comp->file);
+			}
+			else
+			{
+				throw std::exception("Invalid configuration file, component type not supported");
+			}
+
+			l_new_component->description = l_Node_component->AttributeT("description").data();
+			l_new_component->os_filter_greater = l_Node_component->AttributeT("os_filter_greater").data();
+			l_new_component->os_filter_smaller = l_Node_component->AttributeT("os_filter_smaller").data();
+			l_new_component->os_filter_lcid = l_Node_component->AttributeT("os_filter_lcid").data();
+			l_new_component->installcompletemessage = l_Node_component->AttributeT("installcompletemessage").data();
+			l_new_component->mustreboot = ConvBoolString(l_Node_component->Attribute("mustreboot"), false);
+			l_new_component->required = ConvBoolString(l_Node_component->Attribute("required"), true);
+			l_new_component->processor_architecture_filter = l_Node_component->AttributeT("processor_architecture_filter").data();
+
+			// installed checks
+			TiXmlNode * childInstalled = NULL;
+			while ( (childInstalled = l_Node_component->IterateChildren(childInstalled)) != NULL)
+			{
+				TiXmlElement * l_Node = childInstalled->ToElement();
+				if (l_Node != NULL && strcmp(l_Node->Value(), "installedcheck") == 0)
 				{
-					MsiComponent * l_msi_Comp = new MsiComponent();
-				    l_msi_Comp->description = l_Node_component->AttributeT("description").data();
-					l_msi_Comp->package = p_Setting.ValidatePath(l_Node_component->AttributeT("package").data());
-					l_msi_Comp->type = msi;
-					l_msi_Comp->cmdparameters = p_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters").data());
-					l_msi_Comp->cmdparameters_silent = p_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters_silent").data());
-
-                    // additional command line parameters
-                    std::map<std::wstring, std::wstring>::iterator cmdline = commandLineInfo.m_componentCmdArgs.find(l_msi_Comp->description.GetBuffer());
-                    if (cmdline != commandLineInfo.m_componentCmdArgs.end())
-                    {
-                        l_msi_Comp->cmdparameters += TEXT(" ");
-                        l_msi_Comp->cmdparameters += cmdline->second.c_str();
-                        l_msi_Comp->cmdparameters_silent += TEXT(" ");
-                        l_msi_Comp->cmdparameters_silent += cmdline->second.c_str();
-                        ApplicationLog.Write(TEXT("--Additional component arguments: "), cmdline->second.c_str());
-                    }
-
-					l_new_component = l_msi_Comp;
-
-					ApplicationLog.Write(TEXT("--Reading MSI component: "), l_msi_Comp->package);
+                    InstalledCheck * l_new_installedcheck = InstalledCheck::LoadFromXml(l_Node, p_Setting);
+					l_new_component->installedchecks.push_back(l_new_installedcheck);
 				}
-				else if (l_comp_type == "cmd")
+				else if (l_Node != NULL && strcmp(l_Node->Value(), "installedcheckoperator") == 0)
 				{
-					cmd_component * l_cmd_Comp = new cmd_component();
-				    l_cmd_Comp->description = l_Node_component->AttributeT("description").data();
-					l_cmd_Comp->command = p_Setting.ValidatePath(l_Node_component->AttributeT("command").data());
-                    l_cmd_Comp->command_silent = p_Setting.ValidatePath(l_Node_component->AttributeT("command_silent").data());
-					l_cmd_Comp->type = cmd;
-
-                    // additional command line parameters
-                    std::map<std::wstring, std::wstring>::iterator cmdline = commandLineInfo.m_componentCmdArgs.find(l_cmd_Comp->description.GetBuffer());
-                    if (cmdline != commandLineInfo.m_componentCmdArgs.end())
-                    {
-                        l_cmd_Comp->command += TEXT(" ");
-                        l_cmd_Comp->command += cmdline->second.c_str();
-                        l_cmd_Comp->command_silent += TEXT(" ");
-                        l_cmd_Comp->command_silent += cmdline->second.c_str();
-                        ApplicationLog.Write(TEXT("--Additional component arguments: "), cmdline->second.c_str());
-                    }
-
-					l_new_component = l_cmd_Comp;
-
-					ApplicationLog.Write(TEXT("--Reading COMMAND component: "), l_cmd_Comp->command);
+                    InstalledCheckOperator * l_new_installedcheckoperator = new InstalledCheckOperator();
+                    l_new_installedcheckoperator->Load(l_Node, p_Setting);
+					l_new_component->installedchecks.push_back(l_new_installedcheckoperator);
 				}
-				else if (l_comp_type == "openfile")
-				{
-					OpenFileComponent * l_openfile_Comp = new OpenFileComponent();
-					l_openfile_Comp->file = p_Setting.ValidatePath(l_Node_component->AttributeT("file").data());
-					l_openfile_Comp->type = openfile;
+			}
 
-					l_new_component = l_openfile_Comp;
+			//
+			// download dialog
+			l_new_component->ContainsDownloadComponent = false; //default viene messo a falso e poi guardo se presente il nodo
+			TiXmlElement * l_Node_downloaddialog = l_Node_component->FirstChildElement("downloaddialog");
+			if (l_Node_downloaddialog != NULL)
+			{
+			    ApplicationLog.Write( TEXT("---Loading DownloadDialog") );
+				LoadDownloadConfiguration(l_Node_downloaddialog, l_new_component->DownloadDialogConfiguration, p_Setting);
+				l_new_component->ContainsDownloadComponent = true;
+			}
 
-					ApplicationLog.Write(TEXT("--Reading OPENFILE component: "), l_openfile_Comp->file);
-				}
-				else
-				{
-					throw std::exception("Invalid configuration file, component type not supported");
-				}
+			l_new_component->selected = false;
+			//verifico che il componente sia supportato nel sistema operativo
 
-				l_new_component->description = l_Node_component->AttributeT("description").data();
-				l_new_component->os_filter_greater = l_Node_component->AttributeT("os_filter_greater").data();
-				l_new_component->os_filter_smaller = l_Node_component->AttributeT("os_filter_smaller").data();
-				l_new_component->os_filter_lcid = l_Node_component->AttributeT("os_filter_lcid").data();
-				l_new_component->installcompletemessage = l_Node_component->AttributeT("installcompletemessage").data();
-				l_new_component->mustreboot = ConvBoolString(l_Node_component->Attribute("mustreboot"), false);
-				l_new_component->required = ConvBoolString(l_Node_component->Attribute("required"), true);
-				l_new_component->processor_architecture_filter = l_Node_component->AttributeT("processor_architecture_filter").data();
+			if ( CheckConfigFilter(l_new_component->os_filter_lcid, l_new_component->os_filter_greater, l_new_component->os_filter_smaller, l_new_component->processor_architecture_filter) )
+			{
+                bool l_new_component_installed = l_new_component->IsInstalled();
 
-				// installed checks
-				TiXmlNode * childInstalled = NULL;
-				while ( (childInstalled = l_Node_component->IterateChildren(childInstalled)) != NULL)
-				{
-					TiXmlElement * l_Node = childInstalled->ToElement();
-					if (l_Node != NULL && strcmp(l_Node->Value(), "installedcheck") == 0)
-					{
-                        InstalledCheck * l_new_installedcheck = InstalledCheck::LoadFromXml(l_Node, p_Setting);
-						l_new_component->installedchecks.push_back(l_new_installedcheck);
-					}
-					else if (l_Node != NULL && strcmp(l_Node->Value(), "installedcheckoperator") == 0)
-					{
-                        InstalledCheckOperator * l_new_installedcheckoperator = new InstalledCheckOperator();
-                        l_new_installedcheckoperator->Load(l_Node, p_Setting);
-						l_new_component->installedchecks.push_back(l_new_installedcheckoperator);
-					}
-				}
+				if (! l_new_component_installed)
+                {
+					l_new_component->selected = true;
+                }
 
-				//
-				// download dialog
-				l_new_component->ContainsDownloadComponent = false; //default viene messo a falso e poi guardo se � presente il nodo
-				TiXmlElement * l_Node_downloaddialog = l_Node_component->FirstChildElement("downloaddialog");
-				if (l_Node_downloaddialog != NULL)
-				{
-				    ApplicationLog.Write( TEXT("---Loading DownloadDialog") );
-					LoadDownloadConfiguration(l_Node_downloaddialog, l_new_component->DownloadDialogConfiguration, p_Setting);
-					l_new_component->ContainsDownloadComponent = true;
-				}
+				p_Setting.AddComponent(l_new_component);
 
-				l_new_component->selected = false;
-				//verifico che il componente sia supportato nel sistema operativo
+                ApplicationLog.Write( TEXT("--Component OK: "), l_new_component_installed ? TEXT("INSTALLED") : TEXT("NOT INSTALLED") );
+			}
+			else
+			{
+				FreeComponent(l_new_component);
 
-				if ( CheckConfigFilter(l_new_component->os_filter_lcid, l_new_component->os_filter_greater, l_new_component->os_filter_smaller, l_new_component->processor_architecture_filter) )
-				{
-                    bool l_new_component_installed = l_new_component->IsInstalled();
+				ApplicationLog.Write( TEXT("--Component SKIPPED") );
+			}
 
-					if (! l_new_component_installed)
-                    {
-						l_new_component->selected = true;
-                    }
-
-					p_Setting.AddComponent(l_new_component);
-
-                    ApplicationLog.Write( TEXT("--Component OK: "), l_new_component_installed ? TEXT("INSTALLED") : TEXT("NOT INSTALLED") );
-				}
-				else
-				{
-					FreeComponent(l_new_component);
-
-					ApplicationLog.Write( TEXT("--Component SKIPPED") );
-				}
-
-			} //if l_Node_component != NULL
-		}//while l_Node_components != NULL
-	} // if l_Node_components != NULL
+		} //if l_Node_component != NULL
+	}//while l_Node_components != NULL
 
     // Daniel Doubrovkine - 2008-11-08: Check that /ComponentArgs doesn't contain arguments for non-existant components
     std::map<std::wstring, std::wstring>::iterator arg = commandLineInfo.m_componentCmdArgs.begin();
@@ -621,6 +610,3 @@ void FreeComponent(Component * c)
 		delete c;
 	}
 }
-
-
-

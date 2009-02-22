@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace InstallerLib
 {
     /// <summary>
-    /// Tag component of type openfile
+    /// A component of type "openfile" that launches a document.
     /// </summary>
     public class ComponentOpenFile : Component
     {
@@ -22,20 +22,18 @@ namespace InstallerLib
             set { m_file = value; }
         }
 
-        protected override void OnXmlWriteTagcomponent(XmlWriterEventArgs e)
+        protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
-            base.OnXmlWriteTagcomponent(e);
-
             e.XmlWriter.WriteAttributeString("file", m_file);
+            base.OnXmlWriteTag(e);
         }
 
-
-        protected override void OnXmlReadTagcomponent(XmlElementEventArgs e)
+        protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            base.OnXmlReadTagcomponent(e);
-
             if (e.XmlElement.Attributes["file"] != null)
                 m_file = e.XmlElement.Attributes["file"].InnerText;
+
+            base.OnXmlReadTag(e);
         }
 
         public override EmbedFileCollection GetFiles()

@@ -7,8 +7,9 @@ using System.IO;
 namespace InstallerLib
 {
     /// <summary>
-    /// Summary description for FileAttribute.
+    /// A file attribute.
     /// </summary>
+    [XmlNoChildren]
     public class FileAttribute : XmlClassImpl
     {
         public FileAttribute()
@@ -46,30 +47,23 @@ namespace InstallerLib
 
         #region IXmlClass Members
 
-        public override void ToXml(XmlWriter p_Writer)
+        public override string XmlTag
         {
-            base.ToXml(p_Writer);
-
-            p_Writer.WriteStartElement("fileattribute");
-            OnXmlWriteTagcomponent(new XmlWriterEventArgs(p_Writer));
-            p_Writer.WriteEndElement();
-        }
-
-        public override void FromXml(XmlElement p_Element)
-        {
-            base.FromXml(p_Element);
-            OnXmlReadTagcomponent(new XmlElementEventArgs(p_Element));
+            get { return "fileattribute"; }
         }
 
         #endregion
 
-        protected virtual void OnXmlWriteTagcomponent(XmlWriterEventArgs e)
+        protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
             e.XmlWriter.WriteAttributeString("name", m_name);
-            if (m_value != null) e.XmlWriter.WriteAttributeString("value", m_value);
+            if (m_value != null)
+                e.XmlWriter.WriteAttributeString("value", m_value);
+
+            base.OnXmlWriteTag(e);
         }
 
-        protected virtual void OnXmlReadTagcomponent(XmlElementEventArgs e)
+        protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
             if (e.XmlElement.Attributes["name"] != null)
                 m_name = e.XmlElement.Attributes["name"].InnerText;

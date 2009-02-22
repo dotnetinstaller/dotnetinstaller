@@ -60,6 +60,12 @@ namespace InstallerEditor
         private MenuItem mnAddInstalledCheckOperator;
         private SplitContainer mainSplitContainer;
         private TextBox txtComment;
+        private MenuItem mnMove;
+        private MenuItem mnMoveUp;
+        private MenuItem mnMoveDown;
+        private MenuItem menuItem11;
+        private MenuItem mnExpandAll;
+        private MenuItem mnCollapseAll;
         private System.ComponentModel.IContainer components;
 
         public MainForm()
@@ -135,6 +141,12 @@ namespace InstallerEditor
             this.mnAddInstalledCheckOperator = new System.Windows.Forms.MenuItem();
             this.menuItem8 = new System.Windows.Forms.MenuItem();
             this.mnAddEmbedFile = new System.Windows.Forms.MenuItem();
+            this.mnMove = new System.Windows.Forms.MenuItem();
+            this.mnMoveUp = new System.Windows.Forms.MenuItem();
+            this.mnMoveDown = new System.Windows.Forms.MenuItem();
+            this.menuItem11 = new System.Windows.Forms.MenuItem();
+            this.mnExpandAll = new System.Windows.Forms.MenuItem();
+            this.mnCollapseAll = new System.Windows.Forms.MenuItem();
             this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.mnDelete = new System.Windows.Forms.MenuItem();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
@@ -176,12 +188,14 @@ namespace InstallerEditor
             // mnNew
             // 
             this.mnNew.Index = 0;
+            this.mnNew.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
             this.mnNew.Text = "New...";
             this.mnNew.Click += new System.EventHandler(this.mnNew_Click);
             // 
             // mnOpen
             // 
             this.mnOpen.Index = 1;
+            this.mnOpen.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
             this.mnOpen.Text = "Open...";
             this.mnOpen.Click += new System.EventHandler(this.mnOpen_Click);
             // 
@@ -225,6 +239,7 @@ namespace InstallerEditor
             // 
             // mnCreateExe
             // 
+            this.mnCreateExe.Enabled = false;
             this.mnCreateExe.Index = 8;
             this.mnCreateExe.Text = "Create Exe...";
             this.mnCreateExe.Click += new System.EventHandler(this.mnCreateExe_Click);
@@ -237,7 +252,8 @@ namespace InstallerEditor
             // mnExit
             // 
             this.mnExit.Index = 10;
-            this.mnExit.Text = "Exit";
+            this.mnExit.Shortcut = System.Windows.Forms.Shortcut.AltF4;
+            this.mnExit.Text = "E&xit";
             this.mnExit.Click += new System.EventHandler(this.mnExit_Click);
             // 
             // mnView
@@ -250,6 +266,7 @@ namespace InstallerEditor
             // mnRefresh
             // 
             this.mnRefresh.Index = 0;
+            this.mnRefresh.Shortcut = System.Windows.Forms.Shortcut.F5;
             this.mnRefresh.Text = "Refresh";
             this.mnRefresh.Click += new System.EventHandler(this.mnRefresh_Click);
             // 
@@ -296,6 +313,10 @@ namespace InstallerEditor
             // 
             this.contextMenuTreeView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnAdd,
+            this.mnMove,
+            this.menuItem11,
+            this.mnExpandAll,
+            this.mnCollapseAll,
             this.menuItem7,
             this.mnDelete});
             this.contextMenuTreeView.Popup += new System.EventHandler(this.contextMenuTreeView_Popup);
@@ -321,7 +342,7 @@ namespace InstallerEditor
             this.mnAddInstalledCheckOperator,
             this.menuItem8,
             this.mnAddEmbedFile});
-            this.mnAdd.Text = "Add";
+            this.mnAdd.Text = "&Add";
             // 
             // mnAddSetupConfiguration
             // 
@@ -422,15 +443,52 @@ namespace InstallerEditor
             this.mnAddEmbedFile.Text = "&Embed File";
             this.mnAddEmbedFile.Click += new System.EventHandler(this.mnAddEmbedFile_Click);
             // 
+            // mnMove
+            // 
+            this.mnMove.Index = 1;
+            this.mnMove.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnMoveUp,
+            this.mnMoveDown});
+            this.mnMove.Text = "&Move";
+            // 
+            // mnMoveUp
+            // 
+            this.mnMoveUp.Index = 0;
+            this.mnMoveUp.Text = "&Up";
+            this.mnMoveUp.Click += new System.EventHandler(this.mnMoveUp_Click);
+            // 
+            // mnMoveDown
+            // 
+            this.mnMoveDown.Index = 1;
+            this.mnMoveDown.Text = "&Down";
+            this.mnMoveDown.Click += new System.EventHandler(this.mnMoveDown_Click);
+            // 
+            // menuItem11
+            // 
+            this.menuItem11.Index = 2;
+            this.menuItem11.Text = "-";
+            // 
+            // mnExpandAll
+            // 
+            this.mnExpandAll.Index = 3;
+            this.mnExpandAll.Text = "&Expand All";
+            this.mnExpandAll.Click += new System.EventHandler(this.mnExpandAll_Click);
+            // 
+            // mnCollapseAll
+            // 
+            this.mnCollapseAll.Index = 4;
+            this.mnCollapseAll.Text = "&Collapse All";
+            this.mnCollapseAll.Click += new System.EventHandler(this.mnCollapseAll_Click);
+            // 
             // menuItem7
             // 
-            this.menuItem7.Index = 1;
+            this.menuItem7.Index = 5;
             this.menuItem7.Text = "-";
             // 
             // mnDelete
             // 
-            this.mnDelete.Index = 2;
-            this.mnDelete.Text = "Delete";
+            this.mnDelete.Index = 6;
+            this.mnDelete.Text = "&Delete";
             this.mnDelete.Click += new System.EventHandler(this.mnDelete_Click);
             // 
             // imageList
@@ -492,6 +550,7 @@ namespace InstallerEditor
             // 
             // treeView
             // 
+            this.treeView.AllowDrop = true;
             this.treeView.ContextMenu = this.contextMenuTreeView;
             this.treeView.Dock = System.Windows.Forms.DockStyle.Left;
             this.treeView.HideSelection = false;
@@ -502,10 +561,15 @@ namespace InstallerEditor
             this.treeView.SelectedImageIndex = 0;
             this.treeView.Size = new System.Drawing.Size(176, 300);
             this.treeView.TabIndex = 1;
+            this.treeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView_DragDrop);
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             this.treeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseDown);
+            this.treeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView_DragEnter);
             this.treeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyUp);
             this.treeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView_BeforeSelect);
+            this.treeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyDown);
+            this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
+            this.treeView.DragOver += new System.Windows.Forms.DragEventHandler(this.treeView_DragOver);
             // 
             // txtComment
             // 
@@ -540,28 +604,22 @@ namespace InstallerEditor
 
         void contextMenuTreeView_Popup(object sender, EventArgs e)
         {
-            if (m_TreeNodeConfigFile != null)
-            {
-                mnAdd.Enabled = true;
-                mnDelete.Enabled = (treeView.SelectedNode != null);
-            }
-            else
-            {
-                mnAdd.Enabled = false;
-                mnDelete.Enabled = false;
-            }
+            mnAdd.Enabled = (m_TreeNodeConfigFile != null);
+            mnDelete.Enabled = (treeView.SelectedNode != null);
+            mnExpandAll.Enabled = (treeView.SelectedNode != null && treeView.SelectedNode.Nodes.Count > 0);
+            mnCollapseAll.Enabled = (treeView.SelectedNode != null && treeView.SelectedNode.IsExpanded);
         }
 
         void treeView_KeyUp(object sender, KeyEventArgs e)
         {
-            switch (e.KeyValue)
+            switch (e.KeyCode)
             {
                 // delete
-                case 46:
+                case Keys.Delete:
                     if (mnDelete.Enabled) mnDelete_Click(sender, e);
                     break;
                 // insert
-                case 45:
+                case Keys.Insert:
                     contextMenuTreeView.Show(treeView, treeView.SelectedNode != null
                         ? new Point(treeView.SelectedNode.Bounds.Location.X + 5, treeView.SelectedNode.Bounds.Location.Y + 5)
                         : new Point(0, 0));
@@ -578,7 +636,6 @@ namespace InstallerEditor
 
         private TreeNodeConfigFile m_TreeNodeConfigFile = null;
 
-
         private bool NewConfiguration()
         {
             try
@@ -591,6 +648,7 @@ namespace InstallerEditor
                 if (l_dg.ShowDialog(this) == DialogResult.OK)
                 {
                     m_TreeNodeConfigFile = new TreeNodeConfigFile(new ConfigFile());
+                    m_TreeNodeConfigFile.CreateChildNodes();
                     m_TreeNodeConfigFile.ConfigFile.Create(l_dg.FileName);
                     RefreshMenu();
                 }
@@ -634,13 +692,15 @@ namespace InstallerEditor
                     l_File.Load(l_dg.FileName);
 
                     m_TreeNodeConfigFile = new TreeNodeConfigFile(l_File);
+                    m_TreeNodeConfigFile.CreateChildNodes();
                 }
                 else
+                {
                     return false;
+                }
 
                 RefreshMenu();
                 LoadTreeView(m_TreeNodeConfigFile);
-
                 return true;
             }
             catch (Exception err)
@@ -690,7 +750,7 @@ namespace InstallerEditor
             {
                 if (m_TreeNodeConfigFile != null)
                 {
-                    if (m_TreeNodeConfigFile.ConfigFile.FileName == null)
+                    if (m_TreeNodeConfigFile.ConfigFile.filename == null)
                     {
                         SaveFileDialog l_dg = new SaveFileDialog();
                         l_dg.Filter = "Xml Files(*.xml)|*.xml|All Files(*.*)|*.*";
@@ -717,32 +777,19 @@ namespace InstallerEditor
 
         private void RefreshMenu()
         {
-            if (m_TreeNodeConfigFile != null)
-            {
-                mnClose.Enabled = true;
-                //mnCreateExe.Enabled = true;
-                mnNew.Enabled = false;
-                mnOpen.Enabled = false;
-                mnSave.Enabled = true;
-                mnSaveAs.Enabled = true;
-                mnEditWithNotepad.Enabled = true;                
-            }
-            else
-            {
-                mnClose.Enabled = false;
-                //mnCreateExe.Enabled = false;
-                mnNew.Enabled = true;
-                mnOpen.Enabled = true;
-                mnSave.Enabled = false;
-                mnSaveAs.Enabled = false;
-                mnEditWithNotepad.Enabled = false;
-            }
+            mnClose.Enabled = (m_TreeNodeConfigFile != null);
+            mnCreateExe.Enabled = (m_TreeNodeConfigFile != null);
+            mnNew.Enabled = (m_TreeNodeConfigFile == null);
+            mnOpen.Enabled = (m_TreeNodeConfigFile == null);
+            mnSave.Enabled = (m_TreeNodeConfigFile != null);
+            mnSaveAs.Enabled = (m_TreeNodeConfigFile != null);
+            mnEditWithNotepad.Enabled = (m_TreeNodeConfigFile != null);
 
             if (m_TreeNodeConfigFile != null &&
                 m_TreeNodeConfigFile.ConfigFile != null &&
-                m_TreeNodeConfigFile.ConfigFile.FileName != null)
+                m_TreeNodeConfigFile.ConfigFile.filename != null)
             {
-                Text = "Installer Editor - " + m_TreeNodeConfigFile.ConfigFile.FileName;
+                Text = "Installer Editor - " + m_TreeNodeConfigFile.ConfigFile.filename;
             }
             else
             {
@@ -757,7 +804,7 @@ namespace InstallerEditor
             if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is IXmlClass)
             {
                 txtComment.Visible = true;
-                txtComment.Text = ((IXmlClass) treeView.SelectedNode.Tag).Comment;
+                txtComment.Text = ((IXmlClass)treeView.SelectedNode.Tag).Comment;
             }
             else
             {
@@ -790,11 +837,7 @@ namespace InstallerEditor
         private void LoadTreeView(TreeNodeConfigFile p_Configuration)
         {
             CloseTreeView();
-
-            //configuration
             treeView.Nodes.Add(p_Configuration);
-
-
         }
 
         private void mnNew_Click(object sender, System.EventArgs e)
@@ -823,183 +866,128 @@ namespace InstallerEditor
 
         private void RefreshNodeContextMenu()
         {
-            if (treeView.SelectedNode != null)
+            if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is IXmlClass)
             {
-                mnAddDownloadFile.Enabled = false;
+                IXmlClass item = (IXmlClass)treeView.SelectedNode.Tag;
+                mnDelete.Enabled = true;
+                mnAddSetupConfiguration.Enabled = (item.Children.CanAdd(typeof(SetupConfiguration)));
+                mnAddWebConfiguration.Enabled = (item.Children.CanAdd(typeof(WebConfiguration)));
+                mnAddCommandComponent.Enabled = (item.Children.CanAdd(typeof(ComponentCmd)));
+                mnAddMsiComponent.Enabled = (item.Children.CanAdd(typeof(ComponentMsi)));
+                mnAddOpenFileComponent.Enabled = (item.Children.CanAdd(typeof(ComponentOpenFile)));
+                mnAddEmbedFile.Enabled = (item.Children.CanAdd(typeof(EmbedFile)));
+                mnAddDownloadDialog.Enabled = (item.Children.CanAdd(typeof(DownloadDialog)));
+                mnAddDownloadFile.Enabled = (item.Children.CanAdd(typeof(Download)));
+                mnAddInstalledCheckFile.Enabled = (item.Children.CanAdd(typeof(InstalledCheckFile)));
+                mnAddInstalledCheckRegistry.Enabled = (item.Children.CanAdd(typeof(InstalledCheckRegistry)));
+                mnAddInstalledCheckOperator.Enabled = (item.Children.CanAdd(typeof(InstalledCheckOperator)));
+                mnAddComponentWizard.Enabled = (item is SetupConfiguration);
+                mnAddComponentWizard2.Enabled = (item is SetupConfiguration);
+                mnMoveUp.Enabled = (treeView.SelectedNode.PrevNode != null);
+                mnMoveDown.Enabled = (treeView.SelectedNode.NextNode != null);
+            }
+            else
+            {
+                mnDelete.Enabled = false;
                 mnAddSetupConfiguration.Enabled = false;
                 mnAddWebConfiguration.Enabled = false;
-                mnDelete.Enabled = false;
                 mnAddCommandComponent.Enabled = false;
                 mnAddMsiComponent.Enabled = false;
-                mnAddInstalledCheckRegistry.Enabled = false;
-                mnAddInstalledCheckFile.Enabled = false;
-                mnAddInstalledCheckOperator.Enabled = false;
-                mnAddDownloadDialog.Enabled = false;
                 mnAddOpenFileComponent.Enabled = false;
+                mnAddEmbedFile.Enabled = false;
+                mnAddDownloadDialog.Enabled = false;
+                mnAddInstalledCheckFile.Enabled = false;
+                mnAddInstalledCheckRegistry.Enabled = false;
+                mnAddInstalledCheckOperator.Enabled = false;
                 mnAddComponentWizard.Enabled = false;
                 mnAddComponentWizard2.Enabled = false;
-                mnAddEmbedFile.Enabled = false;
-
-                if (treeView.SelectedNode.Tag is ConfigFile)
-                {
-                    mnAddSetupConfiguration.Enabled = true;
-                    mnAddWebConfiguration.Enabled = true;
-                }
-                else if (treeView.SelectedNode.Tag is WebConfiguration)
-                {
-                    mnDelete.Enabled = true;
-                }
-                else if (treeView.SelectedNode.Tag is SetupConfiguration)
-                {
-                    mnDelete.Enabled = true;
-                    mnAddCommandComponent.Enabled = true;
-                    mnAddMsiComponent.Enabled = true;
-                    mnAddOpenFileComponent.Enabled = true;
-                    mnAddComponentWizard.Enabled = true;
-                    mnAddComponentWizard2.Enabled = true;
-                    mnAddEmbedFile.Enabled = true;
-                }
-                else if (treeView.SelectedNode.Tag is DownloadDialog)
-                {
-                    mnAddDownloadFile.Enabled = true;
-                    mnDelete.Enabled = true; //questo delete � valido solo nel caso in cui la classe downloaddialog non si trovi sotto un component
-                }
-                else if (treeView.SelectedNode.Tag is Download)
-                {
-                    mnDelete.Enabled = true;
-                    mnAddEmbedFile.Enabled = true;
-                }
-                else if (treeView.SelectedNode.Tag is Component)
-                {
-                    mnAddInstalledCheckRegistry.Enabled = true;
-                    mnAddInstalledCheckFile.Enabled = true;
-                    mnAddInstalledCheckOperator.Enabled = true;
-                    mnDelete.Enabled = true;
-                    mnAddDownloadDialog.Enabled = true;
-                    mnAddEmbedFile.Enabled = true;
-                }
-                else if (treeView.SelectedNode.Tag is InstalledCheckOperator)
-                {
-                    mnAddInstalledCheckOperator.Enabled = true;
-                    mnAddInstalledCheckRegistry.Enabled = true;
-                    mnAddInstalledCheckFile.Enabled = true;
-                    mnDelete.Enabled = true;
-                }
-                else if (treeView.SelectedNode.Tag is InstalledCheck)
-                {
-                    mnDelete.Enabled = true;
-                }
-                else if (treeView.SelectedNode.Tag is EmbedFile)
-                {
-                    mnDelete.Enabled = true;
-                }
+                mnMove.Enabled = false;
+                mnMoveUp.Enabled = false;
+                mnMoveDown.Enabled = false;
             }
         }
 
-        private Configuration AddWebConfiguration()
+        private Configuration AddWebConfiguration(IXmlClass parent)
         {
             WebConfiguration l_Config = new WebConfiguration();
-            m_TreeNodeConfigFile.ConfigFile.Configurations.Add(l_Config);
+            parent.Children.Add(l_Config);
             return l_Config;
         }
 
-        private Configuration AddSetupConfiguration()
+        private Configuration AddSetupConfiguration(IXmlClass parent)
         {
             SetupConfiguration l_Config = new SetupConfiguration();
-            m_TreeNodeConfigFile.ConfigFile.Configurations.Add(l_Config);
+            parent.Children.Add(l_Config);
             return l_Config;
         }
 
-        private Download AddDownload(DownloadDialog p_Dialog)
+        private Download AddDownload(IXmlClass parent)
         {
             Download d = new Download();
-            p_Dialog.Downloads.Add(d);
+            parent.Children.Add(d);
             return d;
         }
 
-        private Component AddMsiComponent(SetupConfiguration p_Config)
+        private DownloadDialog AddDownloadDialog(IXmlClass parent)
+        {
+            DownloadDialog d = new DownloadDialog();
+            parent.Children.Add(d);
+            return d;
+        }
+
+        private Component AddMsiComponent(IXmlClass parent)
         {
             ComponentMsi l_Component = new ComponentMsi();
-            p_Config.Components.Add(l_Component);
+            parent.Children.Add(l_Component);
             return l_Component;
         }
 
-        private Component AddCmdComponent(SetupConfiguration p_Config)
+        private Component AddCmdComponent(IXmlClass parent)
         {
             ComponentCmd l_Component = new ComponentCmd();
-            p_Config.Components.Add(l_Component);
+            parent.Children.Add(l_Component);
             return l_Component;
         }
 
-        private Component AddOpenFileComponent(SetupConfiguration p_Config)
+        private Component AddOpenFileComponent(IXmlClass parent)
         {
             ComponentOpenFile l_Component = new ComponentOpenFile();
-            p_Config.Components.Add(l_Component);
+            parent.Children.Add(l_Component);
             return l_Component;
         }
 
-        private InstalledCheck AddInstalledCheckRegistry(Component p_Component)
+        private InstalledCheck AddInstalledCheckRegistry(IXmlClass parent)
         {
             InstalledCheckRegistry l_Check = new InstalledCheckRegistry();
-            p_Component.installedchecks.Add(l_Check);
+            parent.Children.Add(l_Check);
             return l_Check;
         }
 
-        private InstalledCheck AddInstalledCheckFile(Component p_Component)
+        private InstalledCheck AddInstalledCheckFile(IXmlClass parent)
         {
             InstalledCheckFile l_Check = new InstalledCheckFile();
-            p_Component.installedchecks.Add(l_Check);
+            parent.Children.Add(l_Check);
             return l_Check;
         }
 
-        private InstalledCheck AddInstalledCheckRegistry(InstalledCheckOperator p_InstalledCheckOperator)
-        {
-            InstalledCheckRegistry l_Check = new InstalledCheckRegistry();
-            p_InstalledCheckOperator.installedchecks.Add(l_Check);
-            return l_Check;
-        }
-
-        private InstalledCheck AddInstalledCheckFile(InstalledCheckOperator p_InstalledCheckOperator)
-        {
-            InstalledCheckFile l_Check = new InstalledCheckFile();
-            p_InstalledCheckOperator.installedchecks.Add(l_Check);
-            return l_Check;
-        }
-
-        private InstalledCheckOperator AddInstalledCheckOperator(Component p_Component)
+        private InstalledCheckOperator AddInstalledCheckOperator(IXmlClass parent)
         {
             InstalledCheckOperator l_Operator = new InstalledCheckOperator();
-            p_Component.installedcheckoperators.Add(l_Operator);
+            parent.Children.Add(l_Operator);
             return l_Operator;
         }
 
-        private InstalledCheckOperator AddInstalledCheckOperator(InstalledCheckOperator p_Operator)
+        private DownloadDialog AddDownloadDIalog(IXmlClass parent)
         {
-            InstalledCheckOperator l_Operator = new InstalledCheckOperator();
-            p_Operator.installedcheckoperators.Add(l_Operator);
-            return l_Operator;
-        }
-
-        private DownloadDialog AddDownloadDIalogToComponetnt(Component p_Component)
-        {
-            if (p_Component.DownloadDialog != null)
-                throw new ApplicationException("There is already one download dialog for this component");
             DownloadDialog l_DownloadDialog = new DownloadDialog();
-            p_Component.DownloadDialog = l_DownloadDialog;
+            parent.Children.Add(l_DownloadDialog);
             return l_DownloadDialog;
         }
 
-        private EmbedFile AddEmbedFileSetupConfiguration(SetupConfiguration p_Config)
-        {
-            EmbedFile l_SetupConfigurationEmbedFile = new EmbedFile();
-            p_Config.EmbedFiles.Add(l_SetupConfigurationEmbedFile);
-            return l_SetupConfigurationEmbedFile;
-        }
-
-        private EmbedFile AddEmbedFileComponent(Component p_Component)
+        private EmbedFile AddEmbedFile(IXmlClass parent)
         {
             EmbedFile l_ComponentEmbedFile = new EmbedFile();
-            p_Component.embedfiles.Add(l_ComponentEmbedFile);
+            parent.Children.Add(l_ComponentEmbedFile);
             return l_ComponentEmbedFile;
         }
 
@@ -1007,7 +995,8 @@ namespace InstallerEditor
         {
             try
             {
-                m_TreeNodeConfigFile.Nodes.Add(new TreeNodeConfiguration(AddSetupConfiguration()));
+                m_TreeNodeConfigFile.Nodes.Add(new TreeNodeConfiguration(AddSetupConfiguration(
+                    (IXmlClass)m_TreeNodeConfigFile.Tag)));
             }
             catch (Exception err)
             {
@@ -1019,7 +1008,8 @@ namespace InstallerEditor
         {
             try
             {
-                m_TreeNodeConfigFile.Nodes.Add(new TreeNodeConfiguration(AddWebConfiguration()));
+                m_TreeNodeConfigFile.Nodes.Add(new TreeNodeConfiguration(AddWebConfiguration(
+                    (IXmlClass)m_TreeNodeConfigFile.Tag)));
             }
             catch (Exception err)
             {
@@ -1037,11 +1027,8 @@ namespace InstallerEditor
         {
             try
             {
-                if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is DownloadDialog)
-                {
-                    DownloadDialog d = (DownloadDialog)treeView.SelectedNode.Tag;
-                    treeView.SelectedNode.Nodes.Add(new TreeNodeDownload(AddDownload(d)));
-                }
+                treeView.SelectedNode.Nodes.Add(new TreeNodeDownload(AddDownload(
+                    (IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1049,159 +1036,18 @@ namespace InstallerEditor
             }
         }
 
-        private void DeleteConfiguration(Configuration p_Config, TreeNode p_CurrentNode)
-        {
-            if (p_CurrentNode.Parent.Tag is ConfigFile)
-            {
-                ConfigFile l_config = (ConfigFile)p_CurrentNode.Parent.Tag;
-                l_config.Configurations.Remove(p_Config);
-                p_CurrentNode.Remove();
-            }
-            else
-            {
-                throw new ApplicationException("Invalid node");
-            }
-        }
-
-        private void DeleteDownload(Download p_Download, TreeNode p_CurrentNode)
-        {
-            if (p_CurrentNode.Parent.Tag is DownloadDialog)
-            {
-                DownloadDialog l_DownloadDialog = (DownloadDialog)p_CurrentNode.Parent.Tag;
-                l_DownloadDialog.Downloads.Remove(p_Download);
-                p_CurrentNode.Remove();
-            }
-            else
-            {
-                throw new ApplicationException("Invalid node");
-            }
-        }
-
-        private void DeleteComponent(Component p_Component, TreeNode p_CurrentNode)
-        {
-            if (p_CurrentNode.Parent.Tag is SetupConfiguration)
-            {
-                SetupConfiguration l_SetupConfiguration = (SetupConfiguration)p_CurrentNode.Parent.Tag;
-                l_SetupConfiguration.Components.Remove(p_Component);
-                p_CurrentNode.Remove();
-            }
-            else
-                throw new ApplicationException("Invalid node");
-        }
-
-        private void DeleteInstalledCheck(InstalledCheck p_Check, TreeNode p_CurrentNode)
-        {
-            if (p_CurrentNode.Parent.Tag is Component)
-            {
-                Component l_Component = (Component)p_CurrentNode.Parent.Tag;
-                l_Component.installedchecks.Remove(p_Check);
-                p_CurrentNode.Remove();
-            }
-            else if (p_CurrentNode.Parent.Tag is InstalledCheckOperator)
-            {
-                InstalledCheckOperator l_Operator = (InstalledCheckOperator)p_CurrentNode.Parent.Tag;
-                l_Operator.installedchecks.Remove(p_Check);
-                p_CurrentNode.Remove();
-            }
-            else
-            {
-                throw new ApplicationException("Invalid node");
-            }
-        }
-
-        private void DeleteInstalledCheckOperator(InstalledCheckOperator p_Operator, TreeNode p_CurrentNode)
-        {
-            if (p_CurrentNode.Parent.Tag is Component)
-            {
-                Component l_Component = (Component)p_CurrentNode.Parent.Tag;
-                l_Component.installedcheckoperators.Remove(p_Operator);
-                p_CurrentNode.Remove();
-            }
-            else if (p_CurrentNode.Parent.Tag is InstalledCheckOperator)
-            {
-                InstalledCheckOperator l_Operator = (InstalledCheckOperator)p_CurrentNode.Parent.Tag;
-                l_Operator.installedcheckoperators.Remove(p_Operator);
-                p_CurrentNode.Remove();
-            }
-            else
-            {
-                throw new ApplicationException("Invalid node");
-            }
-        }
-
-        private void DeleteEmbedFile(EmbedFile p_File, TreeNode p_CurrentNode)
-        {
-            if (p_CurrentNode.Parent.Tag is Component)
-            {
-                Component l_Component = (Component)p_CurrentNode.Parent.Tag;
-                l_Component.embedfiles.Remove(p_File);
-                p_CurrentNode.Remove();
-            }
-            else if (p_CurrentNode.Parent.Tag is SetupConfiguration)
-            {
-                SetupConfiguration l_Configuration = (SetupConfiguration)p_CurrentNode.Parent.Tag;
-                l_Configuration.EmbedFiles.Remove(p_File);
-                p_CurrentNode.Remove();
-            }
-            else
-            {
-                throw new ApplicationException("Invalid node");
-            }
-        }
-
-        private void DeleteDownloadDialogFromComp(DownloadDialog p_DownloadDlg, TreeNode p_CurrentNode)
-        {
-            if (p_CurrentNode.Parent.Tag is Component)
-            {
-                Component l_Component = (Component)p_CurrentNode.Parent.Tag;
-                if (l_Component.DownloadDialog != p_DownloadDlg)
-                    throw new ApplicationException("Invalid download dialog");
-                l_Component.DownloadDialog = null;
-                p_CurrentNode.Remove();
-            }
-            else if (p_CurrentNode.Parent.Tag is WebConfiguration)
-            {
-                throw new ApplicationException("This element cannot be deleted");
-            }
-            else
-            {
-                throw new ApplicationException("Invalid node");
-            }
-        }
-
         private void mnDelete_Click(object sender, System.EventArgs e)
         {
             try
             {
-                if (treeView.SelectedNode != null)
+                if (treeView.SelectedNode != null && treeView.SelectedNode.Parent != null)
                 {
-                    if (treeView.SelectedNode.Tag is Configuration)
+                    if (treeView.SelectedNode.Tag is IXmlClass && treeView.SelectedNode.Parent.Tag is IXmlClass)
                     {
-                        DeleteConfiguration((Configuration)treeView.SelectedNode.Tag, treeView.SelectedNode);
-                    }
-                    else if (treeView.SelectedNode.Tag is Download)
-                    {
-                        DeleteDownload((Download)treeView.SelectedNode.Tag, treeView.SelectedNode);
-                    }
-                    else if (treeView.SelectedNode.Tag is Component)
-                    {
-                        DeleteComponent((Component)treeView.SelectedNode.Tag, treeView.SelectedNode);
-                    }
-                    else if (treeView.SelectedNode.Tag is InstalledCheck)
-                    {
-                        DeleteInstalledCheck((InstalledCheck)treeView.SelectedNode.Tag, treeView.SelectedNode);
-                    }
-                    else if (treeView.SelectedNode.Tag is DownloadDialog)
-                    {
-                        DeleteDownloadDialogFromComp((DownloadDialog)treeView.SelectedNode.Tag, treeView.SelectedNode);
-                    }
-                    else if (treeView.SelectedNode.Tag is InstalledCheckOperator)
-                    {
-                        DeleteInstalledCheckOperator((InstalledCheckOperator)treeView.SelectedNode.Tag, treeView.SelectedNode);
-                    }
-                    else if (treeView.SelectedNode.Tag is EmbedFile)
-                    {
-                        DeleteEmbedFile((EmbedFile)treeView.SelectedNode.Tag, treeView.SelectedNode);
+                        IXmlClass item = (IXmlClass)treeView.SelectedNode.Tag;
+                        IXmlClass parent = (IXmlClass)treeView.SelectedNode.Parent.Tag;
+                        parent.Children.Remove(item);
+                        treeView.SelectedNode.Remove();
                     }
                 }
             }
@@ -1218,6 +1064,7 @@ namespace InstallerEditor
                 if (m_TreeNodeConfigFile != null && m_TreeNodeConfigFile.ConfigFile != null)
                 {
                     m_TreeNodeConfigFile = new TreeNodeConfigFile(m_TreeNodeConfigFile.ConfigFile);
+                    m_TreeNodeConfigFile.CreateChildNodes();
                     LoadTreeView(m_TreeNodeConfigFile);
                 }
             }
@@ -1231,11 +1078,8 @@ namespace InstallerEditor
         {
             try
             {
-                if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is SetupConfiguration)
-                {
-                    SetupConfiguration l_Setup = (SetupConfiguration)treeView.SelectedNode.Tag;
-                    treeView.SelectedNode.Nodes.Add(new TreeNodeComponent(AddMsiComponent(l_Setup)));
-                }
+                treeView.SelectedNode.Nodes.Add(new TreeNodeComponent(AddMsiComponent(
+                    (IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1247,11 +1091,8 @@ namespace InstallerEditor
         {
             try
             {
-                if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is SetupConfiguration)
-                {
-                    SetupConfiguration l_Setup = (SetupConfiguration)treeView.SelectedNode.Tag;
-                    treeView.SelectedNode.Nodes.Add(new TreeNodeComponent(AddCmdComponent(l_Setup)));
-                }
+                treeView.SelectedNode.Nodes.Add(new TreeNodeComponent(AddCmdComponent(
+                    (IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1263,16 +1104,8 @@ namespace InstallerEditor
         {
             try
             {
-                if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is Component)
-                {
-                    Component l_Component = (Component)treeView.SelectedNode.Tag;
-                    treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck(AddInstalledCheckRegistry(l_Component)));
-                }
-                else if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is InstalledCheckOperator)
-                {
-                    InstalledCheckOperator l_Operator = (InstalledCheckOperator)treeView.SelectedNode.Tag;
-                    treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck(AddInstalledCheckRegistry(l_Operator)));
-                }
+                treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck(AddInstalledCheckRegistry(
+                    (IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1284,16 +1117,8 @@ namespace InstallerEditor
         {
             try
             {
-                if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is Component)
-                {
-                    Component l_Component = (Component)treeView.SelectedNode.Tag;
-                    treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck(AddInstalledCheckFile(l_Component)));
-                }
-                else if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is InstalledCheckOperator)
-                {
-                    InstalledCheckOperator l_Operator = (InstalledCheckOperator)treeView.SelectedNode.Tag;
-                    treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck(AddInstalledCheckFile(l_Operator)));
-                }
+                treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck(AddInstalledCheckFile(
+                    (IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1305,11 +1130,8 @@ namespace InstallerEditor
         {
             try
             {
-                if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is Component)
-                {
-                    Component l_Component = (Component)treeView.SelectedNode.Tag;
-                    treeView.SelectedNode.Nodes.Add(new TreeNodeDownloadDialog(AddDownloadDIalogToComponetnt(l_Component)));
-                }
+                treeView.SelectedNode.Nodes.Add(new TreeNodeDownloadDialog(AddDownloadDialog(
+                    (IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1335,7 +1157,7 @@ namespace InstallerEditor
         {
             if (m_TreeNodeConfigFile != null && m_TreeNodeConfigFile.ConfigFile != null)
             {
-                m_TreeNodeConfigFile.ConfigFile.FileName = null;
+                m_TreeNodeConfigFile.ConfigFile.filename = null;
                 SaveConfiguration();
             }
         }
@@ -1344,9 +1166,9 @@ namespace InstallerEditor
         {
             try
             {
-                if (m_TreeNodeConfigFile.ConfigFile.FileName != null)
+                if (m_TreeNodeConfigFile.ConfigFile.filename != null)
                 {
-                    System.Diagnostics.ProcessStartInfo p = new System.Diagnostics.ProcessStartInfo("NOTEPAD.EXE", "\"" + m_TreeNodeConfigFile.ConfigFile.FileName + "\"");
+                    System.Diagnostics.ProcessStartInfo p = new System.Diagnostics.ProcessStartInfo("NOTEPAD.EXE", "\"" + m_TreeNodeConfigFile.ConfigFile.filename + "\"");
                     p.UseShellExecute = false;
                     System.Diagnostics.Process process = new System.Diagnostics.Process();
                     process.StartInfo = p;
@@ -1427,7 +1249,7 @@ namespace InstallerEditor
                 l_frmMakeExe.IconFile = m_AppSetting.IconFile;
                 l_frmMakeExe.OutputFileName = m_AppSetting.OutputMakeFile;
                 if (m_TreeNodeConfigFile != null && m_TreeNodeConfigFile.ConfigFile != null)
-                    l_frmMakeExe.Configuration = m_TreeNodeConfigFile.ConfigFile.FileName;
+                    l_frmMakeExe.Configuration = m_TreeNodeConfigFile.ConfigFile.filename;
 
                 l_frmMakeExe.ShowDialog(this);
 
@@ -1446,11 +1268,8 @@ namespace InstallerEditor
         {
             try
             {
-                if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is SetupConfiguration)
-                {
-                    SetupConfiguration l_Setup = (SetupConfiguration)treeView.SelectedNode.Tag;
-                    treeView.SelectedNode.Nodes.Add(new TreeNodeComponent(AddOpenFileComponent(l_Setup)));
-                }
+                treeView.SelectedNode.Nodes.Add(new TreeNodeComponent(AddOpenFileComponent(
+                    (IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1473,7 +1292,7 @@ namespace InstallerEditor
                         foreach (Component c in l_frmWizard.SelectedComponents)
                         {
                             treeView.SelectedNode.Nodes.Add(new TreeNodeComponent(c));
-                            l_Setup.Components.Add(c);
+                            l_Setup.Children.Add(c);
                         }
                     }
                 }
@@ -1563,7 +1382,7 @@ namespace InstallerEditor
                         foreach (Component c in l_frmWizard.SelectedComponents)
                         {
                             treeView.SelectedNode.Nodes.Add(new TreeNodeComponent(c));
-                            l_Setup.Components.Add(c);
+                            l_Setup.Children.Add(c);
                         }
                     }
                 }
@@ -1578,16 +1397,8 @@ namespace InstallerEditor
         {
             try
             {
-                if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is SetupConfiguration)
-                {
-                    SetupConfiguration l_Setup = (SetupConfiguration)treeView.SelectedNode.Tag;
-                    treeView.SelectedNode.Nodes.Add(new TreeNodeEmbedFile(AddEmbedFileSetupConfiguration(l_Setup)));
-                }
-                else if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is Component)
-                {
-                    Component l_Component = (Component)treeView.SelectedNode.Tag;
-                    treeView.SelectedNode.Nodes.Add(new TreeNodeEmbedFile(AddEmbedFileComponent(l_Component)));
-                }
+                treeView.SelectedNode.Nodes.Add(new TreeNodeEmbedFile(AddEmbedFile(
+                    (IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1599,18 +1410,8 @@ namespace InstallerEditor
         {
             try
             {
-                if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is Component)
-                {
-                    Component l_Component = (Component)treeView.SelectedNode.Tag;
-                    treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheckOperator(
-                        AddInstalledCheckOperator(l_Component)));
-                }
-                else if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is InstalledCheckOperator)
-                {
-                    InstalledCheckOperator l_InstalledCheckOperator = (InstalledCheckOperator)treeView.SelectedNode.Tag;
-                    treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheckOperator(
-                        AddInstalledCheckOperator(l_InstalledCheckOperator)));
-                }
+                treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheckOperator(AddInstalledCheckOperator(
+                    (IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1628,6 +1429,192 @@ namespace InstallerEditor
             if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is IXmlClass)
             {
                 ((IXmlClass)treeView.SelectedNode.Tag).Comment = txtComment.Text;
+            }
+        }
+
+        private void mnMoveUp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (treeView.SelectedNode == null)
+                    throw new ApplicationException("Missing node");
+
+                if (treeView.SelectedNode.PrevNode == null)
+                    throw new ApplicationException("Missing previous node");
+
+                if (treeView.Parent == null)
+                    throw new ApplicationException("Missing parent node");
+
+                TreeNodeImpl nodeMoved = (TreeNodeImpl)treeView.SelectedNode;
+                nodeMoved.MoveTo(nodeMoved.Index - 1);
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
+        }
+
+        private void mnMoveDown_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (treeView.SelectedNode == null)
+                    throw new ApplicationException("Missing node");
+
+                if (treeView.SelectedNode.NextNode == null)
+                    throw new ApplicationException("Missing next node");
+
+                if (treeView.Parent == null)
+                    throw new ApplicationException("Missing parent node");
+
+                TreeNodeImpl nodeMoved = (TreeNodeImpl)treeView.SelectedNode;
+                nodeMoved.MoveTo(nodeMoved.Index + 1);
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
+        }
+
+        private void treeView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Up:
+                        // up
+                        if (mnMoveUp.Enabled) mnMoveUp_Click(sender, e);
+                        break;
+                    case Keys.Down:
+                        //down
+                        if (mnMoveDown.Enabled) mnMoveDown_Click(sender, e);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// A node container for drag-and-drop
+        /// </summary>
+        private class TreeNodeImplContainer
+        {
+            public TreeNodeImpl NodeData;
+
+            public TreeNodeImplContainer(TreeNodeImpl value)
+            {
+                NodeData = value;
+            }
+        }
+
+        private void treeView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            TreeNodeImplContainer container = new TreeNodeImplContainer((TreeNodeImpl)e.Item);
+            DoDragDrop(container, DragDropEffects.Move);
+        }
+
+        private void treeView_DragDrop(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(typeof(TreeNodeImplContainer)))
+                return;
+
+            // target node
+            Point pos = treeView.PointToClient(new Point(e.X, e.Y));
+            TreeNodeImpl targetNode = (TreeNodeImpl)treeView.GetNodeAt(pos);
+
+            // node being dragged
+            TreeNodeImpl dropNode = ((TreeNodeImplContainer)e.Data.GetData(typeof(TreeNodeImplContainer))).NodeData;
+
+            // check that this node data type can be dropped here at all
+            IXmlClass dropItem = (IXmlClass)dropNode.Tag;
+
+            dropNode.MoveTo(targetNode);
+        }
+
+        private void treeView_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = (e.Data.GetDataPresent(typeof(TreeNodeImplContainer)))
+                ? DragDropEffects.Move
+                : DragDropEffects.None;
+        }
+
+        private void treeView_DragOver(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(typeof(TreeNodeImplContainer)))
+            {
+                e.Effect = DragDropEffects.None;
+                return;
+            }
+
+            // target node
+            Point pos = treeView.PointToClient(new Point(e.X, e.Y));
+            TreeNode targetNode = treeView.GetNodeAt(pos);
+
+            if (targetNode == null)
+            {
+                e.Effect = DragDropEffects.None;
+                return;
+            }
+
+            // if the target node is selected, don't validate again
+            if (treeView.SelectedNode == targetNode)
+                return;
+
+            treeView.SelectedNode = targetNode;
+
+            // node being dragged
+            TreeNodeImpl dropNode = ((TreeNodeImplContainer)e.Data.GetData(typeof(TreeNodeImplContainer))).NodeData;
+            if (dropNode.Parent == targetNode)
+            {
+                e.Effect = DragDropEffects.None;
+                return;
+            }
+
+            // check that this node data type can be dropped here at all
+            IXmlClass dropItem = (IXmlClass)dropNode.Tag;
+            IXmlClass targetItem = (IXmlClass)targetNode.Tag;
+            if (!targetItem.Children.CanAdd(dropItem))
+            {
+                e.Effect = DragDropEffects.None;
+                return;
+            }
+
+            // check that the selected node is not the dropNode and also that it is not a child of the dropNode
+            while (targetNode != null)
+            {
+                if (targetNode == dropNode)
+                {
+                    e.Effect = DragDropEffects.None;
+                    return;
+                }
+
+                targetNode = targetNode.Parent;
+            }
+
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void mnExpandAll_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                treeView.SelectedNode.ExpandAll();
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
+        }
+
+        private void mnCollapseAll_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                treeView.SelectedNode.Collapse(false);
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
             }
         }
     }

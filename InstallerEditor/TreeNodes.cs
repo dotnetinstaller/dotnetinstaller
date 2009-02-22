@@ -4,7 +4,82 @@ using InstallerLib;
 
 namespace InstallerEditor
 {
-	public class TreeNodeConfigFile : TreeNode
+    public class TreeNodeImpl : TreeNode
+    {
+        public TreeNodeImpl()
+        {
+
+        }
+
+        public void CreateChildNodes()
+        {
+            IXmlClass item = (IXmlClass) Tag;
+            foreach (IXmlClass child in item.Children)
+            {
+                TreeNodeImpl childnode = CreateNode(child);
+                Nodes.Add(childnode);
+                childnode.CreateChildNodes();
+            }
+        }
+
+        public static TreeNodeImpl CreateNode(IXmlClass item)
+        {
+            if (item is ConfigFile)
+                return new TreeNodeConfigFile((ConfigFile)item);
+            else if (item is Configuration)
+                return new TreeNodeConfiguration((Configuration)item);
+            else if (item is DownloadDialog)
+                return new TreeNodeDownloadDialog((DownloadDialog)item);
+            else if (item is Download)
+                return new TreeNodeDownload((Download)item);
+            else if (item is EmbedFile)
+                return new TreeNodeEmbedFile((EmbedFile)item);
+            else if (item is Component)
+                return new TreeNodeComponent((Component)item);
+            else if (item is InstalledCheck)
+                return new TreeNodeInstalledCheck((InstalledCheck)item);
+            else if (item is InstalledCheckOperator)
+                return new TreeNodeInstalledCheckOperator((InstalledCheckOperator)item);
+            else
+                throw new Exception(string.Format("Unsupported type: {0}", item.GetType().Name));
+        }
+
+        public void MoveTo(TreeNodeImpl newParent)
+        {
+            MoveTo(newParent, newParent.Nodes.Count);
+        }
+
+        public void MoveTo(TreeNodeImpl newParent, int index)
+        {
+            if (newParent.Tag is IXmlClass && Tag is IXmlClass)
+            {
+                IXmlClass currentParentComponent = (IXmlClass)Parent.Tag;
+                IXmlClass newParentComponent = (IXmlClass) newParent.Tag;
+                // if the two items are part of the same compoenent, indexes will be off
+                IXmlClass item = (IXmlClass)Tag;
+                // remove self from current parent
+                currentParentComponent.Children.Remove(item);
+                // add self to new parent
+                newParentComponent.Children.Insert(index, item);
+                // remove the current node
+                Remove();
+                // insert to the parent node
+                newParent.Nodes.Insert(index, this);
+                this.EnsureVisible();
+                TreeView.SelectedNode = this;
+            }
+        }
+
+        public void MoveTo(int index)
+        {
+            if (Parent == null)
+                throw new ApplicationException("Missing parent node");
+
+            MoveTo((TreeNodeImpl) Parent, index);
+        }
+    }
+
+	public class TreeNodeConfigFile : TreeNodeImpl
 	{
 		public TreeNodeConfigFile(ConfigFile p_Config)
 		{
@@ -15,9 +90,6 @@ namespace InstallerEditor
 			m_ConfigFile = p_Config;
 
 			base.Tag = p_Config;
-
-			foreach (Configuration c in p_Config.Configurations)
-				Nodes.Add(new TreeNodeConfiguration(c));
 		}
 
 		private ConfigFile m_ConfigFile;
@@ -28,39 +100,27 @@ namespace InstallerEditor
 		}
 	}
 
-	public class TreeNodeConfiguration : TreeNode
+	public class TreeNodeConfiguration : TreeNodeImpl
 	{
 		public TreeNodeConfiguration(Configuration p_Config)
 		{
 			base.Text = p_Config.ToString();
-
 			if (p_Config is WebConfiguration)
 			{
 				base.ImageIndex = 1;
 				base.SelectedImageIndex = 1;
-
-				Nodes.Add(new TreeNodeDownloadDialog( ((WebConfiguration)p_Config).DownloadDialog ) );
 			}
-			else if (p_Config is SetupConfiguration)
-			{
-				base.ImageIndex = 3;
-				base.SelectedImageIndex = 3;
-
-				foreach (Component c in ((SetupConfiguration)p_Config).Components)
-				{
-					Nodes.Add(new TreeNodeComponent(c));
-				}
-
-                foreach (EmbedFile e in ((SetupConfiguration)p_Config).EmbedFiles)
-                {
-                    Nodes.Add(new TreeNodeEmbedFile(e));
-                }
-			}
-			else
-				throw new ApplicationException("Invalid configuration");
+            else if (p_Config is SetupConfiguration)
+            {
+                base.ImageIndex = 3;
+                base.SelectedImageIndex = 3;
+            }
+            else
+            {
+                throw new ApplicationException("Invalid configuration");
+            }
 
 			m_Configuration = p_Config;
-
 			base.Tag = p_Config;
 			p_Config.LCIDChanged +=new EventHandler(p_Config_LCIDChanged);
 		}
@@ -78,21 +138,15 @@ namespace InstallerEditor
 		}
 	}
 
-	public class TreeNodeDownloadDialog : TreeNode
+	public class TreeNodeDownloadDialog : TreeNodeImpl
 	{
 		public TreeNodeDownloadDialog(DownloadDialog p_Dialog)
 		{
 			base.Text = "Download Dialog";
-
 			base.ImageIndex = 5;
 			base.SelectedImageIndex = 5;
-
 			m_DownloadDialog = p_Dialog;
-
 			base.Tag = p_Dialog;
-
-			foreach (Download d in p_Dialog.Downloads)
-				Nodes.Add(new TreeNodeDownload(d));
 		}
 
 		private DownloadDialog m_DownloadDialog;
@@ -103,19 +157,15 @@ namespace InstallerEditor
 		}
 	}
 
-	public class TreeNodeDownload : TreeNode
+	public class TreeNodeDownload : TreeNodeImpl
 	{
 		public TreeNodeDownload(Download p_Download)
 		{
 			base.Text = p_Download.componentname;
-
 			base.ImageIndex = 6;
 			base.SelectedImageIndex = 6;
-
 			m_Download = p_Download;
-
 			base.Tag = p_Download;
-
 			p_Download.ComponentNameChanged += new EventHandler(p_Download_ComponentNameChanged);
 		}
 
@@ -132,18 +182,15 @@ namespace InstallerEditor
 		}
 	}
 
-    public class TreeNodeEmbedFile : TreeNode
+    public class TreeNodeEmbedFile : TreeNodeImpl
     {
         public TreeNodeEmbedFile(EmbedFile p_EmbedFile)
         {
             base.ImageIndex = 13;
             base.SelectedImageIndex = 13;
-
             m_EmbedFile = p_EmbedFile;
-
             base.Tag = p_EmbedFile;
             base.Text = p_EmbedFile.Name;
-
             p_EmbedFile.SourceFilePathChanged += new EventHandler(p_EmbedFile_SourceFilePathChanged);
         }
 
@@ -160,7 +207,7 @@ namespace InstallerEditor
         }
     }
 
-	public class TreeNodeComponent : TreeNode
+	public class TreeNodeComponent : TreeNodeImpl
 	{
 		public TreeNodeComponent(Component p_Component)
 		{
@@ -187,25 +234,7 @@ namespace InstallerEditor
 			base.Tag = p_Component;
 
 			p_Component.DescriptionChanged +=new EventHandler(p_Component_DescriptionChanged);
-
-			foreach (InstalledCheck c in p_Component.installedchecks)
-			{
-				Nodes.Add(new TreeNodeInstalledCheck(c));
-			}
-
-            foreach (InstalledCheckOperator op in p_Component.installedcheckoperators)
-            {
-                Nodes.Add(new TreeNodeInstalledCheckOperator(op));
-            }
-
-			if (p_Component.DownloadDialog != null)
-				Nodes.Add(new TreeNodeDownloadDialog(p_Component.DownloadDialog));
-
-            foreach (EmbedFile e in p_Component.embedfiles)
-            {
-                Nodes.Add(new TreeNodeEmbedFile(e));
-            }
-		}
+        }
 
 		private Component m_Component;
 		public Component Component
@@ -220,7 +249,7 @@ namespace InstallerEditor
 		}
 	}
 
-	public class TreeNodeInstalledCheck : TreeNode
+	public class TreeNodeInstalledCheck : TreeNodeImpl
 	{
         InstalledCheck m_InstalledCheck = null;
 
@@ -240,7 +269,7 @@ namespace InstallerEditor
 				base.ImageIndex = 10;
 				base.SelectedImageIndex = 10;
 			}
-		}
+        }
 
         void p_InstalledCheck_DescriptionChanged(object sender, EventArgs e)
         {
@@ -248,7 +277,7 @@ namespace InstallerEditor
         }
 	}
 
-    public class TreeNodeInstalledCheckOperator : TreeNode
+    public class TreeNodeInstalledCheckOperator : TreeNodeImpl
     {
         InstalledCheckOperator m_InstalledCheckOperator = null;
 
@@ -257,19 +286,8 @@ namespace InstallerEditor
             base.Tag = m_InstalledCheckOperator = p_InstalledCheckOperator;
             base.ImageIndex = 14;
             base.SelectedImageIndex = 14;
-
             p_InstalledCheckOperator.DescriptionChanged += new EventHandler(p_InstalledCheckOperator_DescriptionChanged);
             p_InstalledCheckOperator_DescriptionChanged(this, null);
-
-            foreach (InstalledCheck c in p_InstalledCheckOperator.installedchecks)
-            {
-                Nodes.Add(new TreeNodeInstalledCheck(c));
-            }
-
-            foreach (InstalledCheckOperator op in p_InstalledCheckOperator.installedcheckoperators)
-            {
-                Nodes.Add(new TreeNodeInstalledCheckOperator(op));
-            }
         }
 
         void p_InstalledCheckOperator_DescriptionChanged(object sender, EventArgs e)

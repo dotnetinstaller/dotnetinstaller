@@ -7,6 +7,9 @@ using System.IO;
 
 namespace InstallerLib
 {
+    /// <summary>
+    /// An installer linker.
+    /// </summary>
     public static class InstallerLinker
     {
         public static void CreateInstaller(InstallerLinkerArguments args)
@@ -63,7 +66,7 @@ namespace InstallerLib
                     iconSizes.Add(icon.ToString());
                 args.WriteLine(string.Format(" {0}", string.Join(", ", iconSizes.ToArray())));
                 GroupIconResource groupIconResource = iconFile.ConvertToGroupIconResource();
-                groupIconResource.Language = (ushort) ResourceUtil.NEUTRALLANGID;
+                groupIconResource.Language = (ushort)ResourceUtil.NEUTRALLANGID;
                 groupIconResource.Name = "128";
                 groupIconResource.SaveTo(args.output);
             }
@@ -101,7 +104,7 @@ namespace InstallerLib
                         }
 
                         directory = directory.TrimEnd("\\".ToCharArray());
-                        
+
                         string[] folderfiles = Directory.GetFiles(directory, flags, SearchOption.AllDirectories);
                         foreach (string folderfile in folderfiles)
                         {

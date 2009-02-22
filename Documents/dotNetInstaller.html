@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>
-        dotNetInstaller - Setup Bootstrapper</h1>
+        dotNetInstaller (DNI) - Setup Bootstrapper</h1>
     <div>
         <small>Lib Version: 1.5<br />
         Doc Version: 1.7</small>
@@ -25,11 +25,13 @@
     <h2>
         Introduction</h2>
     <p>
+     dotNetInstaller (DNI) is a general-purpose setup bootstrapper for Windows.</p>
+ <p>
         This application doesn't replace tools like InstallShield, Wise or Visual Studio
         Setup and Deployment Project; the goal is to create an application to help the users
         with installing the correct prerequisites components.
         Today applications often need to install several components to work properly: Windows
-        Service Pack, Internet Explorer, MDAC, .NET Framework, etc. This kind of applications are most commonly known as
+        Service Packs, Internet Explorer, MDAC, .NET Framework, etc. This kind of applications are most commonly known as
      "bootstrappers".</p>
  <p>
   With dotNetInstaller the developer can define the application prerequisites and install
@@ -39,7 +41,7 @@
         This project is composed of the following components:</p>
     <ul>
         <li><strong>dotNetInstaller.exe</strong>: Main bootstrapper application, written with Visual
-            Studio 2005 C++ and MFC.</li>
+            Studio 2005 C++.</li>
         <li><strong>InstallerEditor.exe</strong>: Application for editing configurations files
             and edit dotNetInstaller.exe resources, written with Visual Studio 2005 C# for .NET
             Framework 2.0.</li>
@@ -70,9 +72,9 @@
     <h2>
         Samples</h2>
     <p>
-     You can find 2 samples in the distribution package: a standalone setup and a all-in-one
-     packaged setup.
-    </p>
+     You can find several samples in the distribution package: a standalone setup, an
+     all-in-one
+     packaged setup and a demo of component operators.</p>
  <p>
   The StandAlone setup is configured to correctly install these components:</p>
     <ul>
@@ -104,6 +106,9 @@
  <p>
   The packaged setup is compiled with InstallerLinker into a single Setup.exe with
   all its dependencies, including a simple MSI setup package.</p>
+ <p>
+  The demo of component operators shows how logical functions can be applied to install
+  checks.</p>
     <h2>
         The editor: InstallerEditor.exe</h2>
     <img src="InstallerEditor.JPG" alt="InstallerEditor image" />
@@ -121,15 +126,33 @@
     <p>
         With the editor you can create these configurations files and then include all configuration
      files in the dotNetInstaller resources and required files in a packaged CAB. With this solution you can only distribute
-        one exe file.
-    </p>
+        one exe file.</p>
     <p>
         Another solution is to distribute in the same path of the dotNetInstaller.exe the
-        configuration file using the name 'configuration.xml'. You can optionally
-        distribute a bitmap with the name "banner.bmp". dotNetInstaller first checks for
+        configuration file using the name "configuration.xml". dotNetInstaller first checks for
         this configuration file, if the file doesn't exist the application uses the configuration
-        embedded in the exe.</p>
-    <p>
+        embedded in the exe. You can optionally
+        distribute a bitmap with the name "banner.bmp".</p><h3>
+         Adding Components</h3>
+ <p>
+        You can add components by right clicking on a configuration node and choosing Add.
+  Install checks and other components can be added in a similar manner.</p>
+ <p>
+  You can use the "Add -&gt; Component Wizard ..." menu when adding new components
+        to automatically add the most important components like: Service Pack 6a for NT4,
+        Internet Explorer 6, .NET 1.1, MDAC 2.8, etc.</p>
+ <p>
+        Remember that the order of the components that you see in the editor is the same
+        order that the setup uses to install these components, so be careful to insert
+        the components in the correct order. You can move components around in the editor. The
+  latter ensures that your setup remains valid: for example you cannot create or drag-and-drop
+  a component under an install check.</p>
+ <p>
+  Each configuration, component, check or operator can have a free-formed note. Select
+  a component and type the latter in the yellow box at the bottom of the editor. Notes are saved as XML comments
+  in the configuration XML.</p><h3>
+   Path Variables</h3>
+ <p>
         In the XML configuration file you can use several path variables in all command or
         path settings. Is recommended to use " symbol in all the <code lang="xml">command</code>
         attributes that contains one or more space, in <code lang="xml">msi</code> component
@@ -139,23 +162,13 @@
         write relative path string from the dotNetInstaller.exe folder; otherwise, all the
         paths are relative to the system's current directory.</p>
  <p>
-        For example, if you want to launch a file ('My App.exe') in the same folder of dotNetInstaller.exe
+        For example, if you want to launch a file ("My App.exe") in the same folder of dotNetInstaller.exe
         you can write in the command string: "#APPPATH\My App.exe".</p>
     <p>
         If you configure the application to download components, use the #TEMPPATH variable
      as destination directory and then run the components from
         the same path. If you're embedding dependencies, you can also use #CABPATH which defaults to #TEMPPATH\#GUID,
      #GUID is a uniquely generated GUID for each install.</p>
-    <p>
-        Remember that the order of the components that you see in the editor is the same
-        order that the setup uses to install these components, so be careful to insert
-        the components in the correct order. In this release you cannot change the order
-        of the components from the editor, if you need this feature you must change the
-        XML manually.</p>
- <p>
-        You can use the "Add -&gt; Component Wizard ..." menu when adding new components
-        to automatically add the most important components like: Service Pack 6a for NT4,
-        Internet Explorer 6, .NET 1.1, MDAC 2.8, ...</p>
         
     <h3>
      The linker: InstallerLinker.exe</h3>
@@ -163,7 +176,8 @@
   Command Line Usage</h3>
     <p>
      InstallerLinker can be used as the bootstrapper compiler and linker in a build process.
-    </p>
+     It also supports some advanced options that are not availablable in the Make Exe
+     function of InstallerEditor.</p>
     <h3>Command Line Parameters</h3>
     <p>
      <table border="1">
@@ -256,7 +270,7 @@
             the OK button.</li>
         <li>Right click on the 'install:' node and select 'Add'-&gt;'Msi Component'</li>
         <li>Select the just created node and customize the properties 'description' and 'package'
-            with the name of your setup and msi package name. In the package path I use #APPPATH
+            with the name of your setup and msi package name. In the package path use #APPPATH
             variable that represents the dotNetInstaller.exe path.</li>
         <li>Select the menu 'File'-&gt;'Save'.</li>
         <li>Write all the contents of the 'c:\MyRelease\' directory on your CDROM. If you want
@@ -439,6 +453,11 @@
   with an <span style="color: #b22222; font-family: Courier New">InstalledCheckOperator</span>.
   The following operators are supported: <strong>And</strong>, <strong>Or</strong>
   and <strong>Not</strong> (And Not).</p>
+ <p>
+  Remember that the check tests whether the component <strong>is installed</strong>
+  and a component appears in the boostrapper at setup time only if it <strong>is not
+   installed</strong>. With many component operators this behavior may require some
+  mental gymnastics.</p>
     <h2>
         Check the operating system version</h2>
     <p>
@@ -646,7 +665,7 @@
                 <td>
                     winServer2008</td>
                 <td>
-                    110</td>
+                 110</td>
             </tr>
             <tr>
                 <td>
@@ -900,10 +919,8 @@
         XML configuration file</h2>
     <p>
         Is recommended to use the editor InstallerEditor to create or modify your configuration
-        files or I suggest to use a normal text editor or xml editor compatible with UTF-8.
-        The configuration file must be written using UTF-8 encoding.<br />
-        NOTE:If you want to insert the " char in the XML manually you must write &amp;quot;
-        .</p>
+     files. You may also edit the configuration file directly with an XML editor that
+     supports UTF-8 encoding.</p>
     <!-- START table for XML configuration help -->
     <table border="1" cellpadding="0" cellspacing="0">
         <tbody>
@@ -1226,9 +1243,13 @@
                     <table border="0" cellpadding="0" cellspacing="0">
                         <tbody>
                             <tr>
-                                <td>
-                                    <b>components</b></td>
+                                <td style="width: 91px">
+                                    <b>component</b></td>
                             </tr>
+                         <tr>
+                          <td style="width: 91px">
+                           <strong>embedfile</strong></td>
+                         </tr>
                         </tbody>
                     </table>
                 </td>
@@ -1247,9 +1268,9 @@
                     A configuration used to download a configuration file from a specific URL.</td>
             </tr>
             <tr>
-                <td bgcolor="#ccccff" valign="top">
+                <td bgcolor="#ccccff" valign="top" style="height: 88px">
                     ATTRIBUTES:</td>
-                <td>
+                <td style="height: 88px">
                     <table border="1" cellpadding="0" cellspacing="0">
                         <tbody>
                             <tr>
@@ -1328,43 +1349,6 @@
                 <td>
                     <table border="0" cellpadding="0" cellspacing="0">
                         <tbody>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <br />
-    <table border="1" cellpadding="0" cellspacing="0">
-        <tbody>
-            <tr>
-                <th colspan="2" bgcolor="#ccccff">
-                    components</th>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    A collection of elements of type 'component'.</td>
-            </tr>
-            <tr>
-                <td bgcolor="#ccccff" valign="top">
-                    ATTRIBUTES:</td>
-                <td>
-                    <table border="1" cellpadding="0" cellspacing="0">
-                        <tbody>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td bgcolor="#ccccff" valign="top">
-                    CHILDREN:</td>
-                <td>
-                    <table border="0" cellpadding="0" cellspacing="0">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <b>component</b></td>
-                            </tr>
                         </tbody>
                     </table>
                 </td>
@@ -1822,43 +1806,6 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <b>downloads</b></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <br />
-    <table border="1" cellpadding="0" cellspacing="0">
-        <tbody>
-            <tr>
-                <th colspan="2" bgcolor="#ccccff">
-                    downloads</th>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    A collection of elements of type 'download'.</td>
-            </tr>
-            <tr>
-                <td bgcolor="#ccccff" valign="top">
-                    ATTRIBUTES:</td>
-                <td>
-                    <table border="1" cellpadding="0" cellspacing="0">
-                        <tbody>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td bgcolor="#ccccff" valign="top">
-                    CHILDREN:</td>
-                <td>
-                    <table border="0" cellpadding="0" cellspacing="0">
-                        <tbody>
-                            <tr>
-                                <td>
                                     <b>download</b></td>
                             </tr>
                         </tbody>
@@ -2257,9 +2204,14 @@
     <!-- END table for XML configuration help -->
     <h3>
      1.5 to 1.6 changes of XML file</h3>
+  <p>
+   If you already have configuratoin files compatible with dotNetInstaller 1.5 you
+   can open these files with the editor. The editor automatically saves configuration
+   files in the 1.6 format. The following changes have been introduced in the 1.6 schema.</p>
  <ul>
-  <li>configurations\configuration\components\component\installedcheck\description</li>
-  <li>configurations\configuration\components\component\installedcheckoperator</li>
+  <li>configuration\component\installedcheck\description </li>
+  <li>configuration\component\installedcheckoperator </li>
+  <li>collapsed nesting, removed all collections: configurations, components, embedfiles</li>
  </ul>
  <br />
  <!-- END table for XML configuration help -->
@@ -2267,9 +2219,10 @@
   1.3.3.0 to 1.5 changes of XML file</h3>
     <p>
         If you already have some files compatible with dotNetInstaller 1.3.3.0 you can open
-        these files with the editor, the editor automatically adds the new attributes.<br />
-        New attributes:
-    </p>
+        these files with the editor, the editor automatically adds the new attributes.</p>
+ <p>
+  New attributes:
+ </p>
     <ul>
         <li>configurations\silent_install</li>
         <li>configurations\configuration\components\component[@type=cmd]\command_silent</li>
@@ -2917,18 +2870,24 @@
       style="color: #b22222; font-family: Courier New">InstalledCheck <span style="color: #000000;
        font-family: Verdana">and <span style="color: #b22222; font-family: Courier New">
         InstalledCheckOperator <span style="color: #000000; font-family: Verdana">elements.</span></span></span></span></li>
-     <li>Added <span style="color: #b22222; font-family: Courier New">/componentArgs "description":"parameters"
+     <li>dotNetInstaller: Added <span style="color: #b22222; font-family: Courier New">/componentArgs "component description":"parameters"
       <span style="color: #000000; font-family: Verdana">to dotNetInstaller.exe command
        line. This enables passing additional parameters to specific components declared
-       in configuration.xml.&nbsp;</span></span></li>
-        <li>Embedded CABs are now segmented into 32-megabyte chunks. This reduces the minimum
-            required memory for installers containing embedded CABs to about 48Mb.</li>
-     <li>Added support for configuration file XML comments. InstallerEditor now has a
-      text box where the developer can edit a comment. It is saved as an xml comment above
+       in configuration.xml.</span></span></li>
+        <li>dotNetInstaller: Embedded CABs are now segmented into 32-megabyte chunks. This reduces the minimum
+            required memory for installers containing embedded CABs to about 48Mb, reduces paging and improves performance during extraction of large embedded
+         CABs.</li>
+     <li>InstallerEditor: added support for configuration file XML comments and a text
+      box where the developer can edit a comment, saved as an xml comment above
       the selected node.</li>
-     <li>InstallerEditor configuration tree now supports deletion of nodes with the keyboard
+     <li>InstallerEditor: configuration tree now supports deletion of nodes with the keyboard
       Delete key and will popup the Add menu with the Insert key.</li>
-     <li>The About box can be closed with the Escape key.</li>
+     <li>InstallerEditor: components can be dragged and dropped between nodes.&nbsp;</li>
+     <li>InstallerEditor: the About box can be closed with the Escape key.</li>
+     <li>InstallerEditor: added Expand All, Collapse All, Move, Move Up and Move Down context menu items.</li>
+     <li>InstallerEditor: Shift+Up and Shift+Down arrows move components up and down.</li>
+     <li>InstallerEditor: added shortcuts to open a configuratoin file (Ctrl+O), create
+      a new configuration file (Ctrol+N), exit (Alt+F4) and refresh (F5).&nbsp;</li>
     </ul>
     <h3>
      1.5 (25 Oct 2008)</h3>

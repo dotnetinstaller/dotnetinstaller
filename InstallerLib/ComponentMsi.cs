@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace InstallerLib
 {
     /// <summary>
-    /// Tag component of type msi
+    /// A component of type "msi" that executes a Windows Installer package.
     /// </summary>
     public class ComponentMsi : Component
     {
@@ -40,19 +40,16 @@ namespace InstallerLib
             set { m_cmdparameters_silent = value; }
         }
 
-        protected override void OnXmlWriteTagcomponent(XmlWriterEventArgs e)
+        protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
-            base.OnXmlWriteTagcomponent(e);
-
             e.XmlWriter.WriteAttributeString("package", m_package);
             e.XmlWriter.WriteAttributeString("cmdparameters", m_cmdparameters);
             e.XmlWriter.WriteAttributeString("cmdparameters_silent", m_cmdparameters_silent);
+            base.OnXmlWriteTag(e);
         }
 
-        protected override void OnXmlReadTagcomponent(XmlElementEventArgs e)
+        protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            base.OnXmlReadTagcomponent(e);
-
             if (e.XmlElement.Attributes["package"] != null)
                 m_package = e.XmlElement.Attributes["package"].InnerText;
 
@@ -61,6 +58,8 @@ namespace InstallerLib
 
             if (e.XmlElement.Attributes["cmdparameters_silent"] != null)
                 m_cmdparameters_silent = e.XmlElement.Attributes["cmdparameters_silent"].InnerText;
+
+            base.OnXmlReadTag(e);
         }
 
         public override EmbedFileCollection GetFiles()

@@ -61,12 +61,12 @@ namespace InstallerLib
                 while (currentOffset < l_ImageStream.Length)
                 {
                     // allocate chunk or the remainder of the stream
-                    int chunkSize = Math.Min(maxchunksize, (int) (l_ImageStream.Length - currentOffset));
+                    int chunkSize = Math.Min(maxchunksize, (int)(l_ImageStream.Length - currentOffset));
                     byte[] l_Chunk = new byte[chunkSize];
                     // read chunk
                     chunkSize = l_ImageStream.Read(l_Chunk, 0, chunkSize);
                     string currentIndexLabel = string.Format("{0}{1}", p_ResourceName, currentIndex);
-                    args.WriteLine(string.Format(" {0}: {1} of {2} - {3}", currentIndex, currentOffset, l_ImageStream.Length, currentIndexLabel)); 
+                    args.WriteLine(string.Format(" {0}: {1} of {2} - {3}", currentIndex, currentOffset, l_ImageStream.Length, currentIndexLabel));
                     UpdateResource(p_BinFileName, currentIndexLabel, p_ResourceType, l_Chunk, p_ResourceLanguage);
                     currentOffset += chunkSize;
                     currentIndex++;

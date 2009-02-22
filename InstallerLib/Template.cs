@@ -6,6 +6,7 @@ namespace InstallerLib
     {
         private static Template m_DefaultTemplate;
         private static Template m_CurrentTemplate;
+
         static Template()
         {
             m_DefaultTemplate = new Template(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(
@@ -17,6 +18,7 @@ namespace InstallerLib
         {
             get { return m_DefaultTemplate; }
         }
+
         public static Template CurrentTemplate
         {
             get { return m_CurrentTemplate; }
@@ -32,7 +34,7 @@ namespace InstallerLib
             m_editortemplate_Node = m_Document.SelectSingleNode("//editortemplate");
             if (m_editortemplate_Node == null)
             {
-                throw new ApplicationException("Invalid template file");
+                throw new Exception("Invalid template file");
             }
 
             m_Name = pName;
@@ -231,7 +233,6 @@ namespace InstallerLib
                 get { return m_tpl.GetAttribute("downloaddialog/@dialog_message_downloading").Replace(c_COMPONENT_NAME, m_ComponentName); }
             }
         }
-
 
         public Template_setupconfiguration setupConfiguration(string applicationName)
         {

@@ -32,11 +32,11 @@ namespace InstallerLib
         public void Validate()
         {
             template = Path.GetFullPath(template);
-            if (! string.IsNullOrEmpty(banner)) banner = Path.GetFullPath(banner);
-            if (! string.IsNullOrEmpty(icon)) icon = Path.GetFullPath(icon);
+            if (!string.IsNullOrEmpty(banner)) banner = Path.GetFullPath(banner);
+            if (!string.IsNullOrEmpty(icon)) icon = Path.GetFullPath(icon);
             config = Path.GetFullPath(config);
             output = Path.GetFullPath(output);
-            
+
             if (!string.IsNullOrEmpty(apppath))
             {
                 apppath = Path.GetFullPath(apppath);

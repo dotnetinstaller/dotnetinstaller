@@ -7,8 +7,12 @@ using System.IO;
 namespace InstallerLib
 {
     /// <summary>
-    /// Summary description for Configuration.
+    /// A base component.
     /// </summary>
+    [XmlChild(typeof(InstalledCheck))]
+    [XmlChild(typeof(InstalledCheckOperator))]
+    [XmlChild(typeof(DownloadDialog), Max = 1)]
+    [XmlChild(typeof(EmbedFile))]
     public abstract class Component : XmlClassImpl
     {
         public Component(string p_type)
@@ -31,19 +35,6 @@ namespace InstallerLib
 
             m_description = tpl.description;
             m_installcompletemessage = tpl.installcompletemessage;
-
-            //			if (LanguageUI.Language == SupportedLanguage.Italian)
-            //			{
-            //				m_description = p_ComponentName;
-            //				m_installcompletemessage = "";
-            //				m_installmessage = "Premi avanti per installare " + p_ComponentName;
-            //			}
-            //			else //english
-            //			{
-            //				m_description = p_ComponentName;
-            //				m_installcompletemessage = "";
-            //				m_installmessage = "Click Next to install " + p_ComponentName;
-            //			}
         }
 
         #region Attributi
@@ -147,98 +138,14 @@ namespace InstallerLib
 
         #region IXmlClass Members
 
-        public override void ToXml(XmlWriter p_Writer)
+        public override string XmlTag
         {
-            base.ToXml(p_Writer);
-
-            p_Writer.WriteStartElement("component");
-            OnXmlWriteTagcomponent(new XmlWriterEventArgs(p_Writer));
-
-            if (m_DownloadDialog != null)
-            {
-                m_DownloadDialog.ToXml(p_Writer);
-            }
-
-            foreach (InstalledCheck i in installedchecks)
-            {
-                i.ToXml(p_Writer);
-            }
-
-            foreach(InstalledCheckOperator op in installedcheckoperators)
-            {
-                op.ToXml(p_Writer);
-            }
-
-            p_Writer.WriteStartElement("embedfiles");
-            foreach (EmbedFile embedFile in embedfiles)
-            {
-                embedFile.ToXml(p_Writer);
-            }
-            p_Writer.WriteEndElement();
-
-            p_Writer.WriteEndElement();
+            get { return "component"; }
         }
 
-        public override void FromXml(XmlElement p_Element)
-        {
-            base.FromXml(p_Element);
-
-            if (p_Element.Attributes["type"] == null ||
-                p_Element.Attributes["type"].InnerText != m_type)
-                throw new ApplicationException("Invalid type");
-
-            OnXmlReadTagcomponent(new XmlElementEventArgs(p_Element));
-
-            XmlElement l_ElementDownloadDialog = (XmlElement)p_Element.SelectSingleNode("downloaddialog");
-            if (l_ElementDownloadDialog != null)
-            {
-                DownloadDialog l_dialog = new DownloadDialog();
-                l_dialog.FromXml(l_ElementDownloadDialog);
-                m_DownloadDialog = l_dialog;
-            }
-
-            XmlNodeList l_List = p_Element.SelectNodes("installedcheck");
-            foreach (XmlElement l_XmlCheck in l_List)
-            {
-                if (l_XmlCheck.Attributes["type"] != null)
-                {
-                    InstalledCheck l_check;
-                    if (l_XmlCheck.Attributes["type"].InnerText == "check_file")
-                        l_check = new InstalledCheckFile();
-                    else if (l_XmlCheck.Attributes["type"].InnerText == "check_registry_value")
-                        l_check = new InstalledCheckRegistry();
-                    else
-                        throw new ApplicationException("Invalid type");
-
-                    l_check.FromXml(l_XmlCheck);
-
-                    installedchecks.Add(l_check);
-                }
-            }
-
-            XmlNodeList l_InstalledCheckOperatorsList = p_Element.SelectNodes("installedcheckoperator");
-            foreach (XmlElement l in l_InstalledCheckOperatorsList)
-            {
-                InstalledCheckOperator op = new InstalledCheckOperator();
-                op.FromXml(l);
-                installedcheckoperators.Add(op);
-            }
-
-            XmlNode l_EmbedFiles = p_Element.SelectSingleNode("embedfiles");
-            if (l_EmbedFiles != null)
-            {
-                XmlNodeList l_EmbedFilesList = l_EmbedFiles.SelectNodes("embedfile");
-                foreach (XmlElement l in l_EmbedFilesList)
-                {
-                    EmbedFile f = new EmbedFile();
-                    f.FromXml(l);
-                    embedfiles.Add(f);
-                }
-            }
-        }
         #endregion
 
-        protected virtual void OnXmlWriteTagcomponent(XmlWriterEventArgs e)
+        protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
             e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
             e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
@@ -252,9 +159,10 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("note", m_note);
             // Jason Biegel - 2008-04-28: new attributes added
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
-
+            base.OnXmlWriteTag(e);
         }
-        protected virtual void OnXmlReadTagcomponent(XmlElementEventArgs e)
+
+        protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
             if (e.XmlElement.Attributes["description"] != null)
                 m_description = e.XmlElement.Attributes["description"].InnerText;
@@ -289,63 +197,26 @@ namespace InstallerLib
             // Jason Biegel - 2008-04-22: new attributes added
             if (e.XmlElement.Attributes["processor_architecture_filter"] != null)
                 m_processor_architecture_filter = e.XmlElement.Attributes["processor_architecture_filter"].InnerText;
+
+            base.OnXmlReadTag(e);
         }
 
-        private InstalledCheckCollection m_installedchecks = new InstalledCheckCollection();
-        [System.ComponentModel.Browsable(false)]
-        public InstalledCheckCollection installedchecks
-        {
-            get { return m_installedchecks; }
-            set { m_installedchecks = value; }
-        }
-
-        private InstalledCheckOperatorCollection m_installedcheckoperators = new InstalledCheckOperatorCollection();
-        [System.ComponentModel.Browsable(false)]
-        public InstalledCheckOperatorCollection installedcheckoperators
-        {
-            get { return m_installedcheckoperators; }
-            set { m_installedcheckoperators = value; }
-        }
-
-        private EmbedFileCollection m_embedfiles = new EmbedFileCollection();
-        [System.ComponentModel.Browsable(false)]
-        public EmbedFileCollection embedfiles
-        {
-            get { return m_embedfiles; }
-            set { m_embedfiles = value; }
-        }
-
-        private DownloadDialog m_DownloadDialog = null; //di default non è presente
-        [System.ComponentModel.Browsable(false)]
-        public DownloadDialog DownloadDialog
-        {
-            get { return m_DownloadDialog; }
-            set { m_DownloadDialog = value; }
-        }
-
-        public static Component CreateComponentFromXml(XmlElement element)
+        public static Component CreateFromXml(XmlElement element)
         {
             Component l_Comp;
-            if (element.Attributes["type"].InnerText == "msi")
+            string xmltype = element.Attributes["type"].InnerText;
+            if (xmltype == "msi")
                 l_Comp = new ComponentMsi();
-            else if (element.Attributes["type"].InnerText == "cmd")
+            else if (xmltype == "cmd")
                 l_Comp = new ComponentCmd();
-            else if (element.Attributes["type"].InnerText == "openfile")
+            else if (xmltype == "openfile")
                 l_Comp = new ComponentOpenFile();
             else
-                throw new ApplicationException("Invalid type");
+                throw new Exception(string.Format("Invalid type: {0}", xmltype));
 
             l_Comp.FromXml(element);
 
             return l_Comp;
-        }
-
-        public virtual EmbedFileCollection GetFiles()
-        {
-            EmbedFileCollection files = new EmbedFileCollection();
-            if (m_DownloadDialog != null) files.AddRange(m_DownloadDialog.GetFiles());
-            files.AddRange(embedfiles);
-            return files;
         }
     }
 }

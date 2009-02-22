@@ -7,13 +7,15 @@ using System.IO;
 namespace InstallerLib
 {
     /// <summary>
-    /// Gestione del tag downloaddialog
+    /// A download dialog that contains one or more download files.
     /// </summary>
+    [XmlChild(typeof(Download))]
     public class DownloadDialog : XmlClassImpl
     {
         public DownloadDialog()
             : this("COMPONENT_NAME")
         {
+
         }
 
         public DownloadDialog(string p_ComponentName)
@@ -96,44 +98,12 @@ namespace InstallerLib
 
         #region IXmlClass Members
 
-        public override void ToXml(XmlWriter p_Writer)
+        public override string XmlTag
         {
-            base.ToXml(p_Writer);
-
-            p_Writer.WriteStartElement("downloaddialog");
-
-            OnXmlWriteTagDownloaddialog(new XmlWriterEventArgs(p_Writer));
-
-            p_Writer.WriteStartElement("downloads");
-            foreach (Download d in Downloads)
-                d.ToXml(p_Writer);
-            p_Writer.WriteEndElement();
-
-            p_Writer.WriteEndElement();
+            get { return "downloaddialog"; }
         }
 
-        public override void FromXml(XmlElement p_Element)
-        {
-            base.FromXml(p_Element);
-
-            OnXmlReadTagDownloaddialog(new XmlElementEventArgs(p_Element));
-
-            XmlNode l_Node = p_Element.SelectSingleNode("downloads");
-            if (l_Node != null)
-            {
-                XmlNodeList l_List = l_Node.SelectNodes("download");
-                foreach (XmlElement l in l_List)
-                {
-                    Download d = new Download();
-                    d.FromXml(l);
-                    Downloads.Add(d);
-                }
-            }
-        }
-        #endregion
-
-
-        protected virtual void OnXmlWriteTagDownloaddialog(XmlWriterEventArgs e)
+        protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
             e.XmlWriter.WriteAttributeString("dialog_caption", m_dialog_caption);
             e.XmlWriter.WriteAttributeString("dialog_message", m_dialog_message);
@@ -141,8 +111,10 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("autostartdownload", m_autostartdownload.ToString());
             e.XmlWriter.WriteAttributeString("buttonstart_caption", m_buttonstart_caption);
             e.XmlWriter.WriteAttributeString("buttoncancel_caption", m_buttoncancel_caption);
+            base.OnXmlWriteTag(e);
         }
-        protected virtual void OnXmlReadTagDownloaddialog(XmlElementEventArgs e)
+
+        protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
             if (e.XmlElement.Attributes["autostartdownload"] != null &&
                 e.XmlElement.Attributes["autostartdownload"].InnerText != null &&
@@ -163,25 +135,17 @@ namespace InstallerLib
 
             if (e.XmlElement.Attributes["dialog_message_downloading"] != null)
                 m_dialog_message_downloading = e.XmlElement.Attributes["dialog_message_downloading"].InnerText;
+
+            base.OnXmlReadTag(e);
         }
 
-        private DownloadCollection m_Downloads = new DownloadCollection();
-        [System.ComponentModel.Browsable(false)]
-        public DownloadCollection Downloads
-        {
-            get { return m_Downloads; }
-            set { m_Downloads = value; }
-        }
+        #endregion
 
-        public EmbedFileCollection GetFiles()
+        public static DownloadDialog CreateFromXml(XmlElement element)
         {
-            EmbedFileCollection files = new EmbedFileCollection();
-            foreach (Download dl in Downloads)
-            {
-                string filename = Path.Combine(dl.destinationpath, dl.destinationfilename);
-                files.Add(new EmbedFile(filename));
-            }
-            return files;
+            DownloadDialog result = new DownloadDialog();
+            result.FromXml(element);
+            return result;
         }
     }
 }

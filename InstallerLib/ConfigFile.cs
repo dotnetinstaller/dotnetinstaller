@@ -6,19 +6,21 @@ using System.Collections.Specialized;
 namespace InstallerLib
 {
     /// <summary>
-    /// Summary description for ConfigFile.
+    /// A configuration file.
     /// </summary>
+    [XmlChild(typeof(WebConfiguration))]
+    [XmlChild(typeof(SetupConfiguration))]
     public class ConfigFile : XmlClassImpl
     {
         public ConfigFile()
         {
         }
 
-        private string m_FileName = null;
-        public string FileName
+        private string m_filename = null;
+        public string filename
         {
-            get { return m_FileName; }
-            set { m_FileName = value; }
+            get { return m_filename; }
+            set { m_filename = value; }
         }
 
         /* Matthew Sheets - 2007-09-20: added flag for silent install */
@@ -61,10 +63,10 @@ namespace InstallerLib
 
         public void Save()
         {
-            if (m_FileName == null)
-                throw new ApplicationException("Invalid save filename");
+            if (m_filename == null)
+                throw new Exception("Invalid save filename");
 
-            SaveAs(m_FileName);
+            SaveAs(m_filename);
         }
 
         public void SaveAs(string p_FileName)
@@ -73,102 +75,87 @@ namespace InstallerLib
             l_XmlWriter.Formatting = Formatting.Indented;
             try
             {
+                l_XmlWriter.WriteStartDocument();
                 ToXml(l_XmlWriter);
             }
             finally
             {
                 l_XmlWriter.Close();
             }
-            m_FileName = p_FileName;
+            m_filename = p_FileName;
         }
 
-        public override void ToXml(XmlWriter l_XmlWriter)
+        public override string XmlTag
         {
-            l_XmlWriter.WriteStartDocument();
+            get { return "configurations"; }
+        }
 
-            base.ToXml(l_XmlWriter);
-            l_XmlWriter.WriteStartElement("configurations");
+        protected override void OnXmlWriteTag(XmlWriterEventArgs e)
+        {
+            // Matthew Sheets - 2007-08-10: added flag for silent install
+            e.XmlWriter.WriteAttributeString("silent_install", m_silent_install.ToString());
+            // Daniel Doubrovkine - 2008-06-27: added version information
+            e.XmlWriter.WriteAttributeString("fileversion", m_fileversion);
+            e.XmlWriter.WriteAttributeString("productversion", m_productversion);
+            // tag schema
+            e.XmlWriter.WriteStartElement("schema");
+            e.XmlWriter.WriteAttributeString("version", m_CurrentSchemaVersion.ToString());
+            e.XmlWriter.WriteEndElement();
+            fileattributes.ToXml(e.XmlWriter);
+            base.OnXmlWriteTag(e);
+        }
 
-            /* Matthew Sheets - 2007-08-10: added flag for silent install */
-            l_XmlWriter.WriteAttributeString("silent_install", m_silent_install.ToString());
+        protected override void OnXmlReadTag(XmlElementEventArgs e)
+        {
+            /* Matthew Sheets - 2007-09-20: added flag for silent install */
+            if (e.XmlElement.Attributes["silent_install"] != null)
+                m_silent_install = bool.Parse(e.XmlElement.Attributes["silent_install"].InnerText);
 
             /* Daniel Doubrovkine - 2008-06-27: added version information */
-            l_XmlWriter.WriteAttributeString("fileversion", m_fileversion);
-            l_XmlWriter.WriteAttributeString("productversion", m_productversion);
+            if (e.XmlElement.Attributes["fileversion"] != null)
+                m_fileversion = e.XmlElement.Attributes["fileversion"].InnerText;
+            if (e.XmlElement.Attributes["productversion"] != null)
+                m_productversion = e.XmlElement.Attributes["productversion"].InnerText;
 
-            //tag schema
-            l_XmlWriter.WriteStartElement("schema");
-            l_XmlWriter.WriteAttributeString("version", m_CurrentSchemaVersion.ToString());
-            l_XmlWriter.WriteEndElement();
+            base.OnXmlReadTag(e);
+        }
 
-            l_XmlWriter.WriteStartElement("fileattributes");
-            foreach (FileAttribute a in fileattributes)
+        protected override bool OnXmlChild(XmlElement child)
+        {
+            bool processed = false;
+            switch (child.LocalName)
             {
-                a.ToXml(l_XmlWriter);
+                case "schema":
+                    // ignore schema, currently schemas are backwards compatible
+                    processed = true;
+                    break;
+                case "fileattributes":
+                    fileattributes.FromXml(child);
+                    processed = true;
+                    break;
+                case "configurations":
+                    FromXml(child);
+                    processed = true;
+                    break;
+                default:
+                    break;
             }
-            l_XmlWriter.WriteEndElement();
-
-            foreach (Configuration c in Configurations)
-            {
-                c.ToXml(l_XmlWriter);
-            }
-
-            l_XmlWriter.WriteEndElement();
+            return processed;
         }
 
         public void Create(string p_FileName)
         {
-            m_FileName = p_FileName;
+            m_filename = p_FileName;
         }
 
         public void Load(string p_FileName)
         {
             XmlDocument l_XmlElement = new XmlDocument();
             l_XmlElement.Load(p_FileName);
-
             XmlNode l_Configurations = l_XmlElement.SelectSingleNode("//configurations");
-
-            if (l_Configurations.PreviousSibling != null && l_Configurations.PreviousSibling.NodeType == XmlNodeType.Comment)
-                Comment = l_Configurations.PreviousSibling.InnerText;
-
-            /* Matthew Sheets - 2007-09-20: added flag for silent install */
-            if (l_Configurations.Attributes["silent_install"] != null)
-                m_silent_install = bool.Parse(l_Configurations.Attributes["silent_install"].InnerText);
-
-            /* Daniel Doubrovkine - 2008-06-27: added version information */
-            if (l_Configurations.Attributes["fileversion"] != null)
-                m_fileversion = l_Configurations.Attributes["fileversion"].InnerText;
-            if (l_Configurations.Attributes["productversion"] != null)
-                m_productversion = l_Configurations.Attributes["productversion"].InnerText;
-
-            XmlNodeList l_FileAttributesList = l_XmlElement.SelectNodes("//fileattributes/fileattribute");
-            foreach (XmlElement l_Element in l_FileAttributesList)
-            {
-                FileAttribute l_FileAttribute = new FileAttribute();
-                l_FileAttribute.FromXml(l_Element);
-                fileattributes.Add(l_FileAttribute);
-            }
-
-            XmlNodeList l_List = l_XmlElement.SelectNodes("//configurations/configuration");
-            foreach (XmlElement l_Element in l_List)
-            {
-                string l_Type = l_Element.Attributes["type"].InnerText.ToLower();
-                Configuration l_Config;
-                if (l_Type == "install")
-                    l_Config = new SetupConfiguration();
-                else if (l_Type == "reference")
-                    l_Config = new WebConfiguration();
-                else
-                    throw new ApplicationException("Invalid type");
-
-                l_Config.FromXml(l_Element);
-
-                Configurations.Add(l_Config);
-            }
-
-            m_FileName = p_FileName;
+            base.FromXml((XmlElement)l_Configurations);
+            m_filename = p_FileName;
         }
-
 
         private static int m_CurrentSchemaVersion = 1;
 
@@ -216,161 +203,5 @@ namespace InstallerLib
                 }
             }
         }
-
-        private ConfigurationCollection m_Configurations = new ConfigurationCollection();
-
-        [System.ComponentModel.Browsable(false)]
-        public ConfigurationCollection Configurations
-        {
-            get { return m_Configurations; }
-            set { m_Configurations = value; }
-        }
-
-        public EmbedFileCollection GetFiles()
-        {
-            EmbedFileCollection c_files = new EmbedFileCollection();
-            foreach (Configuration c in Configurations)
-            {
-                c_files.AddRange(c.GetFiles());
-            }
-            return c_files;
-        }
     }
-
-    public interface IXmlClass
-    {
-        string Comment { get; set; }
-        void ToXml(XmlWriter p_Writer);
-        void FromXml(XmlElement p_Element);
-    }
-
-    public class XmlClassImpl : IXmlClass
-    {
-        private string _comment = string.Empty;
-
-        [System.ComponentModel.Browsable(false)]
-        public string Comment
-        {
-            get { return _comment; }
-            set { _comment = value; }
-        }
-
-        public virtual void ToXml(XmlWriter p_Writer)
-        {
-            if (!string.IsNullOrEmpty(Comment))
-            {
-                p_Writer.WriteComment(Comment);
-            }
-        }
-
-        public virtual void FromXml(XmlElement p_Element)
-        {
-            if (p_Element.PreviousSibling != null && p_Element.PreviousSibling.NodeType == XmlNodeType.Comment)
-            {
-                Comment = p_Element.PreviousSibling.InnerText;
-            }
-        }
-    }
-
-    public class XmlWriterEventArgs : EventArgs
-    {
-        public XmlWriterEventArgs(XmlWriter p_Writer)
-        {
-            m_Writer = p_Writer;
-        }
-        private XmlWriter m_Writer;
-        public XmlWriter XmlWriter
-        {
-            get { return m_Writer; }
-        }
-    }
-
-    public delegate void XmlWriterEventHandler(object sender, XmlWriterEventArgs e);
-
-    public class XmlElementEventArgs : EventArgs
-    {
-        public XmlElementEventArgs(XmlElement p_XmlElement)
-        {
-            m_XmlElement = p_XmlElement;
-        }
-        private XmlElement m_XmlElement;
-        public XmlElement XmlElement
-        {
-            get { return m_XmlElement; }
-        }
-    }
-
-    public delegate void XmlElementEventHandler(object sender, XmlElementEventArgs e);
-
-    public class ConfigFileEventArgs : EventArgs
-    {
-        public ConfigFileEventArgs(ConfigFile p_Config)
-        {
-            m_ConfigFile = p_Config;
-        }
-
-        private ConfigFile m_ConfigFile;
-        public ConfigFile ConfigFile
-        {
-            get { return m_ConfigFile; }
-            set { m_ConfigFile = value; }
-        }
-    }
-
-    public delegate void ConfigFileEventHandler(object sender, ConfigFileEventArgs e);
-
-    public class ConfigFileFileEventArgs : ConfigFileEventArgs
-    {
-        public ConfigFileFileEventArgs(string p_FileName, ConfigFile p_Config)
-            : base(p_Config)
-        {
-            m_FileName = p_FileName;
-        }
-
-        private string m_FileName;
-        public string FileName
-        {
-            get { return m_FileName; }
-            set { m_FileName = value; }
-        }
-    }
-
-    public delegate void ConfigFileFileEventHandler(object sender, ConfigFileFileEventArgs e);
-
-    public class ConfigFileXmlWriterEventArgs : ConfigFileFileEventArgs
-    {
-        public ConfigFileXmlWriterEventArgs(XmlWriter p_XmlWriter, string p_FileName, ConfigFile p_Config)
-            : base(p_FileName, p_Config)
-        {
-            m_XmlWriter = p_XmlWriter;
-        }
-
-        private XmlWriter m_XmlWriter;
-        public XmlWriter XmlWriter
-        {
-            get { return m_XmlWriter; }
-            set { m_XmlWriter = value; }
-        }
-    }
-
-    public delegate void ConfigFileXmlWriterEventHandler(object sender, ConfigFileXmlWriterEventArgs e);
-
-    public class ConfigFileXmlElementEventArgs : ConfigFileFileEventArgs
-    {
-        public ConfigFileXmlElementEventArgs(XmlElement p_XmlElement, string p_FileName, ConfigFile p_Config)
-            : base(p_FileName, p_Config)
-        {
-            m_XmlElement = p_XmlElement;
-        }
-
-        private XmlElement m_XmlElement;
-        public XmlElement XmlElement
-        {
-            get { return m_XmlElement; }
-            set { m_XmlElement = value; }
-        }
-    }
-
-    public delegate void ConfigFileXmlElementEventHandler(object sender, ConfigFileXmlElementEventArgs e);
-
 }

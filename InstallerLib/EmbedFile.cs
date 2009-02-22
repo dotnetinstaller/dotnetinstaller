@@ -6,8 +6,9 @@ using System.IO;
 namespace InstallerLib
 {
     /// <summary>
-    /// Summary description for EmbedFile.
+    /// An embedded file.
     /// </summary>
+    [XmlNoChildren]
     public class EmbedFile : XmlClassImpl
     {
         public EmbedFile()
@@ -40,12 +41,12 @@ namespace InstallerLib
         [Description("The complete path where the file is located. Is recommended to use the APPPATH path: '#APPPATH\\Setup.msi'. Can contains path constants (see Help->Path Constant). (REQUIRED)")]
         public string sourcefilepath
         {
-            get 
+            get
             {
-                return m_sourcefilepath; 
+                return m_sourcefilepath;
             }
-            set 
-            { 
+            set
+            {
                 m_sourcefilepath = value;
                 OnSourceFilePathChanged(EventArgs.Empty);
             }
@@ -55,50 +56,41 @@ namespace InstallerLib
         [Description("The relative path under #CABPATH where the file is going to be extracted. (REQUIRED)")]
         public string targetfilepath
         {
-            get 
-            { 
-                return m_targetfilepath; 
+            get
+            {
+                return m_targetfilepath;
             }
-            set 
-            { 
+            set
+            {
                 m_targetfilepath = value;
             }
         }
 
         #region IXmlClass Members
 
-        public override void ToXml(XmlWriter p_Writer)
+        public override string XmlTag
         {
-            base.ToXml(p_Writer);
-
-            p_Writer.WriteStartElement("embedfile");
-
-            OnXmlWriteTagEmbedFile(new XmlWriterEventArgs(p_Writer));
-
-            p_Writer.WriteEndElement();
+            get { return "embedfile"; }
         }
 
-        public override void FromXml(XmlElement p_Element)
-        {
-            base.FromXml(p_Element);
-            OnXmlReadTagEmbedFile(new XmlElementEventArgs(p_Element));
-        }
         #endregion
 
-
-        protected virtual void OnXmlWriteTagEmbedFile(XmlWriterEventArgs e)
+        protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
             e.XmlWriter.WriteAttributeString("sourcefilepath", m_sourcefilepath);
             e.XmlWriter.WriteAttributeString("targetfilepath", m_targetfilepath);
+            base.OnXmlWriteTag(e);
         }
 
-        protected virtual void OnXmlReadTagEmbedFile(XmlElementEventArgs e)
+        protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
             if (e.XmlElement.Attributes["sourcefilepath"] != null)
                 m_sourcefilepath = e.XmlElement.Attributes["sourcefilepath"].InnerText;
 
             if (e.XmlElement.Attributes["targetfilepath"] != null)
                 m_targetfilepath = e.XmlElement.Attributes["targetfilepath"].InnerText;
+
+            base.OnXmlReadTag(e);
         }
 
         protected virtual void OnSourceFilePathChanged(EventArgs e)
@@ -107,6 +99,13 @@ namespace InstallerLib
             {
                 SourceFilePathChanged(this, e);
             }
+        }
+
+        public static EmbedFile CreateFromXml(XmlElement element)
+        {
+            EmbedFile result = new EmbedFile();
+            result.FromXml(element);
+            return result;
         }
 
         public event EventHandler SourceFilePathChanged;

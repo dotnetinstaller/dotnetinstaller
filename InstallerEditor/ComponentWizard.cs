@@ -331,7 +331,7 @@ namespace InstallerEditor
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";
 				l_Download.sourceurl = p_Path + "/dotNet1.1/English/dotnetfx.exe";
-				l_downloadDlg.Downloads.Add(l_Download);
+				l_downloadDlg.Children.Add(l_Download);
 
 
 				//before for windows 2000
@@ -339,7 +339,7 @@ namespace InstallerEditor
 				if (p_Download) //download
 				{
 					l_component1.command = "\"" + l_Download.destinationpath + "\\dotnetfx.exe\" /q:a /c:\"install /l /qb\"";
-					l_component1.DownloadDialog = l_downloadDlg;
+                    l_component1.Children.Add(l_downloadDlg);
 					l_component1.note = "English - WebSetup - ";
 				}
 				else
@@ -351,7 +351,7 @@ namespace InstallerEditor
 				l_component1.os_filter_lcid = "";
 				l_component1.os_filter_greater = "";
 				l_component1.os_filter_smaller = "45";
-				l_component1.installedchecks.Add(l_InstallCheck);
+                l_component1.Children.Add(l_InstallCheck);
 				l_component1.note += ".NET Framework 1.1 for all operating system before windows 2000, require a reboot";
 
 
@@ -360,7 +360,7 @@ namespace InstallerEditor
 				if (p_Download) //download
 				{
 					l_component2.command = "\"" + l_Download.destinationpath + "\\dotnetfx.exe\" /q:a /c:\"install /l /qb\"";
-					l_component2.DownloadDialog = l_downloadDlg;
+                    l_component2.Children.Add(l_downloadDlg);
 					l_component2.note = "English - WebSetup - ";
 				}
 				else
@@ -372,7 +372,7 @@ namespace InstallerEditor
 				l_component2.os_filter_lcid = "";
 				l_component2.os_filter_greater = "44";
 				l_component2.os_filter_smaller = "90";
-				l_component2.installedchecks.Add(l_InstallCheck);
+                l_component2.Children.Add(l_InstallCheck);
 				l_component2.note += ".NET Framework 1.1 for Windows 2000 and Windows XP";
 
 				return new Component[]{l_component1, l_component2};
@@ -402,14 +402,13 @@ namespace InstallerEditor
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";
 				l_Download.sourceurl = p_Path + "/MDAC2.7Sp1Refresh/English/Win_98_ME_NT_2000/mdac_typ.exe";
-				l_downloadDlg.Downloads.Add(l_Download);
-
+                l_downloadDlg.Children.Add(l_Download);
 
 				ComponentCmd l_component = new ComponentCmd(l_ComponentName);
 				if (p_Download) //download
 				{
 					l_component.command = ListComponent_MDAC28.Build_MDAC_cmd(l_Download.destinationpath + "\\mdac_typ.exe");
-					l_component.DownloadDialog = l_downloadDlg;
+                    l_component.Children.Add(l_downloadDlg);
 					l_component.note = "English - WebSetup - ";
 				}
 				else
@@ -421,7 +420,7 @@ namespace InstallerEditor
 				l_component.os_filter_lcid = "";
 				l_component.os_filter_greater = "";
 				l_component.os_filter_smaller = "75";
-				l_component.installedchecks.Add(l_InstallCheck);
+                l_component.Children.Add(l_InstallCheck);
 				l_component.note += "MDAC 2.7 Sp1 for Win98, ME, NT4, 2000. Quit mode.";
 
 				return new Component[]{l_component};
@@ -451,14 +450,13 @@ namespace InstallerEditor
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";
 				l_Download.sourceurl = p_Path + "/MDAC2.8/English/Win_98_ME_NT_2000_XP/MDAC_TYP.EXE";
-				l_downloadDlg.Downloads.Add(l_Download);
-
+                l_downloadDlg.Children.Add(l_Download);
 
 				ComponentCmd l_component = new ComponentCmd(l_ComponentName);
 				if (p_Download) //download
 				{
 					l_component.command = Build_MDAC_cmd(l_Download.destinationpath + "\\MDAC_TYP.EXE");
-					l_component.DownloadDialog = l_downloadDlg;
+                    l_component.Children.Add(l_downloadDlg);
 					l_component.note = "English - WebSetup - ";
 				}
 				else
@@ -470,7 +468,7 @@ namespace InstallerEditor
 				l_component.os_filter_lcid = "";
 				l_component.os_filter_greater = "14";
 				l_component.os_filter_smaller = "90";
-				l_component.installedchecks.Add(l_InstallCheck);
+                l_component.Children.Add(l_InstallCheck);
 				l_component.note += "MDAC 2.8 for Win98, ME, NT4, 2000 and XP. Quit mode.";
 
 				return new Component[]{l_component};
@@ -509,14 +507,13 @@ namespace InstallerEditor
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";
 				l_Download.sourceurl = p_Path + "/InternetExplorer6.0Sp1/English/ie6setup.exe";
-				l_downloadDlg.Downloads.Add(l_Download);
-
+                l_downloadDlg.Children.Add(l_Download);
 
 				ComponentCmd l_component = new ComponentCmd(l_ComponentName);
 				if (p_Download) //download
 				{
 					l_component.command = "\"" + l_Download.destinationpath + "\\ie6setup.exe\"";
-					l_component.DownloadDialog = l_downloadDlg;
+                    l_component.Children.Add(l_downloadDlg);
 					l_component.note = "English - WebSetup - ";
 				}
 				else
@@ -528,7 +525,7 @@ namespace InstallerEditor
 				l_component.os_filter_lcid = "";
 				l_component.os_filter_greater = "";
 				l_component.os_filter_smaller = "80";
-				l_component.installedchecks.Add(l_InstallCheck);
+                l_component.Children.Add(l_InstallCheck);
 				l_component.note += "Internet Explorer 6Sp1 (IE 5.01 Required)";
 
 				return new Component[]{l_component};
@@ -569,13 +566,13 @@ namespace InstallerEditor
 				l_Download.componentname = m_ComponentName;
 				l_Download.destinationfilename = "";
 				l_Download.sourceurl = p_Path + "/Jet40Sp8/English/" + JetRelativePath + "/" + JetFileName;
-				l_downloadDlg.Downloads.Add(l_Download);
+                l_downloadDlg.Children.Add(l_Download);
 
 				ComponentCmd l_component1 = new ComponentCmd(m_ComponentName);
 				if (p_Download) //download
 				{
 					l_component1.command = "\"" + l_Download.destinationpath + "\\" + JetFileName + "\" " + ExecParameter;
-					l_component1.DownloadDialog = l_downloadDlg;
+                    l_component1.Children.Add(l_downloadDlg);
 					l_component1.note = "English - WebSetup - ";
 				}
 				else
@@ -587,7 +584,7 @@ namespace InstallerEditor
 				l_component1.os_filter_lcid = "";
 				l_component1.os_filter_greater = osFilterGreater;
 				l_component1.os_filter_smaller = osFilterSmaller;
-				l_component1.installedchecks.Add( CreateInstalledCheck() );
+                l_component1.Children.Add(CreateInstalledCheck());
 				l_component1.note += "Jet 4.0 Sp8 for " + osNote;
 
 				return l_component1;
@@ -624,14 +621,13 @@ namespace InstallerEditor
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";
 				l_Download.sourceurl = p_Path + "/ServicePacks/NT4_SP6a/HighEncryption_x86/Network/English/sp6i386.exe";
-				l_downloadDlg.Downloads.Add(l_Download);
-
+                l_downloadDlg.Children.Add(l_Download);
 
 				ComponentCmd l_component = new ComponentCmd(l_ComponentName);
 				if (p_Download) //download
 				{
 					l_component.command = "\"" + l_Download.destinationpath + "\\sp6i386.exe\"";
-					l_component.DownloadDialog = l_downloadDlg;
+                    l_component.Children.Add(l_downloadDlg);
 					l_component.note = "Neutral - WebSetup - ";
 				}
 				else
@@ -665,14 +661,14 @@ namespace InstallerEditor
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";
 				l_Download.sourceurl = p_Path + "/ServicePacks/2000_SP4/Network/English/W2KSP4_EN.EXE";
-				l_downloadDlg.Downloads.Add(l_Download);
+                l_downloadDlg.Children.Add(l_Download);
 
 
 				ComponentCmd l_component = new ComponentCmd(l_ComponentName);
 				if (p_Download) //download
 				{
 					l_component.command = "\"" + l_Download.destinationpath + "\\W2KSP4_EN.EXE\"";
-					l_component.DownloadDialog = l_downloadDlg;
+                    l_component.Children.Add(l_downloadDlg);
 					l_component.note = "English - WebSetup - ";
 				}
 				else
@@ -706,14 +702,13 @@ namespace InstallerEditor
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";
 				l_Download.sourceurl = p_Path + "/ServicePacks/2000_SP4/Express/English/SP4Express_EN.exe";
-				l_downloadDlg.Downloads.Add(l_Download);
-
+                l_downloadDlg.Children.Add(l_Download);
 
 				ComponentCmd l_component = new ComponentCmd(l_ComponentName);
 				if (p_Download) //download
 				{
 					l_component.command = "\"" + l_Download.destinationpath + "\\SP4Express_EN.exe\"";
-					l_component.DownloadDialog = l_downloadDlg;
+                    l_component.Children.Add(l_downloadDlg);
 					l_component.note = "English - WebSetup - ";
 				}
 				else

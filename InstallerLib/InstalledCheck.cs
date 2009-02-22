@@ -4,9 +4,18 @@ using System.ComponentModel;
 
 namespace InstallerLib
 {
+    public enum installcheck_comparison
+    {
+        match,
+        version,
+        exists,
+        contains
+    }
+
     /// <summary>
-    /// Tag InstalledCheck
+    /// An installed check.
     /// </summary>
+    [XmlNoChildren]
     public class InstalledCheck : XmlClassImpl
     {
         public InstalledCheck(string p_type)
@@ -45,49 +54,43 @@ namespace InstallerLib
 
         #region IXmlClass Members
 
-        public override void ToXml(XmlWriter p_Writer)
+        public override string XmlTag
         {
-            base.ToXml(p_Writer);
-
-            p_Writer.WriteStartElement("installedcheck");
-            p_Writer.WriteAttributeString("type", m_type);
-            p_Writer.WriteAttributeString("description", m_description);
-            OnXmlWriteTagInstalledCheck(new XmlWriterEventArgs(p_Writer));
-            p_Writer.WriteEndElement();
+            get { return "installedcheck"; }
         }
 
-        public override void FromXml(XmlElement p_Element)
+        protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            base.FromXml(p_Element);
-
-            if (p_Element.Attributes["type"] == null ||
-                p_Element.Attributes["type"].InnerText != m_type)
-                throw new ApplicationException("Invalid type");
-
-            if (p_Element.Attributes["description"] != null)
-            {
-                description = p_Element.Attributes["description"].InnerText;
-            }
-
-            OnXmlReadTagInstalledCheck(new XmlElementEventArgs(p_Element));
+            if (e.XmlElement.Attributes["description"] != null)
+                description = e.XmlElement.Attributes["description"].InnerText;
         }
+
+        protected override void OnXmlWriteTag(XmlWriterEventArgs e)
+        {
+            e.XmlWriter.WriteAttributeString("type", m_type);
+            e.XmlWriter.WriteAttributeString("description", m_description);
+            base.OnXmlWriteTag(e);
+        }
+
         #endregion
 
-        protected virtual void OnXmlWriteTagInstalledCheck(XmlWriterEventArgs e)
+        public static InstalledCheck CreateFromXml(XmlElement element)
         {
-        }
-        protected virtual void OnXmlReadTagInstalledCheck(XmlElementEventArgs e)
-        {
-        }
+            if (element.Attributes["type"] == null)
+                throw new Exception("Missing installcheck type");
 
-    }
+            InstalledCheck l_check;
+            if (element.Attributes["type"].InnerText == "check_file")
+                l_check = new InstalledCheckFile();
+            else if (element.Attributes["type"].InnerText == "check_registry_value")
+                l_check = new InstalledCheckRegistry();
+            else
+                throw new Exception(string.Format(
+                    "Invalid installcheck type: {0}", element.Attributes["type"]));
 
-    public enum installcheck_comparison
-    {
-        match,
-        version,
-        exists,
-        contains
+            l_check.FromXml(element);
+            return l_check;
+        }
     }
 }
 

@@ -253,7 +253,7 @@ namespace InstallerEditor
 
 				System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
 				doc.LoadXml(xmlComponent);
-				Component c = Component.CreateComponentFromXml(doc.DocumentElement);
+				Component c = Component.CreateFromXml(doc.DocumentElement);
 
 				Description = c.note;
 			}
@@ -265,8 +265,7 @@ namespace InstallerEditor
 
 				System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
 				doc.LoadXml(m_RawXml);
-				Component c = Component.CreateComponentFromXml(doc.DocumentElement);
-
+				Component c = Component.CreateFromXml(doc.DocumentElement);
 				return new Component[]{c};
 			}
 		}

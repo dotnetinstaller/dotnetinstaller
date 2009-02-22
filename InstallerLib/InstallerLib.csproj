@@ -56,18 +56,14 @@
     </Compile>
     <Compile Include="ConfigFile.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="ConfigurationCollection.cs" />
     <Compile Include="Download.cs" />
-    <Compile Include="DownloadCollection.cs" />
     <Compile Include="DownloadDialog.cs" />
     <Compile Include="EmbedFileCollection.cs" />
     <Compile Include="FileAttribute.cs" />
     <Compile Include="FileAttributeCollection.cs" />
     <Compile Include="InstalledCheck.cs" />
-    <Compile Include="InstalledCheckCollection.cs" />
     <Compile Include="InstalledCheckFile.cs" />
     <Compile Include="InstalledCheckOperator.cs" />
-    <Compile Include="InstalledCheckOperatorCollection.cs" />
     <Compile Include="InstalledCheckRegistry.cs" />
     <Compile Include="InstallerLinker.cs" />
     <Compile Include="InstallerLinkerArguments.cs" />
@@ -76,6 +72,7 @@
     <Compile Include="SetupConfiguration.cs" />
     <Compile Include="Template.cs" />
     <Compile Include="WebConfiguration.cs" />
+    <Compile Include="XmlClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="templates\english_template.xml" />

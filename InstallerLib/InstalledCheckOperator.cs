@@ -14,6 +14,8 @@ namespace InstallerLib
     /// <summary>
     /// An installed check operator that can combine multiple checks.
     /// </summary>
+    [XmlChild(typeof(InstalledCheck))]
+    [XmlChild(typeof(InstalledCheckOperator))]
     public class InstalledCheckOperator : XmlClassImpl
     {
         public InstalledCheckOperator()
@@ -42,85 +44,37 @@ namespace InstallerLib
             set { m_description = value; OnDescriptionChanged(); }
         }
 
-        private InstalledCheckCollection m_installedchecks = new InstalledCheckCollection();
-        [System.ComponentModel.Browsable(false)]
-        public InstalledCheckCollection installedchecks
-        {
-            get { return m_installedchecks; }
-            set { m_installedchecks = value; }
-        }
-
-        private InstalledCheckOperatorCollection m_installedcheckoperators = new InstalledCheckOperatorCollection();
-        [System.ComponentModel.Browsable(false)]
-        public InstalledCheckOperatorCollection installedcheckoperators
-        {
-            get { return m_installedcheckoperators; }
-            set { m_installedcheckoperators = value; }
-        }
-
         #region IXmlClass Members
 
-        public override void ToXml(XmlWriter p_Writer)
+        public override string XmlTag
         {
-            base.ToXml(p_Writer);
-
-            p_Writer.WriteStartElement("installedcheckoperator");
-            p_Writer.WriteAttributeString("type", m_type.ToString());
-            p_Writer.WriteAttributeString("description", m_description.ToString());
-
-            foreach (InstalledCheck i in installedchecks)
-            {
-                i.ToXml(p_Writer);
-            }
-
-            foreach (InstalledCheckOperator op in installedcheckoperators)
-            {
-                op.ToXml(p_Writer);
-            }
-
-            p_Writer.WriteEndElement();
+            get { return "installedcheckoperator"; }
         }
 
-        public override void FromXml(XmlElement p_Element)
+        protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            base.FromXml(p_Element);
-
-            if (p_Element.Attributes["type"] != null)
-            {
+            if (e.XmlElement.Attributes["type"] != null)
                 m_type = (InstalledCheckOperatorType)Enum.Parse(
-                    typeof(InstalledCheckOperatorType), p_Element.Attributes["type"].InnerText);
-            }
+                    typeof(InstalledCheckOperatorType), e.XmlElement.Attributes["type"].InnerText);
 
-            if (p_Element.Attributes["description"] != null)
-            {
-                m_description = p_Element.Attributes["description"].InnerText;
-            }
+            if (e.XmlElement.Attributes["description"] != null)
+                m_description = e.XmlElement.Attributes["description"].InnerText;
 
-            XmlNodeList l_InstalledChecksList = p_Element.SelectNodes("installedcheck");
-            foreach (XmlElement l in l_InstalledChecksList)
-            {
-                if (l.Attributes["type"] != null)
-                {
-                    InstalledCheck l_check = null;
-                    if (l.Attributes["type"].InnerText == "check_file")
-                        l_check = new InstalledCheckFile();
-                    else if (l.Attributes["type"].InnerText == "check_registry_value")
-                        l_check = new InstalledCheckRegistry();
-                    else
-                        throw new ApplicationException("Invalid type");
+            base.OnXmlReadTag(e);
+        }
 
-                    l_check.FromXml(l);
-                    installedchecks.Add(l_check);
-                }
-            }
+        protected override void OnXmlWriteTag(XmlWriterEventArgs e)
+        {
+            e.XmlWriter.WriteAttributeString("type", m_type.ToString());
+            e.XmlWriter.WriteAttributeString("description", m_description.ToString());
+            base.OnXmlWriteTag(e);
+        }
 
-            XmlNodeList l_InstalledCheckOperatorsList = p_Element.SelectNodes("installedcheckoperator");
-            foreach (XmlElement l in l_InstalledCheckOperatorsList)
-            {
-                InstalledCheckOperator op = new InstalledCheckOperator();
-                op.FromXml(l);
-                installedcheckoperators.Add(op);
-            }
+        public static InstalledCheckOperator CreateFromXml(XmlElement element)
+        {
+            InstalledCheckOperator result = new InstalledCheckOperator();
+            result.FromXml(element);
+            return result;
         }
 
         #endregion
