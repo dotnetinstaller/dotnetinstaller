@@ -209,6 +209,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ComponentsList.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ConfigFile.cpp"
 				>
 			</File>
@@ -328,6 +332,10 @@
 			</File>
 			<File
 				RelativePath=".\Component.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ComponentsList.h"
 				>
 			</File>
 			<File

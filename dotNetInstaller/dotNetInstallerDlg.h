@@ -7,6 +7,7 @@
 #include "afxwin.h"
 #include "HyperlinkStatic.h"
 #include "InstallerSetting.h"
+#include "ComponentsList.h"
 
 // finestra di dialogo CdotNetInstallerDlg
 class CdotNetInstallerDlg : public CDialog
@@ -41,7 +42,7 @@ public:
 	CButton m_btnInstall;
 	CButton m_btCancel;
 	CStatic m_lblMessage;
-	CCheckListBox m_ListBoxComponents;
+	CComponentsList m_ListBoxComponents;
 	CStatic m_PictureBox;
 	CStatic m_lblOperatingSystem;
 	INT_PTR RunDni(InstallerSetting & p_Setting, bool p_additional_config);
