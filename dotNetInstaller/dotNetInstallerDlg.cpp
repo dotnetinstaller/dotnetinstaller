@@ -92,6 +92,8 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 
 	//load xml file
 	this->SetWindowText(m_Settings.dialog_caption);
+    AfxGetApp()->m_pszAppName = _tcsdup(m_Settings.dialog_caption);
+
 	m_btCancel.SetWindowText(m_Settings.cancel_caption);
 	m_btnSkip.SetWindowText(m_Settings.skip_caption);
 	m_btnInstall.SetWindowText(m_Settings.install_caption);
