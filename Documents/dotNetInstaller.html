@@ -18,6 +18,10 @@
     </ul>
     <p>
         <img alt="dotNetInstaller Image" src="dotNetInstaller.JPG" /></p>
+
+<div id="TOC">
+</div>
+
     <h2>
         Introduction</h2>
     <p>
@@ -785,17 +789,17 @@
             </tr>
             <tr>
                 <td style="font-weight: bold;">
-                    /Launcher&nbsp;&lt;Program&nbsp;Path&gt;</td>
+                    /Launcher &lt;Program Path&gt;</td>
                 <td>
                     If an install requires a reboot and then a resumption of dotNetInstaller, this argument
                     specifies the path to a different program to execute after the system boots back
-                    up. &nbsp;If the path contains spaces, the path must be enclosed in double quotes.
-                    &nbsp;This argument is especially useful if dotNetInstaller has been distributed
+                    up. If the path contains spaces, the path must be enclosed in double quotes.
+                    This argument is especially useful if dotNetInstaller has been distributed
                     as part of a self-extracting executable (SFX) package.</td>
             </tr>
             <tr>
                 <td style="font-weight: bold;">
-                    /LauncherArgs&nbsp;&lt;Program&nbsp;Arguments&gt;</td>
+                    /LauncherArgs &lt;Program Arguments&gt;</td>
                 <td>
                     Used in conjuction with the /Launcher argument above; specified command-line arguments
                     to be used with the /Launcher argument's command.<br />
@@ -819,7 +823,7 @@
             </tr>
             <tr>
                 <td style="font-weight: bold;">
-                    /CompleteCommandArgs&nbsp;&lt;Program&nbsp;Arguments&gt;
+                    /CompleteCommandArgs &lt;Program Arguments&gt;
                 </td>
                 <td>
                     Specify additional arguments for the complete_command. If your complete command is an MSI this lets
@@ -2644,8 +2648,8 @@
         with a 3rd party packaging tool instead of the /Embed options.</p>
     <p>
         The
- <a target=_blank href="http://7zsfx.org/">7zSFX project</a>, based on the
-        <a target=_blank href="http://7-zip.org/">7-Zip project</a>, provides a simple means for
+ <a target="_blank" href="http://7zsfx.org/">7zSFX project</a>, based on the
+        <a target="_blank" href="http://7-zip.org/">7-Zip project</a>, provides a simple means for
         turning an archive file into a setup file.  7-Zip SFX modules can be customized to perform
         specific actions whenever the self-extracting archive is executed.</p>
     <p>
@@ -2658,11 +2662,11 @@
         </ol>
     <p>
         A basic setup SFX can be created as follows (please refer to the
-        <a target=_blank href="http://7zsfx.org/">7zSFX website</a> for a complete discussion of
+        <a target="_blank" href="http://7zsfx.org/">7zSFX website</a> for a complete discussion of
         all SFX capabilities):
         </p>
         <ol style="margin-top: 0">
-            <li>Download an SFX module from the <a target=_blank href="http://7zsfx.org/">7zSFX
+            <li>Download an SFX module from the <a target="_blank" href="http://7zsfx.org/">7zSFX
                 website</a></li>
             <li>Create a text file in UTF-8 format </li>
             <li>Save the following text to the UTF-8 file:
@@ -2677,7 +2681,7 @@
             <li>Create a 7-Zip archive (*.7z) of all the installation files</li>
             <li>Execute the following command to create the self-extracting executable:
                 <blockquote style="margin-top: 0; margin-bottom: 0; font-family: Monospace">
-                copy /b &lt;7-Zip SFX Module&gt; + [&lt;7-Zip UTF-8 Config&gt; +] &lt;7-Zip Archive File&gt; &nbsp; SetupSFX.exe
+                copy /b &lt;7-Zip SFX Module&gt; + [&lt;7-Zip UTF-8 Config&gt; +] &lt;7-Zip Archive File&gt; SetupSFX.exe
                 </blockquote></li>
         </ol>
     <p>
