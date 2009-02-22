@@ -79,6 +79,16 @@ namespace InstallerLib
                     }
                 }
 
+                if (args.embedFiles != null)
+                {
+                    foreach (string filename in args.embedFiles)
+                    {
+                        args.WriteLine(string.Format(" {0}", filename));
+                        string fullpath = Path.Combine(args.apppath, filename);
+                        files.Add(new string[] { fullpath, filename });
+                    }
+                }
+
                 string cabname = Path.Combine(Path.GetDirectoryName(args.output), "Setup.cab");
                 args.WriteLine(string.Format("Writing \"{0}\"", cabname));
                 cab.CompressFileList(files, cabname, true, 0);

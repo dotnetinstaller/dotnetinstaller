@@ -22,6 +22,8 @@ namespace InstallerLib
         public string apppath;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Verbose output", LongName = "Verbose", ShortName = "v")]
         public bool verbose;
+        [Argument(ArgumentType.MultipleUnique, HelpText = "Additional files to embed", LongName = "EmbedFile", ShortName = "f")]
+        public string[] embedFiles;
 
         public void Validate()
         {
@@ -46,6 +48,16 @@ namespace InstallerLib
 
             if (!string.IsNullOrEmpty(apppath) && !Directory.Exists(apppath))
                 throw new DirectoryNotFoundException(apppath);
+
+            if (embedFiles != null)
+            {
+                foreach (string filename in embedFiles)
+                {
+                    string combinedFilename = Path.Combine(apppath, filename);
+                    if (!File.Exists(combinedFilename))
+                        throw new FileNotFoundException(combinedFilename);
+                }
+            }
         }
 
         public void WriteLine(string s)
