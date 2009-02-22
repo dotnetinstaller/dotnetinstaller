@@ -44,7 +44,7 @@ namespace InstallerEditor
 		}
 
 		private installcheck_registrytype m_fieldtype;
-		[Description("Specifies the type of the registry field, can be 'REG_DWORD' (for numeric value) or 'REG_SZ' (for string value). (REQUIRED)")]
+		[Description("Specifies the type of the registry field, can be 'REG_DWORD' (for numeric value) or 'REG_SZ' (for string value) or 'REG_MULTI_SZ' (for multi line strings). (REQUIRED)")]
 		public installcheck_registrytype fieldtype
 		{
 			get{return m_fieldtype;}
@@ -60,7 +60,7 @@ namespace InstallerEditor
 		}
 
 		private installcheck_rootkey m_rootkey;
-		[Description("Root key, from which to begin the registry search from")]
+    [Description("Root key, from which to begin the registry search from. (REQUIRED)")]
 		public installcheck_rootkey rootkey
 		{
 			get{return m_rootkey;}
@@ -107,7 +107,8 @@ namespace InstallerEditor
 	public enum installcheck_registrytype
 	{
 		REG_DWORD,
-		REG_SZ
+		REG_SZ,
+		REG_MULTI_SZ
 	}
 	
 	public enum installcheck_rootkey

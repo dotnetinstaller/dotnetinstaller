@@ -65,7 +65,8 @@ namespace InstallerEditor
 	{
 		match,
 		version,
-		exists
+		exists,
+		contains
 	}
 }
 

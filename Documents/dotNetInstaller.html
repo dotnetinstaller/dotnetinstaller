@@ -1082,90 +1082,74 @@
            </td>
         </tr>
      </tbody>
-  </table>
-		<br>
-
-
-			<table cellpadding="0" cellspacing="0" border="1">
-				<tbody>
-					<tr>
-						<th bgcolor="#ccccff" colspan="2">installedcheck (type='check_registry_value')</th>
-					</tr>
-					<tr>
-						<td colspan="2">The application check if a component is installed looking for the specified registry information or file.</td>
-					</tr>
-					<tr>
-						<td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
-						<td>
-							<table cellpadding="0" cellspacing="0" border="1">
-								<tbody>
-									<tr>
-										<td>
-											<b>type</b>
-										</td>
-										<td>
-											'check_registry_value' - Type of the check, can be 'check_registry_value' to check for a specific value in the registry or
-											'check_file' to check for a specific file.
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<b>rootkey</b>
-										</td>
-										<td>The root key for the path property.</td>
-									</tr>
-									<tr>
-										<td>
-											<b>path</b>
-										</td>
-										<td>
-											Specifies the registry path to search for the registry value specified, the root of this path must be specified in the rootkey
-											property. Example for this property: 'SOFTWARE\\MyCompany'
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<b>fieldname</b>
-										</td>
-										<td>The registry field name in the specified path, for example 'Installed'.</td>
-									</tr>
-									<tr>
-										<td>
-											<b>fieldvalue</b>
-										</td>
-										<td>The registry value used to check if the component is installed, this value is converted based on the value type specified.</td>
-									</tr>
-									<tr>
-										<td>
-											<b>fieldtype</b>
-										</td>
-										<td>Specifies the type of the registry field, can be 'REG_DWORD' (for numeric value) or 'REG_SZ' (for string value).</td>
-									</tr>
-									<tr>
-										<td>
-											<b>comparison</b>
-										</td>
-										<td>
-											Comparison mode; can be 'exists' to check if the registy key exists; 'match' to check if the exact value is present in the
-											registry or 'version' to compare the registry version with the specified version and return true if the registry version is
-											equal or greater then the version specified.
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</td>
-					</tr>
-					<tr>
-						<td bgcolor="#ccccff" valign="top">CHILDREN:</td>
-						<td>
-							<table cellpadding="0" cellspacing="0" border="0">
-								<tbody></tbody>
-							</table>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</br>
+  </table><br>
+  	
+  	
+  <table cellpadding="0" cellspacing="0" border="1">
+     <tbody>
+        <tr>
+           <th bgcolor="#ccccff" colspan="2">installedcheck (type='check_registry_value')</th>
+        </tr>
+        <tr>
+           <td colspan="2">The application check if a component is installed looking for the specified registry information or file.</td>
+        </tr>
+        <tr>
+           <td bgcolor="#ccccff" valign="top">ATTRIBUTES:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="1">
+                 <tbody>
+                    <tr>
+                       <td><b>type</b></td>
+                       <td>'check_registry_value' - Type of the check, can be 'check_registry_value' to check for a specific value in the registry or
+                          'check_file' to check for a specific file.
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>rootkey</b></td>
+                       <td>The root key for the path property.</td>
+                    </tr>
+                    <tr>
+                       <td><b>path</b></td>
+                       <td>Specifies the registry path to search for the registry value specified, the root of this path must be specified in the rootkey
+                          property. Example for this property: 'SOFTWARE\\MyCompany'
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>fieldname</b></td>
+                       <td>The registry field name in the specified path, for example 'Installed'.</td>
+                    </tr>
+                    <tr>
+                       <td><b>fieldvalue</b></td>
+                       <td>The registry value used to check if the component is installed, this value is converted based on the 'fieldtype' specified.</td>
+                    </tr>
+                    <tr>
+                       <td><b>fieldtype</b></td>
+                       <td>Specifies the type of the registry field, can be 'REG_DWORD' (for numeric value), 'REG_SZ' (for string value) or 'REG_MULTI_SZ'
+                          (for multiline string value).
+                       </td>
+                    </tr>
+                    <tr>
+                       <td><b>comparison</b></td>
+                       <td>Comparison mode; can be 'exists' to check if a registy field for an registry key exists; for fieldtype 'REG_SZ' or 'REG_MULTI_SZ'
+                          it can be 'contains' to check if the string value contain the string specified with 'fieldvalue'; 'match' to check if the
+                          exact value is present in the registry or 'version' to compare the registry version with the specified version and return
+                          true if the registry version is equal or greater then the version specified.
+                       </td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
+        </tr>
+        <tr>
+           <td bgcolor="#ccccff" valign="top">CHILDREN:</td>
+           <td>
+              <table cellpadding="0" cellspacing="0" border="0">
+                 <tbody></tbody>
+              </table>
+           </td>
+        </tr>
+     </tbody>
+  </table></br>
 		<!-- END table for XML configuration help -->
 		
 		<h3>1.2.0.0 to 1.3.2.0 changes of XML file</h3>
@@ -1181,7 +1165,8 @@
 		</ul>
 		<p>Changed attributes:</p>
 		<ul>
-			<li>configurations\configuration\components\component\installedcheck\comparison can now have the value 'exists'</li>
+			<li>configurations\configuration\components\component\installedcheck\comparison can now have the values 'match', 'version', 'exists' or 'contains'</li>
+			<li>configurations\configuration\components\component\installedcheck\fieldtype can now have the values 'REG_DWORD', 'REG_SZ' or 'REG_MULTI_SZ'</li>
 		</ul>
 
 		<h3>1.1.0.2 to 1.2.0.0 changes of XML file</h3>

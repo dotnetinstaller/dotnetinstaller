@@ -123,9 +123,9 @@
 		<attribute name="rootkey" description="The root key for the path property." />
 		<attribute name="path" description="Specifies the registry path to search for the registry value specified, the root of this path must be specified in the rootkey property. Example for this property: 'SOFTWARE\\MyCompany'" />
 		<attribute name="fieldname" description="The registry field name in the specified path, for example 'Installed'." />
-		<attribute name="fieldvalue" description="The registry value used to check if the component is installed, this value is converted based on the value type specified." />
-		<attribute name="fieldtype" description="Specifies the type of the registry field, can be 'REG_DWORD' (for numeric value) or 'REG_SZ' (for string value)." />
-		<attribute name="comparison" description="Comparison mode; can be 'exists' to check if the registy key exists; 'match' to check if the exact value is present in the registry or 'version' to compare the registry version with the specified version and return true if the registry version is equal or greater then the version specified." />
+		<attribute name="fieldvalue" description="The registry value used to check if the component is installed, this value is converted based on the 'fieldtype' specified." />
+		<attribute name="fieldtype" description="Specifies the type of the registry field, can be 'REG_DWORD' (for numeric value), 'REG_SZ' (for string value) or 'REG_MULTI_SZ' (for multiline string value)." />
+		<attribute name="comparison" description="Comparison mode; can be 'exists' to check if a registy field for an registry key exists; for fieldtype 'REG_SZ' or 'REG_MULTI_SZ' it can be 'contains' to check if the string value contain the string specified with 'fieldvalue'; 'match' to check if the exact value is present in the registry or 'version' to compare the registry version with the specified version and return true if the registry version is equal or greater then the version specified." />
 	</element>
 	
 </elements>

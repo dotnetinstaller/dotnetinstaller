@@ -29,7 +29,6 @@ struct installedcheck
 	virtual bool IsInstalled() = 0;
 };
 
-
 struct installedcheck_check_registry_value : public installedcheck
 {
 	CString path; //percorso del registry
@@ -149,8 +148,85 @@ struct installedcheck_check_registry_value : public installedcheck
 				}
         else if (comparison == TEXT("exists"))
         {
-          return true;  
+          return true;
 				}
+				else if (comparison == TEXT("contains"))
+				{
+					if (registryValue.Find(fieldvalue) >= 0)
+						return true;
+					else
+						return false;
+				}
+				else
+				{
+					AfxMessageBox(TEXT("Invalid comparison type, expected match or version."), MB_OK|MB_ICONSTOP);
+					return false;
+				}
+			}
+			else if (fieldtype == TEXT("REG_MULTI_SZ"))
+			{
+				DWORD l_dwordLen = 0;//number of bytes
+				DWORD l_type = REG_MULTI_SZ;
+				l_result = RegQueryValueEx(l_HKey,fieldname, NULL, &l_type, NULL, &l_dwordLen);
+				if (l_result != ERROR_SUCCESS)
+				{
+					RegCloseKey(l_HKey);
+					return false;
+				}
+
+
+				size_t numberOfChars = l_dwordLen / sizeof(TCHAR);
+				TCHAR * charsRegValue = new TCHAR[ numberOfChars + 1 ];
+				ZeroMemory(charsRegValue, numberOfChars+1);
+
+				l_result = RegQueryValueEx(l_HKey,fieldname, NULL, &l_type, (LPBYTE)charsRegValue, &l_dwordLen);
+				if (l_result != ERROR_SUCCESS)
+				{
+					RegCloseKey(l_HKey);
+					return false;
+				}
+
+				RegCloseKey(l_HKey);
+				// Check for null values and replace them with spaces.  Because the return value from the 
+				// registry can be a series of null terminated strings, it's easiest to replace the null values 
+				// at the end of each string with a space in order to make it easier to deal with.
+				// There's probably a better way to do this, but this gets the job done.
+				for (int ii = 0; ii < (int)numberOfChars; ii++)
+				{
+					if (charsRegValue[ii] == 0)
+					{
+						charsRegValue[ii] = ' ';
+					}
+				}
+				CString registryValue = charsRegValue;
+				delete [] charsRegValue;
+
+				if (comparison == TEXT("match"))
+				{
+					if (fieldvalue == registryValue)
+						return true;
+					else
+						return false;
+				}
+				else if (comparison == TEXT("version"))
+				{
+					if ( DVLib::stringVersionCompare(fieldvalue, registryValue) <= 0 )
+						return true;
+					else
+						return false;
+				}
+				else if (comparison == TEXT("exists"))
+        {
+          return true;
+				}
+				else if (comparison == TEXT("contains"))
+				{
+					if (registryValue.Find(fieldvalue) >= 0)
+						return true;
+					else
+						return false;
+				}
+
 				else
 				{
 					AfxMessageBox(TEXT("Invalid comparison type, expected match or version."), MB_OK|MB_ICONSTOP);
