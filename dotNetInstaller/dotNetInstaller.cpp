@@ -46,26 +46,26 @@ BOOL CdotNetInstallerApp::InitInstance()
 
 	//AfxEnableControlContainer();
 
-	ParseCommandLine(commandLineInfo);
-
-    ApplicationLog.Write(TEXT("-------------------------------------------------------------------"));
-    ApplicationLog.Write(TEXT("dotNetInstaller (DNI) started, version "), TEXT(VERSION_VALUE));
-    ApplicationLog.Write(TEXT(VERSION_LEGALCOPYRIGHT_VALUE));
-    ApplicationLog.Write(TEXT("Operating system: "), DVLib::GetOsVersionString());
-    ApplicationLog.Write(TEXT("-------------------------------------------------------------------"));
-
-    std::map<std::wstring, std::wstring>::iterator arg = commandLineInfo.m_componentCmdArgs.begin();
-    while(arg != commandLineInfo.m_componentCmdArgs.end())
-    {
-        ApplicationLog.Write((TEXT("Component arguments: \"") + arg->first + TEXT("\": ")).c_str(), arg->second.c_str());
-        arg ++;
-    }
-
-	TiXmlDocument m_Document;
-	InstallerSetting m_Setting;
-
 	try
 	{
+		ParseCommandLine(commandLineInfo);
+
+		ApplicationLog.Write(TEXT("-------------------------------------------------------------------"));
+		ApplicationLog.Write(TEXT("dotNetInstaller (DNI) started, version "), TEXT(VERSION_VALUE));
+		ApplicationLog.Write(TEXT(VERSION_LEGALCOPYRIGHT_VALUE));
+		ApplicationLog.Write(TEXT("Operating system: "), DVLib::GetOsVersionString());
+		ApplicationLog.Write(TEXT("-------------------------------------------------------------------"));
+
+		std::map<std::wstring, std::wstring>::iterator arg = commandLineInfo.m_componentCmdArgs.begin();
+		while(arg != commandLineInfo.m_componentCmdArgs.end())
+		{
+			ApplicationLog.Write((TEXT("Component arguments: \"") + arg->first + TEXT("\": ")).c_str(), arg->second.c_str());
+			arg ++;
+		}
+
+		TiXmlDocument m_Document;
+		InstallerSetting m_Setting;
+
 		//load xml file
 		bool l_bLoadSuccess = LoadXmlSettings(m_Document);
 
