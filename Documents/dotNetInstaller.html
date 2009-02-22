@@ -6,7 +6,9 @@
         <link href="style.css" type="text/css" rel="stylesheet" />
     </head>
 	<body>
+	
 		<h1>dotNetInstaller - Setup Bootstrapper for .NET Application</h1>
+		
         <small>Lib Version: 1.2.2.0 BETA<br />
          Doc Version: 1.5 DRAFT</small>
         <br />
@@ -17,48 +19,10 @@
         </ul>
         
 		<p><img alt="Sample Image - maximum width is 600 pixels" src="dotNetInstaller.JPG" /></p>
-		<!-------------------------------     START      --------------------------->
+
+        <div id="TOC"></div>	
 		
-		<ul>
-			<li><a href="#Introduction">Introduction</a></li>
-			<li><a href="#Samples">Samples</a></li>
-			<li><a href="#TheEditor">The editor: InstallerEditor.exe</a></li>
-			<li><a href="#Tutorials">Tutorials</a>
-			    <ul>
-				    <li><a href="#StandaloneSetup">How to create a Standalone Setup to install .NET Framework and your msi setup</a></li>
-				    <li><a href="#WebSetup">How to create a Web Setup to install .NET Framework and your msi setup</a></li>
-			    </ul>
-			</li>
-			<li><a href="#Pathvariables">Path variables</a></li>
-			<li><a href="#CheckInstalled">Check if the component is already installed</a></li>
-			<li><a href="#CheckOS">Check the operating system version</a></li>
-			<li><a href="#MultilanguageFeatures">Multilanguage features</a>
-			    <ul>
-				    <li><a href="#UTF8AndUnicode">UTF-8 and Unicode</a></li>
-			    </ul>
-			</li>
-			<li><a href="#DeploydotNetInstaller">Deploy dotNetInstaller</a></li>
-			<li><a href="#XMLConfigurationFile">XML configuration file</a>
-			    <ul>
-				    <li><a href="#1102to1200ChangesXML">1.1.0.2 to 1.2.0.0 changes of XML file</a></li>
-			    </ul>
-			</li>
-			<li><a href="#SystemRequirementsNotes">Software Requirements</a>
-			    <ul>
-				    <li><a href="#dotNET">Microsoft .NET Framework 1.1</a></li>
-				    <li><a href="#MDAC">Microsoft Data Access Components 2.8</a></li>
-				    <li><a href="#IE6">Microsoft Internet Explorer 6 Service Pack 1</a></li>
-				    <li><a href="#JET4">Microsoft JET 4.0 Service Pack 8</a></li>
-				    <li><a href="#WindowsInstaller20">Windows Installer 2.0</a></li>
-			    </ul>
-			</li>
-			<li><a href="#Notes">Notes</a></li>
-			<li><a href="#FutureWorks">Summary of future works</a></li>
-			<li><a href="#History">History</a></li>
-			<li><a href="#License">License</a></li>
-		</ul>
-		
-		<h2><a name="Introduction">Introduction</a></h2>
+		<h2>Introduction</h2>
 		<p>This application doesn't replace tool like InstallShield, Wise or Visual Studio Setup and Deployment Project; my goal is to create an application to help the users to installing the correct prerequisites components. 
 		<br />Today applications often need to install several components to work properly: Windows Service Pack, Internet Explorer, MDAC, .NET Framework, ... 
 		<br />With this tool the developer can define the application prerequisites and install the correct version of these components in the correct order based on the user operating system type and language, allow the user to download these components from the web or install these components directly from his media (usually a CDROM).</p>
@@ -90,7 +54,7 @@
         </p>
 	
 	
-		<h2><a name="Samples">Samples</a></h2>
+		<h2>Samples</h2>
 		<p>In the attached zip file you can find 2 samples: a standalone setup and a web setup. Both setups are configured to correctly install these components:</p>
 		<ul>
 			<li>NT4 Sp6</li>
@@ -112,10 +76,9 @@
 		</ul>
 		<p>The configuration files also check and install all the requirements software. For more informations on software requirements look at the <a href="#SystemRequirementsNotes">Software Requirements</a> section.</p>
 		<p>I have created the configuration files for English and Italian operating system, but you can include your custom language easily.</p>
-		<p>You can download and try dotNetInstaller with the web setup of InstallerEditor: <a href="http://www.devage.com/dotNetInstaller/EditorSetup/InstallerEditorWebSetup.exe">http://www.devage.com/dotNetInstaller/EditorSetup/InstallerEditorWebSetup.exe</a>. Note that this sample install only the english version of the components (because I don't have to much disk space on the web server) and I haven't included any service packs, so you must have an English OS with Windows 2000 or later.</p>
 		<p>For other samples or informations look at the attached zip file.</p>
 
-		<h2><a name="TheEditor">The editor: InstallerEditor.exe</a></h2>
+		<h2>The editor: InstallerEditor.exe</h2>
 		<img src="InstallerEditor.JPG" alt="InstallerEditor image" />
 		<p>You can create two types of configuration files with the editor: </p>
 		<ul>
@@ -139,9 +102,9 @@
 		<p>Remember that the order of the components that you see in the editor is the same order that the setup use to install the same components, so be carefull to insert the components in the correct order. In this release you cannot change the order of the components from the editor, if you need this feature you must change the XML manually.<br />
 		You can use the "Add ->Component Wizard ..." menu when adding new components to automatically add the most important components like: Service Pack 6a for NT4, Internet Explorer 6, .NET 1.1, MDAC 2.8, ...</p>
 		
-		<h2><a name="Tutorials">Tutorials</a></h2>
+		<h2>Tutorials</h2>
 		
-		<h3><a name="StandaloneSetup">How to create a Standalone Setup to install .NET Framework and your msi setup</a></h3>
+		<h3>How to create a Standalone Setup to install .NET Framework and your msi setup</h3>
 		<p>We create a CDROM with your MSI package, SupportFiles (like .NET Framework), configuration file configuration.xml) and a bitmap (banner.bmp). All these components are installed directly from the CDROM.</p>
 		<ol>
 			<li>Create a folder that represents your final distribution CDROM, for example 'c:\MyRelease\' .</li>
@@ -181,7 +144,7 @@
 		<img src="StandaloneSetup.jpg" alt="StandaloneSetup image" />
 			
 			
-		<h3><a name="WebSetup">How to create a Web Setup to install .NET Framework and your msi setup</a></h3>
+		<h3>How to create a Web Setup to install .NET Framework and your msi setup</h3>
 		
 		<h4>Create the support files directory</h4>
 		<p>We create a web site with your MSI package and all the support files (like .NET Framework).</p>
@@ -228,13 +191,12 @@
 			<li>Create a zip file 'MyWebSetup.zip' (or a Self Extracting File) with the name 'MyWebSetup.zip' or '.exe' with the contents of the directory 'MyWebSetup' (contents:'unicows.dll', 'dotnetInstaller.exe', 'banner.bml' and 'configuration.xml').</li>
 			<li>Copy 'MyWebSetup.zip' under your 'http://www.mysite.com/MyRelease/'.</li>
 		</ol>
-		<p>Now the user must only download the 'MyWebSetup.zip' (< 400 Kb) and execute dotNetInstaller (or using a Self Extractor file you can automatically run it), this application automatically download and install the required components, in this example .NET Framework and one MSI package.<br />
+		<p>Now the user must only download the 'MyWebSetup.zip' (&lt; 400 Kb) and execute dotNetInstaller (or using a Self Extractor file you can automatically run it), this application automatically download and install the required components, in this example .NET Framework and one MSI package.<br />
 		This is the diagram of a web setup project:</p>
 		<img src="WebSetup.jpg" alt="WebSetup image" />
-		<p>I create a web setup to install this editor, you can download the bootstrapper from: <a href="http://www.devage.com/dotNetInstaller/EditorSetup/InstallerEditorWebSetup.exe">http://www.devage.com/dotNetInstaller/EditorSetup/InstallerEditorWebSetup.exe</a>.</p>
 		
-		<h2><a name="Pathvariables">Path variables</a></h2>
-		These are the variables that can be used in the configuration file in all the attribute that contains a path (<code lang="text">dialog_bitmap</code>,<code lang="text">command</code>, ...):
+		<h2>Path variables</h2>
+		<p>These are the variables that can be used in the configuration file in all the attribute that contains a path (<code lang="text">dialog_bitmap</code>,<code lang="text">command</code>, ...):</p>
 		<ul>
 			<li><code lang="text">#APPPATH</code> - This string is replaced with the directory of dotNetInstaller.exe program.</li>
 			<li><code lang="text">#SYSTEMPATH</code> - This string is replaced with the windows system directory (using <code>GetSystemDirectory()</code> API, usually c:\WINNT\System32 ).</li>
@@ -242,7 +204,7 @@
 			<li><code lang="text">#TEMPPATH</code> - This string is replaced with the temp directory (using <code>GetTempPath()</code> API, usually C:\Documents and Settings\[User]\Local Settings\Temp ).</li>
 		</ul>
 		
-		<h2><a name="CheckInstalled">Check if the component is already installed</a></h2>
+		<h2>Check if the component is already installed</h2>
 		<p>You can use the <code lang="text">installedcheck</code> element to check if a 
 			component is already installed, for example you can check if the .NET Framework 
 			1.1 is installed by reading this registry key SOFTWARE\Microsoft\NET Framework 
@@ -256,7 +218,7 @@
 			(check if the exact value is present) or 'version' (check if the version is greater or equal).</p>
 		<p>You can look at the example to see the check used with the most common components: .NET Framework, Internet Explorer, MDAC, JET and more.</p>
 		
-		<h2><a name="CheckOS">Check the operating system version</a></h2>
+		<h2>Check the operating system version</h2>
 		<p>This is the operating system table used to install a component only in a 
 			specific operating system version.</p>
 		<table border="1">
@@ -384,18 +346,18 @@
 			installed, but for some components is necessary to check the operating system 
 			version (especially for service pack or windows update).</p>
 
-		<h2><a name="MultilanguageFeatures">Multilanguage features</a></h2>
+		<h2>Multilanguage features</h2>
 		<p>dotNetInstaller reads all the captions and messages from the configuration file; so to create your custom language you can easily edit the configuration file using your language.</p>
 		<p>With InstallerEditor you can easily create custom languages using template files. For now there are 3 default files: english_template.xml, french_template.xml and italian_template.xml. The editor can be configured to use one of these files so, when you create new items in the editor, default values are readed from the template selected.<br />
 		To configure the list of templates available you can use the "Tools->Customize Templates" menu. To select a template you can use the "Tools->Template for new Item" menu.</p>
 		<p>Of course you can create your custom template files following the xml structure of one of the existing files.</p>
 		
-		<h3><a name="UTF8AndUnicode">UTF-8 and Unicode</a></h3>
+		<h3>UTF-8 and Unicode</h3>
 		<p>To full support non english language the configuration file uses UTF-8 encoding.<br />
 		To read and use correclty this encoding I have compiled dotNetInstaller with UNICODE. The editor is already full compatible with unicode thanks to .NET that use always unicode strings. Remember that unicode is not supported on Windows 95, 98 and ME; so if you use one of these operating system you must copy Microsoft Layer for Unicode (<b>unicows.dll</b>) in the same path of dotNetInstaller.exe (see also Deploy dotNetInstaller section).</p>
 		<p>Microsoft Link: <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/mslu/winprog/microsoft_layer_for_unicode_on_windows_95_98_me_systems.asp">Microsoft Layer for Unicode on Windows 95/98/Me Systems</a></p>
 		
-		<h2><a name="DeploydotNetInstaller">Deploy dotNetInstaller</a></h2>
+		<h2>Deploy dotNetInstaller</h2>
 		<p>You can deploy dotNetInstaller in 2 ways, these are the files that you must inlcude:</p>
 		<ul>
 			<li>Using directly dotNetInstaller.exe:
@@ -414,7 +376,7 @@
 		</ul>
 		<p><b>IMPORTANT NOTE</b>: On Windows 95, 98 and ME operating system you must deploy unicows.dll in the same path of dotNetInstaller.exe (or of the executable generated by the editor).</p>
 			
-		<h2><a name="XMLConfigurationFile">XML configuration file</a></h2>
+		<h2>XML configuration file</h2>
 		<p>Is recommended to use the editor InstallerEditor to create or modify your configuration files or I suggest to use a normal text editor or xml editor compatible with UTF-8. The configuration file must be written using UTF-8 encoding.<br />
 		NOTE:If you want to insert the &quot; char in the XML manually you must write &amp;quot; .</p>
 		
@@ -1249,7 +1211,7 @@
     </table>
 <!-- END table for XML configuration help -->
 		
-		<h3><a name="1102to1200ChangesXML">1.1.0.2 to 1.2.0.0 changes of XML file</a></h3>
+		<h3>1.1.0.2 to 1.2.0.0 changes of XML file</h3>
 		<p>If you already have some files compatible with dotNetInstaller 1.1.0.2 you can open these files with the editor, the editor automatically removes the old attributes and adds the new attributes.<br />
 		Removed attributes:</p>
 		<ul>
@@ -1272,13 +1234,13 @@
 			<li>configurations\configuration\auto_close_if_installed</li>
 		</ul>
 		
-		<h2><a name="SystemRequirementsNotes">Software Requirements</a></h2>
+		<h2>Software Requirements</h2>
 		<p>dotNetInstaller is compatible with Windows 98, Windows 98 Second Edition, Windows ME, Windows NT4, Windows 2000, Windows XP, Windows Server 2003.<br />
 		Some other applications, like .NET Framework 1.1, require some system components. Here you can find some informations about common components requirements.</p>
 		
 		<p>Consider that these components are available also on the <a href="http://windowsupdate.microsoft.com/">Windows Update web site</a>.</p>
 		
-		<h3><a name="dotNET">Microsoft .NET Framework 1.1</a></h3>
+		<h3>Microsoft .NET Framework 1.1</h3>
 		<table border="1" cellpadding="0" cellspacing="0">
 			<tr>
 				<td><strong>OPERATING SYSTEM</strong></td>
@@ -1325,10 +1287,10 @@
 		<p>Microsoft links:<br />
 		<a href="http://msdn.microsoft.com/netframework/technologyinfo/howtoget/default.aspx">Download</a><br />
 		<a href="http://msdn.microsoft.com/netframework/technologyinfo/sysreqs/default.aspx">System Requirements</a><br />
-		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyId=04DBAF2E-61ED-43F4-8D2A-CCB2BAB7B8EB&displaylang=en">Language Packs</a>
+		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyId=04DBAF2E-61ED-43F4-8D2A-CCB2BAB7B8EB&amp;displaylang=en">Language Packs</a>
 		</p>
 		
-		<h3><a name="MDAC">Microsoft Data Access Components 2.7 Sp1 Refresh</a></h3>
+		<h3>Microsoft Data Access Components 2.7 Sp1 Refresh</h3>
 		<table border="1" cellpadding="0" cellspacing="0">
 			<tr>
 				<td><strong>OPERATING SYSTEM</strong></td>
@@ -1377,10 +1339,10 @@
 		<p>Microsoft links:<br />
 		<a href="http://msdn.microsoft.com/data/downloads/updates/default.aspx">Data Access Downloads</a><br />
 		<a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;271908">INFO: MDAC version 2.6 and later do not contain Jet or Desktop ODBC drivers</a><br />
-		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=9ad000f2-cae7-493d-b0f3-ae36c570ade8&displaylang=en">Download MDAC 2.7 Sp1 Refresh</a>
+		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=9ad000f2-cae7-493d-b0f3-ae36c570ade8&amp;displaylang=en">Download MDAC 2.7 Sp1 Refresh</a>
 		</p>
 		
-		<h3><a name="MDAC">Microsoft Data Access Components 2.8</a></h3>
+		<h3>Microsoft Data Access Components 2.8</h3>
 		<table border="1" cellpadding="0" cellspacing="0">
 			<tr>
 				<td><strong>OPERATING SYSTEM</strong></td>
@@ -1424,10 +1386,10 @@
 		<p>Microsoft links:<br />
 		<a href="http://msdn.microsoft.com/data/downloads/updates/default.aspx">Data Access Downloads</a><br />
 		<a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;271908">INFO: MDAC version 2.6 and later do not contain Jet or Desktop ODBC drivers</a><br />
-		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=6c050fe3-c795-4b7d-b037-185d0506396c&displaylang=en">Download MDAC 2.8</a>
+		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=6c050fe3-c795-4b7d-b037-185d0506396c&amp;displaylang=en">Download MDAC 2.8</a>
 		</p>
 		
-		<h3><a name="IE6">Microsoft Internet Explorer 6 Service Pack 1</a></h3>
+		<h3>Microsoft Internet Explorer 6 Service Pack 1</h3>
 		<table border="1" cellpadding="0" cellspacing="0">
 			<tr>
 				<td><strong>OPERATING SYSTEM</strong></td>
@@ -1472,7 +1434,7 @@
 		</p>
 		
 
-		<h3><a name="JET4">Microsoft JET 4.0 Service Pack 8</a></h3>
+		<h3>Microsoft JET 4.0 Service Pack 8</h3>
 		<table border="1" cellpadding="0" cellspacing="0">
 			<tr>
 				<td><strong>OPERATING SYSTEM</strong></td>
@@ -1505,7 +1467,7 @@
 		<a href="http://support.microsoft.com/default.aspx?scid=kb;en-us;239114">How to obtain the latest service pack for the Microsoft Jet 4.0 Database Engine</a>
 		</p>
 
-		<h3><a name="WindowsInstaller20">Windows Installer 2.0</a></h3>
+		<h3>Windows Installer 2.0</h3>
 		<table border="1" cellpadding="0" cellspacing="0">
 			<tr>
 				<td><strong>OPERATING SYSTEM</strong></td>
@@ -1534,11 +1496,11 @@
 		<p><i>.NET Framework automatically installs Windows Installer 2.</i></p>
 
 		<p>Microsoft links:<br />
-		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=4b6140f9-2d36-4977-8fa1-6f8a0f5dca8f&DisplayLang=en">Windows Installer 2.0 Redistributable for Windows NT 4.0 and 2000 Download</a><br />
-		<a href="http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=CEBBACD8-C094-4255-B702-DE3BB768148F">Windows Installer 2.0 Redistributable for Windows 95, 98, and Me Download</a>
+		<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=4b6140f9-2d36-4977-8fa1-6f8a0f5dca8f&amp;DisplayLang=en">Windows Installer 2.0 Redistributable for Windows NT 4.0 and 2000 Download</a><br />
+		<a href="http://www.microsoft.com/downloads/details.aspx?displaylang=en&amp;FamilyID=CEBBACD8-C094-4255-B702-DE3BB768148F">Windows Installer 2.0 Redistributable for Windows 95, 98, and Me Download</a>
 		</p>
 		
-		<h2><a name="Notes">Notes</a></h2>
+		<h2>Notes</h2>
 		<ul>
 			<li>
 			If a component needs to restart the system the application automatically add a 
@@ -1560,11 +1522,11 @@
 			<li>You can use the "/log" command line parameter when executing dotNetInstaller.exe. This parameter create a log file during installation with some informations and errors usefull for debugging. You can find this file in the user temp directory with the name dotNetInstallerLog.txt (usually: "C:\Documents and Settings\YOUR_NAME\Local Settings\Temp\dotNetInstallerLog.txt")</li>
 			<li>Remember when installing service pack or other system update (like Jet for Win2000 and XP) you must use the same language of the destination operating system.</li>
 		</ul>
-		<h2><a name="FutureWorks">Summary of future works</a></h2>
+		<h2>Summary of future works</h2>
 		<ul>
 			<li>Silent mode support.</li>
 		</ul>
-		<h2><a name="History">History</a></h2>
+		<h2>History</h2>
 		
 		<h3>1.2.2.0 (03 August 2004)</h3>
 		<ul>
@@ -1634,7 +1596,7 @@
 			</li>
 		</ul>
 		
-        <h2><a id="License">License</a></h2>
+        <h2>License</h2>
         <p>
             dotNetInstaller LICENSE (MIT style)<br />
             <br />
@@ -1659,6 +1621,5 @@
             DEALINGS IN THE SOFTWARE.<br />
         </p>
         
-		<!-------------------------------     END      --------------------------->
 	</body>
 </html>
