@@ -176,12 +176,6 @@ namespace InstallerEditor
 				base.ImageIndex = 4;
 				base.SelectedImageIndex = 4;
 			}
-            else if (p_Component is EmbedFile)
-            {
-                // TODO: add icons
-                base.ImageIndex = 11;
-                base.SelectedImageIndex = 11;
-            }
             else if (p_Component is ComponentOpenFile)
             {
                 base.ImageIndex = 12;
