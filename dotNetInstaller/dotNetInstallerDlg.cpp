@@ -332,6 +332,11 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 			}
 		}
 	}
+    catch(TCHAR * error)
+    {
+		ApplicationLog.Write(error);
+		DniSilentMessageBox(error, MB_OK | MB_ICONSTOP);
+    }
 	catch(...)
 	{
 		ApplicationLog.Write( TEXT("Failed to install one or more components"));
@@ -394,13 +399,19 @@ void CdotNetInstallerDlg::OnDestroy()
 
         // 2008-06-09 - Daniel Doubrovkine - delete temporary directory
         // even if a reboot is required, the temporary folder is gone; next run will re-extract components
-        CString temppath = DVLib::GetSessionTempPath(true);
-        if (m_Settings.cab_path_autodelete && temppath.GetLength() && DVLib::FileExistsCustom(temppath))
+        CString cabpath = (m_Settings.cab_path.GetLength() > 0) ? m_Settings.cab_path : DVLib::GetSessionTempPath(true);
+        cabpath = m_Settings.ValidatePath(cabpath);
+        if (m_Settings.cab_path_autodelete && cabpath.GetLength() && DVLib::FileExistsCustom(cabpath))
         {
-		    ApplicationLog.Write(TEXT("Deleting temporary folder: ") + temppath);
-            DVLib::DeleteDirectoryDeep(temppath);
+		    ApplicationLog.Write(TEXT("Deleting temporary folder: ") + cabpath);
+            DVLib::DeleteDirectoryDeep(cabpath);
         }
 	}
+    catch(TCHAR * error)
+    {
+		ApplicationLog.Write(error);
+		DniSilentMessageBox(error, MB_OK | MB_ICONSTOP);
+    }
 	catch(...)
 	{
 		_ASSERT(false);

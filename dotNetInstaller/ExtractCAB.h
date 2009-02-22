@@ -45,6 +45,12 @@ private:
         cabpath = m_Settings.ValidatePath(cabpath);
 		ApplicationLog.Write( TEXT("cabpath is: "), cabpath );
 
+        if (! DVLib::FileExistsCustom(cabpath))
+        {
+		    if (! ::CreateDirectory(cabpath, NULL))
+                throw TEXT("Failed to create CABPATH directory");
+        }
+
         CString tempFile = DVLib::PathCombineCustom(cabpath, TEXT("setup.cab") );
 
 		ApplicationLog.Write( TEXT("tempFile is: "), tempFile );
@@ -56,9 +62,10 @@ private:
         if (! WriteFile(l_hFile, l_buffer, l_size, & dwWritten, NULL))
             throw TEXT("Failed to write setup.cab");
 
+        CloseHandle(l_hFile);
+
         UnlockResource(l_buffer);
         CloseHandle(l_hRes);
-        CloseHandle(l_hFile);
 
         Cabinet::CExtract i_Extract;
         if (!i_Extract.CreateFDIContext()) 
@@ -68,5 +75,6 @@ private:
             throw TEXT("Error extracting files from setup.cab");
     }
 };
+
 
 
