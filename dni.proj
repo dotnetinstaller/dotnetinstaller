@@ -28,6 +28,7 @@
  </ItemGroup>
  <ItemGroup>
   <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" />
+  <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.pdb" />
   <Binaries Include="InstallerEditor\bin\$(Configuration)\InstallerEditor.exe" />
   <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceLibrary.dll" />
   <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceGrid2.dll" />

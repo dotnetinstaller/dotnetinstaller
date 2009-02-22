@@ -237,6 +237,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 						m_Settings.components[i]->Exec()) //execute component
 					{
 						l_dg.DoModal();
+						ApplicationLog.Write( TEXT("---Component DIALOG CLOSED") );
 						
 						if (m_Settings.components[i]->IsExecuting()) // se l'installazione è ancora attiva non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
 						{
@@ -250,6 +251,8 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 							DWORD l_ExitCode = m_Settings.components[i]->GetExitCode();
 							if (l_ExitCode == ERROR_SUCCESS || l_ExitCode == ERROR_SUCCESS_REBOOT_REQUIRED)
 							{
+								ApplicationLog.Write( TEXT("---Component SUCCEEDED") );
+
 								//se è presente un messaggio di completamento installazione
 								CString l_completeMsg = m_Settings.components[i]->installcompletemessage;
 								if (l_completeMsg.Trim().GetLength() > 0)
@@ -261,7 +264,6 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 									ApplicationLog.Write( TEXT("---Component NEED REBOOT") );
 
 									l_bRemoveRunOnce = false;
-									
 
 									//chiedo di riavviare
 									if (DniMessageBox(m_Settings.reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES )
