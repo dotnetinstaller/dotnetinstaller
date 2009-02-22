@@ -1159,6 +1159,7 @@ namespace InstallerEditor
 				MakeExe l_frmMakeExe = new MakeExe();
 				l_frmMakeExe.TemplateFile = m_AppSetting.TemplateInstallerFile;
 				l_frmMakeExe.BannerBitmapFile = m_AppSetting.BannerBitmapFile;
+                l_frmMakeExe.IconFile = m_AppSetting.IconFile;
 				l_frmMakeExe.OutputFileName = m_AppSetting.OutputMakeFile;
 				if (m_TreeNodeConfigFile!=null && m_TreeNodeConfigFile.ConfigFile!=null)
 					l_frmMakeExe.Configuration = m_TreeNodeConfigFile.ConfigFile.FileName;
@@ -1167,6 +1168,7 @@ namespace InstallerEditor
 
 				m_AppSetting.TemplateInstallerFile = l_frmMakeExe.TemplateFile;
 				m_AppSetting.BannerBitmapFile = l_frmMakeExe.BannerBitmapFile;
+                m_AppSetting.IconFile = l_frmMakeExe.IconFile;
 				m_AppSetting.OutputMakeFile = l_frmMakeExe.OutputFileName;
 			}
 			catch(Exception err)

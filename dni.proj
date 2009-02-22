@@ -14,11 +14,13 @@
   <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.txt" />
   <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.xml" />
   <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.bmp" />
+  <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.ico" />
  </ItemGroup>
  <ItemGroup>
   <PackagedSetupSample Include="Samples/PackagedSetup/**/*.txt" />
   <PackagedSetupSample Include="Samples/PackagedSetup/**/*.xml" />
   <PackagedSetupSample Include="Samples/PackagedSetup/**/*.bmp" />
+  <PackagedSetupSample Include="Samples/PackagedSetup/**/*.ico" />
   <PackagedSetupSample Include="Samples/PackagedSetup/**/*.msi" />
  </ItemGroup>
  <ItemGroup>
@@ -85,7 +87,7 @@
   <Copy SourceFiles="@(SupportFiles)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\SupportFiles\%(RecursiveDir)" />
   <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup" />
   <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
-  <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Embed+"/>
+  <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Embed+"/>
   <Copy SourceFiles="@(PackagedSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Source\%(RecursiveDir)" />
  </Target>
 </Project>

@@ -173,7 +173,8 @@
        <tr><td>/?</td><td>show help</td><td></td></tr>
        <tr><td>/Output:filename</td><td>Generated installer file (short form /o)</td><td>yes</td></tr>
        <tr><td>/Template:filename</td><td>Template installer executable (short form /t)</td><td>yes</td></tr>
-       <tr><td>/Banner:filename</td><td>Picture for the banner (short form /b)</td><td>yes</td></tr>
+       <tr><td>/Banner:filename</td><td>Picture for the banner (short form /b)</td><td>no</td></tr>
+       <tr><td>/Icon:filename</td><td>Setup icon (short form /i)</td><td>no</td></tr>
        <tr><td>/Configuration:filename</td><td>XML configuration file (short form /c)</td><td>yes</td></tr>
        <tr><td>/Embed[+|-]</td><td>Embed support files (short form /e)</td><td></td></tr>
        <tr><td>/EmbedFile:filename</td><td>Additional file to embed, may be specified multiple times. (short form /f)</td><td></td></tr>
@@ -2688,36 +2689,35 @@
         <li>Added optional configuration-level and component-level OS filter matching system architecture (x86, x64, etc).
             See "processor_architecture_filter". This filter restricts the entire boostrapper from running on non-supported
             processors and enables installation of different dependencies on different processor architectures</li>
-        <li>Added support for command-line execution of InstallerEditor.exe, can now be used as a bootstrapper
-            compiler in a build process.</li>
         <li>Added CABing, embedding of support files using <a href="http://www.codeproject.com/KB/files/CABCompressExtract.aspx">Elmü's CAB library</a>
-         and a PackagedSetup sample</li>
-     <li>Added /ExtractCab command line option to dotNetInstaller.exe that extracts the
-      embedded CAB file and its contents in the current directory</li>
+            and a PackagedSetup sample</li>
+        <li>Added /ExtractCab command line option to dotNetInstaller.exe that extracts the
+            embedded CAB file and its contents in the current directory</li>
         <li>Added InstallerLinker.exe with command line options /e (Embed) and /a (AppPath) and /v (Verbose) for using in build processes</li>
+        <li>Added support for embedding an icon that can replace the default setup icon</li>
         <li>Added cab_dialog_message, cab_cancelled_message, cab_dialog_caption, cap_path and cab_path_autodelete options</li>
         <li>Temporary files (eg. downloaded files) will be deleted upon completion of dotNetInstaller</li>
         <li>Added /Log command-line option and log_enabled configuration file parameter that enables logging for dotNetInstaller and all MSI components executed</li>
         <li>Added /LogFile &lt;path\filename&gt; command-line option and a log_file configuration
-         file parameter to specify the resulting full path to the log filename for the dotNetInstaller itself</li>
+            file parameter to specify the resulting full path to the log filename for the dotNetInstaller itself</li>
         <li>Added #CABPATH variable that can be used in path settings</li>
         <li>Added #GUID variable that represents a unique GUID across a single instance of dotNetInstaller</li>
         <li>Added an MSBuild script that centrally versions, builds and packages dotNetInstaller
-         into target/Debug|Release, including a sample</li>
+            into target/Debug|Release, including a sample</li>
         <li>Added a combined Visual Studio solution, dni.sln with automatic versioning (reqiures
-         <a href="http://msbuildtasks.tigris.org/">MSBuild Community Tasks</a>). The major
-         and minor version number can be incremented in dni.proj, the build number is the
-         latest SVN revision and the release number is a timestamp</li>
+            <a href="http://msbuildtasks.tigris.org/">MSBuild Community Tasks</a>). The major
+            and minor version number can be incremented in dni.proj, the build number is the
+            latest SVN revision and the release number is a timestamp</li>
         <li>Added file and production version configuration attributes as well as free-formed string attributes
-         using <a href="http://www.codeproject.com/KB/library/ResourceLib.aspx">ResourceLib</a>. InstallerEditor
-         can now write a specific binary version as well as additional information, including copyright or company 
-         name to the target setup binary.</li>
-     <li>Added a component "required" option, default is true. A required component cannot
-      be de-selected in the Advanced tab and complete_command is only executed when all
-      reqiured components have been installed. This option is ignored when executing complete_command
-      for a component that doesn't have any install checks.</li>
-     <li>Added /CompelteCommandArgs "value" to dotNetInstaller.exe to pass additional parameters
-      to complete_command and complete_command_silent.</li>
+            using <a href="http://www.codeproject.com/KB/library/ResourceLib.aspx">ResourceLib</a>. InstallerEditor
+            can now write a specific binary version as well as additional information, including copyright or company 
+            name to the target setup binary.</li>
+        <li>Added a component "required" option, default is true. A required component cannot
+            be de-selected in the Advanced tab and complete_command is only executed when all
+            reqiured components have been installed. This option is ignored when executing complete_command
+            for a component that doesn't have any install checks.</li>
+        <li>Added /CompelteCommandArgs "value" to dotNetInstaller.exe to pass additional parameters
+            to complete_command and complete_command_silent.</li>
         <li>Added horizontal scrollbars in component lists that can't fit all the text in.</li>
     </ul>
     <h3>

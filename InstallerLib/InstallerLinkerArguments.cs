@@ -24,11 +24,14 @@ namespace InstallerLib
         public bool verbose;
         [Argument(ArgumentType.MultipleUnique, HelpText = "Additional files to embed", LongName = "EmbedFile", ShortName = "f")]
         public string[] embedFiles;
+        [Argument(ArgumentType.AtMostOnce, HelpText = "Icon for the executable", LongName = "Icon", ShortName = "i")]
+        public string icon;
 
         public void Validate()
         {
             template = Path.GetFullPath(template);
-            banner = Path.GetFullPath(banner);
+            if (! string.IsNullOrEmpty(banner)) banner = Path.GetFullPath(banner);
+            if (! string.IsNullOrEmpty(icon)) icon = Path.GetFullPath(icon);
             config = Path.GetFullPath(config);
             output = Path.GetFullPath(output);
             
@@ -40,7 +43,7 @@ namespace InstallerLib
             if (!File.Exists(template))
                 throw new FileNotFoundException(template);
 
-            if (!File.Exists(banner))
+            if (!String.IsNullOrEmpty(banner) && !File.Exists(banner))
                 throw new FileNotFoundException(banner);
 
             if (!File.Exists(config))
@@ -58,6 +61,9 @@ namespace InstallerLib
                         throw new FileNotFoundException(combinedFilename);
                 }
             }
+
+            if (!String.IsNullOrEmpty(icon) && !File.Exists(icon))
+                throw new FileNotFoundException(icon);
         }
 
         public void WriteLine(string s)

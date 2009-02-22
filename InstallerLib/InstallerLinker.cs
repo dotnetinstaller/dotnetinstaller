@@ -17,9 +17,12 @@ namespace InstallerLib
             System.IO.File.Copy(args.template, args.output, true);
             System.IO.File.SetAttributes(args.output, System.IO.FileAttributes.Normal);
 
-            args.WriteLine(string.Format("Embedding banner \"{0}\"", args.banner));
-            ResourceUpdate.UpdateResourceWithFile(args.output, "RES_BANNER", "CUSTOM", 0, args.banner);
-            
+            if (!string.IsNullOrEmpty(args.banner))
+            {
+                args.WriteLine(string.Format("Embedding banner \"{0}\"", args.banner));
+                ResourceUpdate.UpdateResourceWithFile(args.output, "RES_BANNER", "CUSTOM", 0, args.banner);
+            }
+
             args.WriteLine(string.Format("Embedding configuration \"{0}\"", args.config));
             ResourceUpdate.UpdateResourceWithFile(args.output, "RES_CONFIGURATION", "CUSTOM", 0, args.config);
 
@@ -49,6 +52,21 @@ namespace InstallerLib
             }
 
             rc.SaveTo(args.output);
+
+            /* Daniel Doubrovkine - 2008-09-28: added icon */
+            if (!string.IsNullOrEmpty(args.icon))
+            {
+                args.WriteLine(string.Format("Embedding icon \"{0}\"", args.icon));
+                IconFile iconFile = new IconFile(args.icon);
+                List<string> iconSizes = new List<string>();
+                foreach (IconFileIcon icon in iconFile.Icons)
+                    iconSizes.Add(icon.ToString());
+                args.WriteLine(string.Format(" {0}", string.Join(", ", iconSizes.ToArray())));
+                GroupIconResource groupIconResource = iconFile.ConvertToGroupIconResource();
+                groupIconResource.Language = (ushort) ResourceUtil.NEUTRALLANGID;
+                groupIconResource.Name = "128";
+                groupIconResource.SaveTo(args.output);
+            }
 
             if (args.embed)
             {

@@ -7,7 +7,7 @@ namespace InstallerEditor
 	/// </summary>
 	public class AppSetting : SourceLibrary.IO.IsolatedStorage.IsolatedStorageSettingVersionBase
 	{
-		public AppSetting():base(2)
+		public AppSetting() : base(3)
 		{
 			base.StorageFileName = "InstallerEditorAppSetting.bin";
 		}
@@ -18,6 +18,13 @@ namespace InstallerEditor
 			get{return m_BannerBitmapFile;}
 			set{m_BannerBitmapFile = value;}
 		}
+
+        private string m_IconFile;
+        public string IconFile
+        {
+            get { return m_IconFile; }
+            set { m_IconFile = value; }
+        }
 
 		private string m_OutputMakeFile;
 		public string OutputMakeFile
@@ -60,26 +67,31 @@ namespace InstallerEditor
 
 
 		protected override void OnLoad(System.IO.IsolatedStorage.IsolatedStorageFileStream p_File, int p_CurrentVersion)
-		{
+		{            
 			Read(p_File, out m_OutputMakeFile);
 			Read(p_File, out m_BannerBitmapFile);
 			Read(p_File, out m_TemplateInstallerFile);
 
-			//Version 2
-			if (p_CurrentVersion > 1)
-			{
-				Read(p_File, out m_TemplateConfigFile);
+            if (p_CurrentVersion > 2)
+            {
+                Read(p_File, out m_IconFile);
+            }
+			
+            //Version 2
+            if (p_CurrentVersion > 1)
+            {
+                Read(p_File, out m_TemplateConfigFile);
 
-				int l_NumberOfTemplates;
-				m_AvailableTemplates.Clear();
-				Read(p_File, out l_NumberOfTemplates);
-				for (int i = 0; i < l_NumberOfTemplates; i++)
-				{
-					string tmp;
-					Read(p_File, out tmp);
-					m_AvailableTemplates.Add(tmp);
-				}
-			}
+                int l_NumberOfTemplates;
+                m_AvailableTemplates.Clear();
+                Read(p_File, out l_NumberOfTemplates);
+                for (int i = 0; i < l_NumberOfTemplates; i++)
+                {
+                    string tmp;
+                    Read(p_File, out tmp);
+                    m_AvailableTemplates.Add(tmp);
+                }
+            }
 		}
 
 		protected override void OnSave(System.IO.IsolatedStorage.IsolatedStorageFileStream p_File)
@@ -89,6 +101,9 @@ namespace InstallerEditor
 			Write(p_File, m_OutputMakeFile);
 			Write(p_File, m_BannerBitmapFile);
 			Write(p_File, m_TemplateInstallerFile);
+
+            //Version 3
+            Write(p_File, m_IconFile);
 
 			//Version 2
 			Write(p_File, m_TemplateConfigFile);
