@@ -6,7 +6,7 @@
  <PropertyGroup>
   <ProductName>dotNetInstaller</ProductName>
   <CompanyName>www.devage.com</CompanyName>
-  <Copyright>Copyright (c) Davide Icardi, Matthias Jentsch (www.devage.com) 2008</Copyright>
+  <Copyright>Copyright (c) www.devage.com 2008</Copyright>
   <Trademark>All Rights Reserved</Trademark>
   <ReleaseDir>target\$(Configuration)</ReleaseDir>
  </PropertyGroup>
@@ -46,7 +46,7 @@
   <CallTarget Targets="release" />
  </Target>
  <Target Name="version">
-  <Version Major="1" Minor="4">
+  <Version Major="1" Minor="5">
    <Output TaskParameter="Major" PropertyName="Major" />
    <Output TaskParameter="Minor" PropertyName="Minor" />
    <Output TaskParameter="Revision" PropertyName="Revision"/>
