@@ -21,7 +21,7 @@ There are three types of variables:
 	<setupconfiguration
 		cancel_caption = "Close"
 		dialog_caption = "##APPLICATION_NAME Installer"
-		dialog_message = "In order to install ##APPLICATION_NAME you must first upgrade these components:"
+		dialog_message = "In order to install ##APPLICATION_NAME you must first install these components:"
 		failed_exec_command_continue = "Failed to install %s. Continue with others components?"
 		install_caption = "Install"
 		installation_completed = "##APPLICATION_NAME installed successfully !"

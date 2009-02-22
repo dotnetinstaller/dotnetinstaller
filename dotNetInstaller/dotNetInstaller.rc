@@ -36,27 +36,23 @@ IDR_MAINFRAME           ICON                    "res\\dotNetInstaller.ico"
 //
 
 IDD_DOTNETINSTALLER_DIALOG DIALOGEX 0, 0, 305, 156
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | 
-    WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION ".Net Installer"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "Annulla",IDCANCEL,248,132,50,16
     DEFPUSHBUTTON   "Install",IDC_INSTALL,188,132,50,16
-    LISTBOX         IDC_COMPONENTS_LIST,88,37,210,71,LBS_NOINTEGRALHEIGHT | 
-                    LBS_NOSEL | WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_COMPONENTS_LIST,88,37,210,71,LBS_NOINTEGRALHEIGHT | LBS_NOSEL | WS_VSCROLL | WS_TABSTOP
     LTEXT           ".Net Installer",IDC_MESSAGE,87,7,211,24
-    CONTROL         "",IDC_PICTUREBOX,"Static",SS_BITMAP | SS_CENTERIMAGE,7,
-                    7,75,130
+    CONTROL         "",IDC_PICTUREBOX,"Static",SS_BITMAP | SS_CENTERIMAGE,7,7,75,130
     LTEXT           "Operating System",IDC_OPERATING_SYSTEM,7,140,179,8
     PUSHBUTTON      "Advanced...",IDC_ADVANCED,248,109,50,16
     LTEXT           "Info Link",IDC_INFO_LINK,87,110,157,12
 END
 
 IDD_DIALOGINSTALL DIALOGEX 0, 0, 209, 60
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Install Component"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
@@ -65,33 +61,27 @@ BEGIN
 END
 
 IDD_DOWNLOAD_DIALOG DIALOGEX 0, 0, 233, 84
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "Download components"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     PUSHBUTTON      "Cancel",IDC_CANCEL,176,63,50,14
-    CONTROL         "",IDC_PROGRESSDOWNLOAD,"msctls_progress32",WS_BORDER | 
-                    0x1,7,48,219,9
+    CONTROL         "",IDC_PROGRESSDOWNLOAD,"msctls_progress32",WS_BORDER | 0x1,7,48,219,9
     LTEXT           "Static",IDC_HELP_DOWNLOAD,7,7,219,25
     DEFPUSHBUTTON   "Start",IDC_START,116,63,50,14
     LTEXT           "Status .....",IDC_STATUS,7,37,219,8
 END
 
 IDD_COMPONENTSELECTOR DIALOGEX 0, 0, 199, 106
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dialog"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,82,85,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,142,85,50,14
-    LISTBOX         IDC_LISTCOMPONENTS,7,27,185,54,LBS_OWNERDRAWFIXED | 
-                    LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
-                    WS_TABSTOP
-    LTEXT           "Select the components to install",
-                    IDC_DESCRIPTIONSELECTOR,7,7,185,19
+    LISTBOX         IDC_LISTCOMPONENTS,7,27,185,54,LBS_OWNERDRAWFIXED | LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Select the components to install",IDC_DESCRIPTIONSELECTOR,7,7,185,19
 END
 
 
@@ -101,8 +91,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,3,2,0
- PRODUCTVERSION 1,3,2,0
+ FILEVERSION 1,3,3,0
+ PRODUCTVERSION 1,3,3,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -124,7 +114,7 @@ BEGIN
             VALUE "InternalName", "dotNetInstaller.exe"
             VALUE "LegalCopyright", "Davide Icardi / Matthias Jentsch. All rights reserved."
             VALUE "OriginalFilename", "dotNetInstaller.exe"
-            VALUE "ProductVersion", "1.3.2.0"
+            VALUE "ProductVersion", "1.3.3.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -196,7 +186,7 @@ IDC_CUSTOM_HAND         CURSOR                  "res\\Hand.cur"
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Italienisch (Italien) resources
+// Italian (Italy) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ITA)
 #ifdef _WIN32
@@ -239,7 +229,7 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif    // Italienisch (Italien) resources
+#endif    // Italian (Italy) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

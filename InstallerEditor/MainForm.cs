@@ -88,372 +88,382 @@ namespace InstallerEditor
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(MainForm));
-			this.mainMenu1 = new System.Windows.Forms.MainMenu();
-			this.mnFile = new System.Windows.Forms.MenuItem();
-			this.mnNew = new System.Windows.Forms.MenuItem();
-			this.mnOpen = new System.Windows.Forms.MenuItem();
-			this.mnClose = new System.Windows.Forms.MenuItem();
-			this.menuItem1 = new System.Windows.Forms.MenuItem();
-			this.mnSave = new System.Windows.Forms.MenuItem();
-			this.mnSaveAs = new System.Windows.Forms.MenuItem();
-			this.menuItem2 = new System.Windows.Forms.MenuItem();
-			this.mnEditWithNotepad = new System.Windows.Forms.MenuItem();
-			this.mnCreateExe = new System.Windows.Forms.MenuItem();
-			this.menuItem4 = new System.Windows.Forms.MenuItem();
-			this.mnExit = new System.Windows.Forms.MenuItem();
-			this.mnView = new System.Windows.Forms.MenuItem();
-			this.mnRefresh = new System.Windows.Forms.MenuItem();
-			this.mnTools = new System.Windows.Forms.MenuItem();
-			this.mnLanguageForNewItem = new System.Windows.Forms.MenuItem();
-			this.mnCustomizeTemplates = new System.Windows.Forms.MenuItem();
-			this.mnHelp = new System.Windows.Forms.MenuItem();
-			this.mnHomePage = new System.Windows.Forms.MenuItem();
-			this.mnHelpAbout = new System.Windows.Forms.MenuItem();
-			this.treeView = new System.Windows.Forms.TreeView();
-			this.contextMenuTreeView = new System.Windows.Forms.ContextMenu();
-			this.mnAdd = new System.Windows.Forms.MenuItem();
-			this.mnAddSetupConfiguration = new System.Windows.Forms.MenuItem();
-			this.mnAddWebConfiguration = new System.Windows.Forms.MenuItem();
-			this.menuItem3 = new System.Windows.Forms.MenuItem();
-			this.mnAddDownloadDialog = new System.Windows.Forms.MenuItem();
-			this.mnAddDownloadFile = new System.Windows.Forms.MenuItem();
-			this.menuItem5 = new System.Windows.Forms.MenuItem();
-			this.mnAddComponentWizard = new System.Windows.Forms.MenuItem();
-			this.mnAddMsiComponent = new System.Windows.Forms.MenuItem();
-			this.mnAddCommandComponent = new System.Windows.Forms.MenuItem();
-			this.mnAddOpenFileComponent = new System.Windows.Forms.MenuItem();
-			this.menuItem6 = new System.Windows.Forms.MenuItem();
-			this.mnAddInstalledCheckRegistry = new System.Windows.Forms.MenuItem();
-			this.mnAddInstalledCheckFile = new System.Windows.Forms.MenuItem();
-			this.menuItem7 = new System.Windows.Forms.MenuItem();
-			this.mnDelete = new System.Windows.Forms.MenuItem();
-			this.imageList = new System.Windows.Forms.ImageList(this.components);
-			this.propertyGrid = new System.Windows.Forms.PropertyGrid();
-			this.splitter1 = new System.Windows.Forms.Splitter();
-			this.mnAddComponentWizard2 = new System.Windows.Forms.MenuItem();
-			this.SuspendLayout();
-			// 
-			// mainMenu1
-			// 
-			this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					  this.mnFile,
-																					  this.mnView,
-																					  this.mnTools,
-																					  this.mnHelp});
-			// 
-			// mnFile
-			// 
-			this.mnFile.Index = 0;
-			this.mnFile.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																				   this.mnNew,
-																				   this.mnOpen,
-																				   this.mnClose,
-																				   this.menuItem1,
-																				   this.mnSave,
-																				   this.mnSaveAs,
-																				   this.menuItem2,
-																				   this.mnEditWithNotepad,
-																				   this.mnCreateExe,
-																				   this.menuItem4,
-																				   this.mnExit});
-			this.mnFile.Text = "File";
-			// 
-			// mnNew
-			// 
-			this.mnNew.Index = 0;
-			this.mnNew.Text = "New...";
-			this.mnNew.Click += new System.EventHandler(this.mnNew_Click);
-			// 
-			// mnOpen
-			// 
-			this.mnOpen.Index = 1;
-			this.mnOpen.Text = "Open...";
-			this.mnOpen.Click += new System.EventHandler(this.mnOpen_Click);
-			// 
-			// mnClose
-			// 
-			this.mnClose.Enabled = false;
-			this.mnClose.Index = 2;
-			this.mnClose.Text = "Close";
-			this.mnClose.Click += new System.EventHandler(this.mnClose_Click);
-			// 
-			// menuItem1
-			// 
-			this.menuItem1.Index = 3;
-			this.menuItem1.Text = "-";
-			// 
-			// mnSave
-			// 
-			this.mnSave.Enabled = false;
-			this.mnSave.Index = 4;
-			this.mnSave.Text = "Save";
-			this.mnSave.Click += new System.EventHandler(this.mnSave_Click);
-			// 
-			// mnSaveAs
-			// 
-			this.mnSaveAs.Enabled = false;
-			this.mnSaveAs.Index = 5;
-			this.mnSaveAs.Text = "Save As...";
-			this.mnSaveAs.Click += new System.EventHandler(this.mnSaveAs_Click);
-			// 
-			// menuItem2
-			// 
-			this.menuItem2.Index = 6;
-			this.menuItem2.Text = "-";
-			// 
-			// mnEditWithNotepad
-			// 
-			this.mnEditWithNotepad.Enabled = false;
-			this.mnEditWithNotepad.Index = 7;
-			this.mnEditWithNotepad.Text = "Edit With Notepad";
-			this.mnEditWithNotepad.Click += new System.EventHandler(this.mnEditWithNotepad_Click);
-			// 
-			// mnCreateExe
-			// 
-			this.mnCreateExe.Index = 8;
-			this.mnCreateExe.Text = "Create Exe...";
-			this.mnCreateExe.Click += new System.EventHandler(this.mnCreateExe_Click);
-			// 
-			// menuItem4
-			// 
-			this.menuItem4.Index = 9;
-			this.menuItem4.Text = "-";
-			// 
-			// mnExit
-			// 
-			this.mnExit.Index = 10;
-			this.mnExit.Text = "Exit";
-			this.mnExit.Click += new System.EventHandler(this.mnExit_Click);
-			// 
-			// mnView
-			// 
-			this.mnView.Index = 1;
-			this.mnView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																				   this.mnRefresh});
-			this.mnView.Text = "View";
-			// 
-			// mnRefresh
-			// 
-			this.mnRefresh.Index = 0;
-			this.mnRefresh.Text = "Refresh";
-			this.mnRefresh.Click += new System.EventHandler(this.mnRefresh_Click);
-			// 
-			// mnTools
-			// 
-			this.mnTools.Index = 2;
-			this.mnTools.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					this.mnLanguageForNewItem,
-																					this.mnCustomizeTemplates});
-			this.mnTools.Text = "Tools";
-			// 
-			// mnLanguageForNewItem
-			// 
-			this.mnLanguageForNewItem.Index = 0;
-			this.mnLanguageForNewItem.Text = "Template For New Item";
-			// 
-			// mnCustomizeTemplates
-			// 
-			this.mnCustomizeTemplates.Index = 1;
-			this.mnCustomizeTemplates.Text = "Customize Templates";
-			this.mnCustomizeTemplates.Click += new System.EventHandler(this.mnCustomizeTemplates_Click);
-			// 
-			// mnHelp
-			// 
-			this.mnHelp.Index = 3;
-			this.mnHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																				   this.mnHomePage,
-																				   this.mnHelpAbout});
-			this.mnHelp.Text = "Help";
-			// 
-			// mnHomePage
-			// 
-			this.mnHomePage.Index = 0;
-			this.mnHomePage.Text = "Home Page";
-			this.mnHomePage.Click += new System.EventHandler(this.mnHomePage_Click);
-			// 
-			// mnHelpAbout
-			// 
-			this.mnHelpAbout.Index = 1;
-			this.mnHelpAbout.Text = "About";
-			this.mnHelpAbout.Click += new System.EventHandler(this.mnHelpAbout_Click);
-			// 
-			// treeView
-			// 
-			this.treeView.ContextMenu = this.contextMenuTreeView;
-			this.treeView.Dock = System.Windows.Forms.DockStyle.Left;
-			this.treeView.HideSelection = false;
-			this.treeView.ImageList = this.imageList;
-			this.treeView.Location = new System.Drawing.Point(0, 0);
-			this.treeView.Name = "treeView";
-			this.treeView.Size = new System.Drawing.Size(176, 346);
-			this.treeView.TabIndex = 0;
-			this.treeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseDown);
-			this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
-			// 
-			// contextMenuTreeView
-			// 
-			this.contextMenuTreeView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																								this.mnAdd,
-																								this.menuItem7,
-																								this.mnDelete});
-			// 
-			// mnAdd
-			// 
-			this.mnAdd.Index = 0;
-			this.mnAdd.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																				  this.mnAddSetupConfiguration,
-																				  this.mnAddWebConfiguration,
-																				  this.menuItem3,
-																				  this.mnAddDownloadDialog,
-																				  this.mnAddDownloadFile,
-																				  this.menuItem5,
-																				  this.mnAddComponentWizard2,
-																				  this.mnAddComponentWizard,
-																				  this.mnAddMsiComponent,
-																				  this.mnAddCommandComponent,
-																				  this.mnAddOpenFileComponent,
-																				  this.menuItem6,
-																				  this.mnAddInstalledCheckRegistry,
-																				  this.mnAddInstalledCheckFile});
-			this.mnAdd.Text = "Add";
-			// 
-			// mnAddSetupConfiguration
-			// 
-			this.mnAddSetupConfiguration.Index = 0;
-			this.mnAddSetupConfiguration.Text = "Setup Configuration";
-			this.mnAddSetupConfiguration.Click += new System.EventHandler(this.mnAddSetupConfiguration_Click);
-			// 
-			// mnAddWebConfiguration
-			// 
-			this.mnAddWebConfiguration.Index = 1;
-			this.mnAddWebConfiguration.Text = "Web Configuration";
-			this.mnAddWebConfiguration.Click += new System.EventHandler(this.mnAddWebConfiguration_Click);
-			// 
-			// menuItem3
-			// 
-			this.menuItem3.Index = 2;
-			this.menuItem3.Text = "-";
-			// 
-			// mnAddDownloadDialog
-			// 
-			this.mnAddDownloadDialog.Index = 3;
-			this.mnAddDownloadDialog.Text = "Download Dialog";
-			this.mnAddDownloadDialog.Click += new System.EventHandler(this.mnAddDownloadDialog_Click);
-			// 
-			// mnAddDownloadFile
-			// 
-			this.mnAddDownloadFile.Index = 4;
-			this.mnAddDownloadFile.Text = "Download File";
-			this.mnAddDownloadFile.Click += new System.EventHandler(this.mnAddDownloadFile_Click);
-			// 
-			// menuItem5
-			// 
-			this.menuItem5.Index = 5;
-			this.menuItem5.Text = "-";
-			// 
-			// mnAddComponentWizard
-			// 
-			this.mnAddComponentWizard.Index = 7;
-			this.mnAddComponentWizard.Text = "Component Wizard ...";
-			this.mnAddComponentWizard.Click += new System.EventHandler(this.mnAddComponentWizard_Click);
-			// 
-			// mnAddMsiComponent
-			// 
-			this.mnAddMsiComponent.Index = 8;
-			this.mnAddMsiComponent.Text = "Msi Component";
-			this.mnAddMsiComponent.Click += new System.EventHandler(this.mnAddMsiComponent_Click);
-			// 
-			// mnAddCommandComponent
-			// 
-			this.mnAddCommandComponent.Index = 9;
-			this.mnAddCommandComponent.Text = "Command Component";
-			this.mnAddCommandComponent.Click += new System.EventHandler(this.mnAddCommandComponent_Click);
-			// 
-			// mnAddOpenFileComponent
-			// 
-			this.mnAddOpenFileComponent.Index = 10;
-			this.mnAddOpenFileComponent.Text = "OpenFile Component";
-			this.mnAddOpenFileComponent.Click += new System.EventHandler(this.mnAddOpenFileComponent_Click);
-			// 
-			// menuItem6
-			// 
-			this.menuItem6.Index = 11;
-			this.menuItem6.Text = "-";
-			// 
-			// mnAddInstalledCheckRegistry
-			// 
-			this.mnAddInstalledCheckRegistry.Index = 12;
-			this.mnAddInstalledCheckRegistry.Text = "Installed Check Registry";
-			this.mnAddInstalledCheckRegistry.Click += new System.EventHandler(this.mnAddInstalledCheckRegistry_Click);
-			// 
-			// mnAddInstalledCheckFile
-			// 
-			this.mnAddInstalledCheckFile.Index = 13;
-			this.mnAddInstalledCheckFile.Text = "Installed Check File";
-			this.mnAddInstalledCheckFile.Click += new System.EventHandler(this.mnInstalledCheckFile_Click);
-			// 
-			// menuItem7
-			// 
-			this.menuItem7.Index = 1;
-			this.menuItem7.Text = "-";
-			// 
-			// mnDelete
-			// 
-			this.mnDelete.Index = 2;
-			this.mnDelete.Text = "Delete";
-			this.mnDelete.Click += new System.EventHandler(this.mnDelete_Click);
-			// 
-			// imageList
-			// 
-			this.imageList.ImageSize = new System.Drawing.Size(16, 16);
-			this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-			this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-			// 
-			// propertyGrid
-			// 
-			this.propertyGrid.CommandsVisibleIfAvailable = true;
-			this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.propertyGrid.LargeButtons = false;
-			this.propertyGrid.LineColor = System.Drawing.SystemColors.ScrollBar;
-			this.propertyGrid.Location = new System.Drawing.Point(176, 0);
-			this.propertyGrid.Name = "propertyGrid";
-			this.propertyGrid.Size = new System.Drawing.Size(444, 346);
-			this.propertyGrid.TabIndex = 2;
-			this.propertyGrid.Text = "propertyGrid1";
-			this.propertyGrid.ViewBackColor = System.Drawing.SystemColors.Window;
-			this.propertyGrid.ViewForeColor = System.Drawing.SystemColors.WindowText;
-			// 
-			// splitter1
-			// 
-			this.splitter1.Location = new System.Drawing.Point(176, 0);
-			this.splitter1.Name = "splitter1";
-			this.splitter1.Size = new System.Drawing.Size(3, 346);
-			this.splitter1.TabIndex = 3;
-			this.splitter1.TabStop = false;
-			// 
-			// mnAddComponentWizard2
-			// 
-			this.mnAddComponentWizard2.Index = 6;
-			this.mnAddComponentWizard2.Text = "Component Wizard 2 ...";
-			this.mnAddComponentWizard2.Click += new System.EventHandler(this.mnAddComponentWizard2_Click);
-			// 
-			// MainForm
-			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(620, 346);
-			this.Controls.Add(this.splitter1);
-			this.Controls.Add(this.propertyGrid);
-			this.Controls.Add(this.treeView);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Menu = this.mainMenu1;
-			this.Name = "MainForm";
-			this.Text = "Installer Editor";
-			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
-			this.Load += new System.EventHandler(this.MainForm_Load);
-			this.Closed += new System.EventHandler(this.MainForm_Closed);
-			this.ResumeLayout(false);
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
+            this.mnFile = new System.Windows.Forms.MenuItem();
+            this.mnNew = new System.Windows.Forms.MenuItem();
+            this.mnOpen = new System.Windows.Forms.MenuItem();
+            this.mnClose = new System.Windows.Forms.MenuItem();
+            this.menuItem1 = new System.Windows.Forms.MenuItem();
+            this.mnSave = new System.Windows.Forms.MenuItem();
+            this.mnSaveAs = new System.Windows.Forms.MenuItem();
+            this.menuItem2 = new System.Windows.Forms.MenuItem();
+            this.mnEditWithNotepad = new System.Windows.Forms.MenuItem();
+            this.mnCreateExe = new System.Windows.Forms.MenuItem();
+            this.menuItem4 = new System.Windows.Forms.MenuItem();
+            this.mnExit = new System.Windows.Forms.MenuItem();
+            this.mnView = new System.Windows.Forms.MenuItem();
+            this.mnRefresh = new System.Windows.Forms.MenuItem();
+            this.mnTools = new System.Windows.Forms.MenuItem();
+            this.mnLanguageForNewItem = new System.Windows.Forms.MenuItem();
+            this.mnCustomizeTemplates = new System.Windows.Forms.MenuItem();
+            this.mnHelp = new System.Windows.Forms.MenuItem();
+            this.mnHomePage = new System.Windows.Forms.MenuItem();
+            this.mnHelpAbout = new System.Windows.Forms.MenuItem();
+            this.treeView = new System.Windows.Forms.TreeView();
+            this.contextMenuTreeView = new System.Windows.Forms.ContextMenu();
+            this.mnAdd = new System.Windows.Forms.MenuItem();
+            this.mnAddSetupConfiguration = new System.Windows.Forms.MenuItem();
+            this.mnAddWebConfiguration = new System.Windows.Forms.MenuItem();
+            this.menuItem3 = new System.Windows.Forms.MenuItem();
+            this.mnAddDownloadDialog = new System.Windows.Forms.MenuItem();
+            this.mnAddDownloadFile = new System.Windows.Forms.MenuItem();
+            this.menuItem5 = new System.Windows.Forms.MenuItem();
+            this.mnAddComponentWizard2 = new System.Windows.Forms.MenuItem();
+            this.mnAddComponentWizard = new System.Windows.Forms.MenuItem();
+            this.mnAddMsiComponent = new System.Windows.Forms.MenuItem();
+            this.mnAddCommandComponent = new System.Windows.Forms.MenuItem();
+            this.mnAddOpenFileComponent = new System.Windows.Forms.MenuItem();
+            this.menuItem6 = new System.Windows.Forms.MenuItem();
+            this.mnAddInstalledCheckRegistry = new System.Windows.Forms.MenuItem();
+            this.mnAddInstalledCheckFile = new System.Windows.Forms.MenuItem();
+            this.menuItem7 = new System.Windows.Forms.MenuItem();
+            this.mnDelete = new System.Windows.Forms.MenuItem();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
+            this.propertyGrid = new System.Windows.Forms.PropertyGrid();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.SuspendLayout();
+            // 
+            // mainMenu1
+            // 
+            this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnFile,
+            this.mnView,
+            this.mnTools,
+            this.mnHelp});
+            // 
+            // mnFile
+            // 
+            this.mnFile.Index = 0;
+            this.mnFile.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnNew,
+            this.mnOpen,
+            this.mnClose,
+            this.menuItem1,
+            this.mnSave,
+            this.mnSaveAs,
+            this.menuItem2,
+            this.mnEditWithNotepad,
+            this.mnCreateExe,
+            this.menuItem4,
+            this.mnExit});
+            this.mnFile.Text = "File";
+            // 
+            // mnNew
+            // 
+            this.mnNew.Index = 0;
+            this.mnNew.Text = "New...";
+            this.mnNew.Click += new System.EventHandler(this.mnNew_Click);
+            // 
+            // mnOpen
+            // 
+            this.mnOpen.Index = 1;
+            this.mnOpen.Text = "Open...";
+            this.mnOpen.Click += new System.EventHandler(this.mnOpen_Click);
+            // 
+            // mnClose
+            // 
+            this.mnClose.Enabled = false;
+            this.mnClose.Index = 2;
+            this.mnClose.Text = "Close";
+            this.mnClose.Click += new System.EventHandler(this.mnClose_Click);
+            // 
+            // menuItem1
+            // 
+            this.menuItem1.Index = 3;
+            this.menuItem1.Text = "-";
+            // 
+            // mnSave
+            // 
+            this.mnSave.Enabled = false;
+            this.mnSave.Index = 4;
+            this.mnSave.Text = "Save";
+            this.mnSave.Click += new System.EventHandler(this.mnSave_Click);
+            // 
+            // mnSaveAs
+            // 
+            this.mnSaveAs.Enabled = false;
+            this.mnSaveAs.Index = 5;
+            this.mnSaveAs.Text = "Save As...";
+            this.mnSaveAs.Click += new System.EventHandler(this.mnSaveAs_Click);
+            // 
+            // menuItem2
+            // 
+            this.menuItem2.Index = 6;
+            this.menuItem2.Text = "-";
+            // 
+            // mnEditWithNotepad
+            // 
+            this.mnEditWithNotepad.Enabled = false;
+            this.mnEditWithNotepad.Index = 7;
+            this.mnEditWithNotepad.Text = "Edit With Notepad";
+            this.mnEditWithNotepad.Click += new System.EventHandler(this.mnEditWithNotepad_Click);
+            // 
+            // mnCreateExe
+            // 
+            this.mnCreateExe.Index = 8;
+            this.mnCreateExe.Text = "Create Exe...";
+            this.mnCreateExe.Click += new System.EventHandler(this.mnCreateExe_Click);
+            // 
+            // menuItem4
+            // 
+            this.menuItem4.Index = 9;
+            this.menuItem4.Text = "-";
+            // 
+            // mnExit
+            // 
+            this.mnExit.Index = 10;
+            this.mnExit.Text = "Exit";
+            this.mnExit.Click += new System.EventHandler(this.mnExit_Click);
+            // 
+            // mnView
+            // 
+            this.mnView.Index = 1;
+            this.mnView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnRefresh});
+            this.mnView.Text = "View";
+            // 
+            // mnRefresh
+            // 
+            this.mnRefresh.Index = 0;
+            this.mnRefresh.Text = "Refresh";
+            this.mnRefresh.Click += new System.EventHandler(this.mnRefresh_Click);
+            // 
+            // mnTools
+            // 
+            this.mnTools.Index = 2;
+            this.mnTools.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnLanguageForNewItem,
+            this.mnCustomizeTemplates});
+            this.mnTools.Text = "Tools";
+            // 
+            // mnLanguageForNewItem
+            // 
+            this.mnLanguageForNewItem.Index = 0;
+            this.mnLanguageForNewItem.Text = "Template For New Item";
+            // 
+            // mnCustomizeTemplates
+            // 
+            this.mnCustomizeTemplates.Index = 1;
+            this.mnCustomizeTemplates.Text = "Customize Templates";
+            this.mnCustomizeTemplates.Click += new System.EventHandler(this.mnCustomizeTemplates_Click);
+            // 
+            // mnHelp
+            // 
+            this.mnHelp.Index = 3;
+            this.mnHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnHomePage,
+            this.mnHelpAbout});
+            this.mnHelp.Text = "Help";
+            // 
+            // mnHomePage
+            // 
+            this.mnHomePage.Index = 0;
+            this.mnHomePage.Text = "Home Page";
+            this.mnHomePage.Click += new System.EventHandler(this.mnHomePage_Click);
+            // 
+            // mnHelpAbout
+            // 
+            this.mnHelpAbout.Index = 1;
+            this.mnHelpAbout.Text = "About";
+            this.mnHelpAbout.Click += new System.EventHandler(this.mnHelpAbout_Click);
+            // 
+            // treeView
+            // 
+            this.treeView.ContextMenu = this.contextMenuTreeView;
+            this.treeView.Dock = System.Windows.Forms.DockStyle.Left;
+            this.treeView.HideSelection = false;
+            this.treeView.ImageIndex = 0;
+            this.treeView.ImageList = this.imageList;
+            this.treeView.Location = new System.Drawing.Point(0, 0);
+            this.treeView.Name = "treeView";
+            this.treeView.SelectedImageIndex = 0;
+            this.treeView.Size = new System.Drawing.Size(176, 346);
+            this.treeView.TabIndex = 0;
+            this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
+            this.treeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseDown);
+            // 
+            // contextMenuTreeView
+            // 
+            this.contextMenuTreeView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnAdd,
+            this.menuItem7,
+            this.mnDelete});
+            // 
+            // mnAdd
+            // 
+            this.mnAdd.Index = 0;
+            this.mnAdd.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnAddSetupConfiguration,
+            this.mnAddWebConfiguration,
+            this.menuItem3,
+            this.mnAddDownloadDialog,
+            this.mnAddDownloadFile,
+            this.menuItem5,
+            this.mnAddComponentWizard2,
+            this.mnAddComponentWizard,
+            this.mnAddMsiComponent,
+            this.mnAddCommandComponent,
+            this.mnAddOpenFileComponent,
+            this.menuItem6,
+            this.mnAddInstalledCheckRegistry,
+            this.mnAddInstalledCheckFile});
+            this.mnAdd.Text = "Add";
+            // 
+            // mnAddSetupConfiguration
+            // 
+            this.mnAddSetupConfiguration.Index = 0;
+            this.mnAddSetupConfiguration.Text = "Setup Configuration";
+            this.mnAddSetupConfiguration.Click += new System.EventHandler(this.mnAddSetupConfiguration_Click);
+            // 
+            // mnAddWebConfiguration
+            // 
+            this.mnAddWebConfiguration.Index = 1;
+            this.mnAddWebConfiguration.Text = "Web Configuration";
+            this.mnAddWebConfiguration.Click += new System.EventHandler(this.mnAddWebConfiguration_Click);
+            // 
+            // menuItem3
+            // 
+            this.menuItem3.Index = 2;
+            this.menuItem3.Text = "-";
+            // 
+            // mnAddDownloadDialog
+            // 
+            this.mnAddDownloadDialog.Index = 3;
+            this.mnAddDownloadDialog.Text = "Download Dialog";
+            this.mnAddDownloadDialog.Click += new System.EventHandler(this.mnAddDownloadDialog_Click);
+            // 
+            // mnAddDownloadFile
+            // 
+            this.mnAddDownloadFile.Index = 4;
+            this.mnAddDownloadFile.Text = "Download File";
+            this.mnAddDownloadFile.Click += new System.EventHandler(this.mnAddDownloadFile_Click);
+            // 
+            // menuItem5
+            // 
+            this.menuItem5.Index = 5;
+            this.menuItem5.Text = "-";
+            // 
+            // mnAddComponentWizard2
+            // 
+            this.mnAddComponentWizard2.Index = 6;
+            this.mnAddComponentWizard2.Text = "Component Wizard ...";
+            this.mnAddComponentWizard2.Click += new System.EventHandler(this.mnAddComponentWizard2_Click);
+            // 
+            // mnAddComponentWizard
+            // 
+            this.mnAddComponentWizard.Index = 7;
+            this.mnAddComponentWizard.Text = "Component Wizard ...";
+            this.mnAddComponentWizard.Visible = false;
+            this.mnAddComponentWizard.Click += new System.EventHandler(this.mnAddComponentWizard_Click);
+            // 
+            // mnAddMsiComponent
+            // 
+            this.mnAddMsiComponent.Index = 8;
+            this.mnAddMsiComponent.Text = "Msi Component";
+            this.mnAddMsiComponent.Click += new System.EventHandler(this.mnAddMsiComponent_Click);
+            // 
+            // mnAddCommandComponent
+            // 
+            this.mnAddCommandComponent.Index = 9;
+            this.mnAddCommandComponent.Text = "Command Component";
+            this.mnAddCommandComponent.Click += new System.EventHandler(this.mnAddCommandComponent_Click);
+            // 
+            // mnAddOpenFileComponent
+            // 
+            this.mnAddOpenFileComponent.Index = 10;
+            this.mnAddOpenFileComponent.Text = "OpenFile Component";
+            this.mnAddOpenFileComponent.Click += new System.EventHandler(this.mnAddOpenFileComponent_Click);
+            // 
+            // menuItem6
+            // 
+            this.menuItem6.Index = 11;
+            this.menuItem6.Text = "-";
+            // 
+            // mnAddInstalledCheckRegistry
+            // 
+            this.mnAddInstalledCheckRegistry.Index = 12;
+            this.mnAddInstalledCheckRegistry.Text = "Installed Check Registry";
+            this.mnAddInstalledCheckRegistry.Click += new System.EventHandler(this.mnAddInstalledCheckRegistry_Click);
+            // 
+            // mnAddInstalledCheckFile
+            // 
+            this.mnAddInstalledCheckFile.Index = 13;
+            this.mnAddInstalledCheckFile.Text = "Installed Check File";
+            this.mnAddInstalledCheckFile.Click += new System.EventHandler(this.mnInstalledCheckFile_Click);
+            // 
+            // menuItem7
+            // 
+            this.menuItem7.Index = 1;
+            this.menuItem7.Text = "-";
+            // 
+            // mnDelete
+            // 
+            this.mnDelete.Index = 2;
+            this.mnDelete.Text = "Delete";
+            this.mnDelete.Click += new System.EventHandler(this.mnDelete_Click);
+            // 
+            // imageList
+            // 
+            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList.Images.SetKeyName(0, "");
+            this.imageList.Images.SetKeyName(1, "");
+            this.imageList.Images.SetKeyName(2, "");
+            this.imageList.Images.SetKeyName(3, "");
+            this.imageList.Images.SetKeyName(4, "");
+            this.imageList.Images.SetKeyName(5, "");
+            this.imageList.Images.SetKeyName(6, "");
+            this.imageList.Images.SetKeyName(7, "");
+            this.imageList.Images.SetKeyName(8, "");
+            this.imageList.Images.SetKeyName(9, "");
+            this.imageList.Images.SetKeyName(10, "");
+            this.imageList.Images.SetKeyName(11, "");
+            this.imageList.Images.SetKeyName(12, "");
+            // 
+            // propertyGrid
+            // 
+            this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGrid.LineColor = System.Drawing.SystemColors.ScrollBar;
+            this.propertyGrid.Location = new System.Drawing.Point(176, 0);
+            this.propertyGrid.Name = "propertyGrid";
+            this.propertyGrid.Size = new System.Drawing.Size(444, 346);
+            this.propertyGrid.TabIndex = 2;
+            // 
+            // splitter1
+            // 
+            this.splitter1.Location = new System.Drawing.Point(176, 0);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(3, 346);
+            this.splitter1.TabIndex = 3;
+            this.splitter1.TabStop = false;
+            // 
+            // MainForm
+            // 
+            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.ClientSize = new System.Drawing.Size(620, 346);
+            this.Controls.Add(this.splitter1);
+            this.Controls.Add(this.propertyGrid);
+            this.Controls.Add(this.treeView);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Menu = this.mainMenu1;
+            this.Name = "MainForm";
+            this.Text = "Installer Editor";
+            this.Closed += new System.EventHandler(this.MainForm_Closed);
+            this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.ResumeLayout(false);
 
 		}
 		#endregion
