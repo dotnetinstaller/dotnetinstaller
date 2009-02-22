@@ -20,9 +20,21 @@ namespace InstallerLib
         public bool embed;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Location of support files for embedding", LongName = "AppPath", ShortName = "a")]
         public string apppath;
+        [Argument(ArgumentType.AtMostOnce, HelpText = "Verbose output", LongName = "Verbose", ShortName = "v")]
+        public bool verbose;
 
         public void Validate()
         {
+            template = Path.GetFullPath(template);
+            banner = Path.GetFullPath(banner);
+            config = Path.GetFullPath(config);
+            output = Path.GetFullPath(output);
+            
+            if (!string.IsNullOrEmpty(apppath))
+            {
+                apppath = Path.GetFullPath(apppath);
+            }
+
             if (!File.Exists(template))
                 throw new FileNotFoundException(template);
 
@@ -34,6 +46,14 @@ namespace InstallerLib
 
             if (!string.IsNullOrEmpty(apppath) && !Directory.Exists(apppath))
                 throw new DirectoryNotFoundException(apppath);
+        }
+
+        public void WriteLine(string s)
+        {
+            if (verbose)
+            {
+                Console.WriteLine(s);
+            }
         }
     }
 }

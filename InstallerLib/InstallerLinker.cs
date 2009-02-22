@@ -13,15 +13,20 @@ namespace InstallerLib
         {
             args.Validate();
 
+            args.WriteLine(string.Format("Creating \"{0}\" from \"{1}\"", args.output, args.template));
             System.IO.File.Copy(args.template, args.output, true);
             System.IO.File.SetAttributes(args.output, System.IO.FileAttributes.Normal);
 
+            args.WriteLine(string.Format("Embedding banner \"{0}\"", args.banner));
             ResourceUpdate.UpdateResourceWithFile(args.output, "RES_BANNER", "CUSTOM", 0, args.banner);
+            
+            args.WriteLine(string.Format("Embedding configuration \"{0}\"", args.config));
             ResourceUpdate.UpdateResourceWithFile(args.output, "RES_CONFIGURATION", "CUSTOM", 0, args.config);
 
             ConfigFile configfile = new ConfigFile();
             configfile.Load(args.config);
 
+            args.WriteLine(string.Format("Updating binary attributes in \"{0}\"", args.output));
             VersionResource rc = new VersionResource();
             rc.LoadFrom(args.output);
 
@@ -39,6 +44,7 @@ namespace InstallerLib
 
             foreach (FileAttribute attr in configfile.fileattributes)
             {
+                args.WriteLine(string.Format(" {0}: {1}", attr.name, attr.data));
                 stringFileInfo[attr.name] = attr.data;
             }
 
@@ -51,6 +57,8 @@ namespace InstallerLib
                 string supportdir = string.IsNullOrEmpty(args.apppath)
                     ? Path.GetDirectoryName(Path.GetFullPath(args.config))
                     : args.apppath;
+
+                args.WriteLine(string.Format("Compressing files from \"{0}\"", supportdir));
 
                 ArrayList files = new ArrayList();
                 foreach (Configuration c in configfile.Configurations)
@@ -65,16 +73,22 @@ namespace InstallerLib
                             .Replace(@"#TEMPPATH", string.Empty)
                             .Replace(@"#CABPATH", string.Empty)
                             .TrimStart(@"\/".ToCharArray());
+                        
+                        args.WriteLine(string.Format(" {0}", relativepath));
                         files.Add(new string[] { fullpath, relativepath });
                     }
                 }
 
                 string cabname = Path.Combine(Path.GetDirectoryName(args.output), "Setup.cab");
+                args.WriteLine(string.Format("Writing \"{0}\"", cabname));
                 cab.CompressFileList(files, cabname, true, 0);
 
+                args.WriteLine(string.Format("Embedding \"{0}\"", cabname));
                 ResourceUpdate.UpdateResourceWithFile(args.output, "RES_CAB", "CUSTOM", 0, cabname);
                 File.Delete(cabname);
             }
+
+            args.WriteLine(string.Format("Successfully created \"{0}\"", args.output));
         }
     }
 }
