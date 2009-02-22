@@ -109,5 +109,12 @@ namespace InstallerLib
         }
 
         public event EventHandler SourceFilePathChanged;
+
+        public override EmbedFileCollection GetFiles()
+        {
+            EmbedFileCollection files = base.GetFiles();
+            files.Add(this);
+            return files;
+        }
     }
 }

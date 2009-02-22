@@ -91,6 +91,7 @@ namespace InstallerLib
                         {
                             case "embedfiles":
                             case "components":
+                            case "downloads":
                                 FromXml((XmlElement)child);
                                 break;
                             default:
