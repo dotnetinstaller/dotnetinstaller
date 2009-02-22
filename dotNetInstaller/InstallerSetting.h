@@ -17,6 +17,7 @@ public:
 	CString status_notinstalled;
 	CString failed_exec_command_continue;
 	CString installation_completed;
+    bool must_reboot_required;
 	CString reboot_required;
 	CString installing_component_wait;
 	//Link properties

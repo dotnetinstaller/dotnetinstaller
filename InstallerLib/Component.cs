@@ -78,11 +78,27 @@ namespace InstallerLib
         }
 
         private bool m_mustreboot;
-        [Description("Indicates if ask to reboot after this component is installed successfully (True/False). Normally if the system must be restarted is automatically the component that tells this setup (with special return code) to stop and restart the system, but in special circumstances (for example in Windows 98) we must force a reboot to install correctly some components (for example the .NET Framework). (REQUIRED)")]
+        [Description("Indicates whether to reboot automatically after this component is installed successfully. Normally if the system must be restarted, the component tells this setup (with special return code) to stop and restart the system. This forces a reboot without prompting. (REQUIRED)")]
         public bool mustreboot
         {
             get { return m_mustreboot; }
             set { m_mustreboot = value; }
+        }
+
+        private string m_reboot_required;
+        [Description("The message used when this component signaled the installer that it requires a reboot. (OPTIONAL)")]
+        public string reboot_required
+        {
+            get { return m_reboot_required; }
+            set { m_reboot_required = value; }
+        }
+
+        private bool m_must_reboot_required;
+        [Description("Component setting for reboot behavior. When true, installation won't continue after this component required a reboot. (OPTIONAL)")]
+        public bool must_reboot_required
+        {
+            get { return m_must_reboot_required; }
+            set { m_must_reboot_required = value; }
         }
 
         private bool m_required;
@@ -153,6 +169,8 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("type", m_type);
             e.XmlWriter.WriteAttributeString("installcompletemessage", m_installcompletemessage);
             e.XmlWriter.WriteAttributeString("mustreboot", m_mustreboot.ToString());
+            e.XmlWriter.WriteAttributeString("reboot_required", m_reboot_required);
+            e.XmlWriter.WriteAttributeString("must_reboot_required", m_must_reboot_required.ToString());
             e.XmlWriter.WriteAttributeString("required", m_required.ToString());
             e.XmlWriter.WriteAttributeString("description", m_description);
             //e.XmlWriter.WriteAttributeString("installmessage",m_installmessage);
@@ -175,6 +193,12 @@ namespace InstallerLib
 
             if (e.XmlElement.Attributes["mustreboot"] != null)
                 m_mustreboot = bool.Parse(e.XmlElement.Attributes["mustreboot"].InnerText);
+
+            if (e.XmlElement.Attributes["reboot_required"] != null)
+                m_reboot_required = e.XmlElement.Attributes["reboot_required"].InnerText;
+
+            if (e.XmlElement.Attributes["must_reboot_required"] != null)
+                m_must_reboot_required = bool.Parse(e.XmlElement.Attributes["must_reboot_required"].InnerText);
 
             if (e.XmlElement.Attributes["required"] != null)
                 m_required = bool.Parse(e.XmlElement.Attributes["required"].InnerText);

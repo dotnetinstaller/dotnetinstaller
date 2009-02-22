@@ -5,6 +5,12 @@
 #include "ConfigFile.h"
 
 InstallerSetting::InstallerSetting()
+    : must_reboot_required(false)
+    , auto_close_if_installed(false)
+    , dialog_show_installed(false)
+    , dialog_show_required(false)
+    , allow_continue_on_error(false)
+    , log_enabled(false)
 {
 
 }
@@ -15,7 +21,9 @@ void InstallerSetting::ExecuteCompleteCode() const
 
     CString message = installation_completed;
 	if (message.Trim().GetLength() > 0)
+    {
 		DniMessageBox(message, MB_OK|MB_ICONINFORMATION);
+    }
 
 	CString command = complete_command;
     CString command_silent = complete_command_silent; 

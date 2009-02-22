@@ -34,6 +34,10 @@ public:
 	CString installcompletemessage;
 	//true per forzare il reboot al termine dell'installazione altrimenti false
 	bool mustreboot;
+    //message for a reboot after this component
+    CString reboot_required;
+    //true to force a reboot when required
+    bool must_reboot_required;
 	//Jason Biegel - 2008-04-28: added filter for processor architecture
 	CString processor_architecture_filter;
     //cancelled by user

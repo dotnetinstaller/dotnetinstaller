@@ -270,8 +270,22 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 
 									l_bRemoveRunOnce = false;
 
-									//chiedo di riavviare
-									if (DniMessageBox(m_Settings.reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES )
+                                    bool l_bReboot = false;
+                                    CString reboot_required = component->reboot_required;
+                                    if (reboot_required.IsEmpty()) reboot_required = m_Settings.reboot_required;
+                                    if (m_Settings.must_reboot_required || component->must_reboot_required)
+                                    {
+										ApplicationLog.Write( TEXT("---Required REBOOT") );
+                                        DniMessageBox(reboot_required, MB_OK|MB_ICONQUESTION);
+                                        l_bReboot = true;
+                                    }
+                                    else 
+                                    {
+										ApplicationLog.Write( TEXT("---Prompt for REBOOT") );
+                                        l_bReboot = (DniMessageBox(reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES);
+                                    }
+
+									if (l_bReboot)
 									{
 										InitiateReboot();
 										l_bShuttingDown = true;

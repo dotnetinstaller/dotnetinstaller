@@ -95,6 +95,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 	p_Setting.failed_exec_command_continue = p_Node->AttributeT("failed_exec_command_continue").data();
 	p_Setting.installation_completed = p_Node->AttributeT("installation_completed").data();
 	p_Setting.reboot_required = p_Node->AttributeT("reboot_required").data();
+    p_Setting.must_reboot_required = ConvBoolString(p_Node->Attribute("must_reboot_required"), false);
 	p_Setting.installing_component_wait = p_Node->AttributeT("installing_component_wait").data();
 
 	p_Setting.dialog_otherinfo_caption = p_Node->AttributeT("dialog_otherinfo_caption").data();
@@ -214,6 +215,8 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 			l_new_component->os_filter_lcid = l_Node_component->AttributeT("os_filter_lcid").data();
 			l_new_component->installcompletemessage = l_Node_component->AttributeT("installcompletemessage").data();
 			l_new_component->mustreboot = ConvBoolString(l_Node_component->Attribute("mustreboot"), false);
+            l_new_component->reboot_required = l_Node_component->AttributeT("reboot_required").data();
+			l_new_component->must_reboot_required = ConvBoolString(l_Node_component->Attribute("must_reboot_required"), false);
 			l_new_component->required = ConvBoolString(l_Node_component->Attribute("required"), true);
 			l_new_component->processor_architecture_filter = l_Node_component->AttributeT("processor_architecture_filter").data();
 

@@ -155,12 +155,21 @@ namespace InstallerLib
         }
 
         private string m_reboot_required;
-        [Description("The message used when the application need to restart and ask if restart now (with a Yes/No message). (REQUIRED)")]
+        [Description("The message used when a component signaled the installer that it requires a reboot. (REQUIRED)")]
         [Category("Messages")]
         public string reboot_required
         {
             get { return m_reboot_required; }
             set { m_reboot_required = value; }
+        }
+
+        private bool m_must_reboot_required = false;
+        [Description("Global setting for reboot behavior. When true, installation won't continue after any component required a reboot. (REQUIRED)")]
+        [Category("Component")]
+        public bool must_reboot_required
+        {
+            get { return m_must_reboot_required; }
+            set { m_must_reboot_required = value; }
         }
 
         private string m_dialog_otherinfo_caption;
@@ -367,6 +376,7 @@ namespace InstallerLib
             // e.XmlWriter.WriteAttributeString("dialog_install_skip",m_dialog_install_skip);
             e.XmlWriter.WriteAttributeString("installing_component_wait", m_installing_component_wait);
             e.XmlWriter.WriteAttributeString("reboot_required", m_reboot_required);
+            e.XmlWriter.WriteAttributeString("must_reboot_required", m_must_reboot_required.ToString());
 
             e.XmlWriter.WriteAttributeString("dialog_otherinfo_caption", m_dialog_otherinfo_caption);
             e.XmlWriter.WriteAttributeString("dialog_otherinfo_link", m_dialog_otherinfo_link);
@@ -439,6 +449,9 @@ namespace InstallerLib
 
             if (e.XmlElement.Attributes["reboot_required"] != null)
                 m_reboot_required = e.XmlElement.Attributes["reboot_required"].InnerText;
+
+            if (e.XmlElement.Attributes["must_reboot_required"] != null)
+                m_must_reboot_required = bool.Parse(e.XmlElement.Attributes["must_reboot_required"].InnerText);
 
             //			if (e.XmlElement.Attributes["reinstallflag_caption"] != null)
             //				m_reinstallflag_caption = e.XmlElement.Attributes["reinstallflag_caption"].InnerText;

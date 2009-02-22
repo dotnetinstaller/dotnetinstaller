@@ -1097,8 +1097,17 @@
                                 <td>
                                     <b>reboot_required</b></td>
                                 <td>
-                                    The message used when the application need to restart and ask if restart now (with
-                                    a Yes/No message).</td>
+                                    The message used when a component signaled the installer that it requires a reboot.
+                                    When must_reboot_required is False, the user is prompted whether to reboot with this message.
+                                    When must_reboot_required is True, the user is told that a reboot is required with this message.</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>must_reboot_required</b></td>
+                                <td>
+                                    Global setting for reboot behavior. When true, installation won't continue after any component
+                                    required a reboot. The user will be told to reboot and he must do so. You should change the text 
+                                    in the reboot_required option accordingly.</td>
                             </tr>
                             <tr>
                                 <td>
@@ -1424,12 +1433,27 @@
                                 <td>
                                     <b>mustreboot</b></td>
                                 <td>
-                                    Indicates if ask to reboot after this component is installed successfully (True/False).
-                                    Normally if the system must be restarted is automatically the component that tells
-                                    this setup (with special return code) to stop and restart the system, but in special
-                                    circumstances (for example in Windows 98) we must force a reboot to install correctly
-                                    some components (for example the .NET Framework).
+                                    Indicates whether to ask to reboot after this component is installed successfully.
+                                    A component may indicate to the installer that it requires a reboot. Setting this option
+                                    to true will require a reboot after this component has been successfully installed.
+                                    The user must reboot.
                                 </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>reboot_required</b></td>
+                                <td>
+                                    The message used when this component signaled the installer that it requires a reboot.
+                                    When must_reboot_required is False, the user is prompted whether to reboot with this message.
+                                    When must_reboot_required is True, the user is told that a reboot is required with this message.</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>must_reboot_required</b></td>
+                                <td>
+                                    Component setting for reboot behavior. When true, installation won't continue after this component
+                                    required a reboot. The user will be told to reboot and he must do so. You should change the text 
+                                    in the reboot_required option accordingly.</td>
                             </tr>
                             <tr>
                                 <td>
@@ -2215,6 +2239,7 @@
   <li>removed: configurations\configuration\dialog_selector_cancel</li>
   <li>configurations\configuration\dialog_show_installed</li>
   <li>configurations\configuration\dialog_show_required</li>
+  <li>configurations\configuration\must_reboot_required</li>
  </ul>
  <br />
  <!-- END table for XML configuration help -->
@@ -2899,6 +2924,13 @@
       when false, required components are hidden.</li>
      <li>Added <span style="color: #b22222; font-family: Courier New">dialog_show_installed</span>:
       when false, installed components are hidden.</li>
+     <li>Added optional <span style="color: #b22222; font-family: Courier New">must_reboot_required</span>:
+      per component.</li>
+     <li>Added <span style="color: #b22222; font-family: Courier New">must_reboot_required</span> globally:
+      sets <span style="color: #b22222; font-family: Courier New">must_reboot_required</span> for any component 
+      that requires a reboot.</li>
+     <li>Added optional <span style="color: #b22222; font-family: Courier New">reboot_required</span>:
+      message per component extending the global setting.</li>
     </ul>
     <h3>
      1.5 (25 Oct 2008)</h3>
