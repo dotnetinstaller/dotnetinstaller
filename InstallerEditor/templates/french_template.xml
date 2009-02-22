@@ -35,7 +35,7 @@ There are three types of variables:
 		dialog_selector_message = "Selectionner les composants pour installer."
 		dialog_selector_ok = "OK"
 		dialog_selector_cancel = "Annuler"
-		os_filter_not_match_message = ""
+		os_filter_not_match_message = "Cette installation ne peut pas fonctionner sous le logiciel d'exploitation courant"
 		>
 	</setupconfiguration>
 	
