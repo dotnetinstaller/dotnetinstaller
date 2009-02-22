@@ -220,6 +220,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
         ExtractCab();
 		InsertRegistryRun();
 		bool l_bRemoveRunOnce = true;
+		bool l_bShuttingDown = false;
 
 	    for each(Component * component in m_Settings.GetComponents())
 		{
@@ -270,6 +271,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 									if (DniMessageBox(m_Settings.reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES )
 									{
 										InitiateReboot();
+										l_bShuttingDown = true;
 										ApplicationLog.Write( TEXT("---Initiated REBOOT") );
 										PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);
 										break;
@@ -322,8 +324,8 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 
 				if (DniMessageBox(l_msg, MB_YESNO, IDNO, MB_YESNO|MB_ICONEXCLAMATION) == IDNO )
 					break;
-				}
 			}
+		}
 
 		if (l_bRemoveRunOnce)
 		{
@@ -334,15 +336,22 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 			ApplicationLog.Write( TEXT("--dotNetInstaller is configured to auto execute on the next boot"));
 		}
 
-		if (LoadComponentsList())
+		if (l_bShuttingDown)
 		{
-			m_Settings.ExecuteCompleteCode();
-            OnOK();
+			OnOK();
 		}
-        else if (QuietInstall.IsSilent())
-        {
-            OnOK();
-        }
+		else
+		{
+			if (LoadComponentsList())
+			{
+				m_Settings.ExecuteCompleteCode();
+				OnOK();
+			}
+			else if (QuietInstall.IsSilent())
+			{
+				OnOK();
+			}
+		}
 
     }
     catch(std::exception& ex)
