@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Xml;
 using System.Collections.Specialized;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
     /// <summary>
     /// Summary description for ConfigFile.

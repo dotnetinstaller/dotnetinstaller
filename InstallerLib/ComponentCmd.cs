@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
 	/// <summary>
 	/// Tag component of type cmd

@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using InstallerLib;
 
 namespace InstallerEditor
 {
@@ -154,9 +155,9 @@ namespace InstallerEditor
 
 			p_Component.DescriptionChanged +=new EventHandler(p_Component_DescriptionChanged);
 
-			foreach (installedcheck c in p_Component.installchecks)
+			foreach (InstalledCheck c in p_Component.installchecks)
 			{
-				Nodes.Add(new TreeNodeinstalledcheck(c));
+				Nodes.Add(new TreeNodeInstalledCheck(c));
 			}
 
 			if (p_Component.DownloadDialog != null)
@@ -176,24 +177,24 @@ namespace InstallerEditor
 		}
 	}
 
-	public class TreeNodeinstalledcheck : TreeNode
+	public class TreeNodeInstalledCheck : TreeNode
 	{
-		public TreeNodeinstalledcheck(installedcheck p_installedcheck)
+		public TreeNodeInstalledCheck(InstalledCheck p_InstalledCheck)
 		{
 			base.Text = "Installed Check";
 
-			if (p_installedcheck is installedcheck_file)
+			if (p_InstalledCheck is InstalledCheckFile)
 			{
 				base.ImageIndex = 9;
 				base.SelectedImageIndex = 9;
 			}
-			else if (p_installedcheck is installedcheck_registry)
+			else if (p_InstalledCheck is InstalledCheckRegistry)
 			{
 				base.ImageIndex = 10;
 				base.SelectedImageIndex = 10;
 			}
 
-			base.Tag = p_installedcheck;
+			base.Tag = p_InstalledCheck;
 		}
 	}
 }

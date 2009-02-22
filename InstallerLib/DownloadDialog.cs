@@ -2,7 +2,7 @@ using System;
 using System.Xml;
 using System.ComponentModel;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
 	/// <summary>
 	/// Gestione del tag downloaddialog

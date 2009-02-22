@@ -1,14 +1,14 @@
 using System;
 using System.ComponentModel;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
 	/// <summary>
-	/// installedcheck of type check_registry_value
+	/// InstalledCheck of type check_registry_value
 	/// </summary>
-	public class installedcheck_file : installedcheck
+	public class InstalledCheckFile : InstalledCheck
 	{
-		public installedcheck_file():base("check_file")
+		public InstalledCheckFile():base("check_file")
 		{
 			m_filename = "#SYSTEMPATH\\my_dll.dll";
 			m_comparison = installcheck_comparison.version;
@@ -40,9 +40,9 @@ namespace InstallerEditor
 		}
 
 
-		protected override void OnXmlWriteTaginstalledcheck(XmlWriterEventArgs e)
+		protected override void OnXmlWriteTagInstalledCheck(XmlWriterEventArgs e)
 		{
-			base.OnXmlWriteTaginstalledcheck (e);
+			base.OnXmlWriteTagInstalledCheck (e);
 
 			e.XmlWriter.WriteAttributeString("filename",m_filename);
 			e.XmlWriter.WriteAttributeString("fileversion",m_fileversion);
@@ -50,9 +50,9 @@ namespace InstallerEditor
 		}
 
 
-		protected override void OnXmlReadTaginstalledcheck(XmlElementEventArgs e)
+		protected override void OnXmlReadTagInstalledCheck(XmlElementEventArgs e)
 		{
-			base.OnXmlReadTaginstalledcheck (e);
+			base.OnXmlReadTagInstalledCheck (e);
 
 			if (e.XmlElement.Attributes["filename"] != null)
 				m_filename = e.XmlElement.Attributes["filename"].InnerText;

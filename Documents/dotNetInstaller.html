@@ -21,56 +21,28 @@
         Introduction</h2>
     <p>
         This application doesn't replace tools like InstallShield, Wise or Visual Studio
-        Setup and Deployment Project; my goal is to create an application to help the users
+        Setup and Deployment Project; the goal is to create an application to help the users
         with installing the correct prerequisites components.
-        <br />
         Today applications often need to install several components to work properly: Windows
-        Service Pack, Internet Explorer, MDAC, .NET Framework, ...
-        <br />
-        With this tool the developer can define the application prerequisites and install
-        the correct version of these components in the correct order based on the processor architecture,
-        user operating system type and language, allow the user to download these components from the web
-        or install these components directly from a single packaged setup or local media (usually a CDROM).</p>
+        Service Pack, Internet Explorer, MDAC, .NET Framework, etc. This kind of applications are most commonly known as
+     "bootstrappers".</p>
+ <p>
+  With dotNetInstaller the developer can define the application prerequisites and install
+        the correct version of these components in the right order based on the processor architecture,
+        user operating system type and language, allow the user to download these components from the web, install these components directly from a single packaged setup or local media (usually a CDROM) or both.</p>
     <p>
-        This project is composed with these components:</p>
+        This project is composed of the following components:</p>
     <ul>
-        <li>dotNetInstaller.exe + Source Code: Main bootstrapper application, written with Visual
+        <li><strong>dotNetInstaller.exe</strong>: Main bootstrapper application, written with Visual
             Studio 2005 C++ and MFC.</li>
-        <li>InstallerEditor.exe + Source Code: Application for editing configurations files
+        <li><strong>InstallerEditor.exe</strong>: Application for editing configurations files
             and edit dotNetInstaller.exe resources, written with Visual Studio 2005 C# for .NET
             Framework 2.0.</li>
-        <li>Configuration samples and SupportFiles template.</li>
+     <li><strong>InstallerLinker.exe</strong>: Command-line bootstrapper linker that can
+      be used in a build process, written with Visual Studio 2005 C# for .NET Framework
+      2.0.</li>
+        <li>Several samples and dependency templates that can be reused as-is.</li>
     </ul>
-    <p>
-        This project is based on Microsoft bootstrapper and Kevin Moore bootstrapper 'Enhanced
-        .NET Bootstrap Setup' (<a href="http://www.codeproject.com/managedcpp/dotnetsetup.asp">http://www.codeproject.com/managedcpp/dotnetsetup.asp</a>).</p>
-    <p>
-        All the settings are stored in a XML file parsed with TinyXml, a little but very
-        good XML parser. You can find it at <a href="http://sourceforge.net/projects/tinyxml">
-            http://sourceforge.net/projects/tinyxml</a>.</p>
-    <p>
-        In the previous version I have used a good parser by Cho, Kyung-min, XMLite: simple
-        xml parser. <a href="http://www.codeproject.com/useritems/xmlite.asp">http://www.codeproject.com/useritems/xmlite.asp</a>
-        but unfortunately can't support very well UTF-8 so now I use TinyXml.</p>
-    <p>
-        A special thanks to Kevin Moore, Cho, Kyung-min, TinyXML project, Peter Mares, Bilou
-        Gateux ( for helping me with the french translation), Wolfgang, Franz Wong, sambourton
-        and a lot of other people who helped me with code, bugs report, new ideas and suggestions.</p>
-    <p>
-        I build this project with Windows XP, Visual Studio 2005 (C++ and C#) and Microsoft
-        .NET Framework 2.0. Check for the latest version at: <a href="http://www.devage.com/"
-            target="_blank">http://www.devage.com/</a>. If you have any ideas or questions
-        contact me at: webmaster@devage.com.</p>
-    <p>
-        The installer, the editor and the configuration files are all UTF-8 compatible,
-        the installer is compiled with UNICODE but you can use the Microsoft Layer for Unicode
-        for using the installer with Win9x and ME operating system.</p>
-    <p>
-        For more informations, a discussion forums, bug tracker system or to download the
-        latest release go to the SourceForge page: <a href="http://sourceforge.net/projects/dotnetinstaller">
-            http://sourceforge.net/projects/dotnetinstaller</a> or to my home page <a href="http://www.devage.com/">
-                http://www.devage.com/</a>
-    </p>
     <h2>
         Authors</h2>
     <p>
@@ -82,23 +54,18 @@
             target="_blank">http://www.matthias-jentsch.de</a> </li>
     </ul>
  <p>
-  The following people have contributed to dotNetInstaller</p>
- <ul>
-  <li>Matthew Sheets</li>
-  <li>Rennie Petersen</li>
-  <li>Rainer Halanek</li>
-  <li>James Muchmore </li>
-  <li>Steve</li>
-  <li>Peter Mares </li>
-  <li>Franz Wong</li>
-  <li>Daniel Doubrovkine <a href="http://www.dblock.org">http://www.dblock.org</a></li>
-  <li>Jason Biegel</li>
-  <li>Charles McDonald</li>
- </ul>
+        A special thanks to Kevin Moore, Cho, Kyung-min, TinyXML project, Peter Mares, Bilou
+        Gateux (for helping me with the french translation), Wolfgang, Franz Wong, sambourton
+        and a lot of other people who helped me with code, bugs report, new ideas and suggestions.</p>
+ <p>
+  The following people (in alphabetical order) have also contributed to dotNetInstaller:
+  Charles McDonald, Daniel Doubrovkine (<a href="http://www.dblock.org">http://www.dblock.org</a>),
+  Franz Wong, James Muchmore, Jason Biegel, Matthew Sheets, Peter Mares, Rainer Halanek,
+  Rennie Petersen, Steve.</p>
     <h2>
         Samples</h2>
     <p>
-        In the attached zip file you can find 2 samples: a standalone setup and a all-in-one
+     You can find 2 samples in the distribution package: a standalone setup and a all-in-one
      packaged setup.
     </p>
  <p>
@@ -130,10 +97,8 @@
         I have created the configuration files for English and Italian operating system,
         but you can include your custom language easily.</p>
  <p>
-  The packaged setup is compiled with InstallerEditor into a single Setup.exe with
+  The packaged setup is compiled with InstallerLinker into a single Setup.exe with
   all its dependencies, including a simple MSI setup package.</p>
-    <p>
-        For other samples or informations look at the attached zip file.</p>
     <h2>
         The editor: InstallerEditor.exe</h2>
     <img src="InstallerEditor.JPG" alt="InstallerEditor image" />
@@ -141,10 +106,10 @@
         You can create two types of configuration files with the editor:
     </p>
     <ul>
-        <li>Standalone Configuration: A configuration that runs the components setups from a
+        <li><strong>Standalone Configuration</strong>: A configuration that runs the components setups from a
             specified path, usually a relative path of the dotNetInstaller.exe file. Select
             this configuration if you want to distribute your application with a CDROM.</li>
-        <li>Web Configuration: A configuration that download and execute the required components
+        <li><strong>Web Configuration</strong>: A configuration that download and execute the required components
             from a specified web site. Select this configuration if you want to distribute the
             configuration over the web.</li>
     </ul>
@@ -156,7 +121,7 @@
     <p>
         Another solution is to distribute in the same path of the dotNetInstaller.exe the
         configuration file using the name 'configuration.xml' and if you want you can also
-        distribute a bitmap with the name 'banner.bmp'. dotNetInstaller first checks for
+        distribute a bitmap with the name "banner.bmp". dotNetInstaller first checks for
         this configuration file, if the file doesn't exist the application uses the configuration
         embedded in the exe.</p>
     <p>
@@ -182,14 +147,18 @@
         order that the setup uses to install the same components, so be carefull to insert
         the components in the correct order. In this release you cannot change the order
         of the components from the editor, if you need this feature you must change the
-        XML manually.<br />
+        XML manually.</p>
+ <p>
         You can use the "Add -&gt;Component Wizard ..." menu when adding new components
         to automatically add the most important components like: Service Pack 6a for NT4,
         Internet Explorer 6, .NET 1.1, MDAC 2.8, ...</p>
         
-    <h3>Command Line Usage</h3>
+    <h3>
+     The linker: InstallerLinker.exe</h3>
+ <h3>
+  Command Line Usage</h3>
     <p>
-     InstallerEditor can be used as the bootstrapper compiler and linker in a build process.
+     InstallerLinker can be used as the bootstrapper compiler and linker in a build process.
     </p>
     <h3>Command Line Parameters</h3>
     <p>
@@ -214,7 +183,8 @@
     </p>
     <p>
      In addition, you can pass a response file prefixed with @ for all options.
-     Run InstallerEditor.exe /? for detailed command-line usage.    
+     Run InstallerLinker.exe
+     /? for detailed command-line usage.    
     </p>    
     <h3>Return Codes</h3>
     <p>
@@ -414,7 +384,7 @@
     <h2>
         Check if the component is already installed</h2>
     <p>
-        You can use the <code lang="text">installedcheck</code> element to check if a component
+        You can use the <code lang="text">InstalledCheck</code> element to check if a component
         is already installed, for example you can check if the .NET Framework 1.1 is installed
         by reading this registry key SOFTWARE\Microsoft\NET Framework Setup\NDP\v1.1.4322\Install
         = 1.</p>
@@ -665,6 +635,10 @@
 	Use TEMPPATH in all configuration settings instead of APPPATH. Extraction, as well as download 
 	happens into TEMPPPATH. When making an EXE, check the Embed Cab option to embed all support files. 
 	For the command line build, add the -e option and optionally -a to specify the location of support files.</p>
+ <p>
+  If you would like temporary files to be deleted after setup completes, use #CABPATH
+  instead of #TEMPPATH and the cab_path_autodelete configuration option. #CABPATH
+  defaults to #TEMPPATH\#GUID.</p>
     <h2>
         Multilanguage features</h2>
     <p>
@@ -710,7 +684,7 @@
             </ul>
         </li>
         <li>Create a custom executable using InstallerEditor (with the "File-&gt;Create Exe"
-            method):
+         method or InstallerLinker.exe):
             <ul>
                 <li><b>dotNetInstaller.exe</b> - Main bootstrapper executable edited with InstallerEditor.</li>
                 <li>unicows.dll - Microsoft Layer for Unicode (this file is required only on Windows
@@ -1369,7 +1343,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <b>installedcheck</b></td>
+                                    <b>InstalledCheck</b></td>
                             </tr>
                             <tr>
                                 <td>
@@ -1820,7 +1794,7 @@
         <tbody>
             <tr>
                 <th colspan="2" bgcolor="#ccccff">
-                    installedcheck (type='check_file')</th>
+                    InstalledCheck (type='check_file')</th>
             </tr>
             <tr>
                 <td colspan="2">
@@ -1887,7 +1861,7 @@
         <tbody>
             <tr>
                 <th colspan="2" bgcolor="#ccccff">
-                    installedcheck (type='check_registry_value')</th>
+                    InstalledCheck (type='check_registry_value')</th>
             </tr>
             <tr>
                 <td colspan="2">
@@ -2011,14 +1985,14 @@
         <li>configurations\configuration\os_filter_greater</li>
         <li>configurations\configuration\os_filter_smaller</li>
         <li>configurations\configuration\os_filter_not_match_message</li>
-        <li>configurations\configuration\components\component\installedcheck\rootkey</li>
+        <li>configurations\configuration\components\component\InstalledCheck\rootkey</li>
     </ul>
     <p>
         Changed attributes:</p>
     <ul>
-        <li>configurations\configuration\components\component\installedcheck\comparison can
+        <li>configurations\configuration\components\component\InstalledCheck\comparison can
             now have the values 'match', 'version', 'exists' or 'contains'</li>
-        <li>configurations\configuration\components\component\installedcheck\fieldtype can now
+        <li>configurations\configuration\components\component\InstalledCheck\fieldtype can now
             have the values 'REG_DWORD', 'REG_SZ' or 'REG_MULTI_SZ'</li>
     </ul>
     <h3>
@@ -2051,7 +2025,7 @@
         Software Requirements</h2>
     <p>
         dotNetInstaller is compatible with Windows 98, Windows 98 Second Edition, Windows
-        ME, Windows NT4, Windows 2000, Windows XP, Windows Server 2003.<br />
+        ME, Windows NT4, Windows 2000, Windows XP, Windows Server 2003.
         Some other applications, like .NET Framework 1.1, require some system components.
         Here you can find some informations about common components requirements.</p>
     <p>
@@ -2426,7 +2400,7 @@
             and shwapi.dll with dotNetInstaller.exe.</li>
         <li>Is useful that also your setup write a little registry value where you can put some
             information about the installed version, this allows this application to check if
-            your setup is already installed using a 'installedcheck' element.</li>
+            your setup is already installed using a 'InstalledCheck' element.</li>
         <li>In Windows 98 after installing .NET Framework I must force a reboot of the computer
             (with the 'mustreboot' attribute) otherwise some .NET Framework or Windows Installer
             components or not installed correctly.</li>
@@ -2444,13 +2418,8 @@
             article: <a href="http://support.microsoft.com/default.aspx?scid=http://support.microsoft.com:80/support/kb/articles/q181/6/04.asp&amp;NoWebContent=1">
                 Microsoft Knowledge Base Article - 181604. HOWTO: Determine Default Language ID
                 of Windows 95 or WinNT</a></li>
-        <li>To download the components I use <code>URLDownloadToFile</code> API.</li>
         <li>For now I don't delete the downloaded components, for this reason I recommended
             to use the TEMP path as a destination folder.</li>
-        <li>To change the resources of the exe file I use <code>BeginUpdateResourceW</code>,
-            <code>UpdateResourceW</code> and <code>EndUpdateResourceW</code> API. These API
-            are available only on Windows NT, 2000 and XP for this reason the editor cannot
-            be used on Windows 98 (the bootstrapper is supported also on Windows 98 ). </li>
         <li>You can use the "/log" command line parameter when executing dotNetInstaller.exe.
             This parameter creates a log file during installation with some informations and
             errors useful for debugging. You can find this file in the user temp directory with
@@ -2460,18 +2429,12 @@
             and XP) you must use the same language of the destination operating system.</li>
     </ul>
     <h2>
-        Summary of future works</h2>
-    <ul>
-        <li>TBD</li>
-    </ul>
-    <h2>
         How to: Create a Self-Extracting Setup Executable</h2>
     <p>
         In certain deployment scenarios, it may be desirable to distribute an installation package
         as a single, self-extracting executable (SFX). dotNetInstaller supports embedding dependencies
-        since version 1.4. This section describes an alternate way of packaging a single installer
-        with a 3rd party tool.
-    </p>
+        since version 1.4 (/Embed+). This section describes an alternate way of packaging a single installer
+        with a 3rd party tool.</p>
     <p>
         The
  <a target=_blank href="http://7zsfx.org/">7zSFX project</a>, based on the
@@ -2548,7 +2511,8 @@
         (In 7zSFX, the <span style="font-family: Monospace">%%S</span> in the embedded UTF-8 configuration file will be replaced with the full
         path to self-extracting executable.)</p>
     <h2>
-     Developer Reference</h2>
+     Developer Reference</h2><h3>
+      Contributing to dotNetInstaller</h3>
  <p>
   dotNetInstaller was written by many developers. Some have contributed large features
   and others small patches. You're invited to make dotNetInstaller better.</p>
@@ -2578,7 +2542,49 @@
  <p>
   Official builds are produced with <span style="color: #b22222; font-family: Courier New">
    build all /p:Configuration=Release </span>from the command line using the dni.proj
-  MSBuild script.</p>
+  MSBuild script.</p><h3>
+   Source Code Notes</h3>
+ <p>
+        This project is based on Microsoft bootstrapper and Kevin Moore bootstrapper "Enhanced
+        .NET Bootstrap Setup' (<a href="http://www.codeproject.com/managedcpp/dotnetsetup.asp">http://www.codeproject.com/managedcpp/dotnetsetup.asp</a>).</p>
+ <p>
+  The source code can be obtained from the SourceForge subversion repository: <a href="https://dotnetinstaller.svn.sourceforge.net/svnroot/dotnetinstaller/trunk">
+   https://dotnetinstaller.svn.sourceforge.net/svnroot/dotnetinstaller/trunk</a>.
+ </p>
+    <p>
+     This project can be built with Windows XP, Server or Vista, Visual Studio 2005 (C++ and C#) and Microsoft
+        .NET Framework 2.0.</p>
+    <p>
+        The installer, the editor and the configuration files are all UTF-8 compatible,
+        the installer is compiled with UNICODE but you can use the Microsoft Layer for Unicode
+        for using the installer with Win9x and ME operating system.</p>
+ <p>
+  To download the components I use <code>URLDownloadToFile</code> API. To change the resources of the exe file I use <code>BeginUpdateResourceW</code>,
+            <code>UpdateResourceW</code> and <code>EndUpdateResourceW</code> API. These API
+            are available only on Windows NT, 2000 and XP for this reason the editor cannot
+            be used on Windows 98 (the bootstrapper is supported also on Windows 98).</p>
+    <p>
+        For more informations, a discussion forums, bug tracker system or to download the
+        latest release go to the SourceForge page: <a href="http://sourceforge.net/projects/dotnetinstaller">
+            http://sourceforge.net/projects/dotnetinstaller</a> or <a href="http://www.devage.com/">
+                http://www.devage.com/</a>.
+    </p><h3>
+     Third Party Libraries</h3>
+ <p>
+  The following third-party libraries are used in this project.</p>
+ <ul>
+  <li>
+        All the settings are stored in an XML file parsed with <a href="http://sourceforge.net/projects/tinyxml">
+   TinyXml</a></li>
+  <li>Older versions used <a href="http://www.codeproject.com/useritems/xmlite.asp">
+   XMLLite</a> by Cho, Kyung-min</li>
+  <li>Packaging is done with <a href="http://www.codeproject.com/KB/files/CABCompressExtract.aspx">
+   Elmü's CAB library</a></li>
+  <li>File attribute patching is done with Vestris <a href="http://www.codeproject.com/KB/library/ResourceLib.aspx">
+   ResourceLib</a>.</li>
+  <li>CommandLine processing is done with Peter Hall's <a href="http://www.codeplex.com/CommandLineArguments">
+   CommandLineArguments</a>.</li>
+ </ul>
  <p>
  </p>
  <h2>
@@ -2613,7 +2619,7 @@
             compiler in a build process.</li>
         <li>Added CABing, embedding of support files using <a href="http://www.codeproject.com/KB/files/CABCompressExtract.aspx">Elmü's CAB library</a>
          and a PackagedSetup sample</li>
-        <li>Added command line options -e (Embed) and -a (AppPath) for command line build</li>
+        <li>Added InstallerLinker.exe with command line options -e (Embed) and -a (AppPath) for command line build</li>
         <li>Added cab_dialog_message, cab_dialog_caption, cap_path and cab_path_autodelete options</li>
         <li>Temporary files (eg. downloaded files) will be deleted upon completion of dotNetInstaller</li>
         <li>Added /Log command-line option and log_enabled configuration file parameter that enables logging for dotNetInstaller and all MSI components executed</li>

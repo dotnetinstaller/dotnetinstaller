@@ -2,14 +2,14 @@ using System;
 using System.Xml;
 using System.ComponentModel;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
 	/// <summary>
-	/// installedcheck of type check_registry_value
+	/// InstalledCheck of type check_registry_value
 	/// </summary>
-	public class installedcheck_registry : installedcheck
+	public class InstalledCheckRegistry : InstalledCheck
 	{
-		public installedcheck_registry():base("check_registry_value")
+		public InstalledCheckRegistry():base("check_registry_value")
 		{
 			m_path = "SOFTWARE\\MyCompany\\MyApplication\\1.0.1.0";
 			m_comparison = installcheck_comparison.match;
@@ -67,9 +67,9 @@ namespace InstallerEditor
 			set{m_rootkey = value;}
 		}
 		
-		protected override void OnXmlWriteTaginstalledcheck(XmlWriterEventArgs e)
+		protected override void OnXmlWriteTagInstalledCheck(XmlWriterEventArgs e)
 		{
-			base.OnXmlWriteTaginstalledcheck (e);
+			base.OnXmlWriteTagInstalledCheck (e);
 
 			e.XmlWriter.WriteAttributeString("path",m_path);
 			e.XmlWriter.WriteAttributeString("fieldname",m_fieldname);
@@ -80,9 +80,9 @@ namespace InstallerEditor
 		}
 
 
-		protected override void OnXmlReadTaginstalledcheck(XmlElementEventArgs e)
+		protected override void OnXmlReadTagInstalledCheck(XmlElementEventArgs e)
 		{
-			base.OnXmlReadTaginstalledcheck (e);
+			base.OnXmlReadTagInstalledCheck (e);
 
 			if (e.XmlElement.Attributes["path"] != null)
 				m_path = e.XmlElement.Attributes["path"].InnerText;

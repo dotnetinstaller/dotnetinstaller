@@ -1,18 +1,15 @@
 using System;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
-    /// <summary>
-    /// Summary description for Template.
-    /// </summary>
     public class Template
     {
         private static Template m_DefaultTemplate;
         private static Template m_CurrentTemplate;
         static Template()
         {
-            m_DefaultTemplate = new Template(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("InstallerEditor.templates.english_template.xml"),
-                            "Default (English)");
+            m_DefaultTemplate = new Template(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(
+                "InstallerLib.templates.english_template.xml"), "Default (English)");
             m_CurrentTemplate = m_DefaultTemplate;
         }
 

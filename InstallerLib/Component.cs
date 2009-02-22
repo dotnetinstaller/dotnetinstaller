@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.IO;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
     /// <summary>
     /// Summary description for Configuration.
@@ -146,7 +146,7 @@ namespace InstallerEditor
                 m_DownloadDialog.ToXml(p_Writer);
             }
 
-            foreach (installedcheck i in installchecks)
+            foreach (InstalledCheck i in installchecks)
             {
                 i.ToXml(p_Writer);
             }
@@ -175,11 +175,11 @@ namespace InstallerEditor
             {
                 if (l_XmlCheck.Attributes["type"] != null)
                 {
-                    installedcheck l_check;
+                    InstalledCheck l_check;
                     if (l_XmlCheck.Attributes["type"].InnerText == "check_file")
-                        l_check = new installedcheck_file();
+                        l_check = new InstalledCheckFile();
                     else if (l_XmlCheck.Attributes["type"].InnerText == "check_registry_value")
-                        l_check = new installedcheck_registry();
+                        l_check = new InstalledCheckRegistry();
                     else
                         throw new ApplicationException("Invalid type");
 
@@ -240,9 +240,9 @@ namespace InstallerEditor
                 m_processor_architecture_filter = e.XmlElement.Attributes["processor_architecture_filter"].InnerText;
         }
 
-        private installedcheckCollection m_installchecks = new installedcheckCollection();
+        private InstalledCheckCollection m_installchecks = new InstalledCheckCollection();
         [System.ComponentModel.Browsable(false)]
-        public installedcheckCollection installchecks
+        public InstalledCheckCollection installchecks
         {
             get { return m_installchecks; }
             set { m_installchecks = value; }

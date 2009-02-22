@@ -4,7 +4,7 @@ using System.ComponentModel.Design;
 using System.Xml;
 using System.Collections.Generic;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
     /// <summary>
     /// node:configuration, type=install
@@ -15,6 +15,7 @@ namespace InstallerEditor
             : this("APPLICATION_NAME")
         {
         }
+
         public SetupConfiguration(string p_ApplicationName)
             : base("install")
         {

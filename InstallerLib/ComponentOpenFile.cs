@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
     /// <summary>
     /// Tag component of type openfile

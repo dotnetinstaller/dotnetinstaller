@@ -3,7 +3,7 @@ using System.Xml;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
 	/// <summary>
 	/// Summary description for WebConfiguration.

@@ -2,7 +2,7 @@ using System;
 using System.Xml;
 using System.ComponentModel;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
 	/// <summary>
 	/// Summary description for Download.

@@ -1,6 +1,6 @@
 using System;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
 	/// <summary>
 	/// A collection of elements of type Component

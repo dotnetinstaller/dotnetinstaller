@@ -2,14 +2,14 @@ using System;
 using System.Xml;
 using System.ComponentModel;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
 	/// <summary>
-	/// Tag installedcheck
+	/// Tag InstalledCheck
 	/// </summary>
-	public class installedcheck
+	public class InstalledCheck
 	{
-		public installedcheck(string p_type)
+		public InstalledCheck(string p_type)
 		{
 			m_type = p_type;
 		}
@@ -38,7 +38,7 @@ namespace InstallerEditor
 		{
 			p_Writer.WriteStartElement("installedcheck");
 				p_Writer.WriteAttributeString("type", m_type);
-				OnXmlWriteTaginstalledcheck(new XmlWriterEventArgs(p_Writer));
+				OnXmlWriteTagInstalledCheck(new XmlWriterEventArgs(p_Writer));
 			p_Writer.WriteEndElement();
 		}
 
@@ -48,14 +48,14 @@ namespace InstallerEditor
 				p_Element.Attributes["type"].InnerText != m_type)
 				throw new ApplicationException("Invalid type");
 
-			OnXmlReadTaginstalledcheck(new XmlElementEventArgs(p_Element));
+			OnXmlReadTagInstalledCheck(new XmlElementEventArgs(p_Element));
 		}
 		#endregion
 
-		protected virtual void OnXmlWriteTaginstalledcheck(XmlWriterEventArgs e)
+		protected virtual void OnXmlWriteTagInstalledCheck(XmlWriterEventArgs e)
 		{
 		}
-		protected virtual void OnXmlReadTaginstalledcheck(XmlElementEventArgs e)
+		protected virtual void OnXmlReadTagInstalledCheck(XmlElementEventArgs e)
 		{
 		}
 

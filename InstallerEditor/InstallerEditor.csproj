@@ -121,57 +121,11 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CommandLineArguments.cs" />
-    <Compile Include="Component.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ComponentCmd.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ComponentCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ComponentMsi.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ComponentOpenFile.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="ComponentWizard.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ComponentWizard2.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ConfigFile.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Configuration.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ConfigurationCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Download.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DownloadCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DownloadDialog.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="installedcheck.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="installedcheckCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="installedcheck_file.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="installedcheck_registry.cs">
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="InstallerEditor.cs" />
     <Compile Include="MainForm.cs">
@@ -183,24 +137,10 @@
     <Compile Include="MenuItemTemplateFile.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="FileAttribute.cs" />
-    <Compile Include="FileAttributeCollection.cs" />
-    <Compile Include="ResourceUpdate.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="SetupConfiguration.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Template.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="TemplatesEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TreeNodes.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebConfiguration.cs">
       <SubType>Code</SubType>
     </Compile>
     <EmbeddedResource Include="About.resx">
@@ -228,12 +168,14 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="templates\components.xml" />
-    <EmbeddedResource Include="templates\english_template.xml" />
     <Content Include="App.ico" />
-    <None Include="templates\german_template.xml" />
     <None Include="bin\Release\InstallerEditor.exe" />
-    <None Include="templates\french_template.xml" />
-    <None Include="templates\italian_template.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InstallerLib\InstallerLib.csproj">
+      <Project>{E19C2177-78F8-4C52-81FE-F49E157D647F}</Project>
+      <Name>InstallerLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

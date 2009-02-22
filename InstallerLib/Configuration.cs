@@ -3,7 +3,7 @@ using System.Xml;
 using System.ComponentModel;
 using System.Collections.Generic;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
     /// <summary>
     /// tag: configuration

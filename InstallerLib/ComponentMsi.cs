@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Collections.Generic;
 
-namespace InstallerEditor
+namespace InstallerLib
 {
     /// <summary>
     /// Tag component of type msi

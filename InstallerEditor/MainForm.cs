@@ -1,9 +1,9 @@
 using System;
 using System.Drawing;
 using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data;
+using InstallerLib;
 
 namespace InstallerEditor
 {
@@ -568,6 +568,8 @@ namespace InstallerEditor
 
 				CloseTreeView();
 
+                propertyGrid.SelectedObject = null;
+
 				RefreshMenu();
 
 				return true;
@@ -747,7 +749,7 @@ namespace InstallerEditor
 					mnDelete.Enabled = true;
 					mnAddDownloadDialog.Enabled = true;
 				}
-				else if (treeView.SelectedNode.Tag is installedcheck)
+				else if (treeView.SelectedNode.Tag is InstalledCheck)
 				{
 					mnDelete.Enabled = true;
 				}
@@ -790,15 +792,15 @@ namespace InstallerEditor
 			p_Config.Components.Add(l_Component);
 			return l_Component;
 		}
-		private installedcheck AddInstalledCheckRegistry(Component p_Component)
+		private InstalledCheck AddInstalledCheckRegistry(Component p_Component)
 		{
-			installedcheck_registry l_Check = new installedcheck_registry();
+			InstalledCheckRegistry l_Check = new InstalledCheckRegistry();
 			p_Component.installchecks.Add(l_Check);
 			return l_Check;
 		}
-		private installedcheck AddInstalledCheckFile(Component p_Component)
+		private InstalledCheck AddInstalledCheckFile(Component p_Component)
 		{
-			installedcheck_file l_Check = new installedcheck_file();
+			InstalledCheckFile l_Check = new InstalledCheckFile();
 			p_Component.installchecks.Add(l_Check);
 			return l_Check;
 		}
@@ -891,7 +893,7 @@ namespace InstallerEditor
 			else
 				throw new ApplicationException("Invalid node");
 		}
-		private void DeleteInstalledCheck(installedcheck p_Check, TreeNode p_CurrentNode)
+		private void DeleteInstalledCheck(InstalledCheck p_Check, TreeNode p_CurrentNode)
 		{
 			if (p_CurrentNode.Parent.Tag is Component)
 			{
@@ -938,9 +940,9 @@ namespace InstallerEditor
 					{
 						DeleteComponent((Component)(treeView.SelectedNode.Tag), treeView.SelectedNode);
 					}		
-					else if (treeView.SelectedNode.Tag is installedcheck)
+					else if (treeView.SelectedNode.Tag is InstalledCheck)
 					{
-						DeleteInstalledCheck((installedcheck)(treeView.SelectedNode.Tag), treeView.SelectedNode);
+						DeleteInstalledCheck((InstalledCheck)(treeView.SelectedNode.Tag), treeView.SelectedNode);
 					}
 					else if  (treeView.SelectedNode.Tag is DownloadDialog)
 					{
@@ -1009,7 +1011,7 @@ namespace InstallerEditor
 				if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is Component)
 				{
 					Component l_Component = (Component)treeView.SelectedNode.Tag;
-					treeView.SelectedNode.Nodes.Add(new TreeNodeinstalledcheck( AddInstalledCheckRegistry(l_Component) ));
+					treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck( AddInstalledCheckRegistry(l_Component) ));
 				}
 			}
 			catch(Exception err)
@@ -1025,7 +1027,7 @@ namespace InstallerEditor
 				if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is Component)
 				{
 					Component l_Component = (Component)treeView.SelectedNode.Tag;
-					treeView.SelectedNode.Nodes.Add(new TreeNodeinstalledcheck( AddInstalledCheckFile(l_Component) ));
+					treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck( AddInstalledCheckFile(l_Component) ));
 				}
 			}
 			catch(Exception err)
@@ -1128,6 +1130,7 @@ namespace InstallerEditor
 			try
 			{
 				RefreshTemplateFilesMenu();
+
 				if (m_AppSetting.TemplateConfigFile != null &&
 					m_AppSetting.TemplateConfigFile.Length > 0)
 				{
@@ -1270,7 +1273,6 @@ namespace InstallerEditor
 
 		private void defTemplate_Click(object sender, EventArgs e)
 		{
-			Template.CurrentTemplate = Template.DefaultTemplate;
 			m_AppSetting.TemplateConfigFile = null;
 			((MenuItem)sender).Checked = true;
 

@@ -1,8 +1,8 @@
 using System;
 using System.Drawing;
 using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
+using InstallerLib;
 
 namespace InstallerEditor
 {
@@ -318,7 +318,7 @@ namespace InstallerEditor
 			{
 				string l_ComponentName = "Microsoft .NET Framework 1.1";
 
-				installedcheck_registry l_InstallCheck = new installedcheck_registry();
+				InstalledCheckRegistry l_InstallCheck = new InstalledCheckRegistry();
 				l_InstallCheck.comparison = installcheck_comparison.match;
 				l_InstallCheck.fieldname = "Install";
 				l_InstallCheck.fieldtype = installcheck_registrytype.REG_DWORD;
@@ -389,7 +389,7 @@ namespace InstallerEditor
 			{
 				string l_ComponentName = "Microsoft Data Access Components 2.7 Sp1";
 
-				installedcheck_registry l_InstallCheck = new installedcheck_registry();
+				InstalledCheckRegistry l_InstallCheck = new InstalledCheckRegistry();
 				l_InstallCheck.comparison = installcheck_comparison.version;
 				l_InstallCheck.fieldname = "Version";
 				l_InstallCheck.fieldtype = installcheck_registrytype.REG_SZ;
@@ -438,7 +438,7 @@ namespace InstallerEditor
 			{
 				string l_ComponentName = "Microsoft Data Access Components 2.8";
 
-				installedcheck_registry l_InstallCheck = new installedcheck_registry();
+				InstalledCheckRegistry l_InstallCheck = new InstalledCheckRegistry();
 				l_InstallCheck.comparison = installcheck_comparison.version;
 				l_InstallCheck.fieldname = "Version";
 				l_InstallCheck.fieldtype = installcheck_registrytype.REG_SZ;
@@ -495,8 +495,8 @@ namespace InstallerEditor
 			{
 				string l_ComponentName = "Microsoft Internet Explorer 6 Sp1";
 
-				//<installedcheck type="check_registry_value" path="SOFTWARE\Microsoft\Internet Explorer" fieldname="Version" fieldvalue="5.50.4134.0100" fieldtype="REG_SZ" comparison="version" />
-				installedcheck_registry l_InstallCheck = new installedcheck_registry();
+				//<InstalledCheck type="check_registry_value" path="SOFTWARE\Microsoft\Internet Explorer" fieldname="Version" fieldvalue="5.50.4134.0100" fieldtype="REG_SZ" comparison="version" />
+				InstalledCheckRegistry l_InstallCheck = new InstalledCheckRegistry();
 				l_InstallCheck.comparison = installcheck_comparison.version;
 				l_InstallCheck.fieldname = "Version";
 				l_InstallCheck.fieldtype = installcheck_registrytype.REG_SZ;
@@ -543,10 +543,10 @@ namespace InstallerEditor
 
 			private const string m_ComponentName = "Microsoft JET 4.0 Sp8";
 
-			private installedcheck CreaetInstalledCheck()
+			private InstalledCheck CreaetInstalledCheck()
 			{
 				//File Msjet40.dll - 4.0.8015.0
-				installedcheck_file l_InstallCheck = new installedcheck_file();
+				InstalledCheckFile l_InstallCheck = new InstalledCheckFile();
 				l_InstallCheck.comparison = installcheck_comparison.version;
 				l_InstallCheck.filename = "#SYSTEMPATH\\Msjet40.dll";
 				l_InstallCheck.fileversion = "4.0.8015.0";

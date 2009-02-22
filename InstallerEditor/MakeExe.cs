@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
+using InstallerLib;
 
 namespace InstallerEditor
 {
@@ -229,13 +230,13 @@ namespace InstallerEditor
                 l_dg.DefaultExt = "exe";
                 if (l_dg.ShowDialog(this) == DialogResult.OK)
                 {
-                    InstallerArgs args = new InstallerArgs();
+                    InstallerLinkerArguments args = new InstallerLinkerArguments();
                     args.banner = txtBannerBitmap.Text;
                     args.config = txtConfiguration.Text;
                     args.output = l_dg.FileName;
                     args.template = txtTemplateFile.Text;
                     args.embed = chkEmbed.Checked;
-                    InstallerEditor.CreateInstaller(args);
+                    InstallerLinker.CreateInstaller(args);
                     m_OutputFileName = l_dg.FileName;
                 }
 
