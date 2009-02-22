@@ -65,6 +65,7 @@ BOOL CComponentSelector::OnInitDialog()
 			l_descr += " ";
 			l_descr += m_Settings->status_notinstalled;
 		}
+
 		m_List.AddString(l_descr);
 		 
 		CSize size = pDC->GetTextExtent(l_descr);	
@@ -73,7 +74,10 @@ BOOL CComponentSelector::OnInitDialog()
 			hScrollWidth = size.cx;
 
 		if (m_Settings->components[i]->selected)
-			m_List.SetCheck((int)i, 1);
+			m_List.SetCheck(i, 1);
+
+        if (m_Settings->components[i]->required)
+            m_List.Enable(i, 0);
 	}
 	
 	if (hScrollWidth > 0 )

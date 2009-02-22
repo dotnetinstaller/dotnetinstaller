@@ -4,6 +4,8 @@
 #include "SilentInstall.h"
 #include "InstallerLauncher.h"
 
+CInstallerCommandLineInfo commandLineInfo;
+
 CInstallerCommandLineInfo::CInstallerCommandLineInfo(void)
 {
 }
@@ -12,9 +14,7 @@ CInstallerCommandLineInfo::~CInstallerCommandLineInfo(void)
 {
 }
 
-void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, 
-											BOOL bFlag,
-											BOOL bLast)
+void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast)
 {
 	if (bFlag)
     {
@@ -50,6 +50,16 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam,
 		{
 			m_lastArgFlag = launcherArgs;
 		}
+        // Daniel Doubrovkine - 2008-09-29: Accept arguments to use in command args
+		else if (_tcsicmp(pszParam, TEXT("completeCommandArgs")) == 0)
+		{
+			m_lastArgFlag = completeCommandArgs;
+		}
+		else if (_tcsicmp(pszParam, TEXT("extractCab")) == 0 )
+		{
+			m_lastArgFlag = extractCab;
+            m_extractCab = true;
+		}
 		else
 		{
 			m_lastArgFlag = unknown;
@@ -80,6 +90,11 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam,
 				// EXAMPLE: To set LauncherArgs as /q -Z, the format should be as follows (note quotes and spacing):
 				//    /launcherArgs " /q -Z"
 				DNILauncher.SetLauncherArgs(pszParam);
+				break;
+			case completeCommandArgs:
+				m_completeCommandArgs = pszParam;
+                break;
+            case extractCab:
 				break;
 		}
 	}

@@ -128,6 +128,7 @@ namespace InstallerLib
         private string m_dialog_otherinfo_link;
 
         private string m_complete_command;
+        private string m_complete_command_silent;
         private bool m_auto_close_if_installed = true;
 
         /* Matthias Jentsch - 2006-03-06: added filter for minimal OS version */
@@ -310,6 +311,14 @@ namespace InstallerLib
             get { return m_complete_command; }
             set { m_complete_command = value; }
         }
+
+        [Description("Silent complete command (executed when all components are installed correctly on a silent install), can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed. (OPTIONAL)")]
+        public string complete_command_silent
+        {
+            get { return m_complete_command_silent; }
+            set { m_complete_command_silent = value; }
+        }
+
         [Description("If true auto close the dialog (display installation_completed message and execute the complete_command) if all the components are already installed. (REQUIRED)")]
         public bool auto_close_if_installed
         {
@@ -450,6 +459,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("dialog_otherinfo_link", m_dialog_otherinfo_link);
 
             e.XmlWriter.WriteAttributeString("complete_command", m_complete_command);
+            e.XmlWriter.WriteAttributeString("complete_command_silent", m_complete_command_silent);
             e.XmlWriter.WriteAttributeString("auto_close_if_installed", m_auto_close_if_installed.ToString());
 
             // Matthias Jentsch - 2006-03-06: new attributes added
@@ -557,6 +567,9 @@ namespace InstallerLib
 
             if (e.XmlElement.Attributes["complete_command"] != null)
                 m_complete_command = e.XmlElement.Attributes["complete_command"].InnerText;
+
+            if (e.XmlElement.Attributes["complete_command_silent"] != null)
+                m_complete_command_silent = e.XmlElement.Attributes["complete_command_silent"].InnerText;
 
             if (e.XmlElement.Attributes["auto_close_if_installed"] != null)
                 m_auto_close_if_installed = bool.Parse(e.XmlElement.Attributes["auto_close_if_installed"].InnerText);

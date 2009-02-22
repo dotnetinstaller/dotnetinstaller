@@ -758,6 +758,15 @@
                 </td>
             </tr>
             <tr>
+                <td style="font-weight: bold;">
+                    /CompleteCommandArgs&nbsp;&lt;Program&nbsp;Arguments&gt;
+                </td>
+                <td>
+                    Specify additional arguments for the complete_command. If your complete command is an MSI this lets
+                    you pass additional parameters. See LauncherArgs for syntax restrictions.
+                </td>
+            </tr>
+            <tr>
                 <td>
                     <span style="font-weight: bold;">/log</span></td>
                 <td>
@@ -771,6 +780,14 @@
                     <span style="font-weight: bold;">/LogFile &lt;path\file&gt;</span></td>
                 <td>
                  Optional log file name.</td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="font-weight: bold;">/ExtractCab</span></td>
+                <td>
+                 If this package contains an embedded CAB, extract Setup.cab and all its contents under 
+                 a new folder called SupportFiles in the current directory. When specified,
+                 all other options are ignored and no installations are run.</td>
             </tr>
         </tbody>
     </table>
@@ -1017,6 +1034,13 @@
                                     Command executed when all components are installed correctly; can be any executable,
                                     document or web page valid for ShellExecute API. Usually is a readme file, a web
                                     page or a startup file. If empty no command is executed.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>complete_command_silent</b></td>
+                                <td>
+                                    Optional replacement for complete_command in silent mode.
                                 </td>
                             </tr>
                             <tr>
@@ -1321,6 +1345,17 @@
                                     this setup (with special return code) to stop and restart the system, but in special
                                     circumstances (for example in Windows 98) we must force a reboot to install correctly
                                     some components (for example the .NET Framework).
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>required</b></td>
+                                <td>
+                                    Indicates whether the component is required. Installation will be considered successful and
+                                    complete_command will be executed only when all required components have been installed.
+                                    Note that a component is successfully installed when all its prerequisite checks are satisfied.
+                                    If a component doesn't have any pre-requisite checks and is required, complete_command will never
+                                    execute.
                                 </td>
                             </tr>
                             <tr>
@@ -1984,6 +2019,7 @@
         <li>configurations\silent_install</li>
         <li>configurations\configuration\components\component[@type=cmd]\command_silent</li>
         <li>configurations\configuration\components\component[@type=msi]\cmdparameters_silent</li>
+        <li>configurations\configuration\components\component\required</li>
         <li>configurations\configuration\log_enable</li>
         <li>configurations\configuration\log_file</li>
         <li>configurations\configuration\skip_caption</li>
@@ -1995,6 +2031,7 @@
         <li>configurations\configuration\cab_cancelled_message</li>
         <li>configurations\configuration\cab_path</li>
         <li>configurations\configuration\cab_path_autodelete</li>
+        <li>configurations\configuration\complete_command_silent</li>
         <li>fileversion</li>
         <li>productversion</li>
         <li>fileattributes\fileattribute\name</li>
@@ -2643,8 +2680,9 @@
             matching block was executed)</li>
         <li>Added environment variable processing support to component commands where the component
             type is "cmd" or "msi"</li>
-        <li>Modified Complete_Command handling so that dotNetInstaller will wait for Command_Complete
-            to finish executing</li>
+        <li>Modified complete_command handling so that dotNetInstaller will wait for Command_Complete
+            to finish executing, added &nbsp;complete_command_silent to allow overriding complete_command
+            on silent install</li>
         <li>Added OS filter identifiers for Windows XP SP3, Windows Server 2003 SP1, Windows
             Server 2003 SP2, and Windows Vista SP1</li>
         <li>Added optional configuration-level and component-level OS filter matching system architecture (x86, x64, etc).
@@ -2654,6 +2692,8 @@
             compiler in a build process.</li>
         <li>Added CABing, embedding of support files using <a href="http://www.codeproject.com/KB/files/CABCompressExtract.aspx">Elmü's CAB library</a>
          and a PackagedSetup sample</li>
+     <li>Added /ExtractCab command line option to dotNetInstaller.exe that extracts the
+      embedded CAB file and its contents in the current directory</li>
         <li>Added InstallerLinker.exe with command line options /e (Embed) and /a (AppPath) and /v (Verbose) for using in build processes</li>
         <li>Added cab_dialog_message, cab_cancelled_message, cab_dialog_caption, cap_path and cab_path_autodelete options</li>
         <li>Temporary files (eg. downloaded files) will be deleted upon completion of dotNetInstaller</li>
@@ -2672,6 +2712,12 @@
          using <a href="http://www.codeproject.com/KB/library/ResourceLib.aspx">ResourceLib</a>. InstallerEditor
          can now write a specific binary version as well as additional information, including copyright or company 
          name to the target setup binary.</li>
+     <li>Added a component "required" option, default is true. A required component cannot
+      be de-selected in the Advanced tab and complete_command is only executed when all
+      reqiured components have been installed. This option is ignored when executing complete_command
+      for a component that doesn't have any install checks.</li>
+     <li>Added /CompelteCommandArgs "value" to dotNetInstaller.exe to pass additional parameters
+      to complete_command and complete_command_silent.</li>
         <li>Added horizontal scrollbars in component lists that can't fit all the text in.</li>
     </ul>
     <h3>

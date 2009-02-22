@@ -14,12 +14,15 @@ namespace InstallerLib
         public Component(string p_type)
             : this(p_type, "COMPONENT_NAME")
         {
+
         }
+
         public Component(string p_type, string p_ComponentName)
         {
             m_type = p_type;
 
             m_mustreboot = false;
+            m_required = true;
             m_os_filter_greater = "";
             m_os_filter_lcid = "";
             m_os_filter_smaller = "";
@@ -89,6 +92,14 @@ namespace InstallerLib
         {
             get { return m_mustreboot; }
             set { m_mustreboot = value; }
+        }
+
+        private bool m_required;
+        [Description("Indicates whether the component is required for a successful installation. (REQUIRED)")]
+        public bool required
+        {
+            get { return m_required; }
+            set { m_required = value; }
         }
 
         private string m_description;
@@ -199,6 +210,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("type", m_type);
             e.XmlWriter.WriteAttributeString("installcompletemessage", m_installcompletemessage);
             e.XmlWriter.WriteAttributeString("mustreboot", m_mustreboot.ToString());
+            e.XmlWriter.WriteAttributeString("required", m_required.ToString());
             e.XmlWriter.WriteAttributeString("description", m_description);
             //e.XmlWriter.WriteAttributeString("installmessage",m_installmessage);
             e.XmlWriter.WriteAttributeString("note", m_note);
@@ -219,6 +231,9 @@ namespace InstallerLib
 
             if (e.XmlElement.Attributes["mustreboot"] != null)
                 m_mustreboot = bool.Parse(e.XmlElement.Attributes["mustreboot"].InnerText);
+
+            if (e.XmlElement.Attributes["required"] != null)
+                m_required = bool.Parse(e.XmlElement.Attributes["required"].InnerText);
 
             if (e.XmlElement.Attributes["os_filter_greater"] != null)
                 m_os_filter_greater = e.XmlElement.Attributes["os_filter_greater"].InnerText;

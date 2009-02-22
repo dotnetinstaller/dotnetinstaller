@@ -130,11 +130,25 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 		//errore nel caricamento dell'immagine
 	}
 
+    // just extract the CABs
+    if (commandLineInfo.ExtractCab())
+    {
+        wchar_t currentDirectory[MAX_PATH];
+        ::GetCurrentDirectoryW(MAX_PATH, currentDirectory);
+        m_Settings.cab_path = currentDirectory;
+        m_Settings.cab_path.Append(L"\\SupportFiles");
+        m_Settings.cab_path_autodelete = false;
+        ExtractCab();
+        OnOK();
+        return FALSE;
+    }
+
 	if (LoadComponentsList())
 	{
 		if (m_Settings.auto_close_if_installed || QuietInstall.IsSilent())
 		{
-            if (m_Settings.complete_command.Trim().GetLength())
+            if (m_Settings.complete_command.Trim().GetLength() 
+				|| m_Settings.complete_command_silent.Trim().GetLength())
             {
                 ExtractCab(); // the command may need to execute a file
             }
@@ -319,26 +333,15 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 
 		if (LoadComponentsList())
 		{
-			ApplicationLog.Write( TEXT("All components are installed succesfully!"));
-
 			m_Settings.ExecuteCompleteCode();
-
-			OnOK();
+            OnOK();
 		}
-		else
-		{
-			// Matthew Sheets - 2007-09-20
-			// TODO: Need to determine how to handle a still-populated LoadComponentsList
-			///   during silent installs, since components need not have install checks.
-			if (QuietInstall.IsSilent())
-			{
-				// TODO: (see above) For now, just continue
-				m_Settings.ExecuteCompleteCode();
+        else if (QuietInstall.IsSilent())
+        {
+            OnOK();
+        }
 
-				OnOK();
-			}
-		}
-	}
+    }
     catch(TCHAR * error)
     {
 		ApplicationLog.Write(error);
@@ -351,7 +354,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 	}
 }
 
-//restituisce true se risultano installati tutti i componenti
+// returns true if all required components have been properly installed
 bool CdotNetInstallerDlg::LoadComponentsList(void)
 {
 	m_ListBoxComponents.ResetContent();
@@ -366,7 +369,15 @@ bool CdotNetInstallerDlg::LoadComponentsList(void)
 		if (m_Settings.components[i]->selected)
 		{
 			m_ListBoxComponents.AddString(m_Settings.components[i]->description);
-			l_AllInstalled &= m_Settings.components[i]->IsInstalled();
+
+            // a component is considered installed when it has an install check which results
+            // in a clear positive; if a component doesn't have any install checks, it cannot
+            // be required (there's no way to check whether the component was installed)
+            if (m_Settings.components[i]->required)
+            {
+			    l_AllInstalled &= m_Settings.components[i]->IsInstalled();
+            }
+
 			CSize size = pDC->GetTextExtent(m_Settings.components[i]->description);
 			if ((size.cx > 0) && (hScrollWidth < size.cx))
 				hScrollWidth = size.cx;

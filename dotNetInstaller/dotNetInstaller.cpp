@@ -5,7 +5,6 @@
 #include "ConfigFile.h"
 #include "dotNetInstaller.h"
 #include "dotNetInstallerDlg.h"
-#include "InstallerCommandLineInfo.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,7 +44,6 @@ BOOL CdotNetInstallerApp::InitInstance()
 
 	//AfxEnableControlContainer();
 
-	CInstallerCommandLineInfo commandLineInfo;
 	ParseCommandLine(commandLineInfo);
 
 	TiXmlDocument m_Document;

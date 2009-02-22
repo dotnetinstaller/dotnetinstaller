@@ -16,6 +16,7 @@
 #include "InstallerLog.h"
 #include "SilentInstall.h"
 #include "OsIdentifier.h"
+#include "InstallerCommandLineInfo.h"
 
 using namespace DVLib;
 
@@ -366,6 +367,8 @@ struct component
 	CString processor_architecture_filter;
     //cancelled by user
     bool cancelled;
+    //true if component is required for final command to execute
+    bool required;
 
 	//classi per gestire la verifica se il componente è installato o no
 	std::vector<installedcheck*> installedchecks;
@@ -676,32 +679,36 @@ struct installerSetting
     bool log_enabled;
     CString log_file;
 
-	void ExecuteCompleteCode()
+	void ExecuteCompleteCode() const
 	{
-		if (installation_completed.Trim().GetLength() > 0)
-			DniMessageBox(installation_completed, MB_OK|MB_ICONINFORMATION);
+		ApplicationLog.Write(TEXT("--Complete Command"));
 
-		if (complete_command.Trim().GetLength() > 0)
+        CString message = installation_completed;
+		if (message.Trim().GetLength() > 0)
+			DniMessageBox(message, MB_OK|MB_ICONINFORMATION);
+
+		CString command = complete_command;
+        CString command_silent = complete_command_silent; 
+		
+        if (QuietInstall.IsSilent() && command_silent.Trim().GetLength()) 
+        {
+            command = complete_command_silent;
+        }
+
+        if (commandLineInfo.GetCompleteCommandArgs().GetLength())
+        {
+            command.Append(L" ");
+            command.Append(commandLineInfo.GetCompleteCommandArgs());
+        }
+
+		if (command.Trim().GetLength())
 		{
-			// Don't wait for the command to return
-			// DVLib::ShellExecuteDefault(complete_command);
-
-			// Wait for the command to return
-			PROCESS_INFORMATION l_process_info;
-			DVLib::ExecCmd(complete_command, &l_process_info);
-			WaitForSingleObject( l_process_info.hProcess, INFINITE );
-
-			//cmd_component * l_cmd_Comp = new cmd_component();
-			//l_cmd_Comp->command = complete_command;
-			//l_cmd_Comp->type = cmd;
-			//l_cmd_Comp->Exec();
-			//l_cmd_Comp->IsExecuting();
-			//DniMessageBox( TEXT("Execute Code Complete") );
-			//l_cmd_Comp->GetExitCode();
-
-			// Wait for the command to return
-			//DWORD l_ExitCodes;
-			//DVLib::ExecCmdAndWait(complete_command, & l_ExitCodes);
+			ApplicationLog.Write( TEXT("Executing complete command: "), command);
+            DWORD dwExitCode = 0;
+            if (! DVLib::ExecCmdAndWait(command, & dwExitCode))
+            {
+                throw _wcsdup(TEXT("Error executing command: ") + command);
+		    }
 		}
 		}
 

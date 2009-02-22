@@ -102,6 +102,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 	p_Setting.dialog_otherinfo_link = p_Setting.ValidatePath(p_Node->AttributeT("dialog_otherinfo_link").data());
 
 	p_Setting.complete_command = p_Setting.ValidatePath(p_Node->AttributeT("complete_command").data());
+	p_Setting.complete_command_silent = p_Setting.ValidatePath(p_Node->AttributeT("complete_command_silent").data());
 	p_Setting.auto_close_if_installed = ConvBoolString(p_Node->Attribute("auto_close_if_installed"), true);
 
 	// Matthias Jentsch - 2006-03-06: read additional attributes
@@ -195,6 +196,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				l_new_component->os_filter_lcid = l_Node_component->AttributeT("os_filter_lcid").data();
 				l_new_component->installcompletemessage = l_Node_component->AttributeT("installcompletemessage").data();
 				l_new_component->mustreboot = ConvBoolString(l_Node_component->Attribute("mustreboot"), false);
+				l_new_component->required = ConvBoolString(l_Node_component->Attribute("required"), true);
 				l_new_component->processor_architecture_filter = l_Node_component->AttributeT("processor_architecture_filter").data();
 
 				// installed checks

@@ -13,8 +13,14 @@ public:
 					BOOL bFlag,
 					BOOL bLast);
 
+    const CString& GetCompleteCommandArgs() const { return m_completeCommandArgs; }
+    bool ExtractCab() const { return m_extractCab; }
 // Matthew Sheets - 2007-11-26: Support more advanced command line argument processing
 private:
-	enum m_argFlags { unknown, log, logfile, silent, noSilent, launcher, launcherArgs };
+	enum m_argFlags { unknown, log, logfile, silent, noSilent, launcher, launcherArgs, completeCommandArgs, extractCab };
 	m_argFlags m_lastArgFlag;
+    CString m_completeCommandArgs;
+    bool m_extractCab;
 };
+
+extern CInstallerCommandLineInfo commandLineInfo;
