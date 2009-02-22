@@ -338,8 +338,13 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 
 			if (l_retVal == false)
 			{
+                // the component failed to install, display an error message and let the user choose to continue or not
+                // unless global or component setting decides otherwise
+
+                CString failed_exec_command_continue = component->failed_exec_command_continue;
+                if (failed_exec_command_continue.IsEmpty()) failed_exec_command_continue = m_Settings.failed_exec_command_continue;
 				CString l_msg;
-				l_msg.Format( m_Settings.failed_exec_command_continue, component->description );
+				l_msg.Format( failed_exec_command_continue, component->description );
 
                 bool l_breakSequence = false;
                 if (m_Settings.allow_continue_on_error && component->allow_continue_on_error)

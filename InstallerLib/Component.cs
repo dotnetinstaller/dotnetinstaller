@@ -85,6 +85,14 @@ namespace InstallerLib
             set { m_mustreboot = value; }
         }
 
+        private string m_failed_exec_command_continue;
+        [Description("The message used when a component cannot be installed and ask if the application can continue with others components (Yes/No message). Must contain one '%s' string where the application put the description of the component. (OPTIONAL)")]
+        public string failed_exec_command_continue
+        {
+            get { return m_failed_exec_command_continue; }
+            set { m_failed_exec_command_continue = value; }
+        }
+
         private string m_reboot_required;
         [Description("The message used when this component signaled the installer that it requires a reboot. (OPTIONAL)")]
         public string reboot_required
@@ -179,6 +187,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("mustreboot", m_mustreboot.ToString());
             e.XmlWriter.WriteAttributeString("reboot_required", m_reboot_required);
             e.XmlWriter.WriteAttributeString("must_reboot_required", m_must_reboot_required.ToString());
+            e.XmlWriter.WriteAttributeString("failed_exec_command_continue", m_failed_exec_command_continue);            
             e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
             e.XmlWriter.WriteAttributeString("required", m_required.ToString());
             e.XmlWriter.WriteAttributeString("description", m_description);
@@ -208,6 +217,9 @@ namespace InstallerLib
 
             if (e.XmlElement.Attributes["must_reboot_required"] != null)
                 m_must_reboot_required = bool.Parse(e.XmlElement.Attributes["must_reboot_required"].InnerText);
+
+            if (e.XmlElement.Attributes["failed_exec_command_continue"] != null)
+                m_failed_exec_command_continue = e.XmlElement.Attributes["failed_exec_command_continue"].InnerText;
 
             if (e.XmlElement.Attributes["allow_continue_on_error"] != null)
                 m_allow_continue_on_error = bool.Parse(e.XmlElement.Attributes["allow_continue_on_error"].InnerText);

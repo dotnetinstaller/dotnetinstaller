@@ -38,6 +38,8 @@ public:
     CString reboot_required;
     // true to force a reboot when required
     bool must_reboot_required;
+    // message to display on error
+    CString failed_exec_command_continue;
     // allow to continue setup on error
     bool allow_continue_on_error;
 	// filter for processor architecture

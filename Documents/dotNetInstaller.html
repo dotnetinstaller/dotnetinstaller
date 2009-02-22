@@ -1478,6 +1478,15 @@
                             </tr>
                             <tr>
                                 <td>
+                                    <b>failed_exec_command_continue</b></td>
+                                <td>
+                                    The message used when this component cannot be installed and ask if the application
+                                    can continue with others components (Yes/No message). May contain one '%s' string
+                                    where the application put the description of the component.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <b>required</b></td>
                                 <td>
                                     Indicates whether the component is required. Installation will be considered successful and
@@ -2253,6 +2262,7 @@
   <li>configurations\configuration\component\installedcheck\description </li>
   <li>configurations\configuration\component\installedcheckoperator </li>
   <li>configurations\configuration\component\allow_continue_on_error</li>
+  <li>configuratoins\configuration\component\failed_exec_command_continue</li>
   <li>collapsed nesting, removed all collections: configurations, components, embedfiles</li>
   <li>configurations\configuration\allow_continue_on_error</li>
   <li>removed: configurations\configuration\dialog_selector_caption</li>
@@ -2953,6 +2963,8 @@
      <li>Added <span style="color: #b22222; font-family: Courier New">must_reboot_required</span>:
       globally and per-component. Setting this option to true will prevent users from
       continuing when a reboot is required.</li>
+     <li>Added <span style="color: #b22222; font-family: Courier New">failed_exec_command_continue</span>
+      per-component extending the global setting that defines the message to show when a component fails to install.</li>           
      <li>Added optional <span style="color: #b22222; font-family: Courier New">reboot_required</span>:
       a message that can be configured per component, extending the global setting.</li>
      <li>Added <span style="color: #b22222; font-family: Courier New">auto_close_on_error</span>:

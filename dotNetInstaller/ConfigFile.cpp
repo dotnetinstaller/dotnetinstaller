@@ -219,6 +219,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
             l_new_component->reboot_required = l_Node_component->AttributeT("reboot_required").data();
 			l_new_component->must_reboot_required = ConvBoolString(l_Node_component->Attribute("must_reboot_required"), false);
             l_new_component->allow_continue_on_error = ConvBoolString(l_Node_component->Attribute("allow_continue_on_error"), true);
+            l_new_component->failed_exec_command_continue = l_Node_component->AttributeT("failed_exec_command_continue").data();
 			l_new_component->required = ConvBoolString(l_Node_component->Attribute("required"), true);
 			l_new_component->processor_architecture_filter = l_Node_component->AttributeT("processor_architecture_filter").data();
 
