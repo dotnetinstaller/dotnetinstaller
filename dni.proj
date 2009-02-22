@@ -33,12 +33,9 @@
   <Version Major="1" Minor="4">
    <Output TaskParameter="Major" PropertyName="Major" />
    <Output TaskParameter="Minor" PropertyName="Minor" />
-   <Output TaskParameter="Build" PropertyName="Build" />
-   <Output TaskParameter="Revision" PropertyName="Revision" />
   </Version>
   <Time Format="HHmm">
    <Output TaskParameter="FormattedTime" PropertyName="Revision" />
-   <Output TaskParameter="FormattedTime" PropertyName="BuildTimestamp" />
   </Time>
   <SvnVersion LocalPath=".">
    <Output TaskParameter="Revision" PropertyName="Build" />
@@ -51,7 +48,6 @@
   <CreateItem Include="CompanyName" AdditionalMetadata="ReplacementValue=$(CompanyName)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
   <CreateItem Include="Copyright" AdditionalMetadata="ReplacementValue=$(Copyright)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
   <CreateItem Include="Trademark" AdditionalMetadata="ReplacementValue=$(Trademark)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
-  <CreateItem Include="BuildTimestamp" AdditionalMetadata="ReplacementValue=$(BuildTimestamp)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
   <Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)"/>
   <MakeDir Directories="Version" />
   <AssemblyInfo CodeLanguage="CS" OutputFile="Version\GlobalAssemblyInfo.cs"

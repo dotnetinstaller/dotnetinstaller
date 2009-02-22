@@ -62,7 +62,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
 				Culture="1040"
-				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;&quot;$(SolutionDir)&quot;"
+				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)..\&quot;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -147,7 +147,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
 				Culture="1040"
-				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;&quot;$(SolutionDir)&quot;"
+				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)..\&quot;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"

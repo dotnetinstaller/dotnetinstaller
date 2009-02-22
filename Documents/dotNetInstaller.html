@@ -81,6 +81,20 @@
         <li><a href="mailto:info@matthias-jentsch.de">Matthias Jentsch</a> <a href="http://www.matthias-jentsch.de"
             target="_blank">http://www.matthias-jentsch.de</a> </li>
     </ul>
+ <p>
+  The following people have contributed to dotNetInstaller</p>
+ <ul>
+  <li>Matthew Sheets</li>
+  <li>Rennie Petersen</li>
+  <li>Rainer Halanek</li>
+  <li>James Muchmore </li>
+  <li>Steve</li>
+  <li>Peter Mares </li>
+  <li>Franz Wong</li>
+  <li>Daniel Doubrovkine <a href="http://www.dblock.org">http://www.dblock.org</a></li>
+  <li>Jason Biegel</li>
+  <li>Charles McDonald</li>
+ </ul>
     <h2>
         Samples</h2>
     <p>
@@ -167,7 +181,7 @@
         to automatically add the most important components like: Service Pack 6a for NT4,
         Internet Explorer 6, .NET 1.1, MDAC 2.8, ...</p>
         
-    <h3>Command Line Usage</h2>
+    <h3>Command Line Usage</h3>
     <p>
      InstallerEditor can be used as the bootstrapper compiler and linker in a build process.
     </p>
@@ -2404,9 +2418,43 @@
         (In 7zSFX, the <span style="font-family: Monospace">%%S</span> in the embedded UTF-8 configuration file will be replaced with the full
         path to self-extracting executable.)</p>
     <h2>
+     Developer Reference</h2>
+ <p>
+  dotNetInstaller was written by many developers. Some have contributed large features
+  and others small patches. You're invited to make dotNetInstaller better.</p>
+ <p>The project is maintained on SourceForge.net at <a href="http://sourceforge.net/projects/dotnetinstaller">http://sourceforge.net/projects/dotnetinstaller</a>.</p>
+ <p>Please follow the following development process.</p>
+ <ol>
+  <li>Obtain the source code from SVN: <a href="https://dotnetinstaller.svn.sourceforge.net/svnroot/dotnetinstaller">
+   https://dotnetinstaller.svn.sourceforge.net/svnroot/dotnetinstaller</a></li>
+  <li>Install Visual Studio 2005</li>
+  <li>To build the complete solution, install <a href="http://msbuildtasks.tigris.org/">
+   MSBuild Community Tasks</a></li>
+  <li>Create SVN patches and submit them to the SourceForge project under patches.</li>
+  <li>E-Mail <a href="mailto:davide@devage.com">Davide Icardi</a>.</li>
+ </ol>
+ <p>
+  Keep in mind the following rules of thumb.</p>
+ <ul>
+  <li>Always remember the goals of the project.</li>
+  <li>Add documentation to this document.</li>
+  <li>Preserve backwards compatibility.</li>
+  <li>Discuss large changes with the project coordinator first.</li>
+ </ul>
+ <p>
+  You can build individual projects (dotNetInstaller.sln and InstallerEditor.sln)
+  or the complete solution (dni.sln).
+ </p>
+ <p>
+  Official builds are produced with <span style="color: #b22222; font-family: Courier New">
+   build all /p:Configuration=Release </span>from the command line using the dni.proj
+  MSBuild script.</p>
+ <p>
+ </p>
+ <h2>
         History</h2>
     <h3>
-        1.3._.0 (__ Month 2008)</h3>
+     1.4 (__ Month 2008)</h3>
     <ul>
         <li>Added support for silent installs; silent mode can be declared either in the
             configuration XML or from the command line</li>
@@ -2431,12 +2479,18 @@
         <li>Added support for command-line execution of InstallerEditor.exe, can now be used as a bootstrapper
             compiler in a build process.</li>
         <li>Added CABing, embedding of support files using <a href="http://www.codeproject.com/KB/files/CABCompressExtract.aspx">Elmü's CAB library</a>.</li>
-        <li>Added command line options -e (Embed) and -a (AppPath) for command line build.</li>
-        <li>Added cab_dialog_message, cab_dialog_caption, cap_path and cab_path_autodelete options.</li>
-        <li>Temporary files (eg. downloaded files) will be deleted upon completion of dotNetInstaller.</li>
-        <li>Added /LogFile &lt;filename&gt; option to the command line parameters to specify the resulting log file.</li>
+        <li>Added command line options -e (Embed) and -a (AppPath) for command line build</li>
+        <li>Added cab_dialog_message, cab_dialog_caption, cap_path and cab_path_autodelete options</li>
+        <li>Temporary files (eg. downloaded files) will be deleted upon completion of dotNetInstaller</li>
+        <li>Added /LogFile &lt;filename&gt; option to the command line parameters to specify the resulting log file</li>
         <li>Added #CABPATH variable that can be used in path settings</li>
         <li>Added #GUID variable that represents a unique GUID across a single instance of dotNetInstaller</li>
+     <li>Added an MSBuild script that centrally versions, builds and packages dotNetInstaller
+      into target/Debug|Release, including a sample.</li>
+     <li>Added a combined Visual Studio solution, dni.sln with automatic versioning (reqiures
+      <a href="http://msbuildtasks.tigris.org/">MSBuild Community Tasks</a>). The major
+      and minor version number can be incremented in dni.proj, the build number is the
+      latest SVN revision and the release number is a timestamp.</li>
     </ul>
     <h3>
         1.3.3.0 (19 March 2007)</h3>

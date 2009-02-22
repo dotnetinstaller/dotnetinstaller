@@ -1,23 +1,48 @@
-?
+﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstaller", "dotNetInstaller\dotNetInstaller.vcproj", "{F4E74CF8-37CD-4023-8B89-05EF4B34D363}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerEditor", "InstallerEditor\InstallerEditor.csproj", "{170AAA63-64CE-404F-8FDE-D0D64DA9214F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{401947AE-AA1F-4FB3-8949-14C91A9504E4}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		build.cmd = build.cmd
 		dni.proj = dni.proj
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Version", "Version\Version.vcproj", "{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{2F6E6EC2-78ED-4D9F-A549-FDBB92E10C1A}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		Documents\dotNetInstaller.html = Documents\dotNetInstaller.html
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
