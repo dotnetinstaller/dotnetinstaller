@@ -60,6 +60,10 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 			m_lastArgFlag = extractCab;
             m_extractCab = true;
 		}
+        else if (_tcsicmp(pszParam, TEXT("componentArgs")) == 0)
+        {
+            m_lastArgFlag = componentArgs;
+        }
 		else
 		{
 			m_lastArgFlag = unknown;
@@ -96,6 +100,17 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
                 break;
             case extractCab:
 				break;
+            case componentArgs:
+		        stlvectorstring l_componentArgsArray;
+                split_string(pszParam, ':', l_componentArgsArray);
+                if (l_componentArgsArray.size() != 2) 
+                {
+                    std::string error = "Invalid component argument parameter: ";
+                    error.append(DVLib::wstring2string(pszParam));
+                    throw std::exception(error.c_str());
+                }
+                m_componentCmdArgs[l_componentArgsArray[0]] = l_componentArgsArray[1];
+                break;
 		}
 	}
 }

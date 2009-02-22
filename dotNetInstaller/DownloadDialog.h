@@ -1,9 +1,8 @@
 #pragma once
 #include "afxwin.h"
 #include "afxcmn.h"
-
+#include "Resource.h"
 #include "DownloadDialogSupport.h"
-
 
 namespace DVLib
 {

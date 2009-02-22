@@ -1,11 +1,10 @@
 #pragma once
 #include "afxwin.h"
-
 #include "installerTypes.h"
-
 #include "KCBusyProgressCtrl.h"
 
-// InstallComponentDlg dialog
+class InstallerSetting;
+class Component;
 
 #define WM_USER_SETSTATUSINSTALL (WM_USER+1)
 
@@ -27,15 +26,15 @@ protected:
     DECLARE_MESSAGE_MAP()
 public:
 	CStatic m_InstallMessage;
-	void LoadComponent(installerSetting * p_Setting, component * p_Component);
+	void LoadComponent(InstallerSetting * p_Setting, Component * p_Component);
 
 private:
 	
 	UINT_PTR m_iTimer; //0 se il timer non è attivo
 
 private:
-	installerSetting * m_Setting;
-	component * m_Component;
+	InstallerSetting * m_Setting;
+	Component * m_Component;
 public:
 	afx_msg void OnBnClickedSkip();
 	afx_msg void OnTimer(UINT nIDEvent);

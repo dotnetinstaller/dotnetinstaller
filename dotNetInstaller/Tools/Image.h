@@ -15,7 +15,9 @@ namespace DVLib
 											LR_VGACOLOR));
 
 		if (l_hBitmap == NULL)
-			throw -1;
+        {
+            throw std::exception("Error loading bitmap from file");
+        }
 
 		return l_hBitmap;
 	}
@@ -28,14 +30,20 @@ namespace DVLib
 		CString l_TempFile = GetTempFullFileName();
 		HANDLE l_hFile = CreateFile(l_TempFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 		if (l_hFile == INVALID_HANDLE_VALUE)
-			throw -1;
+        {
+            throw std::exception("Error loading bitmap from buffer, CreateFile failed");
+        }
 
 		DWORD l_BytesWritten = 0;
 		if (WriteFile(l_hFile, p_Buffer, p_BufferLength, &l_BytesWritten, NULL) == FALSE)
-			throw -1;
+        {
+            throw std::exception("Error writing bitmap to file");
+        }
 
 		if (l_BytesWritten != p_BufferLength)
-			throw -1;
+        {
+            throw std::exception("Error loading bitmap from file, invalid number of bytes written");
+        }
 
 		CloseHandle(l_hFile);
 

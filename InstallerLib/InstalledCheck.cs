@@ -4,69 +4,86 @@ using System.ComponentModel;
 
 namespace InstallerLib
 {
-	/// <summary>
-	/// Tag InstalledCheck
-	/// </summary>
-	public class InstalledCheck
-	{
-		public InstalledCheck(string p_type)
-		{
-			m_type = p_type;
-		}
+    /// <summary>
+    /// Tag InstalledCheck
+    /// </summary>
+    public class InstalledCheck
+    {
+        public InstalledCheck(string p_type)
+        {
+            m_type = p_type;
+        }
 
-		#region Attributi
-		private string m_type; //can be check_registry_value or check_file
-		[Description("Type of the check, can be 'check_registry_value' to check for a specific value in the registry or 'check_file' to check for a specific file. (REQUIRED)")]
-		public string type
-		{
-			get{return m_type;}
-		}
-		#endregion
+        #region Attributes
 
-//		protected void OnDescriptionChanged()
-//		{
-//			if (DescriptionChanged!=null)
-//				DescriptionChanged(this,EventArgs.Empty);
-//		}
-//
-//		public event EventHandler DescriptionChanged;
-//
+        private string m_type; //can be check_registry_value or check_file
+        [Description("Type of the check, can be 'check_registry_value' to check for a specific value in the registry or 'check_file' to check for a specific file. (REQUIRED)")]
+        public string type
+        {
+            get { return m_type; }
+        }
 
-		#region IXmlClass Members
+        private string m_description = "Installed Check";
+        [Description("Description of the check. (REQUIRED)")]
+        public string description
+        {
+            get { return m_description; }
+            set { m_description = value; OnDescriptionChanged(); }
+        }
 
-		public void ToXml(XmlWriter p_Writer)
-		{
-			p_Writer.WriteStartElement("installedcheck");
-				p_Writer.WriteAttributeString("type", m_type);
-				OnXmlWriteTagInstalledCheck(new XmlWriterEventArgs(p_Writer));
-			p_Writer.WriteEndElement();
-		}
+        #endregion
 
-		public void FromXml(XmlElement p_Element)
-		{
-			if (p_Element.Attributes["type"] == null ||
-				p_Element.Attributes["type"].InnerText != m_type)
-				throw new ApplicationException("Invalid type");
+        protected void OnDescriptionChanged()
+        {
+            if (DescriptionChanged != null)
+            {
+                DescriptionChanged(this, EventArgs.Empty);
+            }
+        }
 
-			OnXmlReadTagInstalledCheck(new XmlElementEventArgs(p_Element));
-		}
-		#endregion
+        public event EventHandler DescriptionChanged;
 
-		protected virtual void OnXmlWriteTagInstalledCheck(XmlWriterEventArgs e)
-		{
-		}
-		protected virtual void OnXmlReadTagInstalledCheck(XmlElementEventArgs e)
-		{
-		}
+        #region IXmlClass Members
 
-	}
+        public void ToXml(XmlWriter p_Writer)
+        {
+            p_Writer.WriteStartElement("installedcheck");
+            p_Writer.WriteAttributeString("type", m_type);
+            p_Writer.WriteAttributeString("description", m_description);
+            OnXmlWriteTagInstalledCheck(new XmlWriterEventArgs(p_Writer));
+            p_Writer.WriteEndElement();
+        }
 
-	public enum installcheck_comparison
-	{
-		match,
-		version,
-		exists,
-		contains
-	}
+        public void FromXml(XmlElement p_Element)
+        {
+            if (p_Element.Attributes["type"] == null ||
+                p_Element.Attributes["type"].InnerText != m_type)
+                throw new ApplicationException("Invalid type");
+
+            if (p_Element.Attributes["description"] != null)
+            {
+                description = p_Element.Attributes["description"].InnerText;
+            }
+
+            OnXmlReadTagInstalledCheck(new XmlElementEventArgs(p_Element));
+        }
+        #endregion
+
+        protected virtual void OnXmlWriteTagInstalledCheck(XmlWriterEventArgs e)
+        {
+        }
+        protected virtual void OnXmlReadTagInstalledCheck(XmlElementEventArgs e)
+        {
+        }
+
+    }
+
+    public enum installcheck_comparison
+    {
+        match,
+        version,
+        exists,
+        contains
+    }
 }
 

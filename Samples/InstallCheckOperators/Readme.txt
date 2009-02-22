@@ -1,0 +1,1 @@
+This is a packaged setup sample that combines various installed check operators.

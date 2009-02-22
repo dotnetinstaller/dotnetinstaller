@@ -40,3 +40,21 @@
 #include <afxcmn.h>			// Supporto MFC per controlli comuni di Windows
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
+#include <vector>
+#include <map>
+#include <windows.h>
+#include <strsafe.h>
+
+#include "ExecCmd.h"
+#include "VersionCompare.h"
+#include "Path.h"
+#include "File.h"
+#include "StringUtil.h"
+#include "DniMessageBox.h"
+#include "InstallerLog.h"
+#include "SilentInstall.h"
+#include "OsIdentifier.h"
+#include "Tools/tinyxml.h"
+
+using namespace DVLib;
+

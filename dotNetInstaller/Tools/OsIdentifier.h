@@ -296,7 +296,9 @@ namespace DVLib
 		{
 			l_retScanf = _stscanf(l_tmp, TEXT("%d"), &l_GreaterThan);
 			if (l_retScanf != 1)
-				throw -1;
+            {
+                throw std::exception("IsInRangeOS failed");
+            }
 		}
 
 		l_tmp = p_SmallerThan;
@@ -305,7 +307,9 @@ namespace DVLib
 		{
 			l_retScanf = _stscanf(l_tmp, TEXT("%d"), &l_SmallerThan);
 			if (l_retScanf != 1)
-				throw -1;
+            {
+                throw std::exception("IsInRangeOS failed");
+            }
 		}
 
 		if (p_CurrentOs > l_GreaterThan && p_CurrentOs < l_SmallerThan)
@@ -346,15 +350,15 @@ namespace DVLib
 
 		dwVerInfoSize = GetFileVersionInfoSize(l_UserExePath, &dwVerHnd);
 		if (dwVerInfoSize <= 0)
-			throw -1;
+            throw std::exception("GetOperatingSystemLCID failed in GetFileVersionInfoSize");
 
 		l_bufferVersionInfo = malloc( dwVerInfoSize );
 		if (l_bufferVersionInfo == NULL)
-			throw -1;
+            throw std::exception("GetOperatingSystemLCID failed in malloc");
 
 		BOOL l_ret = GetFileVersionInfo(l_UserExePath, dwVerHnd, dwVerInfoSize,l_bufferVersionInfo);
 		if (l_ret == FALSE)
-			throw -1;
+            throw std::exception("GetOperatingSystemLCID failed in GetFileVersionInfo");
 
 		if (  VerQueryValue(l_bufferVersionInfo,TEXT("\\VarFileInfo\\Translation"),(void**)&lpvi, &iLen) 
 			&& iLen >= sizeof(LANGANDCODEPAGE))
@@ -367,7 +371,7 @@ namespace DVLib
 			return translation.wLanguage;
 		} 
 
-		throw -1;
+        throw std::exception("GetOperatingSystemLCID failed in VerQueryValue");
 	}
 
 	//determina se nella stringa passata in formato: 1033,1040,!2033 (in pratica i LCID separati da virgolo supportando anche il ! (not)
@@ -405,7 +409,7 @@ namespace DVLib
 
 				l_filterId = -1;
 				if ( _stscanf(l_LCID.data(), TEXT("%d"), &l_filterId)!= 1)
-					throw -1;
+                    throw std::exception("IsOperatingSystemLCID failed");
 
 				if (l_bNot)
 				{

@@ -122,7 +122,7 @@ namespace InstallerLib
                 cab.CompressFileList(files, cabname, true, 0);
 
                 args.WriteLine(string.Format("Embedding \"{0}\"", cabname));
-                ResourceUpdate.UpdateResourceWithFile(args.output, "RES_CAB", "CUSTOM", 0, cabname);
+                ResourceUpdate.UpdateResourceWithFile(args.output, "RES_CAB", "BINARY", 0, cabname, 32 * 1024 * 1024, args);
                 File.Delete(cabname);
             }
 

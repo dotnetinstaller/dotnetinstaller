@@ -7,19 +7,19 @@
 #include "DownloadDialog.h"
 #include "OsIdentifier.h"
 #include "Image.h"
-//#include <atlimage.h>
+#include "InstallerSetting.h"
 
-void LoadConfigFile(const CString & p_FileName, installerSetting & p_Setting, CWnd * p_Parent);
+void LoadConfigFile(const CString & p_FileName, InstallerSetting & p_Setting, CWnd * p_Parent);
 
 bool ConvBoolString(const char * p_BoolString);
 
 void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::DownloadGroupConfiguration & p_Configuration);
 
-void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting);
+void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting);
 
 bool LoadReferenceConfigNode(TiXmlElement * p_Node, TiXmlDocument & document, CWnd * p_Parent);
 
-void LoadConfigsNode(TiXmlElement * p_Node, installerSetting & p_Setting, bool p_Caller_Has_Additional_Config);
+void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p_Caller_Has_Additional_Config);
 
 void SaveAppState(configSetting & p_Config);
 
@@ -37,4 +37,4 @@ HBITMAP LoadBannerFromResource(HMODULE p_Module);
 
 bool LoadXmlSettings(TiXmlDocument & p_Document);
 
-void FreeComponent(component * component);
+void FreeComponent(Component * Component);

@@ -31,7 +31,7 @@ namespace DVLib
 									NULL,
 									0);
 		if (reqWideChars == 0)
-			throw TEXT("Error converting to unicode");
+			throw std::exception("Error converting to unicode");
 
 		reqWideChars++; //add one null terminated char (to ensure enough space)
 		wchar_t * strUNICODE = new wchar_t[reqWideChars];
@@ -44,7 +44,7 @@ namespace DVLib
 									strUNICODE,
 									reqWideChars);
 		if (reqWideChars == 0)
-			throw TEXT("Error converting to unicode");
+			throw std::exception("Error converting to unicode");
 
 		std::wstring out = std::wstring(strUNICODE);
 		delete [] strUNICODE;
@@ -74,7 +74,7 @@ namespace DVLib
 									NULL,
 									NULL);
 		if (reqByte == 0)
-			throw TEXT("Error converting to specified codepage");
+			throw std::exception("Error converting to specified codepage");
 
 		reqByte++; //add one null terminated char (to ensure enough space)
 		char * strAnsi = new char[reqByte]; //usually a ASCII string (with the specified codepage)
@@ -89,7 +89,7 @@ namespace DVLib
 									NULL,
 									NULL);
 		if (reqByte == 0)
-			throw TEXT("Error converting to specified codepage");
+			throw std::exception("Error converting to specified codepage");
 
 		std::string out = std::string(strAnsi);
 		delete [] strAnsi;

@@ -4,10 +4,7 @@
 #include "stdafx.h"
 #include "dotNetInstaller.h"
 #include "InstallComponentDlg.h"
-#include ".\installcomponentdlg.h"
-
-
-// InstallComponentDlg dialog
+#include "InstallerSetting.h"
 
 IMPLEMENT_DYNAMIC(InstallComponentDlg, CDialog)
 InstallComponentDlg::InstallComponentDlg(CWnd* pParent /*=NULL*/)
@@ -37,7 +34,7 @@ END_MESSAGE_MAP()
 
 // InstallComponentDlg message handlers
 
-void InstallComponentDlg::LoadComponent(installerSetting * p_Setting, component * p_Component)
+void InstallComponentDlg::LoadComponent(InstallerSetting * p_Setting, Component * p_Component)
 {
 	m_Setting = p_Setting;
 	m_Component = p_Component;

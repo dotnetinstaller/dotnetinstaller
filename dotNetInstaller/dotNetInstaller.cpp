@@ -5,6 +5,7 @@
 #include "ConfigFile.h"
 #include "dotNetInstaller.h"
 #include "dotNetInstallerDlg.h"
+#include "InstallerCommandLineInfo.h"
 #include <Version/Version.h>
 
 #ifdef _DEBUG
@@ -53,8 +54,15 @@ BOOL CdotNetInstallerApp::InitInstance()
     ApplicationLog.Write(TEXT("Operating system: "), DVLib::GetOsVersionString());
     ApplicationLog.Write(TEXT("-------------------------------------------------------------------"));
 
+    std::map<std::wstring, std::wstring>::iterator arg = commandLineInfo.m_componentCmdArgs.begin();
+    while(arg != commandLineInfo.m_componentCmdArgs.end())
+    {
+        ApplicationLog.Write((TEXT("Component arguments: \"") + arg->first + TEXT("\": ")).c_str(), arg->second.c_str());
+        arg ++;
+    }
+
 	TiXmlDocument m_Document;
-	installerSetting m_Setting;
+	InstallerSetting m_Setting;
 
 	try
 	{
@@ -74,9 +82,9 @@ BOOL CdotNetInstallerApp::InitInstance()
 
 		return l_bLoadSuccess;
 	}
-	catch(TCHAR * p_Message)
+	catch(std::exception& ex)
 	{
-		DniSilentMessageBox(p_Message, MB_OK|MB_ICONSTOP);
+        DniSilentMessageBox(DVLib::string2Tstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
 		return false;
 	}
 	catch(...)

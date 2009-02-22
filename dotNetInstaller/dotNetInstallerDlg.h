@@ -6,6 +6,7 @@
 #include "installerTypes.h"
 #include "afxwin.h"
 #include "HyperlinkStatic.h"
+#include "InstallerSetting.h"
 
 // finestra di dialogo CdotNetInstallerDlg
 class CdotNetInstallerDlg : public CDialog
@@ -32,7 +33,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 private:
 	bool m_additional_config;
-	installerSetting m_Settings;
+	InstallerSetting m_Settings;
     void ExtractCab();
 public:
 	CButton m_btnSkip;
@@ -42,7 +43,7 @@ public:
 	CListBox m_ListBoxComponents;
 	CStatic m_PictureBox;
 	CStatic m_lblOperatingSystem;
-	INT_PTR RunDni(installerSetting & p_Setting, bool p_additional_config);
+	INT_PTR RunDni(InstallerSetting & p_Setting, bool p_additional_config);
 	afx_msg void OnBnClickedInstall();
 	bool LoadComponentsList(void);
 	afx_msg void OnBnClickedAdvanced();

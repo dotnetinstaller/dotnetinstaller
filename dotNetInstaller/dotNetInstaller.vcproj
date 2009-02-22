@@ -201,6 +201,14 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\CmdComponent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Component.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ComponentSelector.cpp"
 				>
 			</File>
@@ -237,6 +245,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstalledCheck.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckFile.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckOperator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckRegistry.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\InstallerCommandLineInfo.cpp"
 				>
 			</File>
@@ -249,7 +273,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstallerSetting.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\KCBusyProgressCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MsiComponent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\OpenFileComponent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ProcessComponent.cpp"
 				>
 			</File>
 			<File
@@ -276,12 +316,24 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\ThreadComponent.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\CmdComponent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Component.h"
+				>
+			</File>
 			<File
 				RelativePath=".\ComponentSelector.h"
 				>
@@ -319,6 +371,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstalledCheck.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckFile.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckOperator.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckRegistry.h"
+				>
+			</File>
+			<File
 				RelativePath=".\InstallerCommandLineInfo.h"
 				>
 			</File>
@@ -331,11 +399,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstallerSetting.h"
+				>
+			</File>
+			<File
 				RelativePath=".\installerTypes.h"
 				>
 			</File>
 			<File
 				RelativePath=".\KCBusyProgressCtrl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MsiComponent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\OpenFileComponent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ProcessComponent.h"
 				>
 			</File>
 			<File
@@ -348,6 +432,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ThreadComponent.h"
 				>
 			</File>
 		</Filter>
@@ -391,22 +479,6 @@
 			<File
 				RelativePath=".\Tools\DownloadDialogSupport.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Tools\DownloadDialogSupport.h"
@@ -455,22 +527,6 @@
 			<File
 				RelativePath=".\Tools\ProcessorIdentifier.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Tools\ProcessorIdentifier.h"
@@ -491,14 +547,6 @@
 			<File
 				RelativePath=".\Tools\tinystr.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Tools\tinystr.h"
@@ -507,14 +555,6 @@
 			<File
 				RelativePath=".\Tools\tinyxml.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Tools\tinyxml.h"
@@ -523,26 +563,10 @@
 			<File
 				RelativePath=".\Tools\tinyxmlerror.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Tools\tinyxmlparser.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Tools\VersionCompare.h"

@@ -157,9 +157,14 @@ namespace InstallerLib
                 m_DownloadDialog.ToXml(p_Writer);
             }
 
-            foreach (InstalledCheck i in installchecks)
+            foreach (InstalledCheck i in installedchecks)
             {
                 i.ToXml(p_Writer);
+            }
+
+            foreach(InstalledCheckOperator op in installedcheckoperators)
+            {
+                op.ToXml(p_Writer);
             }
 
             p_Writer.WriteStartElement("embedfiles");
@@ -203,8 +208,16 @@ namespace InstallerLib
 
                     l_check.FromXml(l_XmlCheck);
 
-                    installchecks.Add(l_check);
+                    installedchecks.Add(l_check);
                 }
+            }
+
+            XmlNodeList l_InstalledCheckOperatorsList = p_Element.SelectNodes("installedcheckoperator");
+            foreach (XmlElement l in l_InstalledCheckOperatorsList)
+            {
+                InstalledCheckOperator op = new InstalledCheckOperator();
+                op.FromXml(l);
+                installedcheckoperators.Add(op);
             }
 
             XmlNode l_EmbedFiles = p_Element.SelectSingleNode("embedfiles");
@@ -274,12 +287,20 @@ namespace InstallerLib
                 m_processor_architecture_filter = e.XmlElement.Attributes["processor_architecture_filter"].InnerText;
         }
 
-        private InstalledCheckCollection m_installchecks = new InstalledCheckCollection();
+        private InstalledCheckCollection m_installedchecks = new InstalledCheckCollection();
         [System.ComponentModel.Browsable(false)]
-        public InstalledCheckCollection installchecks
+        public InstalledCheckCollection installedchecks
         {
-            get { return m_installchecks; }
-            set { m_installchecks = value; }
+            get { return m_installedchecks; }
+            set { m_installedchecks = value; }
+        }
+
+        private InstalledCheckOperatorCollection m_installedcheckoperators = new InstalledCheckOperatorCollection();
+        [System.ComponentModel.Browsable(false)]
+        public InstalledCheckOperatorCollection installedcheckoperators
+        {
+            get { return m_installedcheckoperators; }
+            set { m_installedcheckoperators = value; }
         }
 
         private EmbedFileCollection m_embedfiles = new EmbedFileCollection();

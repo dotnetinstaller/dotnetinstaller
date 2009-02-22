@@ -351,7 +351,7 @@ namespace InstallerEditor
 				l_component1.os_filter_lcid = "";
 				l_component1.os_filter_greater = "";
 				l_component1.os_filter_smaller = "45";
-				l_component1.installchecks.Add(l_InstallCheck);
+				l_component1.installedchecks.Add(l_InstallCheck);
 				l_component1.note += ".NET Framework 1.1 for all operating system before windows 2000, require a reboot";
 
 
@@ -372,7 +372,7 @@ namespace InstallerEditor
 				l_component2.os_filter_lcid = "";
 				l_component2.os_filter_greater = "44";
 				l_component2.os_filter_smaller = "90";
-				l_component2.installchecks.Add(l_InstallCheck);
+				l_component2.installedchecks.Add(l_InstallCheck);
 				l_component2.note += ".NET Framework 1.1 for Windows 2000 and Windows XP";
 
 				return new Component[]{l_component1, l_component2};
@@ -421,7 +421,7 @@ namespace InstallerEditor
 				l_component.os_filter_lcid = "";
 				l_component.os_filter_greater = "";
 				l_component.os_filter_smaller = "75";
-				l_component.installchecks.Add(l_InstallCheck);
+				l_component.installedchecks.Add(l_InstallCheck);
 				l_component.note += "MDAC 2.7 Sp1 for Win98, ME, NT4, 2000. Quit mode.";
 
 				return new Component[]{l_component};
@@ -470,7 +470,7 @@ namespace InstallerEditor
 				l_component.os_filter_lcid = "";
 				l_component.os_filter_greater = "14";
 				l_component.os_filter_smaller = "90";
-				l_component.installchecks.Add(l_InstallCheck);
+				l_component.installedchecks.Add(l_InstallCheck);
 				l_component.note += "MDAC 2.8 for Win98, ME, NT4, 2000 and XP. Quit mode.";
 
 				return new Component[]{l_component};
@@ -528,7 +528,7 @@ namespace InstallerEditor
 				l_component.os_filter_lcid = "";
 				l_component.os_filter_greater = "";
 				l_component.os_filter_smaller = "80";
-				l_component.installchecks.Add(l_InstallCheck);
+				l_component.installedchecks.Add(l_InstallCheck);
 				l_component.note += "Internet Explorer 6Sp1 (IE 5.01 Required)";
 
 				return new Component[]{l_component};
@@ -543,7 +543,7 @@ namespace InstallerEditor
 
 			private const string m_ComponentName = "Microsoft JET 4.0 Sp8";
 
-			private InstalledCheck CreaetInstalledCheck()
+			private InstalledCheck CreateInstalledCheck()
 			{
 				//File Msjet40.dll - 4.0.8015.0
 				InstalledCheckFile l_InstallCheck = new InstalledCheckFile();
@@ -587,7 +587,7 @@ namespace InstallerEditor
 				l_component1.os_filter_lcid = "";
 				l_component1.os_filter_greater = osFilterGreater;
 				l_component1.os_filter_smaller = osFilterSmaller;
-				l_component1.installchecks.Add( CreaetInstalledCheck() );
+				l_component1.installedchecks.Add( CreateInstalledCheck() );
 				l_component1.note += "Jet 4.0 Sp8 for " + osNote;
 
 				return l_component1;

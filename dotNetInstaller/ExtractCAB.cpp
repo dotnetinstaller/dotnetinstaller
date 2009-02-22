@@ -29,7 +29,7 @@ BOOL ExtractCABProcessor::OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param
         {
             CString cancelled_message = m_pComponent->m_Settings.cab_cancelled_message;
             if (cancelled_message.Trim().GetLength() == 0) cancelled_message = L"Cancelled by user";
-            throw _wcsdup((LPCWSTR) cancelled_message);
+            throw std::exception(DVLib::Tstring2string((LPCWSTR) cancelled_message).c_str());
         }
     }
 
@@ -42,34 +42,40 @@ UINT ExtractCABComponent::ExecOnThread()
     return ERROR_SUCCESS;
 };
 
-ExtractCABComponent::ExtractCABComponent(installerSetting& settings)
+ExtractCABComponent::ExtractCABComponent(InstallerSetting& settings)
     : m_Settings(settings)
 {
 
 }
 
-void ExtractCABComponent::ExtractCab(HMODULE p_Module, component * pComponent)
+int ExtractCABComponent::GetCabCount(HMODULE p_Module)
 {
-    HRSRC l_res = FindResource(p_Module, TEXT("RES_CAB"), TEXT("CUSTOM"));
-    if (l_res == NULL)
-	    return;
+	int currentIndex = 1;	
+	std::wstring resname = TEXT("RES_CAB");
+	resname.append(DVLib::FormatNumber(currentIndex));
+	
+	HRSRC l_res = FindResource(p_Module, resname.c_str(), TEXT("BINARY"));
+	if (l_res == NULL)
+		return 0;
 
+	do
+	{
+		currentIndex++;
+		resname = TEXT("RES_CAB");
+		resname.append(DVLib::FormatNumber(currentIndex));
+		l_res = FindResource(p_Module, resname.c_str(), TEXT("BINARY"));
+	} while(l_res);
+
+	return currentIndex - 1;
+}
+
+void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
+{
+	ULONG currentIndex = 1;
+
+	std::wstring resname = TEXT("RES_CAB");
+	resname.append(DVLib::FormatNumber(currentIndex));
     ApplicationLog.Write( TEXT("Extracting Setup.cab") );
-
-    HGLOBAL l_hRes = LoadResource(p_Module, l_res);
-    if (l_hRes == NULL)
-    {
-	    throw TEXT("Failed to load resource RES_CAB");
-    }
-
-    LPVOID l_buffer = LockResource(l_hRes);
-    if (l_buffer == NULL)
-    {
-        CloseHandle(l_hRes);
-	    throw TEXT("Failed to lock resource RES_CAB");
-    }
-
-    DWORD l_size = SizeofResource(p_Module, l_res);
 
     CString cabpath = (m_Settings.cab_path.GetLength() > 0) ? m_Settings.cab_path : DVLib::GetSessionTempPath();
     cabpath = m_Settings.ValidatePath(cabpath);
@@ -79,67 +85,82 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, component * pComponent)
     {
 	    if (! ::CreateDirectory(cabpath, NULL))
         {
-            UnlockResource(l_buffer);
-            CloseHandle(l_hRes);
-            throw TEXT("Failed to create CABPATH directory");
+            throw std::exception("Failed to create CABPATH directory");
         }
     }
 
     CString tempFile = DVLib::PathCombineCustom(cabpath, TEXT("setup.cab") );
-
 	ApplicationLog.Write( TEXT("TempFile is: "), tempFile );
     HANDLE l_hFile = CreateFile(tempFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if (l_hFile == INVALID_HANDLE_VALUE)
     {
-	    throw TEXT("Failed to create temp file");
+	    throw std::exception("Failed to create temp file");
     }
 
-    long l_current = 0;
-    long l_chunk = l_size / 10;
-    if (l_chunk == 0) l_chunk = l_size;
-    while (l_current < l_size)
-    {
+	int cabCount = GetCabCount(p_Module);
+
+	for(int i = 1; i <= cabCount; i++)
+	{
+        if (m_pDialog != NULL)
+        {
+            CString percent;
+            percent.Format(L"%d%%", (i * 100) / cabCount);
+            m_pDialog->PostMessage(WM_USER_SETSTATUSINSTALL, 
+                (WPARAM) InstallStatusParam::CreateStatus(L"Setup.cab", percent));
+        }
+
+		std::wstring resname = TEXT("RES_CAB");
+		resname.append(DVLib::FormatNumber(i));
+		ApplicationLog.Write( TEXT("Extracting: "), resname.c_str() );
+
+		HRSRC l_res = FindResource(p_Module, resname.c_str(), TEXT("BINARY"));
+		if (l_res == NULL)
+		{
+			throw std::exception("Missing RES_CAB resource");
+		}
+
         if (cancelled)
         {
             CString cancelled_message = m_Settings.cab_cancelled_message;
             if (cancelled_message.Trim().GetLength() == 0) cancelled_message = L"Cancelled by user";
-            throw _wcsdup((LPCWSTR) cancelled_message);
+            throw std::exception(DVLib::Tstring2string((LPCWSTR) cancelled_message).c_str());
         }
 
-        DWORD dwWritten = 0;
-        l_chunk = min(l_chunk, l_size - l_current);
-        if (! WriteFile(l_hFile, (char *) l_buffer + l_current, l_chunk, & dwWritten, NULL))
+		HGLOBAL l_hRes = LoadResource(p_Module, l_res);
+		if (l_hRes == NULL)
+		{
+			throw std::exception("Failed to load resource RES_CAB");
+		}
+
+		LPVOID l_buffer = LockResource(l_hRes);
+		if (l_buffer == NULL)
+		{
+			throw std::exception("Failed to lock resource RES_CAB");
+		}
+
+		DWORD l_size = SizeofResource(p_Module, l_res);
+		DWORD dwWritten = 0;
+
+        if (! WriteFile(l_hFile, (char *) l_buffer, l_size, & dwWritten, NULL))
         {
             CloseHandle(l_hFile);
             UnlockResource(l_buffer);
-            CloseHandle(l_hRes);
-            throw TEXT("Failed to write setup.cab");
+            throw std::exception("Failed to write setup.cab");
         }
 
-        l_current += l_chunk;
-
-        if (m_pDialog != NULL)
-        {
-            CString percent;
-            percent.Format(L"%d%%", l_current / (l_size / 100));
-            m_pDialog->PostMessage(WM_USER_SETSTATUSINSTALL, 
-                (WPARAM) InstallStatusParam::CreateStatus(L"Setup.cab", percent));
-        }
+		UnlockResource(l_buffer);
     }
 
     CloseHandle(l_hFile);
-    UnlockResource(l_buffer);
 
     ExtractCABProcessor i_Extract(this);
     if (!i_Extract.CreateFDIContext()) 
     {
-        throw TEXT("Failed to initialize CAB context");
+        throw std::exception("Failed to initialize CAB context");
     }
 
     if (!i_Extract.ExtractFileW(tempFile.GetBuffer(), cabpath.GetBuffer()))
     {
-        throw TEXT("Error extracting files from setup.cab");
+        throw std::exception("Error extracting files from setup.cab");
     }
 }
-
-

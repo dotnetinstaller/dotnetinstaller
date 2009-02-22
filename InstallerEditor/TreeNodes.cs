@@ -188,10 +188,15 @@ namespace InstallerEditor
 
 			p_Component.DescriptionChanged +=new EventHandler(p_Component_DescriptionChanged);
 
-			foreach (InstalledCheck c in p_Component.installchecks)
+			foreach (InstalledCheck c in p_Component.installedchecks)
 			{
 				Nodes.Add(new TreeNodeInstalledCheck(c));
 			}
+
+            foreach (InstalledCheckOperator op in p_Component.installedcheckoperators)
+            {
+                Nodes.Add(new TreeNodeInstalledCheckOperator(op));
+            }
 
 			if (p_Component.DownloadDialog != null)
 				Nodes.Add(new TreeNodeDownloadDialog(p_Component.DownloadDialog));
@@ -217,9 +222,13 @@ namespace InstallerEditor
 
 	public class TreeNodeInstalledCheck : TreeNode
 	{
+        InstalledCheck m_InstalledCheck = null;
+
 		public TreeNodeInstalledCheck(InstalledCheck p_InstalledCheck)
 		{
-			base.Text = "Installed Check";
+            base.Tag = m_InstalledCheck = p_InstalledCheck;
+            p_InstalledCheck.DescriptionChanged += new EventHandler(p_InstalledCheck_DescriptionChanged);
+            p_InstalledCheck_DescriptionChanged(this, null);
 
 			if (p_InstalledCheck is InstalledCheckFile)
 			{
@@ -231,8 +240,41 @@ namespace InstallerEditor
 				base.ImageIndex = 10;
 				base.SelectedImageIndex = 10;
 			}
-
-			base.Tag = p_InstalledCheck;
 		}
+
+        void p_InstalledCheck_DescriptionChanged(object sender, EventArgs e)
+        {
+            Text = string.Format("{0} ({1})", m_InstalledCheck.description, m_InstalledCheck.type);
+        }
 	}
+
+    public class TreeNodeInstalledCheckOperator : TreeNode
+    {
+        InstalledCheckOperator m_InstalledCheckOperator = null;
+
+        public TreeNodeInstalledCheckOperator(InstalledCheckOperator p_InstalledCheckOperator)
+        {
+            base.Tag = m_InstalledCheckOperator = p_InstalledCheckOperator;
+            base.ImageIndex = 14;
+            base.SelectedImageIndex = 14;
+
+            p_InstalledCheckOperator.DescriptionChanged += new EventHandler(p_InstalledCheckOperator_DescriptionChanged);
+            p_InstalledCheckOperator_DescriptionChanged(this, null);
+
+            foreach (InstalledCheck c in p_InstalledCheckOperator.installedchecks)
+            {
+                Nodes.Add(new TreeNodeInstalledCheck(c));
+            }
+
+            foreach (InstalledCheckOperator op in p_InstalledCheckOperator.installedcheckoperators)
+            {
+                Nodes.Add(new TreeNodeInstalledCheckOperator(op));
+            }
+        }
+
+        void p_InstalledCheckOperator_DescriptionChanged(object sender, EventArgs e)
+        {
+            Text = string.Format("{0} ({1})", m_InstalledCheckOperator.description, m_InstalledCheckOperator.type);
+        }
+    }
 }

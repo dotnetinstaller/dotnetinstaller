@@ -4,13 +4,12 @@
 #include "stdafx.h"
 #include "dotNetInstaller.h"
 #include "ComponentSelector.h"
-#include ".\componentselector.h"
-
+#include "InstallerSetting.h"
 
 // CComponentSelector dialog
 
 IMPLEMENT_DYNAMIC(CComponentSelector, CDialog)
-CComponentSelector::CComponentSelector(installerSetting * p_Setting, CWnd* pParent /*=NULL*/)
+CComponentSelector::CComponentSelector(InstallerSetting * p_Setting, CWnd* pParent /*=NULL*/)
 	: CDialog(CComponentSelector::IDD, pParent)
 {
 	m_Settings = p_Setting;
@@ -51,11 +50,11 @@ BOOL CComponentSelector::OnInitDialog()
 	CDC *pDC = m_List.GetDC();
 	ASSERT(pDC);
 
-	//Populate the list of components
-	for (size_t i = 0; i < m_Settings->components.size();i++)
+	// Populate the list of components
+	for each(Component * component in m_Settings->GetComponents())
 	{
-		CString l_descr = m_Settings->components[i]->description;
-		if (m_Settings->components[i]->IsInstalled())
+		CString l_descr = component->description;
+		if (component->IsInstalled())
 		{
 			l_descr += " ";
 			l_descr += m_Settings->status_installed;
@@ -66,22 +65,24 @@ BOOL CComponentSelector::OnInitDialog()
 			l_descr += m_Settings->status_notinstalled;
 		}
 
-		m_List.AddString(l_descr);
+		int id = m_List.AddString(l_descr);
 		 
 		CSize size = pDC->GetTextExtent(l_descr);	
 
 		if ((size.cx > 0) && (hScrollWidth < size.cx))
 			hScrollWidth = size.cx;
 
-		if (m_Settings->components[i]->selected)
-			m_List.SetCheck(i, 1);
+		if (component->selected)
+			m_List.SetCheck(id, 1);
 
-        if (m_Settings->components[i]->required)
-            m_List.Enable(i, 0);
+        if (component->required)
+            m_List.Enable(id, 0);
 	}
 	
 	if (hScrollWidth > 0 )
+    {
 		m_List.SetHorizontalExtent(hScrollWidth);
+    }
 
 	m_List.ReleaseDC(pDC); 
 
@@ -90,13 +91,9 @@ BOOL CComponentSelector::OnInitDialog()
 
 void CComponentSelector::OnBnClickedOk()
 {
-	//Populate the list of components
-	for (size_t i = 0; i < m_Settings->components.size();i++)
+	for (size_t i = 0; i < m_Settings->GetComponents().size();i++)
 	{
-		if (m_List.GetCheck((int)i) == 1)
-			m_Settings->components[i]->selected = true;
-		else
-			m_Settings->components[i]->selected = false;
+        m_Settings->GetComponents()[i]->selected = (m_List.GetCheck((int) i) == 1);
 	}
 
 	OnOK();

@@ -1,3 +1,4 @@
+#include "StdAfx.h"
 #include "ProcessorIdentifier.h"
 
 namespace DVLib
@@ -116,7 +117,9 @@ namespace DVLib
 				l_filterId = GetProcessorArchitecture(l_PA);
 
 				if ( l_filterId == PROCESSOR_ARCHITECTURE_UNKNOWN )
-					throw -1;
+                {
+                    throw std::exception("Invalid processor architecture");
+                }
 
 				if (l_bNot)
 				{

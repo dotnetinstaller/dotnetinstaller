@@ -11,7 +11,7 @@ CString DVLib::GetAppFullName()
 	if (GetModuleFileName(NULL,l_buffer,2000) == 0)
 	{
 		_ASSERT(false);
-		throw -1;
+        throw std::exception("GetModuleFileName failed");
 	}
 
 	CString tmp = l_buffer;
@@ -102,7 +102,9 @@ void DVLib::DeleteDirectoryDeep(const CString& path)
     HANDLE h = FindFirstFileW((LPCWSTR) wildcard, & ffd); // find the first file
 
     if(h == INVALID_HANDLE_VALUE)
-        throw _TEXT("FindFirstFileW");
+    {
+        throw std::exception("FindFirstFile failed");
+    }
 
     while(true)
     {
@@ -121,7 +123,9 @@ void DVLib::DeleteDirectoryDeep(const CString& path)
 		    {
 			    if (! ::DeleteFileW((LPCWSTR) sub))
 				{
-					throw _wcsdup((LPCWSTR) TEXT("Error deleting: ") + sub);
+                    std::string error = "Error deleting: ";
+                    error.append(DVLib::Tstring2string((LPCWSTR) sub));
+                    throw std::exception(error.c_str());
 				}
 		    }
 	    }
@@ -132,7 +136,7 @@ void DVLib::DeleteDirectoryDeep(const CString& path)
 			
 		    if (dwErr != ERROR_NO_MORE_FILES)
 		    {
-                throw _TEXT("FindNextFileW");
+                throw std::exception("FindNextFile failed");
 		    }
 
 		    break;

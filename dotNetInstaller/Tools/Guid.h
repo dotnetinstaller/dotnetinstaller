@@ -8,7 +8,7 @@ namespace DVLib
         int len = 0;
 
 		if(0 == (len = ::StringFromGUID2(rguid, (LPOLESTR) & progid, sizeof(progid) - 1)))
-            throw TEXT("StringFromGUID2 failed");
+            throw std::exception("StringFromGUID2 failed");
 
         progid[len - 1] = 0;
         return CString(progid);
@@ -19,7 +19,7 @@ namespace DVLib
 		GUID pguid;
 		
         if (FAILED(::CoCreateGuid(& pguid)))
-            throw TEXT("CoCreateGuid failed");
+            throw std::exception("CoCreateGuid failed");
 
         return StringFromGUID2(pguid);
 	}

@@ -5,6 +5,13 @@
 #include "SilentInstall.h"
 #include "dotNetInstallerDlg.h"
 #include "ProcessorIdentifier.h"
+#include "MsiComponent.h"
+#include "CmdComponent.h"
+#include "OpenFileComponent.h"
+#include "InstalledCheckRegistry.h"
+#include "InstalledCheckFile.h"
+#include "InstalledCheckOperator.h"
+#include "InstallerCommandLineInfo.h"
 
 bool ConvBoolString(const char * p_BoolString, bool defaultValue = false)
 {
@@ -14,7 +21,7 @@ bool ConvBoolString(const char * p_BoolString, bool defaultValue = false)
     else return defaultValue;
 }
 
-void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::DownloadGroupConfiguration & p_Configuration, installerSetting & p_Setting)
+void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::DownloadGroupConfiguration & p_Configuration, InstallerSetting & p_Setting)
 {
 	ApplicationLog.Write( TEXT("Start reading download attributes") );
 
@@ -53,12 +60,12 @@ void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::Down
 
 	if (p_Configuration.Components.GetCount() <= 0)
 	{
-		throw TEXT("No download components found. Downloads node is empty.");
+		throw std::exception("No download components found. Downloads node is empty.");
 	}
 }
 
 // Populate the p_Setting object
-void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
+void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 {
 	DVLib::OperatingSystem l_CurrentOs = DVLib::GetOsVersion();
 
@@ -132,12 +139,12 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 	ApplicationLog.Write( TEXT("Finished reading configuration attributes") );
 
 	//caricamento componenti
-	p_Setting.components.clear();
+	p_Setting.ClearComponents();
 
 	TiXmlElement * l_Node_components = p_Node->FirstChildElement("components");
 	if (NULL == l_Node_components)
 	{
-		throw TEXT("Invalid configuration file, no valid 'components' node found");
+		throw std::exception("Invalid configuration file, no valid 'components' node found");
 	}
 	else
 	{
@@ -150,15 +157,27 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 			{
 				CString l_comp_type = l_Node_component->AttributeT("type").data();
 
-				component * l_new_component;
+				Component * l_new_component;
 
 				if (l_comp_type == "msi")
 				{
-					msi_component * l_msi_Comp = new msi_component();
+					MsiComponent * l_msi_Comp = new MsiComponent();
+				    l_msi_Comp->description = l_Node_component->AttributeT("description").data();
 					l_msi_Comp->package = p_Setting.ValidatePath(l_Node_component->AttributeT("package").data());
 					l_msi_Comp->type = msi;
 					l_msi_Comp->cmdparameters = p_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters").data());
 					l_msi_Comp->cmdparameters_silent = p_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters_silent").data());
+
+                    // additional command line parameters
+                    std::map<std::wstring, std::wstring>::iterator cmdline = commandLineInfo.m_componentCmdArgs.find(l_msi_Comp->description.GetBuffer());
+                    if (cmdline != commandLineInfo.m_componentCmdArgs.end())
+                    {
+                        l_msi_Comp->cmdparameters += TEXT(" ");
+                        l_msi_Comp->cmdparameters += cmdline->second.c_str();
+                        l_msi_Comp->cmdparameters_silent += TEXT(" ");
+                        l_msi_Comp->cmdparameters_silent += cmdline->second.c_str();
+                        ApplicationLog.Write(TEXT("--Additional component arguments: "), cmdline->second.c_str());
+                    }
 
 					l_new_component = l_msi_Comp;
 
@@ -167,9 +186,21 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				else if (l_comp_type == "cmd")
 				{
 					cmd_component * l_cmd_Comp = new cmd_component();
+				    l_cmd_Comp->description = l_Node_component->AttributeT("description").data();
 					l_cmd_Comp->command = p_Setting.ValidatePath(l_Node_component->AttributeT("command").data());
                     l_cmd_Comp->command_silent = p_Setting.ValidatePath(l_Node_component->AttributeT("command_silent").data());
 					l_cmd_Comp->type = cmd;
+
+                    // additional command line parameters
+                    std::map<std::wstring, std::wstring>::iterator cmdline = commandLineInfo.m_componentCmdArgs.find(l_cmd_Comp->description.GetBuffer());
+                    if (cmdline != commandLineInfo.m_componentCmdArgs.end())
+                    {
+                        l_cmd_Comp->command += TEXT(" ");
+                        l_cmd_Comp->command += cmdline->second.c_str();
+                        l_cmd_Comp->command_silent += TEXT(" ");
+                        l_cmd_Comp->command_silent += cmdline->second.c_str();
+                        ApplicationLog.Write(TEXT("--Additional component arguments: "), cmdline->second.c_str());
+                    }
 
 					l_new_component = l_cmd_Comp;
 
@@ -177,7 +208,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				}
 				else if (l_comp_type == "openfile")
 				{
-					openfile_component * l_openfile_Comp = new openfile_component();
+					OpenFileComponent * l_openfile_Comp = new OpenFileComponent();
 					l_openfile_Comp->file = p_Setting.ValidatePath(l_Node_component->AttributeT("file").data());
 					l_openfile_Comp->type = openfile;
 
@@ -187,7 +218,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				}
 				else
 				{
-					throw TEXT("Invalid configuration file, component type not supported");
+					throw std::exception("Invalid configuration file, component type not supported");
 				}
 
 				l_new_component->description = l_Node_component->AttributeT("description").data();
@@ -203,53 +234,23 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 				TiXmlNode * childInstalled = NULL;
 				while ( (childInstalled = l_Node_component->IterateChildren(childInstalled)) != NULL)
 				{
-					TiXmlElement * l_Node_installedcheck = childInstalled->ToElement();
-					if (l_Node_installedcheck != NULL && 
-						strcmp(l_Node_installedcheck->Value(), "installedcheck") == 0)
+					TiXmlElement * l_Node = childInstalled->ToElement();
+					if (l_Node != NULL && strcmp(l_Node->Value(), "installedcheck") == 0)
 					{
-						CString l_installedcheck_type = l_Node_installedcheck->AttributeT("type").data();
-						installedcheck * l_new_installedcheck;
-						if(l_installedcheck_type == "check_registry_value")
-						{
-							installedcheck_check_registry_value * l_new_check_registry_value = new installedcheck_check_registry_value;
-
-							l_new_check_registry_value->fieldname = l_Node_installedcheck->AttributeT("fieldname").data();
-							l_new_check_registry_value->fieldtype = l_Node_installedcheck->AttributeT("fieldtype").data();
-							l_new_check_registry_value->fieldvalue = l_Node_installedcheck->AttributeT("fieldvalue").data();
-							l_new_check_registry_value->path = l_Node_installedcheck->AttributeT("path").data();
-							l_new_check_registry_value->comparison = l_Node_installedcheck->AttributeT("comparison").data();
-							l_new_check_registry_value->rootkey = l_Node_installedcheck->AttributeT("rootkey").data();
-							l_new_check_registry_value->wowoption = l_Node_installedcheck->AttributeT("wowoption").data();
-
-							l_new_installedcheck = l_new_check_registry_value;
-
-							ApplicationLog.Write(TEXT("----Reading REGISTRY installed check: "), l_new_check_registry_value->path);
-						}
-						else if(l_installedcheck_type == "check_file")
-						{
-							installedcheck_check_file * l_new_check_file = new installedcheck_check_file;
-
-							l_new_check_file->filename = p_Setting.ValidatePath(l_Node_installedcheck->AttributeT("filename").data());
-							l_new_check_file->fileversion = l_Node_installedcheck->AttributeT("fileversion").data();
-							l_new_check_file->comparison = l_Node_installedcheck->AttributeT("comparison").data();
-
-							l_new_installedcheck = l_new_check_file;
-
-							ApplicationLog.Write(TEXT("----Reading CHECKFILE installed check: "), l_new_check_file->filename);
-						}
-						else
-						{
-							throw TEXT("Invalid configuration file, installed check type not supported");
-						}
-
-						l_new_component->installedchecks.insert(l_new_component->installedchecks.end(), l_new_installedcheck);
+                        InstalledCheck * l_new_installedcheck = InstalledCheck::LoadFromXml(l_Node, p_Setting);
+						l_new_component->installedchecks.push_back(l_new_installedcheck);
+					}
+					else if (l_Node != NULL && strcmp(l_Node->Value(), "installedcheckoperator") == 0)
+					{
+                        InstalledCheckOperator * l_new_installedcheckoperator = new InstalledCheckOperator();
+                        l_new_installedcheckoperator->Load(l_Node, p_Setting);
+						l_new_component->installedchecks.push_back(l_new_installedcheckoperator);
 					}
 				}
 
-
 				//
 				// download dialog
-				l_new_component->ContainsDownloadComponent = false; //default viene messo a falso e poi guardo se è presente il nodo
+				l_new_component->ContainsDownloadComponent = false; //default viene messo a falso e poi guardo se ï¿½ presente il nodo
 				TiXmlElement * l_Node_downloaddialog = l_Node_component->FirstChildElement("downloaddialog");
 				if (l_Node_downloaddialog != NULL)
 				{
@@ -263,12 +264,16 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 
 				if ( CheckConfigFilter(l_new_component->os_filter_lcid, l_new_component->os_filter_greater, l_new_component->os_filter_smaller, l_new_component->processor_architecture_filter) )
 				{
-					if (l_new_component->IsInstalled() == false)
+                    bool l_new_component_installed = l_new_component->IsInstalled();
+
+					if (! l_new_component_installed)
+                    {
 						l_new_component->selected = true;
+                    }
 
-					p_Setting.components.insert(p_Setting.components.end(), l_new_component);
+					p_Setting.AddComponent(l_new_component);
 
-					ApplicationLog.Write( TEXT("--Component OK") );
+                    ApplicationLog.Write( TEXT("--Component OK: "), l_new_component_installed ? TEXT("INSTALLED") : TEXT("NOT INSTALLED") );
 				}
 				else
 				{
@@ -280,9 +285,22 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 			} //if l_Node_component != NULL
 		}//while l_Node_components != NULL
 	} // if l_Node_components != NULL
+
+    // Daniel Doubrovkine - 2008-11-08: Check that /ComponentArgs doesn't contain arguments for non-existant components
+    std::map<std::wstring, std::wstring>::iterator arg = commandLineInfo.m_componentCmdArgs.begin();
+    while(arg != commandLineInfo.m_componentCmdArgs.end())
+    {
+        if (! p_Setting.HasComponent(arg->first))
+        {
+            ApplicationLog.Write(TEXT("WARNING: Command line argument specified for a missing component: "), 
+                (TEXT("\"") + arg->first + TEXT("\"")).c_str());
+        }
+        
+        arg ++;
+    }
 }
 
-bool LoadReferenceConfigNode(TiXmlElement * p_Node, TiXmlDocument & p_Document, CWnd * p_Parent, installerSetting & p_Setting)
+bool LoadReferenceConfigNode(TiXmlElement * p_Node, TiXmlDocument & p_Document, CWnd * p_Parent, InstallerSetting & p_Setting)
 {
 	bool l_bSuccess = false;
 	TiXmlElement * l_NodeDownloadDialog = p_Node->FirstChildElement("downloaddialog");
@@ -304,14 +322,14 @@ bool LoadReferenceConfigNode(TiXmlElement * p_Node, TiXmlDocument & p_Document, 
 	return l_bSuccess;
 }
 
-void LoadConfigsNode(TiXmlElement * p_Node, installerSetting & p_Setting, bool p_Caller_Has_Additional_Config)
+void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p_Caller_Has_Additional_Config)
 {
 	bool l_bFound = false;
 	bool l_bAbort = false;
 
 	if (strcmp(p_Node->Value(), "configurations") != 0)
 	{
-		throw TEXT("Invalid configuration file, node name not supported, expected 'configurations'.");
+		throw std::exception("Invalid configuration file, node name not supported, expected 'configurations'.");
 	}
 
 	// Matthew Sheets - 2007-09-24: Capture configuration settings
@@ -374,7 +392,7 @@ void LoadConfigsNode(TiXmlElement * p_Node, installerSetting & p_Setting, bool p
 
 					// Matthew Sheets - 2007-09-24: Load the reference config file and process recursively
 					TiXmlDocument l_RefDocument;
-					installerSetting l_RefSetting;
+					InstallerSetting l_RefSetting;
 
 					if (LoadReferenceConfigNode(l_Node_configuration, l_RefDocument, &dlg, p_Setting))
 					{
@@ -406,7 +424,7 @@ void LoadConfigsNode(TiXmlElement * p_Node, installerSetting & p_Setting, bool p
 					}
 				}
 				else
-					throw TEXT("Invalid configuration file, configuration type not supported.");
+					throw std::exception("Invalid configuration file, configuration type not supported.");
 
 				l_bFound = true;
 
@@ -420,13 +438,12 @@ void LoadConfigsNode(TiXmlElement * p_Node, installerSetting & p_Setting, bool p
 		}
 	}
 
-
 	// Matthew Sheets - 2007-09-24: Restore configuration settings
 	//  (configuration settings may have been modified by child "reference" configurations)
 	RestoreAppState(l_ConfigSetting);
 
 	if ( (!l_bFound) && (!l_bAbort) )
-		throw TEXT("System not supported or invalid configuration, no valid 'configuration' node found.");
+		throw std::exception("System not supported or invalid configuration, no valid 'configuration' node found.");
 }
 
 // Matthew Sheets - 2007-09-24: Save the application state, in case it is modified by "reference" config files
@@ -506,7 +523,7 @@ void LoadConfigFromFile(const CString & p_FileName, TiXmlDocument & p_Document)
 	{
         ApplicationLog.Write(TEXT("***Failed to load configuration file: "), p_FileName);
 
-		throw TEXT("Invalid configuration file, failed to parse XML elements.");
+		throw std::exception("Invalid configuration file, failed to parse XML elements.");
 	}
 }
 
@@ -516,13 +533,13 @@ void LoadConfigFromResource(HMODULE p_Module, TiXmlDocument & p_Document)
 
 	HRSRC l_res = FindResource(p_Module, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM"));
 	if (l_res == NULL)
-		throw TEXT("Resource RES_CONFIGURATION not found.");
+		throw std::exception("Resource RES_CONFIGURATION not found.");
 	HGLOBAL l_hRes = LoadResource(p_Module, l_res);
 	if (l_hRes == NULL)
-		throw TEXT("Failed to load resource RES_CONFIGURATION.");
+		throw std::exception("Failed to load resource RES_CONFIGURATION.");
 	LPVOID l_buffer = LockResource(l_hRes);
 	if (l_buffer == NULL)
-		throw TEXT("Failed to lock resource RES_CONFIGURATION.");
+		throw std::exception("Failed to lock resource RES_CONFIGURATION.");
 	DWORD l_size = SizeofResource(p_Module, l_res);
 	char * l_bufferXml = new char[l_size+1];
 	memset(l_bufferXml,0,l_size+1);
@@ -534,7 +551,7 @@ void LoadConfigFromResource(HMODULE p_Module, TiXmlDocument & p_Document)
 	{
 		ApplicationLog.Write( TEXT("***Failed parsing xml configuration from resource") );
         delete [] l_bufferXml;
-		throw TEXT("Resource RES_CONFIGURATION is not a valid xml.");
+		throw std::exception("Resource RES_CONFIGURATION is not a valid xml.");
 	}
 
 	ApplicationLog.Write( TEXT("Finished parsing xml configuration from resource") );
@@ -549,43 +566,20 @@ HBITMAP LoadBannerFromResource(HMODULE p_Module)
 		//leggo la risorsa
 		HRSRC l_res = FindResource(p_Module, TEXT("RES_BANNER"), TEXT("CUSTOM"));
 		if (l_res == NULL)
-			throw -1;
-		HGLOBAL l_hRes = LoadResource(p_Module, l_res);
+            throw std::exception("Error locating RES_BANNER resource");
+
+        HGLOBAL l_hRes = LoadResource(p_Module, l_res);
 		if (l_hRes == NULL)
-			throw -1;
+			throw std::exception("Error loading RES_BANNER resource");
 		DWORD l_size = SizeofResource(p_Module, l_res);
 
 		LPVOID l_buffer = LockResource(l_hRes);
 		if (l_buffer == NULL)
-			throw -1;
+			throw std::exception("Error locking RES_BANNER resource");
 
 		return DVLib::LoadBitmapFromBuffer(l_buffer, l_size);
-	/*	
-		// n.B. Questo pezzo di codice usava GDI+ e quindi non andava bene su sistemi operativi precedenti a Win XP
-
-		HGLOBAL l_hGlobal = GlobalAlloc(GMEM_MOVEABLE, l_size);
-		if (l_hGlobal==NULL)
-			throw -1;
-		LPVOID l_gBuffer = GlobalLock(l_hGlobal);
-		CopyMemory(l_gBuffer, l_buffer, l_size);
-		GlobalUnlock(l_hGlobal);
-
-		CComPtr<IStream> l_pStream;
-		HRESULT l_hrRet = CreateStreamOnHGlobal(l_hGlobal, FALSE, &l_pStream);
-		if (FAILED(l_hrRet))
-			throw -1;
-
-		CImage l_Image;
-		l_hrRet = l_Image.Load(l_pStream);
-		if (FAILED(l_hrRet))
-			throw -1;
-
-		l_pStream.Release();
-		//TODO controllare se è possibile liberare anche HGLOBAL - GlobalFree(l_hGlobal)
-		return l_Image.Detach();
-		*/
 	}
-	catch(...)
+    catch(std::exception&)
 	{
 		return NULL;
 	}
@@ -613,13 +607,13 @@ bool LoadXmlSettings(TiXmlDocument & p_Document)
 	return true;
 }
 
-void FreeComponent(component * c)
+void FreeComponent(Component * c)
 {
 	if (c != NULL)
 	{
 		for (size_t j = 0; j < c->installedchecks.size(); j++)
 		{
-			installedcheck * ic = c->installedchecks[j];
+			InstalledCheck * ic = c->installedchecks[j];
 			c->installedchecks[j] = NULL;
 			if (ic != NULL)
 				delete ic;

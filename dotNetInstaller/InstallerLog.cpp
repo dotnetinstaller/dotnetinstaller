@@ -39,12 +39,16 @@ void InstallerLog::Write(LPCTSTR message)
         if (path.GetLength() && ! DVLib::FileExistsCustom(path))
         {
             if (! ::CreateDirectory(path, NULL))
-                throw TEXT("Failed to create log directory");
+                throw std::exception("Failed to create log directory");
         }
 
 	    m_hFile = CreateFile(m_LogFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	    if (m_hFile == INVALID_HANDLE_VALUE)
-            throw (LPCTSTR) (TEXT("Error creating log file: ") + m_LogFile);
+        {
+            std::string error = "Error creating log file: ";
+            error.append(DVLib::Tstring2string(m_LogFile));
+            throw std::exception(error.c_str());
+        }
 
 	    SetFilePointer(m_hFile, 0, 0, FILE_END);
     }

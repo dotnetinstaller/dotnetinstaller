@@ -2,15 +2,16 @@
 #include "afxwin.h"
 #include "installerTypes.h"
 
-
 // CComponentSelector dialog
+
+class InstallerSetting;
 
 class CComponentSelector : public CDialog
 {
 	DECLARE_DYNAMIC(CComponentSelector)
 
 public:
-	CComponentSelector(installerSetting * p_Setting, CWnd* pParent = NULL);   // standard constructor
+	CComponentSelector(InstallerSetting * p_Setting, CWnd* pParent = NULL);   // standard constructor
 	virtual ~CComponentSelector();
 
 // Dialog Data
@@ -24,7 +25,7 @@ public:
 	CCheckListBox m_List;
 
 private:
-	installerSetting * m_Settings;
+	InstallerSetting * m_Settings;
 public:
 	CButton m_btnOK;
 	CButton m_btnCancel;

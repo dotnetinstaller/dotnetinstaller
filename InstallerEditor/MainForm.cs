@@ -57,6 +57,7 @@ namespace InstallerEditor
 		private System.Windows.Forms.MenuItem mnAddComponentWizard2;
         private MenuItem menuItem8;
         private MenuItem mnAddEmbedFile;
+        private MenuItem mnAddInstalledCheckOperator;
 		private System.ComponentModel.IContainer components;
 
 		public MainForm()
@@ -130,6 +131,7 @@ namespace InstallerEditor
             this.menuItem6 = new System.Windows.Forms.MenuItem();
             this.mnAddInstalledCheckRegistry = new System.Windows.Forms.MenuItem();
             this.mnAddInstalledCheckFile = new System.Windows.Forms.MenuItem();
+            this.mnAddInstalledCheckOperator = new System.Windows.Forms.MenuItem();
             this.menuItem8 = new System.Windows.Forms.MenuItem();
             this.mnAddEmbedFile = new System.Windows.Forms.MenuItem();
             this.menuItem7 = new System.Windows.Forms.MenuItem();
@@ -323,6 +325,7 @@ namespace InstallerEditor
             this.menuItem6,
             this.mnAddInstalledCheckRegistry,
             this.mnAddInstalledCheckFile,
+            this.mnAddInstalledCheckOperator,
             this.menuItem8,
             this.mnAddEmbedFile});
             this.mnAdd.Text = "Add";
@@ -409,14 +412,20 @@ namespace InstallerEditor
             this.mnAddInstalledCheckFile.Text = "Installed Check File";
             this.mnAddInstalledCheckFile.Click += new System.EventHandler(this.mnInstalledCheckFile_Click);
             // 
+            // mnAddInstalledCheckOperator
+            // 
+            this.mnAddInstalledCheckOperator.Index = 14;
+            this.mnAddInstalledCheckOperator.Text = "Installed Check &Operator";
+            this.mnAddInstalledCheckOperator.Click += new System.EventHandler(this.mnAddInstalledCheckOperator_Click);
+            // 
             // menuItem8
             // 
-            this.menuItem8.Index = 14;
+            this.menuItem8.Index = 15;
             this.menuItem8.Text = "-";
             // 
             // mnAddEmbedFile
             // 
-            this.mnAddEmbedFile.Index = 15;
+            this.mnAddEmbedFile.Index = 16;
             this.mnAddEmbedFile.Text = "&Embed File";
             this.mnAddEmbedFile.Click += new System.EventHandler(this.mnAddEmbedFile_Click);
             // 
@@ -449,6 +458,7 @@ namespace InstallerEditor
             this.imageList.Images.SetKeyName(11, "");
             this.imageList.Images.SetKeyName(12, "");
             this.imageList.Images.SetKeyName(13, "");
+            this.imageList.Images.SetKeyName(14, "");
             // 
             // propertyGrid
             // 
@@ -728,6 +738,7 @@ namespace InstallerEditor
 				mnAddMsiComponent.Enabled = false;
 				mnAddInstalledCheckRegistry.Enabled = false;
 				mnAddInstalledCheckFile.Enabled = false;
+                mnAddInstalledCheckOperator.Enabled = false;
 				mnAddDownloadDialog.Enabled = false;
 				mnAddOpenFileComponent.Enabled = false;
 				mnAddComponentWizard.Enabled = false;
@@ -767,14 +778,22 @@ namespace InstallerEditor
 				{
 					mnAddInstalledCheckRegistry.Enabled = true;
 					mnAddInstalledCheckFile.Enabled = true;
+                    mnAddInstalledCheckOperator.Enabled = true;
 					mnDelete.Enabled = true;
 					mnAddDownloadDialog.Enabled = true;
                     mnAddEmbedFile.Enabled = true;
                 }
-				else if (treeView.SelectedNode.Tag is InstalledCheck)
-				{
-					mnDelete.Enabled = true;
-				}
+                else if (treeView.SelectedNode.Tag is InstalledCheckOperator)
+                {
+                    mnAddInstalledCheckOperator.Enabled = true;
+                    mnAddInstalledCheckRegistry.Enabled = true;
+                    mnAddInstalledCheckFile.Enabled = true;
+                    mnDelete.Enabled = true;
+                }
+                else if (treeView.SelectedNode.Tag is InstalledCheck)
+                {
+                    mnDelete.Enabled = true;
+                }
 			}
 		}
 
@@ -823,16 +842,44 @@ namespace InstallerEditor
 		private InstalledCheck AddInstalledCheckRegistry(Component p_Component)
 		{
 			InstalledCheckRegistry l_Check = new InstalledCheckRegistry();
-			p_Component.installchecks.Add(l_Check);
+			p_Component.installedchecks.Add(l_Check);
 			return l_Check;
 		}
 
 		private InstalledCheck AddInstalledCheckFile(Component p_Component)
 		{
 			InstalledCheckFile l_Check = new InstalledCheckFile();
-			p_Component.installchecks.Add(l_Check);
+			p_Component.installedchecks.Add(l_Check);
 			return l_Check;
 		}
+
+        private InstalledCheck AddInstalledCheckRegistry(InstalledCheckOperator p_InstalledCheckOperator)
+        {
+            InstalledCheckRegistry l_Check = new InstalledCheckRegistry();
+            p_InstalledCheckOperator.installedchecks.Add(l_Check);
+            return l_Check;
+        }
+
+        private InstalledCheck AddInstalledCheckFile(InstalledCheckOperator p_InstalledCheckOperator)
+        {
+            InstalledCheckFile l_Check = new InstalledCheckFile();
+            p_InstalledCheckOperator.installedchecks.Add(l_Check);
+            return l_Check;
+        }
+
+        private InstalledCheckOperator AddInstalledCheckOperator(Component p_Component)
+        {
+            InstalledCheckOperator l_Operator = new InstalledCheckOperator();
+            p_Component.installedcheckoperators.Add(l_Operator);
+            return l_Operator;
+        }
+
+        private InstalledCheckOperator AddInstalledCheckOperator(InstalledCheckOperator p_Operator)
+        {
+            InstalledCheckOperator l_Operator = new InstalledCheckOperator();
+            p_Operator.installedcheckoperators.Add(l_Operator);
+            return l_Operator;
+        }
 
 		private DownloadDialog AddDownloadDIalogToComponetnt(Component p_Component)
 		{
@@ -942,7 +989,7 @@ namespace InstallerEditor
 			if (p_CurrentNode.Parent.Tag is Component)
 			{
 				Component l_Component = (Component)p_CurrentNode.Parent.Tag;
-				l_Component.installchecks.Remove(p_Check);
+				l_Component.installedchecks.Remove(p_Check);
 				p_CurrentNode.Remove();
 			}
 			else
@@ -1057,7 +1104,12 @@ namespace InstallerEditor
 					Component l_Component = (Component)treeView.SelectedNode.Tag;
 					treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck( AddInstalledCheckRegistry(l_Component) ));
 				}
-			}
+                else if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is InstalledCheckOperator)
+                {
+                    InstalledCheckOperator l_Operator = (InstalledCheckOperator)treeView.SelectedNode.Tag;
+                    treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck(AddInstalledCheckRegistry(l_Operator)));
+                }
+            }
 			catch(Exception err)
 			{
 				AppUtility.ShowError(this, err);
@@ -1073,7 +1125,12 @@ namespace InstallerEditor
 					Component l_Component = (Component)treeView.SelectedNode.Tag;
 					treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck( AddInstalledCheckFile(l_Component) ));
 				}
-			}
+                else if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is InstalledCheckOperator)
+                {
+                    InstalledCheckOperator l_Operator = (InstalledCheckOperator) treeView.SelectedNode.Tag;
+                    treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck(AddInstalledCheckFile(l_Operator)));
+                }
+            }
 			catch(Exception err)
 			{
 				AppUtility.ShowError(this, err);
@@ -1372,6 +1429,34 @@ namespace InstallerEditor
             {
                 AppUtility.ShowError(this, err);
             }
+        }
+
+        private void AddInstalledCheckOperator(object sender, EventArgs e)
+        {
+            try
+            {
+                if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is Component)
+                {
+                    Component l_Component = (Component)treeView.SelectedNode.Tag;
+                    treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheckOperator(
+                        AddInstalledCheckOperator(l_Component)));
+                }
+                else if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is InstalledCheckOperator)
+                {
+                    InstalledCheckOperator l_InstalledCheckOperator = (InstalledCheckOperator)treeView.SelectedNode.Tag;
+                    treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheckOperator(
+                        AddInstalledCheckOperator(l_InstalledCheckOperator)));
+                }
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
+        }
+
+        private void mnAddInstalledCheckOperator_Click(object sender, EventArgs e)
+        {
+            AddInstalledCheckOperator(sender, e);
         }
 	}
 }

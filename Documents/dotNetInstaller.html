@@ -406,18 +406,39 @@
         by reading this registry key SOFTWARE\Microsoft\NET Framework Setup\NDP\v1.1.4322\Install
         = 1.</p>
     <p>
-        For now there are two type of install check:</p>
+     There are two type of install check:</p>
     <ul>
         <li>'check_registry_value' - Check for a specific registry value.</li>
         <li>'check_file' - Check for a specific file with a specific version.</li>
     </ul>
     <p>
-        There are two type of comparison when check for a registry value or file version:
-        'match' (check if the exact value is present) or 'version' (check if the version
-        is greater or equal).</p>
+        There are several types of comparison when check for a registry value or file version.</p>
+ <p>
+  <strong>check_file</strong>:</p>
+ <ul>
+  <li>'match' - Check that the version of the file exactly matches the check value.</li>
+  <li>'exists' - Check whether the file exists.</li>
+  <li>'version' - Check if the version is greater or equal to the check value.</li>
+ </ul>
+ <p>
+  <strong>check_registry_value</strong>:</p>
+ <p>
+  Note that DWORD, REG_SZ and REG_MULTI_SZ registry types are supported.</p>
+ <ul>
+  <li>'match' - Check if the exact value is present.</li>
+  <li>'version' - Check if the version is greater or equal.</li>
+  <li>'exists' - Check whether the key exists.</li>
+  <li>'contains' - Check whether the value of the registry key contains a string.</li>
+ </ul>
     <p>
         You can look at the example to see the check used with the most common components:
-        .NET Framework, Internet Explorer, MDAC, JET and more.</p>
+        .NET Framework, Internet Explorer, MDAC, JET and more.</p><h2>
+         Combine checks with operators</h2>
+ <p>
+  You can combine results from multiple <code lang="text">InstalledCheck</code> elements
+  with an <span style="color: #b22222; font-family: Courier New">InstalledCheckOperator</span>.
+  The following operators are supported: <strong>And</strong>, <strong>Or</strong>
+  and <strong>Not</strong> (And Not).</p>
     <h2>
         Check the operating system version</h2>
     <p>
@@ -782,21 +803,21 @@
     <table border="1" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
-                <td style="font-weight: bold;">
+                <td style="font-weight: bold; width: 378px;">
                     /q</td>
                 <td>
                     Forces silent mode, even if the configurations silent_install attribute value is
                     false</td>
             </tr>
             <tr>
-                <td style="font-weight: bold;">
+                <td style="font-weight: bold; width: 378px;">
                     /nq</td>
                 <td>
                     Forces normal mode, even if the configurations silent_install attribute value is
                     true</td>
             </tr>
             <tr>
-                <td style="font-weight: bold;">
+                <td style="font-weight: bold; width: 378px;">
                     /Launcher &lt;Program Path&gt;</td>
                 <td>
                     If an install requires a reboot and then a resumption of dotNetInstaller, this argument
@@ -806,7 +827,7 @@
                     as part of a self-extracting executable (SFX) package.</td>
             </tr>
             <tr>
-                <td style="font-weight: bold;">
+                <td style="font-weight: bold; width: 378px;">
                     /LauncherArgs &lt;Program Arguments&gt;</td>
                 <td>
                     Used in conjuction with the /Launcher argument above; specified command-line arguments
@@ -830,7 +851,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="font-weight: bold;">
+                <td style="font-weight: bold; width: 378px;">
                     /CompleteCommandArgs &lt;Program Arguments&gt;
                 </td>
                 <td>
@@ -839,7 +860,7 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td style="width: 378px">
                     <span style="font-weight: bold;">/log</span></td>
                 <td>
                     Creates a log file during installation with information and errors useful for debugging.
@@ -848,19 +869,30 @@
                  It's location and name can be specified with /LogFile.</td>
             </tr>
             <tr>
-                <td>
+                <td style="width: 378px">
                     <span style="font-weight: bold;">/LogFile &lt;path\file&gt;</span></td>
                 <td>
                  Optional log file name.</td>
             </tr>
             <tr>
-                <td>
+                <td style="width: 378px">
                     <span style="font-weight: bold;">/ExtractCab</span></td>
                 <td>
                  If this package contains an embedded CAB, extract Setup.cab and all its contents under 
                  a new folder called SupportFiles in the current directory. When specified,
                  all other options are ignored and no installations are run.</td>
             </tr>
+         <tr>
+          <td style="width: 378px">
+           <strong>/ComponentArgs "description":"value"</strong></td>
+          <td>
+           Additional component parameters. This enables passing additional command-line arguments
+           to specific components. The value is appended to both non-silent and silent command
+           lines of 'msi' and 'cmd' type components. The component description must match exactly
+           the one in the configuration.xml.&nbsp; Note that if multiple components are declared
+           with the same description the command applies to all. Component arguments applied
+           to components that don't exist are ignored.</td>
+         </tr>
         </tbody>
     </table>
     <br />
@@ -1455,8 +1487,12 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <b>InstalledCheck</b></td>
+                                    <b>installedcheck</b></td>
                             </tr>
+                         <tr>
+                          <td>
+                           <strong>installedcheckoperator</strong></td>
+                         </tr>
                             <tr>
                                 <td>
                                     <b>downloaddialog</b></td>
@@ -1906,7 +1942,7 @@
         <tbody>
             <tr>
                 <th colspan="2" bgcolor="#ccccff">
-                    InstalledCheck (type='check_file')</th>
+                 installedcheck (type='check_file')</th>
             </tr>
             <tr>
                 <td colspan="2">
@@ -1919,6 +1955,12 @@
                 <td>
                     <table border="1" cellpadding="0" cellspacing="0">
                         <tbody>
+                         <tr>
+                          <td>
+                           <strong>description</strong></td>
+                          <td>
+                           Description of the check, defaults to 'Installed Check'.</td>
+                         </tr>
                             <tr>
                                 <td>
                                     <b>type</b></td>
@@ -1973,7 +2015,7 @@
         <tbody>
             <tr>
                 <th colspan="2" bgcolor="#ccccff">
-                    InstalledCheck (type='check_registry_value')</th>
+                 installedcheck (type='check_registry_value')</th>
             </tr>
             <tr>
                 <td colspan="2">
@@ -1986,6 +2028,12 @@
                 <td>
                     <table border="1" cellpadding="0" cellspacing="0">
                         <tbody>
+                         <tr>
+                          <td>
+                           <strong>description</strong></td>
+                          <td>
+                           Description of the check, defaults to 'Installed Check'.</td>
+                         </tr>
                             <tr>
                                 <td>
                                     <b>type</b></td>
@@ -2078,7 +2126,51 @@
             </tr>
         </tbody>
     </table>
- <br />
+ <br /><table border="1" cellpadding="0" cellspacing="0">
+  <tbody>
+   <tr>
+    <th colspan="2" bgcolor="#ccccff">
+     installedcheckoperator</th>
+   </tr>
+   <tr>
+    <td colspan="2">
+     A combination of installed checks and operators.</td>
+   </tr>
+   <tr>
+    <td bgcolor="#ccccff" valign="top">
+     ATTRIBUTES:</td>
+    <td>
+     <table border="1" cellpadding="0" cellspacing="0">
+      <tbody>
+       <tr>
+        <td>
+         <strong>description</strong></td>
+        <td>
+         Description of the check, defaults to 'Installed Check Operator'.</td>
+       </tr>
+       <tr>
+        <td>
+         <b>type</b></td>
+        <td>
+         One of 'and', 'or' and 'not'.</td>
+       </tr>
+      </tbody>
+     </table>
+    </td>
+   </tr>
+   <tr>
+    <td bgcolor="#ccccff" valign="top">
+     CHILDREN:</td>
+    <td>
+     <table border="0" cellpadding="0" cellspacing="0">
+      <tbody>
+      </tbody>
+     </table>
+     <strong>installedcheck<br />
+      installedcheckoperator</strong></td>
+   </tr>
+  </tbody>
+ </table>
  <br />
  <table border="1" cellpadding="0" cellspacing="0" id="TABLE1">
   <tbody>
@@ -2164,7 +2256,15 @@
     <br />
     <!-- END table for XML configuration help -->
     <h3>
-        1.3.3.0 to 1.4 changes of XML file</h3>
+     1.5 to 1.6 changes of XML file</h3>
+ <ul>
+  <li>configurations\configuration\components\component\installedcheck\description</li>
+  <li>configurations\configuration\components\component\installedcheckoperator</li>
+ </ul>
+ <br />
+ <!-- END table for XML configuration help -->
+ <h3>
+  1.3.3.0 to 1.5 changes of XML file</h3>
     <p>
         If you already have some files compatible with dotNetInstaller 1.3.3.0 you can open
         these files with the editor, the editor automatically adds the new attributes.<br />
@@ -2206,14 +2306,14 @@
         <li>configurations\configuration\os_filter_greater</li>
         <li>configurations\configuration\os_filter_smaller</li>
         <li>configurations\configuration\os_filter_not_match_message</li>
-        <li>configurations\configuration\components\component\InstalledCheck\rootkey</li>
+        <li>configurations\configuration\components\component\installedcheck\rootkey </li>
     </ul>
     <p>
         Changed attributes:</p>
     <ul>
-        <li>configurations\configuration\components\component\InstalledCheck\comparison can
+        <li>configurations\configuration\components\component\installedcheck\comparison can
             now have the values 'match', 'version', 'exists' or 'contains'</li>
-        <li>configurations\configuration\components\component\InstalledCheck\fieldtype can now
+        <li>configurations\configuration\components\component\installedcheck\fieldtype can now
             have the values 'REG_DWORD', 'REG_SZ' or 'REG_MULTI_SZ'</li>
     </ul>
     <h3>
@@ -2621,7 +2721,7 @@
             and shwapi.dll with dotNetInstaller.exe.</li>
         <li>Is useful that also your setup write a little registry value where you can put some
             information about the installed version, this allows this application to check if
-            your setup is already installed using a 'InstalledCheck' element.</li>
+            your setup is already installed using a 'installedcheck' element.</li>
         <li>In Windows 98 after installing .NET Framework I must force a reboot of the computer
             (with the 'mustreboot' attribute) otherwise some .NET Framework or Windows Installer
             components or not installed correctly.</li>
@@ -2811,7 +2911,18 @@
     <h2>History</h2>
     <h3>1.6 (TBD)</h3>
     <ul>
-        <li>Added OS filter identifiers for Windows Server 2008</li>
+        <li>Added OS filter identifiers for Windows Server 2008.</li>
+     <li>Added <span style="color: #b22222; font-family: Courier New">InstalledCheckOperator
+     </span>of 'And', 'Or' and 'Not' types that combine results from one or more <span
+      style="color: #b22222; font-family: Courier New">InstalledCheck <span style="color: #000000;
+       font-family: Verdana">and <span style="color: #b22222; font-family: Courier New">
+        InstalledCheckOperator <span style="color: #000000; font-family: Verdana">elements.</span></span></span></span></li>
+     <li>Added <span style="color: #b22222; font-family: Courier New">/componentArgs "description":"parameters"
+      <span style="color: #000000; font-family: Verdana">to dotNetInstaller.exe command
+       line. This enables passing additional parameters to specific components declared
+       in configuration.xml.&nbsp;</span></span></li>
+        <li>Embedded CABs are now segmented into 32-megabyte chunks. This reduces the minimum
+            required memory for installers containing embedded CABs to about 48Mb.</li>
     </ul>
     <h3>
      1.5 (25 Oct 2008)</h3>

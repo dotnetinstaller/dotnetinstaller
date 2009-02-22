@@ -66,6 +66,8 @@
     <Compile Include="InstalledCheck.cs" />
     <Compile Include="InstalledCheckCollection.cs" />
     <Compile Include="InstalledCheckFile.cs" />
+    <Compile Include="InstalledCheckOperator.cs" />
+    <Compile Include="InstalledCheckOperatorCollection.cs" />
     <Compile Include="InstalledCheckRegistry.cs" />
     <Compile Include="InstallerLinker.cs" />
     <Compile Include="InstallerLinkerArguments.cs" />
