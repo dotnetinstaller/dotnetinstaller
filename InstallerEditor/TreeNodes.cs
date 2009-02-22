@@ -201,7 +201,7 @@ namespace InstallerEditor
 			if (p_Component.DownloadDialog != null)
 				Nodes.Add(new TreeNodeDownloadDialog(p_Component.DownloadDialog));
 
-            foreach (EmbedFile e in p_Component.EmbedFiles)
+            foreach (EmbedFile e in p_Component.embedfiles)
             {
                 Nodes.Add(new TreeNodeEmbedFile(e));
             }

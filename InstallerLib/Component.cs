@@ -168,7 +168,7 @@ namespace InstallerLib
             }
 
             p_Writer.WriteStartElement("embedfiles");
-            foreach (EmbedFile embedFile in EmbedFiles)
+            foreach (EmbedFile embedFile in embedfiles)
             {
                 embedFile.ToXml(p_Writer);
             }
@@ -228,7 +228,7 @@ namespace InstallerLib
                 {
                     EmbedFile f = new EmbedFile();
                     f.FromXml(l);
-                    EmbedFiles.Add(f);
+                    embedfiles.Add(f);
                 }
             }
         }
@@ -319,14 +319,6 @@ namespace InstallerLib
             set { m_DownloadDialog = value; }
         }
 
-        private EmbedFileCollection m_EmbedFiles = new EmbedFileCollection();
-        [System.ComponentModel.Browsable(false)]
-        public EmbedFileCollection EmbedFiles
-        {
-            get { return m_EmbedFiles; }
-            set { m_EmbedFiles = value; }
-        }
-
         public static Component CreateComponentFromXml(XmlElement element)
         {
             Component l_Comp;
@@ -348,7 +340,7 @@ namespace InstallerLib
         {
             EmbedFileCollection files = new EmbedFileCollection();
             if (m_DownloadDialog != null) files.AddRange(m_DownloadDialog.GetFiles());
-            files.AddRange(EmbedFiles);
+            files.AddRange(embedfiles);
             return files;
         }
     }
