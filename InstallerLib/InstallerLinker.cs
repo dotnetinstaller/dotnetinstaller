@@ -88,10 +88,33 @@ namespace InstallerLib
                     }
                 }
 
+                if (args.embedFolders != null)
+                {
+                    foreach (string folder in args.embedFolders)
+                    {
+                        string directory = Path.GetDirectoryName(folder);
+                        string flags = Path.GetFileName(folder);
+                        if (!(flags.Contains("?") || flags.Contains("*")))
+                        {
+                            directory = folder;
+                            flags = "*.*";
+                        }
+
+                        directory = directory.TrimEnd("\\".ToCharArray());
+                        
+                        string[] folderfiles = Directory.GetFiles(directory, flags, SearchOption.AllDirectories);
+                        foreach (string folderfile in folderfiles)
+                        {
+                            string relativefolderfile = folderfile.Substring(directory.Length + 1);
+                            c_files.Add(new EmbedFile(Path.GetFullPath(folderfile), relativefolderfile));
+                        }
+                    }
+                }
+
                 ArrayList files = c_files.GetFilePairs(supportdir);
                 foreach (string[] filepair in files)
                 {
-                    args.WriteLine(string.Format(" {0}", filepair[1]));
+                    args.WriteLine(string.Format(" {0} ({1})", filepair[1], filepair[0]));
                 }
 
                 string cabname = Path.Combine(Path.GetDirectoryName(args.output), "Setup.cab");

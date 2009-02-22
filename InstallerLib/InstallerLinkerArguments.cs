@@ -24,6 +24,8 @@ namespace InstallerLib
         public bool verbose;
         [Argument(ArgumentType.MultipleUnique, HelpText = "Additional files to embed", LongName = "EmbedFile", ShortName = "f")]
         public string[] embedFiles;
+        [Argument(ArgumentType.MultipleUnique, HelpText = "Additional folders, including subfolders to embed", LongName = "EmbedFolder", ShortName = "r")]
+        public string[] embedFolders;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Icon for the executable", LongName = "Icon", ShortName = "i")]
         public string icon;
 
