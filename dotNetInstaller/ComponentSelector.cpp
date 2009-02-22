@@ -47,6 +47,10 @@ BOOL CComponentSelector::OnInitDialog()
 	m_btnOK.SetWindowText(m_Settings->dialog_selector_ok);
 	m_lblMessage.SetWindowText(m_Settings->dialog_selector_message);
 
+	int hScrollWidth = 0;
+	CDC *pDC = m_List.GetDC();
+	ASSERT(pDC);
+
 	//Populate the list of components
 	for (size_t i = 0; i < m_Settings->components.size();i++)
 	{
@@ -62,13 +66,24 @@ BOOL CComponentSelector::OnInitDialog()
 			l_descr += m_Settings->status_notinstalled;
 		}
 		m_List.AddString(l_descr);
+		 
+		CSize size = pDC->GetTextExtent(l_descr);	
+
+		if ((size.cx > 0) && (hScrollWidth < size.cx))
+			hScrollWidth = size.cx;
 
 		if (m_Settings->components[i]->selected)
 			m_List.SetCheck((int)i, 1);
 	}
+	
+	if (hScrollWidth > 0 )
+		m_List.SetHorizontalExtent(hScrollWidth);
+
+	m_List.ReleaseDC(pDC); 
 
 	return TRUE;
 }
+
 void CComponentSelector::OnBnClickedOk()
 {
 	//Populate the list of components

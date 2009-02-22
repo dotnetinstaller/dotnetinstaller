@@ -356,16 +356,27 @@ bool CdotNetInstallerDlg::LoadComponentsList(void)
 {
 	m_ListBoxComponents.ResetContent();
 
+	int hScrollWidth = 0;
+	CDC *pDC = m_ListBoxComponents.GetDC();
+	ASSERT(pDC);
+
 	bool l_AllInstalled = true;
 	for (size_t i = 0; i < m_Settings.components.size();i++)
 	{
 		if (m_Settings.components[i]->selected)
 		{
 			m_ListBoxComponents.AddString(m_Settings.components[i]->description);
-
 			l_AllInstalled &= m_Settings.components[i]->IsInstalled();
+			CSize size = pDC->GetTextExtent(m_Settings.components[i]->description);
+			if ((size.cx > 0) && (hScrollWidth < size.cx))
+				hScrollWidth = size.cx;
 		}
 	}
+
+	if (hScrollWidth > 0 )
+		m_ListBoxComponents.SetHorizontalExtent(hScrollWidth);
+
+	m_ListBoxComponents.ReleaseDC(pDC); 
 
 	return l_AllInstalled;
 }
