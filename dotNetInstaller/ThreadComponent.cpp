@@ -43,6 +43,7 @@ void thread_component::Init(CDialog * pDialog)
 	m_ExitCode = 0;
     Component::Init(pDialog);
     m_pThread = AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED);
+	m_pThread->m_bAutoDelete = false;
     m_pThread->ResumeThread();
 }
 
@@ -54,6 +55,8 @@ bool thread_component::Exec()
 		{
 			throw std::exception("WaitForSingleObject failed");
 		}
+
+		delete m_pThread;
 
         if (m_Error.GetLength())
         {
