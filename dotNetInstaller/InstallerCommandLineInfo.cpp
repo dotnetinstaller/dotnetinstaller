@@ -23,7 +23,7 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam,
 			m_lastArgFlag = log;
 			ApplicationLog.EnableLog();
 		}
-		// Daniel Doubrovkine - 2008-06-09: specify log filename
+		// Daniel Doubrovkine - 2008-06-26: specify log filename and path
 		else if (_tcsicmp(pszParam, TEXT("logfile")) == 0)
 		{
 			m_lastArgFlag = logfile;
@@ -66,7 +66,7 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam,
 			case noSilent:
 				break;
             case logfile:
-                ApplicationLog.EnableLog(pszParam);
+                ApplicationLog.SetLogFile(pszParam);
                 break;
 			case launcher:
 				DNILauncher.SetLauncherPath(pszParam);

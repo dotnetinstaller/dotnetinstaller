@@ -52,6 +52,10 @@ namespace InstallerEditor
             m_cab_path = tpl.cab_path;
             m_cab_path_autodelete = tpl.cab_path_autodelete;
 
+            // Daniel Doubrovkine - 2008-06-24: added auto-enabled logging options
+            m_log_enabled = tpl.log_enabled;
+            m_log_file = tpl.log_file;
+
             //			if (LanguageUI.Language == SupportedLanguage.Italian)
             //			{
             //				m_cancel_caption = "Chiudi";
@@ -144,6 +148,10 @@ namespace InstallerEditor
         /* Daniel Doubrovkine - 2008-06-06: added path to use during CAB extraction */
         private string m_cab_path;
         private bool m_cab_path_autodelete = true;
+
+        /* Daniel Doubrovkine - 2008-06-24: added auto-enabled logging options */
+        private bool m_log_enabled;
+        private string m_log_file;
 
         [Description("Main dialog title. (REQUIRED)")]
         [Category("Main Dialog")]
@@ -381,6 +389,24 @@ namespace InstallerEditor
             set { m_cab_path_autodelete = value; }
         }
 
+        [Description("Always enable logging; you can also enable logging with /Log on the dotNetInstaller commandline")]
+        [DefaultValue(false)]
+        [Category("Logging")]
+        public bool log_enabled
+        {
+            get { return m_log_enabled; }
+            set { m_log_enabled = value; }
+        }
+
+        [Description("Log filename used for the dotNetInstaller log; msi package logs are named after the msi package and a .log extension")]
+        [DefaultValue("#TEMPPATH\\dotNetInstallerLog.txt")]
+        [Category("Logging")]
+        public string log_file
+        {
+            get { return m_log_file; }
+            set { m_log_file = value; }
+        }
+
         #endregion
 
         protected override void OnXmlWriteTagConfiguration(XmlWriterEventArgs e)
@@ -431,6 +457,10 @@ namespace InstallerEditor
             // Daniel Doubrovkine - 2008-06-12: added CAB path
             e.XmlWriter.WriteAttributeString("cab_path", m_cab_path);
             e.XmlWriter.WriteAttributeString("cab_path_autodelete", m_cab_path_autodelete.ToString());
+
+            // Daniel Doubrovkine - 2008-06-24: added auto-enabled logging
+            e.XmlWriter.WriteAttributeString("log_enabled", m_log_enabled.ToString());
+            e.XmlWriter.WriteAttributeString("log_file", m_log_file);
 
             e.XmlWriter.WriteStartElement("components");
             foreach (Component c in Components)
@@ -545,6 +575,12 @@ namespace InstallerEditor
             if (e.XmlElement.Attributes["cab_path_autodelete"] != null)
                 cab_path_autodelete = bool.Parse(e.XmlElement.Attributes["cab_path_autodelete"].InnerText);
 
+            // Daniel Doubrovkine - 2008-06-24: added auto-enable logging
+            if (e.XmlElement.Attributes["log_enabled"] != null)
+                m_log_enabled = bool.Parse(e.XmlElement.Attributes["log_enabled"].InnerText);
+
+            if (e.XmlElement.Attributes["log_file"] != null)
+                m_log_file = e.XmlElement.Attributes["log_file"].InnerText;
 
             XmlNodeList l_List = e.XmlElement.SelectNodes("components/component");
             foreach (XmlElement l_XmlComp in l_List)

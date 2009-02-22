@@ -45,10 +45,8 @@ BOOL CdotNetInstallerApp::InitInstance()
 
 	//AfxEnableControlContainer();
 
-	//Gestione Log
 	CInstallerCommandLineInfo commandLineInfo;
 	ParseCommandLine(commandLineInfo);
-
 
 	TiXmlDocument m_Document;
 	installerSetting m_Setting;

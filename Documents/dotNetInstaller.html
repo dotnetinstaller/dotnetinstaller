@@ -98,8 +98,11 @@
     <h2>
         Samples</h2>
     <p>
-        In the attached zip file you can find 2 samples: a standalone setup and a web setup.
-        Both setups are configured to correctly install these components:</p>
+        In the attached zip file you can find 2 samples: a standalone setup and a all-in-one
+     packaged setup.
+    </p>
+ <p>
+  The StandAlone setup is configured to correctly install these components:</p>
     <ul>
         <li>NT4 Sp6</li>
         <li>Windows 2000 Sp4</li>
@@ -126,6 +129,9 @@
     <p>
         I have created the configuration files for English and Italian operating system,
         but you can include your custom language easily.</p>
+ <p>
+  The packaged setup is compiled with InstallerEditor into a single Setup.exe with
+  all its dependencies, including a simple MSI setup package.</p>
     <p>
         For other samples or informations look at the attached zip file.</p>
     <h2>
@@ -201,7 +207,6 @@
        <tr><td>/Template:filename</td><td>Template installer executable (short form /t)</td><td>yes</td></tr>
        <tr><td>/Banner:filename</td><td>Picture for the banner (short form /b)</td><td>yes</td></tr>
        <tr><td>/Configuration:filename</td><td>XML configuration file (short form /c)</td><td>yes</td></tr>
-
        <tr><td>/Embed[+|-]</td><td>Embed support files (short form /e)</td><td></td></tr>
        <tr><td>/AppPath</td><td>Location of support files for embedding(short form /a)</td><td></td></tr>
       </tbody>
@@ -775,16 +780,22 @@
                 <td>
                     <span style="font-weight: bold;">/log</span></td>
                 <td>
-                    Creates a log file during installation with some informations and errors useful
-                    for debugging. You can find this file in the user temp directory with the name dotNetInstallerLog.txt
-                    (usually: "C:\Documents and Settings\YOUR_NAME\Local Settings\Temp\dotNetInstallerLog.txt")</td>
+                    Creates a log file during installation with information and errors useful for debugging.
+                 You can find this file in the user temporary directory with the name dotNetInstallerLog.txt
+                 (usually: "C:\Documents and Settings\YOUR_NAME\Local Settings\Temp\dotNetInstallerLog.txt").
+                 It's location and name can be specified with /LogFile.</td>
             </tr>
+         <tr>
+          <td>
+           <strong>/LogFile &lt;path\file&gt;</strong></td>
+          <td>
+           Optional log file name.</td>
+         </tr>
             <tr>
                 <td>
-                    <span style="font-weight: bold;">/LogFile &lt;filename&gt;</span></td>
+                    <span style="font-weight: bold;">/LogFile &lt;path\file&gt;</span></td>
                 <td>
-                    Creates a user-specified log file during installation with some informations and errors useful
-                    for debugging.</td>
+                 Optional log file name.</td>
             </tr>
         </tbody>
     </table>
@@ -1068,6 +1079,19 @@
                                 <td><b>cab_path_autodelete</b></td>
                                 <td>Auto-delete the path where the embedded CAB and its files were extracted upon completion of dotNetInstaller</td>
                             </tr>
+                         <tr>
+                          <td>
+                           <strong>log_enabled</strong></td>
+                          <td>
+                           Always enable logging. This creates the log file specified by log_file. To enable logging
+                           in the MSI component, specify /l command-line parameters.</td>
+                         </tr>
+                         <tr>
+                          <td>
+                           <strong>log_file</strong></td>
+                          <td>
+                           Name and path of the log file, default is #TEMPPATH\DotNetInstallerLog.txt</td>
+                         </tr>
                         </tbody>
                     </table>
                 </td>
@@ -1854,7 +1878,7 @@
     <br />
     <!-- END table for XML configuration help -->
     <h3>
-        1.3.3.0 to 1.3._.0 changes of XML file</h3>
+        1.3.3.0 to 1.4 changes of XML file</h3>
     <p>
         If you already have some files compatible with dotNetInstaller 1.3.3.0 you can open
         these files with the editor, the editor automatically adds the new attributes.<br />
@@ -1862,6 +1886,8 @@
     </p>
     <ul>
         <li>configurations\silent_install</li>
+        <li>configurations\configuration\log_enable</li>
+        <li>configurations\configuration\log_file</li>
         <li>configurations\configuration\skip_caption</li>
         <li>configurations\configuration\downloaddialog\downloads\download\alwaysdownload</li>
         <li>configurations\configuration\processor_architecture_filter</li>
@@ -2340,11 +2366,12 @@
     <p>
         In certain deployment scenarios, it may be desirable to distribute an installation package
         as a single, self-extracting executable (SFX). dotNetInstaller supports embedding dependencies
-        since version 1.3._. This section describes an alternate way of packaging a single installer
+        since version 1.4. This section describes an alternate way of packaging a single installer
         with a 3rd party tool.
     </p>
     <p>
-        The <a target=_blank href="http://7zsfx.org/">7zSFX project</a>, based on the
+        The
+ <a target=_blank href="http://7zsfx.org/">7zSFX project</a>, based on the
         <a target=_blank href="http://7-zip.org/">7-Zip project</a>, provides a simple means for
         turning an archive file into a setup file.  7-Zip SFX modules can be customized to perform
         specific actions whenever the self-extracting archive is executed.</p>
@@ -2475,22 +2502,25 @@
             Server 2003 SP2, and Windows Vista SP1</li>
         <li>Added optional configuration-level and component-level OS filter matching system architecture (x86, x84, etc).
             See "processor_architecture_filter". This filter restricts the entire boostrapper from running on non-supported
-            processors and enables installation of different dependencies on different processor architectures.</li>
+            processors and enables installation of different dependencies on different processor architectures</li>
         <li>Added support for command-line execution of InstallerEditor.exe, can now be used as a bootstrapper
             compiler in a build process.</li>
-        <li>Added CABing, embedding of support files using <a href="http://www.codeproject.com/KB/files/CABCompressExtract.aspx">Elmü's CAB library</a>.</li>
+        <li>Added CABing, embedding of support files using <a href="http://www.codeproject.com/KB/files/CABCompressExtract.aspx">Elmü's CAB library</a>
+         and a PackagedSetup sample</li>
         <li>Added command line options -e (Embed) and -a (AppPath) for command line build</li>
         <li>Added cab_dialog_message, cab_dialog_caption, cap_path and cab_path_autodelete options</li>
         <li>Temporary files (eg. downloaded files) will be deleted upon completion of dotNetInstaller</li>
-        <li>Added /LogFile &lt;filename&gt; option to the command line parameters to specify the resulting log file</li>
+        <li>Added /Log command-line option and log_enabled configuration file parameter that enables logging for dotNetInstaller and all MSI components executed</li>
+        <li>Added /LogFile &lt;path\filename&gt; command-line option and a log_file configuration
+         file parameter to specify the resulting full path to the log filename for the dotNetInstaller itself</li>
         <li>Added #CABPATH variable that can be used in path settings</li>
         <li>Added #GUID variable that represents a unique GUID across a single instance of dotNetInstaller</li>
      <li>Added an MSBuild script that centrally versions, builds and packages dotNetInstaller
-      into target/Debug|Release, including a sample.</li>
+      into target/Debug|Release, including a sample</li>
      <li>Added a combined Visual Studio solution, dni.sln with automatic versioning (reqiures
       <a href="http://msbuildtasks.tigris.org/">MSBuild Community Tasks</a>). The major
       and minor version number can be incremented in dni.proj, the build number is the
-      latest SVN revision and the release number is a timestamp.</li>
+      latest SVN revision and the release number is a timestamp</li>
     </ul>
     <h3>
         1.3.3.0 (19 March 2007)</h3>

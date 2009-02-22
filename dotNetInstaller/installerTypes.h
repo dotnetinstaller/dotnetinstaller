@@ -479,6 +479,8 @@ struct msi_component : public process_component
 		//if (suppressreboot)
 		//	l_command += " REBOOT=ReallySuppress";
 
+        ApplicationLog.Write(TEXT("executing: "), l_command);
+
 		return DVLib::ExecCmd(l_command, &m_process_info);
 	};
 };
@@ -583,6 +585,10 @@ struct installerSetting
     CString cab_dialog_caption;
     CString cab_path;
     bool cab_path_autodelete;
+
+    /* Daniel Doubrovkine - 2008-06-24: added auto-enabled log */
+    bool log_enabled;
+    CString log_file;
 
 	void ExecuteCompleteCode()
 	{

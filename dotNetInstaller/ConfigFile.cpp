@@ -64,6 +64,17 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 
 	ApplicationLog.Write( TEXT("Start reading configuration attributes") );
 
+    /* Daniel Doubrovkine - 2008-06-24: added auto-enabled log options */
+    p_Setting.log_enabled = ConvBoolString(p_Node->Attribute("log_enabled"), false);
+    p_Setting.log_file = p_Node->AttributeT("log_file").data();
+
+    // enable logging if log is not enabled by a command line switch and enabled in the configuration
+    if (! ApplicationLog.IsEnableLog() && p_Setting.log_enabled)
+    {
+        ApplicationLog.SetLogFile(p_Setting.ValidatePath(p_Setting.log_file));
+        ApplicationLog.EnableLog();
+    }
+
     /* Daniel Doubrovkine - 2008-06-12: added CABBPATH that defines where to extract files */
     p_Setting.cab_path = p_Node->AttributeT("cab_path").data();
     p_Setting.cab_path_autodelete = ConvBoolString(p_Node->Attribute("cab_path_autodelete"), true);
