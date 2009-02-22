@@ -1935,6 +1935,26 @@
                                     or greater then the version specified.
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <b>wowoption</b></td>
+                                <td>
+                                    Alternate registry view options. WOW64_64 and WOW64_32 maps to KEY_WOW64_64KEY (64 bit registry view for both 
+                                    32 bit and 64 bit applications) and KEY_WOW64_32KEY (32 bit registry view for both 32 bit and 64 bit applications) 
+                                    respectively. NONE defaults to 32 bit registry view for 32 bit applications and to 64 bit registry view for 64 
+                                    bit applications.
+                                    <ul>
+                                        <li>If your component is a native 64-bit component installing registry keys into the 64-bit registry view,
+                                            specify WOW64_64. 
+
+                                        </li>
+                                        <li>If your component is a native 32-bit component installing registry keys into the
+                                            32-bit registry view, leave the value blank or select NONE.</li>
+                                        <li>Reserved for future use. If dotNetInstaller installer is built native 64-bit and
+                                            the installed component is 32-bit writing to the 32-bit registry view, specify WOW64_32.</li>
+                                    </ul>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </td>
@@ -1979,6 +1999,7 @@
         <li>productversion</li>
         <li>fileattributes\fileattribute\name</li>
         <li>fileattributes\fileattribute\value</li>
+        <li>configurations\configuration\components\component\installedcheck\wowoption</li>
     </ul>
     <h3>
         1.2.0.0 to 1.3.2.0 changes of XML file</h3>
@@ -2603,8 +2624,11 @@
     <h3>
      1.4 (__ Month 2008)</h3>
     <ul>
+        <li>Added support for installing 64-bit applications, including WOW support for component
+            installed checks, processor architecture restrictions per installation and/or component,
+            etc.</li>
         <li>Added support for silent installs; silent mode can be declared either in the
-            configuration XML or from the command line</li>
+            configuration XML or from the command line </li>
         <li>Added command_silent to the component of type "command" and cmdparameters_silent to the 
             component of type "msi" that optionally replace command and cmdparameters parameters in a 
             silent install</li>
@@ -2623,7 +2647,7 @@
             to finish executing</li>
         <li>Added OS filter identifiers for Windows XP SP3, Windows Server 2003 SP1, Windows
             Server 2003 SP2, and Windows Vista SP1</li>
-        <li>Added optional configuration-level and component-level OS filter matching system architecture (x86, x84, etc).
+        <li>Added optional configuration-level and component-level OS filter matching system architecture (x86, x64, etc).
             See "processor_architecture_filter". This filter restricts the entire boostrapper from running on non-supported
             processors and enables installation of different dependencies on different processor architectures</li>
         <li>Added support for command-line execution of InstallerEditor.exe, can now be used as a bootstrapper

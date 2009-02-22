@@ -15,6 +15,9 @@
 #include "InstallerLauncher.h"
 #include "InstallerLog.h"
 #include "SilentInstall.h"
+#include "OsIdentifier.h"
+
+using namespace DVLib;
 
 //in tutti i percorsi viene sostituito #APPPATH con il percorso dell'applicazione corrente, #SYSTEMPATH con la directory System del computer e #WINDOWSPATH con la directory di installazione di Windows, #TEMPPATH con la directory temporanea
 //in all the paths we replace the string constant #APPPATH with the current path of the application and #SYSTEMPATH with the system directory of the computer, #TEMPPATH with the temp directory
@@ -46,6 +49,7 @@ struct installedcheck_check_registry_value : public installedcheck
 	CString fieldtype; //tipo del campo nel registry : REG_DWORD (long) o REG_SZ  (string)
 	CString comparison; //tipo di comparazione : match (verifica se le due stringhe sono uguali) version (che tratta le due stringhe come versioni e quindi se quella richiesta è minore bisogna installare altrimenti no)
 	CString rootkey;
+	CString wowoption; //support for KEY_WOW64_32KEY and KEY_WOW64_64KEY						
 
 	HKEY GetRootKey()
 	{
@@ -57,31 +61,51 @@ struct installedcheck_check_registry_value : public installedcheck
 	  return HKEY_LOCAL_MACHINE;
 	}
 
-
-
 	virtual bool IsInstalled()
 	{
 		try
 		{
-			//
-			// Charles McDonald: 2008-06-19: Added some log entries and modified the way we check the registry.
-			// For 64 bit support we need to specifically check the 64 bit registry, otherwise, this check always
-			// determines that our 64 bit packages are not installed.
-			ApplicationLog.Write( TEXT("Reading Registry For: "), path);
-			HKEY l_HKey;
+			//Arunkumar Viswanathan: 2008-09-02: Modified 64 bit registry search logic to include alternate registry search view options also.
+			//http://msdn.microsoft.com/en-us/library/aa384129(VS.85).aspx
+			
+			CString keypath(path);
+			keypath.Append(L"\\");
+			keypath.Append(fieldname);
 
-			//
-			// When accessing a 64 bit registry key we need to modify the the third parameter (samDesired)
-			// by ORing both 0x0100 (KEY_WOW64_64KEY) and 0x0200 (KEY_WOW64_32KEY).
-			LONG l_result = RegOpenKeyEx(GetRootKey(), path, 0, KEY_READ | KEY_WOW64_64KEY | KEY_WOW64_32KEY, &l_HKey);
+			ApplicationLog.Write( TEXT("Reading Registry For: "), keypath);
+
+			HKEY l_HKey;
+			LONG l_result = 0;
+			
+			OperatingSystem type = GetOsVersion();
+			DWORD dwKeyOption = KEY_READ;
+
+			//Alternate registry view is available from Windows XP onwards for 64 bit systems.
+			if (type >= winXP)
+			{
+				//Indicates that an application on 64-bit Windows should operate on the 64-bit registry view.
+				if ("WOW64_64" == (wowoption.MakeUpper()))
+				{	
+					ApplicationLog.Write( TEXT("Opening 64-bit registry view (KEY_WOW64_64KEY)."));
+					dwKeyOption |= KEY_WOW64_64KEY;
+				}
+				//Indicates that an application on 64-bit Windows should operate on the 32-bit registry view.
+				else if ("WOW64_32" == (wowoption.MakeUpper()))
+				{
+					ApplicationLog.Write( TEXT("Opening 32-bit registry view (KEY_WOW64_32KEY)."));
+					dwKeyOption |= KEY_WOW64_32KEY;
+				}
+			}
+
+			l_result = RegOpenKeyEx(GetRootKey(), path, 0, dwKeyOption, &l_HKey);
 
 			if (l_result != ERROR_SUCCESS)
 			{
-				ApplicationLog.Write( TEXT("***No Registry Entry Found For: "), path);
+				ApplicationLog.Write( TEXT("***No Registry Entry Found For: "), keypath);
 				return false;
 			}
 
-			ApplicationLog.Write( TEXT("Registry Entry Found For: "), path);
+			ApplicationLog.Write( TEXT("Registry Entry Found For: "), keypath);
 			if (fieldtype == TEXT("REG_DWORD"))
 			{
 				DWORD wordValue;

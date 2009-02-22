@@ -16,7 +16,8 @@ namespace InstallerLib
 			m_fieldname = "Installed";
 			m_fieldtype = installcheck_registrytype.REG_DWORD;
 			m_fieldvalue = "1";
-			m_rootkey = installcheck_rootkey.HKEY_LOCAL_MACHINE;
+		    m_rootkey = installcheck_rootkey.HKEY_LOCAL_MACHINE;
+            m_wowoption = installcheck_wowoption.NONE;
 		}
 
 		private string m_path;
@@ -60,12 +61,20 @@ namespace InstallerLib
 		}
 
 		private installcheck_rootkey m_rootkey;
-    [Description("Root key, from which to begin the registry search from. (REQUIRED)")]
+        [Description("Root key, from which to begin the registry search from. (REQUIRED)")]
 		public installcheck_rootkey rootkey
 		{
 			get{return m_rootkey;}
 			set{m_rootkey = value;}
 		}
+
+        private installcheck_wowoption m_wowoption;
+        [Description("Alternate registry view options. WOW64_64 and WOW64_32 maps to KEY_WOW64_64KEY (64 bit registry view for both 32 bit and 64 bit applications) and KEY_WOW64_32KEY (32 bit registry view for both 32 bit and 64 bit applications) respectively. NONE defaults to 32 bit registry view for 32 bit applications and to 64 bit registry view for 64 bit applications.")]
+        public installcheck_wowoption wowoption
+        {
+            get { return m_wowoption; }
+            set { m_wowoption = value; }
+        }
 		
 		protected override void OnXmlWriteTagInstalledCheck(XmlWriterEventArgs e)
 		{
@@ -76,7 +85,8 @@ namespace InstallerLib
 			e.XmlWriter.WriteAttributeString("fieldvalue",m_fieldvalue);
 			e.XmlWriter.WriteAttributeString("fieldtype",m_fieldtype.ToString());
 			e.XmlWriter.WriteAttributeString("comparison",m_comparison.ToString());
-			e.XmlWriter.WriteAttributeString("rootkey",rootkey.ToString());
+            e.XmlWriter.WriteAttributeString("rootkey", m_rootkey.ToString());
+            e.XmlWriter.WriteAttributeString("wowoption", m_wowoption.ToString());
 		}
 
 
@@ -101,6 +111,9 @@ namespace InstallerLib
  
  			if (e.XmlElement.Attributes["rootkey"] != null)
 				m_rootkey = (installcheck_rootkey)Enum.Parse(typeof(installcheck_rootkey),e.XmlElement.Attributes["rootkey"].InnerText, true);
+
+            if (e.XmlElement.Attributes["wowoption"] != null)
+                m_wowoption = (installcheck_wowoption)Enum.Parse(typeof(installcheck_wowoption), e.XmlElement.Attributes["wowoption"].InnerText, true);
 		}
 	}
 
@@ -119,4 +132,12 @@ namespace InstallerLib
 	  HKEY_USERS,
 	  HKEY_CURRENT_CONFIG
 	}
+    
+    // Alternate registry view options
+    public enum installcheck_wowoption
+    {
+        NONE,
+        WOW64_64,
+        WOW64_32
+    }
 }
