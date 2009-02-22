@@ -101,8 +101,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,2,2,1
- PRODUCTVERSION 1,2,2,1
+ FILEVERSION 1,3,0,0
+ PRODUCTVERSION 1,3,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -118,13 +118,13 @@ BEGIN
         BLOCK "000004e4"
         BEGIN
             VALUE "[ProductName]", "dotNet Installer"
-            VALUE "CompanyName", "Davide Icardi"
+            VALUE "CompanyName", "Davide Icardi / Matthias Jentsch"
             VALUE "FileDescription", "Installer for .Net Application"
-            VALUE "FileVersion", "1.2.2.1"
+            VALUE "FileVersion", "1.3.1.0"
             VALUE "InternalName", "dotNetInstaller.exe"
-            VALUE "LegalCopyright", "Davide Icardi. All rights reserved."
+            VALUE "LegalCopyright", "Davide Icardi / Matthias Jentsch. All rights reserved."
             VALUE "OriginalFilename", "dotNetInstaller.exe"
-            VALUE "ProductVersion", "1.2.2.1"
+            VALUE "ProductVersion", "1.3.1.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -196,7 +196,7 @@ IDC_CUSTOM_HAND         CURSOR                  "res\\Hand.cur"
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Italian (Italy) resources
+// Italienisch (Italien) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ITA)
 #ifdef _WIN32
@@ -239,7 +239,7 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif    // Italian (Italy) resources
+#endif    // Italienisch (Italien) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

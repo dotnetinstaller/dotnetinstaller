@@ -80,48 +80,58 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	}
 	else
 	{
-		this->SetWindowText(m_Settings.dialog_caption);
-		m_btCancel.SetWindowText(m_Settings.cancel_caption);
-		m_btnInstall.SetWindowText(m_Settings.install_caption);
-		m_lblMessage.SetWindowText(m_Settings.dialog_message);
-		m_btAdvanced.SetWindowText(m_Settings.advanced_caption);
-		if (m_Settings.advanced_caption.GetLength() <= 0)
-			m_btAdvanced.ShowWindow(SW_HIDE);
-
-		m_InfoLink.SetCaption(m_Settings.dialog_otherinfo_caption);
-		m_InfoLink.SetHyperlink(m_Settings.dialog_otherinfo_link);
-		if (m_Settings.dialog_otherinfo_caption.GetLength() <= 0)
-			m_InfoLink.ShowWindow(SW_HIDE);
-
-		try
+		// Matthias Jentsch - 2006-03-06: Checking operating system version ...
+		if (DVLib::IsInRangedOs(DVLib::GetOsVersion(), m_Settings.os_filter_greater, m_Settings.os_filter_smaller) == false)
 		{
-			HBITMAP hBitmap;
-			if ( m_Settings.dialog_bitmap.GetLength() > 0 &&
-				DVLib::FileExistsCustom(m_Settings.dialog_bitmap) )
-			{
-				hBitmap = DVLib::LoadBitmapFromFile(m_Settings.dialog_bitmap);
-			}
-			else
-			{
-				//l'immagine non è inserita come risorsa tipo BITMAP perchè avevo dei problemi poi a chiamare UpdateResource
-				// è quindi inserita come risorsa di tipo CUSTOM e letta manualmente
-				//hBitmap = LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BANNER));
-				hBitmap = LoadBannerFromResource(AfxGetApp()->m_hInstance);
-			}
-
-			m_PictureBox.SetBitmap(hBitmap);
+			// Matthias Jentsch - 2006-03-06: This setup can't run on the current operating system
+			AfxMessageBox(m_Settings.os_filter_not_match_message, MB_OK|MB_ICONSTOP);
+			PostQuitMessage(-1);
 		}
-		catch(...)
+		else	// Matthias Jentsch - 2006-03-06: Checking of operating system version passed!
 		{
-			//errore nel caricamento dell'immagine
-		}
+			this->SetWindowText(m_Settings.dialog_caption);
+			m_btCancel.SetWindowText(m_Settings.cancel_caption);
+			m_btnInstall.SetWindowText(m_Settings.install_caption);
+			m_lblMessage.SetWindowText(m_Settings.dialog_message);
+			m_btAdvanced.SetWindowText(m_Settings.advanced_caption);
+			if (m_Settings.advanced_caption.GetLength() <= 0)
+				m_btAdvanced.ShowWindow(SW_HIDE);
 
-		if (LoadComponentsList())
-		{
-			if (m_Settings.auto_close_if_installed)
+			m_InfoLink.SetCaption(m_Settings.dialog_otherinfo_caption);
+			m_InfoLink.SetHyperlink(m_Settings.dialog_otherinfo_link);
+			if (m_Settings.dialog_otherinfo_caption.GetLength() <= 0)
+				m_InfoLink.ShowWindow(SW_HIDE);
+
+			try
 			{
-				m_Settings.ExecuteCompleteCode();
-				PostQuitMessage(0);
+				HBITMAP hBitmap;
+				if ( m_Settings.dialog_bitmap.GetLength() > 0 &&
+					DVLib::FileExistsCustom(m_Settings.dialog_bitmap) )
+				{
+					hBitmap = DVLib::LoadBitmapFromFile(m_Settings.dialog_bitmap);
+				}
+				else
+				{
+					//l'immagine non è inserita come risorsa tipo BITMAP perchè avevo dei problemi poi a chiamare UpdateResource
+					// è quindi inserita come risorsa di tipo CUSTOM e letta manualmente
+					//hBitmap = LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BANNER));
+					hBitmap = LoadBannerFromResource(AfxGetApp()->m_hInstance);
+				}
+
+				m_PictureBox.SetBitmap(hBitmap);
+			}
+			catch(...)
+			{
+				//errore nel caricamento dell'immagine
+			}
+
+			if (LoadComponentsList())
+			{
+				if (m_Settings.auto_close_if_installed)
+				{
+					m_Settings.ExecuteCompleteCode();
+					PostQuitMessage(0);
+				}
 			}
 		}
 	}	
@@ -246,12 +256,20 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 									ApplicationLog.Write( TEXT("---Component NEED REBOOT") );
 
 									l_bRemoveRunOnce = false;
+									
 
 									//chiedo di riavviare
 									if (AfxMessageBox(m_Settings.reboot_required, MB_YESNO|MB_ICONQUESTION) == IDYES )
+									{
 										InitiateReboot();
+										break;
+									}
+									else
+									{
+										l_retVal = true;
+									}
 
-									break; //esco dal for
+									//break; //esco dal for
 								}
 								else //installazione completata con sucesso
 								{

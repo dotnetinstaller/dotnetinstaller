@@ -1,135 +1,194 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.10"
+	Version="8,00"
 	Name="dotNetInstaller"
 	ProjectGUID="{F4E74CF8-37CD-4023-8B89-05EF4B34D363}"
 	RootNamespace="dotNetInstaller"
-	SccProjectName=""
-	SccAuxPath=""
-	SccLocalPath=""
-	SccProvider=""
-	Keyword="MFCProj">
+	Keyword="MFCProj"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="1"
-			CharacterSet="1">
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="false"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="Tools"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;WINVER=0x0400;_WIN32_IE=0x0400;_WIN32_WINNT=0x0400;TIXML_USE_STL"
-				MinimalRebuild="TRUE"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				TreatWChar_tAsBuiltInType="TRUE"
-				UsePrecompiledHeader="3"
+				TreatWChar_tAsBuiltInType="true"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="4"/>
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="4"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib"
-				LinkIncremental="2"
-				GenerateDebugInformation="TRUE"
-				SubSystem="2"
-				TargetMachine="1"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="FALSE"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
 				Culture="1040"
-				AdditionalIncludeDirectories="$(IntDir)"/>
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
+				Name="VCLinkerTool"
+				AdditionalDependencies="version.lib"
+				LinkIncremental="2"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				TargetMachine="1"
+			/>
 			<Tool
-				Name="VCWebDeploymentTool"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="1"
-			CharacterSet="1">
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="false"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				FavorSizeOrSpeed="2"
 				AdditionalIncludeDirectories="Tools"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;WINVER=0x0400;_WIN32_IE=0x0400;_WIN32_WINNT=0x0400;TIXML_USE_STL"
-				MinimalRebuild="FALSE"
+				MinimalRebuild="false"
 				RuntimeLibrary="0"
-				TreatWChar_tAsBuiltInType="TRUE"
-				UsePrecompiledHeader="3"
+				TreatWChar_tAsBuiltInType="true"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="3"/>
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalOptions="/nod:kernel32.lib /nod:advapi32.lib /nod:user32.lib /nod:gdi32.lib /nod:shell32.lib /nod:comdlg32.lib /nod:version.lib /nod:mpr.lib /nod:rasapi32.lib /nod:winmm.lib /nod:winspool.lib /nod:vfw32.lib /nod:secur32.lib /nod:oleacc.lib /nod:oledlg.lib /nod:sensapi.lib
-"
-				AdditionalDependencies="UnicoWS.lib kernel32.lib Advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winspool.lib oleacc.lib"
-				LinkIncremental="1"
-				IgnoreAllDefaultLibraries="FALSE"
-				DelayLoadDLLs=""
-				GenerateDebugInformation="FALSE"
-				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				TargetMachine="1"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="FALSE"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
 				Culture="1040"
-				AdditionalIncludeDirectories="$(IntDir)"/>
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
+				Name="VCLinkerTool"
+				AdditionalOptions="/nod:kernel32.lib /nod:advapi32.lib /nod:user32.lib /nod:gdi32.lib /nod:shell32.lib /nod:comdlg32.lib /nod:version.lib /nod:mpr.lib /nod:rasapi32.lib /nod:winmm.lib /nod:winspool.lib /nod:vfw32.lib /nod:secur32.lib /nod:oleacc.lib /nod:oledlg.lib /nod:sensapi.lib&#x0D;&#x0A;"
+				AdditionalDependencies="UnicoWS.lib kernel32.lib Advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winspool.lib oleacc.lib"
+				LinkIncremental="1"
+				IgnoreAllDefaultLibraries="false"
+				DelayLoadDLLs=""
+				GenerateDebugInformation="false"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
+			/>
 			<Tool
-				Name="VCWebDeploymentTool"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -138,230 +197,318 @@
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
 			<File
-				RelativePath=".\ComponentSelector.cpp">
+				RelativePath=".\ComponentSelector.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\ConfigFile.cpp">
+				RelativePath=".\ConfigFile.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\dotNetInstaller.cpp">
+				RelativePath=".\dotNetInstaller.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\dotNetInstallerDlg.cpp">
+				RelativePath=".\dotNetInstallerDlg.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\DownloadDialog.cpp">
+				RelativePath=".\DownloadDialog.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\HyperlinkStatic.cpp">
+				RelativePath=".\HyperlinkStatic.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\InstallComponentDlg.cpp">
+				RelativePath=".\InstallComponentDlg.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\InstallerCommandLineInfo.cpp">
+				RelativePath=".\InstallerCommandLineInfo.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\InstallerLog.cpp">
+				RelativePath=".\InstallerLog.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\KCBusyProgressCtrl.cpp">
+				RelativePath=".\KCBusyProgressCtrl.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\stdafx.cpp">
+				RelativePath=".\stdafx.cpp"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
+						UsePrecompiledHeader="1"
+					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="Release|Win32"
+					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
+						UsePrecompiledHeader="1"
+					/>
 				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
 			<File
-				RelativePath=".\ComponentSelector.h">
+				RelativePath=".\ComponentSelector.h"
+				>
 			</File>
 			<File
-				RelativePath=".\ConfigFile.h">
+				RelativePath=".\ConfigFile.h"
+				>
 			</File>
 			<File
-				RelativePath=".\dotNetInstaller.h">
+				RelativePath=".\dotNetInstaller.h"
+				>
 			</File>
 			<File
-				RelativePath=".\dotNetInstallerDlg.h">
+				RelativePath=".\dotNetInstallerDlg.h"
+				>
 			</File>
 			<File
-				RelativePath=".\DownloadDialog.h">
+				RelativePath=".\DownloadDialog.h"
+				>
 			</File>
 			<File
-				RelativePath=".\HyperlinkStatic.h">
+				RelativePath=".\HyperlinkStatic.h"
+				>
 			</File>
 			<File
-				RelativePath=".\InstallComponentDlg.h">
+				RelativePath=".\InstallComponentDlg.h"
+				>
 			</File>
 			<File
-				RelativePath=".\InstallerCommandLineInfo.h">
+				RelativePath=".\InstallerCommandLineInfo.h"
+				>
 			</File>
 			<File
-				RelativePath=".\InstallerLog.h">
+				RelativePath=".\InstallerLog.h"
+				>
 			</File>
 			<File
-				RelativePath=".\installerTypes.h">
+				RelativePath=".\installerTypes.h"
+				>
 			</File>
 			<File
-				RelativePath=".\KCBusyProgressCtrl.h">
+				RelativePath=".\KCBusyProgressCtrl.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Resource.h">
+				RelativePath=".\Resource.h"
+				>
 			</File>
 			<File
-				RelativePath=".\stdafx.h">
+				RelativePath=".\stdafx.h"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
 			<File
-				RelativePath=".\res\banner.bmp">
+				RelativePath=".\res\banner.bmp"
+				>
 			</File>
 			<File
-				RelativePath=".\res\configuration.xml">
+				RelativePath=".\res\configuration.xml"
+				>
 			</File>
 			<File
-				RelativePath=".\res\dotNetInstaller.ico">
+				RelativePath=".\res\dotNetInstaller.ico"
+				>
 			</File>
 			<File
-				RelativePath=".\dotNetInstaller.rc">
+				RelativePath=".\dotNetInstaller.rc"
+				>
 			</File>
 			<File
-				RelativePath=".\res\dotNetInstaller.rc2">
+				RelativePath=".\res\dotNetInstaller.rc2"
+				>
 			</File>
 			<File
-				RelativePath=".\res\Hand.cur">
+				RelativePath=".\res\Hand.cur"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Tools"
-			Filter="">
+			>
 			<File
-				RelativePath=".\Tools\AppPath.h">
+				RelativePath=".\Tools\AppPath.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Tools\DownloadDialogSupport.cpp">
+				RelativePath=".\Tools\DownloadDialogSupport.cpp"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
+						UsePrecompiledHeader="0"
+					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="Release|Win32"
+					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Tools\DownloadDialogSupport.h">
-			</File>
-			<File
-				RelativePath=".\Tools\ErrorUtil.h">
-			</File>
-			<File
-				RelativePath=".\Tools\ExecCmd.h">
-			</File>
-			<File
-				RelativePath=".\Tools\File.h">
-			</File>
-			<File
-				RelativePath=".\Tools\Format.h">
-			</File>
-			<File
-				RelativePath=".\Tools\Image.h">
-			</File>
-			<File
-				RelativePath=".\Tools\OsIdentifier.h">
-			</File>
-			<File
-				RelativePath=".\Tools\Path.h">
-			</File>
-			<File
-				RelativePath=".\Tools\Split.h">
-			</File>
-			<File
-				RelativePath=".\Tools\StringUtil.cpp">
-			</File>
-			<File
-				RelativePath=".\Tools\StringUtil.h">
-			</File>
-			<File
-				RelativePath=".\Tools\tinystr.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="3"/>
+						UsePrecompiledHeader="0"
+					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Tools\tinystr.h">
+				RelativePath=".\Tools\DownloadDialogSupport.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Tools\tinyxml.cpp">
+				RelativePath=".\Tools\ErrorUtil.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tools\ExecCmd.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tools\File.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tools\Format.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tools\Image.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tools\OsIdentifier.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tools\Path.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tools\Split.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tools\StringUtil.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tools\StringUtil.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tools\tinystr.cpp"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="3"/>
+						UsePrecompiledHeader="2"
+					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Tools\tinyxml.h">
+				RelativePath=".\Tools\tinystr.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Tools\tinyxmlerror.cpp">
+				RelativePath=".\Tools\tinyxml.cpp"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="3"/>
+						UsePrecompiledHeader="2"
+					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Tools\tinyxmlparser.cpp">
+				RelativePath=".\Tools\tinyxml.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tools\tinyxmlerror.cpp"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="3"/>
+						UsePrecompiledHeader="2"
+					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Tools\VersionCompare.h">
+				RelativePath=".\Tools\tinyxmlparser.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Tools\VersionCompare.h"
+				>
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\res\dotNetInstaller.manifest">
+			RelativePath=".\res\dotNetInstaller.manifest"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="true"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="true"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+				/>
+			</FileConfiguration>
 		</File>
 		<File
-			RelativePath=".\ReadMe.txt">
+			RelativePath=".\ReadMe.txt"
+			>
 		</File>
 	</Files>
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value="dotNetInstaller.rc"/>
+			Value="dotNetInstaller.rc"
+		/>
 	</Globals>
 </VisualStudioProject>

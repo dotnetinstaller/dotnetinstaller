@@ -6,13 +6,77 @@ namespace DVLib
 {
 	inline bool ShellExecuteDefault(LPCTSTR file)
 	{
-		HINSTANCE l_hInstance = ShellExecute(NULL,NULL,file,NULL,NULL,SW_SHOWNORMAL);
+		// Matthias Jentsch - 2006-03-07: if environment variables are in the string for ShellExecute then
+		// replace these variables first.
+		// Using ShellExecuteEx API function with setting the flag SEE_MASK_DOENVSUBST does not working in this case
+		// because environment variables can also be placed in the parameters for the new process.
+		CString complete = file;
+		CString search;
+		CString environment;
+		CString replace;
+		int startPos = 0;
+		int endPos = 0;
+		
+		while (1)
+		{
+			// serach first %
+			startPos = complete.Find(TEXT("%"), 0);
+			if (startPos != -1)
+			{
+				// search second %
+				endPos = complete.Find(TEXT("%"), startPos + 1);
+			}
+			else
+			{
+				// break if not found
+				break;
+			}
+			// second % found and minimum one character between the two % chars?
+			if (endPos != -1 && endPos - startPos > 1)
+			{
+				environment = complete.Mid(startPos + 1, endPos - startPos - 1);
+				search = complete.Mid(startPos, endPos - startPos + 1);
+				replace.GetEnvironmentVariable(environment);
+				complete.Replace(search, replace);
+			}
+			else
+			{
+				// break if it not so
+				break;
+			}
+		}
+		
+		// Matthias Jentsch - 2006-03-07: parsing the parameters from the passed file
+		complete.Trim();
+		startPos = 0;
+		// starts the string with "
+		if (complete.GetAt(0) == '"')
+		{
+			// then start searching at position 1
+			startPos = 1;
+		}
+		// search for space or "
+		endPos = complete.Find(startPos == 0 ? TEXT(" ") : TEXT("\""), startPos);
+		HINSTANCE l_hInstance;
+		// when character found and it is not the last character the are parameters available
+		if (endPos != -1 && endPos < complete.GetLength() - 1)
+		{
+			// parameters availabel!
+			CString parameters = complete.Mid(endPos + 1 + startPos);
+			CString fileOnly = complete.Mid(startPos, endPos - startPos);
+			l_hInstance = ShellExecute(NULL,NULL,fileOnly,parameters,NULL,SW_SHOWNORMAL);
+		}
+		else
+		{
+			// no parameters available
+			l_hInstance = ShellExecute(NULL,NULL,file,NULL,NULL,SW_SHOWNORMAL);
+		}
+
 		if ( l_hInstance <= (HINSTANCE)32 )
 			return false;
 		else
 			return true;
 	}
-
 
 	//Can be used to check if a file or directory exists
 	inline bool FileExistsCustom(LPCTSTR filename)

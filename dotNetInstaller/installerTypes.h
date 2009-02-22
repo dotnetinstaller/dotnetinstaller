@@ -416,6 +416,12 @@ struct installerSetting
 	CString complete_command;
 	//If true auto close the dialog (display installation_completed message and execute the complete_command) if all the components are already installed. (REQUIRED)
 	bool auto_close_if_installed;
+	/* Matthias Jentsch - 2006-03-06: added filter for minimum operating system version */
+	CString os_filter_greater;
+	/* Matthias Jentsch - 2006-03-06: added filter for maximum operating system version */
+	CString os_filter_smaller;
+	/* Matthias Jentsch - 2006-03-06: message if the current operating system does not match the operating system filter */
+	CString os_filter_not_match_message;
 
 	void ExecuteCompleteCode()
 	{

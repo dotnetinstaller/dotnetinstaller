@@ -88,6 +88,16 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, installerSetting & p_Setting)
 	p_Setting.complete_command = ValidatePath(p_Node->AttributeT("complete_command").data());
 	p_Setting.auto_close_if_installed = ConvBoolString(p_Node->Attribute("auto_close_if_installed"), true);
 
+	// Matthias Jentsch - 2006-03-06: read additional attributes
+	p_Setting.os_filter_greater = p_Node->AttributeT("os_filter_greater").data();
+	p_Setting.os_filter_smaller = p_Node->AttributeT("os_filter_smaller").data();
+	p_Setting.os_filter_not_match_message = p_Node->AttributeT("os_filter_not_match_message").data();
+	if (p_Setting.os_filter_not_match_message.GetLength() == 0)
+	{
+		// Matthias Jentsch - 2006-03-06: default message if no message is defined
+		p_Setting.os_filter_not_match_message = TEXT("This setup cannot run under the current operating system!");
+	}
+	
 	ApplicationLog.Write( TEXT("End reading configuration attributes") );
 
 	//caricamento componenti
