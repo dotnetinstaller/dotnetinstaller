@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="db007eb2-ccc6-4657-843e-adad7da5db5b" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>Components represent artifacts that are installed on a target system.</para>
+      <para>
+        <alert class="important">
+          <para>
+            THIS SECTION OF DOCUMENTATION NEEDS WRITING
+          </para>
+        </alert>
+      </para>
+    </introduction>
+    <section address="msicomponents">
+      <title>Windows Installer MSI Components</title>
+      <content>
+        <para>
+          A component of type <literal>msi</literal> that executes a Windows Installer package.
+        </para>
+      </content>
+    </section>
+    <section address="commandlinecomponents">
+      <title>Command Line Components</title>
+      <content>
+        <para>
+          A component of type <literal>cmd</literal> that executes a command.
+        </para>
+      </content>
+    </section>
+    <section address="openfilecomponents">
+      <title>OpenFile Components</title>
+      <content>
+        <para>
+          A component of type <literal>openfile</literal> that launches a document.
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

@@ -33,16 +33,18 @@ InstallerLinker: dotNetInstaller Packager
     </section>
     <section>
       <title>Return Codes</title>
-      <para>
-        <definitionTable>
-          <definedTerm>0</definedTerm>
-          <definition>Success</definition>
-          <definedTerm>-1</definedTerm>
-          <definition>Invalid command-line arguments.</definition>
-          <definedTerm>-2</definedTerm>
-          <definition>Error compiling or linking the bootstrapper. Console output contains the detailed error(s).</definition>
-        </definitionTable>
-      </para>
+      <content>
+        <para>
+          <definitionTable>
+            <definedTerm>0</definedTerm>
+            <definition>Success</definition>
+            <definedTerm>-1</definedTerm>
+            <definition>Invalid command-line arguments.</definition>
+            <definedTerm>-2</definedTerm>
+            <definition>Error compiling or linking the bootstrapper. Console output contains the detailed error(s).</definition>
+          </definitionTable>
+        </para>
+      </content>
     </section>
   </developerConceptualDocument>
 </topic>

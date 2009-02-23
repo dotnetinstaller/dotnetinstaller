@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="9ee2c335-6586-4365-a4b0-71befaf996d2" revisionNumber="1">
+  <developerHowToDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        This tutorial walks through creating a web-based setup to install .NET Framework and a user-defined msi setup.
+      </para>
+      <para>
+        <alert class="important">
+          <para>
+            THIS SECTION OF DOCUMENTATION NEEDS REVISITING AND CHECKING
+          </para>
+        </alert>
+      </para>
+    </introduction>
+    <procedure>
+      <title>Create the support files directory</title>
+      <steps class="ordered">
+        <step>
+          <content>
+            <para>
+              Create a web site with your MSI package and all the support files, including the .NET Framework,
+              for example <fictitiousUri>http://www.mysite.com/MyRelease/</fictitiousUri>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Copy under <fictitiousUri>http://www.mysite.com/MyRelease/</fictitiousUri> the directory
+              <localUri>SupportFiles</localUri> that you can find in the project .zip.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              In the SupportFiles replace all the readme.txt files with the real components files that your installation
+              need; for example replace the <localUri>SupportFiles\dotNet\v1.1\English\dotnetfx.exe.readme.txt</localUri>
+              with the real dotnetfx.exe file that you can download from microsoft web site.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Copy your msi package under <fictitiousUri>http://www.mysite.com/MyRelease/</fictitiousUri>.
+            </para>
+          </content>
+        </step>
+      </steps>
+    </procedure>
+    <procedure>
+      <title>Create the main configuration file</title>
+      <steps class="ordered">
+        <step>
+          <content>
+            <para>
+              Execute InstallerEditor. Select the menu <ui>File</ui>, <ui>New ...</ui> and create a new file with the name
+              <localUri>configuration.xml</localUri> and save it in <fictitiousUri>http://www.mysite.com/MyRelease/</fictitiousUri>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select from the menu <ui>Tools</ui>, <ui>Template for New Item</ui> the user interface language that you want.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Right click on the <ui>Config File</ui> node and select <ui>Add</ui>, <ui>Setup Configuration</ui>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select the just created <ui>install:</ui> node and customize the properties <ui>dialog_caption</ui>,
+              <ui>dialog_message</ui> and <ui>installation_completed</ui> with the name of your application.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Right click on the <ui>install:</ui> node and select <ui>Add</ui>, <ui>Component Wizard...</ui>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select <ui>Microsoft .NET Framework 1.1</ui>, <ui>Downloaded from Internet</ui>, and replace
+              <ui>http://www.myWebSite.com/MyApp/SupportFiles</ui> with your web site for example
+              <fictitiousUri>http://www.mysite.com/MyRelease/SupportFiles</fictitiousUri> and click the
+              <ui>OK</ui> button.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Right click on the <ui>install:</ui> node and select <ui>Add</ui>, <ui>Msi Component</ui>
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select the just created node and customize the properties <ui>description</ui> and <ui>package</ui>
+              with the name of your setup and msi package name. Replace the <localUri>#APPPATH\mysetup.msi</localUri>
+              with <localUri>#TEMPPATH\MyApplicationName\mysetup.msi</localUri>, this is download destination of the package.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Right click on the msi component and select <ui>Add</ui>, <ui>Download Dialog</ui>
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select the just created node <ui>Download Dialog</ui> and customize the properties <ui>dialog_caption</ui>
+              and <ui>dialog_message</ui> with the name of your application.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Right click on the <ui>Download Dialog</ui> node and select <ui>Add</ui>, <ui>Download File</ui>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select the just created node under <ui>Download Dialog</ui> and customize the properties
+              <literal>componentname</literal>, <literal>destinationpath</literal> (write for example
+              <localUri>#TEMPPATH\MyApplicationName\</localUri>, must be the same path of the <literal>package</literal>
+              property) and <literal>sourceurl</literal> (write <literal>http://www.mysite.com/MyRelease/mysetup.msi</literal>).
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select the menu <ui>File</ui>, <ui>Save</ui>, and copy this configuration.xml file under
+              <fictitiousUri>http://www.mysite.com/MyRelease/</fictitiousUri>.
+            </para>
+          </content>
+        </step>
+      </steps>
+    </procedure>
+    <procedure>
+      <title>Create the bootstrapper</title>
+      <steps class="ordered">
+        <step>
+          <content>
+            <para>
+              Create a bitmap (banner.bmp 110x208 pixels) with the logo of your application in a folder called
+              <literal>MyWebSetup</literal>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Execute InstallerEditor. Select the menu <ui>File</ui>, <ui>New...</ui> and create a new file with
+              the name <ui>configuration.xml</ui> in the folder <localUri>MyWebSetup</localUri>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select from the menu <ui>Tools</ui>, <ui>Template for New Item</ui> the user interface language that you want.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Right click on the <ui>Config File</ui> node and select <ui>Add</ui>, <ui>Web Configuration</ui>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select the just created node <literal>reference:</literal> and customize the properties <literal>referencefile</literal>
+              for example write <literal>#TEMPPATH\MyApplicationName\configuration.xml</literal>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select the node <ui>Download Dialog</ui> under <literal>reference:</literal> and customize the properties
+              <literal>dialog_caption</literal> and <literal>dialog_message</literal>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Right click on the <ui>Download Dialog</ui> node and select <ui>Add</ui>, <ui>Download File</ui>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select the just created node under <ui>Download Dialog</ui> and customize the properties <literal>componentname</literal>,
+              <literal>destinationpath</literal> (write for example <literal>#TEMPPATH\MyApplicationName\</literal>,
+              must be the same path of the <literal>referencefile</literal> property) and <literal>sourceurl</literal>
+              (write <literal>http://www.mysite.com/MyRelease/configuration.xml</literal>, must be the URL where you
+              can download the previously created configuration file).
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select the menu <ui>File</ui>, <ui>Save</ui> and copy this configuration.xml file under
+              <ui>MyWebSetup</ui>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Copy in the directory <localUri>MyWebSetup</localUri> <localUri>unicows.dll</localUri> and
+              <localUri>dotNetInstaller.exe</localUri>.
+            </para>
+          </content>
+        </step>
+      </steps>
+    </procedure>
+    <section id="conclusion">
+      <title>Conclusion</title>
+      <content>
+        <para>
+          <mediaLink>
+            <image xlink:href="WebSetup.jpg" />
+          </mediaLink>
+        </para>
+      </content>
+    </section>
+  </developerHowToDocument>
+</topic>

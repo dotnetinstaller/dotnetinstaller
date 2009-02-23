@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="a1bf54f2-d23f-43d1-b1e6-380a057e35f8" revisionNumber="1">
+  <developerHowToDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        dotNetInstaller was written by a dozen developers. Some have contributed large features and others small patches.
+        You're encouraged and invited to make dotNetInstaller better.
+      </para>
+      <para>
+        The project is maintained on
+        <externalLink>
+          <linkText>CodePlex</linkText>
+          <linkHref>http://www.codeplex.com/dotnetinstaller/</linkHref>
+        </externalLink>. The website has a bug tracking system and a discussions forum. Please don't hesitate to post suggestions
+        or questions.
+      </para>
+      <para>
+        Keep in mind the following rules of thumb.
+        <list class="bullet">
+          <listItem>Always remember the goals of the project.</listItem>
+          <listItem>Always document everything.</listItem>
+          <listItem>Preserve backwards compatibility.</listItem>
+          <listItem>Discuss large changes.</listItem>
+        </list>
+      </para>
+    </introduction>
+    <procedure>
+      <title>Setup a Development Environment</title>
+      <steps class="ordered">
+        <step>
+          <content>
+            <para>Install a Subversoin client, for example TortoiseSVN.</para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Obtain the source code using a Subversion client at
+              <externalLink>
+                <linkText>https://dotnetinstaller.svn.codeplex.com/svn/trunk</linkText>
+                <linkHref>https://dotnetinstaller.svn.codeplex.com/svn/trunk</linkHref>
+              </externalLink>
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>Install Visual Studio 2005.</para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Install MSBuild Community Tasks from
+              <externalLink>
+                <linkText>http://msbuildtasks.tigris.org/</linkText>
+                <linkHref>http://msbuildtasks.tigris.org/</linkHref>
+              </externalLink>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Install <externalLink>
+                <linkText>Sandcastle 2.4 (May 2008)</linkText>
+                <linkHref>http://www.codeplex.com/Sandcastle/</linkHref>
+              </externalLink>,
+              <externalLink>
+                <linkText>Sandcastle Styles 2.4 Patch</linkText>
+                <linkHref>http://www.codeplex.com/SandcastleStyles</linkHref>
+              </externalLink>
+              and
+              <externalLink>
+                <linkText>Sandcastle Help File Builder</linkText>
+                <linkHref>http://www.codeplex.com/SHFB</linkHref>
+              </externalLink> to build the documentation.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Build the project.
+              <code language="cmd">
+                <![CDATA[build all]]>
+              </code>
+              This should succeed without errors.
+            </para>
+          </content>
+        </step>
+      </steps>
+    </procedure>
+    <section>
+      <title>Third Party Libraries</title>
+      <content>
+        <para>
+          The following third-party libraries are used in this project. 
+          <alert class="important">
+            <para>
+              No (L)GPL code has been used in this project.
+            </para>
+          </alert>
+          <definitionTable>
+            <definedTerm>TinyXML</definedTerm>
+            <definition>
+              All the settings are stored in an XML file parsed with TinyXml. Older versions used XMLLite by
+              Kyung-min Cho. See <externalLink>
+                <linkText>http://sourceforge.net/projects/tinyxml</linkText>
+                <linkHref>http://sourceforge.net/projects/tinyxml</linkHref>
+              </externalLink> for more information.
+            </definition>
+            <definedTerm>CabLib</definedTerm>
+            <definition>
+              Packaging of embedded CABs is done with Elmü's CAB library.
+              See <externalLink>
+                <linkText>http://www.codeproject.com/KB/files/CABCompressExtract.aspx</linkText>
+                <linkHref>http://www.codeproject.com/KB/files/CABCompressExtract.aspx</linkHref>
+                for more information.
+              </externalLink>
+            </definition>
+            <definedTerm>Vestris.ResourceLib</definedTerm>
+            <definition>
+              File attribute patching is done with Vestris ResourceLib.
+              See <externalLink>
+                <linkText>http://www.codeplex.com/ResourceLib</linkText>
+                <linkHref>http://www.codeplex.com/ResourceLib</linkHref>
+              </externalLink> for more information.
+            </definition>
+            <definedTerm>CommandLineArguments</definedTerm>
+            <definition>
+              CommandLine processing in InstallerEditor is done with Peter Hall's CommandLineArguments.
+              See <externalLink>
+                <linkText>http://www.codeplex.com/CommandLineArguments</linkText>
+                <linkHref>http://www.codeplex.com/CommandLineArguments</linkHref>
+              </externalLink> for more information.
+            </definition>
+          </definitionTable>
+        </para>
+      </content>
+    </section>
+  </developerHowToDocument>
+</topic>

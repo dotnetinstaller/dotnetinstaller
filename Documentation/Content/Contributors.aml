@@ -11,9 +11,22 @@
       <title>Contributors</title>
       <content>
         <para>
-          The following people, in alphabetical order, have contributed to DNI: Arunkumar Viswanathan, Bilou Gateux, Charles McDonald,
-          Cho, Daniel Doubrovkine, Franz Wong, James Muchmore, Jason Biegel, Kevin Moore, Kyung-min, Matthew Sheets, Peter Mares,
-          Rainer Halanek, Rennie Petersen, Sambourton, Steve and Wolfgang.
+          This project was created by
+          <externalLink>
+            <linkText>Davide Icardi</linkText>
+            <linkHref>http://www.devage.com/</linkHref>
+          </externalLink>. The following people, in alphabetical order, have contributed to DNI:
+          Arunkumar Viswanathan, Bilou Gateux, Charles McDonald,
+          <externalLink>
+            <linkText>Daniel Doubrovkine</linkText>
+            <linkHref>http://code.dblock.org/</linkHref>
+          </externalLink>,
+          Franz Wong, James Muchmore, Jason Biegel, Kevin Moore, Kyung-min Cho, Matthew Sheets,
+          <externalLink>
+            <linkText>Matthias Jentsch</linkText>
+            <linkHref>http://www.matthias-jentsch.de/</linkHref>
+          </externalLink>,
+          Peter Mares, Rainer Halanek, Rennie Petersen, Sambourton, Steve and Wolfgang.
         </para>
       </content>
     </section>

@@ -15,7 +15,7 @@
     <Name>Documentation</Name>
     <!-- SHFB properties -->
     <OutputPath>$(Configuration)</OutputPath>
-    <HtmlHelpName>Dni</HtmlHelpName>
+    <HtmlHelpName>dotNetInstaller</HtmlHelpName>
     <ProjectSummary>
     </ProjectSummary>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter</MissingTags>
@@ -39,7 +39,7 @@
     </DocumentationSources>
     <KeepLogFile>False</KeepLogFile>
     <CopyrightText>$(Copyright)</CopyrightText>
-    <HelpTitle>DNI Help</HelpTitle>
+    <HelpTitle>dotNetInstaller %28DNI%29 Users Guide</HelpTitle>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="CommandLine" isDocumented="False" xmlns="" />
     </NamespaceSummaries>
@@ -54,6 +54,13 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
   </PropertyGroup>
   <ItemGroup>
+    <None Include="Content\Components.aml" />
+    <None Include="Content\BuildingWebSetupForDotNet.aml" />
+    <None Include="Content\BuildingStandaloneSetupForDotNet.aml" />
+    <None Include="Content\Contributing.aml" />
+    <None Include="Content\dotNetInstaller.aml" />
+    <None Include="Content\Multilingual.aml" />
+    <None Include="Content\SinglePackageTutorial.aml" />
     <None Include="Content\Checks.aml" />
     <None Include="Content\VariableSubstitution.aml" />
     <None Include="Content\InstallLinker.aml" />
@@ -71,11 +78,6 @@
   <ItemGroup>
     <Folder Include="Images\" />
     <Folder Include="Content\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Images\InstallerEditor.jpg">
-      <ImageId>InstallerEditorImage</ImageId>
-    </Image>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />

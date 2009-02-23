@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="59204cba-278b-4648-a149-35f864cae8cf" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        <application>dotNetInstaller.exe</application> is a lightweight driver for your bootstrapped
+        process. This is your Setup.exe. It offers a simple user interface, progress, status, supports silent installs
+        and enables user selection for optional components. It can be somewhat customized.
+      </para>
+    </introduction>
+    <section address="commandlinearguments">
+      <title>Command Line Arguments</title>
+      <content>
+        <para>
+          <definitionTable>
+            <definedTerm>/q</definedTerm>
+            <definition>
+              Forces silent mode, even if the configurations <literal>silent_install</literal> attribute value is false.
+            </definition>
+            <definedTerm>/nq</definedTerm>
+            <definition>
+              Forces normal mode, even if the configurations <literal>silent_install</literal> attribute value is true.
+            </definition>
+            <definedTerm>/CompleteCommandArgs</definedTerm>
+            <definition>
+              Specify additional arguments for the <literal>complete_command</literal>.
+              For example, if your complete command is an MSI this lets you pass additional parameters.
+            </definition>
+            <definedTerm>/Log</definedTerm>
+            <definition>
+              Creates a log file during installation with information and errors useful for debugging. You can find this file in
+              the user temporary directory with the name <localUri>dotNetInstallerLog.txt</localUri> (usually
+              <localUri>C:\Documents and Settings\YOUR_NAME\Local Settings\Temp\dotNetInstallerLog.txt</localUri>.
+              Its location and name can be specified with <system>/LogFile</system>.
+            </definition>
+            <definedTerm>/LogFile [path]</definedTerm>
+            <definition>Optional log file name and location.</definition>
+            <definedTerm>/ExtractCab</definedTerm>
+            <definition>
+              If this package contains an embedded CAB, extract Setup.cab and all its contents under a new folder called
+              SupportFiles in the current directory. When specified, all other options are ignored and no installations are run.
+            </definition>
+            <definedTerm>/ComponentArgs "description":"value"</definedTerm>
+            <definition>
+              <para>
+                Additional component parameters. This enables passing additional command-line arguments to specific components.
+                The value is appended to both non-silent and silent command lines of <literal>msi</literal> and <literal>cmd</literal>
+                type components. The component description must match exactly the one in the configuration.xml.
+              </para>
+              <alert class="note">
+                <para>
+                  Note that if multiple components are declared with the same description the command applies to all.
+                  Component arguments applied to components that don't exist are ignored.
+                </para>
+              </alert>
+            </definition>
+            <definedTerm>/Launcher [Program Path]</definedTerm>
+            <definition>
+              <para>
+                This is obsolete.
+              </para>
+              <para>
+                If an install requires a reboot and then a resumption of dotNetInstaller, this argument specifies the
+                path to a different program to execute after the system boots back up. If the path contains spaces, the path must
+                be enclosed in double quotes. This argument is especially useful if dotNetInstaller has been distributed as
+                part of a self-extracting executable (SFX) package.
+              </para>
+            </definition>
+            <definedTerm>/LauncherArgs [Program Arguments]</definedTerm>
+            <definition>
+              <para>
+                This is obsolete.
+              </para>
+              <para>
+                Used in conjuction with the /Launcher argument above; specified command-line arguments to be
+                used with the /Launcher argument's command.
+              </para>
+              <alert class="note">
+                <para>
+                  If LauncherArgs contains spaces, the argument string must be enclosed in quotes. If the LauncherArgs begin with
+                  a "-" or "/", the argument string Must be enclosed in quotes. Must include a space between the opening quotes and
+                  the first argument character (e.g. enter the argument as " /q" instead of "/q" [note the difference in spacing]).
+                </para>
+              </alert>
+            </definition>
+          </definitionTable>
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

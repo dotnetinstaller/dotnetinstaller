@@ -1,14 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Topics defaultTopic="C73DDB0A-3EC4-4fa4-A341-6A054FDA07DC">
-  <Topic id="C73DDB0A-3EC4-4fa4-A341-6A054FDA07DC" visible="True" title="DNI Setup Bootstrapper" />
-  <Topic id="a6f46303-b703-4ff3-9572-55d8131eb883" visible="True" title="Getting Started" />
-  <Topic id="42440e25-c724-48f7-b3a4-e270f60bad78" visible="True" title="Deployment Strategies" />
+  <Topic id="C73DDB0A-3EC4-4fa4-A341-6A054FDA07DC" visible="True" title="Setup Bootstrapper">
+    <Topic id="a6f46303-b703-4ff3-9572-55d8131eb883" visible="True" title="Getting Started" />
+    <Topic id="42440e25-c724-48f7-b3a4-e270f60bad78" visible="True" title="Deployment Strategies" />
+    <Topic id="1aa2140c-f65d-4aac-83a4-b86a3a554525" visible="True" title="Multilingual Support" />
+  </Topic>
   <Topic id="b88e8650-71df-4328-a720-72ea55cf60f5" visible="True" title="Install Editor &amp; Configuration">
+    <Topic id="db007eb2-ccc6-4657-843e-adad7da5db5b" visible="True" title="Installed Components" />
     <Topic id="9cd31590-c899-40a7-897a-d5ca844c2324" visible="True" title="Checks, Operators and Filters" />
     <Topic id="4d997108-25a8-4158-8072-c47bf49324bb" visible="True" title="Variable Substitution" />
     <Topic id="6cad4ea6-b7ab-4aae-a2a5-514a10b6fc34" visible="True" title="Samples" />
   </Topic>
   <Topic id="ec5c1920-55c4-4f57-8e18-9dd2d37350d6" visible="True" title="Install Linker" />
+  <Topic id="59204cba-278b-4648-a149-35f864cae8cf" visible="True" title="Setup Executable" />
+  <Topic id="891e4af1-557b-440f-bfdc-bc61aaeafe03" visible="True" noFile="True" title="Tutorials">
+    <Topic id="16fef7aa-dae9-4441-ad44-b691d02cf8b2" visible="True" title="Building a Standalone Setup with .NET Framework Required" />
+    <Topic id="9ee2c335-6586-4365-a4b0-71befaf996d2" visible="True" title="Building a Web Setup with .NET Framework Required" />
+    <Topic id="c6bdbf74-e281-4153-ae02-9c14cfb53bb0" visible="True" title="Building a Single Executable Package" />
+  </Topic>
+  <Topic id="078b8f1e-5f24-48f0-a1e2-f3a1a1f336ff" visible="True" title="Contributors">
+    <Topic id="a1bf54f2-d23f-43d1-b1e6-380a057e35f8" visible="True" title="Contributing to Source Code" />
+  </Topic>
   <Topic id="bfd78578-6e10-47e5-8b41-44426e0a1ac1" visible="True" title="License" />
-  <Topic id="078b8f1e-5f24-48f0-a1e2-f3a1a1f336ff" visible="True" title="Contributors" />
 </Topics>

@@ -43,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{2F6E6EC2-78E
 	ProjectSection(SolutionItems) = preProject
 		Documentation\Dni.content = Documentation\Dni.content
 		Documentation\Dni.shfbproj = Documentation\Dni.shfbproj
-		Documents\dotNetInstaller.html = Documents\dotNetInstaller.html
+		Documentation\WhatsNew.html = Documentation\WhatsNew.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{C5E3E607-AA22-4796-B113-E9A1BAA374E9}"
@@ -116,15 +116,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
+		Documentation\Content\BuildingStandaloneSetupForDotNet.aml = Documentation\Content\BuildingStandaloneSetupForDotNet.aml
+		Documentation\Content\BuildingWebSetupForDotNet.aml = Documentation\Content\BuildingWebSetupForDotNet.aml
 		Documentation\Content\Checks.aml = Documentation\Content\Checks.aml
+		Documentation\Content\Components.aml = Documentation\Content\Components.aml
+		Documentation\Content\Contributing.aml = Documentation\Content\Contributing.aml
 		Documentation\Content\Contributors.aml = Documentation\Content\Contributors.aml
 		Documentation\Content\DeploymentStrategies.aml = Documentation\Content\DeploymentStrategies.aml
+		Documentation\Content\dotNetInstaller.aml = Documentation\Content\dotNetInstaller.aml
 		Documentation\Content\GettingStarted.aml = Documentation\Content\GettingStarted.aml
 		Documentation\Content\InstallEditor.aml = Documentation\Content\InstallEditor.aml
 		Documentation\Content\InstallLinker.aml = Documentation\Content\InstallLinker.aml
 		Documentation\Content\License.aml = Documentation\Content\License.aml
 		Documentation\Content\Main.aml = Documentation\Content\Main.aml
+		Documentation\Content\Multilingual.aml = Documentation\Content\Multilingual.aml
 		Documentation\Content\Samples.aml = Documentation\Content\Samples.aml
+		Documentation\Content\SinglePackageTutorial.aml = Documentation\Content\SinglePackageTutorial.aml
 		Documentation\Content\VariableSubstitution.aml = Documentation\Content\VariableSubstitution.aml
 	EndProjectSection
 EndProject

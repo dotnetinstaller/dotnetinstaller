@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="16fef7aa-dae9-4441-ad44-b691d02cf8b2" revisionNumber="1">
+  <developerHowToDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        This tutorial walks through creating a standalone setup to install .NET Framework and a user-defined msi setup.
+        We will create a CDROM with an MSI package, SupportFiles (including the .NET Framework), configuration file
+        configuration.xml) and a bitmap (banner.bmp). All these components are installed directly from the CDROM.
+      </para>
+      <para>
+        <alert class="important">
+          <para>
+            THIS SECTION OF DOCUMENTATION NEEDS REVISITING AND CHECKING
+          </para>
+        </alert>
+      </para>
+    </introduction>
+    <procedure>
+      <title>Create a Standalone Setup</title>
+      <steps class="ordered">
+        <step>
+          <content>
+            <para>
+              Create a folder that represents your final distribution CDROM, for example <localUri>c:\MyRelease\</localUri>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Copy under <localUri>c:\MyRelease\</localUri> the directory <localUri>SupportFiles</localUri> that you can find
+              in the dotNetInstaller distribution under <localUri>Samples</localUri>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Copy your msi package (that you can create with Visual Studio .NET, InstallShield or others installation tool)
+              under the <localUri>c:\MyRelease\</localUri>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Copy dotNetInstaller.exe from the distribution under <localUri>c:\MyRelease\</localUri>.
+              If you're planning to run setup on Windows 95, copy unicows.dll under <localUri>c:\MyRelease\</localUri>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Create a bitmap (banner.bmp 110x208 pixels) with the name <localUri>c:\MyRelease\banner.bmp</localUri> with the
+              logo of your application.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Execute <application>InstallerEditor.exe</application>.
+              Select the menu <ui>File</ui>, <ui>New</ui> and create a new file with the name
+              <localUri>c:\MyRelease\configuration.xml</localUri>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select from the menu <ui>Tools</ui>, <ui>Template for New Item</ui> the user interface language that you want.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Right click on the <ui>Config File</ui> node and select <ui>Add</ui>, <ui>Setup Configuration</ui>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select the just created <literal>install:</literal> node and customize the properties <literal>dialog_caption</literal>,
+              <literal>dialog_message</literal> and <literal>installation_completed</literal> with the name of your application.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Right click on the <literal>install:</literal> node and select <literal>Add</literal>,
+              <literal>Component Wizard ...</literal>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select <ui>Microsoft .NET Framework 1.1</ui>, <ui>Distributed with dotNetInstaller</ui>
+              and click the OK button.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Right click on the <literal>install:</literal> node and select <ui>Add</ui>, <ui>Msi Component</ui>.
+              Select the just created node and customize the properties <literal>description</literal> and
+              <literal>package</literal> with the name of your setup and msi package name. In the package path use
+              #APPPATH variable that represents the dotNetInstaller.exe path.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Select the menu <ui>File</ui>, <ui>Save</ui>.
+              Write all the contents of the <localUri>c:\MyRelease\</localUri> directory on your CDROM. If you want
+              you can also create a <localUri>autorun.inf</localUri> file that execute dotNetInstaller.exe.
+            </para>
+          </content>
+        </step>
+      </steps>
+      <conclusion>
+        <para>
+          The distribution package contains a SupportFiles directory with the required structure and some readme.txt
+          files where you can find a link to download the required components (usually from microsoft web site). Consider
+          also that these components are present as wizard in the InstallerEditor, so you can easily use these components
+          in your setup.
+          <mediaLink>
+            <image xlink:href="StandaloneSetup.jpg" />
+          </mediaLink>
+        </para>
+      </conclusion>
+    </procedure>
+  </developerHowToDocument>
+</topic>

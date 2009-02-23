@@ -3,8 +3,11 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        <newTerm>dotNetInstaller</newTerm>, commonly known as <newTerm>DNI</newTerm>, is a general-purpose setup 
+        <newTerm>dotNetInstaller</newTerm>, commonly known as <newTerm>DNI</newTerm>, is a general-purpose setup
         bootstrapper for Microsoft Windows.
+        <mediaLink>
+          <image xlink:href="DotNetInstaller.jpg" />
+        </mediaLink>
       </para>
       <para>
         DNI enables the developer to define the application prerequisites and install the correct version(s) of these components

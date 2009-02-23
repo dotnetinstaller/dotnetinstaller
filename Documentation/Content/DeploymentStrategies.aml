@@ -5,6 +5,13 @@
       <para>
         DNI supports several deployment strategies. Choose the appropriate one for your project.      
       </para>
+      <para>
+        <alert class="important">
+          <para>
+            THIS SECTION OF DOCUMENTATION NEEDS REVISITING AND CHECKING
+          </para>
+        </alert>
+      </para>
     </introduction>
     <section address="deploymentstrategiessingle">
       <title>Single Deployment Package</title>

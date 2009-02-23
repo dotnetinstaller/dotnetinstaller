@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace InstallerLib
 {
     /// <summary>
-    /// A component of type "cmd" that eecutes a command.
+    /// A component of type "cmd" that executes a command.
     /// </summary>
     [XmlChild(typeof(Component))]
     public class ComponentCmd : Component

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="1aa2140c-f65d-4aac-83a4-b86a3a554525" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>dotNetInstaller reads all the captions and messages from the configuration file. You can create installations 
+      in your custom language.</para>
+    </introduction>
+    <section address="builtintemplates">
+      <title>Built-In Templates</title>
+      <content>
+        <para>
+          With <application>InstallerEditor</application> you can easily create installations in custom languages using template files.
+          There are four default files provided: english_template.xml, french_template.xml, german_template.xml and italian_template.xml.
+          The editor can be configured to use one of these files so, when you create new items in the editor, default values are read
+          from the template selected.
+        </para>
+        <para>
+          To configure the list of templates available you can use the <ui>Tools, Customize Templates</ui> menu.
+          To select a template you can use the <ui>Tools, Template for new Item</ui> menu.
+        </para>
+        <para>
+          You can create your custom template files following the xml structure of one of the existing files.
+        </para>
+      </content>
+    </section>
+    <section address="utf8unicode">
+      <title>UTF-8 and Unicode</title>
+      <content>
+        <para>
+          To fully support non english languages the configuration file uses UTF-8 encoding.
+        </para>
+        <para>
+          To read and use this encoding correctly, dotNetInstaller is built UNICODE. The editor is already fully compatible with unicode.
+          But unicode is not supported on Windows 95, 98 and ME; so if you use one of these operating system you must copy the
+          Microsoft Layer for Unicode (unicows.dll) in the same path of dotNetInstaller.exe.
+        </para>
+        <para>
+          See <externalLink>
+            <linkHref>http://msdn.microsoft.com/en-us/library/ms812865.aspx</linkHref>
+            <linkText>Microsoft Layer for Unicode on Windows 95/98/Me Systems</linkText>
+          </externalLink>
+          for more information.
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>
