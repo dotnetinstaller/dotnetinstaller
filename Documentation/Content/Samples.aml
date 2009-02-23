@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="6cad4ea6-b7ab-4aae-a2a5-514a10b6fc34" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        You can find several samples in the distribution package: a standalone setup, an all-in-one packaged setup and a demo of 
+        component operators.
+      </para>
+    </introduction>
+    <section address="standalonesetupsample">
+      <title>Standalone Setup Sample</title>
+      <content>
+        <para>
+          The Standalone setup is configured to correctly install the following components:
+          <list class="bullet">
+            <listItem>Windows NT4 Sp6</listItem>
+            <listItem>Windows 2000 Sp4</listItem>
+            <listItem>MDAC 2.8</listItem>
+            <listItem>Jet 4.0 Sp8</listItem>
+            <listItem>.NET Framework 1.1</listItem>
+            <listItem>Your custom setup or windows installer package</listItem>
+          </list>
+          on these operating systems:
+          <list class="bullet">
+            <listItem>Windows 98</listItem>
+            <listItem>Windows 98SE</listItem>
+            <listItem>Windows ME</listItem>
+            <listItem>Windows NT4</listItem>
+            <listItem>Windows 2000</listItem>
+            <listItem>Windows XP</listItem>
+            <listItem>Windows Server 2003</listItem>
+          </list>
+          The configuration files also check and install all the required software.
+        </para>
+        <para>
+          You will find configuration files for English and Italian operating system, and it is possible to include your custom
+          language easily.
+        </para>
+      </content>
+    </section>
+    <section address="standalonesetupsample">
+      <title>Packaged Setup Sample</title>
+      <content>
+        <para>
+          The packaged setup is compiled with <application>InstallerLinker</application> into a single Setup.exe with all its 
+          dependencies, including a simple MSI setup package.
+        </para>
+      </content>
+    </section>
+    <section address="operatorssample">
+      <title>Component Operators Sample</title>
+      <content>
+        <para>
+          The demo of component operators shows how logical functions can be applied to install checks.
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

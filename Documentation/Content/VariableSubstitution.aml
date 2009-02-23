@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="4d997108-25a8-4158-8072-c47bf49324bb" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>The following variables are available in most commands and path settings.</para>
+    </introduction>
+    <section address="variablesubstitution">
+      <title>Supported Variables</title>
+      <content>
+        <para>
+          The following variables are available in most commands and path settings.
+          <definitionTable>
+            <definedTerm>#SYSTEMPATH</definedTerm>
+            <definition>
+              This string is replaced with the windows system directory (using <literal>GetSystemDirectory()</literal> API,
+              usually <localUri>C:\WINDOWS\System32</localUri>).
+            </definition>
+            <definedTerm>#WINDOWSPATH</definedTerm>
+            <definition>
+              This string is replaced with the windows directory (using <literal>GetWindowsDirectory()</literal> API, usually
+              <localUri>C:\WINDOWS</localUri> ).
+            </definition>
+            <definedTerm>#APPPATH</definedTerm>
+            <definition>
+              The folder from which the setup bootstrapper is executed. All other paths are relative to the system's current directory.
+            </definition>
+            <definedTerm>#TEMPPATH</definedTerm>
+            <definition>
+              This string is replaced with the temp directory (using <literal>GetTempPath()</literal> API, usually
+              <localUri>C:\Documents and Settings\[User]\Local Settings\Temp</localUri>).
+            </definition>
+            <definedTerm>#GUID</definedTerm>
+            <definition>A uniquely generated GUID string for each install instance.</definition>
+            <definedTerm>#CABPATH</definedTerm>
+            <definition>
+              The location where the embedded CAB is extracted, if any. This value defaults to #TEMPPATH\#GUID. This location is
+              auto-deleted when the appropriate options are chosen in the setup configuration on setup completion, regardless of success
+              or failure. Store temporary files in #CABPATH if you want them to be auto-deleted (eg. CAB files) or #TEMPPATH (eg. logs)
+              otherwise.
+            </definition>
+          </definitionTable>
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

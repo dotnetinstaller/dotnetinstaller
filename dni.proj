@@ -43,7 +43,7 @@
   <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceLibrary.dll" />
   <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceGrid2.dll" />
   <Binaries Include="InstallerLinker\bin\$(Configuration)\CabLib.dll" />
-  <Binaries Include="InstallerLinker\bin\$(Configuration)\Vestris.ResourceLib.dll" />
+  <Binaries Include="InstallerLinker\bin\$(Configuration)\Vestris.Dni.dll" />
   <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
   <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
   <Binaries Include="Samples\Misc\unicows.dll" />
@@ -53,6 +53,7 @@
   <CallTarget Targets="clean" />
   <CallTarget Targets="version" />
   <CallTarget Targets="build" />
+  <CallTarget Targets="doc" />
   <CallTarget Targets="release" />
  </Target>
  <Target Name="version">
@@ -110,5 +111,12 @@
   <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
   <Copy SourceFiles="@(InstallCheckOperatorsSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators\%(RecursiveDir)" />
   <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
+ </Target>
+ <Target Name="doc" DependsOnTargets="version">
+  <Error Condition="'$(DXROOT)'==''" Text="Missing Sandcastle, DXROOT environment variable not set, install from http://www.codeplex.com/Sandcastle" />
+  <Error Condition="'$(SHFBROOT)'==''" Text="Missing Sandcastle Builder, SHFBROOT environment variable not set, install from http://www.codeplex.com/SHFB" />
+  <Delete Files="Documentation\$(Configuration)\Dni.chm" />
+  <MSBuild Projects="Documentation\Dni.shfbproj" Properties="Configuration=$(Configuration)" />
+  <Error Condition="Exists('Documentation\$(Configuration)\LastBuild.log')" Text="Documentation build failed, check Documentation\$(Configuration)\LastBuild.log" />
  </Target>
 </Project>

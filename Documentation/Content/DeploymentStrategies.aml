@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="42440e25-c724-48f7-b3a4-e270f60bad78" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        DNI supports several deployment strategies. Choose the appropriate one for your project.      
+      </para>
+    </introduction>
+    <section address="deploymentstrategiessingle">
+      <title>Single Deployment Package</title>
+      <content>
+        <para>
+          This strategy includes all configuration files in the DNI resources and required files in a packaged CAB. 
+          With this solution you are distributing a single self-extracting executable.
+        </para>
+      </content>
+    </section>
+    <section address="deploymentstrategiesmixed">
+      <title>Web-Based</title>
+      <content>
+        <para>
+        </para>
+      </content>
+    </section>
+    <section address="deploymentstrategiesexploded">
+      <title>Physical Media</title>
+      <content>
+        <para>
+          With this strategy you're distributing physical media, eg. CDROM. This involves placing a <fictitiousUri>configuration.xml</fictitiousUri>
+          in the same path as the <fictitiousUri>dotNetInstaller.exe</fictitiousUri> bootstrapper. DNI first checks for this configuration file, 
+          if the file doesn't exist it uses the configuration embedded in the bootstrapper itself. You can optionally distribute a bitmap 
+          with the name <fictitiousUri>banner.bmp</fictitiousUri>.
+        </para>
+      </content>
+    </section>
+    <section address="deploymentstrategiesmixed">
+      <title>Mixed Strategies</title>
+      <content>
+        <para>
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

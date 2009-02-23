@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="ec5c1920-55c4-4f57-8e18-9dd2d37350d6" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        The <application>Installer Linker</application> can be used as the bootstrapper compiler and linker in a build process.
+        It also supports some advanced options that are not availablable in the functions of Install Editor.
+      </para>
+    </introduction>
+    <section address="commandlineusage">
+      <title>Command Line Usage</title>
+      <content>
+        <para>
+          <code language="cmd">
+            <![CDATA[
+InstallerLinker: dotNetInstaller Packager
+
+/Output:<string>         Generated installer file (short form /o)
+/Template:<string>       Template installer executable (short form /t)
+/Banner:<string>         Picture for the banner (short form /b)
+/Configuration:<string>  XML configuration file (short form /c)
+/Embed[+|-]              Embed support files (short form /e)
+/AppPath:<string>        Location of support files for embedding (short form /a)
+/Verbose[+|-]            Verbose output (short form /v)
+/EmbedFile:<string>      Additional files to embed (short form /f)
+/EmbedFolder:<string>    Additional folders, including subfolders to embed (short form /r)
+/Icon:<string>           Icon for the executable (short form /i)
+@<file>                  Read response file for more options
+]]>
+          </code>
+        </para>
+      </content>
+    </section>
+    <section>
+      <title>Return Codes</title>
+      <para>
+        <definitionTable>
+          <definedTerm>0</definedTerm>
+          <definition>Success</definition>
+          <definedTerm>-1</definedTerm>
+          <definition>Invalid command-line arguments.</definition>
+          <definedTerm>-2</definedTerm>
+          <definition>Error compiling or linking the bootstrapper. Console output contains the detailed error(s).</definition>
+        </definitionTable>
+      </para>
+    </section>
+  </developerConceptualDocument>
+</topic>

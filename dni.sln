@@ -41,6 +41,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{2F6E6EC2-78E
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
+		Documentation\Dni.content = Documentation\Dni.content
+		Documentation\Dni.shfbproj = Documentation\Dni.shfbproj
 		Documents\dotNetInstaller.html = Documents\dotNetInstaller.html
 	EndProjectSection
 EndProject
@@ -108,6 +110,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InstallCheckOperators", "In
 		Samples\InstallCheckOperators\Readme.txt = Samples\InstallCheckOperators\Readme.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA2111-8FFF-42BC-AB3B-1B6549E5EFCE}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		Documentation\Content\Checks.aml = Documentation\Content\Checks.aml
+		Documentation\Content\Contributors.aml = Documentation\Content\Contributors.aml
+		Documentation\Content\DeploymentStrategies.aml = Documentation\Content\DeploymentStrategies.aml
+		Documentation\Content\GettingStarted.aml = Documentation\Content\GettingStarted.aml
+		Documentation\Content\InstallEditor.aml = Documentation\Content\InstallEditor.aml
+		Documentation\Content\InstallLinker.aml = Documentation\Content\InstallLinker.aml
+		Documentation\Content\License.aml = Documentation\Content\License.aml
+		Documentation\Content\Main.aml = Documentation\Content\Main.aml
+		Documentation\Content\Samples.aml = Documentation\Content\Samples.aml
+		Documentation\Content\VariableSubstitution.aml = Documentation\Content\VariableSubstitution.aml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +161,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{64CA2111-8FFF-42BC-AB3B-1B6549E5EFCE} = {2F6E6EC2-78ED-4D9F-A549-FDBB92E10C1A}
 		{7A7F3F3A-C319-4E83-AB2F-95C8B7C85614} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{AA6599BC-B3BA-4EC0-980D-5B66336A1350} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{F4D5A955-C6B7-4989-9DC7-6565035D0ECF} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}

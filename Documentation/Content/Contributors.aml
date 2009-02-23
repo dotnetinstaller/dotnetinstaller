@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="078b8f1e-5f24-48f0-a1e2-f3a1a1f336ff" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        Many special thanks go to a dozen contributors that have provided invaluable features and bug fixes over several years
+        of development.
+      </para>
+    </introduction>
+    <section address="contributors">
+      <title>Contributors</title>
+      <content>
+        <para>
+          The following people, in alphabetical order, have contributed to DNI: Arunkumar Viswanathan, Bilou Gateux, Charles McDonald,
+          Cho, Daniel Doubrovkine, Franz Wong, James Muchmore, Jason Biegel, Kevin Moore, Kyung-min, Matthew Sheets, Peter Mares,
+          Rainer Halanek, Rennie Petersen, Sambourton, Steve and Wolfgang.
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

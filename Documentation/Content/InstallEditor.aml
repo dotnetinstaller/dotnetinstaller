@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="b88e8650-71df-4328-a720-72ea55cf60f5" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        The <application>Installer Editor</application> allows you to create and modify configuration files,
+        compile and link a setup bootstrapper.
+        <mediaLink>
+          <image xlink:href="InstallerEditorImage" />
+        </mediaLink>
+      </para>
+    </introduction>
+    <section address="creatingconfigurations">
+      <title>Creating Configurations</title>
+      <content>
+        <para>
+          The following pre-defined types of configuration can be created with the editor.
+          <list class="bullet">
+            <listItem>
+              <newTerm>Standalone Configuration</newTerm>: a configuration that runs the components from a specified path,
+              usually relative of the bootstrapper setup file. Select this configuration if you want to distribute your application
+              primarily on media, such as CDROM or via a full package download from the web.
+            </listItem>
+            <listItem>
+              <newTerm>Web Configuration</newTerm>: a configuration that downloads and executes the required components from a
+              specified website. Select this configuration if you want to distribute the configuration primarily over the web in a set
+              of packages downloaded on demand.
+            </listItem>
+          </list>
+        </para>
+      </content>
+    </section>
+    <section address="addingcomponents">
+      <title>Adding Components</title>
+      <content>
+        <para>
+          You can add components by right clicking on a configuration node and choosing <ui>Add</ui>. Install checks and other
+          components can be added in a similar manner.
+        </para>
+        <para>
+          You can use the <ui>Add, Component Wizard</ui> menu when adding new components to automatically add pre-defined
+          components, such as Service Pack 6a for NT4, Internet Explorer 6, .NET 1.1, MDAC 2.8, etc.
+        </para>
+        <alert class="note">
+          <para>
+            The order of components that you see in the editor is the same order that the setup uses to install these components.
+            You can move components around in the editor. The latter ensures that your setup remains valid: for example you cannot
+            create or drag-and-drop a component under an install check.
+          </para>
+        </alert>
+        <para>
+          Each configuration, component, check or operator can have a free-formed note. Select a component and type the latter in
+          the yellow box at the bottom of the editor. Notes are saved as xml comments in the configuration xml.
+        </para>
+      </content>
+    </section>
+    <section address="pathvalues">
+      <title>Quoting Path Values</title>
+      <content>
+        <para>
+          It's recommended to use the &quot; symbol in all the command attributes that contains spaces, except for <newTerm>MSI</newTerm>
+          components which add quotes automatically.
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>
