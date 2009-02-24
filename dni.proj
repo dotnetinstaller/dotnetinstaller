@@ -5,8 +5,8 @@
  </PropertyGroup>
  <PropertyGroup>
   <ProductName>dotNetInstaller</ProductName>
-  <CompanyName>www.devage.com</CompanyName>
-  <Copyright>Copyright (c) www.devage.com 2008</Copyright>
+  <CompanyName>DevAge, Vestris Inc. &amp; Contributors</CompanyName>
+  <Copyright>Copyright (c) $(CompanyName)</Copyright>
   <Trademark>All Rights Reserved</Trademark>
   <ReleaseDir>target\$(Configuration)</ReleaseDir>
  </PropertyGroup>

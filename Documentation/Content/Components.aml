@@ -3,36 +3,118 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>Components represent artifacts that are installed on a target system.</para>
-      <para>
-        <alert class="important">
-          <para>
-            THIS SECTION OF DOCUMENTATION NEEDS WRITING
-          </para>
-        </alert>
-      </para>
     </introduction>
-    <section address="msicomponents">
-      <title>Windows Installer MSI Components</title>
+    <section address="compoennttypes">
+      <title>Component Types</title>
       <content>
         <para>
-          A component of type <literal>msi</literal> that executes a Windows Installer package using the 
-          <command>msiexec.exe</command> command.
+          dotNetInstaller supports the following component types.
+          <list class="bullet">
+            <listItem>
+              <newTerm>msi</newTerm>: executes a Windows Installer package.
+            </listItem>
+            <listItem>
+              <newTerm>cmd</newTerm>: executes a command line.
+            </listItem>
+            <listItem>
+              <newTerm>openfile</newTerm>: executes a file with a shell extension.
+            </listItem>
+          </list>
+        </para>
+      </content>
+      <section address="msicomponents">
+        <title>Windows Installer MSI Components</title>
+        <content>
+          <para>
+            A component of type <literal>msi</literal> that executes a Windows Installer package using the
+            <command>msiexec.exe</command> command.
+          </para>
+        </content>
+      </section>
+      <section address="commandlinecomponents">
+        <title>Command Line Components</title>
+        <content>
+          <para>
+            A component of type <literal>cmd</literal> that executes an arbitrary command.
+          </para>
+        </content>
+      </section>
+      <section address="openfilecomponents">
+        <title>OpenFile Components</title>
+        <content>
+          <para>
+            A component of type <literal>openfile</literal> that launches a document via a shell extension.
+          </para>
+        </content>
+      </section>
+    </section>
+    <section address="componentoptions">
+      <title>Component Options and Behaviors</title>
+      <content>
+        <para>
+          Components support a rich set of options. Some affect the bootstrapper behavior after the component has been
+          installed successfully or unsuccessfully.
         </para>
       </content>
     </section>
-    <section address="commandlinecomponents">
-      <title>Command Line Components</title>
+    <section address="componentoptionsrequired">
+      <title>Required Components</title>
       <content>
         <para>
-          A component of type <literal>cmd</literal> that executes an arbitrary command.
+          Components may be <newTerm>required</newTerm> or <newTerm>optional</newTerm>. This is set by the
+          <literal>required</literal> option. When a component is required, it must be installed successfully in order
+          for the subsequent component to be installed. When a component is optional, the
+          <literal>allow_continue_on_failure</literal> option defines the behavior of the bootstrapper following the
+          failure. If <literal>allow_continue_on_failure</literal> is <literal>true</literal>, the user is informed
+          of the failure with the <literal>failed_exec_command_continue</literal> message and offered a choice whether
+          to continue. When <literal>allow_continue_on_failure</literal> is set to <literal>false</literal>, the user
+          is informed of the failure with the same <literal>failed_exec_command_continue</literal> message and is returned
+          to the bootstrapper where the component list is recalcualted.
+        </para>
+        <para>
+          In silent installations the behavior is identical, but the choice to continue is made automatically for the user
+          when available with the <literal>allow_continue_on_failure</literal> option.
         </para>
       </content>
     </section>
-    <section address="openfilecomponents">
-      <title>OpenFile Components</title>
+    <section address="componentoptionsreboot">
+      <title>Requiring Reboot</title>
       <content>
         <para>
-          A component of type <literal>openfile</literal> that launches a document via a shell extension.
+          Reboot behaviour is supported by three component-based and install-based options: <literal>mustreboot</literal>,
+          <literal>reboot_required</literal> and <literal>must_reboot_required</literal>.
+          <definitionTable>
+            <definedTerm>mustreboot</definedTerm>
+            <definition>
+              This option forces the bootstrapper to make a reboot decision in all successful installation cases.
+              You should never have to use this option with an <literal>msi</literal> component because it signals the
+              bootstrapper to reboot automatically.
+            </definition>
+            <definedTerm>must_reboot_required</definedTerm>
+            <definition>
+              By default, dotNetInstaller will ask whether the user wants to reboot now. Setting this option to <literal>true</literal>
+              will force the user to reboot when a reboot is reqiured without offering an opportunity to postpone the reboot.
+              Note that regardless of the value of this option the message defined by <literal>reboot_required</literal>
+              is displayed.
+            </definition>
+            <definedTerm>reboot_required</definedTerm>
+            <definition>
+              The message to display when a reboot is required. Set this value to something like
+              <legacyItalic>"Would you like to reboot now?"</legacyItalic> if <literal>must_reboot_required</literal> is
+              <literal>false</literal>. Set this value to something like <legacyItalic>"Setup will reboot now"</legacyItalic>
+              if the value of <literal>must_reboot_required</literal> is <literal>true</literal>.
+            </definition>
+          </definitionTable>
+        </para>
+        <para>
+          Reboot options are most effective with <literal>msi</literal> components. A Windows Installer may signal the
+          bootstrapper that a reboot is required via a special return code. This happens when, for example, a locked file
+          couldn't be replaced. Windows schedules the replacement after the reboot. dotNetInstaller is capable to force a
+          reboot and return to the previous location in the installation sequence. The options define how the bootstrapper
+          behaves in this situation and whether to offer users the possibility to postpone the reboot.
+        </para>
+        <para>
+          In silent installations the choice to reboot is made automatically for the user when reboot is required.
         </para>
       </content>
     </section>

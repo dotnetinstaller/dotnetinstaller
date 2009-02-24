@@ -1186,7 +1186,7 @@ namespace InstallerEditor
         {
             try
             {
-                SourceLibrary.Utility.Shell.ExecCommand("http://www.devage.com");
+                SourceLibrary.Utility.Shell.ExecCommand("http://www.codeplex.com/dotnetinstaller/");
             }
             catch (Exception err)
             {

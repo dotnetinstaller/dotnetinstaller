@@ -12,8 +12,8 @@ namespace InstallerEditor
 	public class About : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.Label lblVersion;
-		private System.Windows.Forms.PictureBox pictureBox1;
-		private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private LinkLabel linkWebsite;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -56,7 +56,7 @@ namespace InstallerEditor
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
             this.lblVersion = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.linkWebsite = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,9 +65,9 @@ namespace InstallerEditor
             this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVersion.Location = new System.Drawing.Point(64, 12);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(240, 24);
+            this.lblVersion.Size = new System.Drawing.Size(266, 24);
             this.lblVersion.TabIndex = 0;
-            this.lblVersion.Text = "Installer Editor";
+            this.lblVersion.Text = "dotNetInstaller Installer Editor";
             // 
             // pictureBox1
             // 
@@ -79,19 +79,22 @@ namespace InstallerEditor
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
-            // label1
+            // linkWebsite
             // 
-            this.label1.Location = new System.Drawing.Point(64, 40);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(240, 20);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "for dotNetInstaller.exe by www.devage.com";
+            this.linkWebsite.AutoSize = true;
+            this.linkWebsite.Location = new System.Drawing.Point(66, 36);
+            this.linkWebsite.Name = "linkWebsite";
+            this.linkWebsite.Size = new System.Drawing.Size(201, 13);
+            this.linkWebsite.TabIndex = 3;
+            this.linkWebsite.TabStop = true;
+            this.linkWebsite.Text = "http://www.codeplex.com/dotnetinstaller";
+            this.linkWebsite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkWebsite_LinkClicked);
             // 
             // About
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(312, 89);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(324, 89);
+            this.Controls.Add(this.linkWebsite);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lblVersion);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -105,6 +108,7 @@ namespace InstallerEditor
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.About_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 		#endregion
@@ -122,6 +126,18 @@ namespace InstallerEditor
                 case 27:
                     Close();
                     break;
+            }
+        }
+
+        private void linkWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                SourceLibrary.Utility.Shell.ExecCommand("http://www.codeplex.com/dotnetinstaller/");
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
             }
         }
 	}

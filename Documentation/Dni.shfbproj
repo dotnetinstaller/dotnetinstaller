@@ -45,7 +45,8 @@
     </NamespaceSummaries>
     <RootNamespaceContainer>True</RootNamespaceContainer>
     <RootNamespaceTitle>Library Reference</RootNamespaceTitle>
-    <HelpFileFormat>Help1xAndWebsite</HelpFileFormat>
+    <HelpFileFormat>HtmlHelp1x</HelpFileFormat>
+    <Preliminary>True</Preliminary>
   </PropertyGroup>
   <!-- There are no properties for these two groups but they need to appear in
        order for Visual Studio to perform the build. -->
@@ -78,6 +79,20 @@
   <ItemGroup>
     <Folder Include="Images\" />
     <Folder Include="Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\WebSetup.jpg">
+      <ImageId>WebSetup.jpg</ImageId>
+    </Image>
+    <Image Include="Images\StandaloneSetup.jpg">
+      <ImageId>StandaloneSetup.jpg</ImageId>
+    </Image>
+    <Image Include="Images\InstallerEditor.jpg">
+      <ImageId>InstallerEditor.jpg</ImageId>
+    </Image>
+    <Image Include="Images\dotNetInstaller.jpg">
+      <ImageId>dotNetInstaller.jpg</ImageId>
+    </Image>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />

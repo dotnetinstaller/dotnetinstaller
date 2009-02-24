@@ -6,11 +6,12 @@
         You can use the <newTerm>InstalledCheck</newTerm> configuration element to check whether a component is already installed.
         For example, you can check if .NET Framework 1.1 is installed by reading this registry key
         <fictitiousUri>SOFTWARE\Microsoft\NET Framework Setup\NDP\v1.1.4322\Install</fictitiousUri>.
-        InstalledChecks can be combined with operating system checks which filter components depending on the target OS.
+        InstalledChecks can be combined with <newTerm>operating system checks</newTerm> which filter components depending on the target OS and 
+        with <newTerm>processor architecture checks</newTerm> which check the operating system or hardware architecture.
       </para>
     </introduction>
     <section address="checkstypes">
-      <title>Check Types</title>
+      <title>Installed Check Types</title>
       <content>
         <para>
           There are two types of InstalledChecks: <newTerm>check_file</newTerm> and <newTerm>check_registry_value</newTerm>.
@@ -237,6 +238,49 @@
         </para>
       </content>
     </section>
+    <section address="processorarchitecturefilters">
+      <title>Processor Architecture Filters</title>
+      <content>
+        <para>
+          dotNetInstaller supports various processor architecture filters. You can list those processors on which the entire bootstrapper,
+          configuration or component can be installed. Separate the processor architectures by commas and use the ! (not) operator
+          where appropriate.
+        </para>
+        <alert class="note">
+          <para>
+            Note that dotNetInstaller always runs in 32-bit mode, specifically compatibility 32-bit mode on 64-bit operating 
+            systems. This doesn't affect its general operating system filter behavior.
+          </para>
+        </alert>
+        <para>
+          The following processor architectures are supported.
+          <definitionTable>
+            <definedTerm>x86</definedTerm>
+            <definition>Windows 32-bit.</definition>
+            <definedTerm>x64</definedTerm>
+            <definition>Windows 64-bit.</definition>
+            <definedTerm>mips</definedTerm>
+            <definition></definition>
+            <definedTerm>alpha</definedTerm>
+            <definition></definition>
+            <definedTerm>ppc</definedTerm>
+            <definition></definition>
+            <definedTerm>shx</definedTerm>
+            <definition></definition>
+            <definedTerm>arm</definedTerm>
+            <definition></definition>
+            <definedTerm>ia64</definedTerm>
+            <definition></definition>
+            <definedTerm>alpha64</definedTerm>
+            <definition></definition>
+            <definedTerm>msil</definedTerm>
+            <definition></definition>
+            <definedTerm>ia32onwin64</definedTerm>
+            <definition></definition>
+          </definitionTable>
+        </para>
+      </content>
+    </section>
     <section address="evaluatingchecks">
       <title>Evaluating Checks</title>
       <content>
@@ -245,7 +289,7 @@
           failed installation of a component unless the user is returned to the bootstrapper. For example,
           if a component fails the user may be prompted to continue or to abort the operation. If he chooses to abort,
           he is returned to the bootstrapper and the components list is reevaluated. If he chooses to continue, the components
-          list is not reevaluated and the next component is installed. Note that the latter behavior may be changed with 
+          list is not reevaluated and the next component is installed. Note that the latter behavior may be changed with
           options.
         </para>
       </content>
