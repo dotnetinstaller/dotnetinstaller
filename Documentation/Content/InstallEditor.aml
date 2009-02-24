@@ -14,10 +14,15 @@
       <title>Creating Configurations</title>
       <content>
         <para>
+          You must first create a configuration file. Choose <ui>File</ui>, <ui>New</ui> and select a new location
+          for a configuration.xml. Then, right click on <literal>Config File</literal> and choose <ui>Add</ui>, followed
+          by either <newItem>Setup Configuration</newItem> or <newItem>Web Configuration</newItem>.
+        </para>
+        <para>
           The following pre-defined types of configuration can be created with the editor.
           <list class="bullet">
             <listItem>
-              <newTerm>Standalone Configuration</newTerm>: a configuration that runs the components from a specified path,
+              <newTerm>Setup Configuration</newTerm>: a configuration that runs the components from a specified path,
               usually relative of the bootstrapper setup file. Select this configuration if you want to distribute your application
               primarily on media, such as CDROM or via a full package download from the web.
             </listItem>

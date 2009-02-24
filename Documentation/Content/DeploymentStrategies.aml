@@ -3,22 +3,31 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        DNI supports several deployment strategies. Choose the appropriate one for your project.      
-      </para>
-      <para>
-        <alert class="important">
-          <para>
-            THIS SECTION OF DOCUMENTATION NEEDS REVISITING AND CHECKING
-          </para>
-        </alert>
+        dotNetInstaller supports many deployment strategies. Choose the appropriate one for your project.      
       </para>
     </introduction>
+    <section address="physicalmedia">
+      <title>Physical Media</title>
+      <content>
+        <para>
+          With this strategy you're distributing physical media, eg. CDROM. This involves placing a
+          <fictitiousUri>configuration.xml</fictitiousUri> in the same path as the
+          <fictitiousUri>dotNetInstaller.exe</fictitiousUri> bootstrapper. dotNetInstaller first checks for this configuration file,
+          if the file doesn't exist it uses the configuration embedded in the bootstrapper itself.
+          You can optionally distribute a bitmap with the name <fictitiousUri>banner.bmp</fictitiousUri>.
+          Component setup files are placed alongside the setup on the physical media.
+        </para>
+      </content>
+    </section>
     <section address="deploymentstrategiessingle">
       <title>Single Deployment Package</title>
       <content>
         <para>
-          This strategy includes all configuration files in the DNI resources and required files in a packaged CAB. 
-          With this solution you are distributing a single self-extracting executable.
+          This strategy is a packaged variation of the Physical Media scenario. It involves embedding all configuration files 
+          in the dotNetInstaller resources and component setup files in a CAB file. The latter is later embedded producing a single
+          Setup.exe. With this solution you are distributing a single self-extracting executable. At install time the 
+          bootstrapper UI is shown first. When the user chooses to install, the embedded CAB is extracted into a temporary 
+          folder, then deleted when the bootstrapper terminates.          
         </para>
       </content>
     </section>
@@ -26,17 +35,9 @@
       <title>Web-Based</title>
       <content>
         <para>
-        </para>
-      </content>
-    </section>
-    <section address="deploymentstrategiesexploded">
-      <title>Physical Media</title>
-      <content>
-        <para>
-          With this strategy you're distributing physical media, eg. CDROM. This involves placing a <fictitiousUri>configuration.xml</fictitiousUri>
-          in the same path as the <fictitiousUri>dotNetInstaller.exe</fictitiousUri> bootstrapper. DNI first checks for this configuration file, 
-          if the file doesn't exist it uses the configuration embedded in the bootstrapper itself. You can optionally distribute a bitmap 
-          with the name <fictitiousUri>banner.bmp</fictitiousUri>.
+          This strategy is a distributed variation of the Physical Media scenario. It involves packaging configuration files 
+          in the dotNetInstaller resources but leaving the component setup files external. When a component needs to be installed, 
+          it is downloaded.
         </para>
       </content>
     </section>
@@ -44,6 +45,9 @@
       <title>Mixed Strategies</title>
       <content>
         <para>
+          This strategy is a variation of the Web-Based scenario. It involves packaging configuration files
+          in the dotNetInstaller resources but leaving some component setup files external. Frequently used components 
+          may be embedded instead, while rarely required ones can be downloaded from your website.
         </para>
       </content>
     </section>

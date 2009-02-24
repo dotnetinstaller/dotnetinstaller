@@ -5,7 +5,8 @@
       <para>
         <application>dotNetInstaller.exe</application> is a lightweight driver for your bootstrapped
         process. This is your Setup.exe. It offers a simple user interface, progress, status, supports silent installs
-        and enables user selection for optional components. It can be somewhat customized.
+        and enables user selection of optional components. The workflow is highly flexible and the UI can be somewhat 
+        customized.
       </para>
     </introduction>
     <section address="commandlinearguments">
@@ -29,8 +30,8 @@
             <definedTerm>/Log</definedTerm>
             <definition>
               Creates a log file during installation with information and errors useful for debugging. You can find this file in
-              the user temporary directory with the name <localUri>dotNetInstallerLog.txt</localUri> (usually
-              <localUri>C:\Documents and Settings\YOUR_NAME\Local Settings\Temp\dotNetInstallerLog.txt</localUri>.
+              the user temporary directory with the name <localUri>dotNetInstallerLog.txt</localUri> (eg. 
+              <localUri>C:\Documents and Settings\YOUR_NAME\Local Settings\Temp\dotNetInstallerLog.txt</localUri>).
               Its location and name can be specified with <system>/LogFile</system>.
             </definition>
             <definedTerm>/LogFile [path]</definedTerm>
@@ -72,7 +73,7 @@
                 This is obsolete.
               </para>
               <para>
-                Used in conjuction with the /Launcher argument above; specified command-line arguments to be
+                Used in conjunction with the /Launcher argument above; specified command-line arguments to be
                 used with the /Launcher argument's command.
               </para>
               <alert class="note">

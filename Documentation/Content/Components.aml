@@ -15,7 +15,8 @@
       <title>Windows Installer MSI Components</title>
       <content>
         <para>
-          A component of type <literal>msi</literal> that executes a Windows Installer package.
+          A component of type <literal>msi</literal> that executes a Windows Installer package using the 
+          <command>msiexec.exe</command> command.
         </para>
       </content>
     </section>
@@ -23,7 +24,7 @@
       <title>Command Line Components</title>
       <content>
         <para>
-          A component of type <literal>cmd</literal> that executes a command.
+          A component of type <literal>cmd</literal> that executes an arbitrary command.
         </para>
       </content>
     </section>
@@ -31,7 +32,7 @@
       <title>OpenFile Components</title>
       <content>
         <para>
-          A component of type <literal>openfile</literal> that launches a document.
+          A component of type <literal>openfile</literal> that launches a document via a shell extension.
         </para>
       </content>
     </section>

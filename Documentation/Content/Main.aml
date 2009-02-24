@@ -19,7 +19,7 @@
         A boostrapper doesn't replace tools like InstallShield, Wise, Visual Studio Setup and Deployment Project or Wix.
         The goal is to create an application to help users with installing the correct prerequisites. Most real world applications
         need to install several components to work properly, including Windows Service Packs, Internet Explorer, MDAC or .NET Framework.
-        This kind of applications are most commonly known as <newTerm>bootstrappers</newTerm>. DNI is such a bootstrapper.
+        This kind of applications is most commonly known as a <newTerm>bootstrapper</newTerm>.
       </para>
       <para>
         This project is composed of the following:
@@ -45,16 +45,16 @@
         </list>
       </para>
       <para>
-        This project started as a 
+        This project started as a
         <externalLink>
           <linkHref>http://www.codeproject.com/KB/install/dotNetInstaller.aspx</linkHref>
           <linkText>CodeProject article</linkText>
-        </externalLink> and was maintained on the 
+        </externalLink> and was maintained on the
         <externalLink>
           <linkHref>http://www.devage.com/</linkHref>
           <linkText>DevAge</linkText>
         </externalLink>
-        website and 
+        website and
         <externalLink>
           <linkHref>https://sourceforge.net/projects/dotnetinstaller</linkHref>
           <linkText>SourceForge</linkText>
@@ -66,5 +66,8 @@
         </externalLink>.
       </para>
     </introduction>
+    <relatedTopics>
+      <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="a6f46303-b703-4ff3-9572-55d8131eb883" />
+    </relatedTopics>
   </developerConceptualDocument>
 </topic>

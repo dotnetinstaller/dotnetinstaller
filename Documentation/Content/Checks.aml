@@ -58,7 +58,7 @@
                 <definition>Check whether the registry value contains the check value.</definition>
                 <definedTerm>version</definedTerm>
                 <definition>
-                  The registry value is iterpreted as a file version. Check whether the version is greater
+                  The registry value is interpreted as a file version. Check whether the version is greater
                   or equal to the check value.
                 </definition>
               </definitionTable>
@@ -234,6 +234,19 @@
               <entry>200</entry>
             </row>
           </table>
+        </para>
+      </content>
+    </section>
+    <section address="evaluatingchecks">
+      <title>Evaluating Checks</title>
+      <content>
+        <para>
+          Checks are evaluated when the bootstrapper starts. Component checks are not evaluated after a successful or a
+          failed installation of a component unless the user is returned to the bootstrapper. For example,
+          if a component fails the user may be prompted to continue or to abort the operation. If he chooses to abort,
+          he is returned to the bootstrapper and the components list is reevaluated. If he chooses to continue, the components
+          list is not reevaluated and the next component is installed. Note that the latter behavior may be changed with 
+          options.
         </para>
       </content>
     </section>

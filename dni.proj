@@ -30,8 +30,8 @@
   <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.ico" />
  </ItemGroup>
  <ItemGroup>
-  <Documentation Include="Documents/**/*.html" />
-  <Documentation Include="Documents/**/*.jpg" />
+  <Documentation Include="Documentation/$(Configuration)/dotNetInstaller.chm" />
+  <Documentation Include="Documentation/WhatsNew.html" />
  </ItemGroup>
  <ItemGroup>
   <SupportFiles Include="Samples/SupportFiles/**/*.txt" />

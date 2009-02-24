@@ -96,11 +96,6 @@
       <content>
         <para>
           The following third-party libraries are used in this project. 
-          <alert class="important">
-            <para>
-              No (L)GPL code has been used in this project.
-            </para>
-          </alert>
           <definitionTable>
             <definedTerm>TinyXML</definedTerm>
             <definition>
@@ -137,6 +132,11 @@
             </definition>
           </definitionTable>
         </para>
+        <alert class="important">
+          <para>
+            No (L)GPL code has been used in this project.
+          </para>
+        </alert>
       </content>
     </section>
   </developerHowToDocument>
