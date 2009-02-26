@@ -40,7 +40,7 @@ private:
 public:
 	CButton m_btnSkip;
 	CButton m_btnInstall;
-	CButton m_btCancel;
+	CButton m_btnCancel;
 	CStatic m_lblMessage;
 	CComponentsList m_ListBoxComponents;
 	CStatic m_PictureBox;

@@ -1,7 +1,6 @@
 #pragma once
 
-// Matthew Sheets - 2007-09-20: Support silent installs
-
+// support for silent installs
 class SilentInstall
 {
 public:

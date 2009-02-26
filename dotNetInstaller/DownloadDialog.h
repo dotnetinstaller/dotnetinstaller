@@ -51,7 +51,7 @@ namespace DVLib
 		CStatic m_LabelHelpDownload;
 		CStatic m_LabelStatus;
 		CButton m_btStart;
-		CButton m_btCancel;
+		CButton m_btnCancel;
 		CProgressCtrl m_ProgressControl;
 		afx_msg void OnBnClickedCancel();
 		afx_msg void OnBnClickedStart();

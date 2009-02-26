@@ -2,20 +2,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
  <title>What's New</title>
+ <style type="text/css">
+body { color: #000000; font-family: Arial; font-size: 75%; }    
+a { font-family: Arial; text-decoration: none; }
+code { color: #b22222; font-family: Courier New; }
+ </style>
 </head>
 <body>
  <h3>
   1.6 (TBD)</h3>
  <ul>
+  <li>First release off <a href="http://www.codeplex.com/dotnetinstaller">CodePlex</a>.</li>
   <li>Added OS filter identifiers for Windows Server 2008. </li>
-  <li>Added <span style="color: #b22222; font-family: Courier New">InstalledCheckOperator</span>
-   of 'And', 'Or' and 'Not' types that combine results from one or more <span style="color: #b22222;
-    font-family: Courier New">InstalledCheck</span> and <span style="color: #b22222;
-     font-family: Courier New">InstalledCheckOperator</span> elements. </li>
-  <li>dotNetInstaller: Added <span style="color: #b22222; font-family: Courier New">
-   /componentArgs "component description":"parameters"</span> to dotNetInstaller.exe
-   command line. This enables passing additional parameters to specific components
-   declared in configuration.xml. </li>
+  <li>Added <code>InstalledCheckOperator</code> of 'And', 'Or' and 'Not' types that
+   combine results from one or more <code>InstalledCheck</code> and <code>InstalledCheckOperator</code>
+   elements. </li>
+  <li>dotNetInstaller: Added <code>/componentArgs "component description":"parameters"</code>
+   to dotNetInstaller.exe command line. This enables passing additional parameters
+   to specific components declared in configuration.xml. </li>
   <li>dotNetInstaller: Embedded CABs are now segmented into 32-megabyte chunks. This
    reduces the minimum required memory for installers containing embedded CABs to about
    48Mb, reduces paging and improves performance during extraction of large embedded
@@ -33,29 +37,29 @@
   </li>
   <li>InstallerEditor: added shortcuts to open a configuratoin file (Ctrl+O), create
    a new configuration file (Ctrol+N), exit (Alt+F4) and refresh (F5). </li>
-  <li>Added <span style="color: #b22222; font-family: Courier New">allow_continue_on_error</span>
-   globally and per-component: when false user is no longer prompted to continue on
-   error, instead the user is informed of the failure and installation aborts. Combine
-   this option with <span style="color: #b22222; font-family: Courier New">auto_close_on_error</span>
+  <li>Added <code>allow_continue_on_error</code> globally and per-component: when false
+   user is no longer prompted to continue on error, instead the user is informed of
+   the failure and installation aborts. Combine this option with <code>auto_close_on_error</code>
    to get predictable failure behavior as bootstrapper will close after an element
    of setup failed. Note that in order for a component to allow continuing on error
    both the global and the component setting must be set to True. </li>
   <li>DotNetInstaller: merged functionality of the Advanced component selector into
    the main window, removed the Advanced button. </li>
-  <li>Added <span style="color: #b22222; font-family: Courier New">dialog_show_required</span>:
-   when false, required components are hidden. </li>
-  <li>Added <span style="color: #b22222; font-family: Courier New">dialog_show_installed</span>:
-   when false, installed components are hidden. </li>
-  <li>Added <span style="color: #b22222; font-family: Courier New">must_reboot_required</span>:
-   globally and per-component. Setting this option to true will prevent users from
-   continuing when a reboot is required. </li>
-  <li>Added <span style="color: #b22222; font-family: Courier New">failed_exec_command_continue</span>
-   per-component extending the global setting that defines the message to show when
-   a component fails to install. </li>
-  <li>Added optional <span style="color: #b22222; font-family: Courier New">reboot_required</span>:
-   a message that can be configured per component, extending the global setting. </li>
-  <li>Added <span style="color: #b22222; font-family: Courier New">auto_close_on_error</span>:
-   changes behavior on component error, now optionally closing the bootstrapper. </li>
+  <li>Added <code>dialog_show_required</code>: when false, required components are
+   hidden. </li>
+  <li>Added <code>dialog_show_installed</code>: when false, installed components are
+   hidden. </li>
+  <li>Added <code>must_reboot_required</code>: globally and per-component. Setting
+   this option to true will prevent users from continuing when a reboot is required.
+  </li>
+  <li>Added <code>failed_exec_command_continue</code> per-component extending the global
+   setting that defines the message to show when a component fails to install. </li>
+  <li>Added optional <code>reboot_required</code>: a message that can be configured
+   per component, extending the global setting. </li>
+  <li>Added <code>auto_close_on_error</code>: changes behavior on component error,
+   now optionally closing the bootstrapper. </li>
+  <li>Added a set of <code>dialog_position</code> options that enable resizing of the
+   main installer dialog elements.</li>
  </ul>
  <h3>
   1.5 (25 Oct 2008)</h3>

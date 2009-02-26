@@ -1,6 +1,6 @@
 #pragma once
 
-// Matthew Sheets - 2007-08-10: Support silent installs
+// support silent installs
 
 int DniMessageBox(LPCTSTR p_lpszText, UINT p_nType = MB_OK, UINT p_nDefaultResult = MB_OK, UINT p_nIDHelp = 0);
 

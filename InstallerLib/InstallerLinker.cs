@@ -36,7 +36,7 @@ namespace InstallerLib
             VersionResource rc = new VersionResource();
             rc.LoadFrom(args.output);
 
-            /* Daniel Doubrovkine - 2008-06-27: added version information */
+            // version information
             StringFileInfo stringFileInfo = (StringFileInfo)rc["StringFileInfo"];
 
             if (!string.IsNullOrEmpty(configfile.productversion))
@@ -56,7 +56,7 @@ namespace InstallerLib
 
             rc.SaveTo(args.output);
 
-            /* Daniel Doubrovkine - 2008-09-28: added icon */
+            // optional icon
             if (!string.IsNullOrEmpty(args.icon))
             {
                 args.WriteLine(string.Format("Embedding icon \"{0}\"", args.icon));

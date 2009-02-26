@@ -20,8 +20,7 @@ namespace DVLib
 		ZeroMemory(&si, sizeof(si)) ;
 		si.cb = sizeof(si) ;
 
-		// Matthias Jentsch - 2006-03-07: if environment variables are in the string for ExecCmd then
-		// replace these variables first.
+		// if environment variables are in the string for ExecCmd then replace these variables first.
 		// Using ShellExecuteEx API function with setting the flag SEE_MASK_DOENVSUBST does not working in this case
 		// because environment variables can also be placed in the parameters for the new process.
 		CString expandedCmd = pszCmd;
@@ -60,7 +59,6 @@ namespace DVLib
 			}
 		}
 		
-		// Matthew Sheets - 2007-10-26: Convert CString to LPTSTR Buffer, and then release the buffer
 		bReturnVal = CreateProcess(NULL, 
 								expandedCmd.GetBuffer(expandedCmd.GetLength()), 
 								NULL, 

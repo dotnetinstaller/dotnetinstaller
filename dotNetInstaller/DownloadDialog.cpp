@@ -49,7 +49,7 @@ namespace DVLib
 		DDX_Control(pDX, IDC_HELP_DOWNLOAD, m_LabelHelpDownload);
 		DDX_Control(pDX, IDC_STATUS, m_LabelStatus);
 		DDX_Control(pDX, IDC_START, m_btStart);
-		DDX_Control(pDX, IDC_CANCEL, m_btCancel);
+		DDX_Control(pDX, IDC_CANCEL, m_btnCancel);
 		DDX_Control(pDX, IDC_PROGRESSDOWNLOAD, m_ProgressControl);
 	}
 
@@ -77,7 +77,7 @@ namespace DVLib
 
 		m_LabelHelpDownload.SetWindowText(m_HelpMessage);
 		SetWindowText(m_Caption);
-		m_btCancel.SetWindowText(m_ButtonCancelCaption);
+		m_btnCancel.SetWindowText(m_ButtonCancelCaption);
 		m_btStart.SetWindowText(m_ButtonStartCaption);
 		m_ProgressControl.SetRange(0,1000);
 		m_LabelStatus.SetWindowText(TEXT(""));
@@ -86,7 +86,7 @@ namespace DVLib
 		if (QuietInstall.IsSilent())
 		{
 			m_btStart.EnableWindow(FALSE);
-			m_btCancel.EnableWindow(FALSE);
+			m_btnCancel.EnableWindow(FALSE);
 			OnBnClickedStart();
 		}
 		else if (m_bAutoStartDownload)

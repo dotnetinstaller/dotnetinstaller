@@ -57,7 +57,7 @@ namespace InstallerLib
             set { m_destinationfilename = value; }
         }
 
-        // Matthew Sheets - 2007-08-28: added flag to bypass download if the file already exists locally
+        // bypass download if the file already exists locally
         private bool m_alwaysdownload;
         [Description("If true, always download the file; if false, only download if the file does not exist locally.")]
         public bool alwaysdownload

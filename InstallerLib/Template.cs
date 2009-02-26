@@ -142,19 +142,19 @@ namespace InstallerLib
                 get { return m_tpl.GetAttribute("setupconfiguration/@status_notinstalled").Replace(c_APPLICATION_NAME, m_ApplicationName); }
             }
 
-            // Matthias Jentsch - 2007-02-06 added OS filter message to templates
+            // OS filter message
             public string os_filter_not_match_message
             {
                 get { return m_tpl.GetAttribute("setupconfiguration/@os_filter_not_match_message").Replace(c_APPLICATION_NAME, m_ApplicationName); }
             }
 
-            // Jason Biegel - 2008-04-22 added processor architecture message to templates
+            // processor architecture filter message
             public string processor_architecture_filter_not_match_message
             {
                 get { return m_tpl.GetAttribute("setupconfiguration/@processor_architecture_filter_not_match_message").Replace(c_APPLICATION_NAME, m_ApplicationName); }
             }
 
-            // Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction
+            // message and caption to show during CAB extraction
             public string cab_dialog_message
             {
                 get { return m_tpl.GetAttribute("setupconfiguration/@cab_dialog_message").Replace(c_APPLICATION_NAME, m_ApplicationName); }
@@ -170,7 +170,7 @@ namespace InstallerLib
                 get { return m_tpl.GetAttribute("setupconfiguration/@cab_dialog_caption").Replace(c_APPLICATION_NAME, m_ApplicationName); }
             }
 
-            // Daniel Doubrovkine - 2008-06-06: added path to use during CAB extraction
+            // path to use during CAB extraction
             public string cab_path
             {
                 get { return m_tpl.GetAttribute("setupconfiguration/@cab_path"); }
@@ -181,7 +181,7 @@ namespace InstallerLib
                 get { return bool.Parse(m_tpl.GetAttribute("setupconfiguration/@cab_path_autodelete")); }
             }
 
-            // Daniel Doubrovkine - 2008-06-24: added auto-enabled log
+            // auto-enabled log
             public bool log_enabled
             {
                 get { return bool.Parse(m_tpl.GetAttribute("setupconfiguration/@log_enabled")); }

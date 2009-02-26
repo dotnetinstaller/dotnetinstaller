@@ -26,7 +26,7 @@ namespace DVLib
 		//Nome visivo del componente
 		CString ComponentName;
 
-        // Matthew Sheets - 2007-08-28: added flag to enable bypassing download if the file already exists locally
+        // enable bypassing download if the file already exists locally
 		bool AlwaysDownload;
 	};
 

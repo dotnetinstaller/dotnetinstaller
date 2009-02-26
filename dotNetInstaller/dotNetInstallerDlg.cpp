@@ -38,7 +38,7 @@ void CdotNetInstallerDlg::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_SKIP, m_btnSkip);
 	DDX_Control(pDX, IDC_INSTALL, m_btnInstall);
-	DDX_Control(pDX, IDCANCEL, m_btCancel);
+	DDX_Control(pDX, IDCANCEL, m_btnCancel);
 	DDX_Control(pDX, IDC_MESSAGE, m_lblMessage);
 	DDX_Control(pDX, IDC_COMPONENTS_LIST, m_ListBoxComponents);
 	DDX_Control(pDX, IDC_PICTUREBOX, m_PictureBox);
@@ -78,27 +78,46 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Impostare icona piccola.
 
 
-	//remove the Run key if exist
+	// remove the Run key if exist
 	RemoveRegistryRun();
 
-	//determinating operating system
+	// determinating operating system
     m_lblOperatingSystem.SetWindowText(DVLib::GetOsVersionString() + L" (" + DVLib::GetProcessorArchitectureString() + L")");
 
-	// Matthew Sheets - 2008-01-14: Hide the "Skip" button if there are no additional configurations
+	// hide the "Skip" button if there are no additional configurations
 	if (!m_additional_config)
 	{
 		m_btnSkip.ShowWindow(SW_HIDE);
 	}
 
-	//load xml file
+	// load xml file
 	this->SetWindowText(m_Settings.dialog_caption);
     AfxGetApp()->m_pszAppName = _tcsdup(m_Settings.dialog_caption);
 
-	m_btCancel.SetWindowText(m_Settings.cancel_caption);
+	m_btnCancel.SetWindowText(m_Settings.cancel_caption);
 	m_btnSkip.SetWindowText(m_Settings.skip_caption);
 	m_btnInstall.SetWindowText(m_Settings.install_caption);
 	m_lblMessage.SetWindowText(m_Settings.dialog_message);
 
+    if (! m_Settings.dialog_position.IsRectEmpty()) 
+        MoveWindow(& m_Settings.dialog_position);
+    if (! m_Settings.dialog_components_list_position.IsRectEmpty()) 
+        m_ListBoxComponents.MoveWindow(& m_Settings.dialog_components_list_position);
+    if (! m_Settings.dialog_message_position.IsRectEmpty()) 
+        m_lblMessage.MoveWindow(& m_Settings.dialog_message_position);
+    if (! m_Settings.dialog_bitmap_position.IsRectEmpty()) 
+        m_PictureBox.MoveWindow(& m_Settings.dialog_bitmap_position);
+    if (! m_Settings.dialog_otherinfo_link_position.IsRectEmpty()) 
+       m_InfoLink.MoveWindow(& m_Settings.dialog_otherinfo_link_position);
+    if (! m_Settings.dialog_osinfo_position.IsRectEmpty()) 
+       m_lblOperatingSystem.MoveWindow(& m_Settings.dialog_osinfo_position);
+    if (! m_Settings.dialog_install_button_position.IsRectEmpty()) 
+       m_btnInstall.MoveWindow(& m_Settings.dialog_install_button_position);
+    if (! m_Settings.dialog_cancel_button_position.IsRectEmpty()) 
+       m_btnCancel.MoveWindow(& m_Settings.dialog_cancel_button_position);
+    if (! m_Settings.dialog_skip_button_position.IsRectEmpty()) 
+       m_btnSkip.MoveWindow(& m_Settings.dialog_skip_button_position);
+    
 	m_InfoLink.SetCaption(m_Settings.dialog_otherinfo_caption);
 	m_InfoLink.SetHyperlink(m_Settings.dialog_otherinfo_link);
 	if (m_Settings.dialog_otherinfo_caption.GetLength() <= 0)
@@ -156,15 +175,12 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	}
 	else
 	{
-		// Matthew Sheets - 2007-08-21: Initiate component install(s) silently, without end-user input
+		// initiate component install(s) silently, without end-user input
 		if(QuietInstall.IsSilent())
 		{
 			m_btnInstall.EnableWindow(FALSE);
-			m_btCancel.EnableWindow(FALSE);
-
+			m_btnCancel.EnableWindow(FALSE);
             m_InfoLink.EnableWindow(FALSE);
-
-			// Run the button install click event
 			OnBnClickedInstall();
 		}
 	}
@@ -477,7 +493,7 @@ bool CdotNetInstallerDlg::LoadComponentsList(void)
 	return l_AllInstalled;
 }
 
-// Matthew Sheets - 2008-01-14: Skip the current config section and go to the next valid one
+// skip the current config section and go to the next valid one
 void CdotNetInstallerDlg::OnBnClickedSkip()
 {
 	OnOK();
@@ -495,7 +511,7 @@ void CdotNetInstallerDlg::OnDestroy()
 
 		ApplicationLog.Write( TEXT("Components released"));
 
-        // 2008-06-09 - Daniel Doubrovkine - delete temporary directory
+        // delete temporary directory
         // even if a reboot is required, the temporary folder is gone; next run will re-extract components
         CString cabpath = (m_Settings.cab_path.GetLength() > 0) ? m_Settings.cab_path : DVLib::GetSessionTempPath(true);
         cabpath = m_Settings.ValidatePath(cabpath);

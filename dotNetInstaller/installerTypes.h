@@ -13,7 +13,7 @@
 
 #include "InstallerLauncher.h"
 
-// Matthew Sheets - 2007-09-24: Top-level configuration settings
+// top-level configuration settings
 struct configSetting
 {
 	bool silent_install;
@@ -38,10 +38,10 @@ inline void InsertRegistryRun()
 		if (l_result != ERROR_SUCCESS)
 			return;
 
-		// Matthew Sheets - 2007-11-27: Get the installer launcher command (if specified)
+		// get the installer launcher command (if specified)
 		CString l_Cmd = DNILauncher.GetLauncherCmd();
 
-		// Matthew Sheets - 2007-11-27: If no launcher argument was specified, use the DNI command line
+		// if no launcher argument was specified, use the DNI command line
 		if (l_Cmd.GetLength() == 0)
 		{
 			l_Cmd = _T("\"") + DVLib::GetAppFullName() + _T("\"");

@@ -23,7 +23,6 @@ namespace InstallerLib
             set { m_filename = value; }
         }
 
-        /* Matthew Sheets - 2007-09-20: added flag for silent install */
         private bool m_silent_install = false;
         [Description("If true, run the install silently (without end-user input)")]
         [Category("Installation Runtime")]
@@ -33,7 +32,6 @@ namespace InstallerLib
             set { m_silent_install = value; }
         }
 
-        /* Daniel Doubrovkine - 2008-06-27: added version information */
         private string m_fileversion;
         [Description("Four-part binary file version, eg. 1.2.3.4")]
         [Category("File Attributes")]
@@ -92,9 +90,9 @@ namespace InstallerLib
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
-            // Matthew Sheets - 2007-08-10: added flag for silent install
+            // silent install
             e.XmlWriter.WriteAttributeString("silent_install", m_silent_install.ToString());
-            // Daniel Doubrovkine - 2008-06-27: added version information
+            // version information
             e.XmlWriter.WriteAttributeString("fileversion", m_fileversion);
             e.XmlWriter.WriteAttributeString("productversion", m_productversion);
             // tag schema
@@ -107,11 +105,11 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            /* Matthew Sheets - 2007-09-20: added flag for silent install */
+            // silent install
             if (e.XmlElement.Attributes["silent_install"] != null)
                 m_silent_install = bool.Parse(e.XmlElement.Attributes["silent_install"].InnerText);
 
-            /* Daniel Doubrovkine - 2008-06-27: added version information */
+            // version information
             if (e.XmlElement.Attributes["fileversion"] != null)
                 m_fileversion = e.XmlElement.Attributes["fileversion"].InnerText;
             if (e.XmlElement.Attributes["productversion"] != null)

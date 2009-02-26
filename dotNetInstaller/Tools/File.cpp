@@ -4,8 +4,7 @@
 
 bool DVLib::ShellExecuteDefault(LPCTSTR file)
 {
-	// Matthias Jentsch - 2006-03-07: if environment variables are in the string for ShellExecute then
-	// replace these variables first.
+	// if environment variables are in the string for ShellExecute then replace these variables first.
 	// Using ShellExecuteEx API function with setting the flag SEE_MASK_DOENVSUBST does not working in this case
 	// because environment variables can also be placed in the parameters for the new process.
 	CString complete = file;
@@ -44,7 +43,7 @@ bool DVLib::ShellExecuteDefault(LPCTSTR file)
 		}
 	}
 	
-	// Matthias Jentsch - 2006-03-07: parsing the parameters from the passed file
+	// parsing the parameters from the passed file
 	complete.Trim();
 	startPos = 0;
 	// starts the string with "
@@ -76,12 +75,10 @@ bool DVLib::ShellExecuteDefault(LPCTSTR file)
 		return true;
 }
 
-//Can be used to check if a file or directory exists
+// check if a file or directory exists
 bool DVLib::FileExistsCustom(LPCTSTR filename)
 {
-	// Charles McDonald: 2008-06-16: Removing double quotes from the path ensures Win32 will validate a good path.
-	//
-	// Remove double quotes.
+	// removing double quotes from the path ensures Win32 will validate a good path
 	CString fileNameNoDoubleQuotes = CString(filename);
 	fileNameNoDoubleQuotes.Trim(_T('"'));
 

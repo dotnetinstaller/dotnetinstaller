@@ -23,34 +23,35 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 			m_lastArgFlag = log;
 			ApplicationLog.EnableLog();
 		}
-		// Daniel Doubrovkine - 2008-06-26: specify log filename and path
+
+		// specify log filename and path
 		else if (_tcsicmp(pszParam, TEXT("logfile")) == 0)
 		{
 			m_lastArgFlag = logfile;
 		}
-		// Matthew Sheets - 2007-09-20: Enable silent installs from the command line
+		// enable silent installs from the command line
 		else if (_tcsicmp(pszParam, TEXT("q")) == 0)
 		{
 			m_lastArgFlag = silent;
 			QuietInstall.EnableSilentInstall();
 		}
-		// Matthew Sheets - 2008-01-14: Disable silent installs from the command line
+        // disable silent installs from the command line
 		else if (_tcsicmp(pszParam, TEXT("nq")) == 0)
 		{
 			m_lastArgFlag = noSilent;
 			QuietInstall.OverrideSilentInstall();
 		}
-		// Matthew Sheets - 2007-11-26: Accept another command to use in RegistryRun
+		// accept another command to use in RegistryRun
 		else if (_tcsicmp(pszParam, TEXT("launcher")) == 0)
 		{
 			m_lastArgFlag = launcher;
 		}
-		// Matthew Sheets - 2008-01-14: Accept arguments to use with the launcher RegistryRun command
+		// accept arguments to use with the launcher RegistryRun command
 		else if (_tcsicmp(pszParam, TEXT("launcherArgs")) == 0)
 		{
 			m_lastArgFlag = launcherArgs;
 		}
-        // Daniel Doubrovkine - 2008-09-29: Accept arguments to use in command args
+        // accept arguments to use in complete command args
 		else if (_tcsicmp(pszParam, TEXT("completeCommandArgs")) == 0)
 		{
 			m_lastArgFlag = completeCommandArgs;

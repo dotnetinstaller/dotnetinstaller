@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "SilentInstall.h"
 
-// Matthew Sheets - 2007-09-20: Support silent installs
-
+// support for silent installs
 SilentInstall QuietInstall;
 
 SilentInstall::SilentInstall(void):

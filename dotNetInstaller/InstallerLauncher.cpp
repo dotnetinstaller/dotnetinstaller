@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "InstallerLauncher.h"
 
-// Matthew Sheets - 2007-11-27: Support alternate installer launchers
-
+// support alternate installer launchers
 InstallerLauncher DNILauncher;
 
 InstallerLauncher::InstallerLauncher(void)

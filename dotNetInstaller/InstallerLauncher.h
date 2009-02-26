@@ -1,6 +1,6 @@
 #pragma once
 
-// Matthew Sheets - 2007-11-27: Support alternate installer launchers
+// support for alternate installer launchers
 
 // Path + Args + quotes for Path + space between Path and Args
 #define DNI_LAUNCHER_CMD_LEN (FILENAME_MAX * 2) + 3

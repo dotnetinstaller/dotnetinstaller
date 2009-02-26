@@ -21,6 +21,20 @@ bool ConvBoolString(const char * p_BoolString, bool defaultValue = false)
     else return defaultValue;
 }
 
+CRect ConvRectString(const std::wstring& p_RectString)
+{
+    CRect r;
+    if (p_RectString.empty()) return r;
+    std::vector<std::wstring> l_RectCoordinates;
+    split_string(p_RectString, ',', l_RectCoordinates, 4);
+    if (l_RectCoordinates.size() != 4) return r;
+    r.left = _wtoi(l_RectCoordinates[0].c_str());
+    r.top = _wtoi(l_RectCoordinates[1].c_str());
+    r.right = r.left + _wtoi(l_RectCoordinates[2].c_str());
+    r.bottom = r.top + _wtoi(l_RectCoordinates[3].c_str());
+    return r;
+}
+
 void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::DownloadGroupConfiguration & p_Configuration, InstallerSetting & p_Setting)
 {
 	ApplicationLog.Write( TEXT("Start reading download attributes") );
@@ -69,7 +83,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 
 	ApplicationLog.Write( TEXT("Reading configuration attributes") );
 
-    /* Daniel Doubrovkine - 2008-06-24: added auto-enabled log options */
+    // auto-enabled log options
     p_Setting.log_enabled = ConvBoolString(p_Node->Attribute("log_enabled"), false);
     p_Setting.log_file = p_Node->AttributeT("log_file").data();
 
@@ -80,10 +94,20 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
         ApplicationLog.EnableLog();
     }
 
-    /* Daniel Doubrovkine - 2008-06-12: added CABBPATH that defines where to extract files */
+    // defines where to extract files and auto-delete options
     p_Setting.cab_path = p_Node->AttributeT("cab_path").data();
     p_Setting.cab_path_autodelete = ConvBoolString(p_Node->Attribute("cab_path_autodelete"), true);
-
+    // positions within the dialog
+    p_Setting.dialog_position = ConvRectString(p_Node->AttributeT("dialog_position"));
+    p_Setting.dialog_components_list_position = ConvRectString(p_Node->AttributeT("dialog_components_list_position"));
+    p_Setting.dialog_message_position = ConvRectString(p_Node->AttributeT("dialog_message_position"));
+    p_Setting.dialog_bitmap_position = ConvRectString(p_Node->AttributeT("dialog_bitmap_position"));
+    p_Setting.dialog_otherinfo_link_position = ConvRectString(p_Node->AttributeT("dialog_otherinfo_link_position"));
+    p_Setting.dialog_osinfo_position = ConvRectString(p_Node->AttributeT("dialog_osinfo_position"));
+    p_Setting.dialog_install_button_position = ConvRectString(p_Node->AttributeT("dialog_install_button_position"));
+    p_Setting.dialog_cancel_button_position = ConvRectString(p_Node->AttributeT("dialog_cancel_button_position"));
+    p_Setting.dialog_skip_button_position = ConvRectString(p_Node->AttributeT("dialog_skip_button_position"));
+    // other dialog options
 	p_Setting.cancel_caption = p_Node->AttributeT("cancel_caption").data();
 	p_Setting.dialog_bitmap = p_Setting.ValidatePath(p_Node->AttributeT("dialog_bitmap").data());
 	p_Setting.dialog_caption = p_Node->AttributeT("dialog_caption").data();
@@ -109,26 +133,24 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
     p_Setting.dialog_show_installed = ConvBoolString(p_Node->Attribute("dialog_show_installed"), true);
     p_Setting.dialog_show_required = ConvBoolString(p_Node->Attribute("dialog_show_required"), true);
 
-	// Matthias Jentsch - 2006-03-06: read additional attributes
 	p_Setting.os_filter_greater = p_Node->AttributeT("os_filter_greater").data();
 	p_Setting.os_filter_smaller = p_Node->AttributeT("os_filter_smaller").data();
 	p_Setting.os_filter_not_match_message = p_Node->AttributeT("os_filter_not_match_message").data();
 	if (p_Setting.os_filter_not_match_message.GetLength() == 0)
 	{
-		// Matthias Jentsch - 2006-03-06: default message if no message is defined
+		// default message if no message is defined
 		p_Setting.os_filter_not_match_message = TEXT("This setup cannot run under the current operating system!");
 	}
 	
-	// Jason Biegel - 2008-04-23: read additional attributes
 	p_Setting.processor_architecture_filter = p_Node->AttributeT("processor_architecture_filter").data();
 	p_Setting.processor_architecture_filter_not_match_message = p_Node->AttributeT("processor_architecture_filter_not_match_message").data();
 	if(p_Setting.processor_architecture_filter_not_match_message.GetLength() == 0)
 	{
-		// Jason Biegel - 2008-04-23: default message if no message is defined
+		// default message if no message is defined
 		p_Setting.processor_architecture_filter_not_match_message = TEXT("This setup cannot run on the current processor!");
 	}
 
-    /* Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction */
+    // message and caption to show during CAB extraction
     p_Setting.cab_dialog_caption = p_Node->AttributeT("cab_dialog_caption").data();
     p_Setting.cab_dialog_message = p_Node->AttributeT("cab_dialog_message").data();
     p_Setting.cab_cancelled_message = p_Node->AttributeT("cab_cancelled_message").data();
@@ -267,7 +289,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 		} //if l_Node_component != NULL
 	}//while l_Node_components != NULL
 
-    // Daniel Doubrovkine - 2008-11-08: Check that /ComponentArgs doesn't contain arguments for non-existant components
+    // check that /ComponentArgs doesn't contain arguments for non-existant components
     std::map<std::wstring, std::wstring>::iterator arg = commandLineInfo.m_componentCmdArgs.begin();
     while(arg != commandLineInfo.m_componentCmdArgs.end())
     {
@@ -313,14 +335,14 @@ void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p
 		throw std::exception("Invalid configuration file, node name not supported, expected 'configurations'.");
 	}
 
-	// Matthew Sheets - 2007-09-24: Capture configuration settings
-	//  (configuration settings may be modified by child "reference" configurations)
+	// capture configuration settings
+	// (configuration settings may be modified by child "reference" configurations)
 	configSetting l_ConfigSetting;
 	SaveAppState(l_ConfigSetting);
 
-	// Matthew Sheets - 2007-09-20: Process silent install setting
-	//   If parent configuration is configured for a silent install,
-	//   a child configuration will inherit that setting
+	// process silent install setting
+	// if parent configuration is configured for a silent install,
+	// a child configuration will inherit that setting
 	if (ConvBoolString(p_Node->Attribute("silent_install"), false))
 	{
 		QuietInstall.EnableSilentInstall();
@@ -345,11 +367,10 @@ void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p
 
 			ApplicationLog.Write( TEXT("Reading configuration node with LCID: "), l_Config_LCID);
 
-			// Matthew Sheets - 2007-09-25: Added OS Version to the configuration filter (in addition to LCID)
+			// OS Version configuration filter (in addition to LCID)
 			if (CheckConfigFilter(l_Config_LCID, l_os_filter_greater, l_os_filter_smaller, l_processor_architecture_filter))
 			{
-				// Matthew Sheets - 2008-01-14: Peek ahead to determine
-				//	 if other config blocks exist that match the config filters
+				// peek ahead to determine if other config blocks exist that match the config filters
 				bool l_additional_config_found = false;
 				TiXmlElement * l_Node_next_configuration = child->NextSiblingElement();
 				while (l_Node_next_configuration != NULL && (!l_additional_config_found))
@@ -371,7 +392,7 @@ void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p
 				{
 					ApplicationLog.Write( TEXT("Loading reference configuration"));
 
-					// Matthew Sheets - 2007-09-24: Load the reference config file and process recursively
+					// load the reference config file and process recursively
 					TiXmlDocument l_RefDocument;
 					InstallerSetting l_RefSetting;
 
@@ -389,28 +410,25 @@ void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p
 					ApplicationLog.Write( TEXT("Loading install configuration"));
 					LoadInstallConfigNode(l_Node_configuration, p_Setting);
 
-					// Matthew Sheets - 2007-09-24: Launch the installer dialog
+					// launch the installer dialog
 					INT_PTR nResponse = dlg.RunDni(p_Setting, (l_additional_config_found | p_Caller_Has_Additional_Config));
 					if (nResponse == IDOK)
 					{
-						//  tramite il pulsante OK.
+						
 					}
 					else if (nResponse == IDCANCEL)
 					{
-						// Matthew Sheets - 2008-01-14: Stop processing of configuration file
+						// stop processing of configuration file
 						l_bAbort = true;
 						break;
-
-						//  tramite il pulsante Annulla.
 					}
 				}
 				else
+                {
 					throw std::exception("Invalid configuration file, configuration type not supported.");
+                }
 
 				l_bFound = true;
-
-//				break;
-
 			}
 			else
 			{
@@ -419,21 +437,21 @@ void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p
 		}
 	}
 
-	// Matthew Sheets - 2007-09-24: Restore configuration settings
-	//  (configuration settings may have been modified by child "reference" configurations)
+	// restore configuration settings
+	// (configuration settings may have been modified by child "reference" configurations)
 	RestoreAppState(l_ConfigSetting);
 
 	if ( (!l_bFound) && (!l_bAbort) )
 		throw std::exception("System not supported or invalid configuration, no valid 'configuration' node found.");
 }
 
-// Matthew Sheets - 2007-09-24: Save the application state, in case it is modified by "reference" config files
+// save the application state, in case it is modified by "reference" config files
 void SaveAppState(configSetting & p_Config)
 {
 	p_Config.silent_install = QuietInstall.IsSilent();
 }
 
-// Matthew Sheets - 2007-09-24: Restore the application state after potential "reference" config file modifications
+// restore the application state after potential "reference" config file modifications
 void RestoreAppState(configSetting & p_Config)
 {
 	if (p_Config.silent_install)
@@ -446,7 +464,7 @@ void RestoreAppState(configSetting & p_Config)
 	}
 }
 
-// Matthew Sheets - 2008/01/14: Isolate Configuration filter checks to their own function
+// isolate Configuration filter checks to their own function
 bool CheckConfigFilter(
     const CString & p_Config_LCID, 
     const CString & p_os_filter_greater, 

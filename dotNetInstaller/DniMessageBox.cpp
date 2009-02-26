@@ -3,9 +3,7 @@
 #include "SilentInstall.h"
 #include "DniMessageBox.h"
 
-
-// Matthew Sheets - 2007-08-24: Support silent installs
-
+// support for silent installs
 int DniMessageBox(LPCTSTR p_lpszText, UINT p_nType /*=MB_OK*/, UINT p_nDefaultResult /*=MB_OK*/, UINT p_nIDHelp /*=0*/)
 {
 	// Determine whether to display a message to the end user or just return the default value

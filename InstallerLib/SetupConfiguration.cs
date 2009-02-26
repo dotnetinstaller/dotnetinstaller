@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Xml;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace InstallerLib
 {
@@ -36,24 +37,42 @@ namespace InstallerLib
             m_status_installed = tpl.status_installed;
             m_status_notinstalled = tpl.status_notinstalled;
 
-            // Matthias Jentsch - 2007-02-06: read OS filter message from template
+            // OS filter message
             m_os_filter_not_match_message = tpl.os_filter_not_match_message;
 
-            // Jason Biegel - 2008-04-22: read processor architecture filter message from template
+            // processor architecture filter message
             m_processor_architecture_filter_not_match_message = tpl.processor_architecture_filter_not_match_message;
 
-            // Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction
+            // message and caption to show during CAB extraction
             m_cab_dialog_message = tpl.cab_dialog_message; m_cab_cancelled_message = tpl.cab_cancelled_message;
             m_cab_dialog_caption = tpl.cab_dialog_caption;
             m_cab_path = tpl.cab_path;
             m_cab_path_autodelete = tpl.cab_path_autodelete;
 
-            // Daniel Doubrovkine - 2008-06-24: added auto-enabled logging options
+            // auto-enabled logging options
             m_log_enabled = tpl.log_enabled;
             m_log_file = tpl.log_file;
         }
 
         #region Attributes
+
+        private Rectangle m_dialog_position;
+        [Description("Position of the main dialog. (OPTIONAL)")]
+        [Category("Main Dialog Layout")]
+        public Rectangle dialog_position
+        {
+            get { return m_dialog_position; }
+            set { m_dialog_position = value; }
+        }
+
+        private Rectangle m_dialog_components_list_position;
+        [Description("Position of the components list within the main dialog. (OPTIONAL)")]
+        [Category("Main Dialog Layout")]
+        public Rectangle dialog_components_list_position
+        {
+            get { return m_dialog_components_list_position; }
+            set { m_dialog_components_list_position = value; }
+        }
 
         private string m_dialog_caption;
         [Description("Main dialog title. (REQUIRED)")]
@@ -73,6 +92,15 @@ namespace InstallerLib
             set { m_dialog_message = value; }
         }
 
+        private Rectangle m_dialog_message_position;
+        [Description("Position of the main dialog message. (OPTIONAL)")]
+        [Category("Main Dialog Layout")]
+        public Rectangle dialog_message_position
+        {
+            get { return m_dialog_message_position; }
+            set { m_dialog_message_position = value; }
+        }
+
         private string m_dialog_bitmap;
         [Description("Bitmap file used in the left panel of the main dialog. If this file doesn't exist or this attribute is empty the application load the bitmap from the .exe resource. Can contains path constant (see Help->Path Constant). (OPTIONAL)")]
         [Category("Main Dialog")]
@@ -80,6 +108,15 @@ namespace InstallerLib
         {
             get { return m_dialog_bitmap; }
             set { m_dialog_bitmap = value; }
+        }
+
+        private Rectangle m_dialog_bitmap_position;
+        [Description("Position of the main dialog bitmap. (OPTIONAL)")]
+        [Category("Main Dialog Layout")]
+        public Rectangle dialog_bitmap_position
+        {
+            get { return m_dialog_bitmap_position; }
+            set { m_dialog_bitmap_position = value; }
         }
 
         private string m_skip_caption;
@@ -190,6 +227,15 @@ namespace InstallerLib
             set { m_dialog_otherinfo_link = value; }
         }
 
+        private Rectangle m_dialog_otherinfo_link_position;
+        [Description("Position of the link at the bottom of the main dialog that open the link specified in the dialog_otherinfo_link attribute. (OPTIONAL)")]
+        [Category("Main Dialog Layout")]
+        public Rectangle dialog_otherinfo_link_position
+        {
+            get { return m_dialog_otherinfo_link_position; }
+            set { m_dialog_otherinfo_link_position = value; }
+        }
+
         private bool m_dialog_show_installed = true;
         [Description("If true, show installed components. Installed components are greyed out and automatically de-selected.")]
         [Category("Main Dialog")]
@@ -248,7 +294,7 @@ namespace InstallerLib
             set { m_allow_continue_on_error = value; }
         }
 
-        /* Matthias Jentsch - 2006-03-06: added filter for minimal OS version */
+        // filter for minimal OS version
         private string m_os_filter_greater;
         [Description("A filter to run this setup only on all operating system id greater than the id specified (see Help->Operating System Table). For example to run this setup only in Windows 2000 or later write '44'. (OPTIONAL)")]
         public string os_filter_greater
@@ -257,7 +303,7 @@ namespace InstallerLib
             set { m_os_filter_greater = value; }
         }
 
-        /* Matthias Jentsch - 2006-03-06: added filter for maximal OS version */
+        // filter for maximal OS version
         private string m_os_filter_smaller;
         [Description("A filter to run this setup only on all operating system id smaller than the id specified (see operating system table). For example to run this setup preceding Windows 2000 write '45'. (OPTIONAL)")]
         public string os_filter_smaller
@@ -266,7 +312,7 @@ namespace InstallerLib
             set { m_os_filter_smaller = value; }
         }
 
-        /* Matthias Jentsch - 2006-03-06: added message for not matching the OS filter */
+        // message for not matching the OS filter
         private string m_os_filter_not_match_message;
         [Description("A error message for the case that the operating system does not match the operating system filter (see os_filter_greater and os_filter_smaller). (OPTIONAL)")]
         [Category("Messages")]
@@ -276,7 +322,7 @@ namespace InstallerLib
             set { m_os_filter_not_match_message = value; }
         }
 
-        /* Jason Biegel - 2008-04-22: added filter for processor architecture */
+        // filter for processor architecture
         private string m_processor_architecture_filter;
         [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Separate by commas, can use the NOT sign ('!') to exclude. (es. 'x86,x64' or '!x86'). (OPTIONAL)")]
         public string processor_architecture_filter
@@ -285,7 +331,7 @@ namespace InstallerLib
             set { m_processor_architecture_filter = value; }
         }
 
-        /* Jason Biegel - 2008-04-22: added message for not matching the processor architecture filter */
+        // message for not matching the processor architecture filter
         private string m_processor_architecture_filter_not_match_message;
         [Description("An error message for the case that the processor architecture does not match the filter (see processor_architecture_filter). (OPTIONAL)")]
         [Category("Messages")]
@@ -295,7 +341,7 @@ namespace InstallerLib
             set { m_processor_architecture_filter_not_match_message = value; }
         }
 
-        /* Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction */
+        // message and caption to show during CAB extraction
         private string m_cab_dialog_message;
         [Description("CAB dialog message, this dialog shows when extracting an embedded CAB file")]
         [Category("Self-Extracting CAB")]
@@ -323,7 +369,7 @@ namespace InstallerLib
             set { m_cab_dialog_caption = value; }
         }
 
-        /* Daniel Doubrovkine - 2008-06-06: added path to use during CAB extraction */
+        // path to use during CAB extraction
         private string m_cab_path;
         [Description("CAB path used when extracting an embedded CAB file")]
         [DefaultValue("#TEMPPATH/#GUID")]
@@ -343,8 +389,7 @@ namespace InstallerLib
             set { m_cab_path_autodelete = value; }
         }
 
-
-        /* Daniel Doubrovkine - 2008-06-24: added auto-enabled logging options */
+        // auto-enabled logging options
         private bool m_log_enabled;
         [Description("Always enable logging; you can also enable logging with /Log on the dotNetInstaller commandline")]
         [DefaultValue(false)]
@@ -363,6 +408,42 @@ namespace InstallerLib
         {
             get { return m_log_file; }
             set { m_log_file = value; }
+        }
+
+        private Rectangle m_dialog_osinfo_position;
+        [Description("Position of the main dialog osinfo. (OPTIONAL)")]
+        [Category("Main Dialog Layout")]
+        public Rectangle dialog_osinfo_position
+        {
+            get { return m_dialog_osinfo_position; }
+            set { m_dialog_osinfo_position = value; }
+        }
+
+        private Rectangle m_dialog_install_button_position;
+        [Description("Position of the main dialog Install button. (OPTIONAL)")]
+        [Category("Main Dialog Layout")]
+        public Rectangle dialog_install_button_position
+        {
+            get { return m_dialog_install_button_position; }
+            set { m_dialog_install_button_position = value; }
+        }
+
+        private Rectangle m_dialog_cancel_button_position;
+        [Description("Position of the main dialog Cancel button. (OPTIONAL)")]
+        [Category("Main Dialog Layout")]
+        public Rectangle dialog_cancel_button_position
+        {
+            get { return m_dialog_cancel_button_position; }
+            set { m_dialog_cancel_button_position = value; }
+        }
+
+        private Rectangle m_dialog_skip_button_position;
+        [Description("Position of the main dialog Skip button. (OPTIONAL)")]
+        [Category("Main Dialog Layout")]
+        public Rectangle dialog_skip_button_position
+        {
+            get { return m_dialog_skip_button_position; }
+            set { m_dialog_skip_button_position = value; }
         }
 
         #endregion
@@ -397,27 +478,37 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("dialog_show_installed", m_dialog_show_installed.ToString());
             e.XmlWriter.WriteAttributeString("dialog_show_required", m_dialog_show_required.ToString());
 
-            // Matthias Jentsch - 2006-03-06: new attributes added
             e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
             e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
             e.XmlWriter.WriteAttributeString("os_filter_not_match_message", m_os_filter_not_match_message);
 
-            // Jason Biegel - 2008-04-22: new attributes added
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
             e.XmlWriter.WriteAttributeString("processor_architecture_filter_not_match_message", m_processor_architecture_filter_not_match_message);
 
-            // Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction
+            // message and caption to show during CAB extraction
             e.XmlWriter.WriteAttributeString("cab_dialog_message", m_cab_dialog_message);
             e.XmlWriter.WriteAttributeString("cab_cancelled_message", m_cab_cancelled_message);
             e.XmlWriter.WriteAttributeString("cab_dialog_caption", m_cab_dialog_caption);
 
-            // Daniel Doubrovkine - 2008-06-12: added CAB path
+            // CAB path
             e.XmlWriter.WriteAttributeString("cab_path", m_cab_path);
             e.XmlWriter.WriteAttributeString("cab_path_autodelete", m_cab_path_autodelete.ToString());
 
-            // Daniel Doubrovkine - 2008-06-24: added auto-enabled logging
+            // auto-enabled logging
             e.XmlWriter.WriteAttributeString("log_enabled", m_log_enabled.ToString());
             e.XmlWriter.WriteAttributeString("log_file", m_log_file);
+
+            // dialog, message and button positions
+            e.XmlWriter.WriteAttributeString("dialog_position", XmlRectangle.ToString(m_dialog_position));
+            e.XmlWriter.WriteAttributeString("dialog_components_list_position", XmlRectangle.ToString(m_dialog_components_list_position));
+            e.XmlWriter.WriteAttributeString("dialog_message_position", XmlRectangle.ToString(m_dialog_message_position));
+            e.XmlWriter.WriteAttributeString("dialog_bitmap_position", XmlRectangle.ToString(m_dialog_bitmap_position));
+            e.XmlWriter.WriteAttributeString("dialog_otherinfo_link_position", XmlRectangle.ToString(m_dialog_otherinfo_link_position));
+            e.XmlWriter.WriteAttributeString("dialog_osinfo_position", XmlRectangle.ToString(m_dialog_osinfo_position));
+            e.XmlWriter.WriteAttributeString("dialog_install_button_position", XmlRectangle.ToString(m_dialog_install_button_position));
+            e.XmlWriter.WriteAttributeString("dialog_cancel_button_position", XmlRectangle.ToString(m_dialog_cancel_button_position));
+            e.XmlWriter.WriteAttributeString("dialog_skip_button_position", XmlRectangle.ToString(m_dialog_skip_button_position));
+
             base.OnXmlWriteTag(e);
         }
 
@@ -498,7 +589,6 @@ namespace InstallerLib
             if (e.XmlElement.Attributes["dialog_show_required"] != null)
                 m_dialog_show_required = bool.Parse(e.XmlElement.Attributes["dialog_show_required"].InnerText);
 
-            // Matthias Jentsch - 2006-03-06: new attributes added
             if (e.XmlElement.Attributes["os_filter_greater"] != null)
                 m_os_filter_greater = e.XmlElement.Attributes["os_filter_greater"].InnerText;
             if (e.XmlElement.Attributes["os_filter_smaller"] != null)
@@ -506,11 +596,10 @@ namespace InstallerLib
             if (e.XmlElement.Attributes["os_filter_not_match_message"] != null)
                 m_os_filter_not_match_message = e.XmlElement.Attributes["os_filter_not_match_message"].InnerText;
 
-            // Jason Biegel - 2008-04-22: new attributes added
             if (e.XmlElement.Attributes["processor_architecture_filter"] != null)
                 m_processor_architecture_filter = e.XmlElement.Attributes["processor_architecture_filter"].InnerText;
 
-            // Daniel Doubrovkine - 2008-06-06: added message and caption to show during CAB extraction
+            // message and caption to show during CAB extraction
             if (e.XmlElement.Attributes["cab_dialog_message"] != null)
                 m_cab_dialog_message = e.XmlElement.Attributes["cab_dialog_message"].InnerText;
 
@@ -520,19 +609,39 @@ namespace InstallerLib
             if (e.XmlElement.Attributes["cab_dialog_caption"] != null)
                 m_cab_dialog_caption = e.XmlElement.Attributes["cab_dialog_caption"].InnerText;
 
-            // Daniel Doubrovkine - 2008-06-12: added CAB path
+            // CAB path
             if (e.XmlElement.Attributes["cab_path"] != null)
                 m_cab_path = e.XmlElement.Attributes["cab_path"].InnerText;
 
             if (e.XmlElement.Attributes["cab_path_autodelete"] != null)
                 cab_path_autodelete = bool.Parse(e.XmlElement.Attributes["cab_path_autodelete"].InnerText);
 
-            // Daniel Doubrovkine - 2008-06-24: added auto-enable logging
+            // auto-enable logging
             if (e.XmlElement.Attributes["log_enabled"] != null)
                 m_log_enabled = bool.Parse(e.XmlElement.Attributes["log_enabled"].InnerText);
 
             if (e.XmlElement.Attributes["log_file"] != null)
                 m_log_file = e.XmlElement.Attributes["log_file"].InnerText;
+
+            // dialog, message and button positions
+            if (e.XmlElement.Attributes["dialog_position"] != null)
+                m_dialog_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_position"].InnerText);
+            if (e.XmlElement.Attributes["dialog_components_list_position"] != null)
+                m_dialog_components_list_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_components_list_position"].InnerText);
+            if (e.XmlElement.Attributes["dialog_message_position"] != null)
+                m_dialog_message_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_message_position"].InnerText);
+            if (e.XmlElement.Attributes["dialog_bitmap_position"] != null)
+                m_dialog_bitmap_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_bitmap_position"].InnerText);
+            if (e.XmlElement.Attributes["dialog_otherinfo_link_position"] != null)
+                m_dialog_otherinfo_link_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_otherinfo_link_position"].InnerText);
+            if (e.XmlElement.Attributes["dialog_osinfo_position"] != null)
+                m_dialog_osinfo_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_osinfo_position"].InnerText);
+            if (e.XmlElement.Attributes["dialog_install_button_position"] != null)
+                m_dialog_install_button_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_install_button_position"].InnerText);
+            if (e.XmlElement.Attributes["dialog_cancel_button_position"] != null)
+                m_dialog_cancel_button_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_cancel_button_position"].InnerText);
+            if (e.XmlElement.Attributes["dialog_skip_button_position"] != null)
+                m_dialog_skip_button_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_skip_button_position"].InnerText);
 
             base.OnXmlReadTag(e);
         }
