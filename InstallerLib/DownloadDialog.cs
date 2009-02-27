@@ -3,6 +3,8 @@ using System.Xml;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.IO;
+using System.ComponentModel.Design;
+using System.Drawing.Design;
 
 namespace InstallerLib
 {
@@ -57,6 +59,7 @@ namespace InstallerLib
 
         private string m_dialog_message;
         [Description("The initial message that appears in the download dialog before the user press the 'Start' button. (REQUIRED)")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string dialog_message
         {
             get { return m_dialog_message; }
@@ -73,6 +76,7 @@ namespace InstallerLib
 
         private string m_dialog_message_downloading;
         [Description("The message that appears in the download dialog when the download process start. (REQUIRED)")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string dialog_message_downloading
         {
             get { return m_dialog_message_downloading; }

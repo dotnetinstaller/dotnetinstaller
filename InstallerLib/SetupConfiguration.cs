@@ -4,6 +4,7 @@ using System.ComponentModel.Design;
 using System.Xml;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Design;
 
 namespace InstallerLib
 {
@@ -86,6 +87,7 @@ namespace InstallerLib
         private string m_dialog_message;
         [Description("Main message of the main dialog. (REQUIRED)")]
         [Category("Main Dialog")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string dialog_message
         {
             get { return m_dialog_message; }
@@ -167,6 +169,7 @@ namespace InstallerLib
         private string m_failed_exec_command_continue;
         [Description("The message used when a component cannot be installed and ask if the application can continue with others components (Yes/No message). Must contain one '%s' string where the application put the description of the component. (REQUIRED)")]
         [Category("Messages")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string failed_exec_command_continue
         {
             get { return m_failed_exec_command_continue; }
@@ -176,6 +179,7 @@ namespace InstallerLib
         private string m_installation_completed;
         [Description("Installation completed message. (REQUIRED)")]
         [Category("Messages")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string installation_completed
         {
             get { return m_installation_completed; }
@@ -185,6 +189,7 @@ namespace InstallerLib
         private string m_installing_component_wait;
         [Description("The message used when installing a component. Must contain one '%s' string where the application put the description of the component. (REQUIRED)")]
         [Category("Component")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string installing_component_wait
         {
             get { return m_installing_component_wait; }
@@ -194,6 +199,7 @@ namespace InstallerLib
         private string m_reboot_required;
         [Description("The message used when a component signaled the installer that it requires a reboot. (REQUIRED)")]
         [Category("Messages")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string reboot_required
         {
             get { return m_reboot_required; }
@@ -314,8 +320,9 @@ namespace InstallerLib
 
         // message for not matching the OS filter
         private string m_os_filter_not_match_message;
-        [Description("A error message for the case that the operating system does not match the operating system filter (see os_filter_greater and os_filter_smaller). (OPTIONAL)")]
+        [Description("An error message for the case that the operating system does not match the operating system filter (see os_filter_greater and os_filter_smaller). (OPTIONAL)")]
         [Category("Messages")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string os_filter_not_match_message
         {
             get { return m_os_filter_not_match_message; }
@@ -335,6 +342,7 @@ namespace InstallerLib
         private string m_processor_architecture_filter_not_match_message;
         [Description("An error message for the case that the processor architecture does not match the filter (see processor_architecture_filter). (OPTIONAL)")]
         [Category("Messages")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string processor_architecture_filter_not_match_message
         {
             get { return m_processor_architecture_filter_not_match_message; }
@@ -345,6 +353,7 @@ namespace InstallerLib
         private string m_cab_dialog_message;
         [Description("CAB dialog message, this dialog shows when extracting an embedded CAB file")]
         [Category("Self-Extracting CAB")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string cab_dialog_message
         {
             get { return m_cab_dialog_message; }
@@ -354,6 +363,7 @@ namespace InstallerLib
         private string m_cab_cancelled_message;
         [Description("CAB cancelled message, this error shows if extraction operation has been aborted")]
         [Category("Self-Extracting CAB")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string cab_cancelled_message
         {
             get { return m_cab_cancelled_message; }

@@ -1,7 +1,9 @@
 using System;
 using System.Xml;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Collections.Generic;
+using System.Drawing.Design;
 using System.IO;
 
 namespace InstallerLib
@@ -71,6 +73,7 @@ namespace InstallerLib
 
         private string m_installcompletemessage; //se vuoto non viene visualizzato nessun messagio al termine del download
         [Description("The message used when a component is successfully installed. To disable this message leave this property empty. (OPTIONAL)")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string installcompletemessage
         {
             get { return m_installcompletemessage; }
@@ -87,6 +90,7 @@ namespace InstallerLib
 
         private string m_failed_exec_command_continue;
         [Description("The message used when a component cannot be installed and ask if the application can continue with others components (Yes/No message). Must contain one '%s' string where the application put the description of the component. (OPTIONAL)")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string failed_exec_command_continue
         {
             get { return m_failed_exec_command_continue; }
@@ -95,6 +99,7 @@ namespace InstallerLib
 
         private string m_reboot_required;
         [Description("The message used when this component signaled the installer that it requires a reboot. (OPTIONAL)")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string reboot_required
         {
             get { return m_reboot_required; }

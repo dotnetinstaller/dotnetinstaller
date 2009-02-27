@@ -32,9 +32,10 @@ code { color: #b22222; font-family: Courier New; }
   <li>InstallerEditor: components can be dragged and dropped between nodes. </li>
   <li>InstallerEditor: the About box can be closed with the Escape key. </li>
   <li>InstallerEditor: added Expand All, Collapse All, Move, Move Up and Move Down
-   context menu items. </li>
-  <li>InstallerEditor: Shift+Up and Shift+Down arrows move components up and down.
-  </li>
+   context menu items.</li>
+  <li>InstallerEditor: Shift+Up and Shift+Down arrows move components up and down.</li>
+  <li>InstallerEditor: added support for multiline properties for most non-caption
+   or button messages.</li>
   <li>InstallerEditor: added shortcuts to open a configuratoin file (Ctrl+O), create
    a new configuration file (Ctrol+N), exit (Alt+F4) and refresh (F5). </li>
   <li>Added <code>allow_continue_on_error</code> globally and per-component: when false
@@ -58,8 +59,12 @@ code { color: #b22222; font-family: Courier New; }
    per component, extending the global setting. </li>
   <li>Added <code>auto_close_on_error</code>: changes behavior on component error,
    now optionally closing the bootstrapper. </li>
-  <li>Added a set of <code>dialog_position</code> options that enable resizing of the
-   main installer dialog elements.</li>
+  <li>Added a set of options that enable resizing of the main installer dialog elements:
+   dialog_position <code>dialog_components_list_position</code>, <code>dialog_message_position</code>,
+   <code>dialog_bitmap_position</code>, <code>dialog_otherinfo_link_position</code>,
+   <code>dialog_osinfo_position</code>, <code>dialog_install_button_position</code>,
+   <code>dialog_cancel_button_position</code> and <code>dialog_skip_button_position</code>.
+  </li>
  </ul>
  <h3>
   1.5 (25 Oct 2008)</h3>

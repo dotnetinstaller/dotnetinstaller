@@ -4,6 +4,7 @@ using System.Collections;
 using System.Windows.Forms;
 using System.Data;
 using InstallerLib;
+using System.ComponentModel.Design;
 
 namespace InstallerEditor
 {
