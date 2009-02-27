@@ -55,6 +55,7 @@
   <CallTarget Targets="build" />
   <CallTarget Targets="doc" />
   <CallTarget Targets="release" />
+  <CallTarget Targets="zip" />
  </Target>
  <Target Name="version">
   <Version Major="1" Minor="6">
@@ -118,5 +119,11 @@
   <Delete Files="Documentation\$(Configuration)\dotNetInstaller.chm" />
   <MSBuild Projects="Documentation\Dni.shfbproj" Properties="Configuration=$(Configuration)" />
   <Error Condition="Exists('Documentation\$(Configuration)\LastBuild.log')" Text="Documentation build failed, check Documentation\$(Configuration)\LastBuild.log" />
+ </Target>
+ <Target Name="zip" DependsOnTargets="version">
+  <CreateItem Include="$(ReleaseDir)\**\*">
+   <Output TaskParameter="Include" ItemName="PackageFiles" />
+  </CreateItem>
+  <Zip ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).zip" Files="@(PackageFiles)" />
  </Target>
 </Project>
