@@ -37,6 +37,8 @@ private:
 	InstallerSetting m_Settings;
     void ExtractCab();
     void SelectComponents();
+    // move a window to the coordinates defined by a rectangle with defaults
+    static bool MoveWindow(CWnd& dlg, const CRect& pos);
 public:
 	CButton m_btnSkip;
 	CButton m_btnInstall;

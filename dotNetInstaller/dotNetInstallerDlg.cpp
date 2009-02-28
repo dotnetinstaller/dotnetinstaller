@@ -99,24 +99,15 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	m_btnInstall.SetWindowText(m_Settings.install_caption);
 	m_lblMessage.SetWindowText(m_Settings.dialog_message);
 
-    if (! m_Settings.dialog_position.IsRectEmpty()) 
-        MoveWindow(& m_Settings.dialog_position);
-    if (! m_Settings.dialog_components_list_position.IsRectEmpty()) 
-        m_ListBoxComponents.MoveWindow(& m_Settings.dialog_components_list_position);
-    if (! m_Settings.dialog_message_position.IsRectEmpty()) 
-        m_lblMessage.MoveWindow(& m_Settings.dialog_message_position);
-    if (! m_Settings.dialog_bitmap_position.IsRectEmpty()) 
-        m_PictureBox.MoveWindow(& m_Settings.dialog_bitmap_position);
-    if (! m_Settings.dialog_otherinfo_link_position.IsRectEmpty()) 
-       m_InfoLink.MoveWindow(& m_Settings.dialog_otherinfo_link_position);
-    if (! m_Settings.dialog_osinfo_position.IsRectEmpty()) 
-       m_lblOperatingSystem.MoveWindow(& m_Settings.dialog_osinfo_position);
-    if (! m_Settings.dialog_install_button_position.IsRectEmpty()) 
-       m_btnInstall.MoveWindow(& m_Settings.dialog_install_button_position);
-    if (! m_Settings.dialog_cancel_button_position.IsRectEmpty()) 
-       m_btnCancel.MoveWindow(& m_Settings.dialog_cancel_button_position);
-    if (! m_Settings.dialog_skip_button_position.IsRectEmpty()) 
-       m_btnSkip.MoveWindow(& m_Settings.dialog_skip_button_position);
+    MoveWindow(* this, m_Settings.dialog_position);
+    MoveWindow(m_ListBoxComponents, m_Settings.dialog_components_list_position);
+    MoveWindow(m_lblMessage, m_Settings.dialog_message_position);
+    MoveWindow(m_PictureBox, m_Settings.dialog_bitmap_position);
+    MoveWindow(m_InfoLink, m_Settings.dialog_otherinfo_link_position);
+    MoveWindow(m_lblOperatingSystem, m_Settings.dialog_osinfo_position);
+    MoveWindow(m_btnInstall, m_Settings.dialog_install_button_position);
+    MoveWindow(m_btnCancel, m_Settings.dialog_cancel_button_position);
+    MoveWindow(m_btnSkip, m_Settings.dialog_skip_button_position);
     
 	m_InfoLink.SetCaption(m_Settings.dialog_otherinfo_caption);
 	m_InfoLink.SetHyperlink(m_Settings.dialog_otherinfo_link);
@@ -553,4 +544,23 @@ void CdotNetInstallerDlg::ExtractCab()
     e_component.Init(& l_dg);
 	l_dg.DoModal();
     e_component.Exec();
+}
+
+bool CdotNetInstallerDlg::MoveWindow(CWnd& dlg, const CRect& pos)
+{   
+    // an empty rectangle is ignored
+    if (pos.left == 0 && pos.right == 0 && pos.bottom == 0 && pos.top == 0)
+        return false;
+
+    // partial rectangle is filled
+    CRect current_pos;
+    dlg.GetWindowRect(& current_pos);
+    if (pos.left != 0) current_pos.left = pos.left;
+    if (pos.right != 0) current_pos.right = pos.right;
+    if (pos.top != 0) current_pos.top = pos.top;
+    if (pos.bottom != 0) current_pos.bottom = pos.bottom;
+
+    // move the window to a combination of old and new coordinates
+    dlg.MoveWindow(& current_pos);
+    return true;
 }

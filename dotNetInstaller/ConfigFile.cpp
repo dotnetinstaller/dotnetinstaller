@@ -23,7 +23,7 @@ bool ConvBoolString(const char * p_BoolString, bool defaultValue = false)
 
 CRect ConvRectString(const std::wstring& p_RectString)
 {
-    CRect r;
+    CRect r(0, 0, 0, 0);
     if (p_RectString.empty()) return r;
     std::vector<std::wstring> l_RectCoordinates;
     split_string(p_RectString, ',', l_RectCoordinates, 4);
