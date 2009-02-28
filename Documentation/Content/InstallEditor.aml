@@ -3,7 +3,7 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        The <application>Installer Editor</application> allows you to create and modify configuration files,
+        The <newTerm>installer editor</newTerm> allows you to create and modify configuration files,
         compile and link a setup bootstrapper.
         <mediaLink>
           <image xlink:href="InstallerEditor.jpg" />

@@ -55,6 +55,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
   </PropertyGroup>
   <ItemGroup>
+    <None Include="Content\dotNetInstallerLayout.aml" />
     <None Include="Content\Components.aml" />
     <None Include="Content\BuildingWebSetupForDotNet.aml" />
     <None Include="Content\BuildingStandaloneSetupForDotNet.aml" />
@@ -92,6 +93,12 @@
     </Image>
     <Image Include="Images\dotNetInstaller.jpg">
       <ImageId>dotNetInstaller.jpg</ImageId>
+    </Image>
+    <Image Include="Images\dotNetInstallerLayout.jpg">
+      <ImageId>dotNetInstallerLayout.jpg</ImageId>
+    </Image>
+    <Image Include="Images\dotNetInstallerSample.jpg">
+      <ImageId>dotNetInstallerSample.jpg</ImageId>
     </Image>
   </ItemGroup>
   <!-- Import the SHFB build targets -->

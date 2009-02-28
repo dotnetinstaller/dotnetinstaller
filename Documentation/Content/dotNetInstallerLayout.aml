@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="1dbadf87-c930-48a1-8609-71c96e80c9b7" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        It's possible to customize some elements of the setup executable layout beyond
+        multilingual features.
+      </para>
+    </introduction>
+    <section address="dotnetinstallerlayoutpositions">
+      <title>Setting Dialog Element Positions</title>
+      <content>
+        <para>
+          You can set dialog element positions in the installer editor. Click on a configuration
+          node and locate the <literal>Main Dialog Layout</literal> section on the properties pane.
+        </para>
+        <para>
+          Every position consists of 4 numbers defining <newTerm>left</newTerm>,
+          <newTerm>right</newTerm>, <newTerm>width</newTerm> and <newTerm>height</newTerm> of
+          the displayed widget, dialog or button.
+          <alert class="note">
+            <para>
+              You don't have to define all four coordinates. It's possible to modify one or more
+              coordinates to affect the position and the size of the dialog elements.
+            </para>
+          </alert>
+          <mediaLink>
+            <image xlink:href="DotNetInstallerLayout.jpg" />
+          </mediaLink>
+        </para>
+      </content>
+    </section>
+    <section address="dotnetinstallerlayoutpositions">
+      <title>Modifiable Dialog Elements</title>
+      <content>
+        <para>
+          <mediaLink>
+            <image xlink:href="DotNetInstallerSample.jpg" />
+          </mediaLink>
+          The following dialog elements can be positioned and resized.
+          <definitionTable>
+            <definedTerm>dialog_position</definedTerm>
+            <definition>The main dotNetInstaller dialog.</definition>
+            <definedTerm>dialog_bitmap_position</definedTerm>
+            <definition>The main bitmap image.</definition>
+            <definedTerm>dialog_cancel_button_position</definedTerm>
+            <definition>Cancel (close) button.</definition>
+            <definedTerm>dialog_install_button_position</definedTerm>
+            <definition>Install button.</definition>
+            <definedTerm>dialog_skip_button_position</definedTerm>
+            <definition>Skip button for setup sequences.</definition>
+            <definedTerm>dialog_components_list_position</definedTerm>
+            <definition>List of components.</definition>
+            <definedTerm>dialog_message_position</definedTerm>
+            <definition>Message above the components list.</definition>
+            <definedTerm>dialog_osinfo_position</definedTerm>
+            <definition>Operating system information below the bitmap.</definition>
+            <definedTerm>dialog_otherlink_info_position</definedTerm>
+            <definition>Link for more information below the components list.</definition>
+          </definitionTable>
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

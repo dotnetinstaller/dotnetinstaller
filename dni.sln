@@ -124,6 +124,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 		Documentation\Content\Contributors.aml = Documentation\Content\Contributors.aml
 		Documentation\Content\DeploymentStrategies.aml = Documentation\Content\DeploymentStrategies.aml
 		Documentation\Content\dotNetInstaller.aml = Documentation\Content\dotNetInstaller.aml
+		Documentation\Content\dotNetInstallerLayout.aml = Documentation\Content\dotNetInstallerLayout.aml
 		Documentation\Content\GettingStarted.aml = Documentation\Content\GettingStarted.aml
 		Documentation\Content\InstallEditor.aml = Documentation\Content\InstallEditor.aml
 		Documentation\Content\InstallLinker.aml = Documentation\Content\InstallLinker.aml
@@ -133,6 +134,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 		Documentation\Content\Samples.aml = Documentation\Content\Samples.aml
 		Documentation\Content\SinglePackageTutorial.aml = Documentation\Content\SinglePackageTutorial.aml
 		Documentation\Content\VariableSubstitution.aml = Documentation\Content\VariableSubstitution.aml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{02C1E614-3F23-4363-B899-920ECE2DD56E}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		Documentation\Images\dotNetInstaller.jpg = Documentation\Images\dotNetInstaller.jpg
+		Documentation\Images\dotNetInstallerLayout.jpg = Documentation\Images\dotNetInstallerLayout.jpg
+		Documentation\Images\dotNetInstallerSample.jpg = Documentation\Images\dotNetInstallerSample.jpg
+		Documentation\Images\InstallerEditor.jpg = Documentation\Images\InstallerEditor.jpg
+		Documentation\Images\StandaloneSetup.jpg = Documentation\Images\StandaloneSetup.jpg
+		Documentation\Images\WebSetup.jpg = Documentation\Images\WebSetup.jpg
 	EndProjectSection
 EndProject
 Global
@@ -169,6 +184,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{64CA2111-8FFF-42BC-AB3B-1B6549E5EFCE} = {2F6E6EC2-78ED-4D9F-A549-FDBB92E10C1A}
+		{02C1E614-3F23-4363-B899-920ECE2DD56E} = {2F6E6EC2-78ED-4D9F-A549-FDBB92E10C1A}
 		{7A7F3F3A-C319-4E83-AB2F-95C8B7C85614} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{AA6599BC-B3BA-4EC0-980D-5B66336A1350} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{F4D5A955-C6B7-4989-9DC7-6565035D0ECF} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}

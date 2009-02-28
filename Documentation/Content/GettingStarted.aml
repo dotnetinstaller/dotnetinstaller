@@ -8,11 +8,86 @@
       <title>Before You Begin</title>
       <content>
         <para>
-          <alert class="important">
-            <para>
-              THIS SECTION OF DOCUMENTATION NEEDS REVISITING AND CHECKING
-            </para>
-          </alert>
+          The following terms are used in this user guide.
+          <tableDefinition>
+            <definedTerm>installer</definedTerm>
+            <definition>
+              A complete package that consists of several <newTerm>setup packages</newTerm>,
+              a <newTerm>bootstrapper</newTerm>, a <newTerm>configuration file</newTerm> with one
+              or many <newTerm>configurations</newTerm> and additional support files.
+            </definition>
+            <definedTerm>setup package</definedTerm>
+            <definition>
+              An installer for your application. For example an MSI built with Visual Studio or WIX.
+            </definition>
+            <definedTerm>bootstrapper</definedTerm>
+            <definition>
+              The dotNetInstaller executable that the users see when they run the <newTerm>installer</newTerm>.
+              This is a simple GUI, <newTerm>dotNetInstaller.exe</newTerm>, that
+              <newTerm>bootstraps</newTerm> an installation by deploying pre-requisites in the
+              correct order.
+            </definition>
+            <definedTerm>configuration</definedTerm>
+            <definition>
+              A configuration defined by the developer that contains the list of setup packages
+              to install by the bootstrapper. A single configuration applies to one or several
+              locales, operating system(s) and/or processor architecture(s).
+            </definition>
+            <definedTerm>configuration file</definedTerm>
+            <definition>
+              An XML file that contains multiple configurations and that can be
+              edited with the <newTerm>installer editor</newTerm>.
+            </definition>
+            <definedTerm>installer editor</definedTerm>
+            <definition>
+              A tool, <application>InstallerEditor.exe</application> that can edit a <newTerm>configuration file</newTerm>.
+            </definition>
+            <definedTerm>installer linker</definedTerm>
+            <definition>
+              A tool, <newTerm>InstallerLinker.exe</newTerm> that can create bootstrapped
+              <newTerm>installers</newTerm>.
+            </definition>
+            <definedTerm>component</definedTerm>
+            <definition>
+              A <newTerm>component</newTerm> defines a single <newTerm>setup package</newTerm>
+              in a <newTerm>configuration</newTerm>.
+            </definition>
+            <definedTerm>installed check</definedTerm>
+            <definition>
+              An <newTerm>installed check</newTerm> defines a single check for whether
+              a <newTerm>component</newTerm> is installed.
+            </definition>
+            <definedTerm>installed check operator</definedTerm>
+            <definition>
+              An <newTerm>installed check operator</newTerm> combines several <newTerm>installed checks</newTerm>
+              with a logical operator.
+            </definition>
+          </tableDefinition>
+        </para>
+      </content>
+    </section>
+    <section address="usingdni">
+      <title>Using dotNetInstaller</title>
+      <content>
+        <para>
+          <list class="ordered">
+            <listItem>
+              Launch <application>InstallerEditor.exe</application> and create a configuration file. See
+              <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="b88e8650-71df-4328-a720-72ea55cf60f5" />.
+            </listItem>
+            <listItem>
+              Add <newTerm>configurations</newTerm>, <newTerm>components</newTerm> and <newTerm>installed checks</newTerm>.
+              Edit messages and various options. See
+              <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="db007eb2-ccc6-4657-843e-adad7da5db5b" />
+              and
+              <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="9cd31590-c899-40a7-897a-d5ca844c2324" />.
+            </listItem>
+            <listItem>
+              Deploy your <newTerm>installer</newTerm>. This may involve linking a single executable package
+              or copying support files onto a CDROM. See
+              <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="42440e25-c724-48f7-b3a4-e270f60bad78" />.
+            </listItem>
+          </list>
         </para>
       </content>
     </section>

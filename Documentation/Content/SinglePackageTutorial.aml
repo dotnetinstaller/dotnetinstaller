@@ -66,7 +66,7 @@
         <step>
           <content>
             <para>
-              Embed individual files via the InstallLinker.exe command line with <system>/EmbedFile</system> and entire folders with
+              Embed individual files via the <application>InstallLinker.exe command</application> line with <system>/EmbedFile</system> and entire folders with
               their subfolders with <system>/EmbedFolder</system>. The latter lets you optionally specify a flag, eg.
               <system>/EmbedFolder:Path\*.msi</system> to embed all .msi files in all subfolders. Note that with
               <system>/EmbedFolder</system> files are extracted mirroring the structure under the folder specified.
