@@ -30,6 +30,9 @@ namespace InstallerLinker
                 catch (Exception ex)
                 {
                     Console.WriteLine("ERROR: {0}", ex.Message);
+#if DEBUG
+                    Console.WriteLine(ex.StackTrace);
+#endif
                     rc = -2;
                 }
             }

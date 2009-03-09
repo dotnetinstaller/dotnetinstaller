@@ -12,7 +12,7 @@ namespace InstallerLib
         public string output;
         [Argument(ArgumentType.Required, HelpText = "Template installer executable", LongName = "Template", ShortName = "t")]
         public string template;
-        [Argument(ArgumentType.Required, HelpText = "Picture for the banner", LongName = "Banner", ShortName = "b")]
+        [Argument(ArgumentType.AtMostOnce, HelpText = "Picture for the banner", LongName = "Banner", ShortName = "b")]
         public string banner;
         [Argument(ArgumentType.Required, HelpText = "XML configuration file", LongName = "Configuration", ShortName = "c")]
         public string config;

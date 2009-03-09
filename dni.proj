@@ -124,6 +124,6 @@
   <CreateItem Include="$(ReleaseDir)\**\*">
    <Output TaskParameter="Include" ItemName="PackageFiles" />
   </CreateItem>
-  <Zip ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).zip" Files="@(PackageFiles)" />
+  <Zip WorkingDirectory="target\$(Configuration)" ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).zip" Files="@(PackageFiles)" />
  </Target>
 </Project>
