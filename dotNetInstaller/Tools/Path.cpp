@@ -33,11 +33,17 @@ CString DVLib::GetSystemPath()
 
 CString DVLib::GetWindowsPath()
 {
-	//WindowsPath
 	TCHAR l_bufferWindows[MAX_PATH+1];
 	ZeroMemory(l_bufferWindows,MAX_PATH+1);
 	GetWindowsDirectory(l_bufferWindows, MAX_PATH+1);
+	return l_bufferWindows;
+}
 
+CString DVLib::GetSystemWindowsPath()
+{
+	TCHAR l_bufferWindows[MAX_PATH+1];
+	ZeroMemory(l_bufferWindows,MAX_PATH+1);
+	GetSystemWindowsDirectory(l_bufferWindows, MAX_PATH+1);
 	return l_bufferWindows;
 }
 

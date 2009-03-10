@@ -57,27 +57,19 @@ CString InstallerSetting::ValidatePath(LPCTSTR p_Path)
 {
     //ApplicationPath
     CString l_CurrentPath = DVLib::GetAppPath();
-
-    //SystemPath
-    TCHAR l_bufferSystem[MAX_PATH+1];
-    ZeroMemory(l_bufferSystem,MAX_PATH+1);
-    GetSystemDirectory(l_bufferSystem, MAX_PATH+1);
-
-    //WindowsPath
-    TCHAR l_bufferWindows[MAX_PATH+1];
-    ZeroMemory(l_bufferWindows,MAX_PATH+1);
-    GetWindowsDirectory(l_bufferWindows, MAX_PATH+1);
-
-    //CabPath
+    CString l_SystemPath = DVLib::GetSystemPath();
+    CString l_WindowsPath = DVLib::GetWindowsPath();
+    CString l_SystemWindowsPath = DVLib::GetSystemWindowsPath();
+    CString l_CabPath = cab_path.GetLength() ? cab_path : DVLib::GetSessionTempPath();
 
     CString tmp = p_Path;
-    tmp.Replace(c_CABPATH, cab_path.GetLength() ? cab_path : DVLib::GetSessionTempPath());
+    tmp.Replace(c_CABPATH, l_CabPath);
     tmp.Replace(c_APPPATH, l_CurrentPath);
-    tmp.Replace(c_SYSTEMPATH, l_bufferSystem);
-    tmp.Replace(c_WINDOWSPATH, l_bufferWindows);
+    tmp.Replace(c_SYSTEMPATH, l_SystemPath);
+    tmp.Replace(c_WINDOWSPATH, l_WindowsPath);
+    tmp.Replace(c_SYSTEMWINDOWSPATH, l_SystemWindowsPath);
     tmp.Replace(c_TEMPPATH, DVLib::GetTempPathCustom());
     tmp.Replace(c_GUID, DVLib::GetSessionGUID());
-
     return tmp;
 }
 

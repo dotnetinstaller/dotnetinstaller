@@ -7,6 +7,7 @@ namespace DVLib
 	CString GetAppPath();
 	CString GetSystemPath();
 	CString GetWindowsPath();
+	CString GetSystemWindowsPath();
 	CString GetTempPathCustom();
     // get a unique guid for this run of dni
     CString GetSessionGUID();

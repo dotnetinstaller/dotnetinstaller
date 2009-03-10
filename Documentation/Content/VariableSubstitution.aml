@@ -18,7 +18,17 @@
             <definedTerm>#WINDOWSPATH</definedTerm>
             <definition>
               This string is replaced with the windows directory (using <literal>GetWindowsDirectory()</literal> API, usually
-              <localUri>C:\WINDOWS</localUri> ).
+              <localUri>C:\WINDOWS</localUri>).
+            </definition>
+            <definedTerm>#SYSTEMWINDOWSPATH</definedTerm>
+            <definition>
+              This string is replaced with the system windows directory (using <literal>GetSystemWindowsDirectory()</literal> API, usually
+              <localUri>C:\WINDOWS</localUri>).
+              On a system that is running Terminal Services, each user has a unique Windows directory. The system Windows 
+              directory is shared by all users, so it is the directory where an application should store initialization and help 
+              files that apply to all users. With Terminal Services, this variable is the path 
+              of the system Windows directory, while the <literal>#WINDOWSPATH</literal> function is the path of a 
+              Windows directory that is private for each user. On a single-user system, these values are the same.
             </definition>
             <definedTerm>#APPPATH</definedTerm>
             <definition>
