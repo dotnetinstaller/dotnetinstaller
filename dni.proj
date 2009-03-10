@@ -121,7 +121,7 @@
   <Error Condition="Exists('Documentation\$(Configuration)\LastBuild.log')" Text="Documentation build failed, check Documentation\$(Configuration)\LastBuild.log" />
  </Target>
  <Target Name="zip" DependsOnTargets="version">
-  <CreateItem Include="$(ReleaseDir)\**\*">
+  <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip">
    <Output TaskParameter="Include" ItemName="PackageFiles" />
   </CreateItem>
   <Zip WorkingDirectory="target\$(Configuration)" ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).zip" Files="@(PackageFiles)" />
