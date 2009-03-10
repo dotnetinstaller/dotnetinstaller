@@ -135,20 +135,8 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 
 	p_Setting.os_filter_greater = p_Node->AttributeT("os_filter_greater").data();
 	p_Setting.os_filter_smaller = p_Node->AttributeT("os_filter_smaller").data();
-	p_Setting.os_filter_not_match_message = p_Node->AttributeT("os_filter_not_match_message").data();
-	if (p_Setting.os_filter_not_match_message.GetLength() == 0)
-	{
-		// default message if no message is defined
-		p_Setting.os_filter_not_match_message = TEXT("This setup cannot run under the current operating system!");
-	}
 	
 	p_Setting.processor_architecture_filter = p_Node->AttributeT("processor_architecture_filter").data();
-	p_Setting.processor_architecture_filter_not_match_message = p_Node->AttributeT("processor_architecture_filter_not_match_message").data();
-	if(p_Setting.processor_architecture_filter_not_match_message.GetLength() == 0)
-	{
-		// default message if no message is defined
-		p_Setting.processor_architecture_filter_not_match_message = TEXT("This setup cannot run on the current processor!");
-	}
 
     // message and caption to show during CAB extraction
     p_Setting.cab_dialog_caption = p_Node->AttributeT("cab_dialog_caption").data();
@@ -157,7 +145,6 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 
 	ApplicationLog.Write( TEXT("Finished reading configuration attributes") );
 
-	//caricamento componenti
 	p_Setting.ClearComponents();
 
 	TiXmlNode * child = NULL;
@@ -348,7 +335,6 @@ void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p
 		QuietInstall.EnableSilentInstall();
 	}
 
-
 	CdotNetInstallerDlg dlg;
 //	m_pMainWnd = &dlg;
 
@@ -442,7 +428,11 @@ void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p
 	RestoreAppState(l_ConfigSetting);
 
 	if ( (!l_bFound) && (!l_bAbort) )
-		throw std::exception("System not supported or invalid configuration, no valid 'configuration' node found.");
+    {
+        CString configuration_no_match_message = p_Node->AttributeT("configuration_no_match_message").data();
+        if (configuration_no_match_message.IsEmpty()) configuration_no_match_message = "System not supported or invalid configuration.";
+        throw std::exception(DVLib::Tstring2string(configuration_no_match_message).c_str());
+    }
 }
 
 // save the application state, in case it is modified by "reference" config files

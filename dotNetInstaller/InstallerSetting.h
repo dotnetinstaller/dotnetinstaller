@@ -41,12 +41,8 @@ public:
 	CString os_filter_greater;
 	// filter for maximum operating system version
 	CString os_filter_smaller;
-	// message if the current operating system does not match the operating system filter
-	CString os_filter_not_match_message;
 	// filter for processor architecture
 	CString processor_architecture_filter;
-	// message for not matching the processor architecture filter
-	CString processor_architecture_filter_not_match_message;
     // message and caption to show during CAB extraction
     CString cab_dialog_message;
     CString cab_dialog_caption;

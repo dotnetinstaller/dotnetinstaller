@@ -38,14 +38,9 @@ namespace InstallerLib
             m_status_installed = tpl.status_installed;
             m_status_notinstalled = tpl.status_notinstalled;
 
-            // OS filter message
-            m_os_filter_not_match_message = tpl.os_filter_not_match_message;
-
-            // processor architecture filter message
-            m_processor_architecture_filter_not_match_message = tpl.processor_architecture_filter_not_match_message;
-
             // message and caption to show during CAB extraction
-            m_cab_dialog_message = tpl.cab_dialog_message; m_cab_cancelled_message = tpl.cab_cancelled_message;
+            m_cab_dialog_message = tpl.cab_dialog_message; 
+            m_cab_cancelled_message = tpl.cab_cancelled_message;
             m_cab_dialog_caption = tpl.cab_dialog_caption;
             m_cab_path = tpl.cab_path;
             m_cab_path_autodelete = tpl.cab_path_autodelete;
@@ -318,17 +313,6 @@ namespace InstallerLib
             set { m_os_filter_smaller = value; }
         }
 
-        // message for not matching the OS filter
-        private string m_os_filter_not_match_message;
-        [Description("An error message for the case that the operating system does not match the operating system filter (see os_filter_greater and os_filter_smaller). (OPTIONAL)")]
-        [Category("Messages")]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
-        public string os_filter_not_match_message
-        {
-            get { return m_os_filter_not_match_message; }
-            set { m_os_filter_not_match_message = value; }
-        }
-
         // filter for processor architecture
         private string m_processor_architecture_filter;
         [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Separate by commas, can use the NOT sign ('!') to exclude. (es. 'x86,x64' or '!x86'). (OPTIONAL)")]
@@ -336,17 +320,6 @@ namespace InstallerLib
         {
             get { return m_processor_architecture_filter; }
             set { m_processor_architecture_filter = value; }
-        }
-
-        // message for not matching the processor architecture filter
-        private string m_processor_architecture_filter_not_match_message;
-        [Description("An error message for the case that the processor architecture does not match the filter (see processor_architecture_filter). (OPTIONAL)")]
-        [Category("Messages")]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
-        public string processor_architecture_filter_not_match_message
-        {
-            get { return m_processor_architecture_filter_not_match_message; }
-            set { m_processor_architecture_filter_not_match_message = value; }
         }
 
         // message and caption to show during CAB extraction
@@ -490,10 +463,8 @@ namespace InstallerLib
 
             e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
             e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
-            e.XmlWriter.WriteAttributeString("os_filter_not_match_message", m_os_filter_not_match_message);
 
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
-            e.XmlWriter.WriteAttributeString("processor_architecture_filter_not_match_message", m_processor_architecture_filter_not_match_message);
 
             // message and caption to show during CAB extraction
             e.XmlWriter.WriteAttributeString("cab_dialog_message", m_cab_dialog_message);
@@ -603,8 +574,6 @@ namespace InstallerLib
                 m_os_filter_greater = e.XmlElement.Attributes["os_filter_greater"].InnerText;
             if (e.XmlElement.Attributes["os_filter_smaller"] != null)
                 m_os_filter_smaller = e.XmlElement.Attributes["os_filter_smaller"].InnerText;
-            if (e.XmlElement.Attributes["os_filter_not_match_message"] != null)
-                m_os_filter_not_match_message = e.XmlElement.Attributes["os_filter_not_match_message"].InnerText;
 
             if (e.XmlElement.Attributes["processor_architecture_filter"] != null)
                 m_processor_architecture_filter = e.XmlElement.Attributes["processor_architecture_filter"].InnerText;

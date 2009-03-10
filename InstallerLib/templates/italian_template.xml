@@ -30,8 +30,6 @@ There are three types of variables:
 		reboot_required = "Per completare l'installazione è necessario riavviare il computer. Riavviare ora?"
 		status_installed = " (Installato)"
 		status_notinstalled = ""
-		os_filter_not_match_message = "Sistema operativo non supportato. L'installazione non può essere eseguita."
-		processor_architecture_filter_not_match_message = "Questa impostazione non può essere eseguito sul processore attuale!"
     cab_dialog_message = "%s"
     cab_cancelled_message = "" 
     cab_dialog_caption = ""

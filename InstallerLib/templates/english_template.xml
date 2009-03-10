@@ -30,8 +30,6 @@ There are three types of variables:
 		reboot_required = "To continue the installation you must restart your computer. Restart now?"
 		status_installed = " (Installed)"
 		status_notinstalled = ""
-		os_filter_not_match_message = "This setup cannot run under the current operating system!"
-		processor_architecture_filter_not_match_message = "This setup cannot run on the current processor!"
     cab_dialog_message = "%s"
     cab_cancelled_message = "" 
     cab_dialog_caption = ""

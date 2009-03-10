@@ -142,18 +142,6 @@ namespace InstallerLib
                 get { return m_tpl.GetAttribute("setupconfiguration/@status_notinstalled").Replace(c_APPLICATION_NAME, m_ApplicationName); }
             }
 
-            // OS filter message
-            public string os_filter_not_match_message
-            {
-                get { return m_tpl.GetAttribute("setupconfiguration/@os_filter_not_match_message").Replace(c_APPLICATION_NAME, m_ApplicationName); }
-            }
-
-            // processor architecture filter message
-            public string processor_architecture_filter_not_match_message
-            {
-                get { return m_tpl.GetAttribute("setupconfiguration/@processor_architecture_filter_not_match_message").Replace(c_APPLICATION_NAME, m_ApplicationName); }
-            }
-
             // message and caption to show during CAB extraction
             public string cab_dialog_message
             {

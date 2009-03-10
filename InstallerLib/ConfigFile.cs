@@ -1,6 +1,10 @@
 using System;
 using System.ComponentModel;
 using System.Xml;
+using System.Drawing;
+using System.Drawing.Design;
+using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Collections.Specialized;
 
 namespace InstallerLib
@@ -50,6 +54,17 @@ namespace InstallerLib
             set { m_productversion = value; }
         }
 
+        // message for not matching the OS filter
+        private string m_configuration_no_match_message;
+        [Description("An error message for the case that the operating system, processor architecture or lcid does not match the operating system filter of any configuration. (OPTIONAL)")]
+        [Category("Messages")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        public string configuration_no_match_message
+        {
+            get { return m_configuration_no_match_message; }
+            set { m_configuration_no_match_message = value; }
+        }
+
         private FileAttributeCollection m_fileattributes = new FileAttributeCollection();
         [Description("attributes")]
         [Category("File Attributes")]
@@ -90,6 +105,8 @@ namespace InstallerLib
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
+            // processor and os filter architecture messages
+            e.XmlWriter.WriteAttributeString("configuration_no_match_message", m_configuration_no_match_message);
             // silent install
             e.XmlWriter.WriteAttributeString("silent_install", m_silent_install.ToString());
             // version information
@@ -105,6 +122,10 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
+            // processor and os filter architecture messages
+            if (e.XmlElement.Attributes["configuration_no_match_message"] != null)
+                m_configuration_no_match_message = e.XmlElement.Attributes["configuration_no_match_message"].InnerText;
+
             // silent install
             if (e.XmlElement.Attributes["silent_install"] != null)
                 m_silent_install = bool.Parse(e.XmlElement.Attributes["silent_install"].InnerText);
