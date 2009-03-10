@@ -190,7 +190,7 @@ namespace InstallerEditor
             // 
             this.mnNew.Index = 0;
             this.mnNew.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
-            this.mnNew.Text = "New...";
+            this.mnNew.Text = "New";
             this.mnNew.Click += new System.EventHandler(this.mnNew_Click);
             // 
             // mnOpen
@@ -642,20 +642,9 @@ namespace InstallerEditor
             try
             {
                 CloseConfiguration();
-
-                SaveFileDialog l_dg = new SaveFileDialog();
-                l_dg.Filter = "Xml Files(*.xml)|*.xml|All Files(*.*)|*.*";
-                l_dg.DefaultExt = "xml";
-                if (l_dg.ShowDialog(this) == DialogResult.OK)
-                {
-                    m_TreeNodeConfigFile = new TreeNodeConfigFile(new ConfigFile());
-                    m_TreeNodeConfigFile.CreateChildNodes();
-                    m_TreeNodeConfigFile.ConfigFile.Create(l_dg.FileName);
-                    RefreshMenu();
-                }
-                else
-                    return false;
-
+                m_TreeNodeConfigFile = new TreeNodeConfigFile(new ConfigFile());
+                m_TreeNodeConfigFile.CreateChildNodes();
+                RefreshMenu();
                 LoadTreeView(m_TreeNodeConfigFile);
 
                 return true;
@@ -780,7 +769,6 @@ namespace InstallerEditor
         {
             mnClose.Enabled = (m_TreeNodeConfigFile != null);
             mnCreateExe.Enabled = (m_TreeNodeConfigFile != null);
-            mnNew.Enabled = (m_TreeNodeConfigFile == null);
             mnOpen.Enabled = (m_TreeNodeConfigFile == null);
             mnSave.Enabled = (m_TreeNodeConfigFile != null);
             mnSaveAs.Enabled = (m_TreeNodeConfigFile != null);
