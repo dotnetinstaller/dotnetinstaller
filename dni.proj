@@ -38,7 +38,6 @@
  </ItemGroup>
  <ItemGroup>
   <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" />
-  <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.pdb" />
   <Binaries Include="InstallerEditor\bin\$(Configuration)\InstallerEditor.exe" />
   <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceLibrary.dll" />
   <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceGrid2.dll" />
@@ -119,6 +118,12 @@
   <Delete Files="Documentation\$(Configuration)\dotNetInstaller.chm" />
   <MSBuild Projects="Documentation\Dni.shfbproj" Properties="Configuration=$(Configuration)" />
   <Error Condition="Exists('Documentation\$(Configuration)\LastBuild.log')" Text="Documentation build failed, check Documentation\$(Configuration)\LastBuild.log" />
+ </Target>
+ <Target Name="unittests" DependsOnTargets="version">
+  <CreateItem Include="UnitTests\**\bin\$(Configuration)\*UnitTests.dll">
+   <Output TaskParameter="Include" ItemName="UnitTestBinaries" />
+  </CreateItem>
+  <NUnit Assemblies="@(UnitTestBinaries)" ToolPath="$(NUnitDir)\bin" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
  </Target>
  <Target Name="zip" DependsOnTargets="version">
   <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip">

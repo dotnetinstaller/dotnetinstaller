@@ -6,6 +6,7 @@ using System.Drawing.Design;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Collections.Specialized;
+using System.IO;
 
 namespace InstallerLib
 {
@@ -76,8 +77,10 @@ namespace InstallerLib
 
         public void Save()
         {
-            if (m_filename == null)
-                throw new Exception("Invalid save filename");
+            if (string.IsNullOrEmpty(m_filename))
+            {
+                throw new Exception("Missing filename");
+            }
 
             SaveAs(m_filename);
         }
@@ -171,9 +174,20 @@ namespace InstallerLib
         {
             XmlDocument l_XmlElement = new XmlDocument();
             l_XmlElement.Load(p_FileName);
-            XmlNode l_Configurations = l_XmlElement.SelectSingleNode("//configurations");
-            base.FromXml((XmlElement)l_Configurations);
+            LoadXml(l_XmlElement);
             m_filename = p_FileName;
+        }
+
+        public void LoadXml(string xml)
+        {
+            XmlDocument l_XmlElement = new XmlDocument();
+            l_XmlElement.LoadXml(xml);
+            LoadXml(l_XmlElement);
+        }
+
+        public void LoadXml(XmlDocument xml)
+        {
+            base.FromXml((XmlElement) xml.SelectSingleNode("//configurations"));
         }
 
         private static int m_CurrentSchemaVersion = 1;

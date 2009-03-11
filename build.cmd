@@ -8,7 +8,6 @@ if "%~1"=="" (
 )
 
 set VisualStudioCmd=%ProgramFiles%\Microsoft Visual Studio 8.0\VC\vcvarsall.bat
-
 if EXIST "%VisualStudioCmd%" ( 
  call "%VisualStudioCmd%"
 )
@@ -17,6 +16,15 @@ set SvnDir=%ProgramFiles%\svn
 if NOT EXIST "%SvnDir%" set SvnDir=%ProgramFiles%\Subversion
 if NOT EXIST "%SvnDir%" (
  echo Missing SubVersion, expected in %SvnDir%
+ exit /b -1
+)
+
+for /D %%n in ( "%ProgramFiles%\NUnit*" ) do (
+ set NUnitDir=%%~n
+)
+
+if NOT EXIST "%NUnitDir%" (
+ echo Missing NUnit, expected in %NUnitDir%
  exit /b -1
 )
 

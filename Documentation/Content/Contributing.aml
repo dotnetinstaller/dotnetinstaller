@@ -21,6 +21,7 @@
           <listItem>Always document everything.</listItem>
           <listItem>Preserve backwards compatibility.</listItem>
           <listItem>Discuss large changes.</listItem>
+          <listItem>Write unit tests with every new feature.</listItem>
         </list>
       </para>
     </introduction>
@@ -55,6 +56,17 @@
               <externalLink>
                 <linkText>http://msbuildtasks.tigris.org/</linkText>
                 <linkHref>http://msbuildtasks.tigris.org/</linkHref>
+              </externalLink>.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Install NUnit from
+              <externalLink>
+                <linkText>http://www.nunit.org/</linkText>
+                <linkHref>http://www.nunit.org/</linkHref>
               </externalLink>.
             </para>
           </content>
