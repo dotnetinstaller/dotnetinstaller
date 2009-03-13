@@ -88,7 +88,6 @@ namespace DVLib
 					if (osvi.wServicePackMajor >= 1)
 						l_Os = winVistaSp1;
 				}
-				/* Arunkumar Viswanathan - 2008-08-27:  Added wProductType check for differentiating between Windows Server 2003 and Windows XP x64. */
 				// Windows Server 2003 versions
 				else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && osvi.wProductType == 3)
 				{

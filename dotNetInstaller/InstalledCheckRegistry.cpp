@@ -31,7 +31,6 @@ bool InstalledCheckRegistry::IsInstalled()
 {
 	try
 	{
-		//Arunkumar Viswanathan: 2008-09-02: Modified 64 bit registry search logic to include alternate registry search view options also.
 		//http://msdn.microsoft.com/en-us/library/aa384129(VS.85).aspx
 		
 		CString keypath(path);
