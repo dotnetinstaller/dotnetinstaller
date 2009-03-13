@@ -40,11 +40,20 @@ namespace InstallerLib
             set { m_cmdparameters_silent = value; }
         }
 
+        private bool m_embed = true;
+        [Description("Automatically embed MSI package when building a packaged setup.")]
+        public bool embed
+        {
+            get { return m_embed; }
+            set { m_embed = value; }
+        }
+
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
             e.XmlWriter.WriteAttributeString("package", m_package);
             e.XmlWriter.WriteAttributeString("cmdparameters", m_cmdparameters);
             e.XmlWriter.WriteAttributeString("cmdparameters_silent", m_cmdparameters_silent);
+            e.XmlWriter.WriteAttributeString("embed", m_embed.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -59,13 +68,16 @@ namespace InstallerLib
             if (e.XmlElement.Attributes["cmdparameters_silent"] != null)
                 m_cmdparameters_silent = e.XmlElement.Attributes["cmdparameters_silent"].InnerText;
 
+            if (e.XmlElement.Attributes["embed"] != null)
+                m_embed = bool.Parse(e.XmlElement.Attributes["embed"].InnerText);
+
             base.OnXmlReadTag(e);
         }
 
         public override EmbedFileCollection GetFiles()
         {
             EmbedFileCollection files = base.GetFiles();
-            files.Add(new EmbedFile(package));
+            if (embed) files.Add(new EmbedFile(package));
             return files;
         }
     }

@@ -66,6 +66,14 @@ namespace InstallerLib
             set { m_alwaysdownload = value; }
         }
 
+        private bool m_embed = true;
+        [Description("Automatically embed MSI package when building a packaged setup.")]
+        public bool embed
+        {
+            get { return m_embed; }
+            set { m_embed = value; }
+        }
+
         #region IXmlClass Members
 
         public override string XmlTag
@@ -80,6 +88,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("destinationpath", m_destinationpath);
             e.XmlWriter.WriteAttributeString("destinationfilename", m_destinationfilename);
             e.XmlWriter.WriteAttributeString("alwaysdownload", m_alwaysdownload.ToString());
+            e.XmlWriter.WriteAttributeString("embed", m_embed.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -99,6 +108,9 @@ namespace InstallerLib
 
             if (e.XmlElement.Attributes["alwaysdownload"] != null)
                 m_alwaysdownload = bool.Parse(e.XmlElement.Attributes["alwaysdownload"].InnerText);
+
+            if (e.XmlElement.Attributes["embed"] != null)
+                m_embed = bool.Parse(e.XmlElement.Attributes["embed"].InnerText);
 
             base.OnXmlReadTag(e);
         }
@@ -123,8 +135,11 @@ namespace InstallerLib
         public override EmbedFileCollection GetFiles()
         {
             EmbedFileCollection files = base.GetFiles();
-            string filename = Path.Combine(destinationpath, destinationfilename);
-            files.Add(new EmbedFile(filename));
+            if (embed)
+            {
+                string filename = Path.Combine(destinationpath, destinationfilename);
+                files.Add(new EmbedFile(filename));
+            }
             return files;
         }
     }

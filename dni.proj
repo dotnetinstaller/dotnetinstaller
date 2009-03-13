@@ -1,134 +1,159 @@
 <Project DefaultTargets="all" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
- <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
- <PropertyGroup Condition="'$(Configuration)'==''">
-  <Configuration>Debug</Configuration>
- </PropertyGroup>
- <PropertyGroup>
-  <ProductName>dotNetInstaller</ProductName>
-  <CompanyName>DevAge, Vestris Inc. &amp; Contributors</CompanyName>
-  <Copyright>Copyright (c) $(CompanyName)</Copyright>
-  <Trademark>All Rights Reserved</Trademark>
-  <ReleaseDir>target\$(Configuration)</ReleaseDir>
- </PropertyGroup>
- <ItemGroup>
-  <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.txt" />
-  <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.xml" />
-  <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.bmp" />
-  <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.ico" />
- </ItemGroup>
- <ItemGroup>
-  <PackagedSetupSample Include="Samples/PackagedSetup/**/*.txt" />
-  <PackagedSetupSample Include="Samples/PackagedSetup/**/*.xml" />
-  <PackagedSetupSample Include="Samples/PackagedSetup/**/*.bmp" />
-  <PackagedSetupSample Include="Samples/PackagedSetup/**/*.ico" />
-  <PackagedSetupSample Include="Samples/PackagedSetup/**/*.msi" />
- </ItemGroup>
- <ItemGroup>
-  <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.txt" />
-  <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.xml" />
-  <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.bmp" />
-  <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.ico" />
- </ItemGroup>
- <ItemGroup>
-  <Documentation Include="Documentation/$(Configuration)/dotNetInstaller.chm" />
-  <Documentation Include="Documentation/WhatsNew.html" />
- </ItemGroup>
- <ItemGroup>
-  <SupportFiles Include="Samples/SupportFiles/**/*.txt" />
- </ItemGroup>
- <ItemGroup>
-  <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" />
-  <Binaries Include="InstallerEditor\bin\$(Configuration)\InstallerEditor.exe" />
-  <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceLibrary.dll" />
-  <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceGrid2.dll" />
-  <Binaries Include="InstallerLinker\bin\$(Configuration)\CabLib.dll" />
-  <Binaries Include="InstallerLinker\bin\$(Configuration)\Vestris.ResourceLib.dll" />
-  <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
-  <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
-  <Binaries Include="Samples\Misc\unicows.dll" />
- </ItemGroup>
- <Target Name="all">
-  <Message Importance="high" Text="Building project ..." />
-  <CallTarget Targets="clean" />
-  <CallTarget Targets="version" />
-  <CallTarget Targets="build" />
-  <CallTarget Targets="doc" />
-  <CallTarget Targets="release" />
-  <CallTarget Targets="zip" />
- </Target>
- <Target Name="version">
-  <Version Major="1" Minor="6">
-   <Output TaskParameter="Major" PropertyName="Major" />
-   <Output TaskParameter="Minor" PropertyName="Minor" />
-   <Output TaskParameter="Revision" PropertyName="Revision"/>
-  </Version>
-  <SvnVersion LocalPath=".">
-   <Output TaskParameter="Revision" PropertyName="Build" />
-  </SvnVersion>
-  <CreateItem Include="Major" AdditionalMetadata="ReplacementValue=$(Major)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
-  <CreateItem Include="Minor" AdditionalMetadata="ReplacementValue=$(Minor)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
-  <CreateItem Include="Build" AdditionalMetadata="ReplacementValue=$(Build)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
-  <CreateItem Include="Revision" AdditionalMetadata="ReplacementValue=$(Revision)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
-  <CreateItem Include="ProductName" AdditionalMetadata="ReplacementValue=$(ProductName)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
-  <CreateItem Include="CompanyName" AdditionalMetadata="ReplacementValue=$(CompanyName)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
-  <CreateItem Include="Copyright" AdditionalMetadata="ReplacementValue=$(Copyright)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
-  <CreateItem Include="Trademark" AdditionalMetadata="ReplacementValue=$(Trademark)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
-  <Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)"/>
-  <MakeDir Directories="Version" />
-  <AssemblyInfo CodeLanguage="CS" OutputFile="Version\GlobalAssemblyInfo.cs"
-   AssemblyCompany="$(CompanyName)" AssemblyProduct="$(ProductName)"
-   AssemblyCopyright="$(Copyright)" AssemblyTrademark="$(Trademark)"
-   CLSCompliant="true" AssemblyDelaySign="false" AssemblyKeyName="" AssemblyCulture=""
-   AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
-   AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)" />
-  <TemplateFile Template="Version\Version.h.template" OutputFilename="Version.h" Tokens="@(AssemblyInfoTokens)"/>
- </Target>
- <Target Name="clean">
-  <Delete Files="$(ReleaseDir)" />
-  <MSBuild Projects="Dni.sln" Targets="Clean" />
- </Target>
- <Target Name="build" DependsOnTargets="version">
-  <MSBuild Projects="Dni.sln" Targets="Build" />
- </Target>
- <Target Name="release" DependsOnTargets="version">
-  <Message Importance="high" Text="Collecting release files ..." />
-  <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)" /> 
-  <!-- Binaries -->
-  <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Bin" />
-  <!-- Documentation -->
-  <Copy SourceFiles="@(Documentation)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Doc" />
-  <!-- Samples -->
-  <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples" />
-  <!-- Sample: StandaloneSetup -->
-  <Copy SourceFiles="@(StandaloneSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\%(RecursiveDir)" />
-  <Copy SourceFiles="@(SupportFiles)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\SupportFiles\%(RecursiveDir)" />
-  <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup" />
-  <!-- Sample: PackagedSetup -->
-  <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
-  <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Embed+"/>
-  <Copy SourceFiles="@(PackagedSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Source\%(RecursiveDir)" />
-  <!-- Sample: InstallCheckOperators -->
-  <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
-  <Copy SourceFiles="@(InstallCheckOperatorsSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators\%(RecursiveDir)" />
-  <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
- </Target>
- <Target Name="doc" DependsOnTargets="version">
-  <Error Condition="'$(DXROOT)'==''" Text="Missing Sandcastle, DXROOT environment variable not set, install from http://www.codeplex.com/Sandcastle" />
-  <Error Condition="'$(SHFBROOT)'==''" Text="Missing Sandcastle Builder, SHFBROOT environment variable not set, install from http://www.codeplex.com/SHFB" />
-  <Delete Files="Documentation\$(Configuration)\dotNetInstaller.chm" />
-  <MSBuild Projects="Documentation\Dni.shfbproj" Properties="Configuration=$(Configuration)" />
-  <Error Condition="Exists('Documentation\$(Configuration)\LastBuild.log')" Text="Documentation build failed, check Documentation\$(Configuration)\LastBuild.log" />
- </Target>
- <Target Name="unittests" DependsOnTargets="version">
-  <CreateItem Include="UnitTests\**\bin\$(Configuration)\*UnitTests.dll">
-   <Output TaskParameter="Include" ItemName="UnitTestBinaries" />
-  </CreateItem>
-  <NUnit Assemblies="@(UnitTestBinaries)" ToolPath="$(NUnitDir)\bin" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
- </Target>
- <Target Name="zip" DependsOnTargets="version">
-  <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip">
-   <Output TaskParameter="Include" ItemName="PackageFiles" />
-  </CreateItem>
-  <Zip WorkingDirectory="target\$(Configuration)" ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).zip" Files="@(PackageFiles)" />
- </Target>
+  <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+  <PropertyGroup Condition="'$(Configuration)'==''">
+    <Configuration>Debug</Configuration>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ProductName>dotNetInstaller</ProductName>
+    <CompanyName>DevAge, Vestris Inc. &amp; Contributors</CompanyName>
+    <Copyright>Copyright (c) $(CompanyName)</Copyright>
+    <Trademark>All Rights Reserved</Trademark>
+    <ReleaseDir>target\$(Configuration)</ReleaseDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.txt" />
+    <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.xml" />
+    <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.bmp" />
+    <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.txt" />
+    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.xml" />
+    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.bmp" />
+    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.ico" />
+    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.msi" />
+  </ItemGroup>
+  <ItemGroup>
+    <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.txt" />
+    <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.xml" />
+    <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.bmp" />
+    <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Documentation Include="Documentation/$(Configuration)/dotNetInstaller.chm" />
+    <Documentation Include="Documentation/WhatsNew.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <SupportFiles Include="Samples/SupportFiles/**/*.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" />
+    <Binaries Include="InstallerEditor\bin\$(Configuration)\InstallerEditor.exe" />
+    <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceLibrary.dll" />
+    <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceGrid2.dll" />
+    <Binaries Include="InstallerLinker\bin\$(Configuration)\CabLib.dll" />
+    <Binaries Include="InstallerLinker\bin\$(Configuration)\Vestris.ResourceLib.dll" />
+    <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
+    <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
+    <Binaries Include="Samples\Misc\unicows.dll" />
+  </ItemGroup>
+  <Target Name="all">
+    <Message Importance="high" Text="Building project ..." />
+    <CallTarget Targets="clean" />
+    <CallTarget Targets="version" />
+    <CallTarget Targets="build" />
+    <CallTarget Targets="doc" />
+    <CallTarget Targets="rewritesamples" />
+    <CallTarget Targets="release" />
+    <CallTarget Targets="zip" />
+  </Target>
+  <Target Name="version">
+    <Version Major="1" Minor="6">
+      <Output TaskParameter="Major" PropertyName="Major" />
+      <Output TaskParameter="Minor" PropertyName="Minor" />
+      <Output TaskParameter="Revision" PropertyName="Revision"/>
+    </Version>
+    <SvnVersion LocalPath=".">
+      <Output TaskParameter="Revision" PropertyName="Build" />
+    </SvnVersion>
+    <CreateItem Include="Major" AdditionalMetadata="ReplacementValue=$(Major)">
+      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+    </CreateItem>
+    <CreateItem Include="Minor" AdditionalMetadata="ReplacementValue=$(Minor)">
+      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+    </CreateItem>
+    <CreateItem Include="Build" AdditionalMetadata="ReplacementValue=$(Build)">
+      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+    </CreateItem>
+    <CreateItem Include="Revision" AdditionalMetadata="ReplacementValue=$(Revision)">
+      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+    </CreateItem>
+    <CreateItem Include="ProductName" AdditionalMetadata="ReplacementValue=$(ProductName)">
+      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+    </CreateItem>
+    <CreateItem Include="CompanyName" AdditionalMetadata="ReplacementValue=$(CompanyName)">
+      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+    </CreateItem>
+    <CreateItem Include="Copyright" AdditionalMetadata="ReplacementValue=$(Copyright)">
+      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+    </CreateItem>
+    <CreateItem Include="Trademark" AdditionalMetadata="ReplacementValue=$(Trademark)">
+      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
+    </CreateItem>
+    <Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)"/>
+    <MakeDir Directories="Version" />
+    <AssemblyInfo CodeLanguage="CS" OutputFile="Version\GlobalAssemblyInfo.cs"
+     AssemblyCompany="$(CompanyName)" AssemblyProduct="$(ProductName)"
+     AssemblyCopyright="$(Copyright)" AssemblyTrademark="$(Trademark)"
+     CLSCompliant="true" AssemblyDelaySign="false" AssemblyKeyName="" AssemblyCulture=""
+     AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
+     AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)" />
+    <TemplateFile Template="Version\Version.h.template" OutputFilename="Version.h" Tokens="@(AssemblyInfoTokens)"/>
+  </Target>
+  <Target Name="clean">
+    <Delete Files="$(ReleaseDir)" />
+    <MSBuild Projects="Dni.sln" Targets="Clean" />
+  </Target>
+  <Target Name="build" DependsOnTargets="version">
+    <MSBuild Projects="Dni.sln" Targets="Build" />
+  </Target>
+  <Target Name="release" DependsOnTargets="version">
+    <Message Importance="high" Text="Collecting release files ..." />
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)" />
+    <!-- Binaries -->
+    <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Bin" />
+    <!-- Documentation -->
+    <Copy SourceFiles="@(Documentation)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Doc" />
+    <!-- Samples -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples" />
+    <!-- Sample: StandaloneSetup -->
+    <Copy SourceFiles="@(StandaloneSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\%(RecursiveDir)" />
+    <Copy SourceFiles="@(SupportFiles)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\SupportFiles\%(RecursiveDir)" />
+    <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup" />
+    <!-- Sample: PackagedSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
+    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Embed+"/>
+    <Copy SourceFiles="@(PackagedSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Source\%(RecursiveDir)" />
+    <!-- Sample: InstallCheckOperators -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
+    <Copy SourceFiles="@(InstallCheckOperatorsSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators\%(RecursiveDir)" />
+    <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
+  </Target>
+  <Target Name="doc" DependsOnTargets="version">
+    <Error Condition="'$(DXROOT)'==''" Text="Missing Sandcastle, DXROOT environment variable not set, install from http://www.codeplex.com/Sandcastle" />
+    <Error Condition="'$(SHFBROOT)'==''" Text="Missing Sandcastle Builder, SHFBROOT environment variable not set, install from http://www.codeplex.com/SHFB" />
+    <Delete Files="Documentation\$(Configuration)\dotNetInstaller.chm" />
+    <MSBuild Projects="Documentation\Dni.shfbproj" Properties="Configuration=$(Configuration)" />
+    <Error Condition="Exists('Documentation\$(Configuration)\LastBuild.log')" Text="Documentation build failed, check Documentation\$(Configuration)\LastBuild.log" />
+  </Target>
+  <Target Name="unittests" DependsOnTargets="version">
+    <CreateItem Include="UnitTests\**\bin\$(Configuration)\*UnitTests.dll">
+      <Output TaskParameter="Include" ItemName="UnitTestBinaries" />
+    </CreateItem>
+    <NUnit Assemblies="@(UnitTestBinaries)" ToolPath="$(NUnitDir)\bin" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
+  </Target>
+  <Target Name="zip" DependsOnTargets="version">
+    <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip">
+      <Output TaskParameter="Include" ItemName="PackageFiles" />
+    </CreateItem>
+    <Zip WorkingDirectory="target\$(Configuration)" ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).zip" Files="@(PackageFiles)" />
+  </Target>
+  <!-- rewrite configuration samples to the current configuration format -->
+  <ItemGroup>
+    <SampleXmls Include="Samples/**/*.xml" />
+  </ItemGroup>
+  <Target Name="rewritesamples" Inputs="@(SampleXmls)" Outputs="%(SampleXmls.Identity).output">
+    <Message Text="%(SampleXmls.Identity)" />
+    <Exec Command="InstallerConfig\bin\$(Configuration)\InstallerConfig.exe /ConfigFile:%(SampleXmls.Identity)" />
+  </Target>
 </Project>

@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.Reflection;
 using InstallerLib;
 using System.IO;
+using System.Xml;
 
 namespace InstallerLibUnitTests
 {
@@ -14,6 +15,7 @@ namespace InstallerLibUnitTests
         [Test]
         public void LoadSaveSamplesTest()
         {
+            // \todo: don't use an embedded stream, this is a chicken/egg problem with rewriting sample xmls when configuration changes
             // make sure that every sample configuration loads and saves
             string[] manifestResourceNames = Assembly.GetExecutingAssembly().GetManifestResourceNames();
             foreach (string manifestResourceName in manifestResourceNames)
@@ -25,7 +27,9 @@ namespace InstallerLibUnitTests
                 Console.WriteLine(manifestResourceName);
                 Stream s = Assembly.GetExecutingAssembly().GetManifestResourceStream(manifestResourceName);
                 StreamReader r = new StreamReader(s);
-                string configXml = r.ReadToEnd();
+                XmlDocument configXml = new XmlDocument();
+                configXml.LoadXml(r.ReadToEnd());
+                // load as a configuration
                 ConfigFile configFile = new ConfigFile();
                 configFile.LoadXml(configXml);
                 // compare trivial properties
@@ -34,8 +38,13 @@ namespace InstallerLibUnitTests
                 // save file
                 string tempFilename = Path.GetTempFileName();
                 configFile.SaveAs(tempFilename);
+                // reload the file
+                XmlDocument tempXmlFilenameDocument = new XmlDocument();
+                tempXmlFilenameDocument.Load(tempFilename);
                 // delete temporary file
                 File.Delete(tempFilename);
+                // compare contents
+                Assert.AreEqual(tempXmlFilenameDocument.OuterXml, configXml.OuterXml);
             }
         }
     }

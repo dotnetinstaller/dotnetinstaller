@@ -25,7 +25,8 @@
           <content>
             <para>
               Ensure that your dependency files are embedded. This is not automatic except for <literal>Embed File</literal> components, 
-              <literal>msi</literal> components and components with a <literal>Download File</literal> subcomponent.
+              <literal>msi</literal>, <literal>openfile</literal> components and components with a <literal>Download File</literal>
+              subcomponent with the <literal>embed</literal> option set to <literal>true</literal> (this is the default).
             </para>
             <para>
               The simplest way to specify an individual file to be embedded is by using the <literal>EmbedFile</literal> subcomponent. 
