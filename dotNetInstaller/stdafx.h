@@ -55,6 +55,7 @@
 #include "SilentInstall.h"
 #include "OsIdentifier.h"
 #include "Tools/tinyxml.h"
+#include "WidgetPosition.h"
 
 using namespace DVLib;
 

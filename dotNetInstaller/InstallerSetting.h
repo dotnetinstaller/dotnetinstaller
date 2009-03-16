@@ -55,15 +55,15 @@ public:
 	void ExecuteCompleteCode() const;
     CString ValidatePath(LPCTSTR p_Path);
     // dialog elements position
-    CRect dialog_position;
-    CRect dialog_components_list_position;
-    CRect dialog_message_position;
-    CRect dialog_bitmap_position;
-    CRect dialog_otherinfo_link_position;
-    CRect dialog_osinfo_position;
-    CRect dialog_install_button_position;
-    CRect dialog_cancel_button_position;
-    CRect dialog_skip_button_position;
+    WidgetPosition dialog_position;
+    WidgetPosition dialog_components_list_position;
+    WidgetPosition dialog_message_position;
+    WidgetPosition dialog_bitmap_position;
+    WidgetPosition dialog_otherinfo_link_position;
+    WidgetPosition dialog_osinfo_position;
+    WidgetPosition dialog_install_button_position;
+    WidgetPosition dialog_cancel_button_position;
+    WidgetPosition dialog_skip_button_position;
 private:
     // a description-component map
     std::map<std::wstring, Component *> components_map;

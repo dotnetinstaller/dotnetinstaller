@@ -320,6 +320,10 @@
 				RelativePath=".\ThreadComponent.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\WidgetPosition.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -436,6 +440,10 @@
 			</File>
 			<File
 				RelativePath=".\ThreadComponent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WidgetPosition.h"
 				>
 			</File>
 		</Filter>

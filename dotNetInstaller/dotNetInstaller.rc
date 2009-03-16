@@ -36,7 +36,7 @@ IDR_MAINFRAME           ICON                    "res\\dotNetInstaller.ico"
 //
 
 IDD_DOTNETINSTALLER_DIALOG DIALOGEX 0, 0, 305, 156
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION ".Net Installer"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
@@ -202,6 +202,4 @@ LANGUAGE 16, 1
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-
-
 

@@ -38,9 +38,11 @@ code { color: #b22222; font-family: Courier New; }
   <li>InstallerEditor: added support for multiline properties for most non-caption
    or button messages.</li>
   <li>InstallerEditor: added shortcuts to open a configuratoin file (Ctrl+O), create
-   a new configuration file (Ctrl+N), exit (Alt+F4) and refresh (F5). </li>
+   a new configuration file (Ctrl+N), save the current configuration (Ctrl+S), generate an exe (F10),
+   exit (Alt+F4) and refresh (F5). </li>
   <li>InstallerEditor: user no longer prompted for a configuration file name on New.</li>
-  <li>InstallerEditor: the New menu item is always enabled.</li>
+  <li>InstallerEditor: the New and Open menu items are always enabled.</li>
+  <li>InstallerEditor: added a status strip that reports general information, including Save or Load.</li>
   <li>Added <code>allow_continue_on_error</code> globally and per-component: when false
    user is no longer prompted to continue on error, instead the user is informed of
    the failure and installation aborts. Combine this option with <code>auto_close_on_error</code>

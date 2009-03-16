@@ -21,19 +21,6 @@ bool ConvBoolString(const char * p_BoolString, bool defaultValue = false)
     else return defaultValue;
 }
 
-CRect ConvRectString(const std::wstring& p_RectString)
-{
-    CRect r(0, 0, 0, 0);
-    if (p_RectString.empty()) return r;
-    std::vector<std::wstring> l_RectCoordinates;
-    split_string(p_RectString, ',', l_RectCoordinates, 4);
-    if (l_RectCoordinates.size() != 4) return r;
-    r.left = _wtoi(l_RectCoordinates[0].c_str());
-    r.top = _wtoi(l_RectCoordinates[1].c_str());
-    r.right = r.left + _wtoi(l_RectCoordinates[2].c_str());
-    r.bottom = r.top + _wtoi(l_RectCoordinates[3].c_str());
-    return r;
-}
 
 void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::DownloadGroupConfiguration & p_Configuration, InstallerSetting & p_Setting)
 {
@@ -98,15 +85,15 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
     p_Setting.cab_path = p_Node->AttributeT("cab_path").data();
     p_Setting.cab_path_autodelete = ConvBoolString(p_Node->Attribute("cab_path_autodelete"), true);
     // positions within the dialog
-    p_Setting.dialog_position = ConvRectString(p_Node->AttributeT("dialog_position"));
-    p_Setting.dialog_components_list_position = ConvRectString(p_Node->AttributeT("dialog_components_list_position"));
-    p_Setting.dialog_message_position = ConvRectString(p_Node->AttributeT("dialog_message_position"));
-    p_Setting.dialog_bitmap_position = ConvRectString(p_Node->AttributeT("dialog_bitmap_position"));
-    p_Setting.dialog_otherinfo_link_position = ConvRectString(p_Node->AttributeT("dialog_otherinfo_link_position"));
-    p_Setting.dialog_osinfo_position = ConvRectString(p_Node->AttributeT("dialog_osinfo_position"));
-    p_Setting.dialog_install_button_position = ConvRectString(p_Node->AttributeT("dialog_install_button_position"));
-    p_Setting.dialog_cancel_button_position = ConvRectString(p_Node->AttributeT("dialog_cancel_button_position"));
-    p_Setting.dialog_skip_button_position = ConvRectString(p_Node->AttributeT("dialog_skip_button_position"));
+    p_Setting.dialog_position.FromString(p_Node->AttributeT("dialog_position"));
+    p_Setting.dialog_components_list_position.FromString(p_Node->AttributeT("dialog_components_list_position"));
+    p_Setting.dialog_message_position.FromString(p_Node->AttributeT("dialog_message_position"));
+    p_Setting.dialog_bitmap_position.FromString(p_Node->AttributeT("dialog_bitmap_position"));
+    p_Setting.dialog_otherinfo_link_position.FromString(p_Node->AttributeT("dialog_otherinfo_link_position"));
+    p_Setting.dialog_osinfo_position.FromString(p_Node->AttributeT("dialog_osinfo_position"));
+    p_Setting.dialog_install_button_position.FromString(p_Node->AttributeT("dialog_install_button_position"));
+    p_Setting.dialog_cancel_button_position.FromString(p_Node->AttributeT("dialog_cancel_button_position"));
+    p_Setting.dialog_skip_button_position.FromString(p_Node->AttributeT("dialog_skip_button_position"));
     // other dialog options
 	p_Setting.cancel_caption = p_Node->AttributeT("cancel_caption").data();
 	p_Setting.dialog_bitmap = p_Setting.ValidatePath(p_Node->AttributeT("dialog_bitmap").data());

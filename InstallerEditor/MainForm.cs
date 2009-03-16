@@ -67,6 +67,8 @@ namespace InstallerEditor
         private MenuItem menuItem11;
         private MenuItem mnExpandAll;
         private MenuItem mnCollapseAll;
+        private StatusStrip statusStrip;
+        private ToolStripStatusLabel statusLabel;
         private System.ComponentModel.IContainer components;
 
         public MainForm()
@@ -156,9 +158,12 @@ namespace InstallerEditor
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.treeView = new System.Windows.Forms.TreeView();
             this.txtComment = new System.Windows.Forms.TextBox();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -216,6 +221,7 @@ namespace InstallerEditor
             // 
             this.mnSave.Enabled = false;
             this.mnSave.Index = 4;
+            this.mnSave.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
             this.mnSave.Text = "Save";
             this.mnSave.Click += new System.EventHandler(this.mnSave_Click);
             // 
@@ -242,6 +248,7 @@ namespace InstallerEditor
             // 
             this.mnCreateExe.Enabled = false;
             this.mnCreateExe.Index = 8;
+            this.mnCreateExe.Shortcut = System.Windows.Forms.Shortcut.F10;
             this.mnCreateExe.Text = "Create Exe...";
             this.mnCreateExe.Click += new System.EventHandler(this.mnCreateExe_Click);
             // 
@@ -527,16 +534,17 @@ namespace InstallerEditor
             // 
             // mainSplitContainer.Panel2
             // 
+            this.mainSplitContainer.Panel2.Controls.Add(this.statusStrip);
             this.mainSplitContainer.Panel2.Controls.Add(this.txtComment);
             this.mainSplitContainer.Size = new System.Drawing.Size(620, 346);
-            this.mainSplitContainer.SplitterDistance = 300;
+            this.mainSplitContainer.SplitterDistance = 278;
             this.mainSplitContainer.TabIndex = 4;
             // 
             // splitter1
             // 
             this.splitter1.Location = new System.Drawing.Point(176, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 300);
+            this.splitter1.Size = new System.Drawing.Size(3, 278);
             this.splitter1.TabIndex = 4;
             this.splitter1.TabStop = false;
             // 
@@ -546,7 +554,7 @@ namespace InstallerEditor
             this.propertyGrid.LineColor = System.Drawing.SystemColors.ScrollBar;
             this.propertyGrid.Location = new System.Drawing.Point(176, 0);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(444, 300);
+            this.propertyGrid.Size = new System.Drawing.Size(444, 278);
             this.propertyGrid.TabIndex = 3;
             // 
             // treeView
@@ -560,7 +568,7 @@ namespace InstallerEditor
             this.treeView.Location = new System.Drawing.Point(0, 0);
             this.treeView.Name = "treeView";
             this.treeView.SelectedImageIndex = 0;
-            this.treeView.Size = new System.Drawing.Size(176, 300);
+            this.treeView.Size = new System.Drawing.Size(176, 278);
             this.treeView.TabIndex = 1;
             this.treeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView_DragDrop);
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
@@ -579,9 +587,25 @@ namespace InstallerEditor
             this.txtComment.Location = new System.Drawing.Point(0, 0);
             this.txtComment.Multiline = true;
             this.txtComment.Name = "txtComment";
-            this.txtComment.Size = new System.Drawing.Size(620, 42);
+            this.txtComment.Size = new System.Drawing.Size(620, 64);
             this.txtComment.TabIndex = 0;
             this.txtComment.Visible = false;
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 42);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(620, 22);
+            this.statusStrip.TabIndex = 1;
+            this.statusStrip.Text = "statusStrip";
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(39, 17);
+            this.statusLabel.Text = "Ready";
             // 
             // MainForm
             // 
@@ -599,6 +623,8 @@ namespace InstallerEditor
             this.mainSplitContainer.Panel2.ResumeLayout(false);
             this.mainSplitContainer.Panel2.PerformLayout();
             this.mainSplitContainer.ResumeLayout(false);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -646,7 +672,7 @@ namespace InstallerEditor
                 m_TreeNodeConfigFile.CreateChildNodes();
                 RefreshMenu();
                 LoadTreeView(m_TreeNodeConfigFile);
-
+                statusLabel.Text = "Ready";
                 return true;
             }
             catch (Exception err)
@@ -691,6 +717,7 @@ namespace InstallerEditor
 
                 RefreshMenu();
                 LoadTreeView(m_TreeNodeConfigFile);
+                statusLabel.Text = string.Format("Loaded {0}", m_TreeNodeConfigFile.ConfigFile.filename);
                 return true;
             }
             catch (Exception err)
@@ -699,6 +726,7 @@ namespace InstallerEditor
                 return false;
             }
         }
+
         private bool CloseConfiguration()
         {
             try
@@ -718,22 +746,19 @@ namespace InstallerEditor
                 }
 
                 m_TreeNodeConfigFile = null;
-
                 CloseTreeView();
-
                 propertyGrid.SelectedObject = null;
-
                 RefreshMenu();
-
+                statusLabel.Text = "Ready";
                 return true;
             }
             catch (Exception err)
             {
                 AppUtility.ShowError(this, err);
-
                 return false;
             }
         }
+
         private bool SaveConfiguration()
         {
             try
@@ -750,12 +775,17 @@ namespace InstallerEditor
                             m_TreeNodeConfigFile.ConfigFile.SaveAs(l_dg.FileName);
                         }
                         else
+                        {
                             return false;
+                        }
                     }
                     else
+                    {
                         m_TreeNodeConfigFile.ConfigFile.Save();
+                    }
                 }
 
+                statusLabel.Text = string.Format("Written {0}", m_TreeNodeConfigFile.ConfigFile.filename);
                 return true;
             }
             catch (Exception err)
@@ -769,7 +799,6 @@ namespace InstallerEditor
         {
             mnClose.Enabled = (m_TreeNodeConfigFile != null);
             mnCreateExe.Enabled = (m_TreeNodeConfigFile != null);
-            mnOpen.Enabled = (m_TreeNodeConfigFile == null);
             mnSave.Enabled = (m_TreeNodeConfigFile != null);
             mnSaveAs.Enabled = (m_TreeNodeConfigFile != null);
             mnEditWithNotepad.Enabled = (m_TreeNodeConfigFile != null);
@@ -846,6 +875,9 @@ namespace InstallerEditor
                 propertyGrid.SelectedObject = e.Node.Tag;
                 RefreshNodeContextMenu();
                 RefreshCommentPanel();
+                statusLabel.Text = m_TreeNodeConfigFile != null 
+                    ? m_TreeNodeConfigFile.ConfigFile.filename
+                    : string.Empty;
             }
             catch (Exception err)
             {
@@ -1056,6 +1088,8 @@ namespace InstallerEditor
                     m_TreeNodeConfigFile.CreateChildNodes();
                     LoadTreeView(m_TreeNodeConfigFile);
                 }
+
+                statusLabel.Text = "Ready";
             }
             catch (Exception err)
             {

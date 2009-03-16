@@ -547,19 +547,19 @@ void CdotNetInstallerDlg::ExtractCab()
 }
 
 // the pos rectangle is the top left point, width and height, not l/r/t/b
-bool CdotNetInstallerDlg::MoveWindow(CWnd& dlg, const CRect& pos)
+bool CdotNetInstallerDlg::MoveWindow(CWnd& dlg, const WidgetPosition& pos)
 {   
     // an empty rectangle is ignored
-    if (pos.left == 0 && pos.right == 0 && pos.bottom == 0 && pos.top == 0)
-        return false;
+	if (! pos.IsSet()) 
+		return false;
 
     WINDOWPLACEMENT wpc;
     dlg.GetWindowPlacement(& wpc);
 
-    if (pos.left != 0) wpc.rcNormalPosition.left = pos.left;
-    if (pos.right != 0) wpc.rcNormalPosition.right = wpc.rcNormalPosition.left + pos.right /* width */;
-    if (pos.top != 0) wpc.rcNormalPosition.top = pos.top;
-    if (pos.bottom != 0) wpc.rcNormalPosition.bottom = wpc.rcNormalPosition.top + pos.bottom /* height */;
+    if (pos.Left() != 0) wpc.rcNormalPosition.left = pos.Left();
+    if (pos.Width() != 0) wpc.rcNormalPosition.right = wpc.rcNormalPosition.left + pos.Width();
+    if (pos.Top() != 0) wpc.rcNormalPosition.top = pos.Top();
+    if (pos.Height() != 0) wpc.rcNormalPosition.bottom = wpc.rcNormalPosition.top + pos.Height();
 
     // move the window to a combination of old and new coordinates
     dlg.SetWindowPlacement(& wpc);
