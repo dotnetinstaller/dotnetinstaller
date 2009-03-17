@@ -686,13 +686,16 @@ namespace InstallerEditor
         {
             try
             {
-                CloseConfiguration();
-
                 OpenFileDialog l_dg = new OpenFileDialog();
                 l_dg.Filter = "Xml Files(*.xml)|*.xml|All Files(*.*)|*.*";
                 l_dg.DefaultExt = "xml";
                 if (l_dg.ShowDialog(this) == DialogResult.OK)
                 {
+                    if (!CloseConfiguration())
+                    {
+                        return false;
+                    }
+
                     ConfigFile l_File = new ConfigFile();
 
                     string l_CheckDescription;
@@ -833,6 +836,7 @@ namespace InstallerEditor
 
         private void mnSave_Click(object sender, System.EventArgs e)
         {
+            treeView.Select();
             SaveConfiguration();
         }
 
