@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Version.h" />
+    <None Include="Version.wxi.template" />
     <Content Include="Version.rc" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

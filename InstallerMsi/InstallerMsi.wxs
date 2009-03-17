@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include ..\Version\Version.wxi ?>
+  <?define UpgradeCode="0ca33dc6-cbf7-4576-802a-69334216231d"?>
+  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="$(var.ProductVersion)"
+    Manufacturer="$(var.CompanyName)" UpgradeCode="$(var.UpgradeCode)">
+    <Package Id="*" InstallerVersion="200" Compressed="yes" />
+    <Media Id="1" Cabinet="InstallerMsi.cab" EmbedCab="yes" />
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Property="OLDERVERSIONFOUND" Minimum="0.0.0" Maximum="$(var.ProductVersion)" IncludeMaximum="no" />
+      <UpgradeVersion Property="NEWERVERSIONFOUND" OnlyDetect="yes" Minimum="$(var.ProductVersion)" IncludeMinimum="no" />
+    </Upgrade>
+    <Condition Message="!(loc.MessageNewerVersionDetected)">
+      NOT NEWERVERSIONFOUND OR Installed
+    </Condition>
+    <WixVariable Id="WixUILicenseRtf" Value="..\Documentation\EULA.rtf" />
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLLOCATION" Name="dotNetInstaller">
+          <Component Id="InstallerLib" Guid="5D5B5920-D2DF-48e0-BE89-DD1A77E705BB">
+            <File Id="InstallerLib.dll" Source="..\InstallerLib\bin\$(var.Configuration)\InstallerLib.dll" />
+            <File Id="CabLib.dll" Source="..\InstallerLib\References\CabLib.dll" />
+            <File Id="Vestris.ResourceLib.dll" Source="..\InstallerLib\References\Vestris.ResourceLib.dll" />
+          </Component>
+          <Component Id="InstallerEditor" Guid="B28C748A-5834-48f6-AC9D-6976B33EC922">
+            <File Id="InstallerEditor.exe" Source="..\InstallerEditor\bin\$(var.Configuration)\InstallerEditor.exe" />
+            <File Id="SourceGrid2.dll" Source="..\InstallerEditor\References\SourceGrid2.dll" />
+            <File Id="SourceLibrary.dll" Source="..\InstallerEditor\References\SourceLibrary.dll" />
+          </Component>
+          <Component Id="dotNetInstaller" Guid="E28F4986-00F0-489f-99A3-99745FEC243D">
+            <File Id="dotNetInstaller.exe" Source="..\dotNetInstaller\$(var.Configuration)\dotNetInstaller.exe" />
+            <File Id="unicows.dll" Source="..\Samples\Misc\unicows.dll" />
+          </Component>
+          <Component Id="Documentation" Guid="00A1CB0D-BCE4-43a4-8AAC-7563F90B3E7C">
+            <File Id="dotNetInstaller.chm" Source="..\Documentation\$(var.Configuration)\dotNetInstaller.chm" />
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder" Name="ProgMenu">
+        <Directory Id="DotNetInstallerProgramMenuFolder" Name="dotNetInstaller">
+          <Component Id="DotNetInstallerMenuShortcuts" Guid="79506F34-C3E5-4ee7-8F9A-C437931270F4">
+            <RegistryKey Root="HKCU" Key="Software\CodePlex\dotNetInstaller" Action="create">
+              <RegistryValue Name="InstallDir" Value="[INSTALLDIR]" Type="string" KeyPath="yes" />
+            </RegistryKey>
+            <Shortcut Id="InstallerEditor.exe.shortcut" Target="[INSTALLLOCATION]\InstallerEditor.exe" Name="Installer Editor" />
+            <Shortcut Id="dotNetInstaller.chm.shortcut" Target="[INSTALLLOCATION]\dotNetInstaller.chm" Name="Users Guide" />
+            <RemoveFolder Id="RemoveShorcutFolder" Directory="DotNetInstallerProgramMenuFolder" On="uninstall" />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+    <Feature Id="DotNetInstallerFeature" Title="dotNetInstaller" Level="1">
+      <ComponentRef Id="InstallerLib" />
+      <ComponentRef Id="InstallerEditor" />
+      <ComponentRef Id="dotNetInstaller" />
+      <ComponentRef Id="Documentation" />
+      <ComponentRef Id="DotNetInstallerMenuShortcuts" />
+    </Feature>
+    <UIRef Id="dotNetInstallerUI_InstallDir" />
+    <InstallExecuteSequence>
+      <FindRelatedProducts Before="AppSearch"/>
+      <RemoveExistingProducts After="InstallInitialize" />
+    </InstallExecuteSequence>
+  </Product>
+  <?include UI.wxi ?>
+</Wix>

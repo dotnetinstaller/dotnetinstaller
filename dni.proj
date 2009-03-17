@@ -54,6 +54,7 @@
     <CallTarget Targets="build" />
     <CallTarget Targets="doc" />
     <CallTarget Targets="rewritesamples" />
+    <CallTarget Targets="installer" />
     <CallTarget Targets="release" />
     <CallTarget Targets="zip" />
   </Target>
@@ -99,6 +100,7 @@
      AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
      AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)" />
     <TemplateFile Template="Version\Version.h.template" OutputFilename="Version.h" Tokens="@(AssemblyInfoTokens)"/>
+    <TemplateFile Template="Version\Version.wxi.template" OutputFilename="Version.wxi" Tokens="@(AssemblyInfoTokens)"/>
   </Target>
   <Target Name="clean">
     <Delete Files="$(ReleaseDir)" />
@@ -147,6 +149,10 @@
       <Output TaskParameter="Include" ItemName="PackageFiles" />
     </CreateItem>
     <Zip WorkingDirectory="target\$(Configuration)" ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).zip" Files="@(PackageFiles)" />
+  </Target>
+  <Target Name="installer" DependsOnTargets="version">
+    <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Build" />
+    <Copy SourceFiles="InstallerMsi\bin\$(Configuration)\dotNetInstaller.msi" DestinationFiles="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor).msi" />
   </Target>
   <!-- rewrite configuration samples to the current configuration format -->
   <ItemGroup>

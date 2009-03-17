@@ -171,6 +171,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerConfig", "Installe
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallerMsi", "InstallerMsi\InstallerMsi.wixproj", "{E9CBA0F0-543D-4076-8D9C-10C2348665A5}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{170AAA63-64CE-404F-8FDE-D0D64DA9214F} = {170AAA63-64CE-404F-8FDE-D0D64DA9214F}
+		{E19C2177-78F8-4C52-81FE-F49E157D647F} = {E19C2177-78F8-4C52-81FE-F49E157D647F}
+		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
+		{E1B1FD8B-23FE-46CC-A675-BAA6FFBF16F7} = {E1B1FD8B-23FE-46CC-A675-BAA6FFBF16F7}
+		{6E0789A6-234C-4B1C-AEB7-8C51BD754458} = {6E0789A6-234C-4B1C-AEB7-8C51BD754458}
+		{F4E74CF8-37CD-4023-8B89-05EF4B34D363} = {F4E74CF8-37CD-4023-8B89-05EF4B34D363}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -207,6 +221,8 @@ Global
 		{6E0789A6-234C-4B1C-AEB7-8C51BD754458}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E0789A6-234C-4B1C-AEB7-8C51BD754458}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E0789A6-234C-4B1C-AEB7-8C51BD754458}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9CBA0F0-543D-4076-8D9C-10C2348665A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9CBA0F0-543D-4076-8D9C-10C2348665A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
