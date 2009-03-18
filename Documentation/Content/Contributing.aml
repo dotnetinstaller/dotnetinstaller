@@ -93,6 +93,17 @@
         <step>
           <content>
             <para>
+              Install
+              <externalLink>
+                <linkText>Windows Installer XML 3.0</linkText>
+                <linkHref>http://wix.sourceforge.net/</linkHref>
+              </externalLink> to build the MSI installer.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
               Build the project.
               <code language="cmd">
                 <![CDATA[build all]]>

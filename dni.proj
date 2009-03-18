@@ -54,9 +54,9 @@
     <CallTarget Targets="build" />
     <CallTarget Targets="doc" />
     <CallTarget Targets="rewritesamples" />
-    <CallTarget Targets="installer" />
     <CallTarget Targets="release" />
     <CallTarget Targets="zip" />
+    <CallTarget Targets="installer" />
   </Target>
   <Target Name="version">
     <Version Major="1" Minor="6">
@@ -105,6 +105,7 @@
   <Target Name="clean">
     <Delete Files="$(ReleaseDir)" />
     <MSBuild Projects="Dni.sln" Targets="Clean" />
+    <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Clean" />
   </Target>
   <Target Name="build" DependsOnTargets="version">
     <MSBuild Projects="Dni.sln" Targets="Build" />

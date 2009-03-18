@@ -7,7 +7,7 @@
     <Package Id="*" InstallerVersion="200" Compressed="yes" />
     <Media Id="1" Cabinet="InstallerMsi.cab" EmbedCab="yes" />
     <Icon Id="CodePlex.ico" SourceFile="..\Documentation\CodePlex.ico" />
-    <Icon Id="dotNetInstaller.ico" SourceFile="..\dotNetInstaller\res\dotNetInstaller.ico" />    
+    <Icon Id="dotNetInstaller.ico" SourceFile="..\dotNetInstaller\res\dotNetInstaller.ico" />
     <Upgrade Id="$(var.UpgradeCode)">
       <UpgradeVersion Property="OLDERVERSIONFOUND" Minimum="0.0.0" Maximum="$(var.ProductVersion)" IncludeMaximum="no" />
       <UpgradeVersion Property="NEWERVERSIONFOUND" OnlyDetect="yes" Minimum="$(var.ProductVersion)" IncludeMinimum="no" />
@@ -26,6 +26,12 @@
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLLOCATION" Name="dotNetInstaller">
           <Directory Id="bin" Name="bin">
+            <Component Id="InstallerRegistry" Guid="5FBAE1CD-CBE6-406c-AB80-DD5675CED1BC">
+              <RegistryKey Root="HKLM" Key="Software\CodePlex\dotNetInstaller" Action="create">
+                <RegistryValue Name="InstalledVersion" Value="$(var.ProductVersion)" Type="string" />
+                <RegistryValue Name="InstallDir" Value="[INSTALLLOCATION]" Type="string" KeyPath="yes" />
+              </RegistryKey>
+            </Component>
             <Component Id="InstallerLib" Guid="5D5B5920-D2DF-48e0-BE89-DD1A77E705BB">
               <File Id="InstallerLib.dll" Source="..\InstallerLib\bin\$(var.Configuration)\InstallerLib.dll" />
               <File Id="CabLib.dll" Source="..\InstallerLib\References\CabLib.dll" />
@@ -53,8 +59,7 @@
         <Directory Id="DotNetInstallerProgramMenuFolder" Name="dotNetInstaller">
           <Component Id="DotNetInstallerMenuShortcuts" Guid="79506F34-C3E5-4ee7-8F9A-C437931270F4">
             <RegistryKey Root="HKCU" Key="Software\CodePlex\dotNetInstaller" Action="create">
-              <RegistryValue Name="InstallDir" Value="[INSTALLDIR]" Type="string" KeyPath="yes" />
-              <RegistryValue Name="InstalledVersion" Value="$(var.ProductVersion)" Type="string" />
+              <RegistryValue Name="InstallDir" Value="[INSTALLLOCATION]" Type="string" KeyPath="yes" />
             </RegistryKey>
             <Shortcut Id="InstallerEditor.exe.shortcut" Target="[INSTALLLOCATION]\bin\InstallerEditor.exe" Name="Installer Editor" />
             <Shortcut Id="dotNetInstaller.chm.shortcut" Target="[INSTALLLOCATION]\doc\dotNetInstaller.chm" Name="Users Guide" />
@@ -66,14 +71,17 @@
       </Directory>
     </Directory>
     <Feature Id="DotNetInstallerFeature" Title="dotNetInstaller" Level="1">
+      <ComponentRef Id="InstallerRegistry" />
       <ComponentRef Id="InstallerLib" />
       <ComponentRef Id="InstallerEditor" />
       <ComponentRef Id="dotNetInstaller" />
       <ComponentRef Id="Documentation" />
       <ComponentRef Id="DotNetInstallerMenuShortcuts" />
-      <ComponentRef Id="InstallCheckOperatorsSample" />
-      <ComponentGroupRef Id="StandaloneSetupSample" />
-      <ComponentGroupRef Id="PackagedSetupSample"/>
+      <Feature Id="SamplesFeature" Title="Samples" Level="1">
+        <ComponentRef Id="InstallCheckOperatorsSample" />
+        <ComponentGroupRef Id="StandaloneSetupSample" />
+        <ComponentGroupRef Id="PackagedSetupSample"/>
+      </Feature>
     </Feature>
     <UIRef Id="dotNetInstallerUI_InstallDir" />
     <InstallExecuteSequence>
