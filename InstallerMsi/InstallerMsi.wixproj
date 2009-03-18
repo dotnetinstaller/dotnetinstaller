@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="InstallWelcomeDlg.wxi" />
+    <Compile Include="Samples.wxi" />
     <Content Include="UI.wxi" />
     <Content Include="UpgradeWelcomeDlg.wxi" />
   </ItemGroup>

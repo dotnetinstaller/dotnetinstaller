@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="INSTALLLOCATION">
+      <Directory Id="Samples" Name="samples">
+        <Directory Id="InstallCheckOperatorsFolder" Name="InstallCheckOperators">
+          <Component Id="InstallCheckOperatorsSample" Guid="30AD6A29-CCC9-40D0-BDAB-D2414C39247A">
+            <File Id="InstallCheckOperators.banner.bmp" Name="banner.bmp" Source="..\Samples\InstallCheckOperators\banner.bmp" />
+            <File Id="InstallCheckOperators.Configuration.xml" Name="Configuration.xml" Source="..\Samples\InstallCheckOperators\Configuration.xml" />
+            <File Id="InstallCheckOperators.dotNetInstaller.exe" Name="dotNetInstaller.exe" Source="..\dotNetInstaller\$(var.Configuration)\dotNetInstaller.exe" />
+            <File Id="InstallCheckOperators.icon.ico" Name="icon.ico" Source="..\Samples\InstallCheckOperators\icon.ico" />
+            <File Id="InstallCheckOperators.Readme.txt" Name="Readme.txt" Source="..\Samples\InstallCheckOperators\Readme.txt" />
+          </Component>
+        </Directory>
+        <Directory Id="PackagedSetupFolder" Name="PackagedSetup">
+          <Directory Id="PackagedSetupPackageFolder" Name="Package">
+            <Component Id="PackagedSetupPackage" Guid="D7F09438-C2B0-4C73-8A3C-BC3FB32EFC44">
+              <File Id="Setup.exe" Name="Setup.exe" Source="..\Samples\PackagedSetup\bin\$(var.Configuration)\Setup.exe" />
+            </Component>
+          </Directory>
+          <Directory Id="PackagedSetupSourceFolder" Name="Source">
+            <Component Id="PackagedSetupSource" Guid="5FF553D5-EFA9-4914-94B0-E09A0156EAFC">
+              <File Id="PackagedSetupSource.banner.bmp" Name="banner.bmp" Source="..\Samples\PackagedSetup\banner.bmp" />
+              <File Id="PackagedSetupSource.Configuration.xml" Name="Configuration.xml" Source="..\Samples\PackagedSetup\Configuration.xml" />
+              <File Id="PackagedSetupSource.icon.ico" Name="icon.ico" Source="..\Samples\PackagedSetup\icon.ico" />
+              <File Id="PackagedSetupSource.Readme.txt" Name="Readme.txt" Source="..\Samples\PackagedSetup\Readme.txt" />
+            </Component>
+            <Directory Id="PackagedSetupSimpleFolder" Name="Simple">
+              <Component Id="PackagedSetupSimple" Guid="C0669897-61C6-45FC-A943-94C767906B69">
+                <File Id="PackagedSetupSimple.Simple.msi" Name="Simple.msi" Source="..\Samples\PackagedSetup\Simple\Simple.msi" />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+        <Directory Id="StandaloneSetupFolder" Name="StandaloneSetup">
+          <Component Id="StandaloneSetup" Guid="DABBB985-D0B4-41FF-BDD4-10E14BE68BE3">
+            <File Id="StandaloneSetup.banner.bmp" Name="banner.bmp" Source="..\Samples\StandaloneSetup\banner.bmp" />
+            <File Id="StandaloneSetup.configuration.xml" Name="configuration.xml" Source="..\Samples\StandaloneSetup\configuration.xml" />
+            <File Id="StandaloneSetupdotNetInstaller.exe" Name="dotNetInstaller.exe" Source="..\dotNetInstaller\$(var.Configuration)\dotNetInstaller.exe" />
+            <File Id="StandaloneSetupSampleApp.msi.readme.txt" Name="SampleApp.msi.readme.txt" Source="..\Samples\StandaloneSetup\SampleApp.msi.readme.txt" />
+          </Component>
+          <Directory Id="SSSF_Folder" Name="SupportFiles">
+            <Component Id="SSSF" Guid="C3B8823A-4281-4B9B-A5D6-972670A57A86">
+              <File Id="SSSF.readme.txt" Name="readme.txt" Source="..\Samples\StandaloneSetup\SupportFiles\readme.txt" />
+            </Component>
+            <Directory Id="SSSF_dotNet1.1Folder" Name="dotNet1.1">
+              <Directory Id="SSSF_dotNet1.1EnglishFolder" Name="English">
+                <Component Id="SSSF_dotNet1.1English" Guid="E983F7EA-300B-45B3-B3CA-81FBA6E60309">
+                  <File Id="SSSF_dotNet1.1English.dotnetfx.exe.readme.txt" Name="dotnetfx.exe.readme.txt" Source="..\Samples\SupportFiles\dotNet1.1\English\dotnetfx.exe.readme.txt" />
+                </Component>
+              </Directory>
+              <Directory Id="SSSF_dotNet1.1ItalianFolder" Name="Italian">
+                <Component Id="SSSF_dotNet1.1Italian" Guid="EA4D2BDE-B0DB-47DD-9FAF-863DC5E90A65">
+                  <File Id="SSSF_dotNet1.1Italian.dotnetfx.exe.readme.txt" Name="dotnetfx.exe.readme.txt" Source="..\Samples\SupportFiles\dotNet1.1\Italian\dotnetfx.exe.readme.txt" />
+                  <File Id="SSSF_dotNet1.1Italian.langpack.exe.readme.txt" Name="langpack.exe.readme.txt" Source="..\Samples\SupportFiles\dotNet1.1\Italian\langpack.exe.readme.txt" />
+                </Component>
+              </Directory>
+            </Directory>
+            <Directory Id="SSSF_dotNet2.0Folder" Name="dotNet2.0">
+              <Directory Id="SSSF_dotNet2.0EnglishFolder" Name="English">
+                <Component Id="SSSF_dotNet2.0English" Guid="97F0B8B4-FF95-42D2-AD36-2D26A750DDA9">
+                  <File Id="SSSF_dotNet2.0English.dotnetfx.exe.readme.txt" Name="dotnetfx.exe.readme.txt" Source="..\Samples\SupportFiles\dotNet2.0\English\dotnetfx.exe.readme.txt" />
+                </Component>
+              </Directory>
+              <Directory Id="SSSF_dotNet2.0ItalianFolder" Name="Italian">
+                <Component Id="SSSF_dotNet2.0Italian" Guid="B8504CA5-D236-49B5-9BFC-50201ADE372B">
+                  <File Id="SSSF_dotNet2.0Italian.dotnetfx.exe.readme.txt" Name="dotnetfx.exe.readme.txt" Source="..\Samples\SupportFiles\dotNet2.0\Italian\dotnetfx.exe.readme.txt" />
+                </Component>
+              </Directory>
+            </Directory>
+            <Directory Id="SSSF_InternetExplorer6.0Sp1Folder" Name="InternetExplorer6.0Sp1">
+              <Directory Id="SSSF_InternetExplorer6.0Sp1EnglishFolder" Name="English">
+                <Component Id="SSSF_InternetExplorer6.0Sp1English" Guid="18731AC4-860D-463B-9D70-65B23F7162E1">
+                  <File Id="SSSF_InternetExplorer6.0Sp1English.ie6setup.exe.readme.txt" Name="ie6setup.exe.readme.txt" Source="..\Samples\SupportFiles\InternetExplorer6.0Sp1\English\ie6setup.exe.readme.txt" />
+                </Component>
+              </Directory>
+              <Directory Id="SSSF_InternetExplorer6.0Sp1ItalianFolder" Name="Italian">
+                <Component Id="SSSF_InternetExplorer6.0Sp1Italian" Guid="9DBAAC27-535F-440F-ABFB-8C27B70425E6">
+                  <File Id="SSSF_InternetExplorer6.0Sp1Italian.ie6setup.exe.readme.txt" Name="ie6setup.exe.readme.txt" Source="..\Samples\SupportFiles\InternetExplorer6.0Sp1\Italian\ie6setup.exe.readme.txt" />
+                </Component>
+              </Directory>
+            </Directory>
+            <Directory Id="SSSF_Jet40Sp8Folder" Name="Jet40Sp8">
+              <Directory Id="SSSF_Jet40Sp8EnglishFolder" Name="English">
+                <Directory Id="SSSF_Jet40Sp8English2000Folder" Name="2000">
+                  <Component Id="SSSF_Jet40Sp8English2000" Guid="321B8BB7-4586-4424-BE9D-000A422EB87B">
+                    <File Id="SSSF_Jet40Sp8English2000.Windows2000KB829558x86ENU.exe.readme.txt" Name="Windows2000-KB829558-x86-ENU.exe.readme.txt" Source="..\Samples\SupportFiles\Jet40Sp8\English\2000\Windows2000-KB829558-x86-ENU.exe.readme.txt" />
+                  </Component>
+                </Directory>
+                <Directory Id="SSSF_Jet40Sp8English95_98_NT4Folder" Name="95_98_NT4">
+                  <Component Id="SSSF_95_98_NT4" Guid="461D61BD-9C56-45F9-A328-AB3332B92347">
+                    <File Id="SSSF_95_98_NT4.Jet40SP8_9xNT.exe.readme.txt" Name="Jet40SP8_9xNT.exe.readme.txt" Source="..\Samples\SupportFiles\Jet40Sp8\English\95_98_NT4\Jet40SP8_9xNT.exe.readme.txt" />
+                  </Component>
+                </Directory>
+                <Directory Id="SSSF_Jet40Sp8EnglishMEFolder" Name="ME">
+                  <Component Id="SSSF_ME" Guid="7B855659-DC4E-490C-B52B-682E878376F0">
+                    <File Id="SSSF_ME.jet40sp8_Wme.exe.readme.txt" Name="jet40sp8_Wme.exe.readme.txt" Source="..\Samples\SupportFiles\Jet40Sp8\English\ME\jet40sp8_Wme.exe.readme.txt" />
+                  </Component>
+                </Directory>
+                <Directory Id="SSSF_Jet40Sp8EnglishServer2003Folder" Name="Server2003">
+                  <Component Id="SSSF_Server2003" Guid="605CABF7-5CFA-4F36-BBB6-148A172AE9FD">
+                    <File Id="SSSF_Server2003.WindowsServer2003KB829558x86ENU.exe.readme.txt" Name="WindowsServer2003-KB829558-x86-ENU.exe.readme.txt" Source="..\Samples\SupportFiles\Jet40Sp8\English\Server2003\WindowsServer2003-KB829558-x86-ENU.exe.readme.txt" />
+                  </Component>
+                </Directory>
+                <Directory Id="SSSF_Jet40Sp8EnglishXPFolder" Name="XP">
+                  <Component Id="SSSF_XP" Guid="307C091E-4A8D-43D5-A603-1E654AC6BF4B">
+                    <File Id="SSSF_XP.WindowsXPKB829558x86ENU.exe.readme.txt" Name="WindowsXP-KB829558-x86-ENU.exe.readme.txt" Source="..\Samples\SupportFiles\Jet40Sp8\English\XP\WindowsXP-KB829558-x86-ENU.exe.readme.txt" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="SSSF_Jet40Sp8ItalianFolder" Name="Italian">
+                <Directory Id="SSSF_Jet40Sp8Italian2000Folder" Name="2000">
+                  <Component Id="SSSF_Jet40Sp8Italian2000" Guid="B10F2360-E3A7-4227-9B18-AECDA17717FB">
+                    <File Id="SSSF_Jet40Sp8Italian2000.Windows2000KB829558x86ITA.exe.readme.txt" Name="Windows2000-KB829558-x86-ITA.exe.readme.txt" Source="..\Samples\SupportFiles\Jet40Sp8\Italian\2000\Windows2000-KB829558-x86-ITA.exe.readme.txt" />
+                  </Component>
+                </Directory>
+                <Directory Id="SSSF_Jet40Sp8Italian95_98_NT4Folder" Name="95_98_NT4">
+                  <Component Id="SSSF_Jet40Sp8Italian95_98_NT4" Guid="A2DA1D57-B7D0-4D28-8FF2-F19677374AB3">
+                    <File Id="SSSF_Jet40Sp8Italian95_98_NT4.Jet40SP8_9xNT.exe.readme.txt_2" Name="Jet40SP8_9xNT.exe.readme.txt" Source="..\Samples\SupportFiles\Jet40Sp8\Italian\95_98_NT4\Jet40SP8_9xNT.exe.readme.txt" />
+                  </Component>
+                </Directory>
+                <Directory Id="SSSF_Jet40Sp8ItalianMEFolder" Name="ME">
+                  <Component Id="SSSF_Jet40Sp8ItalianME" Guid="874ED222-3DD0-4811-8B12-74419F4698F7">
+                    <File Id="SSSF_Jet40Sp8ItalianME.jet40sp8_Wme.exe.readme.txt" Name="jet40sp8_Wme.exe.readme.txt" Source="..\Samples\SupportFiles\Jet40Sp8\Italian\ME\jet40sp8_Wme.exe.readme.txt" />
+                  </Component>
+                </Directory>
+                <Directory Id="SSSF_Jet40Sp8ItalianServer2003Folder" Name="Server2003">
+                  <Component Id="SSSF_Jet40Sp8ItalianServer2003" Guid="158399AD-0FAA-4EFB-93E3-FDE1F7D0BC51">
+                    <File Id="SSSF_Jet40Sp8ItalianServer2003.readme.txt" Name="WindowsServer2003-KB829558-x86-ITA.exe.readme.txt" Source="..\Samples\SupportFiles\Jet40Sp8\Italian\Server2003\WindowsServer2003-KB829558-x86-ITA.exe.readme.txt" />
+                  </Component>
+                </Directory>
+                <Directory Id="SSSF_Jet40Sp8ItalianXPFolder" Name="XP">
+                  <Component Id="SSSF_Jet40Sp8ItalianXP" Guid="7AD3194F-E93A-46D1-A583-9BFDF1423413">
+                    <File Id="SSSF_Jet40Sp8ItalianXPFolder.readme.txt" Name="WindowsXP-KB829558-x86-ITA.exe.readme.txt" Source="..\Samples\SupportFiles\Jet40Sp8\Italian\XP\WindowsXP-KB829558-x86-ITA.exe.readme.txt" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="SSSF_MDAC2.8Folder" Name="MDAC2.8">
+              <Directory Id="SSSF_MDAC2.8EnglishFolder" Name="English">
+                <Directory Id="SSSF_MDAC2.8EnglishWin_98_ME_NT_2000_XPFolder" Name="Win_98_ME_NT_2000_XP">
+                  <Component Id="SSSF_MDAC2.8EnglishWin_98_ME_NT_2000_XP" Guid="45FCDCC3-1023-4CDC-85E9-58A4B2135E77">
+                    <File Id="SSSF_MDAC2.8EnglishWin_98_ME_NT_2000_XP.MDAC_TYP.EXE.readme.txt" Name="MDAC_TYP.EXE.readme.txt" Source="..\Samples\SupportFiles\MDAC2.8\English\Win_98_ME_NT_2000_XP\MDAC_TYP.EXE.readme.txt" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="SSSF_MDAC2.8ItalianFolder" Name="Italian">
+                <Directory Id="SSSF_MDAC2.8ItalianWin_98_ME_NT_2000_XP_2Folder" Name="Win_98_ME_NT_2000_XP">
+                  <Component Id="SSSF_MDAC2.8ItalianWin_98_ME_NT_2000_XP_2" Guid="073BF199-86D1-4317-9624-947F75B2EDA7">
+                    <File Id="SSSF_MDAC2.8ItalianWin_98_ME_NT_2000_XP.MDAC_TYP.EXE.readme.txt" Name="MDAC_TYP.EXE.readme.txt" Source="..\Samples\SupportFiles\MDAC2.8\Italian\Win_98_ME_NT_2000_XP\MDAC_TYP.EXE.readme.txt" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="SSSF_ServicePacksFolder" Name="ServicePacks">
+              <Directory Id="SSSF_ServicePacks2000_SP4Folder" Name="2000_SP4">
+                <Directory Id="SSSF_ServicePacks2000_SP4ExpressFolder" Name="Express">
+                  <Directory Id="SSSF_ServicePacks2000_SP4ExpressEnglishFolder" Name="English">
+                    <Component Id="SSSF_ServicePacks2000_SP4ExpressEnglish" Guid="8CE5E9BD-F8D1-437D-B0D9-A7ACFDF3B6F4">
+                      <File Id="SSSF_ServicePacks2000_SP4ExpressEnglish.SP4Express_EN.exe.readme.txt" Name="SP4Express_EN.exe.readme.txt" Source="..\Samples\SupportFiles\ServicePacks\2000_SP4\Express\English\SP4Express_EN.exe.readme.txt" />
+                    </Component>
+                  </Directory>
+                  <Directory Id="SSSF_ServicePacks2000_SP4ExpressItalianFolder" Name="Italian">
+                    <Component Id="SSSF_ServicePacks2000_SP4ExpressItalian" Guid="E9C97882-ED09-4239-A7D6-92FCD51E6B2B">
+                      <File Id="SSSF_ServicePacks2000_SP4ExpressItalian.SP4express_it.exe.readme.txt" Name="SP4express_it.exe.readme.txt" Source="..\Samples\SupportFiles\ServicePacks\2000_SP4\Express\Italian\SP4express_it.exe.readme.txt" />
+                    </Component>
+                  </Directory>
+                </Directory>
+                <Directory Id="SSSF_ServicePacks2000_SP4NetworkFolder" Name="Network">
+                  <Directory Id="SSSF_ServicePacks2000_SP4NetworkEnglishFolder" Name="English">
+                    <Component Id="SSSF_ServicePacks2000_SP4Network" Guid="609824A5-044C-47D9-8512-B33B702BAD66">
+                      <File Id="SSSF_ServicePacks2000_SP4Network.W2KSP4_EN.EXE.readme.txt" Name="W2KSP4_EN.EXE.readme.txt" Source="..\Samples\SupportFiles\ServicePacks\2000_SP4\Network\English\W2KSP4_EN.EXE.readme.txt" />
+                    </Component>
+                  </Directory>
+                  <Directory Id="SSSF_ServicePacks2000_SP4NetworkItalianFolder" Name="Italian">
+                    <Component Id="SSSF_ServicePacks2000_SP4NetworkItalian" Guid="552B81EB-602F-4741-8BE0-C69870944764">
+                      <File Id="SSSF_ServicePacks2000_SP4NetworkItalian.w2ksp4_it.exe.readme.txt" Name="w2ksp4_it.exe.readme.txt" Source="..\Samples\SupportFiles\ServicePacks\2000_SP4\Network\Italian\w2ksp4_it.exe.readme.txt" />
+                    </Component>
+                  </Directory>
+                </Directory>
+              </Directory>
+              <Directory Id="SSSFilesServicePacksNT4_SP6aFolder" Name="NT4_SP6a">
+                <Directory Id="SSSFilesServicePacksNT4_SP6aHighEncryption_x86Folder" Name="HighEncryption_x86">
+                  <Directory Id="SSSFilesServicePacksNT4_SP6aHighEncryption_x86ExpressFolder" Name="Express">
+                    <Directory Id="SSSFilesServicePacksNT4_SP6aHighEncryption_x86ExpressEnglishFolder" Name="English">
+                      <Component Id="SSSFilesServicePacksNT4_SP6aHighEncryption_x86ExpressEnglish" Guid="E5687AD7-DBFC-4213-8B27-36CD3884271F">
+                        <File Id="SSSFilesServicePacksNT4_SP6aHighEncryption_x86ExpressEnglish.readme.txt" Name="sp6patch_i386.exe.readme.txt" Source="..\Samples\SupportFiles\ServicePacks\NT4_SP6a\HighEncryption_x86\Express\English\sp6patch_i386.exe.readme.txt" />
+                      </Component>
+                    </Directory>
+                  </Directory>
+                  <Directory Id="SSSFilesServicePacksNT4_SP6aHighEncryption_x86NetworkFolder" Name="Network">
+                    <Directory Id="SSSFilesServicePacksNT4_SP6aHighEncryption_x86NetworkEnglishFolder" Name="English">
+                      <Component Id="SSSFilesServicePacksNT4_SP6aHighEncryption_x86NetworkEnglish" Guid="B73A50A1-56F6-429E-B7CE-3E09F25410FC">
+                        <File Id="SSSFilesServicePacksNT4_SP6aHighEncryption_x86NetworkEnglish.readme.txt" Name="sp6i386.exe.readme.txt" Source="..\Samples\SupportFiles\ServicePacks\NT4_SP6a\HighEncryption_x86\Network\English\sp6i386.exe.readme.txt" />
+                      </Component>
+                    </Directory>
+                  </Directory>
+                </Directory>
+                <Directory Id="SSSFilesServicePacksNT4_SP6aSE_x86Folder" Name="StandardEncryption_x86">
+                  <Directory Id="SSSFilesServicePacksNT4_SP6aSE_x86ExpressFolder" Name="Express">
+                    <Directory Id="SSSFilesServicePacksNT4_SP6aSE_x86ExpressEnglishFolder" Name="English">
+                      <Component Id="SSSFilesServicePacksNT4_SP6aSE_x86ExpressEnglish" Guid="212335F7-51AA-4563-B58F-49FCFEA27168">
+                        <File Id="SSSFilesServicePacksNT4_SP6aSE_x86ExpressEnglish.readme.txt" Name="sp6patch_i386.exe.readme.txt" Source="..\Samples\SupportFiles\ServicePacks\NT4_SP6a\StandardEncryption_x86\Express\English\sp6patch_i386.exe.readme.txt" />
+                      </Component>
+                    </Directory>
+                  </Directory>
+                  <Directory Id="SSSFilesServicePacksNT4_SP6aSE_x86NetworkFolder" Name="Network">
+                    <Directory Id="SSSFilesServicePacksNT4_SP6aSE_x86NetworkEnglishFolder" Name="English">
+                      <Component Id="SSSFilesServicePacksNT4_SP6aSE_x86NetworkEnglish" Guid="9052D395-C0EA-42FC-BF30-3D0D0B6548BA">
+                        <File Id="SSSFilesServicePacksNT4_SP6aSE_x86NetworkEnglish.readme.txt" Name="sp6i386.exe.readme.txt" Source="..\Samples\SupportFiles\ServicePacks\NT4_SP6a\StandardEncryption_x86\Network\English\sp6i386.exe.readme.txt" />
+                      </Component>
+                    </Directory>
+                  </Directory>
+                </Directory>
+              </Directory>
+              <Directory Id="SSSF_ServicePacksWin98_Y2kUpdateFolder" Name="Win98_Y2kUpdate">
+                <Directory Id="SSSF_ServicePacksWin98_Y2kUpdateEnglishFolder" Name="English">
+                  <Component Id="SSSF_ServicePacksWin98_Y2kUpdateEnglish" Guid="A3D5E05B-F11D-488C-A655-E73B12445F35">
+                    <File Id="SSSF_ServicePacksWin98_Y2kUpdateEnglish.y2k.exe.readme.txt" Name="y2k.exe.readme.txt" Source="..\Samples\SupportFiles\ServicePacks\Win98_Y2kUpdate\English\y2k.exe.readme.txt" />
+                    <File Id="SSSF_ServicePacksWin98_Y2kUpdateEnglish.Y2KW98_2.EXE.readme.txt" Name="Y2KW98_2.EXE.readme.txt" Source="..\Samples\SupportFiles\ServicePacks\Win98_Y2kUpdate\English\Y2KW98_2.EXE.readme.txt" />
+                  </Component>
+                </Directory>
+                <Directory Id="SSSF_ServicePacksWin98_Y2kUpdateItalianFolder" Name="Italian">
+                  <Component Id="SSSF_ServicePacksWin98_Y2kUpdateItalian" Guid="31C89714-3DDC-4BC4-89E3-46244B50D1E4">
+                    <File Id="SSSF_ServicePacksWin98_Y2kUpdateItalian.y2k.exe.readme.txt_2" Name="y2k.exe.readme.txt" Source="..\Samples\SupportFiles\ServicePacks\Win98_Y2kUpdate\Italian\y2k.exe.readme.txt" />
+                    <File Id="SSSF_ServicePacksWin98_Y2kUpdateItalian.Y2KW98_2.EXE.readme.txt_2" Name="Y2KW98_2.EXE.readme.txt" Source="..\Samples\SupportFiles\ServicePacks\Win98_Y2kUpdate\Italian\Y2KW98_2.EXE.readme.txt" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="SSSF_WindowsInstaller2.0Folder" Name="WindowsInstaller2.0">
+              <Directory Id="SSSF_WindowsInstaller2.09x_MEFolder" Name="9x_ME">
+                <Component Id="SSSF_WindowsInstaller2.09x_ME" Guid="D77B8330-3A10-442E-97B6-8C8372D43876">
+                  <File Id="SSSF_WindowsInstaller2.09x_ME.InstMsiA.exe.readme.txt" Name="InstMsiA.exe.readme.txt" Source="..\Samples\SupportFiles\WindowsInstaller2.0\9x_ME\InstMsiA.exe.readme.txt" />
+                </Component>
+              </Directory>
+              <Directory Id="SSSF_WindowsInstaller2.09x_MENt_2000Folder" Name="Nt_2000">
+                <Component Id="SSSF_WindowsInstaller2.09x_MENt_2000" Guid="BF4EB3FE-D255-4273-B6C8-125C4BC361E8">
+                  <File Id="SSSF_WindowsInstaller2.09x_MENt_2000.InstMsiW.exe.readme.txt" Name="InstMsiW.exe.readme.txt" Source="..\Samples\SupportFiles\WindowsInstaller2.0\Nt_2000\InstMsiW.exe.readme.txt" />
+                </Component>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="PackagedSetupSample">
+      <ComponentRef Id="PackagedSetupPackage" />
+      <ComponentRef Id="PackagedSetupSource" />
+      <ComponentRef Id="PackagedSetupSimple" />
+    </ComponentGroup>
+    <ComponentGroup Id="StandaloneSetupSample">
+      <ComponentRef Id="StandaloneSetup" />
+      <ComponentRef Id="SSSF" />
+      <ComponentRef Id="SSSF_dotNet1.1English" />
+      <ComponentRef Id="SSSF_dotNet1.1Italian" />
+      <ComponentRef Id="SSSF_dotNet2.0English" />
+      <ComponentRef Id="SSSF_dotNet2.0Italian" />
+      <ComponentRef Id="SSSF_InternetExplorer6.0Sp1English" />
+      <ComponentRef Id="SSSF_InternetExplorer6.0Sp1Italian" />
+      <ComponentRef Id="SSSF_Jet40Sp8English2000" />
+      <ComponentRef Id="SSSF_95_98_NT4" />
+      <ComponentRef Id="SSSF_ME" />
+      <ComponentRef Id="SSSF_Server2003" />
+      <ComponentRef Id="SSSF_XP" />
+      <ComponentRef Id="SSSF_Jet40Sp8Italian2000" />
+      <ComponentRef Id="SSSF_Jet40Sp8Italian95_98_NT4" />
+      <ComponentRef Id="SSSF_Jet40Sp8ItalianME" />
+      <ComponentRef Id="SSSF_Jet40Sp8ItalianServer2003" />
+      <ComponentRef Id="SSSF_Jet40Sp8ItalianXP" />
+      <ComponentRef Id="SSSF_MDAC2.8EnglishWin_98_ME_NT_2000_XP" />
+      <ComponentRef Id="SSSF_MDAC2.8ItalianWin_98_ME_NT_2000_XP_2" />
+      <ComponentRef Id="SSSF_ServicePacks2000_SP4ExpressEnglish" />
+      <ComponentRef Id="SSSF_ServicePacks2000_SP4ExpressItalian" />
+      <ComponentRef Id="SSSF_ServicePacks2000_SP4Network" />
+      <ComponentRef Id="SSSF_ServicePacks2000_SP4NetworkItalian" />
+      <ComponentRef Id="SSSFilesServicePacksNT4_SP6aHighEncryption_x86ExpressEnglish" />
+      <ComponentRef Id="SSSFilesServicePacksNT4_SP6aHighEncryption_x86NetworkEnglish" />
+      <ComponentRef Id="SSSFilesServicePacksNT4_SP6aSE_x86ExpressEnglish" />
+      <ComponentRef Id="SSSFilesServicePacksNT4_SP6aSE_x86NetworkEnglish" />
+      <ComponentRef Id="SSSF_ServicePacksWin98_Y2kUpdateEnglish" />
+      <ComponentRef Id="SSSF_ServicePacksWin98_Y2kUpdateItalian" />
+      <ComponentRef Id="SSSF_WindowsInstaller2.09x_ME" />
+      <ComponentRef Id="SSSF_WindowsInstaller2.09x_MENt_2000" />
+    </ComponentGroup>
+  </Fragment>
+</Wix>

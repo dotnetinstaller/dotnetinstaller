@@ -6,10 +6,18 @@
     Manufacturer="$(var.CompanyName)" UpgradeCode="$(var.UpgradeCode)">
     <Package Id="*" InstallerVersion="200" Compressed="yes" />
     <Media Id="1" Cabinet="InstallerMsi.cab" EmbedCab="yes" />
+    <Icon Id="CodePlex.ico" SourceFile="..\Documentation\CodePlex.ico" />
+    <Icon Id="dotNetInstaller.ico" SourceFile="..\dotNetInstaller\res\dotNetInstaller.ico" />    
     <Upgrade Id="$(var.UpgradeCode)">
       <UpgradeVersion Property="OLDERVERSIONFOUND" Minimum="0.0.0" Maximum="$(var.ProductVersion)" IncludeMaximum="no" />
       <UpgradeVersion Property="NEWERVERSIONFOUND" OnlyDetect="yes" Minimum="$(var.ProductVersion)" IncludeMinimum="no" />
     </Upgrade>
+    <Property Id="ALLUSERS" Value="1" />
+    <Property Id="ARPPRODUCTICON" Value="dotNetInstaller.ico" />
+    <Property Id="DotNetInstallerCodePlexUri" Value="http://dotnetinstaller.codeplex.com/" />
+    <Property Id="INSTALLEDPRODUCTVERSION">
+      <RegistrySearch Id="GetInstalledProductVersion" Type="raw" Root="HKLM" Key="SOFTWARE\CodePlex\dotNetInstaller" Name="InstalledVersion" />
+    </Property>
     <Condition Message="!(loc.MessageNewerVersionDetected)">
       NOT NEWERVERSIONFOUND OR Installed
     </Condition>
@@ -17,23 +25,28 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLLOCATION" Name="dotNetInstaller">
-          <Component Id="InstallerLib" Guid="5D5B5920-D2DF-48e0-BE89-DD1A77E705BB">
-            <File Id="InstallerLib.dll" Source="..\InstallerLib\bin\$(var.Configuration)\InstallerLib.dll" />
-            <File Id="CabLib.dll" Source="..\InstallerLib\References\CabLib.dll" />
-            <File Id="Vestris.ResourceLib.dll" Source="..\InstallerLib\References\Vestris.ResourceLib.dll" />
-          </Component>
-          <Component Id="InstallerEditor" Guid="B28C748A-5834-48f6-AC9D-6976B33EC922">
-            <File Id="InstallerEditor.exe" Source="..\InstallerEditor\bin\$(var.Configuration)\InstallerEditor.exe" />
-            <File Id="SourceGrid2.dll" Source="..\InstallerEditor\References\SourceGrid2.dll" />
-            <File Id="SourceLibrary.dll" Source="..\InstallerEditor\References\SourceLibrary.dll" />
-          </Component>
-          <Component Id="dotNetInstaller" Guid="E28F4986-00F0-489f-99A3-99745FEC243D">
-            <File Id="dotNetInstaller.exe" Source="..\dotNetInstaller\$(var.Configuration)\dotNetInstaller.exe" />
-            <File Id="unicows.dll" Source="..\Samples\Misc\unicows.dll" />
-          </Component>
-          <Component Id="Documentation" Guid="00A1CB0D-BCE4-43a4-8AAC-7563F90B3E7C">
-            <File Id="dotNetInstaller.chm" Source="..\Documentation\$(var.Configuration)\dotNetInstaller.chm" />
-          </Component>
+          <Directory Id="bin" Name="bin">
+            <Component Id="InstallerLib" Guid="5D5B5920-D2DF-48e0-BE89-DD1A77E705BB">
+              <File Id="InstallerLib.dll" Source="..\InstallerLib\bin\$(var.Configuration)\InstallerLib.dll" />
+              <File Id="CabLib.dll" Source="..\InstallerLib\References\CabLib.dll" />
+              <File Id="Vestris.ResourceLib.dll" Source="..\InstallerLib\References\Vestris.ResourceLib.dll" />
+            </Component>
+            <Component Id="InstallerEditor" Guid="B28C748A-5834-48f6-AC9D-6976B33EC922">
+              <File Id="InstallerEditor.exe" Source="..\InstallerEditor\bin\$(var.Configuration)\InstallerEditor.exe" />
+              <File Id="SourceGrid2.dll" Source="..\InstallerEditor\References\SourceGrid2.dll" />
+              <File Id="SourceLibrary.dll" Source="..\InstallerEditor\References\SourceLibrary.dll" />
+            </Component>
+            <Component Id="dotNetInstaller" Guid="E28F4986-00F0-489f-99A3-99745FEC243D">
+              <File Id="dotNetInstaller.exe" Source="..\dotNetInstaller\$(var.Configuration)\dotNetInstaller.exe" />
+              <File Id="unicows.dll" Source="..\Samples\Misc\unicows.dll" />
+            </Component>
+          </Directory>
+          <Directory Id="doc" Name="doc">
+            <Component Id="Documentation" Guid="00A1CB0D-BCE4-43a4-8AAC-7563F90B3E7C">
+              <File Id="dotNetInstaller.chm" Source="..\Documentation\$(var.Configuration)\dotNetInstaller.chm" />
+              <File Id="WhatsNew.html" Source="..\Documentation\WhatsNew.html" />
+            </Component>
+          </Directory>
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder" Name="ProgMenu">
@@ -41,9 +54,12 @@
           <Component Id="DotNetInstallerMenuShortcuts" Guid="79506F34-C3E5-4ee7-8F9A-C437931270F4">
             <RegistryKey Root="HKCU" Key="Software\CodePlex\dotNetInstaller" Action="create">
               <RegistryValue Name="InstallDir" Value="[INSTALLDIR]" Type="string" KeyPath="yes" />
+              <RegistryValue Name="InstalledVersion" Value="$(var.ProductVersion)" Type="string" />
             </RegistryKey>
-            <Shortcut Id="InstallerEditor.exe.shortcut" Target="[INSTALLLOCATION]\InstallerEditor.exe" Name="Installer Editor" />
-            <Shortcut Id="dotNetInstaller.chm.shortcut" Target="[INSTALLLOCATION]\dotNetInstaller.chm" Name="Users Guide" />
+            <Shortcut Id="InstallerEditor.exe.shortcut" Target="[INSTALLLOCATION]\bin\InstallerEditor.exe" Name="Installer Editor" />
+            <Shortcut Id="dotNetInstaller.chm.shortcut" Target="[INSTALLLOCATION]\doc\dotNetInstaller.chm" Name="Users Guide" />
+            <Shortcut Id="WhatsNew.html.shortcut" Target="[INSTALLLOCATION]\doc\WhatsNew.html" Name="What's New" />
+            <Shortcut Id="CodePlex.lnk.shortcut" Target="[DotNetInstallerCodePlexUri]" Name="Official Website" Icon="CodePlex.ico" />
             <RemoveFolder Id="RemoveShorcutFolder" Directory="DotNetInstallerProgramMenuFolder" On="uninstall" />
           </Component>
         </Directory>
@@ -55,6 +71,9 @@
       <ComponentRef Id="dotNetInstaller" />
       <ComponentRef Id="Documentation" />
       <ComponentRef Id="DotNetInstallerMenuShortcuts" />
+      <ComponentRef Id="InstallCheckOperatorsSample" />
+      <ComponentGroupRef Id="StandaloneSetupSample" />
+      <ComponentGroupRef Id="PackagedSetupSample"/>
     </Feature>
     <UIRef Id="dotNetInstallerUI_InstallDir" />
     <InstallExecuteSequence>
