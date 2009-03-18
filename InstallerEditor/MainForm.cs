@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Data;
 using InstallerLib;
 using System.ComponentModel.Design;
+using System.IO;
 
 namespace InstallerEditor
 {
@@ -69,6 +70,8 @@ namespace InstallerEditor
         private MenuItem mnCollapseAll;
         private StatusStrip statusStrip;
         private ToolStripStatusLabel statusLabel;
+        private MenuItem mnUsersGuide;
+        private MenuItem menuItem10;
         private System.ComponentModel.IContainer components;
 
         public MainForm()
@@ -123,6 +126,8 @@ namespace InstallerEditor
             this.mnLanguageForNewItem = new System.Windows.Forms.MenuItem();
             this.mnCustomizeTemplates = new System.Windows.Forms.MenuItem();
             this.mnHelp = new System.Windows.Forms.MenuItem();
+            this.mnUsersGuide = new System.Windows.Forms.MenuItem();
+            this.menuItem10 = new System.Windows.Forms.MenuItem();
             this.mnHomePage = new System.Windows.Forms.MenuItem();
             this.mnHelpAbout = new System.Windows.Forms.MenuItem();
             this.contextMenuTreeView = new System.Windows.Forms.ContextMenu();
@@ -157,9 +162,9 @@ namespace InstallerEditor
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.treeView = new System.Windows.Forms.TreeView();
-            this.txtComment = new System.Windows.Forms.TextBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.txtComment = new System.Windows.Forms.TextBox();
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
@@ -189,27 +194,27 @@ namespace InstallerEditor
             this.mnCreateExe,
             this.menuItem4,
             this.mnExit});
-            this.mnFile.Text = "File";
+            this.mnFile.Text = "&File";
             // 
             // mnNew
             // 
             this.mnNew.Index = 0;
             this.mnNew.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
-            this.mnNew.Text = "New";
+            this.mnNew.Text = "&New";
             this.mnNew.Click += new System.EventHandler(this.mnNew_Click);
             // 
             // mnOpen
             // 
             this.mnOpen.Index = 1;
             this.mnOpen.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
-            this.mnOpen.Text = "Open...";
+            this.mnOpen.Text = "&Open...";
             this.mnOpen.Click += new System.EventHandler(this.mnOpen_Click);
             // 
             // mnClose
             // 
             this.mnClose.Enabled = false;
             this.mnClose.Index = 2;
-            this.mnClose.Text = "Close";
+            this.mnClose.Text = "&Close";
             this.mnClose.Click += new System.EventHandler(this.mnClose_Click);
             // 
             // menuItem1
@@ -222,7 +227,7 @@ namespace InstallerEditor
             this.mnSave.Enabled = false;
             this.mnSave.Index = 4;
             this.mnSave.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
-            this.mnSave.Text = "Save";
+            this.mnSave.Text = "&Save";
             this.mnSave.Click += new System.EventHandler(this.mnSave_Click);
             // 
             // mnSaveAs
@@ -269,13 +274,13 @@ namespace InstallerEditor
             this.mnView.Index = 1;
             this.mnView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnRefresh});
-            this.mnView.Text = "View";
+            this.mnView.Text = "&View";
             // 
             // mnRefresh
             // 
             this.mnRefresh.Index = 0;
             this.mnRefresh.Shortcut = System.Windows.Forms.Shortcut.F5;
-            this.mnRefresh.Text = "Refresh";
+            this.mnRefresh.Text = "&Refresh";
             this.mnRefresh.Click += new System.EventHandler(this.mnRefresh_Click);
             // 
             // mnTools
@@ -284,37 +289,50 @@ namespace InstallerEditor
             this.mnTools.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnLanguageForNewItem,
             this.mnCustomizeTemplates});
-            this.mnTools.Text = "Tools";
+            this.mnTools.Text = "&Tools";
             // 
             // mnLanguageForNewItem
             // 
             this.mnLanguageForNewItem.Index = 0;
-            this.mnLanguageForNewItem.Text = "Template For New Item";
+            this.mnLanguageForNewItem.Text = "Template For New &Item";
             // 
             // mnCustomizeTemplates
             // 
             this.mnCustomizeTemplates.Index = 1;
-            this.mnCustomizeTemplates.Text = "Customize Templates";
+            this.mnCustomizeTemplates.Text = "&Customize Templates";
             this.mnCustomizeTemplates.Click += new System.EventHandler(this.mnCustomizeTemplates_Click);
             // 
             // mnHelp
             // 
             this.mnHelp.Index = 3;
             this.mnHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnUsersGuide,
+            this.menuItem10,
             this.mnHomePage,
             this.mnHelpAbout});
             this.mnHelp.Text = "Help";
             // 
+            // mnUsersGuide
+            // 
+            this.mnUsersGuide.Index = 0;
+            this.mnUsersGuide.Text = "&Users Guide";
+            this.mnUsersGuide.Click += new System.EventHandler(this.mnUsersGuide_Click);
+            // 
+            // menuItem10
+            // 
+            this.menuItem10.Index = 1;
+            this.menuItem10.Text = "-";
+            // 
             // mnHomePage
             // 
-            this.mnHomePage.Index = 0;
-            this.mnHomePage.Text = "Home Page";
+            this.mnHomePage.Index = 2;
+            this.mnHomePage.Text = "&Home Page";
             this.mnHomePage.Click += new System.EventHandler(this.mnHomePage_Click);
             // 
             // mnHelpAbout
             // 
-            this.mnHelpAbout.Index = 1;
-            this.mnHelpAbout.Text = "About";
+            this.mnHelpAbout.Index = 3;
+            this.mnHelpAbout.Text = "&About";
             this.mnHelpAbout.Click += new System.EventHandler(this.mnHelpAbout_Click);
             // 
             // contextMenuTreeView
@@ -580,17 +598,6 @@ namespace InstallerEditor
             this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
             this.treeView.DragOver += new System.Windows.Forms.DragEventHandler(this.treeView_DragOver);
             // 
-            // txtComment
-            // 
-            this.txtComment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.txtComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtComment.Location = new System.Drawing.Point(0, 0);
-            this.txtComment.Multiline = true;
-            this.txtComment.Name = "txtComment";
-            this.txtComment.Size = new System.Drawing.Size(620, 64);
-            this.txtComment.TabIndex = 0;
-            this.txtComment.Visible = false;
-            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -606,6 +613,17 @@ namespace InstallerEditor
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(39, 17);
             this.statusLabel.Text = "Ready";
+            // 
+            // txtComment
+            // 
+            this.txtComment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.txtComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtComment.Location = new System.Drawing.Point(0, 0);
+            this.txtComment.Multiline = true;
+            this.txtComment.Name = "txtComment";
+            this.txtComment.Size = new System.Drawing.Size(620, 64);
+            this.txtComment.TabIndex = 0;
+            this.txtComment.Visible = false;
             // 
             // MainForm
             // 
@@ -1200,7 +1218,6 @@ namespace InstallerEditor
                     System.Diagnostics.Process process = new System.Diagnostics.Process();
                     process.StartInfo = p;
                     process.Start();
-                    //SourceLibrary.Utility.Shell.ExecCommand("NOTEPAD.EXE \"" + m_TreeNodeConfigFile.ConfigFile.FileName + "\"");
                 }
             }
             catch (Exception err)
@@ -1624,6 +1641,23 @@ namespace InstallerEditor
             try
             {
                 treeView.SelectedNode.Collapse(false);
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
+        }
+
+        private void mnUsersGuide_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string chm = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"..\doc\dotNetInstaller.chm");
+                System.Diagnostics.ProcessStartInfo p = new System.Diagnostics.ProcessStartInfo(chm);
+                p.UseShellExecute = true;
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                process.StartInfo = p;
+                process.Start();
             }
             catch (Exception err)
             {
