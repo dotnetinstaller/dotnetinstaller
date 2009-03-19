@@ -63,24 +63,8 @@ BOOL CdotNetInstallerApp::InitInstance()
 			arg ++;
 		}
 
-		TiXmlDocument m_Document;
-		InstallerSetting m_Setting;
-
-		//load xml file
-		bool l_bLoadSuccess = LoadXmlSettings(m_Document);
-
-		if (l_bLoadSuccess)
-		{
-			// Process xml file ("additional config" parameter needs defaulted to false)
-			LoadConfigsNode(m_Document.FirstChildElement(), m_Setting, false);
-		}
-		else
-		{
-			DniSilentMessageBox(TEXT("Failed to read configuration file."), MB_OK|MB_ICONSTOP);
-			PostQuitMessage(-1);
-		}
-
-		return l_bLoadSuccess;
+        ConfigFile config;
+        config.Load();
 	}
 	catch(std::exception& ex)
 	{

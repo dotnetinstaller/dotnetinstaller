@@ -30,4 +30,6 @@ namespace DVLib
 	stlstring string2Tstring(const char * strAscii);
 
 	std::string Tstring2string(const TCHAR * TString);
+
+    bool ConvBoolString(const char * p_BoolString, bool defaultvalue = false);
 }

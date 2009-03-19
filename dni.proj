@@ -124,8 +124,9 @@
     <Copy SourceFiles="@(SupportFiles)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\SupportFiles\%(RecursiveDir)" />
     <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup" />
     <!-- Sample: PackagedSetup -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
+    <MakeDir Directories="Samples\PackagedSetup\bin\$(Configuration)" />
     <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Embed+"/>
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
     <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
     <Copy SourceFiles="@(PackagedSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Source\%(RecursiveDir)" />
     <!-- Sample: InstallCheckOperators -->
@@ -147,7 +148,7 @@
     <NUnit Assemblies="@(UnitTestBinaries)" ToolPath="$(NUnitDir)\bin" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
   </Target>
   <Target Name="zip" DependsOnTargets="version">
-    <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip">
+    <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip;$(ReleaseDir)\UnitTests.xml;$(ReleaseDir)\*.msi">
       <Output TaskParameter="Include" ItemName="PackageFiles" />
     </CreateItem>
     <Zip WorkingDirectory="target\$(Configuration)" ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).zip" Files="@(PackageFiles)" />

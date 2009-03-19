@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<configurations configuration_no_match_message="" silent_install="False" fileversion="1.0.0.0" productversion="1.0.0.0">
+<configurations lcid_type="UserExe" configuration_no_match_message="" silent_install="False" fileversion="1.0.0.0" productversion="1.0.0.0">
   <schema version="1" />
   <fileattributes>
     <fileattribute name="FileDescription" value="Standalone setup sample" />

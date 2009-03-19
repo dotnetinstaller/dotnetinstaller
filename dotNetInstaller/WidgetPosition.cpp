@@ -46,4 +46,5 @@ bool WidgetPosition::FromString(const std::wstring& p_RectString)
 	_top = _wtoi(l_RectCoordinates[1].c_str());
 	_width = _wtoi(l_RectCoordinates[2].c_str());
 	_height = _wtoi(l_RectCoordinates[3].c_str());
+    return true;
 }

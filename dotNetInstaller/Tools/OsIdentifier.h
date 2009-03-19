@@ -8,6 +8,13 @@
 
 namespace DVLib
 {
+    enum LcidType
+    {
+        LcidUserExe = 0, // System32\user.exe lcid
+        LcidSystem, // GetSystemDefaultLCID
+        LcidUser // GetUserDefaultLCID
+    };
+
 	enum OperatingSystem
 	{
 		winNotValid = 0,
@@ -325,62 +332,71 @@ namespace DVLib
 	unsigned short wCodePage; //WORD
 	};
 
-	inline LCID GetOperatingSystemLCID()
+	inline LCID GetOperatingSystemLCID(LcidType lcidtype)
 	{
-		//per ulteriori informazioni vedere :
-		// http://support.microsoft.com/default.aspx?scid=http://support.microsoft.com:80/support/kb/articles/q181/6/04.asp&NoWebContent=1
-		// Microsoft Knowledge Base Article - 181604
-		// HOWTO: Determine Default Language ID of Windows 95 or WinNT
-		//
-		//return GetSystemDefaultLCID(); NO Questa funzione restituisce la lingua impostata di default dal pannello di controllo
+        switch(lcidtype)
+        {
+        case LcidSystem:
+            return ::GetSystemDefaultLCID();
+        case LcidUser:
+            return ::GetUserDefaultLCID();
+        case LcidUserExe:
+        default:
+		    //per ulteriori informazioni vedere :
+		    // http://support.microsoft.com/kb/q181604/
+		    // Microsoft Knowledge Base Article - 181604
+		    // HOWTO: Determine Default Language ID of Windows 95 or WinNT
+		    //
+		    //return GetSystemDefaultLCID(); NO Questa funzione restituisce la lingua impostata di default dal pannello di controllo
 
-		unsigned long dwVerHnd, dwVerInfoSize = 0;
-		void * l_bufferVersionInfo = NULL;
-		VS_FIXEDFILEINFO* lpvi = NULL;
-		unsigned int iLen = 0;
+		    unsigned long dwVerHnd, dwVerInfoSize = 0;
+		    void * l_bufferVersionInfo = NULL;
+		    VS_FIXEDFILEINFO* lpvi = NULL;
+		    unsigned int iLen = 0;
 
-		LANGANDCODEPAGE translation;
+		    LANGANDCODEPAGE translation;
 
-		//SystemPath
-		TCHAR l_bufferSystem[MAX_PATH+1];
-		ZeroMemory(l_bufferSystem,MAX_PATH+1);
-		GetSystemDirectory(l_bufferSystem, MAX_PATH+1);
-		CString l_UserExePath = PathCombineCustom(l_bufferSystem, TEXT("user.exe"));
+		    //SystemPath
+		    TCHAR l_bufferSystem[MAX_PATH+1];
+		    ZeroMemory(l_bufferSystem,MAX_PATH+1);
+		    GetSystemDirectory(l_bufferSystem, MAX_PATH+1);
+		    CString l_UserExePath = PathCombineCustom(l_bufferSystem, TEXT("user.exe"));
 
-		dwVerInfoSize = GetFileVersionInfoSize(l_UserExePath, &dwVerHnd);
-		if (dwVerInfoSize <= 0)
-            throw std::exception("GetOperatingSystemLCID failed in GetFileVersionInfoSize");
+		    dwVerInfoSize = GetFileVersionInfoSize(l_UserExePath, &dwVerHnd);
+		    if (dwVerInfoSize <= 0)
+                throw std::exception("GetOperatingSystemLCID failed in GetFileVersionInfoSize");
 
-		l_bufferVersionInfo = malloc( dwVerInfoSize );
-		if (l_bufferVersionInfo == NULL)
-            throw std::exception("GetOperatingSystemLCID failed in malloc");
+		    l_bufferVersionInfo = malloc( dwVerInfoSize );
+		    if (l_bufferVersionInfo == NULL)
+                throw std::exception("GetOperatingSystemLCID failed in malloc");
 
-		BOOL l_ret = GetFileVersionInfo(l_UserExePath, dwVerHnd, dwVerInfoSize,l_bufferVersionInfo);
-		if (l_ret == FALSE)
-            throw std::exception("GetOperatingSystemLCID failed in GetFileVersionInfo");
+		    BOOL l_ret = GetFileVersionInfo(l_UserExePath, dwVerHnd, dwVerInfoSize,l_bufferVersionInfo);
+		    if (l_ret == FALSE)
+                throw std::exception("GetOperatingSystemLCID failed in GetFileVersionInfo");
 
-		if (  VerQueryValue(l_bufferVersionInfo,TEXT("\\VarFileInfo\\Translation"),(void**)&lpvi, &iLen) 
-			&& iLen >= sizeof(LANGANDCODEPAGE))
-		{
-			translation = *(LANGANDCODEPAGE*)lpvi;
+		    if (  VerQueryValue(l_bufferVersionInfo,TEXT("\\VarFileInfo\\Translation"),(void**)&lpvi, &iLen) 
+			    && iLen >= sizeof(LANGANDCODEPAGE))
+		    {
+			    translation = *(LANGANDCODEPAGE*)lpvi;
 
-			free(l_bufferVersionInfo);
-			l_bufferVersionInfo = NULL;
+			    free(l_bufferVersionInfo);
+			    l_bufferVersionInfo = NULL;
 
-			return translation.wLanguage;
-		} 
+			    return translation.wLanguage;
+		    } 
 
-        throw std::exception("GetOperatingSystemLCID failed in VerQueryValue");
+            throw std::exception("GetOperatingSystemLCID failed in VerQueryValue");
+        }
 	}
 
 	//determina se nella stringa passata in formato: 1033,1040,!2033 (in pratica i LCID separati da virgolo supportando anche il ! (not)
 	// è presente il locale del sistema operativo
-	inline bool IsOperatingSystemLCID(const CString & p_FilterLCID)
+	inline bool IsOperatingSystemLCID(LcidType lcidtype, const CString & p_FilterLCID)
 	{
 		if (p_FilterLCID.GetLength() <= 0)
 			return true;
 
-		LCID l_id = GetOperatingSystemLCID();
+		LCID l_id = GetOperatingSystemLCID(lcidtype);
 		LCID l_filterId;
 
 		bool l_bIsOperatingSystemLCID = false;

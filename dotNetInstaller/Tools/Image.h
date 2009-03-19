@@ -53,4 +53,30 @@ namespace DVLib
 
 		return l_hBitmap;
 	}
+
+    inline HBITMAP LoadBannerFromResource(HMODULE p_Module)
+    {
+	    try
+	    {
+		    //leggo la risorsa
+		    HRSRC l_res = FindResource(p_Module, TEXT("RES_BANNER"), TEXT("CUSTOM"));
+		    if (l_res == NULL)
+                throw std::exception("Error locating RES_BANNER resource");
+
+            HGLOBAL l_hRes = LoadResource(p_Module, l_res);
+		    if (l_hRes == NULL)
+			    throw std::exception("Error loading RES_BANNER resource");
+		    DWORD l_size = SizeofResource(p_Module, l_res);
+
+		    LPVOID l_buffer = LockResource(l_hRes);
+		    if (l_buffer == NULL)
+			    throw std::exception("Error locking RES_BANNER resource");
+
+		    return LoadBitmapFromBuffer(l_buffer, l_size);
+	    }
+        catch(std::exception&)
+	    {
+		    return NULL;
+	    }
+    }
 }

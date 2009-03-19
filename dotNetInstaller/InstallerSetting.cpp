@@ -83,7 +83,7 @@ void InstallerSetting::ClearComponents()
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
-		FreeComponent(components[i]);
+        delete components[i];
 	}
 
     components.clear();

@@ -8,6 +8,7 @@
 #include "HyperlinkStatic.h"
 #include "InstallerSetting.h"
 #include "ComponentsList.h"
+#include "resource.h"
 
 // finestra di dialogo CdotNetInstallerDlg
 class CdotNetInstallerDlg : public CDialog

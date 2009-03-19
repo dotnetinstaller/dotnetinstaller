@@ -124,4 +124,12 @@ namespace DVLib
 			return std::string(TString);
 		#endif
 	}
+
+    bool ConvBoolString(const char * p_BoolString, bool defaultValue)
+    {
+        if (NULL == p_BoolString) return defaultValue;
+	    else if (0 == _stricmp(p_BoolString, "true")) return true;
+	    else if (0 == _stricmp(p_BoolString, "false")) return false;
+        else return defaultValue;
+    }
 }

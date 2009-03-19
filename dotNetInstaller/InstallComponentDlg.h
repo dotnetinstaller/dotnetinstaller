@@ -2,6 +2,7 @@
 #include "afxwin.h"
 #include "installerTypes.h"
 #include "KCBusyProgressCtrl.h"
+#include "resource.h"
 
 class InstallerSetting;
 class Component;

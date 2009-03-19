@@ -15,8 +15,8 @@ enum component_type
 class Component
 {
 public:
-    Component(void);
-    virtual ~Component(void);
+    Component();
+    virtual ~Component();
 public:
     // dialog where to post messages to
     CDialog * m_pDialog;

@@ -75,6 +75,15 @@ namespace InstallerLib
             set { m_fileattributes = value; }
         }
 
+        private LcidType m_lcidtype = LcidType.UserExe;
+        [Description(@"Choose between using LCID from system32\user.exe, GetUserDefaultLCID or system GetSystemDefaultLCID.")]
+        [Category("Installation Runtime")]
+        public LcidType lcidtype
+        {
+            get { return m_lcidtype; }
+            set { m_lcidtype = value; }
+        }
+
         public void Save()
         {
             if (string.IsNullOrEmpty(m_filename))
@@ -108,6 +117,8 @@ namespace InstallerLib
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
+            // lcid type
+            e.XmlWriter.WriteAttributeString("lcid_type", m_lcidtype.ToString());
             // processor and os filter architecture messages
             e.XmlWriter.WriteAttributeString("configuration_no_match_message", m_configuration_no_match_message);
             // silent install
@@ -125,6 +136,10 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
+            // lcid type
+            if (e.XmlElement.Attributes["lcid_type"] != null)
+                m_lcidtype = (LcidType) Enum.Parse(typeof(LcidType), e.XmlElement.Attributes["lcid_type"].InnerText, true);
+
             // processor and os filter architecture messages
             if (e.XmlElement.Attributes["configuration_no_match_message"] != null)
                 m_configuration_no_match_message = e.XmlElement.Attributes["configuration_no_match_message"].InnerText;

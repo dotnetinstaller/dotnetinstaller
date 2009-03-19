@@ -19,7 +19,10 @@ Component::Component()
 
 Component::~Component(void)
 {
-
+	for (size_t j = 0; j < installedchecks.size(); j++)
+	{
+		delete installedchecks[j];
+	}
 }
 
 bool Component::DownloadComponents(CWnd * p_Parent)
@@ -61,3 +64,4 @@ bool Component::IsInstalled()
 
 	return l_installed;
 }
+

@@ -10,7 +10,7 @@
         The project is maintained on
         <externalLink>
           <linkText>CodePlex</linkText>
-          <linkHref>http://www.codeplex.com/dotnetinstaller/</linkHref>
+          <linkUri>http://www.codeplex.com/dotnetinstaller/</linkUri>
         </externalLink>. The website has a bug tracking system and a discussions forum. Please don't hesitate to post suggestions
         or questions.
       </para>
@@ -39,7 +39,7 @@
               Obtain the source code using a Subversion client at
               <externalLink>
                 <linkText>https://dotnetinstaller.svn.codeplex.com/svn/trunk</linkText>
-                <linkHref>https://dotnetinstaller.svn.codeplex.com/svn/trunk</linkHref>
+                <linkUri>https://dotnetinstaller.svn.codeplex.com/svn/trunk</linkUri>
               </externalLink>
             </para>
           </content>
@@ -55,7 +55,7 @@
               Install MSBuild Community Tasks from
               <externalLink>
                 <linkText>http://msbuildtasks.tigris.org/</linkText>
-                <linkHref>http://msbuildtasks.tigris.org/</linkHref>
+                <linkUri>http://msbuildtasks.tigris.org/</linkUri>
               </externalLink>.
             </para>
           </content>
@@ -66,7 +66,7 @@
               Install NUnit from
               <externalLink>
                 <linkText>http://www.nunit.org/</linkText>
-                <linkHref>http://www.nunit.org/</linkHref>
+                <linkUri>http://www.nunit.org/</linkUri>
               </externalLink>.
             </para>
           </content>
@@ -76,16 +76,16 @@
             <para>
               Install <externalLink>
                 <linkText>Sandcastle 2.4 (May 2008)</linkText>
-                <linkHref>http://www.codeplex.com/Sandcastle/</linkHref>
+                <linkUri>http://www.codeplex.com/Sandcastle/</linkUri>
               </externalLink>,
               <externalLink>
                 <linkText>Sandcastle Styles 2.4 Patch</linkText>
-                <linkHref>http://www.codeplex.com/SandcastleStyles</linkHref>
+                <linkUri>http://www.codeplex.com/SandcastleStyles</linkUri>
               </externalLink>
               and
               <externalLink>
                 <linkText>Sandcastle Help File Builder</linkText>
-                <linkHref>http://www.codeplex.com/SHFB</linkHref>
+                <linkUri>http://www.codeplex.com/SHFB</linkUri>
               </externalLink> to build the documentation.
             </para>
           </content>
@@ -95,8 +95,8 @@
             <para>
               Install
               <externalLink>
-                <linkText>Windows Installer XML 3.0</linkText>
-                <linkHref>http://wix.sourceforge.net/</linkHref>
+                <linkText>Windows Installer XML and ProjectAggregator 3.0</linkText>
+                <linkUri>http://wix.sourceforge.net/</linkUri>
               </externalLink> to build the MSI installer.
             </para>
           </content>
@@ -125,7 +125,7 @@
               All the settings are stored in an XML file parsed with TinyXml. Older versions used XMLLite by
               Kyung-min Cho. See <externalLink>
                 <linkText>http://sourceforge.net/projects/tinyxml</linkText>
-                <linkHref>http://sourceforge.net/projects/tinyxml</linkHref>
+                <linkUri>http://sourceforge.net/projects/tinyxml</linkUri>
               </externalLink> for more information.
             </definition>
             <definedTerm>CabLib</definedTerm>
@@ -133,7 +133,7 @@
               Packaging of embedded CABs is done with Elmü's CAB library.
               See <externalLink>
                 <linkText>http://www.codeproject.com/KB/files/CABCompressExtract.aspx</linkText>
-                <linkHref>http://www.codeproject.com/KB/files/CABCompressExtract.aspx</linkHref>
+                <linkUri>http://www.codeproject.com/KB/files/CABCompressExtract.aspx</linkUri>
                 for more information.
               </externalLink>
             </definition>
@@ -142,7 +142,7 @@
               File attribute patching is done with Vestris ResourceLib.
               See <externalLink>
                 <linkText>http://www.codeplex.com/ResourceLib</linkText>
-                <linkHref>http://www.codeplex.com/ResourceLib</linkHref>
+                <linkUri>http://www.codeplex.com/ResourceLib</linkUri>
               </externalLink> for more information.
             </definition>
             <definedTerm>CommandLineArguments</definedTerm>
@@ -150,7 +150,7 @@
               CommandLine processing in InstallerEditor is done with Peter Hall's CommandLineArguments.
               See <externalLink>
                 <linkText>http://www.codeplex.com/CommandLineArguments</linkText>
-                <linkHref>http://www.codeplex.com/CommandLineArguments</linkHref>
+                <linkUri>http://www.codeplex.com/CommandLineArguments</linkUri>
               </externalLink> for more information.
             </definition>
           </definitionTable>

@@ -20,7 +20,6 @@ struct configSetting
 	bool silent_install;
 };
 
-
 // HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce
 #define c_dotNetInstaller TEXT("dotNetInstallerBoot")
 //#define c_RunOnce "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce"

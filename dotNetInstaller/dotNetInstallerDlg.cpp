@@ -17,11 +17,11 @@
 #include "SilentInstall.h"
 #include "ExtractCAB.h"
 #include "InstallerCommandLineInfo.h"
+#include "Image.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
 
 // finestra di dialogo CdotNetInstallerDlg
 
@@ -127,7 +127,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 			//l'immagine non è inserita come risorsa tipo BITMAP perchè avevo dei problemi poi a chiamare UpdateResource
 			// è quindi inserita come risorsa di tipo CUSTOM e letta manualmente
 			//hBitmap = LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BANNER));
-			hBitmap = LoadBannerFromResource(AfxGetApp()->m_hInstance);
+            hBitmap = DVLib::LoadBannerFromResource(AfxGetApp()->m_hInstance);
 		}
 
 		m_PictureBox.SetBitmap(hBitmap);

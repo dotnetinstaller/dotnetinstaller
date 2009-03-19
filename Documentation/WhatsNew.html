@@ -13,7 +13,8 @@ code { color: #b22222; font-family: Courier New; }
   1.6 (TBD)</h3>
  <ul>
   <li>First release off <a href="http://www.codeplex.com/dotnetinstaller">CodePlex</a>.</li>
-  <li>New MSI installer.</li>
+  <li>New MSI installer. You can use the installer or a binary distribution package.</li>
+  <li>New, largely rewritten, CHM documentation.</li>
   <li>Added editor and linker support for Windows Vista/XP 64.</li>
   <li>Added OS filter identifiers for Windows Server 2008. </li>
   <li>Added <code>InstalledCheckOperator</code> of 'And', 'Or' and 'Not' types that
@@ -39,11 +40,12 @@ code { color: #b22222; font-family: Courier New; }
   <li>InstallerEditor: added support for multiline properties for most non-caption
    or button messages.</li>
   <li>InstallerEditor: added shortcuts to open a configuratoin file (Ctrl+O), create
-   a new configuration file (Ctrl+N), save the current configuration (Ctrl+S), generate an exe (F10),
-   exit (Alt+F4) and refresh (F5). </li>
+   a new configuration file (Ctrl+N), save the current configuration (Ctrl+S), generate
+   an exe (F10), exit (Alt+F4) and refresh (F5). </li>
   <li>InstallerEditor: user no longer prompted for a configuration file name on New.</li>
   <li>InstallerEditor: the New and Open menu items are always enabled.</li>
-  <li>InstallerEditor: added a status strip that reports general information, including Save or Load.</li>
+  <li>InstallerEditor: added a status strip that reports general information, including
+   Save or Load.</li>
   <li>Added <code>allow_continue_on_error</code> globally and per-component: when false
    user is no longer prompted to continue on error, instead the user is informed of
    the failure and installation aborts. Combine this option with <code>auto_close_on_error</code>
@@ -71,11 +73,16 @@ code { color: #b22222; font-family: Courier New; }
    <code>dialog_osinfo_position</code>, <code>dialog_install_button_position</code>,
    <code>dialog_cancel_button_position</code> and <code>dialog_skip_button_position</code>.
    Supports resizing coordinates selectively.</li>
-  <li>Added <code>configuration_no_match_message</code> that displays as error when no configuration matching
-   operating system, locale or processor architecture filters has been found. Removed unused
-   <code>os_filter_not_match_message</code> and <code>processor_architecture_filter_not_match_message</code>.</li>
+  <li>Added <code>configuration_no_match_message</code> that displays as error when
+   no configuration matching operating system, locale or processor architecture filters
+   has been found. Removed unused <code>os_filter_not_match_message</code> and <code>
+    processor_architecture_filter_not_match_message</code>.</li>
   <li>Added <code>#SYSTEMWINDOWSPATH</code> constant resolved in paths.</li>
-  <li>Added <code>embed</code> option to msi, openfile and download (sub)components to disable automatic file embedding.</li>
+  <li>Added <code>embed</code> option to msi, openfile and download (sub)components
+   to disable automatic file embedding.</li>
+  <li>Added <code>lcidtype</code> option to the configuration file that can be set
+   to the method to use to obtain the current LCID used to match a configuration. Now
+   supports user.exe (KB181604), system and user methods.</li>
  </ul>
  <h3>
   1.5 (25 Oct 2008)</h3>

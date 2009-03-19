@@ -12,17 +12,22 @@
 #include "InstalledCheckFile.h"
 #include "InstalledCheckOperator.h"
 #include "InstallerCommandLineInfo.h"
+#include "DownloadDialog.h"
+#include "Image.h"
 
-bool ConvBoolString(const char * p_BoolString, bool defaultValue = false)
+ConfigFile::ConfigFile()
+    : m_lcidtype(LcidUserExe)
 {
-    if (NULL == p_BoolString) return defaultValue;
-	else if (0 == _stricmp(p_BoolString, "true")) return true;
-	else if (0 == _stricmp(p_BoolString, "false")) return false;
-    else return defaultValue;
+
 }
 
+void ConfigFile::Load()
+{
+    LoadXmlSettings();
+	LoadConfigsNode(m_XmlDocument.FirstChildElement(), false);
+}
 
-void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::DownloadGroupConfiguration & p_Configuration, InstallerSetting & p_Setting)
+void ConfigFile::LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::DownloadGroupConfiguration & p_Configuration)
 {
 	ApplicationLog.Write( TEXT("Start reading download attributes") );
 
@@ -47,9 +52,9 @@ void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::Down
 
 			DVLib::DownloadComponentInfo l_DownloadComp;
 			l_DownloadComp.ComponentName = l_Node_download->AttributeT("componentname").data();
-			l_DownloadComp.SourceURL = p_Setting.ValidatePath(l_Node_download->AttributeT("sourceurl").data());
-			l_DownloadComp.DestinationPath = p_Setting.ValidatePath(l_Node_download->AttributeT("destinationpath").data());
-			l_DownloadComp.DestinationFileName = p_Setting.ValidatePath(l_Node_download->AttributeT("destinationfilename").data());
+			l_DownloadComp.SourceURL = m_Setting.ValidatePath(l_Node_download->AttributeT("sourceurl").data());
+			l_DownloadComp.DestinationPath = m_Setting.ValidatePath(l_Node_download->AttributeT("destinationpath").data());
+		l_DownloadComp.DestinationFileName = m_Setting.ValidatePath(l_Node_download->AttributeT("destinationfilename").data());
 			l_DownloadComp.AlwaysDownload = ConvBoolString(l_Node_download->Attribute("alwaysdownload"), true);
 			p_Configuration.Components.Add(l_DownloadComp);
 
@@ -63,76 +68,76 @@ void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::Down
 	}
 }
 
-// Populate the p_Setting object
-void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
+// Populate the m_Setting object
+void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 {
 	DVLib::OperatingSystem l_CurrentOs = DVLib::GetOsVersion();
 
 	ApplicationLog.Write( TEXT("Reading configuration attributes") );
 
     // auto-enabled log options
-    p_Setting.log_enabled = ConvBoolString(p_Node->Attribute("log_enabled"), false);
-    p_Setting.log_file = p_Node->AttributeT("log_file").data();
+    m_Setting.log_enabled = ConvBoolString(p_Node->Attribute("log_enabled"), false);
+    m_Setting.log_file = p_Node->AttributeT("log_file").data();
 
     // enable logging if log is not enabled by a command line switch and enabled in the configuration
-    if (! ApplicationLog.IsEnableLog() && p_Setting.log_enabled)
+    if (! ApplicationLog.IsEnableLog() && m_Setting.log_enabled)
     {
-        ApplicationLog.SetLogFile(p_Setting.ValidatePath(p_Setting.log_file));
+        ApplicationLog.SetLogFile(m_Setting.ValidatePath(m_Setting.log_file));
         ApplicationLog.EnableLog();
     }
 
     // defines where to extract files and auto-delete options
-    p_Setting.cab_path = p_Node->AttributeT("cab_path").data();
-    p_Setting.cab_path_autodelete = ConvBoolString(p_Node->Attribute("cab_path_autodelete"), true);
+    m_Setting.cab_path = p_Node->AttributeT("cab_path").data();
+    m_Setting.cab_path_autodelete = ConvBoolString(p_Node->Attribute("cab_path_autodelete"), true);
     // positions within the dialog
-    p_Setting.dialog_position.FromString(p_Node->AttributeT("dialog_position"));
-    p_Setting.dialog_components_list_position.FromString(p_Node->AttributeT("dialog_components_list_position"));
-    p_Setting.dialog_message_position.FromString(p_Node->AttributeT("dialog_message_position"));
-    p_Setting.dialog_bitmap_position.FromString(p_Node->AttributeT("dialog_bitmap_position"));
-    p_Setting.dialog_otherinfo_link_position.FromString(p_Node->AttributeT("dialog_otherinfo_link_position"));
-    p_Setting.dialog_osinfo_position.FromString(p_Node->AttributeT("dialog_osinfo_position"));
-    p_Setting.dialog_install_button_position.FromString(p_Node->AttributeT("dialog_install_button_position"));
-    p_Setting.dialog_cancel_button_position.FromString(p_Node->AttributeT("dialog_cancel_button_position"));
-    p_Setting.dialog_skip_button_position.FromString(p_Node->AttributeT("dialog_skip_button_position"));
+    m_Setting.dialog_position.FromString(p_Node->AttributeT("dialog_position"));
+    m_Setting.dialog_components_list_position.FromString(p_Node->AttributeT("dialog_components_list_position"));
+    m_Setting.dialog_message_position.FromString(p_Node->AttributeT("dialog_message_position"));
+    m_Setting.dialog_bitmap_position.FromString(p_Node->AttributeT("dialog_bitmap_position"));
+    m_Setting.dialog_otherinfo_link_position.FromString(p_Node->AttributeT("dialog_otherinfo_link_position"));
+    m_Setting.dialog_osinfo_position.FromString(p_Node->AttributeT("dialog_osinfo_position"));
+    m_Setting.dialog_install_button_position.FromString(p_Node->AttributeT("dialog_install_button_position"));
+    m_Setting.dialog_cancel_button_position.FromString(p_Node->AttributeT("dialog_cancel_button_position"));
+    m_Setting.dialog_skip_button_position.FromString(p_Node->AttributeT("dialog_skip_button_position"));
     // other dialog options
-	p_Setting.cancel_caption = p_Node->AttributeT("cancel_caption").data();
-	p_Setting.dialog_bitmap = p_Setting.ValidatePath(p_Node->AttributeT("dialog_bitmap").data());
-	p_Setting.dialog_caption = p_Node->AttributeT("dialog_caption").data();
-	p_Setting.dialog_message = p_Node->AttributeT("dialog_message").data();
-	p_Setting.skip_caption = p_Node->AttributeT("skip_caption").data();
-	p_Setting.install_caption = p_Node->AttributeT("install_caption").data();
-	p_Setting.status_installed = p_Node->AttributeT("status_installed").data();
-	p_Setting.status_notinstalled = p_Node->AttributeT("status_notinstalled").data();
-	p_Setting.failed_exec_command_continue = p_Node->AttributeT("failed_exec_command_continue").data();
-	p_Setting.installation_completed = p_Node->AttributeT("installation_completed").data();
-	p_Setting.reboot_required = p_Node->AttributeT("reboot_required").data();
-    p_Setting.must_reboot_required = ConvBoolString(p_Node->Attribute("must_reboot_required"), false);
-	p_Setting.installing_component_wait = p_Node->AttributeT("installing_component_wait").data();
+	m_Setting.cancel_caption = p_Node->AttributeT("cancel_caption").data();
+	m_Setting.dialog_bitmap = m_Setting.ValidatePath(p_Node->AttributeT("dialog_bitmap").data());
+	m_Setting.dialog_caption = p_Node->AttributeT("dialog_caption").data();
+	m_Setting.dialog_message = p_Node->AttributeT("dialog_message").data();
+	m_Setting.skip_caption = p_Node->AttributeT("skip_caption").data();
+	m_Setting.install_caption = p_Node->AttributeT("install_caption").data();
+	m_Setting.status_installed = p_Node->AttributeT("status_installed").data();
+	m_Setting.status_notinstalled = p_Node->AttributeT("status_notinstalled").data();
+	m_Setting.failed_exec_command_continue = p_Node->AttributeT("failed_exec_command_continue").data();
+	m_Setting.installation_completed = p_Node->AttributeT("installation_completed").data();
+	m_Setting.reboot_required = p_Node->AttributeT("reboot_required").data();
+    m_Setting.must_reboot_required = ConvBoolString(p_Node->Attribute("must_reboot_required"), false);
+	m_Setting.installing_component_wait = p_Node->AttributeT("installing_component_wait").data();
 
-	p_Setting.dialog_otherinfo_caption = p_Node->AttributeT("dialog_otherinfo_caption").data();
-	p_Setting.dialog_otherinfo_link = p_Setting.ValidatePath(p_Node->AttributeT("dialog_otherinfo_link").data());
+	m_Setting.dialog_otherinfo_caption = p_Node->AttributeT("dialog_otherinfo_caption").data();
+	m_Setting.dialog_otherinfo_link = m_Setting.ValidatePath(p_Node->AttributeT("dialog_otherinfo_link").data());
 
-	p_Setting.complete_command = p_Setting.ValidatePath(p_Node->AttributeT("complete_command").data());
-	p_Setting.complete_command_silent = p_Setting.ValidatePath(p_Node->AttributeT("complete_command_silent").data());
-	p_Setting.auto_close_if_installed = ConvBoolString(p_Node->Attribute("auto_close_if_installed"), true);
-    p_Setting.auto_close_on_error = ConvBoolString(p_Node->Attribute("auto_close_on_error"), false);
-    p_Setting.allow_continue_on_error = ConvBoolString(p_Node->Attribute("allow_continue_on_error"), true);
-    p_Setting.dialog_show_installed = ConvBoolString(p_Node->Attribute("dialog_show_installed"), true);
-    p_Setting.dialog_show_required = ConvBoolString(p_Node->Attribute("dialog_show_required"), true);
+	m_Setting.complete_command = m_Setting.ValidatePath(p_Node->AttributeT("complete_command").data());
+	m_Setting.complete_command_silent = m_Setting.ValidatePath(p_Node->AttributeT("complete_command_silent").data());
+	m_Setting.auto_close_if_installed = ConvBoolString(p_Node->Attribute("auto_close_if_installed"), true);
+    m_Setting.auto_close_on_error = ConvBoolString(p_Node->Attribute("auto_close_on_error"), false);
+    m_Setting.allow_continue_on_error = ConvBoolString(p_Node->Attribute("allow_continue_on_error"), true);
+    m_Setting.dialog_show_installed = ConvBoolString(p_Node->Attribute("dialog_show_installed"), true);
+    m_Setting.dialog_show_required = ConvBoolString(p_Node->Attribute("dialog_show_required"), true);
 
-	p_Setting.os_filter_greater = p_Node->AttributeT("os_filter_greater").data();
-	p_Setting.os_filter_smaller = p_Node->AttributeT("os_filter_smaller").data();
+	m_Setting.os_filter_greater = p_Node->AttributeT("os_filter_greater").data();
+	m_Setting.os_filter_smaller = p_Node->AttributeT("os_filter_smaller").data();
 	
-	p_Setting.processor_architecture_filter = p_Node->AttributeT("processor_architecture_filter").data();
+	m_Setting.processor_architecture_filter = p_Node->AttributeT("processor_architecture_filter").data();
 
     // message and caption to show during CAB extraction
-    p_Setting.cab_dialog_caption = p_Node->AttributeT("cab_dialog_caption").data();
-    p_Setting.cab_dialog_message = p_Node->AttributeT("cab_dialog_message").data();
-    p_Setting.cab_cancelled_message = p_Node->AttributeT("cab_cancelled_message").data();
+    m_Setting.cab_dialog_caption = p_Node->AttributeT("cab_dialog_caption").data();
+    m_Setting.cab_dialog_message = p_Node->AttributeT("cab_dialog_message").data();
+    m_Setting.cab_cancelled_message = p_Node->AttributeT("cab_cancelled_message").data();
 
 	ApplicationLog.Write( TEXT("Finished reading configuration attributes") );
 
-	p_Setting.ClearComponents();
+	m_Setting.ClearComponents();
 
 	TiXmlNode * child = NULL;
 	while ( (child = p_Node->IterateChildren("component", child)) != NULL)
@@ -148,10 +153,10 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 			{
 				MsiComponent * l_msi_Comp = new MsiComponent();
 			    l_msi_Comp->description = l_Node_component->AttributeT("description").data();
-				l_msi_Comp->package = p_Setting.ValidatePath(l_Node_component->AttributeT("package").data());
+				l_msi_Comp->package = m_Setting.ValidatePath(l_Node_component->AttributeT("package").data());
 				l_msi_Comp->type = msi;
-				l_msi_Comp->cmdparameters = p_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters").data());
-				l_msi_Comp->cmdparameters_silent = p_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters_silent").data());
+				l_msi_Comp->cmdparameters = m_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters").data());
+				l_msi_Comp->cmdparameters_silent = m_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters_silent").data());
 
                 // additional command line parameters
                 std::map<std::wstring, std::wstring>::iterator cmdline = commandLineInfo.m_componentCmdArgs.find(l_msi_Comp->description.GetBuffer());
@@ -172,8 +177,8 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 			{
 				cmd_component * l_cmd_Comp = new cmd_component();
 			    l_cmd_Comp->description = l_Node_component->AttributeT("description").data();
-				l_cmd_Comp->command = p_Setting.ValidatePath(l_Node_component->AttributeT("command").data());
-                l_cmd_Comp->command_silent = p_Setting.ValidatePath(l_Node_component->AttributeT("command_silent").data());
+				l_cmd_Comp->command = m_Setting.ValidatePath(l_Node_component->AttributeT("command").data());
+                l_cmd_Comp->command_silent = m_Setting.ValidatePath(l_Node_component->AttributeT("command_silent").data());
 				l_cmd_Comp->type = cmd;
 
                 // additional command line parameters
@@ -194,7 +199,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 			else if (l_comp_type == "openfile")
 			{
 				OpenFileComponent * l_openfile_Comp = new OpenFileComponent();
-				l_openfile_Comp->file = p_Setting.ValidatePath(l_Node_component->AttributeT("file").data());
+				l_openfile_Comp->file = m_Setting.ValidatePath(l_Node_component->AttributeT("file").data());
 				l_openfile_Comp->type = openfile;
 
 				l_new_component = l_openfile_Comp;
@@ -226,13 +231,13 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 				TiXmlElement * l_Node = childInstalled->ToElement();
 				if (l_Node != NULL && strcmp(l_Node->Value(), "installedcheck") == 0)
 				{
-                    InstalledCheck * l_new_installedcheck = InstalledCheck::LoadFromXml(l_Node, p_Setting);
+                    InstalledCheck * l_new_installedcheck = InstalledCheck::LoadFromXml(l_Node, m_Setting);
 					l_new_component->installedchecks.push_back(l_new_installedcheck);
 				}
 				else if (l_Node != NULL && strcmp(l_Node->Value(), "installedcheckoperator") == 0)
 				{
                     InstalledCheckOperator * l_new_installedcheckoperator = new InstalledCheckOperator();
-                    l_new_installedcheckoperator->Load(l_Node, p_Setting);
+                    l_new_installedcheckoperator->Load(l_Node, m_Setting);
 					l_new_component->installedchecks.push_back(l_new_installedcheckoperator);
 				}
 			}
@@ -244,19 +249,19 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 			if (l_Node_downloaddialog != NULL)
 			{
 			    ApplicationLog.Write( TEXT("---Loading DownloadDialog") );
-				LoadDownloadConfiguration(l_Node_downloaddialog, l_new_component->DownloadDialogConfiguration, p_Setting);
+				LoadDownloadConfiguration(l_Node_downloaddialog, l_new_component->DownloadDialogConfiguration);
 				l_new_component->ContainsDownloadComponent = true;
 			}
 
 			//verifico che il componente sia supportato nel sistema operativo
 			if ( CheckConfigFilter(l_new_component->os_filter_lcid, l_new_component->os_filter_greater, l_new_component->os_filter_smaller, l_new_component->processor_architecture_filter) )
 			{
-				p_Setting.AddComponent(l_new_component);
+				m_Setting.AddComponent(l_new_component);
                 ApplicationLog.Write( TEXT("--Component OK: "), l_new_component->description );
 			}
 			else
 			{
-				FreeComponent(l_new_component);
+				delete l_new_component;
 				ApplicationLog.Write( TEXT("--Component SKIPPED") );
 			}
 
@@ -267,7 +272,7 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
     std::map<std::wstring, std::wstring>::iterator arg = commandLineInfo.m_componentCmdArgs.begin();
     while(arg != commandLineInfo.m_componentCmdArgs.end())
     {
-        if (! p_Setting.HasComponent(arg->first))
+        if (! m_Setting.HasComponent(arg->first))
         {
             ApplicationLog.Write(TEXT("WARNING: Command line argument specified for a missing component: "), 
                 (TEXT("\"") + arg->first + TEXT("\"")).c_str());
@@ -277,29 +282,28 @@ void LoadInstallConfigNode(TiXmlElement * p_Node, InstallerSetting & p_Setting)
     }
 }
 
-bool LoadReferenceConfigNode(TiXmlElement * p_Node, TiXmlDocument & p_Document, CWnd * p_Parent, InstallerSetting & p_Setting)
+bool ConfigFile::LoadReferenceConfigNode(TiXmlElement * p_Node, CWnd * p_Parent)
 {
 	bool l_bSuccess = false;
 	TiXmlElement * l_NodeDownloadDialog = p_Node->FirstChildElement("downloaddialog");
 
 	DVLib::DownloadGroupConfiguration l_DownloadConfig;
-	LoadDownloadConfiguration(l_NodeDownloadDialog, l_DownloadConfig, p_Setting);
+	LoadDownloadConfiguration(l_NodeDownloadDialog, l_DownloadConfig);
 
-	l_bSuccess = RunDownloadDialog(l_DownloadConfig, p_Parent);
+    l_bSuccess = DVLib::RunDownloadDialog(l_DownloadConfig, p_Parent);
 	if (l_bSuccess)
 	{
 		TiXmlElement * l_Node_configfile = p_Node->FirstChildElement("configfile");
 
-		CString l_configfile_filename = p_Setting.ValidatePath(l_Node_configfile->AttributeT("filename").data());
-		//CString l_configfile_banner = p_Setting.ValidatePath(l_Node_configfile->GetAttrValue("banner"));
-
-		LoadConfigFromFile(l_configfile_filename, p_Document);
+		CString l_configfile_filename = m_Setting.ValidatePath(l_Node_configfile->AttributeT("filename").data());
+		//CString l_configfile_banner = m_Setting.ValidatePath(l_Node_configfile->GetAttrValue("banner"));
+		LoadConfigFromFile(l_configfile_filename);
 	}
 
 	return l_bSuccess;
 }
 
-void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p_Caller_Has_Additional_Config)
+void ConfigFile::LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additional_Config)
 {
 	bool l_bFound = false;
 	bool l_bAbort = false;
@@ -314,17 +318,11 @@ void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p
 	configSetting l_ConfigSetting;
 	SaveAppState(l_ConfigSetting);
 
-	// process silent install setting
-	// if parent configuration is configured for a silent install,
-	// a child configuration will inherit that setting
-	if (ConvBoolString(p_Node->Attribute("silent_install"), false))
-	{
-		QuietInstall.EnableSilentInstall();
-	}
+    ProcessSilentInstall(p_Node->Attribute("silent_install"));
+    ProcessLcidType(p_Node->Attribute("lcid_type"));
 
 	CdotNetInstallerDlg dlg;
 //	m_pMainWnd = &dlg;
-
 
 	TiXmlNode * child = NULL;
 	while( (child = p_Node->IterateChildren(child)) != NULL )
@@ -366,12 +364,11 @@ void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p
 					ApplicationLog.Write( TEXT("Loading reference configuration"));
 
 					// load the reference config file and process recursively
-					TiXmlDocument l_RefDocument;
-					InstallerSetting l_RefSetting;
-
-					if (LoadReferenceConfigNode(l_Node_configuration, l_RefDocument, &dlg, p_Setting))
+                    ConfigFile ref_config_file;
+					if (ref_config_file.LoadReferenceConfigNode(l_Node_configuration, & dlg))
 					{
-						LoadConfigsNode(l_RefDocument.FirstChildElement(), l_RefSetting, (l_additional_config_found | p_Caller_Has_Additional_Config));
+						ref_config_file.LoadConfigsNode(ref_config_file.m_XmlDocument.FirstChildElement(), 
+                            (l_additional_config_found | p_Caller_Has_Additional_Config));
 					}
 					else
 					{
@@ -381,10 +378,10 @@ void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p
 				else if (l_type =="install")
 				{
 					ApplicationLog.Write( TEXT("Loading install configuration"));
-					LoadInstallConfigNode(l_Node_configuration, p_Setting);
+					LoadInstallConfigNode(l_Node_configuration);
 
 					// launch the installer dialog
-					INT_PTR nResponse = dlg.RunDni(p_Setting, (l_additional_config_found | p_Caller_Has_Additional_Config));
+					INT_PTR nResponse = dlg.RunDni(m_Setting, (l_additional_config_found | p_Caller_Has_Additional_Config));
 					if (nResponse == IDOK)
 					{
 						
@@ -423,13 +420,13 @@ void LoadConfigsNode(TiXmlElement * p_Node, InstallerSetting & p_Setting, bool p
 }
 
 // save the application state, in case it is modified by "reference" config files
-void SaveAppState(configSetting & p_Config)
+void ConfigFile::SaveAppState(configSetting & p_Config)
 {
 	p_Config.silent_install = QuietInstall.IsSilent();
 }
 
 // restore the application state after potential "reference" config file modifications
-void RestoreAppState(configSetting & p_Config)
+void ConfigFile::RestoreAppState(configSetting & p_Config)
 {
 	if (p_Config.silent_install)
 	{
@@ -442,18 +439,18 @@ void RestoreAppState(configSetting & p_Config)
 }
 
 // isolate Configuration filter checks to their own function
-bool CheckConfigFilter(
+bool ConfigFile::CheckConfigFilter(
     const CString & p_Config_LCID, 
     const CString & p_os_filter_greater, 
     const CString & p_os_filter_smaller,
     const CString & p_processor_architecture_filter)
 {
-	return (DVLib::IsOperatingSystemLCID(p_Config_LCID) &&
+	return (DVLib::IsOperatingSystemLCID(m_lcidtype, p_Config_LCID) &&
 		DVLib::IsProcessorArchitecture(p_processor_architecture_filter) &&
 		DVLib::IsInRangedOs(DVLib::GetOsVersion(), p_os_filter_greater, p_os_filter_smaller));
 }
 
-bool LoadDocumentFromFile(const CString & p_FileName, TiXmlDocument & document)
+bool ConfigFile::LoadDocumentFromFile(const CString & p_FileName)
 {
 	HANDLE l_hFile = CreateFile(p_FileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (l_hFile == INVALID_HANDLE_VALUE)
@@ -476,34 +473,30 @@ bool LoadDocumentFromFile(const CString & p_FileName, TiXmlDocument & document)
 
     ApplicationLog.Write(TEXT("Parsing "), DVLib::FormatNumberToBytes(l_Size));
 
-	document.Parse(l_Buffer);
-	if (document.Error())
+	m_XmlDocument.Parse(l_Buffer);
+	if (m_XmlDocument.Error())
 	{
-		ApplicationLog.Write(TEXT("***Parsing error: "), DVLib::string2Tstring(document.ErrorDesc()).data() );
-
+		ApplicationLog.Write(TEXT("***Parsing error: "), DVLib::string2Tstring(m_XmlDocument.ErrorDesc()).data());
 		return false;
 	}
 
 	delete [] l_Buffer;
-
     ApplicationLog.Write(TEXT("Successfully parsed: "), p_FileName);
-
 	return true;
 }
 
-void LoadConfigFromFile(const CString & p_FileName, TiXmlDocument & p_Document)
+void ConfigFile::LoadConfigFromFile(const CString & p_FileName)
 {
-	//I don't use the default LoadFrom file because is not Unicode
-	bool l_ret = LoadDocumentFromFile(p_FileName, p_Document);
-	if (l_ret==false)
+	// don't use the default LoadFrom file because is not Unicode
+	bool l_ret = LoadDocumentFromFile(p_FileName);
+	if (l_ret == false)
 	{
         ApplicationLog.Write(TEXT("***Failed to load configuration file: "), p_FileName);
-
 		throw std::exception("Invalid configuration file, failed to parse XML elements.");
 	}
 }
 
-void LoadConfigFromResource(HMODULE p_Module, TiXmlDocument & p_Document)
+void ConfigFile::LoadConfigFromResource(HMODULE p_Module)
 {
 	ApplicationLog.Write( TEXT("Loading configuration from resource") );
 
@@ -521,9 +514,8 @@ void LoadConfigFromResource(HMODULE p_Module, TiXmlDocument & p_Document)
 	memset(l_bufferXml,0,l_size+1);
 	memcpy(l_bufferXml, l_buffer, l_size);
 	
-	p_Document.Parse(l_bufferXml);
-	
-	if (p_Document.Error())
+	m_XmlDocument.Parse(l_bufferXml);	
+	if (m_XmlDocument.Error())
 	{
 		ApplicationLog.Write( TEXT("***Failed parsing xml configuration from resource") );
         delete [] l_bufferXml;
@@ -535,65 +527,40 @@ void LoadConfigFromResource(HMODULE p_Module, TiXmlDocument & p_Document)
 	delete [] l_bufferXml;
 }
 
-HBITMAP LoadBannerFromResource(HMODULE p_Module)
+void ConfigFile::LoadXmlSettings()
 {
-	try
+	CString settings_file = DVLib::PathCombineCustom(DVLib::GetAppPath(), TEXT("configuration.xml"));
+	if (DVLib::FileExistsCustom(settings_file))
 	{
-		//leggo la risorsa
-		HRSRC l_res = FindResource(p_Module, TEXT("RES_BANNER"), TEXT("CUSTOM"));
-		if (l_res == NULL)
-            throw std::exception("Error locating RES_BANNER resource");
-
-        HGLOBAL l_hRes = LoadResource(p_Module, l_res);
-		if (l_hRes == NULL)
-			throw std::exception("Error loading RES_BANNER resource");
-		DWORD l_size = SizeofResource(p_Module, l_res);
-
-		LPVOID l_buffer = LockResource(l_hRes);
-		if (l_buffer == NULL)
-			throw std::exception("Error locking RES_BANNER resource");
-
-		return DVLib::LoadBitmapFromBuffer(l_buffer, l_size);
-	}
-    catch(std::exception&)
-	{
-		return NULL;
-	}
-}
-
-//returns true if the functions sucessfully load the setting m_Setting
-bool LoadXmlSettings(TiXmlDocument & p_Document)
-{
-	//riferimento standard
-	CString l_SettingFile = DVLib::PathCombineCustom(DVLib::GetAppPath(), TEXT("configuration.xml"));
-
-	if (DVLib::FileExistsCustom(l_SettingFile))
-	{
-		ApplicationLog.Write(TEXT("Loading configuration from file: "), l_SettingFile);
-
-		LoadConfigFromFile(l_SettingFile, p_Document); //riferimento
+		ApplicationLog.Write(TEXT("Loading configuration from file: "), settings_file);
+		LoadConfigFromFile(settings_file);
 	}
 	else
 	{
 		ApplicationLog.Write(TEXT("Loading configuration from resource."));
-
-		LoadConfigFromResource(AfxGetApp()->m_hInstance, p_Document);
+		LoadConfigFromResource(AfxGetApp()->m_hInstance);
 	}
-
-	return true;
 }
 
-void FreeComponent(Component * c)
+void ConfigFile::ProcessSilentInstall(const std::string& value)
 {
-	if (c != NULL)
+	// process silent install setting
+	// if parent configuration is configured for a silent install,
+	// a child configuration will inherit that setting
+	if (ConvBoolString(value.c_str(), false))
 	{
-		for (size_t j = 0; j < c->installedchecks.size(); j++)
-		{
-			InstalledCheck * ic = c->installedchecks[j];
-			c->installedchecks[j] = NULL;
-			if (ic != NULL)
-				delete ic;
-		}
-		delete c;
+		QuietInstall.EnableSilentInstall();
 	}
+}
+
+// process lcidtype setting
+void ConfigFile::ProcessLcidType(const std::string& lcidtype)
+{
+    if (lcidtype.empty()) 
+       return;
+
+    if (lcidtype == "System") m_lcidtype = LcidSystem;
+    else if (lcidtype == "User") m_lcidtype = LcidUser;
+    else if (lcidtype == "UserExe") m_lcidtype = LcidUserExe;
+    else throw std::exception("Invalid LCID type.");
 }

@@ -47,21 +47,21 @@
       <para>
         This project started as a
         <externalLink>
-          <linkHref>http://www.codeproject.com/KB/install/dotNetInstaller.aspx</linkHref>
+          <linkUri>http://www.codeproject.com/KB/install/dotNetInstaller.aspx</linkUri>
           <linkText>CodeProject article</linkText>
         </externalLink> and was maintained on the
         <externalLink>
-          <linkHref>http://www.devage.com/</linkHref>
+          <linkUri>http://www.devage.com/</linkUri>
           <linkText>DevAge</linkText>
         </externalLink>
         website and
         <externalLink>
-          <linkHref>https://sourceforge.net/projects/dotnetinstaller</linkHref>
+          <linkUri>https://sourceforge.net/projects/dotnetinstaller</linkUri>
           <linkText>SourceForge</linkText>
         </externalLink>.
         It's now fully open-sourced and maintained on CodePlex at
         <externalLink>
-          <linkHref>http://www.codeplex.com/dotnetinstaller/</linkHref>
+          <linkUri>http://www.codeplex.com/dotnetinstaller/</linkUri>
           <linkText>http://www.codeplex.com/dotnetinstaller/</linkText>
         </externalLink>.
       </para>
