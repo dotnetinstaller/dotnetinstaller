@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="MessageNewerVersionDetected">A newer version of [ProductName] is already installed.</String>
+  <String Id="UpgradeWelcomeDlg_Title">[ProductName] Upgrade</String>
+  <String Id="UpgradeWelcomeDlgBitmap">WixUI_Bmp_Dialog</String>
+  <String Id="UpgradeWelcomeDlgTitle">{\WixUI_Font_Title}Upgrade Information</String>
+  <String Id="UpgradeWelcomeDlgDescription">Setup will upgrade [ProductName] from version [INSTALLEDPRODUCTVERSION] to [ProductVersion].</String>
+</WixLocalization>
