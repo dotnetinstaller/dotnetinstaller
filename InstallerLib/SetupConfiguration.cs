@@ -11,6 +11,8 @@ namespace InstallerLib
     /// <summary>
     /// An install configuration.
     /// </summary>
+    [XmlChild(typeof(EmbedFile))]
+    [XmlChild(typeof(Component))]
     public class SetupConfiguration : Configuration
     {
         public SetupConfiguration()

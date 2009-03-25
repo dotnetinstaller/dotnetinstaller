@@ -73,16 +73,12 @@ namespace DVLib
 
 			p_Callback->DownloadComplete();
 		}
-		catch(std::exception&)
+		catch(std::exception& ex)
 		{
-		    p_Callback->DownloadError(TEXT("Failed to download component: ") + l_tmpLastComponent);
+		    p_Callback->DownloadError(DVLib::string2Tstring(ex.what()).c_str());
+			return 0;
 		}
 
 		return 0;
-	}
-
-	UINT DownloadComponentsThread( LPVOID pParam )
-	{
-		return DownloadComponents((IDownloadCallback*)pParam);
 	}
 }

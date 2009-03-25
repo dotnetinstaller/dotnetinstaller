@@ -10,7 +10,7 @@ InstallerSetting::InstallerSetting()
     , auto_close_on_error(false)
     , dialog_show_installed(false)
     , dialog_show_required(false)
-    , allow_continue_on_error(false)
+    , allow_continue_on_error(true)
     , log_enabled(false)
 {
 

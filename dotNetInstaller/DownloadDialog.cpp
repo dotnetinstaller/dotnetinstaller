@@ -12,19 +12,17 @@
 #include "SilentInstall.h"
 
 #define WM_USER_SETSTATUSDOWNLOAD (WM_USER+1)
-
+#define WM_USER_CLOSE_DIALOG (WM_USER+2)
 
 namespace DVLib
 {
 	// DownloadDialog dialog
 
 	IMPLEMENT_DYNAMIC(DownloadDialog, CDialog)
-	DownloadDialog::DownloadDialog(const DownloadGroupConfiguration & p_Configuration,
-							CWnd* pParent /*=NULL*/)
-		: CDialog(DownloadDialog::IDD, pParent),
-		m_bCancelDownload(false),
-		m_hDownloadThread(INVALID_HANDLE_VALUE),
-		m_bDownloadCompleted(false)
+	DownloadDialog::DownloadDialog(const DownloadGroupConfiguration & p_Configuration, CWnd* pParent /*=NULL*/)
+		: CDialog(DownloadDialog::IDD, pParent)
+		, m_bCancelOrErrorDownload(false)
+		, m_bDownloadCompleted(false)
 	{
 		m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
@@ -58,8 +56,9 @@ namespace DVLib
 		ON_BN_CLICKED(IDC_CANCEL, OnBnClickedCancel)
 		ON_BN_CLICKED(IDC_START, OnBnClickedStart)
 		ON_MESSAGE(WM_USER_SETSTATUSDOWNLOAD, OnSetStatusDownload)
+		ON_MESSAGE(WM_USER_CLOSE_DIALOG, OnCloseDialog)
 		ON_WM_CLOSE()
-		ON_COMMAND(IDCANCEL, OnCancel)
+		ON_COMMAND(IDCANCEL, OnBnClickedCancel)
 		ON_COMMAND(IDOK, OnOK)
 	END_MESSAGE_MAP()
 
@@ -81,7 +80,6 @@ namespace DVLib
 		m_btStart.SetWindowText(m_ButtonStartCaption);
 		m_ProgressControl.SetRange(0,1000);
 		m_LabelStatus.SetWindowText(TEXT(""));
-		//m_ProgressControl.SetStep
 
 		if (QuietInstall.IsSilent())
 		{
@@ -99,24 +97,12 @@ namespace DVLib
 
 	void DownloadDialog::OnOK()
 	{
-		WaitDownloadThread();
-
 		CDialog::OnOK();
-	}
-
-	void DownloadDialog::OnCancel() //ESC Key
-	{
-		//n.b. Sulla pressione del tasto cancel non viene chiamato OnClose e quindi devo anche in questo caso verificare il thread
-		m_bCancelDownload = true;
-
-		WaitDownloadThread();
-
-		CDialog::OnCancel();
 	}
 
 	void DownloadDialog::OnBnClickedCancel() //Cancel Button
 	{
-		OnCancel();
+		CanceledByTheUser();
 	}
 
 	void DownloadDialog::OnBnClickedStart()
@@ -124,20 +110,8 @@ namespace DVLib
 		ApplicationLog.Write( TEXT("Starting download thread"));
 
 		m_LabelHelpDownload.SetWindowText(m_HelpMessageDownloading);
-
-		CWinThread * l_Thread = AfxBeginThread(DownloadComponentsThread, (IDownloadCallback*)this);
-		m_hDownloadThread = l_Thread->m_hThread;
-
+		AfxBeginThread(ThreadProc, this);
 		m_btStart.EnableWindow(FALSE);
-	}
-
-	void DownloadDialog::WaitDownloadThread()
-	{
-		if (m_hDownloadThread!=INVALID_HANDLE_VALUE)
-		{
-			WaitForSingleObject(m_hDownloadThread, 20000); //wait for 20 seconds
-			m_hDownloadThread = INVALID_HANDLE_VALUE;
-		}
 	}
 
 	void DownloadDialog::OnClose( ) //Chiusura della finestra tramite X 
@@ -162,39 +136,32 @@ namespace DVLib
 				else
 					m_ProgressControl.SetPos( 0 );
 				m_LabelStatus.SetWindowText(l_Param->Status);
-
 				DownloadStatusParam::Free(l_Param);
 			}
 			else if (l_Param->Type == StatusType_Error) //ERROR
 			{
 				ApplicationLog.Write( TEXT("***Download ERROR"));
-
 				DniSilentMessageBox(l_Param->Error, MB_OK|MB_ICONSTOP);
-
+				m_bCancelOrErrorDownload = true;
 				DownloadStatusParam::Free(l_Param);
-				OnCancel();
 			}
 			else if (l_Param->Type == StatusType_Canceled) //CANCELED
 			{
 				ApplicationLog.Write( TEXT("***Download CANCELED"));
-
+				m_bCancelOrErrorDownload = true;
 				DownloadStatusParam::Free(l_Param);
-				OnCancel();
 			}
 			else if (l_Param->Type == StatusType_Completed) //COMPLETED
 			{
 				ApplicationLog.Write( TEXT("---Download OK"));
-
 				m_bDownloadCompleted = true; //Download OK
-
 				DownloadStatusParam::Free(l_Param);
-				OnOK();
 			}
 		}
 		catch(...)
 		{
-			DniSilentMessageBox(TEXT("Failed to read OnSetStatusDownload parameters"), MB_OK|MB_ICONSTOP);
-			OnCancel();
+			m_bCancelOrErrorDownload = true;
+			DniSilentMessageBox(TEXT("Failed to read OnSetStatusDownload parameters"), MB_OK|MB_ICONSTOP);			
 		}
 		return 0;
 	}
@@ -218,7 +185,7 @@ namespace DVLib
 	}
 	bool DownloadDialog::WantToStop()
 	{
-		return m_bCancelDownload;
+		return m_bCancelOrErrorDownload;
 	}
 	void DownloadDialog::CanceledByTheUser()
 	{
@@ -227,5 +194,19 @@ namespace DVLib
 	DownloadComponentInfoVector * DownloadDialog::GetComponents()
 	{
 		return &m_Components;
+	}
+
+	LRESULT DownloadDialog::OnCloseDialog( WPARAM, LPARAM )
+	{
+	  OnOK();
+	  return 1;
+	}
+
+	UINT DownloadDialog::ThreadProc(LPVOID pParam)
+	{
+		DownloadDialog * dlg = (DownloadDialog *) pParam;
+		DownloadComponents(dlg);
+		::PostMessage(dlg->GetSafeHwnd(), WM_USER_CLOSE_DIALOG, 0, 0);
+		return 0;
 	}
 }

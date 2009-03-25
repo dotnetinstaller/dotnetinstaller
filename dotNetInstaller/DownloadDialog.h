@@ -30,8 +30,7 @@ namespace DVLib
 		DownloadComponentInfoVector m_Components;
 		bool m_bAutoStartDownload;
 
-		bool m_bCancelDownload;
-		HANDLE m_hDownloadThread;
+		bool m_bCancelOrErrorDownload;
 		bool m_bDownloadCompleted;
 
 		HICON m_hIcon;
@@ -42,10 +41,9 @@ namespace DVLib
 	protected:
 		virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 		virtual BOOL OnInitDialog();
+		LRESULT OnCloseDialog(WPARAM, LPARAM);
 		virtual afx_msg void OnClose();
-
-		virtual void WaitDownloadThread();
-
+		static UINT ThreadProc(LPVOID pParam);
 		DECLARE_MESSAGE_MAP()
 	public:
 		CStatic m_LabelHelpDownload;
@@ -55,7 +53,6 @@ namespace DVLib
 		CProgressCtrl m_ProgressControl;
 		afx_msg void OnBnClickedCancel();
 		afx_msg void OnBnClickedStart();
-		afx_msg void OnCancel();
 		afx_msg void OnOK();
 
 		afx_msg LRESULT OnSetStatusDownload(WPARAM wParam, LPARAM lParam);

@@ -80,7 +80,7 @@ namespace InstallerLib
             set { m_installcompletemessage = value; }
         }
 
-        private bool m_mustreboot;
+        private bool m_mustreboot = false;
         [Description("Indicates whether to reboot automatically after this component is installed successfully. Normally if the system must be restarted, the component tells this setup (with special return code) to stop and restart the system. This forces a reboot without prompting. (REQUIRED)")]
         public bool mustreboot
         {
@@ -106,7 +106,7 @@ namespace InstallerLib
             set { m_reboot_required = value; }
         }
 
-        private bool m_must_reboot_required;
+        private bool m_must_reboot_required = false;
         [Description("Component setting for reboot behavior. When true, installation won't continue after this component required a reboot. (REQUIRED)")]
         public bool must_reboot_required
         {
@@ -114,7 +114,7 @@ namespace InstallerLib
             set { m_must_reboot_required = value; }
         }
 
-        private bool m_allow_continue_on_error;
+        private bool m_allow_continue_on_error = true;
         [Description("If true, the user will be prompted to continue when a component fails to install. (REQUIRED)")]
         public bool allow_continue_on_error
         {
@@ -122,7 +122,7 @@ namespace InstallerLib
             set { m_allow_continue_on_error = value; }
         }
 
-        private bool m_required;
+        private bool m_required = false;
         [Description("Indicates whether the component is required for a successful installation. (REQUIRED)")]
         public bool required
         {

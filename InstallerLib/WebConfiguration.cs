@@ -8,6 +8,7 @@ namespace InstallerLib
     /// <summary>
     /// A WebConfiguration.
     /// </summary>
+    [XmlChild(typeof(DownloadDialog), Max = 1)]
     public class WebConfiguration : Configuration
     {
         public WebConfiguration()

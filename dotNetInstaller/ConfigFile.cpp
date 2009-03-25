@@ -54,7 +54,7 @@ void ConfigFile::LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog,
 			l_DownloadComp.ComponentName = l_Node_download->AttributeT("componentname").data();
 			l_DownloadComp.SourceURL = m_Setting.ValidatePath(l_Node_download->AttributeT("sourceurl").data());
 			l_DownloadComp.DestinationPath = m_Setting.ValidatePath(l_Node_download->AttributeT("destinationpath").data());
-		l_DownloadComp.DestinationFileName = m_Setting.ValidatePath(l_Node_download->AttributeT("destinationfilename").data());
+			l_DownloadComp.DestinationFileName = m_Setting.ValidatePath(l_Node_download->AttributeT("destinationfilename").data());
 			l_DownloadComp.AlwaysDownload = ConvBoolString(l_Node_download->Attribute("alwaysdownload"), true);
 			p_Configuration.Components.Add(l_DownloadComp);
 

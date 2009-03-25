@@ -8,9 +8,6 @@ namespace InstallerLib
     /// <summary>
     /// A configuration.
     /// </summary>
-    [XmlChild(typeof(EmbedFile))]
-    [XmlChild(typeof(Component))]
-    [XmlChild(typeof(DownloadDialog))]
     public abstract class Configuration : XmlClassImpl
     {
         public Configuration(string p_type)

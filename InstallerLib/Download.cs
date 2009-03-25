@@ -67,7 +67,7 @@ namespace InstallerLib
         }
 
         private bool m_embed = true;
-        [Description("Automatically embed MSI package when building a packaged setup.")]
+        [Description("Automatically embed package referenced by this download when building a packaged setup.")]
         public bool embed
         {
             get { return m_embed; }
