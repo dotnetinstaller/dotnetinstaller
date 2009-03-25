@@ -542,20 +542,25 @@ void ConfigFile::LoadXmlSettings()
 	}
 }
 
-void ConfigFile::ProcessSilentInstall(const std::string& value)
+void ConfigFile::ProcessSilentInstall(LPCSTR pszSilent)
 {
 	// process silent install setting
 	// if parent configuration is configured for a silent install,
 	// a child configuration will inherit that setting
-	if (ConvBoolString(value.c_str(), false))
+	if (ConvBoolString(pszSilent, false))
 	{
 		QuietInstall.EnableSilentInstall();
 	}
 }
 
 // process lcidtype setting
-void ConfigFile::ProcessLcidType(const std::string& lcidtype)
+void ConfigFile::ProcessLcidType(LPCSTR pszType)
 {
+	if (pszType == NULL)
+		return;
+
+	std::string lcidtype(pszType);
+
     if (lcidtype.empty()) 
        return;
 

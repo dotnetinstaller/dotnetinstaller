@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Collections.Specialized;
 using System.IO;
+using System.Text;
 
 namespace InstallerLib
 {
@@ -94,20 +95,34 @@ namespace InstallerLib
             SaveAs(m_filename);
         }
 
+        /// <summary>
+        /// Save the xml to a file.
+        /// </summary>
+        /// <param name="p_FileName">target filename</param>
         public void SaveAs(string p_FileName)
         {
-            XmlTextWriter l_XmlWriter = new XmlTextWriter(p_FileName, System.Text.Encoding.UTF8);
-            l_XmlWriter.Formatting = Formatting.Indented;
-            try
+            Xml.Save(p_FileName);
+            m_filename = p_FileName;
+        }
+
+        /// <summary>
+        /// Raw configuration xml.
+        /// </summary>
+        public XmlDocument Xml
+        {
+            get
             {
+                MemoryStream ms = new MemoryStream();
+                XmlTextWriter l_XmlWriter = new XmlTextWriter(ms, Encoding.UTF8);
+                l_XmlWriter.Formatting = Formatting.Indented;
                 l_XmlWriter.WriteStartDocument();
                 ToXml(l_XmlWriter);
+                XmlDocument xmldoc = new XmlDocument();
+                l_XmlWriter.Flush();
+                ms.Position = 0;
+                xmldoc.Load(ms);
+                return xmldoc;
             }
-            finally
-            {
-                l_XmlWriter.Close();
-            }
-            m_filename = p_FileName;
         }
 
         public override string XmlTag
@@ -138,7 +153,7 @@ namespace InstallerLib
         {
             // lcid type
             if (e.XmlElement.Attributes["lcid_type"] != null)
-                m_lcidtype = (LcidType) Enum.Parse(typeof(LcidType), e.XmlElement.Attributes["lcid_type"].InnerText, true);
+                m_lcidtype = (LcidType)Enum.Parse(typeof(LcidType), e.XmlElement.Attributes["lcid_type"].InnerText, true);
 
             // processor and os filter architecture messages
             if (e.XmlElement.Attributes["configuration_no_match_message"] != null)
@@ -202,7 +217,7 @@ namespace InstallerLib
 
         public void LoadXml(XmlDocument xml)
         {
-            base.FromXml((XmlElement) xml.SelectSingleNode("//configurations"));
+            base.FromXml((XmlElement)xml.SelectSingleNode("//configurations"));
         }
 
         private static int m_CurrentSchemaVersion = 1;

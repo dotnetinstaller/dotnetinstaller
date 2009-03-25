@@ -35,16 +35,8 @@ namespace InstallerLibUnitTests
                 // compare trivial properties
                 Assert.AreEqual("1.0.0.0", configFile.productversion, configFile.productversion);
                 Assert.AreEqual(false, configFile.silent_install);
-                // save file
-                string tempFilename = Path.GetTempFileName();
-                configFile.SaveAs(tempFilename);
-                // reload the file
-                XmlDocument tempXmlFilenameDocument = new XmlDocument();
-                tempXmlFilenameDocument.Load(tempFilename);
-                // delete temporary file
-                File.Delete(tempFilename);
                 // compare contents
-                Assert.AreEqual(tempXmlFilenameDocument.OuterXml, configXml.OuterXml);
+                Assert.AreEqual(configFile.Xml.OuterXml, configXml.OuterXml);
             }
         }
     }

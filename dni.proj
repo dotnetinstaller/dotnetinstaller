@@ -30,6 +30,9 @@
     <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.ico" />
   </ItemGroup>
   <ItemGroup>
+    <DownloadSetupSample Include="Samples/DownloadSetup/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <Documentation Include="Documentation/$(Configuration)/dotNetInstaller.chm" />
     <Documentation Include="Documentation/WhatsNew.html" />
   </ItemGroup>
@@ -133,6 +136,9 @@
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
     <Copy SourceFiles="@(InstallCheckOperatorsSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators\%(RecursiveDir)" />
     <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
+    <!-- Sample: DownloadSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\DownloadSetup" />
+    <Copy SourceFiles="@(DownloadSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\DownloadSetup\%(RecursiveDir)" />
   </Target>
   <Target Name="doc" DependsOnTargets="version">
     <Error Condition="'$(DXROOT)'==''" Text="Missing Sandcastle, DXROOT environment variable not set, install from http://www.codeplex.com/Sandcastle" />

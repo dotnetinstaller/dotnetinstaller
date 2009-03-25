@@ -51,7 +51,15 @@
       <title>Component Operators Sample</title>
       <content>
         <para>
-          The demo of component operators shows how logical functions can be applied to install checks.
+          A demo of component operators. Shows how logical functions can be applied to install checks.
+        </para>
+      </content>
+    </section>
+    <section address="downloadsetupsample">
+      <title>Download Setup Sample</title>
+      <content>
+        <para>
+          A demo of downloadable components.
         </para>
       </content>
     </section>

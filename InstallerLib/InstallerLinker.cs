@@ -32,6 +32,8 @@ namespace InstallerLib
             ConfigFile configfile = new ConfigFile();
             configfile.Load(args.config);
 
+            // \todo: check XML with XSD, warn if nodes are being dropped
+
             args.WriteLine(string.Format("Updating binary attributes in \"{0}\"", args.output));
             VersionResource rc = new VersionResource();
             rc.LoadFrom(args.output);
