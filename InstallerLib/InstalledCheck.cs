@@ -61,8 +61,7 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["description"] != null)
-                description = e.XmlElement.Attributes["description"].InnerText;
+            if (ReadAttributeValue(e, "description", ref m_description)) OnDescriptionChanged();
         }
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)

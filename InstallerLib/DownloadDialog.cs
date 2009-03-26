@@ -120,26 +120,12 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["autostartdownload"] != null &&
-                e.XmlElement.Attributes["autostartdownload"].InnerText != null &&
-                e.XmlElement.Attributes["autostartdownload"].InnerText.Length > 0)
-                m_autostartdownload = bool.Parse(e.XmlElement.Attributes["autostartdownload"].InnerText);
-
-            if (e.XmlElement.Attributes["buttoncancel_caption"] != null)
-                m_buttoncancel_caption = e.XmlElement.Attributes["buttoncancel_caption"].InnerText;
-
-            if (e.XmlElement.Attributes["buttonstart_caption"] != null)
-                m_buttonstart_caption = e.XmlElement.Attributes["buttonstart_caption"].InnerText;
-
-            if (e.XmlElement.Attributes["dialog_caption"] != null)
-                m_dialog_caption = e.XmlElement.Attributes["dialog_caption"].InnerText;
-
-            if (e.XmlElement.Attributes["dialog_message"] != null)
-                m_dialog_message = e.XmlElement.Attributes["dialog_message"].InnerText;
-
-            if (e.XmlElement.Attributes["dialog_message_downloading"] != null)
-                m_dialog_message_downloading = e.XmlElement.Attributes["dialog_message_downloading"].InnerText;
-
+            ReadAttributeValue(e, "autostartdownload", ref m_autostartdownload);
+            ReadAttributeValue(e, "buttoncancel_caption", ref m_buttoncancel_caption);
+            ReadAttributeValue(e, "buttonstart_caption", ref m_buttonstart_caption);
+            ReadAttributeValue(e, "dialog_caption", ref m_dialog_caption);
+            ReadAttributeValue(e, "dialog_message", ref m_dialog_message);
+            ReadAttributeValue(e, "dialog_message_downloading", ref m_dialog_message_downloading);
             base.OnXmlReadTag(e);
         }
 

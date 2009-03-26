@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Drawing;
 
 namespace InstallerLib
 {
@@ -161,6 +162,65 @@ namespace InstallerLib
         protected virtual void OnXmlReadTag(XmlElementEventArgs e)
         {
         }
+
+        #region Attribute Values
+
+        public bool ReadAttributeValue(XmlElementEventArgs e, string value, ref string propertyName)
+        {
+            XmlAttribute xmlattrib = e.XmlElement.Attributes[value];
+            if (xmlattrib != null)
+            {
+                propertyName = xmlattrib.InnerText;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool ReadAttributeValue<T>(XmlElementEventArgs e, string value, ref T propertyName)            
+        {
+            XmlAttribute xmlattrib = e.XmlElement.Attributes[value];
+            if (xmlattrib != null && !string.IsNullOrEmpty(xmlattrib.InnerText))
+            {
+                propertyName = (T) Enum.Parse(typeof(T), xmlattrib.InnerText);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool ReadAttributeValue(XmlElementEventArgs e, string value, ref Rectangle propertyName)
+        {
+            XmlAttribute xmlattrib = e.XmlElement.Attributes[value];
+            if (xmlattrib != null && ! string.IsNullOrEmpty(xmlattrib.InnerText))
+            {
+                propertyName = XmlRectangle.FromString(xmlattrib.InnerText);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool ReadAttributeValue(XmlElementEventArgs e, string value, ref bool propertyName)
+        {
+            XmlAttribute xmlattrib = e.XmlElement.Attributes[value];
+            if (xmlattrib != null && !string.IsNullOrEmpty(xmlattrib.InnerText))
+            {
+                return bool.TryParse(xmlattrib.InnerText, out propertyName);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
     }
 
     /// <summary>

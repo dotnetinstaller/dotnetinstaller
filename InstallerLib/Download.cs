@@ -94,24 +94,12 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["componentname"] != null)
-                m_componentname = e.XmlElement.Attributes["componentname"].InnerText;
-
-            if (e.XmlElement.Attributes["destinationfilename"] != null)
-                m_destinationfilename = e.XmlElement.Attributes["destinationfilename"].InnerText;
-
-            if (e.XmlElement.Attributes["destinationpath"] != null)
-                m_destinationpath = e.XmlElement.Attributes["destinationpath"].InnerText;
-
-            if (e.XmlElement.Attributes["sourceurl"] != null)
-                m_sourceurl = e.XmlElement.Attributes["sourceurl"].InnerText;
-
-            if (e.XmlElement.Attributes["alwaysdownload"] != null)
-                m_alwaysdownload = bool.Parse(e.XmlElement.Attributes["alwaysdownload"].InnerText);
-
-            if (e.XmlElement.Attributes["embed"] != null)
-                m_embed = bool.Parse(e.XmlElement.Attributes["embed"].InnerText);
-
+            ReadAttributeValue(e, "componentname", ref m_componentname);
+            ReadAttributeValue(e, "destinationfilename", ref m_destinationfilename);
+            ReadAttributeValue(e, "destinationpath", ref m_destinationpath);
+            ReadAttributeValue(e, "sourceurl", ref m_sourceurl);
+            ReadAttributeValue(e, "alwaysdownload", ref m_alwaysdownload);
+            ReadAttributeValue(e, "embed", ref m_embed);
             base.OnXmlReadTag(e);
         }
 

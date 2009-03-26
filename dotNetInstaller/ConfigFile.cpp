@@ -152,7 +152,6 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 			if (l_comp_type == "msi")
 			{
 				MsiComponent * l_msi_Comp = new MsiComponent();
-			    l_msi_Comp->description = l_Node_component->AttributeT("description").data();
 				l_msi_Comp->package = m_Setting.ValidatePath(l_Node_component->AttributeT("package").data());
 				l_msi_Comp->type = msi;
 				l_msi_Comp->cmdparameters = m_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters").data());
@@ -176,7 +175,6 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 			else if (l_comp_type == "cmd")
 			{
 				cmd_component * l_cmd_Comp = new cmd_component();
-			    l_cmd_Comp->description = l_Node_component->AttributeT("description").data();
 				l_cmd_Comp->command = m_Setting.ValidatePath(l_Node_component->AttributeT("command").data());
                 l_cmd_Comp->command_silent = m_Setting.ValidatePath(l_Node_component->AttributeT("command_silent").data());
 				l_cmd_Comp->type = cmd;
@@ -212,6 +210,7 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 			}
 
 			l_new_component->description = l_Node_component->AttributeT("description").data();
+			l_new_component->status_installed = l_Node_component->AttributeT("status_installed").data();
 			l_new_component->os_filter_greater = l_Node_component->AttributeT("os_filter_greater").data();
 			l_new_component->os_filter_smaller = l_Node_component->AttributeT("os_filter_smaller").data();
 			l_new_component->os_filter_lcid = l_Node_component->AttributeT("os_filter_lcid").data();

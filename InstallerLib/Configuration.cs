@@ -55,8 +55,7 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["lcid"] != null)
-                lcid = e.XmlElement.Attributes["lcid"].InnerText;
+            if (ReadAttributeValue(e, "lcid", ref m_lcid)) OnLCIDChanged();
         }
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)

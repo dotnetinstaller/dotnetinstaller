@@ -497,133 +497,51 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["cancel_caption"] != null)
-                m_cancel_caption = e.XmlElement.Attributes["cancel_caption"].InnerText;
-
-            if (e.XmlElement.Attributes["dialog_bitmap"] != null)
-                m_dialog_bitmap = e.XmlElement.Attributes["dialog_bitmap"].InnerText;
-
-            if (e.XmlElement.Attributes["dialog_caption"] != null)
-                m_dialog_caption = e.XmlElement.Attributes["dialog_caption"].InnerText;
-
-            //			if (e.XmlElement.Attributes["dialog_install_next"] != null)
-            //				m_dialog_install_next = e.XmlElement.Attributes["dialog_install_next"].InnerText;
-            //
-            //			if (e.XmlElement.Attributes["dialog_install_skip"] != null)
-            //				m_dialog_install_skip = e.XmlElement.Attributes["dialog_install_skip"].InnerText;
-
-            if (e.XmlElement.Attributes["dialog_message"] != null)
-                m_dialog_message = e.XmlElement.Attributes["dialog_message"].InnerText;
-
-            if (e.XmlElement.Attributes["failed_exec_command_continue"] != null)
-                m_failed_exec_command_continue = e.XmlElement.Attributes["failed_exec_command_continue"].InnerText;
-
-            if (e.XmlElement.Attributes["skip_caption"] != null)
-                m_skip_caption = e.XmlElement.Attributes["skip_caption"].InnerText;
-
-            if (e.XmlElement.Attributes["install_caption"] != null)
-                m_install_caption = e.XmlElement.Attributes["install_caption"].InnerText;
-
-            if (e.XmlElement.Attributes["installation_completed"] != null)
-                m_installation_completed = e.XmlElement.Attributes["installation_completed"].InnerText;
-
-            if (e.XmlElement.Attributes["installing_component_wait"] != null)
-                m_installing_component_wait = e.XmlElement.Attributes["installing_component_wait"].InnerText;
-
-            if (e.XmlElement.Attributes["reboot_required"] != null)
-                m_reboot_required = e.XmlElement.Attributes["reboot_required"].InnerText;
-
-            if (e.XmlElement.Attributes["must_reboot_required"] != null)
-                m_must_reboot_required = bool.Parse(e.XmlElement.Attributes["must_reboot_required"].InnerText);
-
-            //			if (e.XmlElement.Attributes["reinstallflag_caption"] != null)
-            //				m_reinstallflag_caption = e.XmlElement.Attributes["reinstallflag_caption"].InnerText;
-
-            if (e.XmlElement.Attributes["status_installed"] != null)
-                m_status_installed = e.XmlElement.Attributes["status_installed"].InnerText;
-
-            if (e.XmlElement.Attributes["status_notinstalled"] != null)
-                m_status_notinstalled = e.XmlElement.Attributes["status_notinstalled"].InnerText;
-
-            if (e.XmlElement.Attributes["dialog_otherinfo_caption"] != null)
-                m_dialog_otherinfo_caption = e.XmlElement.Attributes["dialog_otherinfo_caption"].InnerText;
-
-            if (e.XmlElement.Attributes["dialog_otherinfo_link"] != null)
-                m_dialog_otherinfo_link = e.XmlElement.Attributes["dialog_otherinfo_link"].InnerText;
-
-
-            if (e.XmlElement.Attributes["complete_command"] != null)
-                m_complete_command = e.XmlElement.Attributes["complete_command"].InnerText;
-
-            if (e.XmlElement.Attributes["complete_command_silent"] != null)
-                m_complete_command_silent = e.XmlElement.Attributes["complete_command_silent"].InnerText;
-
-            if (e.XmlElement.Attributes["auto_close_if_installed"] != null)
-                m_auto_close_if_installed = bool.Parse(e.XmlElement.Attributes["auto_close_if_installed"].InnerText);
-
-            if (e.XmlElement.Attributes["auto_close_on_error"] != null)
-                m_auto_close_on_error = bool.Parse(e.XmlElement.Attributes["auto_close_on_error"].InnerText);
-
-            if (e.XmlElement.Attributes["allow_continue_on_error"] != null)
-                allow_continue_on_error = bool.Parse(e.XmlElement.Attributes["allow_continue_on_error"].InnerText);
-
-            if (e.XmlElement.Attributes["dialog_show_installed"] != null)
-                m_dialog_show_installed = bool.Parse(e.XmlElement.Attributes["dialog_show_installed"].InnerText);
-            if (e.XmlElement.Attributes["dialog_show_required"] != null)
-                m_dialog_show_required = bool.Parse(e.XmlElement.Attributes["dialog_show_required"].InnerText);
-
-            if (e.XmlElement.Attributes["os_filter_greater"] != null)
-                m_os_filter_greater = e.XmlElement.Attributes["os_filter_greater"].InnerText;
-            if (e.XmlElement.Attributes["os_filter_smaller"] != null)
-                m_os_filter_smaller = e.XmlElement.Attributes["os_filter_smaller"].InnerText;
-
-            if (e.XmlElement.Attributes["processor_architecture_filter"] != null)
-                m_processor_architecture_filter = e.XmlElement.Attributes["processor_architecture_filter"].InnerText;
-
+            ReadAttributeValue(e, "cancel_caption", ref m_cancel_caption);
+            ReadAttributeValue(e, "dialog_bitmap", ref m_dialog_bitmap);
+            ReadAttributeValue(e, "dialog_caption", ref m_dialog_caption);
+            ReadAttributeValue(e, "dialog_message", ref m_dialog_message);
+            ReadAttributeValue(e, "failed_exec_command_continue", ref m_failed_exec_command_continue);
+            ReadAttributeValue(e, "skip_caption", ref m_skip_caption);
+            ReadAttributeValue(e, "install_caption", ref m_install_caption);
+            ReadAttributeValue(e, "installation_completed", ref m_installation_completed);
+            ReadAttributeValue(e, "installing_component_wait", ref m_installing_component_wait);
+            ReadAttributeValue(e, "reboot_required", ref m_reboot_required);
+            ReadAttributeValue(e, "must_reboot_required", ref m_must_reboot_required);
+            ReadAttributeValue(e, "status_installed", ref m_status_installed);
+            ReadAttributeValue(e, "status_notinstalled", ref m_status_notinstalled);
+            ReadAttributeValue(e, "dialog_otherinfo_caption", ref m_dialog_otherinfo_caption);
+            ReadAttributeValue(e, "dialog_otherinfo_link", ref m_dialog_otherinfo_link);
+            ReadAttributeValue(e, "complete_command", ref m_complete_command);
+            ReadAttributeValue(e, "complete_command_silent", ref m_complete_command_silent);
+            ReadAttributeValue(e, "auto_close_if_installed", ref m_auto_close_if_installed);
+            ReadAttributeValue(e, "auto_close_on_error", ref m_auto_close_on_error);
+            ReadAttributeValue(e, "allow_continue_on_error", ref m_allow_continue_on_error);
+            ReadAttributeValue(e, "dialog_show_installed", ref m_dialog_show_installed);
+            ReadAttributeValue(e, "dialog_show_required", ref m_dialog_show_required);
+            ReadAttributeValue(e, "os_filter_greater", ref m_os_filter_greater);
+            ReadAttributeValue(e, "os_filter_smaller", ref m_os_filter_smaller);
+            ReadAttributeValue(e, "processor_architecture_filter", ref m_processor_architecture_filter);
             // message and caption to show during CAB extraction
-            if (e.XmlElement.Attributes["cab_dialog_message"] != null)
-                m_cab_dialog_message = e.XmlElement.Attributes["cab_dialog_message"].InnerText;
-
-            if (e.XmlElement.Attributes["cab_cancelled_message"] != null)
-                m_cab_cancelled_message = e.XmlElement.Attributes["cab_cancelled_message"].InnerText;
-
-            if (e.XmlElement.Attributes["cab_dialog_caption"] != null)
-                m_cab_dialog_caption = e.XmlElement.Attributes["cab_dialog_caption"].InnerText;
-
+            ReadAttributeValue(e, "cab_dialog_message", ref m_cab_dialog_message);
+            ReadAttributeValue(e, "cab_cancelled_message", ref m_cab_cancelled_message);
+            ReadAttributeValue(e, "cab_dialog_caption", ref m_cab_dialog_caption);
             // CAB path
-            if (e.XmlElement.Attributes["cab_path"] != null)
-                m_cab_path = e.XmlElement.Attributes["cab_path"].InnerText;
-
-            if (e.XmlElement.Attributes["cab_path_autodelete"] != null)
-                cab_path_autodelete = bool.Parse(e.XmlElement.Attributes["cab_path_autodelete"].InnerText);
-
+            ReadAttributeValue(e, "cab_path", ref m_cab_path);
+            ReadAttributeValue(e, "cab_path_autodelete", ref m_cab_path_autodelete);
             // auto-enable logging
-            if (e.XmlElement.Attributes["log_enabled"] != null)
-                m_log_enabled = bool.Parse(e.XmlElement.Attributes["log_enabled"].InnerText);
-
-            if (e.XmlElement.Attributes["log_file"] != null)
-                m_log_file = e.XmlElement.Attributes["log_file"].InnerText;
-
+            ReadAttributeValue(e, "log_enabled", ref m_log_enabled);
+            ReadAttributeValue(e, "log_file", ref m_log_file);
             // dialog, message and button positions
-            if (e.XmlElement.Attributes["dialog_position"] != null)
-                m_dialog_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_position"].InnerText);
-            if (e.XmlElement.Attributes["dialog_components_list_position"] != null)
-                m_dialog_components_list_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_components_list_position"].InnerText);
-            if (e.XmlElement.Attributes["dialog_message_position"] != null)
-                m_dialog_message_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_message_position"].InnerText);
-            if (e.XmlElement.Attributes["dialog_bitmap_position"] != null)
-                m_dialog_bitmap_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_bitmap_position"].InnerText);
-            if (e.XmlElement.Attributes["dialog_otherinfo_link_position"] != null)
-                m_dialog_otherinfo_link_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_otherinfo_link_position"].InnerText);
-            if (e.XmlElement.Attributes["dialog_osinfo_position"] != null)
-                m_dialog_osinfo_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_osinfo_position"].InnerText);
-            if (e.XmlElement.Attributes["dialog_install_button_position"] != null)
-                m_dialog_install_button_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_install_button_position"].InnerText);
-            if (e.XmlElement.Attributes["dialog_cancel_button_position"] != null)
-                m_dialog_cancel_button_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_cancel_button_position"].InnerText);
-            if (e.XmlElement.Attributes["dialog_skip_button_position"] != null)
-                m_dialog_skip_button_position = XmlRectangle.FromString(e.XmlElement.Attributes["dialog_skip_button_position"].InnerText);
-
+            ReadAttributeValue(e, "dialog_position", ref m_dialog_position);
+            ReadAttributeValue(e, "dialog_components_list_position", ref m_dialog_components_list_position);
+            ReadAttributeValue(e, "dialog_message_position", ref m_dialog_message_position);
+            ReadAttributeValue(e, "dialog_bitmap_position", ref m_dialog_bitmap_position);
+            ReadAttributeValue(e, "dialog_otherinfo_link_position", ref m_dialog_otherinfo_link_position);
+            ReadAttributeValue(e, "dialog_osinfo_position", ref m_dialog_osinfo_position);
+            ReadAttributeValue(e, "dialog_install_button_position", ref m_dialog_install_button_position);
+            ReadAttributeValue(e, "dialog_cancel_button_position", ref m_dialog_cancel_button_position);
+            ReadAttributeValue(e, "dialog_skip_button_position", ref m_dialog_skip_button_position);
             base.OnXmlReadTag(e);
         }
     }

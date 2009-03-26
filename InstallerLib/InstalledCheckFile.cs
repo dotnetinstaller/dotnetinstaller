@@ -50,15 +50,9 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["filename"] != null)
-                m_filename = e.XmlElement.Attributes["filename"].InnerText;
-
-            if (e.XmlElement.Attributes["fileversion"] != null)
-                m_fileversion = e.XmlElement.Attributes["fileversion"].InnerText;
-
-            if (e.XmlElement.Attributes["comparison"] != null)
-                m_comparison = (installcheck_comparison)Enum.Parse(typeof(installcheck_comparison), e.XmlElement.Attributes["comparison"].InnerText, true);
-
+            ReadAttributeValue(e, "filename", ref m_filename);
+            ReadAttributeValue(e, "fileversion", ref m_fileversion);
+            ReadAttributeValue(e, "comparison", ref m_comparison);
             base.OnXmlReadTag(e);
         }
     }

@@ -446,8 +446,8 @@ bool CdotNetInstallerDlg::LoadComponentsList(void)
 		CString l_descr = component->description;
 	    l_descr += " ";
         l_descr += component_installed
-            ? m_Settings.status_installed
-            : m_Settings.status_notinstalled;
+			? (component->status_installed.IsEmpty() ? m_Settings.status_installed : component->status_installed)
+			: (component->status_notinstalled.IsEmpty() ? m_Settings.status_notinstalled : component->status_notinstalled);
 
         if (! m_Settings.dialog_show_installed && component_installed)
             continue;

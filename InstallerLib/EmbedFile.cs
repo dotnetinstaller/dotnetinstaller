@@ -84,12 +84,8 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["sourcefilepath"] != null)
-                m_sourcefilepath = e.XmlElement.Attributes["sourcefilepath"].InnerText;
-
-            if (e.XmlElement.Attributes["targetfilepath"] != null)
-                m_targetfilepath = e.XmlElement.Attributes["targetfilepath"].InnerText;
-
+            ReadAttributeValue(e, "sourcefilepath", ref m_sourcefilepath);
+            ReadAttributeValue(e, "targetfilepath", ref m_targetfilepath);
             base.OnXmlReadTag(e);
         }
 

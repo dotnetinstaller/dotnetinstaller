@@ -44,12 +44,8 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["command"] != null)
-                m_command = e.XmlElement.Attributes["command"].InnerText;
-
-            if (e.XmlElement.Attributes["command_silent"] != null)
-                m_command_silent = e.XmlElement.Attributes["command_silent"].InnerText;
-
+            ReadAttributeValue(e, "command", ref m_command);
+            ReadAttributeValue(e, "command_silent", ref m_command_silent);
             base.OnXmlReadTag(e);
         }
     }

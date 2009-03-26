@@ -152,23 +152,14 @@ namespace InstallerLib
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
             // lcid type
-            if (e.XmlElement.Attributes["lcid_type"] != null)
-                m_lcidtype = (LcidType)Enum.Parse(typeof(LcidType), e.XmlElement.Attributes["lcid_type"].InnerText, true);
-
+            ReadAttributeValue(e, "lcid_type", ref m_lcidtype);
             // processor and os filter architecture messages
-            if (e.XmlElement.Attributes["configuration_no_match_message"] != null)
-                m_configuration_no_match_message = e.XmlElement.Attributes["configuration_no_match_message"].InnerText;
-
+            ReadAttributeValue(e, "configuration_no_match_message", ref m_configuration_no_match_message);
             // silent install
-            if (e.XmlElement.Attributes["silent_install"] != null)
-                m_silent_install = bool.Parse(e.XmlElement.Attributes["silent_install"].InnerText);
-
+            ReadAttributeValue(e, "silent_install", ref m_silent_install);
             // version information
-            if (e.XmlElement.Attributes["fileversion"] != null)
-                m_fileversion = e.XmlElement.Attributes["fileversion"].InnerText;
-            if (e.XmlElement.Attributes["productversion"] != null)
-                m_productversion = e.XmlElement.Attributes["productversion"].InnerText;
-
+            ReadAttributeValue(e, "fileversion", ref m_fileversion);
+            ReadAttributeValue(e, "productversion", ref m_productversion);
             base.OnXmlReadTag(e);
         }
 

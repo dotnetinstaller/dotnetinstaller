@@ -163,6 +163,22 @@ namespace InstallerLib
             set { m_processor_architecture_filter = value; }
         }
 
+        private string m_status_installed;
+        [Description("The string used for indicating that this component is installed. (OPTIONAL)")]
+        public string status_installed
+        {
+            get { return m_status_installed; }
+            set { m_status_installed = value; }
+        }
+
+        private string m_status_notinstalled;
+        [Description("The string used for indicating that this component is not installed. (OPTIONAL)")]
+        public string status_notinstalled
+        {
+            get { return m_status_notinstalled; }
+            set { m_status_notinstalled = value; }
+        }
+
         #endregion
 
         protected void OnDescriptionChanged()
@@ -196,59 +212,30 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
             e.XmlWriter.WriteAttributeString("required", m_required.ToString());
             e.XmlWriter.WriteAttributeString("description", m_description);
-            //e.XmlWriter.WriteAttributeString("installmessage",m_installmessage);
             e.XmlWriter.WriteAttributeString("note", m_note);
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
+            e.XmlWriter.WriteAttributeString("status_installed", m_status_installed);
+            e.XmlWriter.WriteAttributeString("status_notinstalled", m_status_installed);
             base.OnXmlWriteTag(e);
         }
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["description"] != null)
-                m_description = e.XmlElement.Attributes["description"].InnerText;
-
-            if (e.XmlElement.Attributes["installcompletemessage"] != null)
-                m_installcompletemessage = e.XmlElement.Attributes["installcompletemessage"].InnerText;
-
-            //			if (e.XmlElement.Attributes["installmessage"]!=null)
-            //				m_installmessage = e.XmlElement.Attributes["installmessage"].InnerText;
-
-            if (e.XmlElement.Attributes["mustreboot"] != null)
-                m_mustreboot = bool.Parse(e.XmlElement.Attributes["mustreboot"].InnerText);
-
-            if (e.XmlElement.Attributes["reboot_required"] != null)
-                m_reboot_required = e.XmlElement.Attributes["reboot_required"].InnerText;
-
-            if (e.XmlElement.Attributes["must_reboot_required"] != null)
-                m_must_reboot_required = bool.Parse(e.XmlElement.Attributes["must_reboot_required"].InnerText);
-
-            if (e.XmlElement.Attributes["failed_exec_command_continue"] != null)
-                m_failed_exec_command_continue = e.XmlElement.Attributes["failed_exec_command_continue"].InnerText;
-
-            if (e.XmlElement.Attributes["allow_continue_on_error"] != null)
-                m_allow_continue_on_error = bool.Parse(e.XmlElement.Attributes["allow_continue_on_error"].InnerText);
-
-            if (e.XmlElement.Attributes["required"] != null)
-                m_required = bool.Parse(e.XmlElement.Attributes["required"].InnerText);
-
-            if (e.XmlElement.Attributes["os_filter_greater"] != null)
-                m_os_filter_greater = e.XmlElement.Attributes["os_filter_greater"].InnerText;
-
-            if (e.XmlElement.Attributes["os_filter_lcid"] != null)
-                m_os_filter_lcid = e.XmlElement.Attributes["os_filter_lcid"].InnerText;
-
-            if (e.XmlElement.Attributes["os_filter_smaller"] != null)
-                m_os_filter_smaller = e.XmlElement.Attributes["os_filter_smaller"].InnerText;
-
-            if (e.XmlElement.Attributes["note"] != null)
-                m_note = e.XmlElement.Attributes["note"].InnerText;
-
-            //			if (e.XmlElement.Attributes["type"]!=null)
-            //				m_type = e.XmlElement.Attributes["type"].InnerText;
-
-            if (e.XmlElement.Attributes["processor_architecture_filter"] != null)
-                m_processor_architecture_filter = e.XmlElement.Attributes["processor_architecture_filter"].InnerText;
-
+            ReadAttributeValue(e, "description", ref m_description);
+            ReadAttributeValue(e, "installcompletemessage", ref m_installcompletemessage);
+            ReadAttributeValue(e, "mustreboot", ref m_mustreboot);
+            ReadAttributeValue(e, "reboot_required", ref m_reboot_required);
+            ReadAttributeValue(e, "must_reboot_required", ref m_must_reboot_required);
+            ReadAttributeValue(e, "failed_exec_command_continue", ref m_failed_exec_command_continue);
+            ReadAttributeValue(e, "allow_continue_on_error", ref m_allow_continue_on_error);
+            ReadAttributeValue(e, "required", ref m_required);
+            ReadAttributeValue(e, "os_filter_greater", ref m_os_filter_greater);
+            ReadAttributeValue(e, "os_filter_lcid", ref m_os_filter_lcid);
+            ReadAttributeValue(e, "os_filter_smaller", ref m_os_filter_smaller);
+            ReadAttributeValue(e, "note", ref m_note);
+            ReadAttributeValue(e, "processor_architecture_filter", ref m_processor_architecture_filter);
+            ReadAttributeValue(e, "status_installed", ref m_status_installed);
+            ReadAttributeValue(e, "status_notinstalled", ref m_status_notinstalled);
             base.OnXmlReadTag(e);
         }
 

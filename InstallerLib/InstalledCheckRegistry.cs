@@ -91,27 +91,13 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["path"] != null)
-                m_path = e.XmlElement.Attributes["path"].InnerText;
-
-            if (e.XmlElement.Attributes["fieldname"] != null)
-                m_fieldname = e.XmlElement.Attributes["fieldname"].InnerText;
-
-            if (e.XmlElement.Attributes["fieldvalue"] != null)
-                m_fieldvalue = e.XmlElement.Attributes["fieldvalue"].InnerText;
-
-            if (e.XmlElement.Attributes["fieldtype"] != null)
-                m_fieldtype = (installcheck_registrytype)Enum.Parse(typeof(installcheck_registrytype), e.XmlElement.Attributes["fieldtype"].InnerText, true);
-
-            if (e.XmlElement.Attributes["comparison"] != null)
-                m_comparison = (installcheck_comparison)Enum.Parse(typeof(installcheck_comparison), e.XmlElement.Attributes["comparison"].InnerText, true);
-
-            if (e.XmlElement.Attributes["rootkey"] != null)
-                m_rootkey = (installcheck_rootkey)Enum.Parse(typeof(installcheck_rootkey), e.XmlElement.Attributes["rootkey"].InnerText, true);
-
-            if (e.XmlElement.Attributes["wowoption"] != null)
-                m_wowoption = (installcheck_wowoption)Enum.Parse(typeof(installcheck_wowoption), e.XmlElement.Attributes["wowoption"].InnerText, true);
-
+            ReadAttributeValue(e, "path", ref m_path);
+            ReadAttributeValue(e, "fieldname", ref m_fieldname);
+            ReadAttributeValue(e, "fieldvalue", ref m_fieldvalue);
+            ReadAttributeValue(e, "fieldtype", ref m_fieldtype);
+            ReadAttributeValue(e, "comparison", ref m_comparison);
+            ReadAttributeValue(e, "rootkey", ref m_rootkey);
+            ReadAttributeValue(e, "wowoption", ref m_wowoption);
             base.OnXmlReadTag(e);
         }
     }

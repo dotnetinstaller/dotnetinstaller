@@ -65,11 +65,8 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["name"] != null)
-                m_name = e.XmlElement.Attributes["name"].InnerText;
-
-            if (e.XmlElement.Attributes["value"] != null)
-                m_value = e.XmlElement.Attributes["value"].InnerText;
+            ReadAttributeValue(e, "name", ref m_name);
+            ReadAttributeValue(e, "value", ref m_value);
         }
 
         public override string ToString()

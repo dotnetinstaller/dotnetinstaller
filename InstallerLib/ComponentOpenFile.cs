@@ -39,12 +39,8 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["file"] != null)
-                m_file = e.XmlElement.Attributes["file"].InnerText;
-
-            if (e.XmlElement.Attributes["embed"] != null)
-                m_embed = bool.Parse(e.XmlElement.Attributes["embed"].InnerText);
-
+            ReadAttributeValue(e, "file", ref m_file);
+            ReadAttributeValue(e, "embed", ref m_embed);
             base.OnXmlReadTag(e);
         }
 

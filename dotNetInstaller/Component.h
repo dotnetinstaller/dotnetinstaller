@@ -24,6 +24,10 @@ public:
 	component_type type;
 	// component description
 	CString description;
+	// component status when installed
+	CString status_installed;
+	// component status when not installed
+	CString status_notinstalled;
 	// filtro che indica il minimo sistema operativo in cui lanciare il componente (estremo escluso)
 	CString os_filter_greater;
 	// filtro che indica il massimo sistema operativo in cui lanciare il componente (estremo escluso)

@@ -53,13 +53,8 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["type"] != null)
-                m_type = (InstalledCheckOperatorType)Enum.Parse(
-                    typeof(InstalledCheckOperatorType), e.XmlElement.Attributes["type"].InnerText);
-
-            if (e.XmlElement.Attributes["description"] != null)
-                m_description = e.XmlElement.Attributes["description"].InnerText;
-
+            ReadAttributeValue(e, "type", ref m_type);
+            ReadAttributeValue(e, "description", ref m_description);
             base.OnXmlReadTag(e);
         }
 

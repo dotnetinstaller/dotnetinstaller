@@ -59,18 +59,10 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (e.XmlElement.Attributes["package"] != null)
-                m_package = e.XmlElement.Attributes["package"].InnerText;
-
-            if (e.XmlElement.Attributes["cmdparameters"] != null)
-                m_cmdparameters = e.XmlElement.Attributes["cmdparameters"].InnerText;
-
-            if (e.XmlElement.Attributes["cmdparameters_silent"] != null)
-                m_cmdparameters_silent = e.XmlElement.Attributes["cmdparameters_silent"].InnerText;
-
-            if (e.XmlElement.Attributes["embed"] != null)
-                m_embed = bool.Parse(e.XmlElement.Attributes["embed"].InnerText);
-
+            ReadAttributeValue(e, "package", ref m_package);
+            ReadAttributeValue(e, "cmdparameters", ref m_cmdparameters);
+            ReadAttributeValue(e, "cmdparameters_silent", ref m_cmdparameters_silent);
+            ReadAttributeValue(e, "embed", ref m_embed);
             base.OnXmlReadTag(e);
         }
 
