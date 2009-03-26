@@ -64,7 +64,10 @@ void ConfigFile::LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog,
 
 	if (p_Configuration.Components.GetCount() <= 0)
 	{
-		throw std::exception("No download components found. Downloads node is empty.");
+        CString error;
+        error.Format(TEXT("Invalid configuration. Download dialog \"%s\" requires at least one download file."),
+			p_Configuration.Caption);
+		throw std::exception(DVLib::Tstring2string(error).c_str());
 	}
 }
 
