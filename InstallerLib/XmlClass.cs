@@ -30,7 +30,7 @@ namespace InstallerLib
         /// Get an array of physical files to embed
         /// </summary>
         /// <returns></returns>
-        EmbedFileCollection GetFiles();
+        EmbedFileCollection GetFiles(string supportdir);
         /// <summary>
         /// Children
         /// </summary>
@@ -145,12 +145,12 @@ namespace InstallerLib
             set { m_children = value; }
         }
 
-        public virtual EmbedFileCollection GetFiles()
+        public virtual EmbedFileCollection GetFiles(string supportdir)
         {
-            EmbedFileCollection c_files = new EmbedFileCollection();
+            EmbedFileCollection c_files = new EmbedFileCollection(supportdir);
             foreach (IXmlClass c in Children)
             {
-                c_files.AddRange(c.GetFiles());
+                c_files.AddRange(c.GetFiles(supportdir));
             }
             return c_files;
         }

@@ -207,6 +207,31 @@ namespace InstallerEditor
         }
     }
 
+    public class TreeNodeEmbedFolder : TreeNodeImpl
+    {
+        public TreeNodeEmbedFolder(EmbedFolder p_EmbedFolder)
+        {
+            base.ImageIndex = 15;
+            base.SelectedImageIndex = 15;
+            m_EmbedFolder = p_EmbedFolder;
+            base.Tag = p_EmbedFolder;
+            base.Text = p_EmbedFolder.Name;
+            p_EmbedFolder.SourceFilePathChanged += new EventHandler(p_EmbedFolder_SourceFolderPathChanged);
+        }
+
+        void p_EmbedFolder_SourceFolderPathChanged(object sender, EventArgs e)
+        {
+            Text = m_EmbedFolder.Name;
+        }
+
+        private EmbedFolder m_EmbedFolder;
+        public EmbedFolder EmbedFolder
+        {
+            get { return m_EmbedFolder; }
+            set { m_EmbedFolder = value; }
+        }
+    }
+
 	public class TreeNodeComponent : TreeNodeImpl
 	{
 		public TreeNodeComponent(Component p_Component)

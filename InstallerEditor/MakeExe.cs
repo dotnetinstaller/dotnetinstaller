@@ -177,6 +177,8 @@ namespace InstallerEditor
             // chkEmbed
             // 
             this.chkEmbed.AutoSize = true;
+            this.chkEmbed.Checked = true;
+            this.chkEmbed.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkEmbed.Location = new System.Drawing.Point(9, 189);
             this.chkEmbed.Name = "chkEmbed";
             this.chkEmbed.Size = new System.Drawing.Size(131, 17);

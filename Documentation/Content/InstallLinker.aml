@@ -31,6 +31,25 @@ InstallerLinker: dotNetInstaller Packager
         </para>
       </content>
     </section>
+    <section address="defaultvalues">
+      <title>Default Values</title>
+      <content>
+        <para>
+          <definitionTable>
+            <definedTerm>AppPath</definedTerm>
+            <definition>Current directory.</definition>
+            <definedTerm>Embed</definedTerm>
+            <definition>
+              Defaults to +, embed files. When set to -, EmbedFile and EmbedFolder components are ignored.
+              This helps debugging: you can build a bootstrapper without all embedded dependencies much faster and manually lay
+              out a support files directory with all dependencies extracted for testing.
+            </definition>
+            <definedTerm>Verbose</definedTerm>
+            <definition>Defaults to -, no verbose output.</definition>
+          </definitionTable>
+        </para>
+      </content>
+    </section>
     <section>
       <title>Return Codes</title>
       <content>

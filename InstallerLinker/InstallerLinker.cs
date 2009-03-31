@@ -29,9 +29,9 @@ namespace InstallerLinker
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("ERROR: {0}", ex.Message);
+                    i_args.WriteError(string.Format("ERROR: {0}", ex.Message));
 #if DEBUG
-                    Console.WriteLine(ex.StackTrace);
+                    i_args.WriteError(ex.StackTrace);
 #endif
                     rc = -2;
                 }

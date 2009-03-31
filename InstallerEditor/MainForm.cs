@@ -72,6 +72,7 @@ namespace InstallerEditor
         private ToolStripStatusLabel statusLabel;
         private MenuItem mnUsersGuide;
         private MenuItem menuItem10;
+        private MenuItem mnAddEmbedFolder;
         private System.ComponentModel.IContainer components;
 
         public MainForm()
@@ -149,6 +150,7 @@ namespace InstallerEditor
             this.mnAddInstalledCheckOperator = new System.Windows.Forms.MenuItem();
             this.menuItem8 = new System.Windows.Forms.MenuItem();
             this.mnAddEmbedFile = new System.Windows.Forms.MenuItem();
+            this.mnAddEmbedFolder = new System.Windows.Forms.MenuItem();
             this.mnMove = new System.Windows.Forms.MenuItem();
             this.mnMoveUp = new System.Windows.Forms.MenuItem();
             this.mnMoveDown = new System.Windows.Forms.MenuItem();
@@ -367,7 +369,8 @@ namespace InstallerEditor
             this.mnAddInstalledCheckFile,
             this.mnAddInstalledCheckOperator,
             this.menuItem8,
-            this.mnAddEmbedFile});
+            this.mnAddEmbedFile,
+            this.mnAddEmbedFolder});
             this.mnAdd.Text = "&Add";
             // 
             // mnAddSetupConfiguration
@@ -469,6 +472,12 @@ namespace InstallerEditor
             this.mnAddEmbedFile.Text = "&Embed File";
             this.mnAddEmbedFile.Click += new System.EventHandler(this.mnAddEmbedFile_Click);
             // 
+            // mnAddEmbedFolder
+            // 
+            this.mnAddEmbedFolder.Index = 17;
+            this.mnAddEmbedFolder.Text = "Embed Folder";
+            this.mnAddEmbedFolder.Click += new System.EventHandler(this.mnAddEmbedFolder_Click);
+            // 
             // mnMove
             // 
             this.mnMove.Index = 1;
@@ -536,6 +545,7 @@ namespace InstallerEditor
             this.imageList.Images.SetKeyName(12, "");
             this.imageList.Images.SetKeyName(13, "");
             this.imageList.Images.SetKeyName(14, "");
+            this.imageList.Images.SetKeyName(15, "");
             // 
             // mainSplitContainer
             // 
@@ -919,6 +929,7 @@ namespace InstallerEditor
                 mnAddMsiComponent.Enabled = (item.Children.CanAdd(typeof(ComponentMsi)));
                 mnAddOpenFileComponent.Enabled = (item.Children.CanAdd(typeof(ComponentOpenFile)));
                 mnAddEmbedFile.Enabled = (item.Children.CanAdd(typeof(EmbedFile)));
+                mnAddEmbedFolder.Enabled = (item.Children.CanAdd(typeof(EmbedFolder)));
                 mnAddDownloadDialog.Enabled = (item.Children.CanAdd(typeof(DownloadDialog)));
                 mnAddDownloadFile.Enabled = (item.Children.CanAdd(typeof(Download)));
                 mnAddInstalledCheckFile.Enabled = (item.Children.CanAdd(typeof(InstalledCheckFile)));
@@ -938,6 +949,7 @@ namespace InstallerEditor
                 mnAddMsiComponent.Enabled = false;
                 mnAddOpenFileComponent.Enabled = false;
                 mnAddEmbedFile.Enabled = false;
+                mnAddEmbedFolder.Enabled = false;
                 mnAddDownloadDialog.Enabled = false;
                 mnAddInstalledCheckFile.Enabled = false;
                 mnAddInstalledCheckRegistry.Enabled = false;
@@ -1032,6 +1044,13 @@ namespace InstallerEditor
             EmbedFile l_ComponentEmbedFile = new EmbedFile();
             parent.Children.Add(l_ComponentEmbedFile);
             return l_ComponentEmbedFile;
+        }
+
+        private EmbedFolder AddEmbedFolder(IXmlClass parent)
+        {
+            EmbedFolder l_ComponentEmbedFolder = new EmbedFolder();
+            parent.Children.Add(l_ComponentEmbedFolder);
+            return l_ComponentEmbedFolder;
         }
 
         private void mnAddSetupConfiguration_Click(object sender, System.EventArgs e)
@@ -1658,6 +1677,19 @@ namespace InstallerEditor
                 System.Diagnostics.Process process = new System.Diagnostics.Process();
                 process.StartInfo = p;
                 process.Start();
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
+        }
+
+        private void mnAddEmbedFolder_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                treeView.SelectedNode.Nodes.Add(new TreeNodeEmbedFolder(AddEmbedFolder(
+                    (IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {

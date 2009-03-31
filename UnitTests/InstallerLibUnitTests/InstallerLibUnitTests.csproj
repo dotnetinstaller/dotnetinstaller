@@ -40,9 +40,11 @@
     <Compile Include="..\..\Version\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ComponentEmbedFolderTests.cs" />
     <Compile Include="ComponentMsiTests.cs" />
     <Compile Include="ComponentOpenFileTests.cs" />
     <Compile Include="DownloadTests.cs" />
+    <Compile Include="ComponentEmbedFileTests.cs" />
     <Compile Include="SamplesUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

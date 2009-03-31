@@ -22,33 +22,16 @@ namespace InstallerLib
             set { m_file = value; }
         }
 
-        private bool m_embed = true;
-        [Description("Automatically embed file when building a packaged setup.")]
-        public bool embed
-        {
-            get { return m_embed; }
-            set { m_embed = value; }
-        }
-
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
             e.XmlWriter.WriteAttributeString("file", m_file);
-            e.XmlWriter.WriteAttributeString("embed", m_embed.ToString());
             base.OnXmlWriteTag(e);
         }
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
             ReadAttributeValue(e, "file", ref m_file);
-            ReadAttributeValue(e, "embed", ref m_embed);
             base.OnXmlReadTag(e);
-        }
-
-        public override EmbedFileCollection GetFiles()
-        {
-            EmbedFileCollection files = base.GetFiles();
-            if (embed) files.Add(new EmbedFile(m_file));
-            return files;
         }
     }
 }

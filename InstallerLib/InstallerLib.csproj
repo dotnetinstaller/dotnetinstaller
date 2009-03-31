@@ -66,6 +66,7 @@
     <Compile Include="Download.cs" />
     <Compile Include="DownloadDialog.cs" />
     <Compile Include="EmbedFileCollection.cs" />
+    <Compile Include="EmbedFolder.cs" />
     <Compile Include="FileAttribute.cs" />
     <Compile Include="FileAttributeCollection.cs" />
     <Compile Include="InstalledCheck.cs" />

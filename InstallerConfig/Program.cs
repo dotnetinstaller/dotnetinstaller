@@ -40,9 +40,9 @@ namespace InstallerConfig
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("ERROR: {0}", ex.Message);
+                    Console.Error.WriteLine("ERROR: {0}", ex.Message);
 #if DEBUG
-                    Console.WriteLine(ex.StackTrace);
+                    Console.Error.WriteLine(ex.StackTrace);
 #endif
                     rc = -2;
                 }

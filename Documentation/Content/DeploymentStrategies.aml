@@ -45,7 +45,7 @@
       <title>Mixed Strategies</title>
       <content>
         <para>
-          This strategy is a variation of the Web-Based scenario. It involves packaging configuration files
+          This strategy is a variation of the web-based scenario. It involves packaging configuration files
           in the dotNetInstaller resources but leaving some component setup files external. Frequently used components 
           may be embedded instead, while rarely required ones can be downloaded from your website.
         </para>

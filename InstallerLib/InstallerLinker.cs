@@ -78,18 +78,18 @@ namespace InstallerLib
                 CabLib.Compress cab = new CabLib.Compress();
 
                 string supportdir = string.IsNullOrEmpty(args.apppath)
-                    ? Path.GetDirectoryName(Path.GetFullPath(args.config))
+                    ? Environment.CurrentDirectory
                     : args.apppath;
 
                 args.WriteLine(string.Format("Compressing files from \"{0}\"", supportdir));
 
-                EmbedFileCollection c_files = configfile.GetFiles();
+                EmbedFileCollection c_files = configfile.GetFiles(supportdir);
                 if (args.embedFiles != null)
                 {
                     foreach (string filename in args.embedFiles)
                     {
                         string fullpath = Path.Combine(args.apppath, filename);
-                        c_files.Add(new EmbedFile(fullpath, filename));
+                        c_files.Add(new EmbedFilePair(fullpath, filename));
                     }
                 }
 
@@ -97,31 +97,13 @@ namespace InstallerLib
                 {
                     foreach (string folder in args.embedFolders)
                     {
-                        string directory = Path.GetDirectoryName(folder);
-                        string flags = Path.GetFileName(folder);
-                        if (!(flags.Contains("?") || flags.Contains("*")))
-                        {
-                            directory = folder;
-                            flags = "*.*";
-                        }
-
-                        directory = directory.TrimEnd("\\".ToCharArray());
-
-                        string[] folderfiles = Directory.GetFiles(directory, flags, SearchOption.AllDirectories);
-                        foreach (string folderfile in folderfiles)
-                        {
-                            string relativefolderfile = folderfile.Substring(directory.Length + 1);
-                            c_files.Add(new EmbedFile(Path.GetFullPath(folderfile), relativefolderfile));
-                        }
+                        c_files.AddDirectory(folder);
                     }
                 }
 
-                ArrayList files = c_files.GetFilePairs(supportdir);
-                foreach (string[] filepair in files)
-                {
-                    args.WriteLine(string.Format(" {0} ({1})", filepair[1], filepair[0]));
-                }
+                c_files.CheckFilesExist(args);
 
+                ArrayList files = c_files.GetFilePairs();
                 string cabname = Path.Combine(Path.GetDirectoryName(args.output), "Setup.cab");
                 args.WriteLine(string.Format("Writing \"{0}\"", cabname));
                 cab.CompressFileList(files, cabname, true, 0);

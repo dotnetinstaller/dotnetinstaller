@@ -3,10 +3,10 @@
   <developerHowToDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        In certain deployment scenarios, it may be desirable to distribute an installation package as a single, self-extracting 
-        executable. dotNetInstaller supports embedding dependencies and producing a stand-alone packaged setup.exe. This is 
-        accomplished by CAB-ing all dependencies into a single Setup.cab, embedding the result into your setup.exe and extracting 
-        its contents at runtime. dotNetInstaller is also capable of deleting extracted temporary files upon completion. No third-party 
+        In certain deployment scenarios, it may be desirable to distribute an installation package as a single, self-extracting
+        executable. dotNetInstaller supports embedding dependencies and producing a stand-alone packaged setup.exe. This is
+        accomplished by CAB-ing all dependencies into a single Setup.cab, embedding the result into your setup.exe and extracting
+        its contents at runtime. dotNetInstaller is also capable of deleting extracted temporary files upon completion. No third-party
         packaging/zipping technology is required.
       </para>
     </introduction>
@@ -16,49 +16,38 @@
         <step>
           <content>
             <para>
-              In order to embed dependencies you must specify <system>/Embed</system> on the command line of 
-              InstallerLinker.exe or check the appropriate option in the InstallerEditor <ui>Make Exe</ui> dialog.
-            </para>
-          </content>
-        </step>
-        <step>
-          <content>
-            <para>
-              Ensure that your dependency files are embedded. This is not automatic except for <literal>Embed File</literal> components, 
-              <literal>msi</literal>, <literal>openfile</literal> components and components with a <literal>Download File</literal>
-              subcomponent with the <literal>embed</literal> option set to <literal>true</literal> (this is the default).
+              In order to embed dependencies you must add explicit <literal>EmbedFile</literal> or <literal>EmbedFolder</literal>
+              components to the bootstrapper configuration. No other automatic embedding, such as from <literal>msi</literal>,
+              <literal>openfile</literal> or <literal>download</literal> subcomponents is performed.
             </para>
             <para>
-              The simplest way to specify an individual file to be embedded is by using the <literal>EmbedFile</literal> subcomponent. 
-              The <literal>sourcefilepath</literal> is the location of the file on your file system. The <literal>targetfilepath</literal>
-              is a relative destination path under <localUri>#CABPATH</localUri> of the extracted file during installation.
+              The <literal>sourcefilepath</literal> of a <literal>EmbedFile</literal> subcomponent is the location of the file on
+              your file system. The <literal>targetfilepath</literal> is a relative destination path, including the filename, under 
+              <localUri>#CABPATH</localUri> of the extracted file during installation. You may omit <literal>targetfilepath</literal>
+              to extract files under <localUri>#CABPATH</localUri>. The <literal>sourcefilepath</literal> may be a relative location
+              to the value of <system>/AppPath</system> specified on the command line of the installer linker, which in turn
+              defaults to the current directory from which the linker command is invoked.
             </para>
             <para>
-              The embedding process automatically embeds files specified by the Msi component. The package value for Setup.msi should 
-              be set to <localUri>#CABPATH\SupportFiles\Setup.msi</localUri>.
-            </para>
-            <para>
-              The embedding process automatically embeds files specified by the <literal>Download File</literal> component. The 
-              Download File should have a destinationpath set to <localUri>#CABPATH\SupportFiles</localUri>. Set <literal>alwaysdownload</literal>
-              to false and ignore <literal>sourceurl</literal>.
-            </para>
-            <para>
-              Same rules apply for all automatically embedded files. For example, if msxml.msi is in 
-              <localUri>SupportFiles\MSXML\English\msxml.msi</localUri>, set <literal>destinationpath</literal> of a Download File 
-              component and package for an Msi component to <localUri>#CABPATH\SupportFiles\MSXML\English</localUri>. 
-              This means that at build time, InstallerLinker must find <localUri>SupportFiles\MSXML\English\msxml.msi</localUri> 
-              under the current directory or the value specified by <system>/AppPath</system>.
+              The <literal>sourcefolderpath</literal> of a <literal>EmbedFolder</literal> subcomponent is the location of the folder on
+              your file system. The <literal>targetfolderpath</literal> is a relative destination path under
+              <localUri>#CABPATH</localUri> of the extracted folder during installation. You may omit <literal>targetfolderpath</literal>
+              to extract folders under <localUri>#CABPATH</localUri>. You may specify additional wildcard options
+              using special * and ? characters in <literal>sourcefolderpath</literal>. The latter can also be a relative location
+              to the value of <system>/AppPath</system> specified on the command line of the installer linker, which in turn
+              defaults to the current directory from which the linker command is invoked.
             </para>
             <alert class="note">
               <para>
-                You may use #TEMPPATH everywhere instead of #CABPATH. #CABPATH defaults to #TEMPPATH\#GUID. If you would like 
-                temporary files to be deleted after setup completes, use #CABPATH instead of #TEMPPATH and set the 
-                <literal>cab_path_autodelete</literal> configuration option.
+                You may use <localUri>#TEMPPATH</localUri> everywhere instead of <localUri>#CABPATH</localUri>. 
+                <localUri>#CABPATH</localUri> defaults to <localUri>#TEMPPATH\#GUID</localUri>. If you would like
+                temporary files to be deleted after setup completes, use <localUri>#CABPATH</localUri> instead of 
+                <localUri>#TEMPPATH</localUri> and set the <literal>cab_path_autodelete</literal> configuration option.
               </para>
             </alert>
             <alert class="note">
               <para>
-                When enabling logging, make sure not to output the log file into #CABPATH. This would prevent the #CABPATH directory from 
+                When enabling logging, make sure not to output the log file into #CABPATH. This would prevent the #CABPATH directory from
                 being deleted since the installer still attempts to write to the log file.
               </para>
             </alert>
@@ -67,20 +56,21 @@
         <step>
           <content>
             <para>
-              Embed individual files via the <application>InstallLinker.exe command</application> line with <system>/EmbedFile</system> and entire folders with
-              their subfolders with <system>/EmbedFolder</system>. The latter lets you optionally specify a flag, eg.
-              <system>/EmbedFolder:Path\*.msi</system> to embed all .msi files in all subfolders. Note that with
-              <system>/EmbedFolder</system> files are extracted mirroring the structure under the folder specified.
-              For example, if <system>/EmbedFolder:c:\files</system> embeds <localUri>c:\files\folder1\setup.msi</localUri>,
-              the extracted setup.msi appears under <localUri>folder1\setup.msi</localUri>.
+              You may optionally embed individual files via the <application>InstallLinker.exe</application> command line with 
+              <system>/EmbedFile</system> and entire folders with their subfolders with <system>/EmbedFolder</system>. The latter also 
+              lets you optionally specify a flag, eg. <system>/EmbedFolder:Path\*.msi</system> to embed all .msi files in all 
+              subfolders. Note that with <system>/EmbedFolder</system> files are extracted mirroring the structure under the folder 
+              specified. For example, if <system>/EmbedFolder:c:\files</system> embeds <localUri>c:\files\folder1\setup.msi</localUri>,
+              the extracted setup.msi appears under <localUri>folder1\setup.msi</localUri>. In order to define a different extraction
+              structure, use the built-in <literal>EmbedFolder</literal> sub-component.
             </para>
           </content>
         </step>
         <step>
           <content>
             <para>
-              Test which files have been embedded. Run your <command>Setup.exe <system>/ExtractCab</system></command>. 
-              This will output all CAB contents in the current folder.
+              Link your setup with <system>InstallLinker.exe</system> and test which files have been embedded. Run your 
+              <command>Setup.exe <system>/ExtractCab</system></command>. This will output all CAB contents in the current folder.
             </para>
           </content>
         </step>

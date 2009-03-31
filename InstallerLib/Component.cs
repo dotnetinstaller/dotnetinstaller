@@ -15,6 +15,7 @@ namespace InstallerLib
     [XmlChild(typeof(InstalledCheckOperator))]
     [XmlChild(typeof(DownloadDialog), Max = 1)]
     [XmlChild(typeof(EmbedFile))]
+    [XmlChild(typeof(EmbedFolder))]
     public abstract class Component : XmlClassImpl
     {
         public Component(string p_type)

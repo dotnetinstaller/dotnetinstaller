@@ -42,7 +42,7 @@ namespace InstallerLib
         }
 
         private string m_destinationpath;
-        [Description("The complete destination path where the application copy the sourceurl file. Is recommended to use the TEMP path for destination like this: '#TEMPPATH\\APPLICATION_NAME' . Can contains path constant (see Help->Path Constant). (REQUIRED)")]
+        [Description("The complete destination path where the application downloads the file. Using #TEMPPATH is recommended. (REQUIRED)")]
         public string destinationpath
         {
             get { return m_destinationpath; }
@@ -50,7 +50,7 @@ namespace InstallerLib
         }
 
         private string m_destinationfilename;
-        [Description("New name of the downloaded file. Leave this value empty to use the same filename of the original filename. (OPTIONAL)")]
+        [Description("The destination filename or blank to keep the original filename. (OPTIONAL)")]
         public string destinationfilename
         {
             get { return m_destinationfilename; }
@@ -64,14 +64,6 @@ namespace InstallerLib
         {
             get { return m_alwaysdownload; }
             set { m_alwaysdownload = value; }
-        }
-
-        private bool m_embed = true;
-        [Description("Automatically embed package referenced by this download when building a packaged setup.")]
-        public bool embed
-        {
-            get { return m_embed; }
-            set { m_embed = value; }
         }
 
         #region IXmlClass Members
@@ -88,7 +80,6 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("destinationpath", m_destinationpath);
             e.XmlWriter.WriteAttributeString("destinationfilename", m_destinationfilename);
             e.XmlWriter.WriteAttributeString("alwaysdownload", m_alwaysdownload.ToString());
-            e.XmlWriter.WriteAttributeString("embed", m_embed.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -99,7 +90,6 @@ namespace InstallerLib
             ReadAttributeValue(e, "destinationpath", ref m_destinationpath);
             ReadAttributeValue(e, "sourceurl", ref m_sourceurl);
             ReadAttributeValue(e, "alwaysdownload", ref m_alwaysdownload);
-            ReadAttributeValue(e, "embed", ref m_embed);
             base.OnXmlReadTag(e);
         }
 
@@ -119,16 +109,5 @@ namespace InstallerLib
         }
 
         public event EventHandler ComponentNameChanged;
-
-        public override EmbedFileCollection GetFiles()
-        {
-            EmbedFileCollection files = base.GetFiles();
-            if (embed)
-            {
-                string filename = Path.Combine(destinationpath, destinationfilename);
-                files.Add(new EmbedFile(filename));
-            }
-            return files;
-        }
     }
 }

@@ -15,7 +15,22 @@ code { color: #b22222; font-family: Courier New; }
         <li>First release off <a href="http://www.codeplex.com/dotnetinstaller">CodePlex</a>.</li>
         <li>New MSI installer. You can use the installer or a binary distribution package.</li>
         <li>New, largely rewritten, CHM documentation.</li>
-        <li>Added editor and linker support for Windows Vista/XP 64.</li>
+        <li>Changed behavior of file embedding to explicit: disabled automatic embedding of
+            files from <code>msi</code>, <code>download</code> and <code>openfile</code> components,
+            set <code>/Embed</code> to <code>True</code> by default.</li>
+        <li>Added an <span style="color: #b22222; font-family: Courier New">EmbedFolder</span>
+            configuration component to embed directories and subdirectories with an optional
+            wildcard and configurable destination.</li>
+        <li>Added parity between <code>EmbedFolder</code> and <code>EmbedFile</code> components
+            which can be now specified in both the configuration and on the command line. </li>
+        <li>InstallerLinker: embedded files that cannot be found are reported as errors with
+            their full paths.</li>
+        <li>InstallerLinker: Changed default value of <code>/AppPath</code>, now defaults to
+            the current directory and not to the location of the configuration.xml.</li>
+        <li>dotNetInstaller: embedded CABs are now segmented into 32-megabyte chunks. This reduces
+            the minimum required memory for installers containing embedded CABs to about 48Mb,
+            reduces paging and improves performance during extraction of large embedded CABs.
+            Added editor and linker support for Windows Vista/XP 64. </li>
         <li>Added OS filter identifiers for Windows Server 2008. </li>
         <li>Added <code>InstalledCheckOperator</code> of 'And', 'Or' and 'Not' types that combine
             results from one or more <code>InstalledCheck</code> and <code>InstalledCheckOperator</code>
@@ -23,10 +38,6 @@ code { color: #b22222; font-family: Courier New; }
         <li>dotNetInstaller: Added <code>/componentArgs "component description":"parameters"</code>
             to dotNetInstaller.exe command line. This enables passing additional parameters
             to specific components declared in configuration.xml. </li>
-        <li>dotNetInstaller: Embedded CABs are now segmented into 32-megabyte chunks. This reduces
-            the minimum required memory for installers containing embedded CABs to about 48Mb,
-            reduces paging and improves performance during extraction of large embedded CABs.
-        </li>
         <li>InstallerEditor: added support for configuration file XML comments and a text box
             where the developer can edit a comment, saved as an xml comment above the selected
             node. </li>

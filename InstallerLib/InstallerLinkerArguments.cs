@@ -16,7 +16,7 @@ namespace InstallerLib
         public string banner;
         [Argument(ArgumentType.Required, HelpText = "XML configuration file", LongName = "Configuration", ShortName = "c")]
         public string config;
-        [Argument(ArgumentType.AtMostOnce, HelpText = "Embed support files", LongName = "Embed", ShortName = "e")]
+        [Argument(ArgumentType.AtMostOnce, HelpText = "Embed support files", LongName = "Embed", ShortName = "e", DefaultValue = true)]
         public bool embed;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Location of support files for embedding", LongName = "AppPath", ShortName = "a")]
         public string apppath;
@@ -74,6 +74,11 @@ namespace InstallerLib
             {
                 Console.WriteLine(s);
             }
+        }
+
+        public void WriteError(string s)
+        {
+            Console.Error.WriteLine(s);
         }
     }
 }

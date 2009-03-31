@@ -2,7 +2,6 @@ using System;
 using System.Xml;
 using System.ComponentModel;
 using System.IO;
-using System.Collections.Generic;
 
 namespace InstallerLib
 {
@@ -10,10 +9,10 @@ namespace InstallerLib
     /// An embedded file.
     /// </summary>
     [XmlNoChildren]
-    public class EmbedFile : XmlClassImpl
+    public class EmbedFolder : XmlClassImpl
     {
-        public EmbedFile()
-            : this("EmbedFile")
+        public EmbedFolder()
+            : this("EmbedFolder")
         {
 
         }
@@ -23,47 +22,47 @@ namespace InstallerLib
         {
             get
             {
-                return Path.GetFileName(sourcefilepath);
+                return Path.GetFileName(sourcefolderpath);
             }
         }
 
-        public EmbedFile(string path)
+        public EmbedFolder(string path)
         {
-            m_sourcefilepath = path;
+            m_sourcefolderpath = path;
         }
 
-        public EmbedFile(string sourcepath, string targetpath)
+        public EmbedFolder(string sourcepath, string targetpath)
         {
-            m_sourcefilepath = sourcepath;
-            m_targetfilepath = targetpath;
+            m_sourcefolderpath = sourcepath;
+            m_targetfolderpath = targetpath;
         }
 
-        private string m_sourcefilepath;
-        [Description("The complete path where the file is located. Is recommended to use the APPPATH path: '#APPPATH\\Setup.msi'. Can contains path constants (see Help->Path Constant). (REQUIRED)")]
-        public string sourcefilepath
+        private string m_sourcefolderpath;
+        [Description("The complete or relative path where the file is located. Can contains path constants (see Help->Path Constant). (REQUIRED)")]
+        public string sourcefolderpath
         {
             get
             {
-                return m_sourcefilepath;
+                return m_sourcefolderpath;
             }
             set
             {
-                m_sourcefilepath = value;
+                m_sourcefolderpath = value;
                 OnSourceFilePathChanged(EventArgs.Empty);
             }
         }
 
-        private string m_targetfilepath;
+        private string m_targetfolderpath;
         [Description("The relative path under #CABPATH where the file is going to be extracted. (REQUIRED)")]
-        public string targetfilepath
+        public string targetfolderpath
         {
             get
             {
-                return m_targetfilepath;
+                return m_targetfolderpath;
             }
             set
             {
-                m_targetfilepath = value;
+                m_targetfolderpath = value;
             }
         }
 
@@ -78,15 +77,15 @@ namespace InstallerLib
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
-            e.XmlWriter.WriteAttributeString("sourcefilepath", m_sourcefilepath);
-            e.XmlWriter.WriteAttributeString("targetfilepath", m_targetfilepath);
+            e.XmlWriter.WriteAttributeString("sourcefolderpath", m_sourcefolderpath);
+            e.XmlWriter.WriteAttributeString("targetfolderpath", m_targetfolderpath);
             base.OnXmlWriteTag(e);
         }
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            ReadAttributeValue(e, "sourcefilepath", ref m_sourcefilepath);
-            ReadAttributeValue(e, "targetfilepath", ref m_targetfilepath);
+            ReadAttributeValue(e, "sourcefolderpath", ref m_sourcefolderpath);
+            ReadAttributeValue(e, "targetfolderpath", ref m_targetfolderpath);
             base.OnXmlReadTag(e);
         }
 
@@ -98,20 +97,20 @@ namespace InstallerLib
             }
         }
 
-        public static EmbedFile CreateFromXml(XmlElement element)
+        public static EmbedFolder CreateFromXml(XmlElement element)
         {
-            EmbedFile result = new EmbedFile();
+            EmbedFolder result = new EmbedFolder();
             result.FromXml(element);
             return result;
         }
 
         public event EventHandler SourceFilePathChanged;
 
-        public override EmbedFileCollection GetFiles(string supportdir)
+        public override EmbedFileCollection GetFiles(string supportfiles)
         {
-            EmbedFileCollection files = base.GetFiles(supportdir);
-            files.Add(sourcefilepath, targetfilepath);
-            return files;
+            EmbedFileCollection fileCollection = base.GetFiles(supportfiles);
+            fileCollection.AddDirectory(sourcefolderpath, targetfolderpath);
+            return fileCollection;
         }
     }
 }
