@@ -1,7 +1,6 @@
 #pragma once
 
 #include "InstallerSetting.h"
-#include "DownloadDialogSupport.h"
 #include "InstallerTypes.h"
 
 class ConfigFile
@@ -17,7 +16,7 @@ private:
     void LoadXmlSettings();
     bool LoadReferenceConfigNode(TiXmlElement * p_Node, CWnd * p_Parent);
     void LoadConfigFile(const CString & p_FileName, CWnd * p_Parent);
-    void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::DownloadGroupConfiguration & p_Configuration);
+    void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DownloadGroupConfiguration & p_Configuration);
     void LoadInstallConfigNode(TiXmlElement * p_Node);
     void LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additional_Config);
     void SaveAppState(configSetting & p_Config);

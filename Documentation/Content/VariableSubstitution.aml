@@ -48,6 +48,10 @@
               or failure. Store temporary files in #CABPATH if you want them to be auto-deleted (eg. CAB files) or #TEMPPATH (eg. logs)
               otherwise.
             </definition>
+            <definedTerm>#PID</definedTerm>
+            <definition>
+              Current process ID. Provides a shorter alternative to #GUID for file locations.
+            </definition>
           </definitionTable>
         </para>
       </content>

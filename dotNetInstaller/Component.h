@@ -1,9 +1,9 @@
 #pragma once
 
+#include "DownloadDialog.h"
+
 class InstalledCheck;
 class InstalledCheckOperator;
-
-#include "DownloadDialogSupport.h"
 
 enum component_type
 {
@@ -55,7 +55,7 @@ public:
 	// classi per gestire la verifica se il componente è installato o no
 	std::vector<InstalledCheck*> installedchecks;
 	// informazioni sull'eventuale download dei componenti (fa riferimento al nodo downloaddialog all'interno di Component, se non è presente non viene scaricato nessun componente)
-	DVLib::DownloadGroupConfiguration DownloadDialogConfiguration;
+	DownloadGroupConfiguration DownloadDialogConfiguration;
 	// indica se il componente contiene o meno dei componenti da scaricare (in pratica dice se il nodo downloaddialog è presente o no)
 	bool ContainsDownloadComponent;
 	// scarica gli eventuali componenti necesari e restituisce true se il download ha avuto successo

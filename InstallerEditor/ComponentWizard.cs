@@ -326,7 +326,7 @@ namespace InstallerEditor
 				l_InstallCheck.path = "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v1.1.4322";
 
 				DownloadDialog l_downloadDlg = new DownloadDialog(l_ComponentName);
-				l_downloadDlg.autostartdownload = false;
+				l_downloadDlg.autostartdownload = true;
 				Download l_Download = new Download("dotNET1_1_en");
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";
@@ -397,7 +397,7 @@ namespace InstallerEditor
 				l_InstallCheck.path = "SOFTWARE\\Microsoft\\DataAccess";
 
 				DownloadDialog l_downloadDlg = new DownloadDialog(l_ComponentName);
-				l_downloadDlg.autostartdownload = false;
+				l_downloadDlg.autostartdownload = true;
 				Download l_Download = new Download("MDAC27Sp1");
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";
@@ -445,7 +445,7 @@ namespace InstallerEditor
 				l_InstallCheck.path = "SOFTWARE\\Microsoft\\DataAccess";
 
 				DownloadDialog l_downloadDlg = new DownloadDialog(l_ComponentName);
-				l_downloadDlg.autostartdownload = false;
+				l_downloadDlg.autostartdownload = true;
 				Download l_Download = new Download("MDAC28");
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";
@@ -502,7 +502,7 @@ namespace InstallerEditor
 				l_InstallCheck.path = "SOFTWARE\\Microsoft\\Internet Explorer";
 
 				DownloadDialog l_downloadDlg = new DownloadDialog(l_ComponentName);
-				l_downloadDlg.autostartdownload = false;
+				l_downloadDlg.autostartdownload = true;
 				Download l_Download = new Download("IE6SP1");
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";
@@ -561,7 +561,7 @@ namespace InstallerEditor
 												string osNote)
 			{
 				DownloadDialog l_downloadDlg = new DownloadDialog(m_ComponentName);
-				l_downloadDlg.autostartdownload = false;
+				l_downloadDlg.autostartdownload = true;
 				Download l_Download = new Download("JET4Sp8");
 				l_Download.componentname = m_ComponentName;
 				l_Download.destinationfilename = "";
@@ -616,7 +616,7 @@ namespace InstallerEditor
 				//<component os_filter_greater="29" os_filter_smaller="40" os_filter_lcid="" type="cmd" installcompletemessage="" mustreboot="False" description="Windows NT 4 Service Pack 6a English" installmessage="Click Next to install Service Pack 6a for Windows NT4 (English)" note="" command="&quot;#APPPATH\SupportFiles\ServicePack\NT4_SP6a_English\sp6i386.exe&quot;" />
 
 				DownloadDialog l_downloadDlg = new DownloadDialog(l_ComponentName);
-				l_downloadDlg.autostartdownload = false;
+				l_downloadDlg.autostartdownload = true;
 				Download l_Download = new Download("NT4Sp6a");
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";
@@ -656,7 +656,7 @@ namespace InstallerEditor
 				string l_ComponentName = "Windows 2000 Service Pack 4 English";
 
 				DownloadDialog l_downloadDlg = new DownloadDialog(l_ComponentName);
-				l_downloadDlg.autostartdownload = false;
+				l_downloadDlg.autostartdownload = true;
 				Download l_Download = new Download("Win2000Sp4");
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";
@@ -697,7 +697,7 @@ namespace InstallerEditor
 				string l_ComponentName = "Windows 2000 Service Pack 4 English";
 
 				DownloadDialog l_downloadDlg = new DownloadDialog(l_ComponentName);
-				l_downloadDlg.autostartdownload = false;
+				l_downloadDlg.autostartdownload = true;
 				Download l_Download = new Download("Win2000Sp4");
 				l_Download.componentname = l_ComponentName;
 				l_Download.destinationfilename = "";

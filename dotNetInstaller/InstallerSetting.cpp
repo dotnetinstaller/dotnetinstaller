@@ -70,6 +70,7 @@ CString InstallerSetting::ValidatePath(LPCTSTR p_Path)
     tmp.Replace(c_SYSTEMWINDOWSPATH, l_SystemWindowsPath);
     tmp.Replace(c_TEMPPATH, DVLib::GetTempPathCustom());
     tmp.Replace(c_GUID, DVLib::GetSessionGUID());
+	tmp.Replace(c_PID, DVLib::FormatNumber(::GetCurrentProcessId()));
     return tmp;
 }
 

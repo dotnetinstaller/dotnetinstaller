@@ -66,7 +66,7 @@ namespace InstallerLib
             set { m_dialog_message = value; }
         }
 
-        private bool m_autostartdownload;
+        private bool m_autostartdownload = true;
         [Description("True to start the download without user interaction, False to let the user press the 'Start' button. (REQUIRED)")]
         public bool autostartdownload
         {

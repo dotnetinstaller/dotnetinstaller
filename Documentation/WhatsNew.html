@@ -84,13 +84,17 @@ code { color: #b22222; font-family: Courier New; }
         <li>Added <code>configuration_no_match_message</code> that displays as error when no
             configuration matching operating system, locale or processor architecture filters
             has been found. Removed unused <code>os_filter_not_match_message</code> and <code>processor_architecture_filter_not_match_message</code>.</li>
-        <li>Added <code>#SYSTEMWINDOWSPATH</code> constant resolved in paths.</li>
+        <li>Added <code>#SYSTEMWINDOWSPATH</code> constant resolved to system Windows directory in paths.</li>
+        <li>Added <code>#PID</code> constant resolved to process ID in paths.</li>
         <li>Added <code>embed</code> option to msi, openfile and download (sub)components to
             disable automatic file embedding.</li>
         <li>Added <code>lcidtype</code> option to the configuration file that can be set to
             the method to use to obtain the current LCID used to match a configuration. Now
             supports user.exe (KB181604), system and user methods.</li>
         <li>Expanded <code>status_installed</code> and <code>status_notinstalled</code> per-component.</li>
+        <li>Download dialog <code>autostartdownload</code> default value is changed to <code>true</code>.</li>
+        <li>Bug: cancel has no effect on the download dialog before download starts.</li>
+        <li>Bug: download dialog will no longer appear when download is not required.</li>
     </ul>
     <h3>
         1.5 (25 Oct 2008)</h3>

@@ -229,7 +229,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DownloadComponent.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DownloadDialog.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DownloadGroupConfiguration.cpp"
 				>
 			</File>
 			<File
@@ -359,7 +367,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DownloadCallback.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DownloadComponent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DownloadComponentInfo.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DownloadDialog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DownloadGroupConfiguration.h"
 				>
 			</File>
 			<File
@@ -482,14 +506,6 @@
 			>
 			<File
 				RelativePath=".\Tools\AppPath.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\DownloadDialogSupport.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\DownloadDialogSupport.h"
 				>
 			</File>
 			<File

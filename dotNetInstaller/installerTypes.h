@@ -11,6 +11,7 @@
 #define c_TEMPPATH TEXT("#TEMPPATH")
 #define c_CABPATH TEXT("#CABPATH")
 #define c_GUID TEXT("#GUID")
+#define c_PID TEXT("#PID")
 
 #include "InstallerLauncher.h"
 

@@ -27,18 +27,14 @@ void ConfigFile::Load()
 	LoadConfigsNode(m_XmlDocument.FirstChildElement(), false);
 }
 
-void ConfigFile::LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DVLib::DownloadGroupConfiguration & p_Configuration)
+void ConfigFile::LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DownloadGroupConfiguration & p_Configuration)
 {
-	ApplicationLog.Write( TEXT("Start reading download attributes") );
-
 	p_Configuration.Caption = p_Node_downloaddialog->AttributeT("dialog_caption").data();
 	p_Configuration.HelpMessage = p_Node_downloaddialog->AttributeT("dialog_message").data();
 	p_Configuration.HelpMessageDownloading = p_Node_downloaddialog->AttributeT("dialog_message_downloading").data();
 	p_Configuration.ButtonStartCaption = p_Node_downloaddialog->AttributeT("buttonstart_caption").data();
 	p_Configuration.ButtonCancelCaption = p_Node_downloaddialog->AttributeT("buttoncancel_caption").data();
 	p_Configuration.AutoStartDownload = ConvBoolString(p_Node_downloaddialog->Attribute("autostartdownload"), false);
-
-	ApplicationLog.Write( TEXT("End reading download attributes") );
 
 	p_Configuration.Components.RemoveAll();
 
@@ -50,7 +46,7 @@ void ConfigFile::LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog,
 		{
 			ApplicationLog.Write( TEXT("--Reading Download component"));
 
-			DVLib::DownloadComponentInfo l_DownloadComp;
+			DownloadComponentInfo l_DownloadComp;
 			l_DownloadComp.ComponentName = l_Node_download->AttributeT("componentname").data();
 			l_DownloadComp.SourceURL = m_Setting.ValidatePath(l_Node_download->AttributeT("sourceurl").data());
 			l_DownloadComp.DestinationPath = m_Setting.ValidatePath(l_Node_download->AttributeT("destinationpath").data());
@@ -289,10 +285,10 @@ bool ConfigFile::LoadReferenceConfigNode(TiXmlElement * p_Node, CWnd * p_Parent)
 	bool l_bSuccess = false;
 	TiXmlElement * l_NodeDownloadDialog = p_Node->FirstChildElement("downloaddialog");
 
-	DVLib::DownloadGroupConfiguration l_DownloadConfig;
+	DownloadGroupConfiguration l_DownloadConfig;
 	LoadDownloadConfiguration(l_NodeDownloadDialog, l_DownloadConfig);
 
-    l_bSuccess = DVLib::RunDownloadDialog(l_DownloadConfig, p_Parent);
+    l_bSuccess = l_DownloadConfig.Run(p_Parent);
 	if (l_bSuccess)
 	{
 		TiXmlElement * l_Node_configfile = p_Node->FirstChildElement("configfile");
