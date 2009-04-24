@@ -11,14 +11,14 @@ private:
 	InstallerSetting m_Setting;
 public:
     ConfigFile();
-    void Load();
+    int Load();
 private:
     void LoadXmlSettings();
     bool LoadReferenceConfigNode(TiXmlElement * p_Node, CWnd * p_Parent);
     void LoadConfigFile(const CString & p_FileName, CWnd * p_Parent);
     void LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DownloadGroupConfiguration & p_Configuration);
     void LoadInstallConfigNode(TiXmlElement * p_Node);
-    void LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additional_Config);
+    int LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additional_Config);
     void SaveAppState(configSetting & p_Config);
     void RestoreAppState(configSetting & p_Config);
     bool CheckConfigFilter(const CString & p_Config_LCID, const CString & p_os_filter_greater, const CString & p_os_filter_smaller, const CString & p_processor_architecture_filter);

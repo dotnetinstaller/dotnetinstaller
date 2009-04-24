@@ -34,6 +34,7 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 private:
+	int m_recorded_error;	
 	bool m_additional_config;
 	InstallerSetting m_Settings;
     void ExtractCab();
@@ -41,6 +42,9 @@ private:
     // move a window to the coordinates defined by a rectangle with defaults
     static bool MoveWindow(CWnd& dlg, const WidgetPosition& pos);
 public:
+	inline int GetRecordedError() const { return m_recorded_error; }
+	void RecordError(int error = -1);
+	void ClearError();
 	CButton m_btnSkip;
 	CButton m_btnInstall;
 	CButton m_btnCancel;

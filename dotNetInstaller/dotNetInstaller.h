@@ -1,6 +1,3 @@
-// dotNetInstaller.h : file di intestazione principale per l'applicazione PROJECT_NAME
-//
-
 #pragma once
 
 #ifndef __AFXWIN_H__
@@ -9,22 +6,14 @@
 
 #include "resource.h"		// simboli principali
 
-
-// CdotNetInstallerApp:
-// Per l'implementazione di questa classe, vedere dotNetInstaller.cpp.
-//
-
 class CdotNetInstallerApp : public CWinApp
 {
+private:
+	int m_rc;
 public:
 	CdotNetInstallerApp();
-
-// Sostituzioni
-	public:
-	virtual BOOL InitInstance();
-
-// Implementazione
-
+	BOOL InitInstance();
+	int ExitInstance();
 	DECLARE_MESSAGE_MAP()
 };
 

@@ -21,10 +21,10 @@ ConfigFile::ConfigFile()
 
 }
 
-void ConfigFile::Load()
+int ConfigFile::Load()
 {
     LoadXmlSettings();
-	LoadConfigsNode(m_XmlDocument.FirstChildElement(), false);
+	return LoadConfigsNode(m_XmlDocument.FirstChildElement(), false);
 }
 
 void ConfigFile::LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DownloadGroupConfiguration & p_Configuration)
@@ -301,7 +301,7 @@ bool ConfigFile::LoadReferenceConfigNode(TiXmlElement * p_Node, CWnd * p_Parent)
 	return l_bSuccess;
 }
 
-void ConfigFile::LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additional_Config)
+int ConfigFile::LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additional_Config)
 {
 	bool l_bFound = false;
 	bool l_bAbort = false;
@@ -415,6 +415,8 @@ void ConfigFile::LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additi
         if (configuration_no_match_message.IsEmpty()) configuration_no_match_message = "System not supported or invalid configuration.";
         throw std::exception(DVLib::Tstring2string(configuration_no_match_message).c_str());
     }
+
+	return dlg.GetRecordedError();
 }
 
 // save the application state, in case it is modified by "reference" config files

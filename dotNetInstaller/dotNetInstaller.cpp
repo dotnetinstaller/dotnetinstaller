@@ -23,6 +23,7 @@ END_MESSAGE_MAP()
 // costruzione di CdotNetInstallerApp
 
 CdotNetInstallerApp::CdotNetInstallerApp()
+	: m_rc(0)
 {
 	// Inserire l'inizializzazione significativa in InitInstance.
 }
@@ -64,16 +65,18 @@ BOOL CdotNetInstallerApp::InitInstance()
 		}
 
         ConfigFile config;
-        config.Load();
+        m_rc = config.Load();
 	}
 	catch(std::exception& ex)
 	{
         DniSilentMessageBox(DVLib::string2Tstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
+		m_rc = -1;
 		return false;
 	}
 	catch(...)
 	{
 		DniSilentMessageBox(TEXT("Error loading configuration file"), MB_OK|MB_ICONSTOP);
+		m_rc = -1;
 		return false;
 	}
 
@@ -81,4 +84,11 @@ BOOL CdotNetInstallerApp::InitInstance()
 	// Poiché la finestra di dialogo è stata chiusa, restituisce FALSE in modo che l'applicazione
 	//  venga terminata, anziché avviare la message pump dell'applicazione.
 	return FALSE;
+}
+
+int CdotNetInstallerApp::ExitInstance() 
+{
+	// ignore the MFC return code, which is typically the last key pressed
+	CWinApp::ExitInstance();
+	return m_rc;
 }

@@ -29,6 +29,8 @@
 
 CdotNetInstallerDlg::CdotNetInstallerDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CdotNetInstallerDlg::IDD, pParent)
+	, m_additional_config(false)
+	, m_recorded_error(false)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -76,7 +78,6 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	//  se la finestra principale dell'applicazione non è una finestra di dialogo.
 	SetIcon(m_hIcon, TRUE);			// Impostare icona grande.
 	SetIcon(m_hIcon, FALSE);		// Impostare icona piccola.
-
 
 	// remove the Run key if exist
 	RemoveRegistryRun();
@@ -229,6 +230,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 {
 	try
 	{
+		ClearError();
         SelectComponents();
         ExtractCab();
 		InsertRegistryRun();
@@ -245,13 +247,31 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 					ApplicationLog.Write( TEXT("--Executing component: "), component->description);
 
 					InstallComponentDlg l_dg;
-					l_dg.LoadComponent(& m_Settings, component);
-                    component->Init(& l_dg);
+					if (! QuietInstall.IsSilent())
+					{
+						l_dg.LoadComponent(& m_Settings, component);
+						component->Init(& l_dg);
+					}
+					else
+					{
+						component->Init(NULL);
+					}
 
 					if (component->DownloadComponents(this) &&  //download component
 						component->Exec()) //execute component
 					{
-						l_dg.DoModal();
+						if (! QuietInstall.IsSilent())
+						{
+							l_dg.DoModal();
+						}
+						else
+						{
+							while(component->IsExecuting())
+							{
+								Sleep(1000);
+							}
+						}
+
 						ApplicationLog.Write( TEXT("---Component DIALOG CLOSED") );
 						
 						if (component->IsExecuting()) // se l'installazione è ancora attiva non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
@@ -320,7 +340,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 							else //error restituito dal setup
 							{
                                 ApplicationLog.Write( TEXT("***Component ERROR ON EXIT CODE: "), DVLib::FormatNumber(l_ExitCode));
-
+								RecordError(l_ExitCode);
 								l_retVal = false;
 							}
 						}
@@ -328,7 +348,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 					else //download non riuscito o eseguzione del setup non riuscita
 					{
 						ApplicationLog.Write( TEXT("***Component ERROR ON DOWNLOAD OR EXECUTING") );
-
+						RecordError();
 						l_retVal = false;
 					}
 				}
@@ -340,7 +360,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 			catch(std::exception& ex)
 			{
                 ApplicationLog.Write( TEXT("***ERROR on component: "), DVLib::string2Tstring(ex.what()).c_str());
-
+				RecordError();
 				l_retVal = false;
 			}
 
@@ -408,11 +428,13 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
     {
 		ApplicationLog.Write(TEXT("***"), DVLib::string2Tstring(ex.what()).c_str());
 		DniSilentMessageBox(DVLib::string2Tstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
+		RecordError();
     }
 	catch(...)
 	{
 		ApplicationLog.Write( TEXT("***Failed to install one or more components"));
 		DniSilentMessageBox(TEXT("Failed to install one or more components"), MB_OK|MB_ICONSTOP);
+		RecordError();
 	}
 }
 
@@ -527,6 +549,7 @@ void CdotNetInstallerDlg::OnDestroy()
 
 void CdotNetInstallerDlg::OnBnClickedCancel()
 {
+	RecordError(-2);
 	OnCancel();
 }
 
@@ -540,9 +563,16 @@ void CdotNetInstallerDlg::ExtractCab()
     e_setting.installing_component_wait = m_Settings.cab_dialog_message;
     e_component.description = m_Settings.cab_dialog_caption;
     InstallComponentDlg l_dg;
-	l_dg.LoadComponent(& e_setting, & e_component);
-    e_component.Init(& l_dg);
-	l_dg.DoModal();
+	if (! QuietInstall.IsSilent())
+	{
+		l_dg.LoadComponent(& e_setting, & e_component);
+		e_component.Init(& l_dg);
+		l_dg.DoModal();
+	}
+	else
+	{
+		e_component.Init(NULL);
+	}
     e_component.Exec();
 }
 
@@ -564,4 +594,17 @@ bool CdotNetInstallerDlg::MoveWindow(CWnd& dlg, const WidgetPosition& pos)
     // move the window to a combination of old and new coordinates
     dlg.SetWindowPlacement(& wpc);
     return true;
+}
+
+void CdotNetInstallerDlg::RecordError(int error) 
+{ 
+	if (m_recorded_error == 0) 
+	{
+		m_recorded_error = error; 
+	}
+}
+
+void CdotNetInstallerDlg::ClearError() 
+{ 
+	m_recorded_error = 0; 
 }

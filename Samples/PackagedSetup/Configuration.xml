@@ -10,7 +10,7 @@
     <!--Demo MSI.-->
     <component package="#CABPATH\Simple\Simple.msi" cmdparameters="" cmdparameters_silent="" os_filter_greater="" os_filter_smaller="" os_filter_lcid="" type="msi" installcompletemessage="" mustreboot="False" reboot_required="" must_reboot_required="False" failed_exec_command_continue="" allow_continue_on_error="False" required="True" description="Simple.msi" note="" processor_architecture_filter="" status_installed="" status_notinstalled="">
       <installedcheck path="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{89DD6045-A45B-4ED4-9C06-E93316D52A1D}" fieldname="Version" fieldvalue="1" fieldtype="REG_DWORD" comparison="exists" rootkey="HKEY_LOCAL_MACHINE" wowoption="NONE" type="check_registry_value" description="Installed Check" />
-      <embedfile sourcefilepath="#APPPATH\Simple\Simple.msi" targetfilepath="" />
+      <embedfile sourcefilepath="#APPPATH\Simple\Simple.msi" targetfilepath="Simple\Simple.msi" />
     </component>
     <!--An automatically embedded Readme.txt file.-->
     <embedfile sourcefilepath="#APPPATH\Readme.txt" targetfilepath="" />

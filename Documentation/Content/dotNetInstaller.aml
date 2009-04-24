@@ -5,7 +5,7 @@
       <para>
         <application>dotNetInstaller.exe</application> is a lightweight driver for your bootstrapped
         process. This is your Setup.exe. It offers a simple user interface, progress, status, supports silent installs
-        and enables user selection of optional components. The workflow is highly flexible and the UI can be somewhat 
+        and enables user selection of optional components. The workflow is highly flexible and the UI can be somewhat
         customized.
       </para>
     </introduction>
@@ -30,7 +30,7 @@
             <definedTerm>/Log</definedTerm>
             <definition>
               Creates a log file during installation with information and errors useful for debugging. You can find this file in
-              the user temporary directory with the name <localUri>dotNetInstallerLog.txt</localUri> (eg. 
+              the user temporary directory with the name <localUri>dotNetInstallerLog.txt</localUri> (eg.
               <localUri>C:\Documents and Settings\YOUR_NAME\Local Settings\Temp\dotNetInstallerLog.txt</localUri>).
               Its location and name can be specified with <system>/LogFile</system>.
             </definition>
@@ -83,6 +83,28 @@
                   the first argument character (e.g. enter the argument as " /q" instead of "/q" [note the difference in spacing]).
                 </para>
               </alert>
+            </definition>
+          </definitionTable>
+        </para>
+      </content>
+    </section>
+    <section address="errorlevels">
+      <title>Return Codes</title>
+      <content>
+        <para>
+          <definitionTable>
+            <definedTerm>0</definedTerm>
+            <definition>Success.</definition>
+            <definedTerm>-1</definedTerm>
+            <definition>Any non-specific error.</definition>
+            <definedTerm>-2</definedTerm>
+            <definition>
+              User pressed <ui>Cancel</ui> in the main dialog.
+            </definition>
+            <definedTerm>Any other non-zero value</definedTerm>
+            <definition>
+              Error code of a failed component. This is the <command>msiexec</command> return code for
+              <literal>msi</literal> components and process exit code for <literal>cmd</literal> components.
             </definition>
           </definitionTable>
         </para>
