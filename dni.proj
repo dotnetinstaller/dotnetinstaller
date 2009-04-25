@@ -106,9 +106,11 @@
     <TemplateFile Template="Version\Version.wxi.template" OutputFilename="Version.wxi" Tokens="@(AssemblyInfoTokens)"/>
   </Target>
   <Target Name="clean">
-    <Delete Files="$(ReleaseDir)" />
     <MSBuild Projects="Dni.sln" Targets="Clean" />
     <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Clean" />
+    <DeleteTree Directories="$(ReleaseDir)" />
+    <DeleteTree Directories=".\**\bin;.\**\obj;.\**\$(Configuration)" Recursive="true" />
+    <Delete Files="Version\Version.h;Version\Version.wxi;Version\GlobalAssemblyInfo.cs" />
   </Target>
   <Target Name="build" DependsOnTargets="version">
     <MSBuild Projects="Dni.sln" Targets="Build" />

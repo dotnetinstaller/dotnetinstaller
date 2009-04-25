@@ -133,6 +133,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 		Documentation\Content\Multilingual.aml = Documentation\Content\Multilingual.aml
 		Documentation\Content\Samples.aml = Documentation\Content\Samples.aml
 		Documentation\Content\SinglePackageTutorial.aml = Documentation\Content\SinglePackageTutorial.aml
+		Documentation\Content\UIModes.aml = Documentation\Content\UIModes.aml
 		Documentation\Content\VariableSubstitution.aml = Documentation\Content\VariableSubstitution.aml
 	EndProjectSection
 EndProject

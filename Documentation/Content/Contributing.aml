@@ -52,7 +52,7 @@
         <step>
           <content>
             <para>
-              Install MSBuild Community Tasks from
+              Install MSBuild Community Tasks 1.3 from
               <externalLink>
                 <linkText>http://msbuildtasks.tigris.org/</linkText>
                 <linkUri>http://msbuildtasks.tigris.org/</linkUri>
