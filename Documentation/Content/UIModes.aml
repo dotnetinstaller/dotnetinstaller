@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="1d803485-bce5-4d08-93e6-c2935074a8ba" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>dotNetInstaller supports several UI modes, similar to the MSI engine.</para>
+    </introduction>
+    <section address="uimodes">
+      <title>UI Modes</title>
+      <content>
+        <para>
+          <tableDefinition>
+            <definedTerm>Full</definedTerm>
+            <definition>A full UI mode.</definition>
+            <definedTerm>Basic</definedTerm>
+            <definition>A basic UI mode. Progress dialogs are shown, but no user interaction is required.</definition>
+            <definedTerm>Silent</definedTerm>
+            <definition>A completely silent UI mode. No progress dialogs are shown and no user interaction is required.</definition>
+          </tableDefinition>
+        </para>
+      </content>
+    </section>
+    <section address="uiconfiguration">
+      <title>Selecting UI Mode in Configuration</title>
+      <content>
+        <para>
+          You can select the UI mode with the top-level installer configuration's <literal>UILevel</literal> option.
+          The value of this option defines the default UI level for the installation.
+        </para>
+      </content>
+    </section>
+    <section address="uicommandlinearguments">
+      <title>Command Line Selection</title>
+      <content>
+        <para>
+          Command-line options can override the UI mode that was set in configuration. These include <command>/q</command>,
+          <command>/qb</command> and <command>/qn</command>. See <link xlink:href="59204cba-278b-4648-a149-35f864cae8cf" /> for
+          details.
+        </para>
+      </content>
+    </section>
+    <section address="uicomponentoptions">
+      <title>Component Options</title>
+      <content>
+        <para>
+          Components have additional options that enable different behavior in different UI modes.
+          <definitionTable>
+            <definedTerm>msi</definedTerm>
+            <definition>
+              Msi components can have <literal>cmdparameters</literal>, <literal>cmdparameters_basic</literal> and
+              <literal>cmdparameters_silent</literal> additional parameters. These are added to the command line passed to
+              the <command>msiexec.exe</command> process.
+            </definition>
+            <definedTerm>cmd</definedTerm>
+            <definition>
+              Cmd components can have <literal>command</literal>, <literal>command_basic</literal> and
+              <literal>command_silent</literal> parameters. These are the command lines executed under various UI levels.
+            </definition>
+          </definitionTable>
+        </para>
+        <alert class="note">
+          <para>
+            Full UI mode parameters must always be present, while silent and basic parameters are defaulted in reverse.
+            For example, when the <literal>cmd</literal> component is executed in silent mode, <literal>command_silent</literal>
+            is executed if specified, <literal>command_basic</literal> is executed if <literal>command_silent</literal> is
+            missing and finally <literal>command</literal> is executed if neither <literal>command_silent</literal> or
+            <literal>command_basic</literal> is specified. When the <literal>cmd</literal> component is executed
+            in basic UI mode, <literal>command_basic</literal> and <literal>command_silent</literal> are selected in reverse
+            order, <literal>command_basic</literal> is selected first.
+          </para>
+        </alert>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

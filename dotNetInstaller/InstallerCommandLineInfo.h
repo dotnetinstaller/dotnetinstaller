@@ -18,7 +18,20 @@ public:
 public:
     std::map<std::wstring, std::wstring> m_componentCmdArgs;
 private:
-	enum m_argFlags { unknown, log, logfile, silent, noSilent, launcher, launcherArgs, completeCommandArgs, extractCab, componentArgs };
+	enum m_argFlags 
+	{ 
+		unknown, 
+		log, 
+		logfile, 
+		silent, 
+		noSilent, 
+		basic, 
+		launcher, 
+		launcherArgs, 
+		completeCommandArgs, 
+		extractCab, 
+		componentArgs 
+	};
 	m_argFlags m_lastArgFlag;
     CString m_completeCommandArgs;
     bool m_extractCab;

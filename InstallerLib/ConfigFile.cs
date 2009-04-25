@@ -11,6 +11,22 @@ using System.Text;
 
 namespace InstallerLib
 {
+    public enum InstallUILevel
+    {
+        /// <summary>
+        /// Full install, all UI.
+        /// </summary>
+        full,
+        /// <summary>
+        /// Basic UI.
+        /// </summary>
+        basic,
+        /// <summary>
+        /// Silent, no UI.
+        /// </summary>
+        silent
+    }
+
     /// <summary>
     /// A configuration file.
     /// </summary>
@@ -29,13 +45,13 @@ namespace InstallerLib
             set { m_filename = value; }
         }
 
-        private bool m_silent_install = false;
-        [Description("If true, run the install silently (without end-user input)")]
+        private InstallUILevel m_ui_level = InstallUILevel.full;
+        [Description("Set the install-time UI level. Default to silent or basic UI installation.")]
         [Category("Installation Runtime")]
-        public bool silent_install
+        public InstallUILevel UILevel
         {
-            get { return m_silent_install; }
-            set { m_silent_install = value; }
+            get { return m_ui_level; }
+            set { m_ui_level = value; }
         }
 
         private string m_fileversion;
@@ -137,7 +153,7 @@ namespace InstallerLib
             // processor and os filter architecture messages
             e.XmlWriter.WriteAttributeString("configuration_no_match_message", m_configuration_no_match_message);
             // silent install
-            e.XmlWriter.WriteAttributeString("silent_install", m_silent_install.ToString());
+            e.XmlWriter.WriteAttributeString("ui_level", m_ui_level.ToString());
             // version information
             e.XmlWriter.WriteAttributeString("fileversion", m_fileversion);
             e.XmlWriter.WriteAttributeString("productversion", m_productversion);
@@ -155,8 +171,14 @@ namespace InstallerLib
             ReadAttributeValue(e, "lcid_type", ref m_lcidtype);
             // processor and os filter architecture messages
             ReadAttributeValue(e, "configuration_no_match_message", ref m_configuration_no_match_message);
-            // silent install
-            ReadAttributeValue(e, "silent_install", ref m_silent_install);
+            // ui level
+            ReadAttributeValue<InstallUILevel>(e, "ui_level", ref m_ui_level);
+            // backwards compatibility: silent_install
+            bool silentInstall = false;
+            if (ReadAttributeValue(e, "silent_install", ref silentInstall) && silentInstall)
+            {
+                m_ui_level = InstallUILevel.silent;
+            }
             // version information
             ReadAttributeValue(e, "fileversion", ref m_fileversion);
             ReadAttributeValue(e, "productversion", ref m_productversion);

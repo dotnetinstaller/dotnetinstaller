@@ -52,7 +52,7 @@
 #include "StringUtil.h"
 #include "DniMessageBox.h"
 #include "InstallerLog.h"
-#include "SilentInstall.h"
+#include "InstallUILevel.h"
 #include "OsIdentifier.h"
 #include "Tools/tinyxml.h"
 #include "WidgetPosition.h"

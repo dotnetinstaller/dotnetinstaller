@@ -285,6 +285,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstallUILevel.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\KCBusyProgressCtrl.cpp"
 				>
 			</File>
@@ -298,10 +302,6 @@
 			</File>
 			<File
 				RelativePath=".\ProcessComponent.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\SilentInstall.cpp"
 				>
 			</File>
 			<File
@@ -435,6 +435,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstallUILevel.h"
+				>
+			</File>
+			<File
 				RelativePath=".\KCBusyProgressCtrl.h"
 				>
 			</File>
@@ -452,10 +456,6 @@
 			</File>
 			<File
 				RelativePath=".\Resource.h"
-				>
-			</File>
-			<File
-				RelativePath=".\SilentInstall.h"
 				>
 			</File>
 			<File

@@ -15,7 +15,7 @@
       <content>
         <para>
           You must first create a configuration file. Choose <ui>File</ui>, <ui>New</ui> and select a new location
-          for a configuration.xml. Then, right click on <literal>Config File</literal> and choose <ui>Add</ui>, followed
+          for a configuration.xml. Then, right click on <ui>Config File</ui> and choose <ui>Add</ui>, followed
           by either <newItem>Setup Configuration</newItem> or <newItem>Web Configuration</newItem>.
         </para>
         <para>
@@ -68,5 +68,11 @@
         </para>
       </content>
     </section>
+    <relatedTopics>
+      <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="db007eb2-ccc6-4657-843e-adad7da5db5b" />
+      <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="9cd31590-c899-40a7-897a-d5ca844c2324" />
+      <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="4d997108-25a8-4158-8072-c47bf49324bb" />
+      <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="1dbadf87-c930-48a1-8609-71c96e80c9b7" />
+    </relatedTopics>
   </developerConceptualDocument>
 </topic>

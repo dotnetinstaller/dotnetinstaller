@@ -53,7 +53,8 @@
       <content>
         <para>
           Components support a rich set of options. Some affect the bootstrapper behavior after the component has been
-          installed successfully or unsuccessfully.
+          installed successfully or unsuccessfully. Please refer to the contextual help when editing
+          each component in InstallerEditor.
         </para>
       </content>
     </section>
@@ -72,8 +73,8 @@
           to the bootstrapper where the component list is recalcualted.
         </para>
         <para>
-          In silent installations the behavior is identical, but the choice to continue is made automatically for the user
-          when available with the <literal>allow_continue_on_failure</literal> option.
+          In silent (basic and no UI) installations the behavior is identical, but the choice to continue is made
+          automatically for the user when available with the <literal>allow_continue_on_failure</literal> option.
         </para>
       </content>
     </section>
@@ -114,7 +115,8 @@
           behaves in this situation and whether to offer users the possibility to postpone the reboot.
         </para>
         <para>
-          In silent installations the choice to reboot is made automatically for the user when reboot is required.
+          In silent installations (basic and no UI) the choice to reboot is made automatically for the user when reboot
+          is required.
         </para>
       </content>
     </section>

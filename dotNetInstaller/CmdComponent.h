@@ -8,5 +8,6 @@ public:
 public:
 	CString command;
     CString command_silent;
+	CString command_basic;
 	bool Exec();
 };

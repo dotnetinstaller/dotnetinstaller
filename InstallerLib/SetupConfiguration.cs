@@ -274,6 +274,14 @@ namespace InstallerLib
             set { m_complete_command_silent = value; }
         }
 
+        private string m_complete_command_basic;
+        [Description("Basic UI complete command (executed when all components are installed correctly on a basic UI install), can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed. (OPTIONAL)")]
+        public string complete_command_basic
+        {
+            get { return m_complete_command_basic; }
+            set { m_complete_command_basic = value; }
+        }
+
         private bool m_auto_close_if_installed = true;
         [Description("If true auto close the dialog (display installation_completed message and execute the complete_command) if all the components are already installed. (REQUIRED)")]
         public bool auto_close_if_installed
@@ -458,6 +466,7 @@ namespace InstallerLib
 
             e.XmlWriter.WriteAttributeString("complete_command", m_complete_command);
             e.XmlWriter.WriteAttributeString("complete_command_silent", m_complete_command_silent);
+            e.XmlWriter.WriteAttributeString("complete_command_basic", m_complete_command_basic);
             e.XmlWriter.WriteAttributeString("auto_close_if_installed", m_auto_close_if_installed.ToString());
             e.XmlWriter.WriteAttributeString("auto_close_on_error", m_auto_close_on_error.ToString());
             e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
@@ -515,6 +524,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "dialog_otherinfo_link", ref m_dialog_otherinfo_link);
             ReadAttributeValue(e, "complete_command", ref m_complete_command);
             ReadAttributeValue(e, "complete_command_silent", ref m_complete_command_silent);
+            ReadAttributeValue(e, "complete_command_basic", ref m_complete_command_basic);
             ReadAttributeValue(e, "auto_close_if_installed", ref m_auto_close_if_installed);
             ReadAttributeValue(e, "auto_close_on_error", ref m_auto_close_on_error);
             ReadAttributeValue(e, "allow_continue_on_error", ref m_allow_continue_on_error);

@@ -27,6 +27,8 @@ public:
 	CString complete_command;
 	// complete command on silent install
 	CString complete_command_silent;
+	// complete command on a basic UI install
+	CString complete_command_basic;
 	// if true auto close the dialog (display installation_completed message and execute the complete_command) if all the components are already installed
 	bool auto_close_if_installed;
     // if true, auto-close on error when the user chooses not to continue

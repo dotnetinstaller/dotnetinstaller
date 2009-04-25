@@ -36,9 +36,19 @@ namespace InstallerLib
             set { m_command_silent = value; }
         }
 
+        private string m_command_basic;
+        [Description("Specifies the command to execute on basic UI install. Defaults to command when blank. (OPTIONAL)")]
+        public string command_basic
+        {
+            get { return m_command_basic; }
+            set { m_command_basic = value; }
+        }
+
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
             e.XmlWriter.WriteAttributeString("command", m_command);
+            e.XmlWriter.WriteAttributeString("command_silent", m_command_silent);
+            e.XmlWriter.WriteAttributeString("command_basic", m_command_basic);
             base.OnXmlWriteTag(e);
         }
 
@@ -46,6 +56,7 @@ namespace InstallerLib
         {
             ReadAttributeValue(e, "command", ref m_command);
             ReadAttributeValue(e, "command_silent", ref m_command_silent);
+            ReadAttributeValue(e, "command_basic", ref m_command_silent);
             base.OnXmlReadTag(e);
         }
     }

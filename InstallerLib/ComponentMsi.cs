@@ -32,7 +32,15 @@ namespace InstallerLib
             set { m_cmdparameters = value; }
         }
 
-        private string m_cmdparameters_silent;
+        private string m_cmdparameters_basic = "/qb";
+        [Description("Specifies the command line parameters for the msiexec program when running a basic UI mode. Defaults to cmdparameters if blank. Can contain \" char and path constant (see Help->Path Constant). See MSDN for the command line you can use with Windows Installer. (OPTIONAL)")]
+        public string cmdparameters_basic
+        {
+            get { return m_cmdparameters_basic; }
+            set { m_cmdparameters_basic = value; }
+        }
+
+        private string m_cmdparameters_silent = "/qn";
         [Description("Specifies the command line parameters for the msiexec program when running a silent install. Defaults to cmdparameters if blank. Can contain \" char and path constant (see Help->Path Constant). See MSDN for the command line you can use with Windows Installer. (OPTIONAL)")]
         public string cmdparameters_silent
         {
@@ -45,6 +53,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("package", m_package);
             e.XmlWriter.WriteAttributeString("cmdparameters", m_cmdparameters);
             e.XmlWriter.WriteAttributeString("cmdparameters_silent", m_cmdparameters_silent);
+            e.XmlWriter.WriteAttributeString("cmdparameters_basic", m_cmdparameters_basic);
             base.OnXmlWriteTag(e);
         }
 
@@ -53,6 +62,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "package", ref m_package);
             ReadAttributeValue(e, "cmdparameters", ref m_cmdparameters);
             ReadAttributeValue(e, "cmdparameters_silent", ref m_cmdparameters_silent);
+            ReadAttributeValue(e, "cmdparameters_basic", ref m_cmdparameters_basic);
             base.OnXmlReadTag(e);
         }
     }

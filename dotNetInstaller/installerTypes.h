@@ -18,7 +18,7 @@
 // top-level configuration settings
 struct configSetting
 {
-	bool silent_install;
+	InstallUILevel ui_level;
 };
 
 // HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce

@@ -9,6 +9,7 @@ public:
 	CString package;
 	CString cmdparameters; // es. "/qn REBOOT=ReallySuppress"
     CString cmdparameters_silent;
+	CString cmdparameters_basic;
 	bool Exec();
 };
 

@@ -26,28 +26,33 @@ void InstallerSetting::ExecuteCompleteCode() const
 		DniMessageBox(message, MB_OK|MB_ICONINFORMATION);
     }
 
-	CString command = complete_command;
-    CString command_silent = complete_command_silent; 
-	
-    if (QuietInstall.IsSilent() && command_silent.Trim().GetLength()) 
-    {
-        command = complete_command_silent;
-    }
+	CString l_complete_command = complete_command;
+	switch(CurrentInstallUILevel.GetUILevel())
+	{
+	case InstallUILevelSilent:
+		if (complete_command_silent.GetLength()) l_complete_command = complete_command_silent;
+		else if (complete_command_basic.GetLength()) l_complete_command = complete_command_basic;
+		break;
+	case InstallUILevelBasic:
+		if (complete_command_basic.GetLength()) l_complete_command = complete_command_basic;
+		else if (complete_command_silent.GetLength()) l_complete_command = complete_command_silent;
+		break;
+	}
 
     if (commandLineInfo.GetCompleteCommandArgs().GetLength())
     {
-        command.Append(L" ");
-        command.Append(commandLineInfo.GetCompleteCommandArgs());
+        l_complete_command.Append(L" ");
+        l_complete_command.Append(commandLineInfo.GetCompleteCommandArgs());
     }
 
-	if (command.Trim().GetLength())
+	if (l_complete_command.Trim().GetLength())
 	{
-		ApplicationLog.Write( TEXT("Executing complete command: "), command);
+		ApplicationLog.Write( TEXT("Executing complete command: "), l_complete_command);
         DWORD dwExitCode = 0;
-        if (! DVLib::ExecCmdAndWait(command, & dwExitCode))
+        if (! DVLib::ExecCmdAndWait(l_complete_command, & dwExitCode))
         {
             std::string error = "***Error executing complete command: ";
-            error.append(DVLib::Tstring2string((LPCWSTR) command));
+            error.append(DVLib::Tstring2string((LPCWSTR) l_complete_command));
             throw std::exception(error.c_str());
 	    }
 	}

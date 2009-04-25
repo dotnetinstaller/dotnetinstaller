@@ -16,11 +16,16 @@
           <definitionTable>
             <definedTerm>/q</definedTerm>
             <definition>
-              Forces silent mode, even if the configurations <literal>silent_install</literal> attribute value is false.
+              Forces silent UI mode, overriding the configuration's <literal>ui_mode</literal> attribute.
+            </definition>
+            <definedTerm>/qb</definedTerm>
+            <definition>
+              Forces basic UI mode, overriding the configuration's <literal>ui_mode</literal> attribute.
+              A basic UI mode shows progress dialogs but does not require any user interaction.
             </definition>
             <definedTerm>/nq</definedTerm>
             <definition>
-              Forces normal mode, even if the configurations <literal>silent_install</literal> attribute value is true.
+              Forces full UI mode, overriding the configuration's <literal>ui_mode</literal> attribute.
             </definition>
             <definedTerm>/CompleteCommandArgs</definedTerm>
             <definition>

@@ -13,7 +13,9 @@
     <Topic id="6cad4ea6-b7ab-4aae-a2a5-514a10b6fc34" visible="True" title="Samples" />
   </Topic>
   <Topic id="ec5c1920-55c4-4f57-8e18-9dd2d37350d6" visible="True" title="Install Linker" />
-  <Topic id="59204cba-278b-4648-a149-35f864cae8cf" visible="True" title="Setup Executable" />
+  <Topic id="59204cba-278b-4648-a149-35f864cae8cf" visible="True" title="Setup Executable">
+    <Topic id="1d803485-bce5-4d08-93e6-c2935074a8ba" visible="True" title="User Interface Modes" />
+  </Topic>
   <Topic id="891e4af1-557b-440f-bfdc-bc61aaeafe03" visible="True" noFile="True" title="Tutorials">
     <Topic id="16fef7aa-dae9-4441-ad44-b691d02cf8b2" visible="True" title="Building a Standalone Setup with .NET Framework Required" />
     <Topic id="9ee2c335-6586-4365-a4b0-71befaf996d2" visible="True" title="Building a Web Setup with .NET Framework Required" />

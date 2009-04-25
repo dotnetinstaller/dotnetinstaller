@@ -25,6 +25,6 @@ private:
     bool LoadDocumentFromFile(const CString & p_FileName);
     void LoadConfigFromFile(const CString & p_FileName);
     void LoadConfigFromResource(HMODULE p_Module);
-    void ProcessSilentInstall(LPCSTR value);
+    void ProcessUILevel(InstallUILevel value);
     void ProcessLcidType(LPCSTR value);
 };

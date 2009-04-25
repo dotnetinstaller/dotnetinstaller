@@ -1,13 +1,12 @@
 #include "stdafx.h"
 #include "InstallerLog.h"
-#include "SilentInstall.h"
 #include "DniMessageBox.h"
 
 // support for silent installs
 int DniMessageBox(LPCTSTR p_lpszText, UINT p_nType /*=MB_OK*/, UINT p_nDefaultResult /*=MB_OK*/, UINT p_nIDHelp /*=0*/)
 {
 	// Determine whether to display a message to the end user or just return the default value
-	if(QuietInstall.IsSilent())
+	if(CurrentInstallUILevel.IsSilent())
 	{
 		return p_nDefaultResult;
 	}
@@ -54,5 +53,5 @@ int DniTimedMessageBox(bool p_bTimed, LPCTSTR p_lpszText, UINT p_nType /*=MB_OK*
 
 int DniSilentMessageBox(LPCTSTR p_lpszText, UINT p_nType /*=MB_OK*/, UINT p_nDefaultResult /*=MB_OK*/, UINT p_nIDHelp /*=0*/)
 {
-	return DniTimedMessageBox(QuietInstall.IsSilent(), p_lpszText, p_nType, p_nDefaultResult, p_nIDHelp);
+	return DniTimedMessageBox(CurrentInstallUILevel.IsSilent(), p_lpszText, p_nType, p_nDefaultResult, p_nIDHelp);
 }

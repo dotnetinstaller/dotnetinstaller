@@ -1,7 +1,6 @@
 #include "StdAfx.h"
 #include "InstallerCommandLineInfo.h"
 #include "InstallerLog.h"
-#include "SilentInstall.h"
 #include "InstallerLauncher.h"
 
 CInstallerCommandLineInfo commandLineInfo;
@@ -33,13 +32,19 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 		else if (_tcsicmp(pszParam, TEXT("q")) == 0)
 		{
 			m_lastArgFlag = silent;
-			QuietInstall.EnableSilentInstall();
+			CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelSilent);
 		}
         // disable silent installs from the command line
 		else if (_tcsicmp(pszParam, TEXT("nq")) == 0)
 		{
 			m_lastArgFlag = noSilent;
-			QuietInstall.OverrideSilentInstall();
+			CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelFull);
+		}
+		// enable silent installs from the command line
+		else if (_tcsicmp(pszParam, TEXT("qb")) == 0)
+		{
+			m_lastArgFlag = basic;
+			CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelBasic);
 		}
 		// accept another command to use in RegistryRun
 		else if (_tcsicmp(pszParam, TEXT("launcher")) == 0)
@@ -75,10 +80,10 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 		switch (m_lastArgFlag)
 		{
 			case log:
-				break;
 			case silent:
-				break;
 			case noSilent:
+			case basic:
+            case extractCab:
 				break;
             case logfile:
                 ApplicationLog.SetLogFile(pszParam);
@@ -99,8 +104,6 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 			case completeCommandArgs:
 				m_completeCommandArgs = pszParam;
                 break;
-            case extractCab:
-				break;
             case componentArgs:
 		        stlvectorstring l_componentArgsArray;
                 split_string(pszParam, ':', l_componentArgsArray, 2);

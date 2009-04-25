@@ -3,49 +3,50 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        <newTerm>dotNetInstaller</newTerm>, commonly known as <newTerm>DNI</newTerm>, is a general-purpose setup
-        bootstrapper for Microsoft Windows.
+        <newTerm>dotNetInstaller</newTerm> is a general-purpose setup bootstrapper for Microsoft Windows.
         <mediaLink>
           <image xlink:href="DotNetInstaller.jpg" />
         </mediaLink>
       </para>
       <para>
-        DNI enables the developer to define the application prerequisites and install the correct version(s) of these components
-        in a predictable order based on the processor architecture, user operating system type and language, allow the user to
+        dotNetInstaller enables the developer to define the application prerequisites and install the correct version(s) of these components
+        in a predictable order based on the processor architecture, user operating system type and language, allows the user to
         download these components from the web, install these components directly from a single packaged setup, local media
-        or both. DNI is very feature rich and runs on all known Windows operating systems with a very tiny footprint.
+        or both. dotNetInstaller is very feature rich and runs on all known Windows operating systems since Windows 95 
+        with a very tiny footprint.
       </para>
       <para>
         A boostrapper doesn't replace tools like InstallShield, Wise, Visual Studio Setup and Deployment Project or Wix.
-        The goal is to create an application to help users with installing the correct prerequisites. Most real world applications
-        need to install several components to work properly, including Windows Service Packs, Internet Explorer, MDAC or .NET Framework.
-        This kind of applications is most commonly known as a <newTerm>bootstrapper</newTerm>.
+        The goal of this application is to help users with installing the correct prerequisites. Most real world applications
+        need to install several components to work properly, including Windows Service Packs, Internet Explorer, MDAC or 
+        .NET Framework. Such an application is known as a <newTerm>bootstrapper</newTerm>.
       </para>
       <para>
-        This project is composed of the following:
+        This project consists of the following components:
         <list class="bullet">
           <listItem>
-            <application>dotNetInstaller</application>: main bootstrapper application, written in Visual Studio 2005 C++. This is the raw setup which
-            presents a GUI in front of the user that displays which components to install depending on which components are
-            already installed on the operating system. The bootstrapper has no prerequisites.
+            <application>dotNetInstaller</application>: main bootstrapper application, written in Visual Studio 2005 C++. 
+            This is the raw setup which presents a GUI in front of the user that displays which components to install depending 
+            on which components are already installed on the operating system. The bootstrapper is statically linked with the
+            CRT and has no prerequisites.
           </listItem>
           <listItem>
-            <application>InstallerEditor</application>: an application for editing configurations files and dotNetInstaller.exe resources, written with
-            Visual Studio 2005 C# for .NET Framework 2.0. The editor is also capable of importing older versions of DNI configuration
-            files and re-saving them in the current/newer format.
+            <application>InstallerEditor</application>: an application for editing configurations files and dotNetInstaller.exe 
+            resources, written with Visual Studio 2005 C# for .NET Framework 2.0. The editor is also capable of importing older 
+            versions of dotNetInstaller configuration files and re-saving them in the current/newer format.
           </listItem>
           <listItem>
-            <application>InstallerLinker</application>: a command-line bootstrapper linker that can be used in a build process, written with Visual Studio
-            2005 C# for .NET Framework 2.0.
+            <application>InstallerLinker</application>: a command-line bootstrapper linker that can be used in a build process, 
+            written with Visual Studio 2005 C# for .NET Framework 2.0.
           </listItem>
           <listItem>
-            Several samples and dependency templates that can be reused as-is and that demonstrate sometimes complex checks which verify
-            whether, for example, MDAC or .NET framework are already installed.
+            Several samples and dependency templates that can be reused as-is and that demonstrate sometimes complex checks which
+            verify whether, for example, MDAC or .NET framework are already installed.
           </listItem>
         </list>
       </para>
       <para>
-        This project started as a
+        This project began as a
         <externalLink>
           <linkUri>http://www.codeproject.com/KB/install/dotNetInstaller.aspx</linkUri>
           <linkText>CodeProject article</linkText>
@@ -58,12 +59,12 @@
         <externalLink>
           <linkUri>https://sourceforge.net/projects/dotnetinstaller</linkUri>
           <linkText>SourceForge</linkText>
-        </externalLink>.
+        </externalLink> by David Icardi.
         It's now fully open-sourced and maintained on CodePlex at
         <externalLink>
           <linkUri>http://www.codeplex.com/dotnetinstaller/</linkUri>
           <linkText>http://www.codeplex.com/dotnetinstaller/</linkText>
-        </externalLink>.
+        </externalLink> by a community of developers that use dotNetInstaller in their own projects.
       </para>
     </introduction>
     <relatedTopics>

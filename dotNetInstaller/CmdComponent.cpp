@@ -8,15 +8,20 @@ cmd_component::cmd_component()
 
 bool cmd_component::Exec()
 {
-    if (QuietInstall.IsSilent() && command_silent.GetLength() > 0)
-    {
-		ApplicationLog.Write(TEXT("Executing: "), command_silent);
-	    return DVLib::ExecCmd(command_silent, &m_process_info);
-    }
-    else
-    {
-		ApplicationLog.Write(TEXT("Executing: "), command);
-	    return DVLib::ExecCmd(command, &m_process_info);
-    }
+	CString l_command = command;
+	switch(CurrentInstallUILevel.GetUILevel())
+	{
+	case InstallUILevelSilent:
+		if (command_silent.GetLength()) l_command = command_silent;
+		else if (command_basic.GetLength()) l_command = command_basic;
+		break;
+	case InstallUILevelBasic:
+		if (command_basic.GetLength()) l_command = command_basic;
+		else if (command_silent.GetLength()) l_command = command_silent;
+		break;
+	}
+
+	ApplicationLog.Write(TEXT("Executing: "), l_command);
+	return DVLib::ExecCmd(l_command, & m_process_info);
 };
 

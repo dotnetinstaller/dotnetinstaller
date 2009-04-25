@@ -14,7 +14,6 @@
 #include "ConfigFile.h"
 #include "InstallerLog.h"
 #include "DniMessageBox.h"
-#include "SilentInstall.h"
 #include "ExtractCAB.h"
 #include "InstallerCommandLineInfo.h"
 #include "Image.h"
@@ -153,10 +152,11 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 
 	if (LoadComponentsList())
 	{
-		if (m_Settings.auto_close_if_installed || QuietInstall.IsSilent())
+		if (m_Settings.auto_close_if_installed || CurrentInstallUILevel.IsSilent())
 		{
             if (m_Settings.complete_command.Trim().GetLength() 
-				|| m_Settings.complete_command_silent.Trim().GetLength())
+				|| m_Settings.complete_command_silent.Trim().GetLength()
+				|| m_Settings.complete_command_basic.Trim().GetLength())
             {
                 ExtractCab(); // the command may need to execute a file
             }
@@ -168,7 +168,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	else
 	{
 		// initiate component install(s) silently, without end-user input
-		if(QuietInstall.IsSilent())
+		if(CurrentInstallUILevel.IsSilent())
 		{
 			m_btnInstall.EnableWindow(FALSE);
 			m_btnCancel.EnableWindow(FALSE);
@@ -247,7 +247,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 					ApplicationLog.Write( TEXT("--Executing component: "), component->description);
 
 					InstallComponentDlg l_dg;
-					if (! QuietInstall.IsSilent())
+					if (CurrentInstallUILevel.IsAnyUI())
 					{
 						l_dg.LoadComponent(& m_Settings, component);
 						component->Init(& l_dg);
@@ -260,7 +260,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 					if (component->DownloadComponents(this) &&  //download component
 						component->Exec()) //execute component
 					{
-						if (! QuietInstall.IsSilent())
+						if (CurrentInstallUILevel.IsAnyUI())
 						{
 							l_dg.DoModal();
 						}
@@ -417,7 +417,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 				m_Settings.ExecuteCompleteCode();
 				OnOK();
 			}
-			else if (QuietInstall.IsSilent())
+			else if (CurrentInstallUILevel.IsSilent())
 			{
 				OnOK();
 			}
@@ -563,7 +563,7 @@ void CdotNetInstallerDlg::ExtractCab()
     e_setting.installing_component_wait = m_Settings.cab_dialog_message;
     e_component.description = m_Settings.cab_dialog_caption;
     InstallComponentDlg l_dg;
-	if (! QuietInstall.IsSilent())
+	if (CurrentInstallUILevel.IsAnyUI())
 	{
 		l_dg.LoadComponent(& e_setting, & e_component);
 		e_component.Init(& l_dg);

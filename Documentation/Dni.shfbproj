@@ -55,6 +55,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
   </PropertyGroup>
   <ItemGroup>
+    <None Include="Content\UIModes.aml" />
     <None Include="Content\dotNetInstallerLayout.aml" />
     <None Include="Content\Components.aml" />
     <None Include="Content\BuildingWebSetupForDotNet.aml" />

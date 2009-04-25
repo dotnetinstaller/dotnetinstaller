@@ -2,7 +2,6 @@
 #include "ConfigFile.h"
 #include "InstallerLog.h"
 #include "DniMessageBox.h"
-#include "SilentInstall.h"
 #include "dotNetInstallerDlg.h"
 #include "ProcessorIdentifier.h"
 #include "MsiComponent.h"
@@ -155,6 +154,7 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 				l_msi_Comp->type = msi;
 				l_msi_Comp->cmdparameters = m_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters").data());
 				l_msi_Comp->cmdparameters_silent = m_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters_silent").data());
+				l_msi_Comp->cmdparameters_basic = m_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters_basic").data());
 
                 // additional command line parameters
                 std::map<std::wstring, std::wstring>::iterator cmdline = commandLineInfo.m_componentCmdArgs.find(l_msi_Comp->description.GetBuffer());
@@ -164,6 +164,8 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
                     l_msi_Comp->cmdparameters += cmdline->second.c_str();
                     l_msi_Comp->cmdparameters_silent += TEXT(" ");
                     l_msi_Comp->cmdparameters_silent += cmdline->second.c_str();
+                    l_msi_Comp->cmdparameters_basic += TEXT(" ");
+                    l_msi_Comp->cmdparameters_basic += cmdline->second.c_str();
                     ApplicationLog.Write(TEXT("--Additional component arguments: "), cmdline->second.c_str());
                 }
 
@@ -176,6 +178,7 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 				cmd_component * l_cmd_Comp = new cmd_component();
 				l_cmd_Comp->command = m_Setting.ValidatePath(l_Node_component->AttributeT("command").data());
                 l_cmd_Comp->command_silent = m_Setting.ValidatePath(l_Node_component->AttributeT("command_silent").data());
+				l_cmd_Comp->command_basic = m_Setting.ValidatePath(l_Node_component->AttributeT("command_basic").data());
 				l_cmd_Comp->type = cmd;
 
                 // additional command line parameters
@@ -186,6 +189,8 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
                     l_cmd_Comp->command += cmdline->second.c_str();
                     l_cmd_Comp->command_silent += TEXT(" ");
                     l_cmd_Comp->command_silent += cmdline->second.c_str();
+                    l_cmd_Comp->command_basic += TEXT(" ");
+                    l_cmd_Comp->command_basic += cmdline->second.c_str();
                     ApplicationLog.Write(TEXT("--Additional component arguments: "), cmdline->second.c_str());
                 }
 
@@ -316,7 +321,7 @@ int ConfigFile::LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additio
 	configSetting l_ConfigSetting;
 	SaveAppState(l_ConfigSetting);
 
-    ProcessSilentInstall(p_Node->Attribute("silent_install"));
+    ProcessUILevel(InstallUILevelSetting::ToUILevel(p_Node->Attribute("ui_level")));
     ProcessLcidType(p_Node->Attribute("lcid_type"));
 
 	CdotNetInstallerDlg dlg;
@@ -422,19 +427,19 @@ int ConfigFile::LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additio
 // save the application state, in case it is modified by "reference" config files
 void ConfigFile::SaveAppState(configSetting & p_Config)
 {
-	p_Config.silent_install = QuietInstall.IsSilent();
+	p_Config.ui_level = CurrentInstallUILevel.GetUILevel();
 }
 
 // restore the application state after potential "reference" config file modifications
 void ConfigFile::RestoreAppState(configSetting & p_Config)
 {
-	if (p_Config.silent_install)
+	if (p_Config.ui_level != InstallUILevelNotSet)
 	{
-		QuietInstall.EnableSilentInstall();
+		CurrentInstallUILevel.SetConfigLevel(p_Config.ui_level);
 	}
 	else
 	{
-		QuietInstall.DisableSilentInstall();
+		CurrentInstallUILevel.SetConfigLevel(InstallUILevelNotSet);
 	}
 }
 
@@ -542,14 +547,12 @@ void ConfigFile::LoadXmlSettings()
 	}
 }
 
-void ConfigFile::ProcessSilentInstall(LPCSTR pszSilent)
+void ConfigFile::ProcessUILevel(InstallUILevel value)
 {
-	// process silent install setting
-	// if parent configuration is configured for a silent install,
-	// a child configuration will inherit that setting
-	if (ConvBoolString(pszSilent, false))
+	// if parent configuration UI level is set, a child configuration will inherit that setting
+	if (value != InstallUILevelNotSet)
 	{
-		QuietInstall.EnableSilentInstall();
+		CurrentInstallUILevel.SetConfigLevel(value);
 	}
 }
 

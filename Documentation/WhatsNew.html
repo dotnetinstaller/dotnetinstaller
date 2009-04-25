@@ -98,7 +98,10 @@ code { color: #b22222; font-family: Courier New; }
         <li>dotNetInstaller process exit code is now 0 on success, MSI return code on an MSI
             component failure, process exit code on a non-zero cmd component return, -2 on cancel
             from main dialog and -1 on any other error. Check %ERRORLEVEL% in batch scripts.</li>
-        <li>Silent installs no longer popup progress dialogs.</li>
+        <li>Silent install support was extended to a full UI, basic UI and no UI mode, silent
+            install no longer pops up progress dialogs, while basic UI install does without
+            requiring user interaction. All UI modes are enabled via configuration and can be
+            overriden from command line with /q (silent), /qb (basic UI) and /qn (full UI).</li>
         <li>Bug: cancel has no effect on the download dialog before download starts.</li>
         <li>Bug: download dialog will no longer appear when download is not required.</li>
         <li>Bug: command-line parameters are not preserved on reboot.</li>
