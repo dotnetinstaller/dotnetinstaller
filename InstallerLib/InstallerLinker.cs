@@ -102,6 +102,7 @@ namespace InstallerLib
                 }
 
                 c_files.CheckFilesExist(args);
+                c_files.CheckFileAttributes(args);
 
                 ArrayList files = c_files.GetFilePairs();
                 string cabname = Path.Combine(Path.GetDirectoryName(args.output), "Setup.cab");

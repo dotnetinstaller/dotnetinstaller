@@ -101,6 +101,9 @@ namespace InstallerLib
                 flags = "*.*";
             }
 
+            if ((File.GetAttributes(directory) & FileAttributes.Hidden) == FileAttributes.Hidden)
+                return;
+
             directory = directory.TrimEnd(Path.DirectorySeparatorChar);
 
             string[] folderfiles = Directory.GetFiles(directory, flags, SearchOption.AllDirectories);
@@ -115,7 +118,27 @@ namespace InstallerLib
                        Path.DirectorySeparatorChar + relativefolderfile;
                 }
 
-                Add(new EmbedFilePair(Path.GetFullPath(folderfile), relativefolderfile));
+                string folderfilefullpath = Path.GetFullPath(folderfile);
+
+                if ((File.GetAttributes(folderfilefullpath) & FileAttributes.Hidden) == FileAttributes.Hidden)
+                    continue;
+
+                Add(new EmbedFilePair(folderfilefullpath, relativefolderfile));
+            }
+        }
+
+        /// <summary>
+        /// Checks file attributes and warns the user if any are read-only.
+        /// </summary>
+        /// <param name="args"></param>
+        public void CheckFileAttributes(InstallerLinkerArguments args)
+        {
+            foreach (EmbedFilePair file in _files)
+            {
+                if ((File.GetAttributes(file.fullpath) & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                {
+                    args.WriteLine(string.Format("Embedded file '{0}' is and will be extracted read-only.", file.fullpath));
+                }
             }
         }
 
