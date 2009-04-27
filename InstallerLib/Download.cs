@@ -18,7 +18,7 @@ namespace InstallerLib
 
         public Download(string p_DownloadPath)
         {
-            m_componentname = "New Component";
+            m_componentname = "DOWNLOAD_FILE";
             m_sourceurl = "http://www.yourwebsite.com/SetupX/Setup.exe";
             m_destinationpath = "#TEMPPATH\\" + p_DownloadPath;
             m_destinationfilename = "";
@@ -39,6 +39,14 @@ namespace InstallerLib
         {
             get { return m_sourceurl; }
             set { m_sourceurl = value; }
+        }
+
+        private string m_sourcepath;
+        [Description("The local source path of the file. This optional location is checked for whether the file exists before attempting a web-based download.")]
+        public string sourcepath
+        {
+            get { return m_sourcepath; }
+            set { m_sourcepath = value; }
         }
 
         private string m_destinationpath;
@@ -77,6 +85,7 @@ namespace InstallerLib
         {
             e.XmlWriter.WriteAttributeString("componentname", m_componentname);
             e.XmlWriter.WriteAttributeString("sourceurl", m_sourceurl);
+            e.XmlWriter.WriteAttributeString("sourcepath", m_sourcepath);
             e.XmlWriter.WriteAttributeString("destinationpath", m_destinationpath);
             e.XmlWriter.WriteAttributeString("destinationfilename", m_destinationfilename);
             e.XmlWriter.WriteAttributeString("alwaysdownload", m_alwaysdownload.ToString());
@@ -89,6 +98,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "destinationfilename", ref m_destinationfilename);
             ReadAttributeValue(e, "destinationpath", ref m_destinationpath);
             ReadAttributeValue(e, "sourceurl", ref m_sourceurl);
+            ReadAttributeValue(e, "sourcepath", ref m_sourcepath);
             ReadAttributeValue(e, "alwaysdownload", ref m_alwaysdownload);
             base.OnXmlReadTag(e);
         }

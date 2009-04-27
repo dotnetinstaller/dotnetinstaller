@@ -43,6 +43,7 @@ void DownloadComponent::StartDownload()
 {
 	CString l_destinationFullFileName = GetDestinationFileName();
 
+	ApplicationLog.Write( TEXT("SourcePath: "), m_Component->SourcePath);
 	ApplicationLog.Write( TEXT("DestinationPath: "), m_Component->DestinationPath);
 	CreateDirectory(m_Component->DestinationPath,NULL); //cerco comunque di creare la directory
 	
@@ -56,13 +57,31 @@ void DownloadComponent::StartDownload()
 		return;
 	}
 
-	HRESULT l_hrRet = URLDownloadToFile(NULL, m_Component->SourceURL, l_destinationFullFileName, 0, this);
-	if (! SUCCEEDED(l_hrRet))
-    {
-        std::string error = "Error downloading ";
-        error.append(DVLib::Tstring2string(m_Component->SourceURL));
-        throw std::exception(error.c_str());
-    }
+	if (! m_Component->SourcePath.IsEmpty() && FileExistsCustom(m_Component->SourcePath))
+	{
+		ApplicationLog.Write( TEXT("Copying: "), m_Component->SourcePath);
+		if (! CopyFile(m_Component->SourcePath, l_destinationFullFileName, false))
+		{
+			std::string error = "Error copying ";
+			error.append(DVLib::Tstring2string(m_Component->SourcePath));
+			error.append("\r\n");
+			error.append(DVLib::Tstring2string(DVLib::TranslateErrorMsg(DVLib::LastError())));
+			throw std::exception(error.c_str());
+		}
+	}
+	else
+	{
+		ApplicationLog.Write( TEXT("Downloading: "), m_Component->SourceURL);
+		HRESULT l_hrRet = URLDownloadToFile(NULL, m_Component->SourceURL, l_destinationFullFileName, 0, this);
+		if (FAILED(l_hrRet))
+		{
+			std::string error = "Error downloading ";
+			error.append(DVLib::Tstring2string(m_Component->SourceURL));
+			error.append("\r\n");
+			error.append(DVLib::Tstring2string(DVLib::TranslateErrorMsg(l_hrRet)));
+			throw std::exception(error.c_str());
+		}
+	}
 }
 
 UINT DownloadComponents(IDownloadCallback * p_Callback)

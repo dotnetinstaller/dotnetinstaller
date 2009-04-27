@@ -29,23 +29,6 @@ namespace InstallerLib
             m_dialog_caption = tpl.dialog_caption;
             m_dialog_message = tpl.dialog_message;
             m_dialog_message_downloading = tpl.dialog_message_downloading;
-
-            //			if (LanguageUI.Language == SupportedLanguage.Italian)
-            //			{
-            //				m_buttoncancel_caption = "Annulla";
-            //				m_buttonstart_caption = "Avanti";
-            //				m_dialog_caption = p_ComponentName + " - Download Componenti";
-            //				m_dialog_message = "Premi 'Avanti' per scaricare i componenti necessari all'installazione di " + p_ComponentName + ".";
-            //				m_dialog_message_downloading = "Download in corso. Attendere...";
-            //			}
-            //			else //english
-            //			{
-            //				m_buttoncancel_caption = "Cancel";
-            //				m_buttonstart_caption = "Start";
-            //				m_dialog_caption = p_ComponentName + " - Download Components";
-            //				m_dialog_message = "Press 'Start' to download the required components for installing " + p_ComponentName + ".";
-            //				m_dialog_message_downloading = "Download in progress. Wait...";
-            //			}
         }
 
         #region Attributes

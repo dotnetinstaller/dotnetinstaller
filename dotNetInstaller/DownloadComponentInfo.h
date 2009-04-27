@@ -5,6 +5,9 @@ struct DownloadComponentInfo
 	//URL del file da scaricare
 	CString SourceURL;
 
+	//Optional local location for the file.
+	CString SourcePath;
+
 	//Directory di destinazione (senza il nome del file)
 	CString DestinationPath;
 
