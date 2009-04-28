@@ -109,6 +109,7 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 	m_Setting.status_notinstalled = p_Node->AttributeT("status_notinstalled").data();
 	m_Setting.failed_exec_command_continue = p_Node->AttributeT("failed_exec_command_continue").data();
 	m_Setting.installation_completed = p_Node->AttributeT("installation_completed").data();
+	m_Setting.installation_none = p_Node->AttributeT("installation_none").data();
 	m_Setting.reboot_required = p_Node->AttributeT("reboot_required").data();
     m_Setting.must_reboot_required = ConvBoolString(p_Node->Attribute("must_reboot_required"), false);
 	m_Setting.installing_component_wait = p_Node->AttributeT("installing_component_wait").data();
@@ -322,8 +323,8 @@ int ConfigFile::LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additio
 	configSetting l_ConfigSetting;
 	SaveAppState(l_ConfigSetting);
 
-    ProcessUILevel(InstallUILevelSetting::ToUILevel(p_Node->Attribute("ui_level")));
-    ProcessLcidType(p_Node->Attribute("lcid_type"));
+    ProcessUILevel(InstallUILevelSetting::ToUILevel(p_Node->AttributeT("ui_level").data()));
+    ProcessLcidType(p_Node->AttributeT("lcid_type").data());
 
 	CdotNetInstallerDlg dlg;
 //	m_pMainWnd = &dlg;
@@ -558,15 +559,10 @@ void ConfigFile::ProcessUILevel(InstallUILevel value)
 }
 
 // process lcidtype setting
-void ConfigFile::ProcessLcidType(LPCSTR pszType)
+void ConfigFile::ProcessLcidType(const CString& lcidtype)
 {
-	if (pszType == NULL)
+	if (lcidtype.IsEmpty())
 		return;
-
-	std::string lcidtype(pszType);
-
-    if (lcidtype.empty()) 
-       return;
 
     if (lcidtype == "System") m_lcidtype = LcidSystem;
     else if (lcidtype == "User") m_lcidtype = LcidUser;

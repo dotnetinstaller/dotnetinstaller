@@ -68,16 +68,13 @@ InstallUILevel InstallUILevelSetting::GetUILevel(InstallUILevel defaultValue) co
 	return defaultValue;
 }
 
-InstallUILevel InstallUILevelSetting::ToUILevel(LPCSTR pszLevel, InstallUILevel defaultValue)
+InstallUILevel InstallUILevelSetting::ToUILevel(const CString& level, InstallUILevel defaultValue)
 {
-	if (! pszLevel || 0 == strlen(pszLevel))
-		return defaultValue;
-
-	if (0 == strcmpi(pszLevel, "full"))
+	if (level == TEXT("full"))
 		return InstallUILevelFull;
-	else if (0 == strcmpi(pszLevel, "basic"))
+	if (level == TEXT("basic"))
 		return InstallUILevelBasic;
-	else if (0 == strcmpi(pszLevel, "silent"))
+	if (level == TEXT("silent"))
 		return InstallUILevelSilent;
 	else
 		return defaultValue;

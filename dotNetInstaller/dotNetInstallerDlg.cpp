@@ -161,7 +161,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
                 ExtractCab(); // the command may need to execute a file
             }
 
-			m_Settings.ExecuteCompleteCode();
+			m_Settings.ExecuteCompleteCode(false);
 			OnOK();
 		}
 	}
@@ -414,7 +414,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		{
 			if (LoadComponentsList())
 			{
-				m_Settings.ExecuteCompleteCode();
+				m_Settings.ExecuteCompleteCode(true);
 				OnOK();
 			}
 			else if (CurrentInstallUILevel.IsSilent())

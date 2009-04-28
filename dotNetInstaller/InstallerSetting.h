@@ -16,6 +16,7 @@ public:
 	CString status_installed;
 	CString status_notinstalled;
 	CString failed_exec_command_continue;
+	CString installation_none;
 	CString installation_completed;
     bool must_reboot_required;
 	CString reboot_required;
@@ -29,7 +30,8 @@ public:
 	CString complete_command_silent;
 	// complete command on a basic UI install
 	CString complete_command_basic;
-	// if true auto close the dialog (display installation_completed message and execute the complete_command) if all the components are already installed
+	// if true auto close the dialog (display installation_completed or installation_none message 
+	// and execute the complete_command) if all the components are already installed
 	bool auto_close_if_installed;
     // if true, auto-close on error when the user chooses not to continue
     bool auto_close_on_error;
@@ -54,7 +56,7 @@ public:
     // auto-enabled log
     bool log_enabled;
     CString log_file;
-	void ExecuteCompleteCode() const;
+	void ExecuteCompleteCode(bool componentsInstalled) const;
     CString ValidatePath(LPCTSTR p_Path);
     // dialog elements position
     WidgetPosition dialog_position;

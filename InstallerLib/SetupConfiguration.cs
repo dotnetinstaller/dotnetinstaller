@@ -36,6 +36,7 @@ namespace InstallerLib
             m_skip_caption = tpl.skip_caption;
             m_install_caption = tpl.install_caption;
             m_installation_completed = tpl.installation_completed;
+            m_installation_none = tpl.installation_none;
             m_installing_component_wait = tpl.installing_component_wait;
             m_reboot_required = tpl.reboot_required;
             m_status_installed = tpl.status_installed;
@@ -172,6 +173,16 @@ namespace InstallerLib
         {
             get { return m_failed_exec_command_continue; }
             set { m_failed_exec_command_continue = value; }
+        }
+
+        private string m_installation_none;
+        [Description("No pre-requisite components required message. (REQUIRED)")]
+        [Category("Messages")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        public string installation_none
+        {
+            get { return m_installation_none; }
+            set { m_installation_none = value; }
         }
 
         private string m_installation_completed;
@@ -455,6 +466,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("status_notinstalled", m_status_notinstalled);
             e.XmlWriter.WriteAttributeString("failed_exec_command_continue", m_failed_exec_command_continue);
             e.XmlWriter.WriteAttributeString("installation_completed", m_installation_completed);
+            e.XmlWriter.WriteAttributeString("installation_none", m_installation_none);
             // e.XmlWriter.WriteAttributeString("dialog_install_next",m_dialog_install_next);
             // e.XmlWriter.WriteAttributeString("dialog_install_skip",m_dialog_install_skip);
             e.XmlWriter.WriteAttributeString("installing_component_wait", m_installing_component_wait);
@@ -515,6 +527,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "skip_caption", ref m_skip_caption);
             ReadAttributeValue(e, "install_caption", ref m_install_caption);
             ReadAttributeValue(e, "installation_completed", ref m_installation_completed);
+            ReadAttributeValue(e, "installation_none", ref m_installation_none);
             ReadAttributeValue(e, "installing_component_wait", ref m_installing_component_wait);
             ReadAttributeValue(e, "reboot_required", ref m_reboot_required);
             ReadAttributeValue(e, "must_reboot_required", ref m_must_reboot_required);

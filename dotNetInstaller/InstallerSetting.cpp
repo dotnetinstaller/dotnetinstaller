@@ -16,11 +16,17 @@ InstallerSetting::InstallerSetting()
 
 }
 
-void InstallerSetting::ExecuteCompleteCode() const
+void InstallerSetting::ExecuteCompleteCode(bool componentsInstalled) const
 {
 	ApplicationLog.Write(TEXT("--Complete Command"));
 
     CString message = installation_completed;
+	// installation completed, but no components have been installed
+	if (! componentsInstalled && installation_none.GetLength())
+	{
+		message = installation_none;
+	}
+
 	if (message.Trim().GetLength() > 0)
     {
 		DniMessageBox(message, MB_OK|MB_ICONINFORMATION);
