@@ -125,6 +125,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 		Documentation\Content\DeploymentStrategies.aml = Documentation\Content\DeploymentStrategies.aml
 		Documentation\Content\dotNetInstaller.aml = Documentation\Content\dotNetInstaller.aml
 		Documentation\Content\dotNetInstallerLayout.aml = Documentation\Content\dotNetInstallerLayout.aml
+		Documentation\Content\DownloadComponents.aml = Documentation\Content\DownloadComponents.aml
 		Documentation\Content\GettingStarted.aml = Documentation\Content\GettingStarted.aml
 		Documentation\Content\InstallEditor.aml = Documentation\Content\InstallEditor.aml
 		Documentation\Content\InstallLinker.aml = Documentation\Content\InstallLinker.aml

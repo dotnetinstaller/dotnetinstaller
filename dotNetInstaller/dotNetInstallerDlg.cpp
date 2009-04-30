@@ -118,7 +118,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	{
 		HBITMAP hBitmap;
 		if ( m_Settings.dialog_bitmap.GetLength() > 0 &&
-			DVLib::FileExistsCustom(m_Settings.dialog_bitmap) )
+			DVLib::FileExists(m_Settings.dialog_bitmap) )
 		{
 			hBitmap = DVLib::LoadBitmapFromFile(m_Settings.dialog_bitmap);
 		}
@@ -528,7 +528,7 @@ void CdotNetInstallerDlg::OnDestroy()
         // even if a reboot is required, the temporary folder is gone; next run will re-extract components
         CString cabpath = (m_Settings.cab_path.GetLength() > 0) ? m_Settings.cab_path : DVLib::GetSessionTempPath(true);
         cabpath = m_Settings.ValidatePath(cabpath);
-        if (m_Settings.cab_path_autodelete && cabpath.GetLength() && DVLib::FileExistsCustom(cabpath))
+        if (m_Settings.cab_path_autodelete && cabpath.GetLength() && DVLib::FileExists(cabpath))
         {
 		    ApplicationLog.Write(TEXT("Deleting temporary folder: ") + cabpath);
             DVLib::DeleteDirectoryDeep(cabpath);

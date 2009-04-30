@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="6a0bb485-df81-413c-9bf3-714dc13b3661" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>Download components represent a workflow that allows downloading of some or all pre-requisites.</para>
+    </introduction>
+    <section address="downloaddialogs">
+      <title>Download Dialog</title>
+      <content>
+        <para>
+          A <newTerm>Download Dialog</newTerm> encapsulates one or more downloaded files. It shows a progress bar
+          during download and supports both manual and automatic download start.
+        </para>
+      </content>
+    </section>
+    <section address="downloadfile">
+      <title>Downloaded File</title>
+      <content>
+        <para>
+          A <newTerm>Downloaded File</newTerm> encapsulates a single downloaded file. It defines a source URL,
+          a destination path and file name as well as additional options. Downloaded file options enable mixed-mode
+          physical media distribution scenarios where frequently required components are embedded and other
+          components downloaded.
+          <tableDefinition>
+            <definedTerm>componentname</definedTerm>
+            <definition>
+              A component name.
+            </definition>
+            <definedTerm>alwaysdownload</definedTerm>
+            <definition>
+              Automatically begin download or require the user to press <ui>Start</ui>.
+            </definition>
+            <definedTerm>destinationpath</definedTerm>
+            <definition>
+              The name of the folder where to download or copy file. This is typically <literal>#CABPATH</literal> or <literal>#TEMPPATH</literal>.
+            </definition>
+            <definedTerm>destinationfilename</definedTerm>
+            <definition>
+              The name of the downloaded or copied file.
+            </definition>
+            <definedTerm>sourceurl</definedTerm>
+            <definition>
+              An url where to download the file from.
+            </definition>
+            <definedTerm>sourcepath</definedTerm>
+            <definition>
+              An optional source location to be used instead of <literal>sourceurl</literal>. This enables a scenario of
+              packages containing frequently required files only. The missing files are only downloaded when the component
+              is not present on the system.
+            </definition>
+          </tableDefinition>
+        </para>
+        <alert class="important">
+          <para>
+            When defining <newTerm>Download Files</newTerm>, make sure to set <literal>destinationpath</literal> to the same
+            value as the parent component's package or command. For example, for <literal>msi</literal> components, set
+            <literal>destinationpath</literal> to the same value as <literal>package</literal> (eg.
+            <literal>#CABPATH\MyInstaller.msi</literal>).
+          </para>
+        </alert>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

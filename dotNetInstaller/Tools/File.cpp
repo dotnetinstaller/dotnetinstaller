@@ -76,7 +76,7 @@ bool DVLib::ShellExecuteDefault(LPCTSTR file)
 }
 
 // check if a file or directory exists
-bool DVLib::FileExistsCustom(LPCTSTR filename)
+bool DVLib::FileExists(LPCTSTR filename)
 {
 	// removing double quotes from the path ensures Win32 will validate a good path
 	CString fileNameNoDoubleQuotes = CString(filename);
@@ -149,7 +149,7 @@ CString DVLib::GetPathFromFullFilePath(LPCTSTR p_FileFullPath)
 
 //Concatenates two strings that represent properly formed paths into one path
 // Non uso PathCombine perchè non è presente in Win95
-CString DVLib::PathCombineCustom(LPCTSTR p_Path1, LPCTSTR p_Path2, char p_separator)
+CString DVLib::PathCombine(LPCTSTR p_Path1, LPCTSTR p_Path2, char p_separator)
 {
 	CString l_Path1 = p_Path1;
 	CString l_Path2 = p_Path2;

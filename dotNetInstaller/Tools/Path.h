@@ -8,11 +8,12 @@ namespace DVLib
 	CString GetSystemPath();
 	CString GetWindowsPath();
 	CString GetSystemWindowsPath();
-	CString GetTempPathCustom();
+	CString GetTempPath();
     // get a unique guid for this run of dni
     CString GetSessionGUID();
     // get a unique temporary directory for this run of dni
     CString GetSessionTempPath(bool returnonly = false);
 	CString GetTempFullFileName();
 	void DeleteDirectoryDeep(const CString& path);
+	bool CreateDirectoryPath(const CString& path);
 }

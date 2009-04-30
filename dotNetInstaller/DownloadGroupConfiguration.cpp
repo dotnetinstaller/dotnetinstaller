@@ -12,9 +12,17 @@ bool DownloadGroupConfiguration::Run(CWnd * p_Parent)
 {
 	DownloadDialog l_dgDownload(* this, p_Parent);
 	
-	if (! l_dgDownload.IsDownloadRequired())
+	if (l_dgDownload.IsCopyRequired())
+	{
+		l_dgDownload.CopyFromSourcePath();
 		return true;
+	}
 
-	l_dgDownload.DoModal();
-	return l_dgDownload.IsDownloadCompleted();
+	if (l_dgDownload.IsDownloadRequired())
+	{
+		l_dgDownload.DoModal();
+		return l_dgDownload.IsDownloadCompleted();
+	}
+
+	return true;
 }

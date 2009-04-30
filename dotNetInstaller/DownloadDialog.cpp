@@ -207,6 +207,39 @@ UINT DownloadDialog::ThreadProc(LPVOID pParam)
 	return 0;
 }
 
+void DownloadDialog::CopyFromSourcePath()
+{
+	for (int i = 0; i < m_Components.GetCount(); i++)
+	{
+		DownloadComponent l_Component(this, &(m_Components.GetAt(i)), i + 1, (int) m_Components.GetCount());
+		if (l_Component.IsCopyRequired())
+		{
+			l_Component.CopyFromSourcePath();
+		}
+	}
+}
+
+bool DownloadDialog::IsCopyRequired()
+{
+	for (int i = 0; i < m_Components.GetCount(); i++)
+	{
+		DownloadComponent l_Component(this, &(m_Components.GetAt(i)), i + 1, (int) m_Components.GetCount());
+		bool l_CopyRequired = l_Component.IsCopyRequired();
+				
+		CString l_destinationFullFileName = l_Component.GetDestinationFileName();
+		ApplicationLog.Write( TEXT("DestinationFullFileName: "), l_destinationFullFileName);
+		ApplicationLog.Write( TEXT("FileExists: "), FileExists(l_destinationFullFileName) ? TEXT("True") : TEXT("False") );
+		ApplicationLog.Write( TEXT("Copy: "), l_CopyRequired ? TEXT("True") : TEXT("False") );
+
+		if (l_CopyRequired)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool DownloadDialog::IsDownloadRequired()
 {
 	for (int i = 0; i < m_Components.GetCount(); i++)
@@ -216,7 +249,7 @@ bool DownloadDialog::IsDownloadRequired()
 				
 		CString l_destinationFullFileName = l_Component.GetDestinationFileName();
 		ApplicationLog.Write( TEXT("DestinationFullFileName: "), l_destinationFullFileName);
-		ApplicationLog.Write( TEXT("FileExists: "), FileExistsCustom(l_destinationFullFileName) ? TEXT("True") : TEXT("False") );
+		ApplicationLog.Write( TEXT("FileExists: "), FileExists(l_destinationFullFileName) ? TEXT("True") : TEXT("False") );
 		ApplicationLog.Write( TEXT("Download: "), l_DownloadRequired ? TEXT("True") : TEXT("False") );
 
 		if (l_DownloadRequired)

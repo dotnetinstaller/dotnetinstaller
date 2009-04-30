@@ -57,6 +57,10 @@ public:
 	inline bool IsDownloadCompleted() { return m_bDownloadCompleted; };
 	inline bool IsDownloadStarted() { return m_pDownloadThread != NULL; }
 	bool IsDownloadRequired();
+	bool IsCopyRequired();
+
+	// copy local SourcePath files
+	void CopyFromSourcePath();
 
 	// IDownloadCallback
 	virtual void Status(ULONG p_CurrentProgress, ULONG p_MaxProgress, LPCTSTR p_Description);

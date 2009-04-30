@@ -536,8 +536,8 @@ void ConfigFile::LoadConfigFromResource(HMODULE p_Module)
 
 void ConfigFile::LoadXmlSettings()
 {
-	CString settings_file = DVLib::PathCombineCustom(DVLib::GetAppPath(), TEXT("configuration.xml"));
-	if (DVLib::FileExistsCustom(settings_file))
+	CString settings_file = DVLib::PathCombine(DVLib::GetAppPath(), TEXT("configuration.xml"));
+	if (DVLib::FileExists(settings_file))
 	{
 		ApplicationLog.Write(TEXT("Loading configuration from file: "), settings_file);
 		LoadConfigFromFile(settings_file);

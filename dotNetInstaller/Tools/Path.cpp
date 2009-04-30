@@ -47,17 +47,13 @@ CString DVLib::GetSystemWindowsPath()
 	return l_bufferWindows;
 }
 
-CString DVLib::GetTempPathCustom()
+CString DVLib::GetTempPath()
 {
-	//TempPath
 	TCHAR l_bufferTempPath[MAX_PATH+1];
 	ZeroMemory(l_bufferTempPath,MAX_PATH+1);
 	::GetTempPath(MAX_PATH+1, l_bufferTempPath);
-
-	if (DVLib::FileExistsCustom(l_bufferTempPath) == false)
-		//Try to create the directory (because on Win95/98 the directory cannot exist, see : http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/base/gettemppath.asp )
-		::CreateDirectory(l_bufferTempPath, NULL);
-
+	// on Win95/98 the directory does not exist, http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/base/gettemppath.asp
+	DVLib::CreateDirectoryPath(l_bufferTempPath);
 	return l_bufferTempPath;
 }
 
@@ -75,13 +71,11 @@ CString DVLib::GetSessionTempPath(bool returnonly)
 {
     // not threadsafe
     static CString s_tempDirectory;
+
     if (s_tempDirectory.GetLength() == 0 && ! returnonly)
     {
-        s_tempDirectory = DVLib::PathCombineCustom(DVLib::GetTempPathCustom(), DVLib::GetSessionGUID());
-	    if (DVLib::FileExistsCustom(s_tempDirectory) == false)
-        {
-		    ::CreateDirectory(s_tempDirectory, NULL);
-        }
+        s_tempDirectory = DVLib::PathCombine(DVLib::GetTempPath(), DVLib::GetSessionGUID());
+		DVLib::CreateDirectoryPath(s_tempDirectory);
     }
 
     return s_tempDirectory;
@@ -150,4 +144,24 @@ void DVLib::DeleteDirectoryDeep(const CString& path)
     FindClose(h);
  
     ::RemoveDirectoryW((LPCWSTR) path);
+}
+
+bool DVLib::CreateDirectoryPath(const CString& path)
+{
+    if (DVLib::FileExists(path))
+		return false;
+
+	if (path.IsEmpty())
+		return false;
+
+    if (! ::CreateDirectory(path, NULL))
+	{
+		std::string error = "Error creating directory \"";
+		error.append(DVLib::Tstring2string(path));
+		error.append("\"\r\n");
+		error.append(DVLib::Tstring2string(DVLib::TranslateErrorMsg(DVLib::LastError())));
+		throw std::exception(error.c_str());
+	}
+
+	return true;
 }

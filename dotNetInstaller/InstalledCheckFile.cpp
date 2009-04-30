@@ -17,7 +17,7 @@ bool InstalledCheckFile::IsInstalled()
 {
 	try
 	{
-		if (DVLib::FileExistsCustom(filename))
+		if (DVLib::FileExists(filename))
 		{
 			CString l_FileVersion = DVLib::GetFileVersionString(filename);
 
@@ -25,7 +25,7 @@ bool InstalledCheckFile::IsInstalled()
 			{
 				if (comparison == TEXT("exists"))
 				{
-					return DVLib::FileExistsCustom(filename);
+					return DVLib::FileExists(filename);
 				}
 				else if (comparison == TEXT("match"))
 				{

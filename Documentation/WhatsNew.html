@@ -95,9 +95,9 @@ code { color: #b22222; font-family: Courier New; }
         <li>Expanded <code>status_installed</code> and <code>status_notinstalled</code> per-component.</li>
         <li>Download dialog <code>autostartdownload</code> default value is changed to <code>
             true</code>.</li>
-        <li>Added <code>sourcepath</code> to support optional or physical media distribution
-            scnearios where download components check for a local file then download to a different
-            temporary location.</li>
+        <li>Added <code>sourcepath</code> to support mixed-mode physical media distribution
+            scenarios where frequently required components are embedded and other components
+            downloaded.</li>
         <li>dotNetInstaller process exit code is now 0 on success, MSI return code on an MSI
             component failure, process exit code on a non-zero cmd component return, -2 on cancel
             from main dialog and -1 on any other error. Check <code>%ERRORLEVEL%</code> in batch

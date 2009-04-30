@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <windows.h>
@@ -360,7 +359,7 @@ namespace DVLib
 		    TCHAR l_bufferSystem[MAX_PATH+1];
 		    ZeroMemory(l_bufferSystem,MAX_PATH+1);
 		    GetSystemDirectory(l_bufferSystem, MAX_PATH+1);
-		    CString l_UserExePath = PathCombineCustom(l_bufferSystem, TEXT("user.exe"));
+		    CString l_UserExePath = PathCombine(l_bufferSystem, TEXT("user.exe"));
 
 		    dwVerInfoSize = GetFileVersionInfoSize(l_UserExePath, &dwVerHnd);
 		    if (dwVerInfoSize <= 0)

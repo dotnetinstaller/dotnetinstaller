@@ -32,15 +32,11 @@ void InstallerLog::Write(LPCTSTR message)
     {
         if (m_LogFile.GetLength() == 0) 
         {
-            m_LogFile = DVLib::PathCombineCustom(DVLib::GetTempPathCustom(), L"dotNetInstallerLog.txt");
+            m_LogFile = DVLib::PathCombine(DVLib::GetTempPath(), L"dotNetInstallerLog.txt");
         }
 
         CString path = DVLib::GetPathFromFullFilePath(m_LogFile);
-        if (path.GetLength() && ! DVLib::FileExistsCustom(path))
-        {
-            if (! ::CreateDirectory(path, NULL))
-                throw std::exception("Failed to create log directory");
-        }
+		DVLib::CreateDirectoryPath(path);
 
 	    m_hFile = CreateFile(m_LogFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	    if (m_hFile == INVALID_HANDLE_VALUE)

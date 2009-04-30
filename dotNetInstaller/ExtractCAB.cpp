@@ -88,18 +88,11 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
 
     CString cabpath = (m_Settings.cab_path.GetLength() > 0) ? m_Settings.cab_path : DVLib::GetSessionTempPath();
     cabpath = m_Settings.ValidatePath(cabpath);
-	ApplicationLog.Write( TEXT("Cabpath is: "), cabpath );
+	ApplicationLog.Write( TEXT("Cabpath: "), cabpath );
+	DVLib::CreateDirectoryPath(cabpath);
 
-    if (! DVLib::FileExistsCustom(cabpath))
-    {
-	    if (! ::CreateDirectory(cabpath, NULL))
-        {
-            throw std::exception("Failed to create CABPATH directory");
-        }
-    }
-
-    CString tempFile = DVLib::PathCombineCustom(cabpath, TEXT("setup.cab") );
-	ApplicationLog.Write( TEXT("TempFile is: "), tempFile );
+    CString tempFile = DVLib::PathCombine(cabpath, TEXT("setup.cab") );
+	ApplicationLog.Write( TEXT("TempFile: "), tempFile );
     HANDLE l_hFile = CreateFile(tempFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if (l_hFile == INVALID_HANDLE_VALUE)
     {

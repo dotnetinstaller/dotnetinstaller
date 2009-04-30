@@ -11,7 +11,6 @@
 // 
 // Release history:
 //   December 24, 1999: Version 1.0.  First release.
-//
 //////////////////////////////////////////////////////////////////////
 class DownloadComponent : public IBindStatusCallback
 {
@@ -36,6 +35,9 @@ public:
 
 	// returns true if a download is required (local file doesn't exist, etc.)
 	bool IsDownloadRequired() const;
+	// returns true if a local copy from source path is required (or possible)
+	bool IsCopyRequired() const;
+	// destination filename
 	CString GetDestinationFileName() const;
 
 	// IBindStatusCallback methods.  Note that the only method called by IE
@@ -112,6 +114,8 @@ public:
 
 	// Download the specified component.
 	void StartDownload();
+	// Copy the component from SourcePath.
+	void CopyFromSourcePath();
 };
 
 UINT DownloadComponents(IDownloadCallback * p_Callback);
