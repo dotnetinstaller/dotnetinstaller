@@ -18,20 +18,24 @@ DownloadComponent::DownloadComponent(
 
 bool DownloadComponent::IsCopyRequired() const
 {
+	// no source path, nothing to copy
 	if (m_Component->SourcePath.IsEmpty())
 		return false;
 
-	if (! m_Component->AlwaysDownload)
-	{
-		// destination file has already been downloaded/copied
-		if (FileExists(GetDestinationFileName()))
-			return false;
+	// download every time
+	if (m_Component->AlwaysDownload)
+		return false;
 
-		if (FileExists(m_Component->SourcePath))
-			return true;
-	}
+	// destination file has already been downloaded/copied
+	if (FileExists(GetDestinationFileName()))
+		return false;
 
-	return true;
+	// source path file exists, copy it
+	if (FileExists(m_Component->SourcePath))
+		return true;
+
+	// source path file doesn't exist
+	return false;
 }
 
 bool DownloadComponent::IsDownloadRequired() const
