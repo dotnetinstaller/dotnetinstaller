@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "DownloadDialog.h"
+#include "Tools/Format.h"
 
 #define WM_USER_SETSTATUSDOWNLOAD (WM_USER+1)
 #define WM_USER_CLOSE_DIALOG (WM_USER+2)
@@ -127,7 +128,7 @@ afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM lParam
 		}
 		else if (l_Param->Type == StatusType_Error) //ERROR
 		{
-			ApplicationLog.Write( TEXT("***Download ERROR"));
+			ApplicationLog.Write( TEXT("***Download ERROR: "), l_Param->Error);
 			DniSilentMessageBox(l_Param->Error, MB_OK|MB_ICONSTOP);
 			m_bCancelOrErrorDownload = true;
 			DownloadStatusParam::Free(l_Param);
@@ -259,4 +260,41 @@ bool DownloadDialog::IsDownloadRequired()
 	}
 
 	return false;
+}
+
+void DownloadDialog::DownloadComponents(IDownloadCallback * p_Callback)
+{
+	CString l_tmpLastComponent = TEXT("-");
+	try
+	{
+		DownloadComponentInfoVector * l_List = p_Callback->GetComponents();
+		for (int i = 0; i < l_List->GetCount(); i++)
+		{
+			//verifico se l'utente ha premuto cancel
+			if (p_Callback->WantToStop())
+			{
+				p_Callback->CanceledByTheUser();
+				return;
+			}
+
+			l_tmpLastComponent = l_List->GetAt(i).ComponentName;
+
+			//Download del componente
+			DownloadComponent l_Component(p_Callback, &(l_List->GetAt(i)), i+1, (int)l_List->GetCount() );
+			l_Component.StartDownload();
+
+			//verifico se l'utente ha premuto cancel
+			if (l_Component.IsCanceledByTheUser())
+			{
+				p_Callback->CanceledByTheUser();
+				return;
+			}
+		}
+
+		p_Callback->DownloadComplete();
+	}
+	catch(std::exception& ex)
+	{
+	    p_Callback->DownloadError(DVLib::string2Tstring(ex.what()).c_str());
+	}
 }

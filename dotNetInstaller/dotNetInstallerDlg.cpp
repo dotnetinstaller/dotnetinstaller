@@ -17,6 +17,7 @@
 #include "ExtractCAB.h"
 #include "InstallerCommandLineInfo.h"
 #include "Image.h"
+#include "Tools/Format.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

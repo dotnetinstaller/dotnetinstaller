@@ -1,7 +1,6 @@
 #pragma once
 
 #include "DownloadCallback.h"
-#include "Tools\Format.h"
 
 //////////////////////////////////////////////////////////////////////
 // Original class based on:
@@ -39,84 +38,21 @@ public:
 	bool IsCopyRequired() const;
 	// destination filename
 	CString GetDestinationFileName() const;
-
-	// IBindStatusCallback methods.  Note that the only method called by IE
-	// is OnProgress(), so the others just return E_NOTIMPL.
-	STDMETHOD(OnStartBinding)(
-		/* [in] */ DWORD dwReserved,
-		/* [in] */ IBinding __RPC_FAR *pib)
-		{ return E_NOTIMPL; }
-
-	STDMETHOD(GetPriority)(
-		/* [out] */ LONG __RPC_FAR *pnPriority)
-		{ return E_NOTIMPL; }
-
-	STDMETHOD(OnLowResource)(
-		/* [in] */ DWORD reserved)
-		{ return E_NOTIMPL; }
-
-	STDMETHOD(OnProgress)(
-		/* [in] */ ULONG ulProgress,
-		/* [in] */ ULONG ulProgressMax,
-		/* [in] */ ULONG ulStatusCode,
-		/* [in] */ LPCWSTR wszStatusText)
-	{
-		// Did the user hit the Stop button?
-		if ( m_Callback->WantToStop() )
-		{
-			m_bCanceledByTheUser = true;
-			return E_ABORT;
-		}
-
-		CString tmp;
-		tmp.Format(TEXT("%s (%s of %s) - %d/%d"), m_Component->ComponentName, FormatNumberToBytes(ulProgress), FormatNumberToBytes(ulProgressMax), m_CurrentComponent, m_TotalComponents );
-
-		m_Callback->Status(ulProgress, ulProgressMax, tmp);
-
-		return S_OK;
-	}
-
-	STDMETHOD(OnStopBinding)(
-		/* [in] */ HRESULT hresult,
-		/* [unique][in] */ LPCWSTR szError)
-		{ return E_NOTIMPL; }
-
-	STDMETHOD(GetBindInfo)(
-		/* [out] */ DWORD __RPC_FAR *grfBINDF,
-		/* [unique][out][in] */ BINDINFO __RPC_FAR *pbindinfo)
-		{ return E_NOTIMPL; }
-
-	STDMETHOD(OnDataAvailable)(
-		/* [in] */ DWORD grfBSCF,
-		/* [in] */ DWORD dwSize,
-		/* [in] */ FORMATETC __RPC_FAR *pformatetc,
-		/* [in] */ STGMEDIUM __RPC_FAR *pstgmed)
-		{ return E_NOTIMPL; }
-
-	STDMETHOD(OnObjectAvailable)(
-		/* [in] */ REFIID riid,
-		/* [iid_is][in] */ IUnknown __RPC_FAR *punk)
-		{ return E_NOTIMPL; }
-
-	// IUnknown methods.  Note that IE never calls any of these methods, since
-	// the caller owns the IBindStatusCallback interface, so the methods all
-	// return zero/E_NOTIMPL.
-	STDMETHOD_(ULONG,AddRef)()
-		{ return 0; }
-
-	STDMETHOD_(ULONG,Release)()
-		{ return 0; }
-
-	STDMETHOD(QueryInterface)(
-	/* [in] */ REFIID riid,
-	/* [iid_is][out] */ void __RPC_FAR *__RPC_FAR *ppvObject)
-		{ return E_NOTIMPL; }
-
+	// IBindStatusCallback
+	STDMETHOD(OnStartBinding)(DWORD dwReserved, IBinding __RPC_FAR *pib);
+	STDMETHOD(GetPriority)(LONG __RPC_FAR *pnPriority);
+	STDMETHOD(OnLowResource)(DWORD reserved);
+	STDMETHOD(OnProgress)(ULONG ulProgress, ULONG ulProgressMax, ULONG ulStatusCode, LPCWSTR wszStatusText);
+	STDMETHOD(OnStopBinding)(HRESULT hresult, LPCWSTR szError);
+	STDMETHOD(GetBindInfo)(DWORD __RPC_FAR *grfBINDF, BINDINFO __RPC_FAR *pbindinfo);
+	STDMETHOD(OnDataAvailable)(DWORD grfBSCF, DWORD dwSize, FORMATETC __RPC_FAR *pformatetc, STGMEDIUM __RPC_FAR *pstgmed);
+	STDMETHOD(OnObjectAvailable)(REFIID riid, IUnknown __RPC_FAR *punk);
+	// IUnknown
+	STDMETHOD_(ULONG, AddRef)();
+	STDMETHOD_(ULONG, Release)();
+	STDMETHOD(QueryInterface)(REFIID riid, void __RPC_FAR *__RPC_FAR *ppvObject);
 	// Download the specified component.
 	void StartDownload();
 	// Copy the component from SourcePath.
 	void CopyFromSourcePath();
 };
-
-UINT DownloadComponents(IDownloadCallback * p_Callback);
-UINT DownloadComponentsThread( LPVOID pParam );

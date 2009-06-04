@@ -13,6 +13,7 @@
 #include "InstallerCommandLineInfo.h"
 #include "DownloadDialog.h"
 #include "Image.h"
+#include "Tools\Format.h"
 
 ConfigFile::ConfigFile()
     : m_lcidtype(LcidUserExe)

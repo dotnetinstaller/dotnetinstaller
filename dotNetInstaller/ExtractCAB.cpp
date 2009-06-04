@@ -7,6 +7,7 @@
 #include "Tools/Guid.h"
 #include "Tools/Cab/ExtractT.hpp"
 #include "InstallComponentDlg.h"
+#include "Tools/Format.h"
 
 ExtractCABProcessor::ExtractCABProcessor(ExtractCABComponent * pComponent)
     : m_pComponent(pComponent)

@@ -3,6 +3,7 @@
 #include "InstallerCommandLineInfo.h"
 #include "InstallerTypes.h"
 #include "ConfigFile.h"
+#include "Tools/Format.h"
 
 InstallerSetting::InstallerSetting()
     : must_reboot_required(false)

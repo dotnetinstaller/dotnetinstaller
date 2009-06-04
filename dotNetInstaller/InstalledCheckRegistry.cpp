@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "InstalledCheckRegistry.h"
+#include "Tools/Format.h"
 
 InstalledCheckRegistry::InstalledCheckRegistry(void)
 {

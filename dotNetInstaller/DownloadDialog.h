@@ -35,6 +35,8 @@ private:
 	//HWND m_HWNDProgressBar;
 	//HWND m_HWNDLabelStatus;
 
+	static void DownloadComponents(IDownloadCallback *);
+
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();

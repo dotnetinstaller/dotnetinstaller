@@ -1,4 +1,3 @@
-
 #pragma once
 namespace DVLib
 {
@@ -6,6 +5,13 @@ namespace DVLib
 	{
 		CString tmp;
         tmp.Format(TEXT("%lu"), p_Number);
+        return tmp;
+    }
+
+	inline CString FormatHexNumber(ULONG p_Number)
+	{
+		CString tmp;
+        tmp.Format(TEXT("0x%x"), p_Number);
         return tmp;
     }
 
