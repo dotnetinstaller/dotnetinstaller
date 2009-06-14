@@ -3,11 +3,11 @@ using System.ComponentModel;
 using System.Xml;
 using System.Drawing;
 using System.Drawing.Design;
-using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Collections.Specialized;
 using System.IO;
 using System.Text;
+using System.Reflection;
 
 namespace InstallerLib
 {
@@ -39,6 +39,7 @@ namespace InstallerLib
         }
 
         private string m_filename = null;
+        [Browsable(false)]
         public string filename
         {
             get { return m_filename; }
@@ -48,7 +49,7 @@ namespace InstallerLib
         private InstallUILevel m_ui_level = InstallUILevel.full;
         [Description("Set the install-time UI level. Default to silent or basic UI installation.")]
         [Category("Installation Runtime")]
-        public InstallUILevel UILevel
+        public InstallUILevel ui_level
         {
             get { return m_ui_level; }
             set { m_ui_level = value; }
@@ -101,6 +102,14 @@ namespace InstallerLib
             set { m_lcidtype = value; }
         }
 
+        private Editor m_editor = new Editor();
+        [Description(@"Editor information.")]
+        [Category("Configuration File")]
+        public Editor editor
+        {
+            get { return m_editor; }
+        }
+
         public void Save()
         {
             if (string.IsNullOrEmpty(m_filename))
@@ -124,6 +133,7 @@ namespace InstallerLib
         /// <summary>
         /// Raw configuration xml.
         /// </summary>
+        [Browsable(false)]
         public XmlDocument Xml
         {
             get
@@ -158,9 +168,8 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("fileversion", m_fileversion);
             e.XmlWriter.WriteAttributeString("productversion", m_productversion);
             // tag schema
-            e.XmlWriter.WriteStartElement("schema");
-            e.XmlWriter.WriteAttributeString("version", m_CurrentSchemaVersion.ToString());
-            e.XmlWriter.WriteEndElement();
+            editor.ToXml(e.XmlWriter);
+            // file attributes
             fileattributes.ToXml(e.XmlWriter);
             base.OnXmlWriteTag(e);
         }
@@ -191,7 +200,7 @@ namespace InstallerLib
             switch (child.LocalName)
             {
                 case "schema":
-                    // ignore schema, currently schemas are backwards compatible
+                    m_editor = Editor.CreateFromXml(child);
                     processed = true;
                     break;
                 case "fileattributes":
@@ -230,54 +239,7 @@ namespace InstallerLib
 
         public void LoadXml(XmlDocument xml)
         {
-            base.FromXml((XmlElement)xml.SelectSingleNode("//configurations"));
-        }
-
-        private static int m_CurrentSchemaVersion = 1;
-
-        /// <summary>
-        /// Returns true is the specified filename match the current schema version.
-        /// </summary>
-        /// <returns></returns>
-        public bool IsCurrentSchemaVersion(string p_FileName, out string p_CheckDesription)
-        {
-            XmlDocument l_XmlElement = new XmlDocument();
-            l_XmlElement.Load(p_FileName);
-
-            XmlNode l_SchemaNode = l_XmlElement.SelectSingleNode("//configurations/schema");
-
-            if (l_SchemaNode == null || l_SchemaNode.Attributes["version"] == null)
-            {
-                p_CheckDesription = "Node //configurations/schema or attribute version not found";
-                return false;
-            }
-            else
-            {
-                try
-                {
-                    int l_Version = int.Parse(l_SchemaNode.Attributes["version"].InnerText);
-                    if (l_Version < m_CurrentSchemaVersion)
-                    {
-                        p_CheckDesription = "Version is smaller than editor schema version";
-                        return false;
-                    }
-                    else if (l_Version > m_CurrentSchemaVersion)
-                    {
-                        p_CheckDesription = "Version is grater than editor schema version";
-                        return false;
-                    }
-                    else
-                    {
-                        p_CheckDesription = "Version Checked";
-                        return true;
-                    }
-                }
-                catch (Exception err)
-                {
-                    p_CheckDesription = "Failed to parse version: " + err.Message;
-                    return false;
-                }
-            }
+            base.FromXml((XmlElement) xml.SelectSingleNode("//configurations"));
         }
     }
 }

@@ -81,6 +81,8 @@ namespace InstallerEditor
 
 	public class TreeNodeConfigFile : TreeNodeImpl
 	{
+        private bool m_dirty = false;
+
 		public TreeNodeConfigFile(ConfigFile p_Config)
 		{
 			base.Text = "Config File";
@@ -95,9 +97,15 @@ namespace InstallerEditor
 		private ConfigFile m_ConfigFile;
 		public ConfigFile ConfigFile
 		{
-			get{return m_ConfigFile;}
-			set{m_ConfigFile = value;}
+			get{ return m_ConfigFile; }
+			set{ m_ConfigFile = value; }
 		}
+
+        public bool IsDirty
+        {
+            get { return m_dirty; }
+            set { m_dirty = value; }
+        }
 	}
 
 	public class TreeNodeConfiguration : TreeNodeImpl

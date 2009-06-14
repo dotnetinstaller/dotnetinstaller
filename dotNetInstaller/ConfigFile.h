@@ -9,6 +9,8 @@ private:
     LcidType m_lcidtype;
     TiXmlDocument m_XmlDocument;
 	InstallerSetting m_Setting;
+	CString schema_generator;
+	CString schema_version;
 public:
     ConfigFile();
     int Load();
@@ -27,4 +29,5 @@ private:
     void LoadConfigFromResource(HMODULE p_Module);
     void ProcessUILevel(InstallUILevel value);
     void ProcessLcidType(const CString& value);
+	void LoadSchemaVersion(TiXmlElement * p_Node);
 };

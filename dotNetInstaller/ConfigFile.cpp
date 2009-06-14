@@ -14,9 +14,12 @@
 #include "DownloadDialog.h"
 #include "Image.h"
 #include "Tools\Format.h"
+#include <Version/Version.h>
 
 ConfigFile::ConfigFile()
     : m_lcidtype(LcidUserExe)
+	, schema_generator("dotNetInstaller InstallerEditor")
+	, schema_version("1")
 {
 
 }
@@ -311,9 +314,6 @@ bool ConfigFile::LoadReferenceConfigNode(TiXmlElement * p_Node, CWnd * p_Parent)
 
 int ConfigFile::LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additional_Config)
 {
-	bool l_bFound = false;
-	bool l_bAbort = false;
-
 	if (strcmp(p_Node->Value(), "configurations") != 0)
 	{
 		throw std::exception("Invalid configuration file, node name not supported, expected 'configurations'.");
@@ -327,15 +327,16 @@ int ConfigFile::LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additio
     ProcessUILevel(InstallUILevelSetting::ToUILevel(p_Node->AttributeT("ui_level").data()));
     ProcessLcidType(p_Node->AttributeT("lcid_type").data());
 
-	CdotNetInstallerDlg dlg;
-//	m_pMainWnd = &dlg;
+	LoadSchemaVersion(p_Node);
 
+	CdotNetInstallerDlg dlg;
+	bool l_bFound = false;
+	bool l_bAbort = false;
 	TiXmlNode * child = NULL;
 	while( (child = p_Node->IterateChildren(child)) != NULL )
 	{
 		TiXmlElement * l_Node_configuration = child->ToElement();
-		if ( l_Node_configuration != NULL && 
-			strcmp(l_Node_configuration->Value(), "configuration") == 0 )
+		if (l_Node_configuration != NULL && strcmp(l_Node_configuration->Value(), "configuration") == 0)
 		{
 			CString l_Config_LCID = l_Node_configuration->AttributeT("lcid").data();
 			CString l_os_filter_greater = l_Node_configuration->AttributeT("os_filter_greater").data();
@@ -569,4 +570,34 @@ void ConfigFile::ProcessLcidType(const CString& lcidtype)
     else if (lcidtype == "User") m_lcidtype = LcidUser;
     else if (lcidtype == "UserExe") m_lcidtype = LcidUserExe;
     else throw std::exception("Invalid LCID type.");
+}
+
+void ConfigFile::LoadSchemaVersion(TiXmlElement * p_Node)
+{
+	TiXmlNode * child = NULL;
+	while( (child = p_Node->IterateChildren(child)) != NULL )
+	{
+		TiXmlElement * l_Child = child->ToElement();
+		if (l_Child != NULL && strcmp(l_Child->Value(), "schema") == 0)
+		{
+			schema_generator = l_Child->AttributeT("generator").data();
+			ApplicationLog.Write( TEXT("Configuration generator: "), schema_generator);
+			schema_version = l_Child->AttributeT("version").data();
+			ApplicationLog.Write( TEXT("Generator version: "), schema_version);
+		}
+	}
+
+	if (schema_version != VERSION_VALUE)
+	{
+		CString version_message;
+		version_message.Format(
+			TEXT("Configuration version %s does not match bootstrapper version.\r\n") \
+			TEXT("Open and re-save configuration.xml with editor version %s.\r\n") \
+			TEXT("Continue with installation?"),
+			schema_version, TEXT(VERSION_VALUE));
+		if (DniSilentMessageBox(version_message, MB_YESNO|MB_ICONQUESTION, IDYES) != IDYES)
+		{
+			throw std::exception("Configuration file version mismatch, skipped.");
+		}
+	}
 }

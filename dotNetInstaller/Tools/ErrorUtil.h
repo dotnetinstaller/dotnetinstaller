@@ -73,7 +73,8 @@ namespace DVLib
 		}
 		else
 		{
-			result = DVLib::FormatHexNumber(hr);
+			// fallback to system
+			result = TranslateErrorMsg(hr);
 		}
 
 		return result.Trim();

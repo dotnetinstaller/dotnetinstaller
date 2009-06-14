@@ -31,7 +31,7 @@ bool Component::DownloadComponents(CWnd * p_Parent)
 	{
 		if (ContainsDownloadComponent)
         {
-			DownloadDialogConfiguration.Run(p_Parent);
+			return DownloadDialogConfiguration.Run(p_Parent);
         }
 		else
         {

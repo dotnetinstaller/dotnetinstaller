@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>What's New</title>
-    <style type="text/css">
+ <title>What's New</title>
+ <style type="text/css">
 body { color: #000000; font-family: Arial; font-size: 75%; }    
 a { font-family: Arial; text-decoration: none; }
 code { color: #b22222; font-family: Courier New; }
@@ -57,12 +57,17 @@ code { color: #b22222; font-family: Courier New; }
         <li>InstallerEditor: the New and Open menu items are always enabled.</li>
         <li>InstallerEditor: added a status strip that reports general information, including
             Save or Load.</li>
+        <li>InstallerEditor: closing a configuration no longer prompts to save changes when
+            there were no changes made.</li>
+        <li>InstallerEditor: writes schema and generator version information to configuration.xml.</li>
         <li>Added <code>allow_continue_on_error</code> globally and per-component: when false
             user is no longer prompted to continue on error, instead the user is informed of
             the failure and installation aborts. Combine this option with <code>auto_close_on_error</code>
             to get predictable failure behavior as bootstrapper will close after an element
             of setup failed. Note that in order for a component to allow continuing on error
             both the global and the component setting must be set to True. </li>
+        <li>DotNetInstaller: warns and offers the user to abort if configuration was not generated
+            with a matching version of InstallerEditor.</li>
         <li>DotNetInstaller: merged functionality of the Advanced component selector into the
             main window, removed the Advanced button. </li>
         <li>Added <code>dialog_show_required</code>: when false, required components are hidden.</li>

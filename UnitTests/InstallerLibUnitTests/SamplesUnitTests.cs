@@ -34,7 +34,7 @@ namespace InstallerLibUnitTests
                 configFile.LoadXml(configXml);
                 // compare trivial properties
                 Assert.AreEqual("1.0.0.0", configFile.productversion, configFile.productversion);
-                Assert.AreEqual(InstallUILevel.full, configFile.UILevel);
+                Assert.AreEqual(InstallUILevel.full, configFile.ui_level);
                 // compare contents
                 Assert.AreEqual(configFile.Xml.OuterXml, configXml.OuterXml);
             }

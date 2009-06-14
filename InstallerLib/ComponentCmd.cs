@@ -6,7 +6,6 @@ namespace InstallerLib
     /// <summary>
     /// A component of type "cmd" that executes a command.
     /// </summary>
-    [XmlChild(typeof(Component))]
     public class ComponentCmd : Component
     {
         public ComponentCmd()

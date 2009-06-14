@@ -584,6 +584,7 @@ namespace InstallerEditor
             this.propertyGrid.Name = "propertyGrid";
             this.propertyGrid.Size = new System.Drawing.Size(444, 278);
             this.propertyGrid.TabIndex = 3;
+            this.propertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid_PropertyValueChanged);
             // 
             // treeView
             // 
@@ -697,6 +698,7 @@ namespace InstallerEditor
             {
                 CloseConfiguration();
                 m_TreeNodeConfigFile = new TreeNodeConfigFile(new ConfigFile());
+                m_TreeNodeConfigFile.IsDirty = true;
                 m_TreeNodeConfigFile.CreateChildNodes();
                 RefreshMenu();
                 LoadTreeView(m_TreeNodeConfigFile);
@@ -720,25 +722,25 @@ namespace InstallerEditor
                 if (l_dg.ShowDialog(this) == DialogResult.OK)
                 {
                     if (!CloseConfiguration())
-                    {
                         return false;
-                    }
 
                     ConfigFile l_File = new ConfigFile();
-
-                    string l_CheckDescription;
-                    if (l_File.IsCurrentSchemaVersion(l_dg.FileName, out l_CheckDescription) == false)
+                    l_File.Load(l_dg.FileName);
+                    
+                    if (! l_File.editor.IsCurrent())
                     {
-                        if (MessageBox.Show(this, "Invalid file version :" + l_CheckDescription + " \r\n Configuration file must converted to the format used by this version of InstallerEditor. \r\n If you choose to convert this file you will lose some properties and some new properties will be added. \r\n Convert this file?", "Convert config file?", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                            == DialogResult.No)
+                        DialogResult convertResult = MessageBox.Show(this, string.Format("Do you want to convert configuration file version {0} to {1}?", 
+                            l_File.editor.loaded_version, l_File.editor.current_version), "Convert config file?", 
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                        if (convertResult == DialogResult.No)
                         {
                             return false;
                         }
                     }
 
-                    l_File.Load(l_dg.FileName);
-
                     m_TreeNodeConfigFile = new TreeNodeConfigFile(l_File);
+                    m_TreeNodeConfigFile.IsDirty = false;
                     m_TreeNodeConfigFile.CreateChildNodes();
                 }
                 else
@@ -764,15 +766,18 @@ namespace InstallerEditor
             {
                 if (m_TreeNodeConfigFile != null)
                 {
-                    DialogResult l_ret = MessageBox.Show(this, "Do you want to save your changes?", "Setup Installer", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                    if (l_ret == DialogResult.Yes)
+                    if (m_TreeNodeConfigFile.IsDirty)
                     {
-                        if (SaveConfiguration() == false)
+                        DialogResult l_ret = MessageBox.Show(this, "Do you want to save your changes?", "Setup Installer", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                        if (l_ret == DialogResult.Yes)
+                        {
+                            if (SaveConfiguration() == false)
+                                return false;
+                        }
+                        else if (l_ret == DialogResult.Cancel)
+                        {
                             return false;
-                    }
-                    else if (l_ret == DialogResult.Cancel)
-                    {
-                        return false;
+                        }
                     }
                 }
 
@@ -816,6 +821,7 @@ namespace InstallerEditor
                     }
                 }
 
+                m_TreeNodeConfigFile.IsDirty = false;
                 statusLabel.Text = string.Format("Written {0}", m_TreeNodeConfigFile.ConfigFile.filename);
                 return true;
             }
@@ -1059,6 +1065,7 @@ namespace InstallerEditor
             {
                 m_TreeNodeConfigFile.Nodes.Add(new TreeNodeConfiguration(AddSetupConfiguration(
                     (IXmlClass)m_TreeNodeConfigFile.Tag)));
+                m_TreeNodeConfigFile.IsDirty = true;
             }
             catch (Exception err)
             {
@@ -1072,6 +1079,7 @@ namespace InstallerEditor
             {
                 m_TreeNodeConfigFile.Nodes.Add(new TreeNodeConfiguration(AddWebConfiguration(
                     (IXmlClass)m_TreeNodeConfigFile.Tag)));
+                m_TreeNodeConfigFile.IsDirty = true;
             }
             catch (Exception err)
             {
@@ -1578,6 +1586,7 @@ namespace InstallerEditor
             IXmlClass dropItem = (IXmlClass)dropNode.Tag;
 
             dropNode.MoveTo(targetNode);
+            m_TreeNodeConfigFile.IsDirty = true;
         }
 
         private void treeView_DragEnter(object sender, DragEventArgs e)
@@ -1694,6 +1703,14 @@ namespace InstallerEditor
             catch (Exception err)
             {
                 AppUtility.ShowError(this, err);
+            }
+        }
+
+        private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            if (m_TreeNodeConfigFile != null)
+            {
+                m_TreeNodeConfigFile.IsDirty = true;
             }
         }
     }
