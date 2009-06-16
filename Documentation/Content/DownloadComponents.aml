@@ -28,7 +28,8 @@
             </definition>
             <definedTerm>alwaysdownload</definedTerm>
             <definition>
-              Automatically begin download or require the user to press <ui>Start</ui>.
+              When <literal>true</literal>, automatically begin download. when <literal>false</literal>, require the user 
+              to press the <ui>Start</ui> button.
             </definition>
             <definedTerm>destinationpath</definedTerm>
             <definition>
@@ -45,8 +46,8 @@
             <definedTerm>sourcepath</definedTerm>
             <definition>
               An optional source location to be used instead of <literal>sourceurl</literal>. This enables a scenario of
-              packages containing frequently required files only. The missing files are only downloaded when the component
-              is not present on the system.
+              packages containing frequently required files only. The missing files are downloaded only when the component
+              is not present on the system and has not been packaged with the bootstrapper.
             </definition>
           </tableDefinition>
         </para>

@@ -39,14 +39,14 @@
     </DocumentationSources>
     <KeepLogFile>False</KeepLogFile>
     <CopyrightText>$(Copyright)</CopyrightText>
-    <HelpTitle>dotNetInstaller %28DNI%29 Users Guide</HelpTitle>
+    <HelpTitle>dotNetInstaller Users Guide</HelpTitle>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="CommandLine" isDocumented="False" xmlns="" />
     </NamespaceSummaries>
     <RootNamespaceContainer>True</RootNamespaceContainer>
     <RootNamespaceTitle>Library Reference</RootNamespaceTitle>
     <HelpFileFormat>HtmlHelp1x</HelpFileFormat>
-    <Preliminary>True</Preliminary>
+    <Preliminary>False</Preliminary>
   </PropertyGroup>
   <!-- There are no properties for these two groups but they need to appear in
        order for Visual Studio to perform the build. -->

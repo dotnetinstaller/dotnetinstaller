@@ -1676,6 +1676,9 @@ namespace InstallerEditor
         {
             treeView.SelectedNode.Nodes.Add(treeNode);
             m_TreeNodeConfigFile.IsDirty = true;
+            treeView.SelectedNode.Expand();
+            treeView.SelectedNode = treeNode;
+            treeNode.ExpandAll();
         }
     }
 }

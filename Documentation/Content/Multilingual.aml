@@ -77,7 +77,7 @@
         </para>
         <alert class="note">
           <para>
-            Unicode character set is not supported on Windows 95, 98 and ME. If you plan to run instlalations on one of
+            Unicode character set is not supported on Windows 95, 98 and ME. If you plan to run installations on one of
             these operating system you must copy the Microsoft Layer for Unicode (<localUri>unicows.dll</localUri>) in
             the same path as <localUri>dotNetInstaller.exe</localUri>.
           </para>

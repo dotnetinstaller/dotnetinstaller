@@ -9,35 +9,63 @@
         </mediaLink>
       </para>
       <para>
-        dotNetInstaller enables the developer to define the application prerequisites and install the correct version(s) of these components
-        in a predictable order based on the processor architecture, user operating system type and language, allows the user to
-        download these components from the web, install these components directly from a single packaged setup, local media
-        or both. dotNetInstaller is very feature rich and runs on all known Windows operating systems since Windows 95 
+        dotNetInstaller enables developers to define the application prerequisites and install the correct version(s) of
+        these components in a predictable order based on the processor architecture, user operating system type or language.
+        It allows the user to download components from the web, install these components directly from a single packaged setup,
+        local media or both. dotNetInstaller is very feature rich and runs on all known Windows operating systems since Windows 95
         with a very tiny footprint.
       </para>
       <para>
-        A boostrapper doesn't replace tools like InstallShield, Wise, Visual Studio Setup and Deployment Project or Wix.
+        A boostrapper doesn't replace tools like InstallShield, Wise, Visual Studio Setup and Deployment Projects or Wix.
         The goal of this application is to help users with installing the correct prerequisites. Most real world applications
-        need to install several components to work properly, including Windows Service Packs, Internet Explorer, MDAC or 
+        need to install several components to work properly, including Windows Service Packs, Internet Explorer, MDAC or
         .NET Framework. Such an application is known as a <newTerm>bootstrapper</newTerm>.
+      </para>
+      <para>
+        A bootstrapper is also enables additional scenarios not supported by one single installer.
+        <list class="bullet">
+          <listItem>
+            Distribute a single, compressed, executable packaged setup with all pre-requisites.
+          </listItem>
+          <listItem>
+            Distribute multiple installers that compose a large and complex application in a single package
+            and enforce a well-defined installation workflow and dependencies.
+          </listItem>
+          <listItem>
+            Package frequently required components or components with a small footprint,
+            and download less frequently used or larger ones only when necessary.
+          </listItem>
+          <listItem>
+            Provide additional parameters to existing package technologies, eg. automatically enabling logging
+            in MSI installers.
+          </listItem>
+          <listItem>
+            Support workflow that includes a reboot in the middle of an installation between
+            inter-dependent components.
+          </listItem>
+          <listItem>
+            Support web-based scenarios that include on-demand downloading the latest versions of the installed software
+            and prerequisites.
+          </listItem>
+        </list>
       </para>
       <para>
         This project consists of the following components:
         <list class="bullet">
           <listItem>
-            <application>dotNetInstaller</application>: main bootstrapper application, written in Visual Studio 2005 C++. 
-            This is the raw setup which presents a GUI in front of the user that displays which components to install depending 
+            <application>dotNetInstaller</application>: main bootstrapper application, written in C++.
+            This is the raw setup which presents a GUI in front of the user that displays which components to install depending
             on which components are already installed on the operating system. The bootstrapper is statically linked with the
             CRT and has no prerequisites.
           </listItem>
           <listItem>
-            <application>InstallerEditor</application>: an application for editing configurations files and dotNetInstaller.exe 
-            resources, written with Visual Studio 2005 C# for .NET Framework 2.0. The editor is also capable of importing older 
-            versions of dotNetInstaller configuration files and re-saving them in the current/newer format.
+            <application>InstallerEditor</application>: an application for editing configuration files and dotNetInstaller.exe
+            resources, written in C# for the .NET Framework 2.0. The editor is also capable of importing older
+            versions of dotNetInstaller configuration files and converting them into the current/newer format.
           </listItem>
           <listItem>
-            <application>InstallerLinker</application>: a command-line bootstrapper linker that can be used in a build process, 
-            written with Visual Studio 2005 C# for .NET Framework 2.0.
+            <application>InstallerLinker</application>: a command-line bootstrapper linker that can be used in a build process,
+            written in C# for the .NET Framework 2.0.
           </listItem>
           <listItem>
             Several samples and dependency templates that can be reused as-is and that demonstrate sometimes complex checks which

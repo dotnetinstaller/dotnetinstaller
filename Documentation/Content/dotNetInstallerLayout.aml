@@ -21,7 +21,8 @@
           <alert class="note">
             <para>
               You don't have to define all four coordinates. It's possible to modify one or more
-              coordinates to affect the position and the size of the dialog elements.
+              coordinates to affect the position and the size of the dialog elements. Coordinates with a value
+              of zero are read from the dialog element's default position.
             </para>
           </alert>
           <mediaLink>

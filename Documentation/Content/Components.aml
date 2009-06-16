@@ -70,7 +70,7 @@
           of the failure with the <literal>failed_exec_command_continue</literal> message and offered a choice whether
           to continue. When <literal>allow_continue_on_failure</literal> is set to <literal>false</literal>, the user
           is informed of the failure with the same <literal>failed_exec_command_continue</literal> message and is returned
-          to the bootstrapper where the component list is recalcualted.
+          to the bootstrapper where the component list is recalculated.
         </para>
         <para>
           In silent (basic and no UI) installations the behavior is identical, but the choice to continue is made
@@ -94,7 +94,7 @@
             <definedTerm>must_reboot_required</definedTerm>
             <definition>
               By default, dotNetInstaller will ask whether the user wants to reboot now. Setting this option to <literal>true</literal>
-              will force the user to reboot when a reboot is reqiured without offering an opportunity to postpone the reboot.
+              will force the user to reboot when a reboot is required without offering an opportunity to postpone the reboot.
               Note that regardless of the value of this option the message defined by <literal>reboot_required</literal>
               is displayed.
             </definition>

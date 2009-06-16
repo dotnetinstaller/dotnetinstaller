@@ -3,10 +3,10 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        <application>dotNetInstaller.exe</application> is a lightweight driver for your bootstrapped
-        process. This is your Setup.exe. It offers a simple user interface, progress, status, supports silent installs
-        and enables user selection of optional components. The workflow is highly flexible and the UI can be somewhat
-        customized.
+        <application>dotNetInstaller.exe</application> is a <literal>bootstrapper</literal>, a lightweight driver for 
+        your setup process. Simply put, this is your <command>setup.exe</command>. It offers a user interface, progress, 
+        status, supports silent installs and enables user selection of optional components. The workflow is highly flexible 
+        and the UI can be somewhat customized.
       </para>
     </introduction>
     <section address="commandlinearguments">

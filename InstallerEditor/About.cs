@@ -84,10 +84,10 @@ namespace InstallerEditor
             this.linkWebsite.AutoSize = true;
             this.linkWebsite.Location = new System.Drawing.Point(66, 36);
             this.linkWebsite.Name = "linkWebsite";
-            this.linkWebsite.Size = new System.Drawing.Size(201, 13);
+            this.linkWebsite.Size = new System.Drawing.Size(177, 13);
             this.linkWebsite.TabIndex = 3;
             this.linkWebsite.TabStop = true;
-            this.linkWebsite.Text = "http://www.codeplex.com/dotnetinstaller";
+            this.linkWebsite.Text = "http://dotnetinstaller.codeplex.com/";
             this.linkWebsite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkWebsite_LinkClicked);
             // 
             // About
@@ -133,7 +133,7 @@ namespace InstallerEditor
         {
             try
             {
-                SourceLibrary.Utility.Shell.ExecCommand("http://www.codeplex.com/dotnetinstaller/");
+                SourceLibrary.Utility.Shell.ExecCommand("http://dotnetinstaller.codeplex.com/");
             }
             catch (Exception err)
             {

@@ -8,7 +8,7 @@
       <title>Before You Begin</title>
       <content>
         <para>
-          The following terms are used in this user guide.
+          The following terms are used in this Users Guide.
           <tableDefinition>
             <definedTerm>installer</definedTerm>
             <definition>
@@ -18,7 +18,7 @@
             </definition>
             <definedTerm>setup package</definedTerm>
             <definition>
-              An installer for your application. For example an MSI built with Visual Studio or WIX.
+              An installer for your application. For example an MSI built with Visual Studio or Wix.
             </definition>
             <definedTerm>bootstrapper</definedTerm>
             <definition>

@@ -3,7 +3,7 @@
   <developerHowToDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        In certain deployment scenarios, it may be desirable to distribute an installation package as a single, self-extracting
+        In most common deployment scenarios it is desirable to distribute an installation package as a single, self-extracting
         executable. dotNetInstaller supports embedding dependencies and producing a stand-alone packaged setup.exe. This is
         accomplished by CAB-ing all dependencies into a single Setup.cab, embedding the result into your setup.exe and extracting
         its contents at runtime. dotNetInstaller is also capable of deleting extracted temporary files upon completion. No third-party
@@ -18,7 +18,11 @@
             <para>
               In order to embed dependencies you must add explicit <literal>EmbedFile</literal> or <literal>EmbedFolder</literal>
               components to the bootstrapper configuration. No other automatic embedding, such as from <literal>msi</literal>,
-              <literal>openfile</literal> or <literal>download</literal> subcomponents is performed.
+              <literal>openfile</literal> or <literal>download</literal> subcomponents is done by the linker.
+            </para>
+            <para>
+              Right click on a component and choose <ui>Add</ui>, <ui>Embed File</ui> or <ui>Embed Folder</ui>. Select
+              the newly created embed node and adjust its properties.
             </para>
             <para>
               The <literal>sourcefilepath</literal> of a <literal>EmbedFile</literal> subcomponent is the location of the file on
@@ -58,7 +62,7 @@
             <para>
               You may optionally embed individual files via the <application>InstallLinker.exe</application> command line with 
               <system>/EmbedFile</system> and entire folders with their subfolders with <system>/EmbedFolder</system>. The latter also 
-              lets you optionally specify a flag, eg. <system>/EmbedFolder:Path\*.msi</system> to embed all .msi files in all 
+              lets you specify a flag, eg. <system>/EmbedFolder:Path\*.msi</system> to embed all .msi files in all 
               subfolders. Note that with <system>/EmbedFolder</system> files are extracted mirroring the structure under the folder 
               specified. For example, if <system>/EmbedFolder:c:\files</system> embeds <localUri>c:\files\folder1\setup.msi</localUri>,
               the extracted setup.msi appears under <localUri>folder1\setup.msi</localUri>. In order to define a different extraction

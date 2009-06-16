@@ -4,15 +4,8 @@
     <introduction>
       <para>
         This tutorial walks through creating a standalone setup to install .NET Framework and a user-defined msi setup.
-        We will create a CDROM with an MSI package, SupportFiles (including the .NET Framework), configuration file
-        configuration.xml) and a bitmap (banner.bmp). All these components are installed directly from the CDROM.
-      </para>
-      <para>
-        <alert class="important">
-          <para>
-            THIS SECTION OF DOCUMENTATION NEEDS REVISITING AND CHECKING
-          </para>
-        </alert>
+        We will create a CD-ROM with an MSI package, SupportFiles (including the .NET Framework), configuration file
+        configuration.xml) and a bitmap (banner.bmp). All these components are installed directly from the a CD-ROM.
       </para>
     </introduction>
     <procedure>
@@ -21,7 +14,7 @@
         <step>
           <content>
             <para>
-              Create a folder that represents your final distribution CDROM, for example <localUri>c:\MyRelease\</localUri>.
+              Create a folder that represents your final distribution CD-ROM, for example <localUri>c:\MyRelease\</localUri>.
             </para>
           </content>
         </step>
@@ -29,7 +22,14 @@
           <content>
             <para>
               Copy under <localUri>c:\MyRelease\</localUri> the directory <localUri>SupportFiles</localUri> that you can find
-              in the dotNetInstaller distribution under <localUri>Samples</localUri>.
+              in the dotNetInstaller distribution under <localUri>Samples</localUri>. The directory has several readme.txt
+              files that contain the URLs for the binaries that should be downloaded and packaged with your setup. For example,
+              if you are adding a pre-requisite for the .NET Framework 2.0, download
+              <externalLink>
+                <linkText>dotnetfx.exe</linkText>
+                <linkUri>http://www.microsoft.com/downloads/details.aspx?familyid=0856eacb-4362-4b0d-8edd-aab15c5e04f5&amp;displaylang=en</linkUri>
+              </externalLink>
+              and replace <localUri>dotnetfx.exe.readme.txt</localUri> with it.
             </para>
           </content>
         </step>
@@ -61,8 +61,7 @@
           <content>
             <para>
               Execute <application>InstallerEditor.exe</application>.
-              Select the menu <ui>File</ui>, <ui>New</ui> and create a new file with the name
-              <localUri>c:\MyRelease\configuration.xml</localUri>.
+              Select the menu <ui>File</ui>, <ui>New</ui>.
             </para>
           </content>
         </step>
@@ -117,7 +116,7 @@
         <step>
           <content>
             <para>
-              Select the menu <ui>File</ui>, <ui>Save</ui>.
+              Select the menu <ui>File</ui>, <ui>Save</ui>. Choose <localUri>c:\MyRelease\configuration.xml</localUri>.
               Write all the contents of the <localUri>c:\MyRelease\</localUri> directory on your CDROM. If you want
               you can also create a <localUri>autorun.inf</localUri> file that execute dotNetInstaller.exe.
             </para>
@@ -126,10 +125,8 @@
       </steps>
       <conclusion>
         <para>
-          The distribution package contains a SupportFiles directory with the required structure and some readme.txt
-          files where you can find a link to download the required components (usually from microsoft web site). Consider
-          also that these components are present as wizard in the InstallerEditor, so you can easily use these components
-          in your setup.
+          The distribution package contains a configuration and a SupportFiles directory with the required structure 
+          and pre-requisites. The runtime setup workflow is illustrated below.
           <mediaLink>
             <image xlink:href="StandaloneSetup.jpg" />
           </mediaLink>

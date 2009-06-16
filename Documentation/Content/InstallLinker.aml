@@ -4,7 +4,7 @@
     <introduction>
       <para>
         The <newTerm>installer linker</newTerm> can be used as the bootstrapper compiler and linker in a build process.
-        It also supports some advanced options that are not availablable in the functions of the InstallEditor GUI.
+        It also supports some advanced options that are not available in the functions of the InstallEditor GUI.
       </para>
     </introduction>
     <section address="commandlineusage">
