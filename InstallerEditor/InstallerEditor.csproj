@@ -115,9 +115,6 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ComponentWizard.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="ComponentWizard2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,10 +141,6 @@
       <DependentUpon>About.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ComponentWizard.resx">
-      <DependentUpon>ComponentWizard.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="ComponentWizard2.resx">
       <DependentUpon>ComponentWizard2.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -165,6 +158,8 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="App.ico" />
+    <Content Include="xsl\config2wizard.xsl" />
+    <Content Include="xsl\wizard2config.xsl" />
     <EmbeddedResource Include="wizardcomponents.xml" />
     <None Include="bin\Release\InstallerEditor.exe" />
   </ItemGroup>

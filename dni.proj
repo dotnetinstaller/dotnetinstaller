@@ -57,6 +57,7 @@
     <CallTarget Targets="build" />
     <CallTarget Targets="doc" />
     <CallTarget Targets="rewritesamples" />
+    <CallTarget Targets="rewritewizardxmls" />
     <CallTarget Targets="release" />
     <CallTarget Targets="zip" />
     <CallTarget Targets="installer" />
@@ -172,5 +173,16 @@
   <Target Name="rewritesamples" Inputs="@(SampleXmls)" Outputs="%(SampleXmls.Identity).output">
     <Message Text="%(SampleXmls.Identity)" />
     <Exec Command="InstallerConfig\bin\$(Configuration)\InstallerConfig.exe /ConfigFile:%(SampleXmls.Identity)" />
+  </Target>
+  <!-- rewrite the InstallerEditor/wizardcomponents.xml to current configuration format -->
+  <ItemGroup>
+    <WizardXmls Include="InstallerEditor/*.xml" />
+  </ItemGroup>
+  <Target Name="rewritewizardxmls" Inputs="@(WizardXmls)" Outputs="%(WizardXmls.Identity).output">
+    <Message Text="%(WizardXmls.Identity)" />
+    <XslTransform XmlFile="%(WizardXmls.Identity)" XsltFiles="InstallerEditor\xsl\wizard2config.xsl" OutputFile="%(WizardXmls.Identity).config" />
+    <Exec Command="InstallerConfig\bin\$(Configuration)\InstallerConfig.exe /ConfigFile:%(WizardXmls.Identity).config" />
+    <XslTransform XmlFile="%(WizardXmls.Identity).config" XsltFiles="InstallerEditor\xsl\config2wizard.xsl" OutputFile="%(WizardXmls.Identity)" />
+    <Delete Files="%(WizardXmls.Identity).config" />
   </Target>
 </Project>

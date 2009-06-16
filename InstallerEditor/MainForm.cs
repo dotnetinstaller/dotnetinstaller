@@ -53,7 +53,6 @@ namespace InstallerEditor
         private System.Windows.Forms.MenuItem mnHelp;
         private System.Windows.Forms.MenuItem mnHomePage;
         private System.Windows.Forms.MenuItem mnAddOpenFileComponent;
-        private System.Windows.Forms.MenuItem mnAddComponentWizard;
         private System.Windows.Forms.MenuItem mnHelpAbout;
         private System.Windows.Forms.MenuItem mnCustomizeTemplates;
         private System.Windows.Forms.MenuItem mnAddComponentWizard2;
@@ -140,7 +139,6 @@ namespace InstallerEditor
             this.mnAddDownloadFile = new System.Windows.Forms.MenuItem();
             this.menuItem5 = new System.Windows.Forms.MenuItem();
             this.mnAddComponentWizard2 = new System.Windows.Forms.MenuItem();
-            this.mnAddComponentWizard = new System.Windows.Forms.MenuItem();
             this.mnAddMsiComponent = new System.Windows.Forms.MenuItem();
             this.mnAddCommandComponent = new System.Windows.Forms.MenuItem();
             this.mnAddOpenFileComponent = new System.Windows.Forms.MenuItem();
@@ -360,7 +358,6 @@ namespace InstallerEditor
             this.mnAddDownloadFile,
             this.menuItem5,
             this.mnAddComponentWizard2,
-            this.mnAddComponentWizard,
             this.mnAddMsiComponent,
             this.mnAddCommandComponent,
             this.mnAddOpenFileComponent,
@@ -413,68 +410,61 @@ namespace InstallerEditor
             this.mnAddComponentWizard2.Text = "Component Wizard ...";
             this.mnAddComponentWizard2.Click += new System.EventHandler(this.mnAddComponentWizard2_Click);
             // 
-            // mnAddComponentWizard
-            // 
-            this.mnAddComponentWizard.Index = 7;
-            this.mnAddComponentWizard.Text = "Component Wizard ...";
-            this.mnAddComponentWizard.Visible = false;
-            this.mnAddComponentWizard.Click += new System.EventHandler(this.mnAddComponentWizard_Click);
-            // 
             // mnAddMsiComponent
             // 
-            this.mnAddMsiComponent.Index = 8;
+            this.mnAddMsiComponent.Index = 7;
             this.mnAddMsiComponent.Text = "Msi Component";
             this.mnAddMsiComponent.Click += new System.EventHandler(this.mnAddMsiComponent_Click);
             // 
             // mnAddCommandComponent
             // 
-            this.mnAddCommandComponent.Index = 9;
+            this.mnAddCommandComponent.Index = 8;
             this.mnAddCommandComponent.Text = "Command Component";
             this.mnAddCommandComponent.Click += new System.EventHandler(this.mnAddCommandComponent_Click);
             // 
             // mnAddOpenFileComponent
             // 
-            this.mnAddOpenFileComponent.Index = 10;
+            this.mnAddOpenFileComponent.Index = 9;
             this.mnAddOpenFileComponent.Text = "OpenFile Component";
             this.mnAddOpenFileComponent.Click += new System.EventHandler(this.mnAddOpenFileComponent_Click);
             // 
             // menuItem6
             // 
-            this.menuItem6.Index = 11;
+            this.menuItem6.Index = 10;
             this.menuItem6.Text = "-";
             // 
             // mnAddInstalledCheckRegistry
             // 
-            this.mnAddInstalledCheckRegistry.Index = 12;
+            this.mnAddInstalledCheckRegistry.Index = 11;
             this.mnAddInstalledCheckRegistry.Text = "Installed Check Registry";
             this.mnAddInstalledCheckRegistry.Click += new System.EventHandler(this.mnAddInstalledCheckRegistry_Click);
             // 
             // mnAddInstalledCheckFile
             // 
-            this.mnAddInstalledCheckFile.Index = 13;
+            this.mnAddInstalledCheckFile.Index = 12;
             this.mnAddInstalledCheckFile.Text = "Installed Check File";
             this.mnAddInstalledCheckFile.Click += new System.EventHandler(this.mnInstalledCheckFile_Click);
             // 
             // mnAddInstalledCheckOperator
             // 
-            this.mnAddInstalledCheckOperator.Index = 14;
+            this.mnAddInstalledCheckOperator.Index = 13;
             this.mnAddInstalledCheckOperator.Text = "Installed Check &Operator";
             this.mnAddInstalledCheckOperator.Click += new System.EventHandler(this.mnAddInstalledCheckOperator_Click);
             // 
             // menuItem8
             // 
-            this.menuItem8.Index = 15;
+            this.menuItem8.Index = 14;
             this.menuItem8.Text = "-";
             // 
             // mnAddEmbedFile
             // 
-            this.mnAddEmbedFile.Index = 16;
+            this.mnAddEmbedFile.Index = 15;
             this.mnAddEmbedFile.Text = "&Embed File";
             this.mnAddEmbedFile.Click += new System.EventHandler(this.mnAddEmbedFile_Click);
             // 
             // mnAddEmbedFolder
             // 
-            this.mnAddEmbedFolder.Index = 17;
+            this.mnAddEmbedFolder.Index = 16;
             this.mnAddEmbedFolder.Text = "Embed Folder";
             this.mnAddEmbedFolder.Click += new System.EventHandler(this.mnAddEmbedFolder_Click);
             // 
@@ -941,7 +931,6 @@ namespace InstallerEditor
                 mnAddInstalledCheckFile.Enabled = (item.Children.CanAdd(typeof(InstalledCheckFile)));
                 mnAddInstalledCheckRegistry.Enabled = (item.Children.CanAdd(typeof(InstalledCheckRegistry)));
                 mnAddInstalledCheckOperator.Enabled = (item.Children.CanAdd(typeof(InstalledCheckOperator)));
-                mnAddComponentWizard.Enabled = (item is SetupConfiguration);
                 mnAddComponentWizard2.Enabled = (item is SetupConfiguration);
                 mnMoveUp.Enabled = (treeView.SelectedNode.PrevNode != null);
                 mnMoveDown.Enabled = (treeView.SelectedNode.NextNode != null);
@@ -960,7 +949,6 @@ namespace InstallerEditor
                 mnAddInstalledCheckFile.Enabled = false;
                 mnAddInstalledCheckRegistry.Enabled = false;
                 mnAddInstalledCheckOperator.Enabled = false;
-                mnAddComponentWizard.Enabled = false;
                 mnAddComponentWizard2.Enabled = false;
                 mnMove.Enabled = false;
                 mnMoveUp.Enabled = false;
@@ -1097,8 +1085,7 @@ namespace InstallerEditor
         {
             try
             {
-                treeView.SelectedNode.Nodes.Add(new TreeNodeDownload(AddDownload(
-                    (IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeDownload(AddDownload((IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1118,6 +1105,7 @@ namespace InstallerEditor
                         IXmlClass parent = (IXmlClass)treeView.SelectedNode.Parent.Tag;
                         parent.Children.Remove(item);
                         treeView.SelectedNode.Remove();
+                        m_TreeNodeConfigFile.IsDirty = true;
                     }
                 }
             }
@@ -1150,8 +1138,7 @@ namespace InstallerEditor
         {
             try
             {
-                treeView.SelectedNode.Nodes.Add(new TreeNodeComponent(AddMsiComponent(
-                    (IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeComponent(AddMsiComponent((IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1163,8 +1150,7 @@ namespace InstallerEditor
         {
             try
             {
-                treeView.SelectedNode.Nodes.Add(new TreeNodeComponent(AddCmdComponent(
-                    (IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeComponent(AddCmdComponent((IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1176,8 +1162,7 @@ namespace InstallerEditor
         {
             try
             {
-                treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck(AddInstalledCheckRegistry(
-                    (IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeInstalledCheck(AddInstalledCheckRegistry((IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1189,8 +1174,7 @@ namespace InstallerEditor
         {
             try
             {
-                treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheck(AddInstalledCheckFile(
-                    (IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeInstalledCheck(AddInstalledCheckFile((IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1202,8 +1186,7 @@ namespace InstallerEditor
         {
             try
             {
-                treeView.SelectedNode.Nodes.Add(new TreeNodeDownloadDialog(AddDownloadDialog(
-                    (IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeDownloadDialog(AddDownloadDialog((IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1217,7 +1200,9 @@ namespace InstallerEditor
             {
                 TreeNode l_Node = treeView.GetNodeAt(e.X, e.Y);
                 if (l_Node != null)
+                {
                     treeView.SelectedNode = l_Node;
+                }
             }
             catch (Exception err)
             {
@@ -1346,34 +1331,7 @@ namespace InstallerEditor
         {
             try
             {
-                treeView.SelectedNode.Nodes.Add(new TreeNodeComponent(AddOpenFileComponent(
-                    (IXmlClass)treeView.SelectedNode.Tag)));
-            }
-            catch (Exception err)
-            {
-                AppUtility.ShowError(this, err);
-            }
-        }
-
-        private void mnAddComponentWizard_Click(object sender, System.EventArgs e)
-        {
-            try
-            {
-                if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is SetupConfiguration)
-                {
-                    SetupConfiguration l_Setup = (SetupConfiguration)treeView.SelectedNode.Tag;
-
-                    ComponentWizard l_frmWizard = new ComponentWizard();
-
-                    if (l_frmWizard.ShowDialog(this) == DialogResult.OK)
-                    {
-                        foreach (Component c in l_frmWizard.SelectedComponents)
-                        {
-                            treeView.SelectedNode.Nodes.Add(new TreeNodeComponent(c));
-                            l_Setup.Children.Add(c);
-                        }
-                    }
-                }
+                AddTreeNode(new TreeNodeComponent(AddOpenFileComponent((IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1431,15 +1389,16 @@ namespace InstallerEditor
                 if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is SetupConfiguration)
                 {
                     SetupConfiguration l_Setup = (SetupConfiguration)treeView.SelectedNode.Tag;
-
                     ComponentWizard2 l_frmWizard = new ComponentWizard2();
 
                     if (l_frmWizard.ShowDialog(this) == DialogResult.OK)
                     {
                         foreach (Component c in l_frmWizard.SelectedComponents)
                         {
-                            treeView.SelectedNode.Nodes.Add(new TreeNodeComponent(c));
                             l_Setup.Children.Add(c);
+                            TreeNodeComponent componentNode = new TreeNodeComponent(c);
+                            componentNode.CreateChildNodes();
+                            AddTreeNode(componentNode);
                         }
                     }
                 }
@@ -1454,8 +1413,7 @@ namespace InstallerEditor
         {
             try
             {
-                treeView.SelectedNode.Nodes.Add(new TreeNodeEmbedFile(AddEmbedFile(
-                    (IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeEmbedFile(AddEmbedFile((IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1467,8 +1425,7 @@ namespace InstallerEditor
         {
             try
             {
-                treeView.SelectedNode.Nodes.Add(new TreeNodeInstalledCheckOperator(AddInstalledCheckOperator(
-                    (IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeInstalledCheckOperator(AddInstalledCheckOperator((IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1504,6 +1461,7 @@ namespace InstallerEditor
 
                 TreeNodeImpl nodeMoved = (TreeNodeImpl)treeView.SelectedNode;
                 nodeMoved.MoveTo(nodeMoved.Index - 1);
+                m_TreeNodeConfigFile.IsDirty = true;
             }
             catch (Exception err)
             {
@@ -1526,6 +1484,7 @@ namespace InstallerEditor
 
                 TreeNodeImpl nodeMoved = (TreeNodeImpl)treeView.SelectedNode;
                 nodeMoved.MoveTo(nodeMoved.Index + 1);
+                m_TreeNodeConfigFile.IsDirty = true;
             }
             catch (Exception err)
             {
@@ -1697,8 +1656,7 @@ namespace InstallerEditor
         {
             try
             {
-                treeView.SelectedNode.Nodes.Add(new TreeNodeEmbedFolder(AddEmbedFolder(
-                    (IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeEmbedFolder(AddEmbedFolder((IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1712,6 +1670,12 @@ namespace InstallerEditor
             {
                 m_TreeNodeConfigFile.IsDirty = true;
             }
+        }
+
+        private void AddTreeNode(TreeNodeImpl treeNode)
+        {
+            treeView.SelectedNode.Nodes.Add(treeNode);
+            m_TreeNodeConfigFile.IsDirty = true;
         }
     }
 }

@@ -68,13 +68,24 @@ namespace InstallerLib
         public static Configuration CreateFromXml(XmlElement element)
         {
             Configuration l_Config;
-            string xmltype = element.Attributes["type"].InnerText;
-            if (xmltype == "install")
-                l_Config = new SetupConfiguration();
-            else if (xmltype == "reference")
-                l_Config = new WebConfiguration();
-            else
-                throw new Exception(string.Format("Invalid configuration type: {0}", xmltype));
+            XmlAttribute xmltypeAttribute = element.Attributes["type"];
+            if (xmltypeAttribute == null)
+            {
+                throw new Exception(string.Format("Missing configuration type at \"{0}\".", element.Name));
+            }
+
+            string xmltype = xmltypeAttribute.InnerText;
+            switch (xmltype)
+            {
+                case "install":
+                    l_Config = new SetupConfiguration();
+                    break;
+                case "reference":
+                    l_Config = new WebConfiguration();
+                    break;
+                default:
+                    throw new Exception(string.Format("Invalid configuration type: {0}", xmltype));
+            }
             
             l_Config.FromXml(element);
             return l_Config;
