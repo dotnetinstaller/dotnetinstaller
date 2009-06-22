@@ -654,6 +654,7 @@ namespace InstallerEditor
             mnDelete.Enabled = (treeView.SelectedNode != null);
             mnExpandAll.Enabled = (treeView.SelectedNode != null && treeView.SelectedNode.Nodes.Count > 0);
             mnCollapseAll.Enabled = (treeView.SelectedNode != null && treeView.SelectedNode.IsExpanded);
+            mnMove.Enabled = (m_TreeNodeConfigFile != null);
         }
 
         void treeView_KeyUp(object sender, KeyEventArgs e)
@@ -934,6 +935,7 @@ namespace InstallerEditor
                 mnAddComponentWizard2.Enabled = (item is SetupConfiguration);
                 mnMoveUp.Enabled = (treeView.SelectedNode.PrevNode != null);
                 mnMoveDown.Enabled = (treeView.SelectedNode.NextNode != null);
+                mnMove.Enabled = mnMoveUp.Enabled || mnMoveDown.Enabled;
             }
             else
             {
@@ -1051,9 +1053,9 @@ namespace InstallerEditor
         {
             try
             {
-                m_TreeNodeConfigFile.Nodes.Add(new TreeNodeConfiguration(AddSetupConfiguration(
-                    (IXmlClass)m_TreeNodeConfigFile.Tag)));
-                m_TreeNodeConfigFile.IsDirty = true;
+                TreeNodeConfiguration treeNode = new TreeNodeConfiguration(AddSetupConfiguration(
+                    (IXmlClass)m_TreeNodeConfigFile.Tag));
+                AddTreeNode(m_TreeNodeConfigFile, treeNode);
             }
             catch (Exception err)
             {
@@ -1065,9 +1067,9 @@ namespace InstallerEditor
         {
             try
             {
-                m_TreeNodeConfigFile.Nodes.Add(new TreeNodeConfiguration(AddWebConfiguration(
-                    (IXmlClass)m_TreeNodeConfigFile.Tag)));
-                m_TreeNodeConfigFile.IsDirty = true;
+                TreeNodeConfiguration treeNode = new TreeNodeConfiguration(AddWebConfiguration(
+                    (IXmlClass)m_TreeNodeConfigFile.Tag));
+                AddTreeNode(m_TreeNodeConfigFile, treeNode);
             }
             catch (Exception err)
             {
@@ -1674,9 +1676,14 @@ namespace InstallerEditor
 
         private void AddTreeNode(TreeNodeImpl treeNode)
         {
-            treeView.SelectedNode.Nodes.Add(treeNode);
+            AddTreeNode(treeView.SelectedNode, treeNode);
+        }
+
+        private void AddTreeNode(TreeNode node, TreeNodeImpl treeNode)
+        {
+            node.Nodes.Add(treeNode);
             m_TreeNodeConfigFile.IsDirty = true;
-            treeView.SelectedNode.Expand();
+            node.Expand();
             treeView.SelectedNode = treeNode;
             treeNode.ExpandAll();
         }
