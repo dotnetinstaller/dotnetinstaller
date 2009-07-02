@@ -6,6 +6,9 @@ using System.Drawing;
 
 namespace InstallerLib
 {
+    /// <summary>
+    /// An xml entity that can be stored.
+    /// </summary>
     public interface IXmlClass
     {
         /// <summary>
@@ -37,6 +40,9 @@ namespace InstallerLib
         IXmlClassCollection<IXmlClass> Children { get; set; }
     }
 
+    /// <summary>
+    /// An xml entity that can be stored.
+    /// </summary>
     public abstract class XmlClassImpl : IXmlClass
     {
         public XmlClassImpl()

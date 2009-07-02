@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "InstallerLog.h"
 #include "DniMessageBox.h"
 
 // support for silent installs
@@ -30,7 +29,7 @@ void CALLBACK CloseMessageBox(HWND p_hwnd, UINT p_uiMsg, UINT p_idEvent, DWORD p
 int DniTimedMessageBox(bool p_bTimed, LPCTSTR p_lpszText, UINT p_nType /*=MB_OK*/, UINT p_nDefaultResult /*=MB_OK*/, UINT p_nIDHelp /*=0*/)
 {
 	int result;
-	UINT idTimer;
+	UINT_PTR idTimer;
 
 	if(p_bTimed)
 	{

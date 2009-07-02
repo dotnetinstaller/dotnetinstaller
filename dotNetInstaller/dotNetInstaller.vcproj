@@ -45,7 +45,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="Tools;&quot;$(SolutionDir)&quot;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;WINVER=0x0400;_WIN32_IE=0x0400;_WIN32_WINNT=0x0400;TIXML_USE_STL"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;WINVER=0x0400;_WIN32_IE=0x0400;_WIN32_WINNT=0x0400"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -131,7 +131,7 @@
 				Optimization="1"
 				FavorSizeOrSpeed="2"
 				AdditionalIncludeDirectories="Tools;&quot;$(SolutionDir)&quot;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;WINVER=0x0400;_WIN32_IE=0x0400;_WIN32_WINNT=0x0400;TIXML_USE_STL"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;WINVER=0x0400;_WIN32_IE=0x0400;_WIN32_WINNT=0x0400"
 				MinimalRebuild="false"
 				RuntimeLibrary="0"
 				TreatWChar_tAsBuiltInType="true"
@@ -201,14 +201,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\CmdComponent.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Component.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\ComponentsList.cpp"
 				>
 			</File>
@@ -229,15 +221,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DownloadComponent.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\DownloadDialog.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DownloadGroupConfiguration.cpp"
 				>
 			</File>
 			<File
@@ -253,22 +237,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\InstalledCheck.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\InstalledCheckFile.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\InstalledCheckOperator.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\InstalledCheckRegistry.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\InstallerCommandLineInfo.cpp"
 				>
 			</File>
@@ -277,31 +245,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\InstallerLog.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\InstallerSetting.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\InstallUILevel.cpp"
+				RelativePath=".\InstallSystem.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\KCBusyProgressCtrl.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MsiComponent.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\OpenFileComponent.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ProcessComponent.cpp"
 				>
 			</File>
 			<File
@@ -324,28 +272,12 @@
 					/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath=".\ThreadComponent.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WidgetPosition.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\CmdComponent.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Component.h"
-				>
-			</File>
 			<File
 				RelativePath=".\ComponentsList.h"
 				>
@@ -367,23 +299,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DownloadCallback.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DownloadComponent.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DownloadComponentInfo.h"
-				>
-			</File>
-			<File
 				RelativePath=".\DownloadDialog.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DownloadGroupConfiguration.h"
 				>
 			</File>
 			<File
@@ -399,22 +315,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\InstalledCheck.h"
-				>
-			</File>
-			<File
-				RelativePath=".\InstalledCheckFile.h"
-				>
-			</File>
-			<File
-				RelativePath=".\InstalledCheckOperator.h"
-				>
-			</File>
-			<File
-				RelativePath=".\InstalledCheckRegistry.h"
-				>
-			</File>
-			<File
 				RelativePath=".\InstallerCommandLineInfo.h"
 				>
 			</File>
@@ -423,35 +323,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\InstallerLog.h"
-				>
-			</File>
-			<File
-				RelativePath=".\InstallerSetting.h"
-				>
-			</File>
-			<File
-				RelativePath=".\installerTypes.h"
-				>
-			</File>
-			<File
-				RelativePath=".\InstallUILevel.h"
+				RelativePath=".\InstallSystem.h"
 				>
 			</File>
 			<File
 				RelativePath=".\KCBusyProgressCtrl.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MsiComponent.h"
-				>
-			</File>
-			<File
-				RelativePath=".\OpenFileComponent.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ProcessComponent.h"
 				>
 			</File>
 			<File
@@ -462,14 +338,6 @@
 				RelativePath=".\stdafx.h"
 				>
 			</File>
-			<File
-				RelativePath=".\ThreadComponent.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WidgetPosition.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -478,10 +346,6 @@
 			>
 			<File
 				RelativePath=".\res\banner.bmp"
-				>
-			</File>
-			<File
-				RelativePath=".\res\configuration.xml"
 				>
 			</File>
 			<File
@@ -500,134 +364,6 @@
 				RelativePath=".\res\Hand.cur"
 				>
 			</File>
-		</Filter>
-		<Filter
-			Name="Tools"
-			>
-			<File
-				RelativePath=".\Tools\AppPath.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\ErrorUtil.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\ExecCmd.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\File.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\File.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\Format.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\Guid.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\Image.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\OsIdentifier.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\Path.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\Path.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\ProcessorIdentifier.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\ProcessorIdentifier.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\Split.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\StringUtil.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\StringUtil.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\tinystr.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\tinystr.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\tinyxml.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\tinyxml.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\tinyxmlerror.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\tinyxmlparser.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Tools\VersionCompare.h"
-				>
-			</File>
-			<Filter
-				Name="Cab"
-				>
-				<File
-					RelativePath=".\Tools\Cab\CompressT.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Tools\Cab\ExtractMemoryT.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Tools\Cab\ExtractResourceT.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Tools\Cab\ExtractT.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Tools\Cab\File.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Tools\Cab\Map.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Tools\Cab\UTF7.hpp"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\res\dotNetInstaller.manifest"

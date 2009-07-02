@@ -121,7 +121,6 @@ END
 // CUSTOM
 //
 
-RES_CONFIGURATION       CUSTOM                  "res\\configuration.xml"
 RES_BANNER              CUSTOM                  "res\\banner.bmp"
 
 /////////////////////////////////////////////////////////////////////////////

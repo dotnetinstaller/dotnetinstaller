@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "dotNetInstaller.h"
 #include "InstallComponentDlg.h"
-#include "InstallerSetting.h"
 
 IMPLEMENT_DYNAMIC(InstallComponentDlg, CDialog)
 InstallComponentDlg::InstallComponentDlg(CWnd* pParent /*=NULL*/)

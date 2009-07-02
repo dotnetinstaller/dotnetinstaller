@@ -5,6 +5,9 @@ using System.IO;
 
 namespace InstallerLib
 {
+    /// <summary>
+    /// A pair of source->target file for embedding.
+    /// </summary>
     public class EmbedFilePair
     {
         private string _fullpath;
@@ -35,6 +38,11 @@ namespace InstallerLib
             }
 
             return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 
@@ -226,7 +234,7 @@ namespace InstallerLib
 
         public IEnumerator<EmbedFilePair> GetEnumerator()
         {
-            throw new Exception("The method or operation is not implemented.");
+            return _files.GetEnumerator();
         }
 
         #endregion
@@ -244,28 +252,28 @@ namespace InstallerLib
 
         public int IndexOf(EmbedFilePair item)
         {
-            throw new Exception("The method or operation is not implemented.");
+            return _files.IndexOf(item);
         }
 
         public void Insert(int index, EmbedFilePair item)
         {
-            throw new Exception("The method or operation is not implemented.");
+            _files.Insert(index, item);
         }
 
         public void RemoveAt(int index)
         {
-            throw new Exception("The method or operation is not implemented.");
+            _files.RemoveAt(index);
         }
 
         public EmbedFilePair this[int index]
         {
             get
             {
-                throw new Exception("The method or operation is not implemented.");
+                return _files[index];
             }
             set
             {
-                throw new Exception("The method or operation is not implemented.");
+                _files[index] = value;
             }
         }
 

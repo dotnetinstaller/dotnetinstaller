@@ -1,23 +1,13 @@
 #include "stdafx.h"
 #include "ConfigFile.h"
-#include "InstallerLog.h"
 #include "DniMessageBox.h"
 #include "dotNetInstallerDlg.h"
-#include "ProcessorIdentifier.h"
-#include "MsiComponent.h"
-#include "CmdComponent.h"
-#include "OpenFileComponent.h"
-#include "InstalledCheckRegistry.h"
-#include "InstalledCheckFile.h"
-#include "InstalledCheckOperator.h"
 #include "InstallerCommandLineInfo.h"
 #include "DownloadDialog.h"
-#include "Image.h"
-#include "Tools\Format.h"
 #include <Version/Version.h>
 
 ConfigFile::ConfigFile()
-    : m_lcidtype(LcidUserExe)
+    : m_lcidtype(DVLib::LcidUserExe)
 	, schema_generator("dotNetInstaller InstallerEditor")
 	, schema_version("1")
 {
@@ -37,7 +27,7 @@ void ConfigFile::LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog,
 	p_Configuration.HelpMessageDownloading = p_Node_downloaddialog->AttributeT("dialog_message_downloading").data();
 	p_Configuration.ButtonStartCaption = p_Node_downloaddialog->AttributeT("buttonstart_caption").data();
 	p_Configuration.ButtonCancelCaption = p_Node_downloaddialog->AttributeT("buttoncancel_caption").data();
-	p_Configuration.AutoStartDownload = ConvBoolString(p_Node_downloaddialog->Attribute("autostartdownload"), false);
+	p_Configuration.AutoStartDownload = DVLib::ConvBoolString(p_Node_downloaddialog->Attribute("autostartdownload"), false);
 
 	p_Configuration.Components.RemoveAll();
 
@@ -55,7 +45,7 @@ void ConfigFile::LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog,
 			l_DownloadComp.SourcePath = m_Setting.ValidatePath(l_Node_download->AttributeT("sourcepath").data());
 			l_DownloadComp.DestinationPath = m_Setting.ValidatePath(l_Node_download->AttributeT("destinationpath").data());
 			l_DownloadComp.DestinationFileName = m_Setting.ValidatePath(l_Node_download->AttributeT("destinationfilename").data());
-			l_DownloadComp.AlwaysDownload = ConvBoolString(l_Node_download->Attribute("alwaysdownload"), true);
+			l_DownloadComp.AlwaysDownload = DVLib::ConvBoolString(l_Node_download->Attribute("alwaysdownload"), true);
 			p_Configuration.Components.Add(l_DownloadComp);
 
 			ApplicationLog.Write( TEXT("--Finished reading download component: "), l_DownloadComp.SourceURL );
@@ -79,7 +69,7 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 	ApplicationLog.Write( TEXT("Reading configuration attributes") );
 
     // auto-enabled log options
-    m_Setting.log_enabled = ConvBoolString(p_Node->Attribute("log_enabled"), false);
+    m_Setting.log_enabled = DVLib::ConvBoolString(p_Node->Attribute("log_enabled"), false);
     m_Setting.log_file = p_Node->AttributeT("log_file").data();
 
     // enable logging if log is not enabled by a command line switch and enabled in the configuration
@@ -91,7 +81,7 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 
     // defines where to extract files and auto-delete options
     m_Setting.cab_path = p_Node->AttributeT("cab_path").data();
-    m_Setting.cab_path_autodelete = ConvBoolString(p_Node->Attribute("cab_path_autodelete"), true);
+    m_Setting.cab_path_autodelete = DVLib::ConvBoolString(p_Node->Attribute("cab_path_autodelete"), true);
     // positions within the dialog
     m_Setting.dialog_position.FromString(p_Node->AttributeT("dialog_position"));
     m_Setting.dialog_components_list_position.FromString(p_Node->AttributeT("dialog_components_list_position"));
@@ -115,7 +105,7 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 	m_Setting.installation_completed = p_Node->AttributeT("installation_completed").data();
 	m_Setting.installation_none = p_Node->AttributeT("installation_none").data();
 	m_Setting.reboot_required = p_Node->AttributeT("reboot_required").data();
-    m_Setting.must_reboot_required = ConvBoolString(p_Node->Attribute("must_reboot_required"), false);
+    m_Setting.must_reboot_required = DVLib::ConvBoolString(p_Node->Attribute("must_reboot_required"), false);
 	m_Setting.installing_component_wait = p_Node->AttributeT("installing_component_wait").data();
 
 	m_Setting.dialog_otherinfo_caption = p_Node->AttributeT("dialog_otherinfo_caption").data();
@@ -123,11 +113,11 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 
 	m_Setting.complete_command = m_Setting.ValidatePath(p_Node->AttributeT("complete_command").data());
 	m_Setting.complete_command_silent = m_Setting.ValidatePath(p_Node->AttributeT("complete_command_silent").data());
-	m_Setting.auto_close_if_installed = ConvBoolString(p_Node->Attribute("auto_close_if_installed"), true);
-    m_Setting.auto_close_on_error = ConvBoolString(p_Node->Attribute("auto_close_on_error"), false);
-    m_Setting.allow_continue_on_error = ConvBoolString(p_Node->Attribute("allow_continue_on_error"), true);
-    m_Setting.dialog_show_installed = ConvBoolString(p_Node->Attribute("dialog_show_installed"), true);
-    m_Setting.dialog_show_required = ConvBoolString(p_Node->Attribute("dialog_show_required"), true);
+	m_Setting.auto_close_if_installed = DVLib::ConvBoolString(p_Node->Attribute("auto_close_if_installed"), true);
+    m_Setting.auto_close_on_error = DVLib::ConvBoolString(p_Node->Attribute("auto_close_on_error"), false);
+    m_Setting.allow_continue_on_error = DVLib::ConvBoolString(p_Node->Attribute("allow_continue_on_error"), true);
+    m_Setting.dialog_show_installed = DVLib::ConvBoolString(p_Node->Attribute("dialog_show_installed"), true);
+    m_Setting.dialog_show_required = DVLib::ConvBoolString(p_Node->Attribute("dialog_show_required"), true);
 
 	m_Setting.os_filter_greater = p_Node->AttributeT("os_filter_greater").data();
 	m_Setting.os_filter_smaller = p_Node->AttributeT("os_filter_smaller").data();
@@ -225,12 +215,12 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 			l_new_component->os_filter_smaller = l_Node_component->AttributeT("os_filter_smaller").data();
 			l_new_component->os_filter_lcid = l_Node_component->AttributeT("os_filter_lcid").data();
 			l_new_component->installcompletemessage = l_Node_component->AttributeT("installcompletemessage").data();
-			l_new_component->mustreboot = ConvBoolString(l_Node_component->Attribute("mustreboot"), false);
+			l_new_component->mustreboot = DVLib::ConvBoolString(l_Node_component->Attribute("mustreboot"), false);
             l_new_component->reboot_required = l_Node_component->AttributeT("reboot_required").data();
-			l_new_component->must_reboot_required = ConvBoolString(l_Node_component->Attribute("must_reboot_required"), false);
-            l_new_component->allow_continue_on_error = ConvBoolString(l_Node_component->Attribute("allow_continue_on_error"), true);
+			l_new_component->must_reboot_required = DVLib::ConvBoolString(l_Node_component->Attribute("must_reboot_required"), false);
+            l_new_component->allow_continue_on_error = DVLib::ConvBoolString(l_Node_component->Attribute("allow_continue_on_error"), true);
             l_new_component->failed_exec_command_continue = l_Node_component->AttributeT("failed_exec_command_continue").data();
-			l_new_component->required = ConvBoolString(l_Node_component->Attribute("required"), true);
+			l_new_component->required = DVLib::ConvBoolString(l_Node_component->Attribute("required"), true);
 			l_new_component->processor_architecture_filter = l_Node_component->AttributeT("processor_architecture_filter").data();
 
 			// installed checks
@@ -253,13 +243,13 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 
 			//
 			// download dialog
-			l_new_component->ContainsDownloadComponent = false; //default viene messo a falso e poi guardo se presente il nodo
+			l_new_component->download = false; //default viene messo a falso e poi guardo se presente il nodo
 			TiXmlElement * l_Node_downloaddialog = l_Node_component->FirstChildElement("downloaddialog");
 			if (l_Node_downloaddialog != NULL)
 			{
 			    ApplicationLog.Write( TEXT("---Loading DownloadDialog") );
 				LoadDownloadConfiguration(l_Node_downloaddialog, l_new_component->DownloadDialogConfiguration);
-				l_new_component->ContainsDownloadComponent = true;
+				l_new_component->download = true;
 			}
 
 			//verifico che il componente sia supportato nel sistema operativo
@@ -291,7 +281,7 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
     }
 }
 
-bool ConfigFile::LoadReferenceConfigNode(TiXmlElement * p_Node, CWnd * p_Parent)
+bool ConfigFile::LoadReferenceConfigNode(TiXmlElement * p_Node, CdotNetInstallerDlg * p_Parent)
 {
 	bool l_bSuccess = false;
 	TiXmlElement * l_NodeDownloadDialog = p_Node->FirstChildElement("downloaddialog");
@@ -299,7 +289,7 @@ bool ConfigFile::LoadReferenceConfigNode(TiXmlElement * p_Node, CWnd * p_Parent)
 	DownloadGroupConfiguration l_DownloadConfig;
 	LoadDownloadConfiguration(l_NodeDownloadDialog, l_DownloadConfig);
 
-    l_bSuccess = l_DownloadConfig.Run(p_Parent);
+    l_bSuccess = p_Parent->RunDownloadConfiguration(l_DownloadConfig);
 	if (l_bSuccess)
 	{
 		TiXmlElement * l_Node_configfile = p_Node->FirstChildElement("configfile");
@@ -536,18 +526,29 @@ void ConfigFile::LoadConfigFromResource(HMODULE p_Module)
 	delete [] l_bufferXml;
 }
 
+bool ConfigFile::HasConfigResource(HMODULE p_Module)
+{
+	HRSRC l_res = FindResource(p_Module, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM"));
+	return l_res != NULL;
+}
+
 void ConfigFile::LoadXmlSettings()
 {
-	CString settings_file = DVLib::PathCombine(DVLib::GetAppPath(), TEXT("configuration.xml"));
+	CString settings_file = DVLib::PathCombineT(DVLib::GetAppPath(), TEXT("configuration.xml"));
 	if (DVLib::FileExists(settings_file))
 	{
 		ApplicationLog.Write(TEXT("Loading configuration from file: "), settings_file);
 		LoadConfigFromFile(settings_file);
 	}
-	else
+	else if (HasConfigResource(AfxGetApp()->m_hInstance))
 	{
 		ApplicationLog.Write(TEXT("Loading configuration from resource."));
 		LoadConfigFromResource(AfxGetApp()->m_hInstance);
+	}
+	else
+	{
+		ApplicationLog.Write(TEXT("Missing configuration.xml."));
+		throw std::exception("Missing configuration.xml");
 	}
 }
 
@@ -566,9 +567,9 @@ void ConfigFile::ProcessLcidType(const CString& lcidtype)
 	if (lcidtype.IsEmpty())
 		return;
 
-    if (lcidtype == "System") m_lcidtype = LcidSystem;
-    else if (lcidtype == "User") m_lcidtype = LcidUser;
-    else if (lcidtype == "UserExe") m_lcidtype = LcidUserExe;
+    if (lcidtype == "System") m_lcidtype = DVLib::LcidSystem;
+    else if (lcidtype == "User") m_lcidtype = DVLib::LcidUser;
+    else if (lcidtype == "UserExe") m_lcidtype = DVLib::LcidUserExe;
     else throw std::exception("Invalid LCID type.");
 }
 
@@ -601,3 +602,4 @@ void ConfigFile::LoadSchemaVersion(TiXmlElement * p_Node)
 		}
 	}
 }
+

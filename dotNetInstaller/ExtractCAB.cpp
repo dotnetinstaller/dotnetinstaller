@@ -1,13 +1,8 @@
 #include "StdAfx.h"
 #include "ExtractCAB.h"
-
 #include "ConfigFile.h"
-#include "Tools/Cab/ExtractResourceT.hpp"
-#include "Tools/Cab/CompressT.hpp"
-#include "Tools/Guid.h"
-#include "Tools/Cab/ExtractT.hpp"
 #include "InstallComponentDlg.h"
-#include "Tools/Format.h"
+#include "Resource.h"
 
 ExtractCABProcessor::ExtractCABProcessor(ExtractCABComponent * pComponent)
     : m_pComponent(pComponent)
@@ -92,7 +87,7 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
 	ApplicationLog.Write( TEXT("Cabpath: "), cabpath );
 	DVLib::CreateDirectoryPath(cabpath);
 
-    CString tempFile = DVLib::PathCombine(cabpath, TEXT("setup.cab") );
+    CString tempFile = DVLib::PathCombineT(cabpath, TEXT("setup.cab") );
 	ApplicationLog.Write( TEXT("TempFile: "), tempFile );
     HANDLE l_hFile = CreateFile(tempFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if (l_hFile == INVALID_HANDLE_VALUE)

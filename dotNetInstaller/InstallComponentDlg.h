@@ -1,6 +1,5 @@
 #pragma once
 #include "afxwin.h"
-#include "installerTypes.h"
 #include "KCBusyProgressCtrl.h"
 #include "resource.h"
 

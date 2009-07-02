@@ -1,12 +1,6 @@
-// dotNetInstallerDlg.h : file di intestazione
-//
-
 #pragma once
 
-#include "installerTypes.h"
-#include "afxwin.h"
 #include "HyperlinkStatic.h"
-#include "InstallerSetting.h"
 #include "ComponentsList.h"
 #include "resource.h"
 
@@ -42,6 +36,9 @@ private:
     // move a window to the coordinates defined by a rectangle with defaults
     static bool MoveWindow(CWnd& dlg, const WidgetPosition& pos);
 public:
+	void ExecuteCompleteCode(bool componentsInstalled);
+	bool RunDownloadConfiguration(DownloadGroupConfiguration & p_Configuration);
+	bool DownloadComponents(Component& p_Component);
 	inline int GetRecordedError() const { return m_recorded_error; }
 	void RecordError(int error = -1);
 	void ClearError();

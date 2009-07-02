@@ -45,17 +45,12 @@
 #include <windows.h>
 #include <strsafe.h>
 
-#include "ExecCmd.h"
-#include "VersionCompare.h"
-#include "Path.h"
-#include "File.h"
-#include "StringUtil.h"
-#include "DniMessageBox.h"
-#include "InstallerLog.h"
-#include "InstallUILevel.h"
-#include "OsIdentifier.h"
-#include "Tools/tinyxml.h"
-#include "WidgetPosition.h"
+#include <dotNetInstallerToolsLib\Tools.h>
+#include <dotNetInstallerLib\dotNetInstallerLib.h>
+#include <dotNetInstallerCabLib\Cab.h>
 
-using namespace DVLib;
-
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif

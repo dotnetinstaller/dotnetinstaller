@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 #include "InstallerCommandLineInfo.h"
-#include "InstallerLog.h"
 #include "InstallerLauncher.h"
 
 CInstallerCommandLineInfo commandLineInfo;
@@ -106,7 +105,7 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
                 break;
             case componentArgs:
 		        stlvectorstring l_componentArgsArray;
-                split_string(pszParam, ':', l_componentArgsArray, 2);
+				DVLib::split_string(pszParam, ':', l_componentArgsArray, 2);
                 if (l_componentArgsArray.size() != 2) 
                 {
                     std::string error = "Invalid component argument parameter: ";

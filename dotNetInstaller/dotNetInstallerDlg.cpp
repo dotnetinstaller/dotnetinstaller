@@ -4,28 +4,14 @@
 #include "stdafx.h"
 #include "dotNetInstaller.h"
 #include "dotNetInstallerDlg.h"
-
 #include "InstallComponentDlg.h"
-
-//user defined include
-#include <tchar.h>
-#include "OsIdentifier.h"
-#include "ProcessorIdentifier.h"
-#include "ConfigFile.h"
-#include "InstallerLog.h"
 #include "DniMessageBox.h"
 #include "ExtractCAB.h"
+#include "DownloadDialog.h"
+#include "InstallSystem.h"
 #include "InstallerCommandLineInfo.h"
-#include "Image.h"
-#include "Tools/Format.h"
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
 
 // finestra di dialogo CdotNetInstallerDlg
-
-
 
 CdotNetInstallerDlg::CdotNetInstallerDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CdotNetInstallerDlg::IDD, pParent)
@@ -162,7 +148,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
                 ExtractCab(); // the command may need to execute a file
             }
 
-			m_Settings.ExecuteCompleteCode(false);
+			ExecuteCompleteCode(false);
 			OnOK();
 		}
 	}
@@ -258,7 +244,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 						component->Init(NULL);
 					}
 
-					if (component->DownloadComponents(this) &&  //download component
+					if (DownloadComponents(* component) &&  //download component
 						component->Exec()) //execute component
 					{
 						if (CurrentInstallUILevel.IsAnyUI())
@@ -415,7 +401,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		{
 			if (LoadComponentsList())
 			{
-				m_Settings.ExecuteCompleteCode(true);
+				ExecuteCompleteCode(true);
 				OnOK();
 			}
 			else if (CurrentInstallUILevel.IsSilent())
@@ -608,4 +594,90 @@ void CdotNetInstallerDlg::RecordError(int error)
 void CdotNetInstallerDlg::ClearError() 
 { 
 	m_recorded_error = 0; 
+}
+
+bool CdotNetInstallerDlg::RunDownloadConfiguration(DownloadGroupConfiguration & p_Configuration)
+{
+	DownloadDialog l_dgDownload(p_Configuration, this);
+	
+	if (l_dgDownload.IsCopyRequired())
+	{
+		l_dgDownload.CopyFromSourcePath();
+		return true;
+	}
+
+	if (l_dgDownload.IsDownloadRequired())
+	{
+		l_dgDownload.DoModal();
+		return l_dgDownload.IsDownloadCompleted();
+	}
+
+	return true;
+}
+
+bool CdotNetInstallerDlg::DownloadComponents(Component& p_Component)
+{
+	try
+	{
+		if (p_Component.download)
+        {
+			return RunDownloadConfiguration(p_Component.DownloadDialogConfiguration);
+        }
+		else
+        {
+			return true;
+        }
+	}
+	catch(std::exception&)
+	{
+		return false;
+	}
+}
+
+void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
+{
+	ApplicationLog.Write(TEXT("--Complete Command"));
+
+    CString message = m_Settings.installation_completed;
+	// installation completed, but no components have been installed
+	if (! componentsInstalled && m_Settings.installation_none.GetLength())
+	{
+		message = m_Settings.installation_none;
+	}
+
+	if (message.Trim().GetLength() > 0)
+    {
+		DniMessageBox(message, MB_OK|MB_ICONINFORMATION);
+    }
+
+	CString l_complete_command = m_Settings.complete_command;
+	switch(CurrentInstallUILevel.GetUILevel())
+	{
+	case InstallUILevelSilent:
+		if (m_Settings.complete_command_silent.GetLength()) l_complete_command = m_Settings.complete_command_silent;
+		else if (m_Settings.complete_command_basic.GetLength()) l_complete_command = m_Settings.complete_command_basic;
+		break;
+	case InstallUILevelBasic:
+		if (m_Settings.complete_command_basic.GetLength()) l_complete_command = m_Settings.complete_command_basic;
+		else if (m_Settings.complete_command_silent.GetLength()) l_complete_command = m_Settings.complete_command_silent;
+		break;
+	}
+
+    if (commandLineInfo.GetCompleteCommandArgs().GetLength())
+    {
+        l_complete_command.Append(L" ");
+        l_complete_command.Append(commandLineInfo.GetCompleteCommandArgs());
+    }
+
+	if (l_complete_command.Trim().GetLength())
+	{
+		ApplicationLog.Write( TEXT("Executing complete command: "), l_complete_command);
+        DWORD dwExitCode = 0;
+        if (! DVLib::ExecCmdAndWait(l_complete_command, & dwExitCode))
+        {
+            std::string error = "***Error executing complete command: ";
+            error.append(DVLib::Tstring2string((LPCWSTR) l_complete_command));
+            throw std::exception(error.c_str());
+	    }
+	}
 }

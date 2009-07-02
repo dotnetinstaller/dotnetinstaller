@@ -1,11 +1,6 @@
 #pragma once
 
 #include "ConfigFile.h"
-#include "Tools/Cab/ExtractResourceT.hpp"
-#include "Tools/Cab/CompressT.hpp"
-#include "Tools/Guid.h"
-#include "Tools/Cab/ExtractT.hpp"
-#include "ThreadComponent.h"
 
 struct ExtractCABComponent;
 

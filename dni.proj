@@ -58,12 +58,14 @@
     <CallTarget Targets="doc" />
     <CallTarget Targets="rewritesamples" />
     <CallTarget Targets="rewritewizardxmls" />
+    <CallTarget Targets="unittests" />
     <CallTarget Targets="release" />
     <CallTarget Targets="zip" />
     <CallTarget Targets="installer" />
+    <Message Text="Built version $(Major).$(Minor).$(Build).$(Revision)."/>
   </Target>
   <Target Name="version">
-    <Version Major="1" Minor="6">
+    <Version Major="1" Minor="7">
       <Output TaskParameter="Major" PropertyName="Major" />
       <Output TaskParameter="Minor" PropertyName="Minor" />
       <Output TaskParameter="Revision" PropertyName="Revision"/>
@@ -150,11 +152,18 @@
     <MSBuild Projects="Documentation\Dni.shfbproj" Properties="Configuration=$(Configuration)" />
     <Error Condition="Exists('Documentation\$(Configuration)\LastBuild.log')" Text="Documentation build failed, check Documentation\$(Configuration)\LastBuild.log" />
   </Target>
+  <ItemGroup>
+    <CppUnitTests Include="UnitTests\dotNetInstallerLibUnitTests\$(Configuration)\dotNetInstallerLibUnitTests.exe" />
+    <CppUnitTests Include="UnitTests\dotNetInstallerToolsLibUnitTests\$(Configuration)\dotNetInstallerToolsLibUnitTests.exe" />
+  </ItemGroup>
   <Target Name="unittests" DependsOnTargets="version">
     <CreateItem Include="UnitTests\**\bin\$(Configuration)\*UnitTests.dll">
       <Output TaskParameter="Include" ItemName="UnitTestBinaries" />
     </CreateItem>
+    <MakeDir Directories="$(ReleaseDir)" />
     <NUnit Assemblies="@(UnitTestBinaries)" ToolPath="$(NUnitDir)\bin" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
+    <Message Text="Running %(CppUnitTests.Identity) ..." />
+    <Exec Command="%(CppUnitTests.Identity)" />
   </Target>
   <Target Name="zip" DependsOnTargets="version">
     <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip;$(ReleaseDir)\UnitTests.xml;$(ReleaseDir)\*.msi">

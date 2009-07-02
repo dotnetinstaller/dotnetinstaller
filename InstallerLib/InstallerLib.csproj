@@ -20,6 +20,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\InstallerLib.XML</DocumentationFile>
     <PlatformTarget>x86</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

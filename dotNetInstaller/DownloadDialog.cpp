@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "DownloadDialog.h"
-#include "Tools/Format.h"
+#include "DniMessageBox.h"
 
 #define WM_USER_SETSTATUSDOWNLOAD (WM_USER+1)
 #define WM_USER_CLOSE_DIALOG (WM_USER+2)
@@ -229,7 +229,7 @@ bool DownloadDialog::IsCopyRequired()
 				
 		CString l_destinationFullFileName = l_Component.GetDestinationFileName();
 		ApplicationLog.Write( TEXT("DestinationFullFileName: "), l_destinationFullFileName);
-		ApplicationLog.Write( TEXT("FileExists: "), FileExists(l_destinationFullFileName) ? TEXT("True") : TEXT("False") );
+		ApplicationLog.Write( TEXT("FileExists: "), DVLib::FileExists(l_destinationFullFileName) ? TEXT("True") : TEXT("False") );
 		ApplicationLog.Write( TEXT("Copy: "), l_CopyRequired ? TEXT("True") : TEXT("False") );
 
 		if (l_CopyRequired)
@@ -250,7 +250,7 @@ bool DownloadDialog::IsDownloadRequired()
 				
 		CString l_destinationFullFileName = l_Component.GetDestinationFileName();
 		ApplicationLog.Write( TEXT("DestinationFullFileName: "), l_destinationFullFileName);
-		ApplicationLog.Write( TEXT("FileExists: "), FileExists(l_destinationFullFileName) ? TEXT("True") : TEXT("False") );
+		ApplicationLog.Write( TEXT("FileExists: "), DVLib::FileExists(l_destinationFullFileName) ? TEXT("True") : TEXT("False") );
 		ApplicationLog.Write( TEXT("Download: "), l_DownloadRequired ? TEXT("True") : TEXT("False") );
 
 		if (l_DownloadRequired)

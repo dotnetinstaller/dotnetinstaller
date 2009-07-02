@@ -6,12 +6,8 @@
 #include "dotNetInstaller.h"
 #include "dotNetInstallerDlg.h"
 #include "InstallerCommandLineInfo.h"
+#include "DniMessageBox.h"
 #include <Version/Version.h>
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
-
 
 // CdotNetInstallerApp
 
