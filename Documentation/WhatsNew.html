@@ -3,10 +3,23 @@
 <head>
     <title>What's New</title>
     <style type="text/css">
-body { color: #000000; font-family: Arial; font-size: 75%; }    
-a { font-family: Arial; text-decoration: none; }
-code { color: #b22222; font-family: Courier New; }
- </style>
+        body
+        {
+            color: #000000;
+            font-family: Arial;
+            font-size: 75%;
+        }
+        a
+        {
+            font-family: Arial;
+            text-decoration: none;
+        }
+        code
+        {
+            color: #b22222;
+            font-family: Courier New;
+        }
+    </style>
 </head>
 <body>
     <h3>
@@ -14,6 +27,7 @@ code { color: #b22222; font-family: Courier New; }
     <ul>
         <li>Bug: wrong error when missing configuration.xml (invalid schema version vs. missing
             configuration.xml).</li>
+        <li>Converted the projects to Visual Studio 2008 format.</li>
     </ul>
     <h3>
         1.6 (29 June 2009)</h3>
@@ -28,7 +42,8 @@ code { color: #b22222; font-family: Courier New; }
             configuration component to embed directories and subdirectories with an optional
             wildcard and configurable destination.</li>
         <li>Added parity between <code>EmbedFolder</code> and <code>EmbedFile</code> components
-            which can be now specified in both the configuration and on the command line. </li>
+            which can be now specified in both the configuration and on the command line.
+        </li>
         <li>InstallerLinker: embedded files that cannot be found are reported as errors with
             their full paths.</li>
         <li>InstallerLinker: Changed default value of <code>/AppPath</code>, now defaults to
@@ -79,9 +94,11 @@ code { color: #b22222; font-family: Courier New; }
         <li>Added <code>dialog_show_required</code>: when false, required components are hidden.</li>
         <li>Added <code>dialog_show_installed</code>: when false, installed components are hidden.</li>
         <li>Added <code>must_reboot_required</code>: globally and per-component. Setting this
-            option to true will prevent users from continuing when a reboot is required. </li>
+            option to true will prevent users from continuing when a reboot is required.
+        </li>
         <li>Added <code>failed_exec_command_continue</code> per-component extending the global
-            setting that defines the message to show when a component fails to install. </li>
+            setting that defines the message to show when a component fails to install.
+        </li>
         <li>Added optional <code>reboot_required</code>: a message that can be configured per
             component, extending the global setting. </li>
         <li>Added <code>auto_close_on_error</code>: changes behavior on component error, now
@@ -169,7 +186,8 @@ code { color: #b22222; font-family: Courier New; }
             and /v (Verbose) for using in build processes </li>
         <li>Added /EmbedFile and /EmbedFolder command line options to InstallerLinker to embed
             individual files and folder structures </li>
-        <li>Added support for embedding an icon that can replace the default setup icon </li>
+        <li>Added support for embedding an icon that can replace the default setup icon
+        </li>
         <li>Added "cab_dialog_message", "cab_cancelled_message", "cab_dialog_caption", "cab_path"
             and "cab_path_autodelete" options </li>
         <li>Temporary files (eg. downloaded files) will be deleted upon completion of dotNetInstaller
@@ -199,19 +217,22 @@ code { color: #b22222; font-family: Courier New; }
             have been installed </li>
         <li>Added /CompleteCommandArgs "value" to dotNetInstaller.exe to pass additional parameters
             to "complete_command" and "complete_command_silent" </li>
-        <li>Added horizontal scrollbars in component lists that can't fit all the text in </li>
+        <li>Added horizontal scrollbars in component lists that can't fit all the text in
+        </li>
     </ul>
     <h3>
         1.3.3.0 (19 March 2007)</h3>
     <ul>
-        <li>dotNetInstaller can now recognize Windows Vista (Thanks to Rennie Petersen) </li>
+        <li>dotNetInstaller can now recognize Windows Vista (Thanks to Rennie Petersen)
+        </li>
         <li>Included .NET 2 components on the InstallerEditor templates (Thanks to Rennie Petersen)
         </li>
         <li>Added OS filter functionality. You can now specify on which OS your setup will be
             running. </li>
         <li>Added OS filter functionality. You can now specify on which OS your setup will be
             running. </li>
-        <li>In the complete_command you can now use environment variables (e.g. %Temp%) </li>
+        <li>In the complete_command you can now use environment variables (e.g. %Temp%)
+        </li>
         <li>A template for german language is available in the InstallerEditor\templates\ folder
             (Thanks to Rainer Halanek for the translation) </li>
         <li>Converted the projects to Visual Studio 2005 format. </li>
