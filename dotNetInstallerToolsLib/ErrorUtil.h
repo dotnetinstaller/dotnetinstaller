@@ -3,14 +3,6 @@
 
 namespace DVLib
 {
-	inline HRESULT LastError () 
-	{
-		HRESULT hr = HRESULT_FROM_WIN32(GetLastError());
-		if (SUCCEEDED(hr)) 
-			return E_FAIL;
-		return hr;
-	}
-
 	// Emit an error message based on WIN32 error messages
 	inline CString TranslateErrorMsg (HRESULT hr) 
 	{

@@ -1,10 +1,5 @@
 #pragma once
 
-#include <windows.h>
-#include <stdio.h>
-#include "split.h"
-#include "File.h"
-
 namespace DVLib
 {
     enum LcidType
@@ -400,15 +395,14 @@ namespace DVLib
 
 		bool l_bIsOperatingSystemLCID = false;
 
-		stlvectorstring l_ArrayLcid;
-		split_string((LPCTSTR)p_FilterLCID, ',', l_ArrayLcid);
+		std::vector<std::wstring> l_ArrayLcid = DVLib::split((LPCTSTR) p_FilterLCID, L",");
 
 		for (size_t i = 0; i < l_ArrayLcid.size(); i++)
 		{
 			if (l_ArrayLcid[i].size() > 0)
 			{
-				stlstring l_CheckNot = l_ArrayLcid[i];
-				stlstring l_LCID;
+				std::wstring l_CheckNot = l_ArrayLcid[i];
+				std::wstring l_LCID;
 				bool l_bNot;
 				if ( _tcscmp(TEXT("!"), l_CheckNot.substr(0,1).data() ) == 0  )
 				{

@@ -11,8 +11,8 @@ InstalledCheckOperator::InstalledCheckOperator()
 
 void InstalledCheckOperator::Load(TiXmlElement * p_Node, InstallerSetting & p_Setting)
 {
-    type = p_Node->AttributeT("type").data();
-    description = p_Node->AttributeT("description").data();
+    type = p_Node->AttributeW("type").data();
+    description = p_Node->AttributeW("description").data();
     ApplicationLog.Write(TEXT("----Reading installed check operator: "), description + TEXT(" (") + type + TEXT(")"));
 
 	// installed checks

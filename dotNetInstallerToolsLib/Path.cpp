@@ -124,7 +124,7 @@ void DVLib::DeleteDirectoryDeep(const CString& path)
 			    if (! ::DeleteFileW((LPCWSTR) sub))
 				{
                     std::string error = "Error deleting: ";
-                    error.append(DVLib::Tstring2string((LPCWSTR) sub));
+                    error.append(DVLib::wstring2string((LPCWSTR) sub));
                     throw std::exception(error.c_str());
 				}
 		    }
@@ -159,9 +159,9 @@ bool DVLib::CreateDirectoryPath(const CString& path)
     if (! ::CreateDirectory(path, NULL))
 	{
 		std::string error = "Error creating directory \"";
-		error.append(DVLib::Tstring2string(path));
+		error.append(DVLib::wstring2string((LPCWSTR) path));
 		error.append("\"\r\n");
-		error.append(DVLib::Tstring2string(DVLib::TranslateErrorMsg(DVLib::LastError())));
+		error.append(DVLib::wstring2string((LPCWSTR) DVLib::TranslateErrorMsg(HRESULT_FROM_WIN32(::GetLastError()))));
 		throw std::exception(error.c_str());
 	}
 

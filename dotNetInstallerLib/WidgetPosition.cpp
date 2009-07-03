@@ -37,8 +37,7 @@ bool WidgetPosition::FromString(const std::wstring& p_RectString)
     if (p_RectString.empty())
 		return false;
 
-	std::vector<std::wstring> l_RectCoordinates;
-	DVLib::split_string(p_RectString, ',', l_RectCoordinates, 4);
+	std::vector<std::wstring> l_RectCoordinates = DVLib::split(p_RectString, L",", 4);
 	if (l_RectCoordinates.size() != 4) 
 		return false;
 

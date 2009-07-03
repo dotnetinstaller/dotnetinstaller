@@ -64,16 +64,16 @@ namespace DVLib
 		DWORD dwHandle;
 		DWORD cchver = GetFileVersionInfoSize(filename,&dwHandle);
 		if (cchver == 0) 
-			return LastError();
+			return HRESULT_FROM_WIN32(::GetLastError());
 		char* pver = new char[cchver];
 		BOOL bret = GetFileVersionInfo(filename,dwHandle,cchver,pver);
 		if (!bret) 
-			return LastError();
+			return HRESULT_FROM_WIN32(::GetLastError());
 		UINT uLen;
 		void *pbuf;
 		bret = VerQueryValue(pver,TEXT("\\"),&pbuf,&uLen);
 		if (!bret) 
-			return LastError();
+			return HRESULT_FROM_WIN32(::GetLastError());
 		memcpy(pvsf,pbuf,sizeof(VS_FIXEDFILEINFO));
 		delete[] pver;
 		return S_OK;

@@ -8,10 +8,10 @@ InstalledCheckFile::InstalledCheckFile()
 
 void InstalledCheckFile::Load(TiXmlElement * l_Node, InstallerSetting& p_Setting)
 {
-    ApplicationLog.Write(TEXT("----Reading CHECKFILE installed check: "), l_Node->AttributeT("filename").data());
-    filename = p_Setting.ValidatePath(l_Node->AttributeT("filename").data());
-    fileversion = l_Node->AttributeT("fileversion").data();
-    comparison = l_Node->AttributeT("comparison").data();
+    ApplicationLog.Write(TEXT("----Reading CHECKFILE installed check: "), l_Node->AttributeW("filename").data());
+    filename = p_Setting.ValidatePath(l_Node->AttributeW("filename").data());
+    fileversion = l_Node->AttributeW("fileversion").data();
+    comparison = l_Node->AttributeW("comparison").data();
 }
 
 bool InstalledCheckFile::IsInstalled()

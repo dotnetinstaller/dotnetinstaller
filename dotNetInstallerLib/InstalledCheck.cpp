@@ -15,7 +15,7 @@ InstalledCheck::~InstalledCheck(void)
 
 InstalledCheck * InstalledCheck::LoadFromXml(TiXmlElement *l_Node, InstallerSetting &p_Setting)
 {
-    CString l_installedcheck_type = l_Node->AttributeT("type").data();
+    CString l_installedcheck_type = l_Node->AttributeW("type").data();
 	InstalledCheck * l_new_installedcheck = NULL;
 	if(l_installedcheck_type == "check_registry_value")
 	{

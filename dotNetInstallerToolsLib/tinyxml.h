@@ -810,14 +810,9 @@ public:
 			SetAttribute (n.buffer, _value);	
 	}	
 
-	//Davide additions
 	std::wstring AttributeW(const std::string & name) const
 	{
 		return DVLib::UTF8string2wstring(Attribute(name));
-	}
-	stlstring AttributeT(const std::string & name) const
-	{
-		return DVLib::UTF8string2Tstring(Attribute(name));
 	}
 
 	#endif

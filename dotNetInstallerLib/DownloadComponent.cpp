@@ -90,11 +90,11 @@ void DownloadComponent::CopyFromSourcePath()
 	if (! CopyFile(m_Component->SourcePath, l_destinationFullFileName, false))
 	{
 		std::string error = "Error copying \"";
-		error.append(DVLib::Tstring2string(m_Component->SourcePath));
+		error.append(DVLib::wstring2string((LPCWSTR) m_Component->SourcePath));
 		error.append("\" to \"");
-		error.append(DVLib::Tstring2string(l_destinationFullFileName));
+		error.append(DVLib::wstring2string((LPCWSTR) l_destinationFullFileName));
 		error.append("\r\n");
-		error.append(DVLib::Tstring2string(DVLib::TranslateErrorMsg(DVLib::LastError())));
+		error.append(DVLib::GetLastErrorString());
 		throw std::exception(error.c_str());
 	}
 }
@@ -121,11 +121,11 @@ void DownloadComponent::StartDownload()
 	if (FAILED(l_hrRet))
 	{
 		std::string error = "Error downloading \"";
-		error.append(DVLib::Tstring2string(m_Component->SourceURL));
+		error.append(DVLib::wstring2string((LPCTSTR) m_Component->SourceURL));
 		error.append("\" to \"");
-		error.append(DVLib::Tstring2string(l_destinationFullFileName));
+		error.append(DVLib::wstring2string((LPCTSTR) l_destinationFullFileName));
 		error.append(": ");
-		error.append(DVLib::Tstring2string(DVLib::TranslateErrorMsg(l_hrRet, "urlmon.dll")));
+		error.append(DVLib::wstring2string((LPCTSTR) DVLib::TranslateErrorMsg(l_hrRet, "urlmon.dll")));
 		throw std::exception(error.c_str());
 	}
 }

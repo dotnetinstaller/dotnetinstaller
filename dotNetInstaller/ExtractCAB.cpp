@@ -33,7 +33,7 @@ BOOL ExtractCABProcessor::OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param
         {
             CString cancelled_message = m_pComponent->m_Settings.cab_cancelled_message;
             if (cancelled_message.Trim().GetLength() == 0) cancelled_message = L"Cancelled by user";
-            throw std::exception(DVLib::Tstring2string((LPCWSTR) cancelled_message).c_str());
+            throw std::exception(DVLib::wstring2string((LPCWSTR) cancelled_message).c_str());
         }
     }
 
@@ -123,7 +123,7 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
 			ApplicationLog.Write( TEXT("Cancelled: "), resname.c_str() );
             CString cancelled_message = m_Settings.cab_cancelled_message;
             if (cancelled_message.Trim().GetLength() == 0) cancelled_message = L"Cancelled by user";
-            throw std::exception(DVLib::Tstring2string((LPCWSTR) cancelled_message).c_str());
+            throw std::exception(DVLib::wstring2string((LPCWSTR) cancelled_message).c_str());
         }
 
 		HGLOBAL l_hRes = LoadResource(p_Module, l_res);

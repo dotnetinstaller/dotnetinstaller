@@ -65,7 +65,7 @@ BOOL CdotNetInstallerApp::InitInstance()
 	}
 	catch(std::exception& ex)
 	{
-        DniSilentMessageBox(DVLib::string2Tstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
+        DniSilentMessageBox(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
 		m_rc = -1;
 		return false;
 	}

@@ -61,7 +61,7 @@ bool thread_component::Exec()
 
         if (m_Error.GetLength())
         {
-            throw std::exception(DVLib::Tstring2string((LPCWSTR) m_Error).c_str());
+            throw std::exception(DVLib::wstring2string((LPCWSTR) m_Error).c_str());
         }
     }
 

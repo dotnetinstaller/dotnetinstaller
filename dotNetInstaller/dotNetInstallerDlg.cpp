@@ -346,7 +346,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 			}
 			catch(std::exception& ex)
 			{
-                ApplicationLog.Write( TEXT("***ERROR on component: "), DVLib::string2Tstring(ex.what()).c_str());
+                ApplicationLog.Write( TEXT("***ERROR on component: "), DVLib::string2wstring(ex.what()).c_str());
 				RecordError();
 				l_retVal = false;
 			}
@@ -413,8 +413,8 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
     }
     catch(std::exception& ex)
     {
-		ApplicationLog.Write(TEXT("***"), DVLib::string2Tstring(ex.what()).c_str());
-		DniSilentMessageBox(DVLib::string2Tstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
+		ApplicationLog.Write(TEXT("***"), DVLib::string2wstring(ex.what()).c_str());
+		DniSilentMessageBox(DVLib::string2wstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
 		RecordError();
     }
 	catch(...)
@@ -525,8 +525,8 @@ void CdotNetInstallerDlg::OnDestroy()
 	}
     catch(std::exception& ex)
     {
-		ApplicationLog.Write(DVLib::string2Tstring(ex.what()).c_str());
-		DniSilentMessageBox(DVLib::string2Tstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
+		ApplicationLog.Write(DVLib::string2wstring(ex.what()).c_str());
+		DniSilentMessageBox(DVLib::string2wstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
     }
 	catch(...)
 	{
@@ -676,7 +676,7 @@ void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
         if (! DVLib::ExecCmdAndWait(l_complete_command, & dwExitCode))
         {
             std::string error = "***Error executing complete command: ";
-            error.append(DVLib::Tstring2string((LPCWSTR) l_complete_command));
+            error.append(DVLib::wstring2string((LPCWSTR) l_complete_command));
             throw std::exception(error.c_str());
 	    }
 	}

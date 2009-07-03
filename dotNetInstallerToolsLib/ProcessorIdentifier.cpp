@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "ProcessorIdentifier.h"
+#include "StringUtil.h"
 
 namespace DVLib
 {
@@ -93,15 +94,14 @@ namespace DVLib
 
 		bool l_bIsProcessorArchitecture = false;
 
-		stlvectorstring l_ArrayPa;
-		split_string((LPCTSTR)p_FilterPA, ',', l_ArrayPa);
+		std::vector<std::wstring> l_ArrayPa = DVLib::split((LPCTSTR) p_FilterPA, L",");
 
 		for (size_t i = 0; i < l_ArrayPa.size(); i++)
 		{
 			if (l_ArrayPa[i].size() > 0)
 			{
-				stlstring l_CheckNot = l_ArrayPa[i];
-				stlstring l_PA;
+				std::wstring l_CheckNot = l_ArrayPa[i];
+				std::wstring l_PA;
 				bool l_bNot;
 				if ( _tcscmp(TEXT("!"), l_CheckNot.substr(0,1).data() ) == 0  )
 				{

@@ -295,6 +295,6 @@ void DownloadDialog::DownloadComponents(IDownloadCallback * p_Callback)
 	}
 	catch(std::exception& ex)
 	{
-	    p_Callback->DownloadError(DVLib::string2Tstring(ex.what()).c_str());
+	    p_Callback->DownloadError(DVLib::string2wstring(ex.what()).c_str());
 	}
 }

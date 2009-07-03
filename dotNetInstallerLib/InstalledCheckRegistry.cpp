@@ -18,14 +18,14 @@ HKEY InstalledCheckRegistry::GetRootKey() const
 
 void InstalledCheckRegistry::Load(TiXmlElement * l_Node, InstallerSetting& p_Setting)
 {
-    ApplicationLog.Write(TEXT("----Reading REGISTRY installed check: "), l_Node->AttributeT("path").data());
-    fieldname = l_Node->AttributeT("fieldname").data();
-    fieldtype = l_Node->AttributeT("fieldtype").data();
-    fieldvalue = l_Node->AttributeT("fieldvalue").data();
-    path = l_Node->AttributeT("path").data();
-    comparison = l_Node->AttributeT("comparison").data();
-    rootkey = l_Node->AttributeT("rootkey").data();
-    wowoption = l_Node->AttributeT("wowoption").data();
+    ApplicationLog.Write(TEXT("----Reading REGISTRY installed check: "), l_Node->AttributeW("path").data());
+    fieldname = l_Node->AttributeW("fieldname").data();
+    fieldtype = l_Node->AttributeW("fieldtype").data();
+    fieldvalue = l_Node->AttributeW("fieldvalue").data();
+    path = l_Node->AttributeW("path").data();
+    comparison = l_Node->AttributeW("comparison").data();
+    rootkey = l_Node->AttributeW("rootkey").data();
+    wowoption = l_Node->AttributeW("wowoption").data();
 }
 
 bool InstalledCheckRegistry::IsInstalled()

@@ -37,7 +37,7 @@ void InstallerLog::Write(LPCTSTR message)
 	    if (m_hFile == INVALID_HANDLE_VALUE)
         {
             std::string error = "Error creating log file: ";
-            error.append(DVLib::Tstring2string(m_LogFile));
+            error.append(DVLib::wstring2string((LPCTSTR) m_LogFile));
             throw std::exception(error.c_str());
         }
 
@@ -47,9 +47,9 @@ void InstallerLog::Write(LPCTSTR message)
 	DWORD l_BytesWritten = 0;
 
     std::string strMessage;
-    strMessage.append(DVLib::Tstring2string(DVLib::FormatCurrentDateTime()));
+    strMessage.append(DVLib::wstring2string((LPCTSTR) DVLib::FormatCurrentDateTime()));
     strMessage.append("\t");
-    strMessage.append(DVLib::Tstring2string(message));
+    strMessage.append(DVLib::wstring2string(message));
 	strMessage.append("\r\n");
 
 	if (WriteFile(m_hFile, strMessage.data(), (DWORD)strMessage.length(), &l_BytesWritten, NULL) == FALSE)
@@ -58,7 +58,7 @@ void InstallerLog::Write(LPCTSTR message)
 
 void InstallerLog::Write(LPCTSTR message, LPCTSTR appendMessage)
 {
-	stlstring tmp = message;
+	std::wstring tmp = message;
 	tmp.append(appendMessage);
 	Write(tmp.data());
 }

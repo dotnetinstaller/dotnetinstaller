@@ -22,12 +22,12 @@ int ConfigFile::Load()
 
 void ConfigFile::LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog, DownloadGroupConfiguration & p_Configuration)
 {
-	p_Configuration.Caption = p_Node_downloaddialog->AttributeT("dialog_caption").data();
-	p_Configuration.HelpMessage = p_Node_downloaddialog->AttributeT("dialog_message").data();
-	p_Configuration.HelpMessageDownloading = p_Node_downloaddialog->AttributeT("dialog_message_downloading").data();
-	p_Configuration.ButtonStartCaption = p_Node_downloaddialog->AttributeT("buttonstart_caption").data();
-	p_Configuration.ButtonCancelCaption = p_Node_downloaddialog->AttributeT("buttoncancel_caption").data();
-	p_Configuration.AutoStartDownload = DVLib::ConvBoolString(p_Node_downloaddialog->Attribute("autostartdownload"), false);
+	p_Configuration.Caption = p_Node_downloaddialog->AttributeW("dialog_caption").data();
+	p_Configuration.HelpMessage = p_Node_downloaddialog->AttributeW("dialog_message").data();
+	p_Configuration.HelpMessageDownloading = p_Node_downloaddialog->AttributeW("dialog_message_downloading").data();
+	p_Configuration.ButtonStartCaption = p_Node_downloaddialog->AttributeW("buttonstart_caption").data();
+	p_Configuration.ButtonCancelCaption = p_Node_downloaddialog->AttributeW("buttoncancel_caption").data();
+	p_Configuration.AutoStartDownload = DVLib::string2bool(p_Node_downloaddialog->Attribute("autostartdownload"), false);
 
 	p_Configuration.Components.RemoveAll();
 
@@ -40,12 +40,12 @@ void ConfigFile::LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog,
 			ApplicationLog.Write( TEXT("--Reading Download component"));
 
 			DownloadComponentInfo l_DownloadComp;
-			l_DownloadComp.ComponentName = l_Node_download->AttributeT("componentname").data();
-			l_DownloadComp.SourceURL = m_Setting.ValidatePath(l_Node_download->AttributeT("sourceurl").data());
-			l_DownloadComp.SourcePath = m_Setting.ValidatePath(l_Node_download->AttributeT("sourcepath").data());
-			l_DownloadComp.DestinationPath = m_Setting.ValidatePath(l_Node_download->AttributeT("destinationpath").data());
-			l_DownloadComp.DestinationFileName = m_Setting.ValidatePath(l_Node_download->AttributeT("destinationfilename").data());
-			l_DownloadComp.AlwaysDownload = DVLib::ConvBoolString(l_Node_download->Attribute("alwaysdownload"), true);
+			l_DownloadComp.ComponentName = l_Node_download->AttributeW("componentname").data();
+			l_DownloadComp.SourceURL = m_Setting.ValidatePath(l_Node_download->AttributeW("sourceurl").data());
+			l_DownloadComp.SourcePath = m_Setting.ValidatePath(l_Node_download->AttributeW("sourcepath").data());
+			l_DownloadComp.DestinationPath = m_Setting.ValidatePath(l_Node_download->AttributeW("destinationpath").data());
+			l_DownloadComp.DestinationFileName = m_Setting.ValidatePath(l_Node_download->AttributeW("destinationfilename").data());
+			l_DownloadComp.AlwaysDownload = DVLib::string2bool(l_Node_download->Attribute("alwaysdownload"), true);
 			p_Configuration.Components.Add(l_DownloadComp);
 
 			ApplicationLog.Write( TEXT("--Finished reading download component: "), l_DownloadComp.SourceURL );
@@ -57,7 +57,7 @@ void ConfigFile::LoadDownloadConfiguration(TiXmlElement * p_Node_downloaddialog,
         CString error;
         error.Format(TEXT("Invalid configuration. Download dialog \"%s\" requires at least one download file."),
 			p_Configuration.Caption);
-		throw std::exception(DVLib::Tstring2string(error).c_str());
+		throw std::exception(DVLib::wstring2string((LPCTSTR) error).c_str());
 	}
 }
 
@@ -69,8 +69,8 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 	ApplicationLog.Write( TEXT("Reading configuration attributes") );
 
     // auto-enabled log options
-    m_Setting.log_enabled = DVLib::ConvBoolString(p_Node->Attribute("log_enabled"), false);
-    m_Setting.log_file = p_Node->AttributeT("log_file").data();
+    m_Setting.log_enabled = DVLib::string2bool(p_Node->Attribute("log_enabled"), false);
+    m_Setting.log_file = p_Node->AttributeW("log_file").data();
 
     // enable logging if log is not enabled by a command line switch and enabled in the configuration
     if (! ApplicationLog.IsEnableLog() && m_Setting.log_enabled)
@@ -80,54 +80,54 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
     }
 
     // defines where to extract files and auto-delete options
-    m_Setting.cab_path = p_Node->AttributeT("cab_path").data();
-    m_Setting.cab_path_autodelete = DVLib::ConvBoolString(p_Node->Attribute("cab_path_autodelete"), true);
+    m_Setting.cab_path = p_Node->AttributeW("cab_path").data();
+    m_Setting.cab_path_autodelete = DVLib::string2bool(p_Node->Attribute("cab_path_autodelete"), true);
     // positions within the dialog
-    m_Setting.dialog_position.FromString(p_Node->AttributeT("dialog_position"));
-    m_Setting.dialog_components_list_position.FromString(p_Node->AttributeT("dialog_components_list_position"));
-    m_Setting.dialog_message_position.FromString(p_Node->AttributeT("dialog_message_position"));
-    m_Setting.dialog_bitmap_position.FromString(p_Node->AttributeT("dialog_bitmap_position"));
-    m_Setting.dialog_otherinfo_link_position.FromString(p_Node->AttributeT("dialog_otherinfo_link_position"));
-    m_Setting.dialog_osinfo_position.FromString(p_Node->AttributeT("dialog_osinfo_position"));
-    m_Setting.dialog_install_button_position.FromString(p_Node->AttributeT("dialog_install_button_position"));
-    m_Setting.dialog_cancel_button_position.FromString(p_Node->AttributeT("dialog_cancel_button_position"));
-    m_Setting.dialog_skip_button_position.FromString(p_Node->AttributeT("dialog_skip_button_position"));
+    m_Setting.dialog_position.FromString(p_Node->AttributeW("dialog_position"));
+    m_Setting.dialog_components_list_position.FromString(p_Node->AttributeW("dialog_components_list_position"));
+    m_Setting.dialog_message_position.FromString(p_Node->AttributeW("dialog_message_position"));
+    m_Setting.dialog_bitmap_position.FromString(p_Node->AttributeW("dialog_bitmap_position"));
+    m_Setting.dialog_otherinfo_link_position.FromString(p_Node->AttributeW("dialog_otherinfo_link_position"));
+    m_Setting.dialog_osinfo_position.FromString(p_Node->AttributeW("dialog_osinfo_position"));
+    m_Setting.dialog_install_button_position.FromString(p_Node->AttributeW("dialog_install_button_position"));
+    m_Setting.dialog_cancel_button_position.FromString(p_Node->AttributeW("dialog_cancel_button_position"));
+    m_Setting.dialog_skip_button_position.FromString(p_Node->AttributeW("dialog_skip_button_position"));
     // other dialog options
-	m_Setting.cancel_caption = p_Node->AttributeT("cancel_caption").data();
-	m_Setting.dialog_bitmap = m_Setting.ValidatePath(p_Node->AttributeT("dialog_bitmap").data());
-	m_Setting.dialog_caption = p_Node->AttributeT("dialog_caption").data();
-	m_Setting.dialog_message = p_Node->AttributeT("dialog_message").data();
-	m_Setting.skip_caption = p_Node->AttributeT("skip_caption").data();
-	m_Setting.install_caption = p_Node->AttributeT("install_caption").data();
-	m_Setting.status_installed = p_Node->AttributeT("status_installed").data();
-	m_Setting.status_notinstalled = p_Node->AttributeT("status_notinstalled").data();
-	m_Setting.failed_exec_command_continue = p_Node->AttributeT("failed_exec_command_continue").data();
-	m_Setting.installation_completed = p_Node->AttributeT("installation_completed").data();
-	m_Setting.installation_none = p_Node->AttributeT("installation_none").data();
-	m_Setting.reboot_required = p_Node->AttributeT("reboot_required").data();
-    m_Setting.must_reboot_required = DVLib::ConvBoolString(p_Node->Attribute("must_reboot_required"), false);
-	m_Setting.installing_component_wait = p_Node->AttributeT("installing_component_wait").data();
+	m_Setting.cancel_caption = p_Node->AttributeW("cancel_caption").data();
+	m_Setting.dialog_bitmap = m_Setting.ValidatePath(p_Node->AttributeW("dialog_bitmap").data());
+	m_Setting.dialog_caption = p_Node->AttributeW("dialog_caption").data();
+	m_Setting.dialog_message = p_Node->AttributeW("dialog_message").data();
+	m_Setting.skip_caption = p_Node->AttributeW("skip_caption").data();
+	m_Setting.install_caption = p_Node->AttributeW("install_caption").data();
+	m_Setting.status_installed = p_Node->AttributeW("status_installed").data();
+	m_Setting.status_notinstalled = p_Node->AttributeW("status_notinstalled").data();
+	m_Setting.failed_exec_command_continue = p_Node->AttributeW("failed_exec_command_continue").data();
+	m_Setting.installation_completed = p_Node->AttributeW("installation_completed").data();
+	m_Setting.installation_none = p_Node->AttributeW("installation_none").data();
+	m_Setting.reboot_required = p_Node->AttributeW("reboot_required").data();
+    m_Setting.must_reboot_required = DVLib::string2bool(p_Node->Attribute("must_reboot_required"), false);
+	m_Setting.installing_component_wait = p_Node->AttributeW("installing_component_wait").data();
 
-	m_Setting.dialog_otherinfo_caption = p_Node->AttributeT("dialog_otherinfo_caption").data();
-	m_Setting.dialog_otherinfo_link = m_Setting.ValidatePath(p_Node->AttributeT("dialog_otherinfo_link").data());
+	m_Setting.dialog_otherinfo_caption = p_Node->AttributeW("dialog_otherinfo_caption").data();
+	m_Setting.dialog_otherinfo_link = m_Setting.ValidatePath(p_Node->AttributeW("dialog_otherinfo_link").data());
 
-	m_Setting.complete_command = m_Setting.ValidatePath(p_Node->AttributeT("complete_command").data());
-	m_Setting.complete_command_silent = m_Setting.ValidatePath(p_Node->AttributeT("complete_command_silent").data());
-	m_Setting.auto_close_if_installed = DVLib::ConvBoolString(p_Node->Attribute("auto_close_if_installed"), true);
-    m_Setting.auto_close_on_error = DVLib::ConvBoolString(p_Node->Attribute("auto_close_on_error"), false);
-    m_Setting.allow_continue_on_error = DVLib::ConvBoolString(p_Node->Attribute("allow_continue_on_error"), true);
-    m_Setting.dialog_show_installed = DVLib::ConvBoolString(p_Node->Attribute("dialog_show_installed"), true);
-    m_Setting.dialog_show_required = DVLib::ConvBoolString(p_Node->Attribute("dialog_show_required"), true);
+	m_Setting.complete_command = m_Setting.ValidatePath(p_Node->AttributeW("complete_command").data());
+	m_Setting.complete_command_silent = m_Setting.ValidatePath(p_Node->AttributeW("complete_command_silent").data());
+	m_Setting.auto_close_if_installed = DVLib::string2bool(p_Node->Attribute("auto_close_if_installed"), true);
+    m_Setting.auto_close_on_error = DVLib::string2bool(p_Node->Attribute("auto_close_on_error"), false);
+    m_Setting.allow_continue_on_error = DVLib::string2bool(p_Node->Attribute("allow_continue_on_error"), true);
+    m_Setting.dialog_show_installed = DVLib::string2bool(p_Node->Attribute("dialog_show_installed"), true);
+    m_Setting.dialog_show_required = DVLib::string2bool(p_Node->Attribute("dialog_show_required"), true);
 
-	m_Setting.os_filter_greater = p_Node->AttributeT("os_filter_greater").data();
-	m_Setting.os_filter_smaller = p_Node->AttributeT("os_filter_smaller").data();
+	m_Setting.os_filter_greater = p_Node->AttributeW("os_filter_greater").data();
+	m_Setting.os_filter_smaller = p_Node->AttributeW("os_filter_smaller").data();
 	
-	m_Setting.processor_architecture_filter = p_Node->AttributeT("processor_architecture_filter").data();
+	m_Setting.processor_architecture_filter = p_Node->AttributeW("processor_architecture_filter").data();
 
     // message and caption to show during CAB extraction
-    m_Setting.cab_dialog_caption = p_Node->AttributeT("cab_dialog_caption").data();
-    m_Setting.cab_dialog_message = p_Node->AttributeT("cab_dialog_message").data();
-    m_Setting.cab_cancelled_message = p_Node->AttributeT("cab_cancelled_message").data();
+    m_Setting.cab_dialog_caption = p_Node->AttributeW("cab_dialog_caption").data();
+    m_Setting.cab_dialog_message = p_Node->AttributeW("cab_dialog_message").data();
+    m_Setting.cab_cancelled_message = p_Node->AttributeW("cab_cancelled_message").data();
 
 	ApplicationLog.Write( TEXT("Finished reading configuration attributes") );
 
@@ -139,18 +139,18 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 		TiXmlElement * l_Node_component = child->ToElement();
 		if (l_Node_component != NULL)
 		{
-			CString l_comp_type = l_Node_component->AttributeT("type").data();
+			CString l_comp_type = l_Node_component->AttributeW("type").data();
 
 			Component * l_new_component;
 
 			if (l_comp_type == "msi")
 			{
 				MsiComponent * l_msi_Comp = new MsiComponent();
-				l_msi_Comp->package = m_Setting.ValidatePath(l_Node_component->AttributeT("package").data());
+				l_msi_Comp->package = m_Setting.ValidatePath(l_Node_component->AttributeW("package").data());
 				l_msi_Comp->type = msi;
-				l_msi_Comp->cmdparameters = m_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters").data());
-				l_msi_Comp->cmdparameters_silent = m_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters_silent").data());
-				l_msi_Comp->cmdparameters_basic = m_Setting.ValidatePath(l_Node_component->AttributeT("cmdparameters_basic").data());
+				l_msi_Comp->cmdparameters = m_Setting.ValidatePath(l_Node_component->AttributeW("cmdparameters").data());
+				l_msi_Comp->cmdparameters_silent = m_Setting.ValidatePath(l_Node_component->AttributeW("cmdparameters_silent").data());
+				l_msi_Comp->cmdparameters_basic = m_Setting.ValidatePath(l_Node_component->AttributeW("cmdparameters_basic").data());
 
                 // additional command line parameters
                 std::map<std::wstring, std::wstring>::iterator cmdline = commandLineInfo.m_componentCmdArgs.find(l_msi_Comp->description.GetBuffer());
@@ -172,9 +172,9 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 			else if (l_comp_type == "cmd")
 			{
 				cmd_component * l_cmd_Comp = new cmd_component();
-				l_cmd_Comp->command = m_Setting.ValidatePath(l_Node_component->AttributeT("command").data());
-                l_cmd_Comp->command_silent = m_Setting.ValidatePath(l_Node_component->AttributeT("command_silent").data());
-				l_cmd_Comp->command_basic = m_Setting.ValidatePath(l_Node_component->AttributeT("command_basic").data());
+				l_cmd_Comp->command = m_Setting.ValidatePath(l_Node_component->AttributeW("command").data());
+                l_cmd_Comp->command_silent = m_Setting.ValidatePath(l_Node_component->AttributeW("command_silent").data());
+				l_cmd_Comp->command_basic = m_Setting.ValidatePath(l_Node_component->AttributeW("command_basic").data());
 				l_cmd_Comp->type = cmd;
 
                 // additional command line parameters
@@ -197,7 +197,7 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 			else if (l_comp_type == "openfile")
 			{
 				OpenFileComponent * l_openfile_Comp = new OpenFileComponent();
-				l_openfile_Comp->file = m_Setting.ValidatePath(l_Node_component->AttributeT("file").data());
+				l_openfile_Comp->file = m_Setting.ValidatePath(l_Node_component->AttributeW("file").data());
 				l_openfile_Comp->type = openfile;
 
 				l_new_component = l_openfile_Comp;
@@ -209,19 +209,19 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * p_Node)
 				throw std::exception("Invalid configuration file, component type not supported");
 			}
 
-			l_new_component->description = l_Node_component->AttributeT("description").data();
-			l_new_component->status_installed = l_Node_component->AttributeT("status_installed").data();
-			l_new_component->os_filter_greater = l_Node_component->AttributeT("os_filter_greater").data();
-			l_new_component->os_filter_smaller = l_Node_component->AttributeT("os_filter_smaller").data();
-			l_new_component->os_filter_lcid = l_Node_component->AttributeT("os_filter_lcid").data();
-			l_new_component->installcompletemessage = l_Node_component->AttributeT("installcompletemessage").data();
-			l_new_component->mustreboot = DVLib::ConvBoolString(l_Node_component->Attribute("mustreboot"), false);
-            l_new_component->reboot_required = l_Node_component->AttributeT("reboot_required").data();
-			l_new_component->must_reboot_required = DVLib::ConvBoolString(l_Node_component->Attribute("must_reboot_required"), false);
-            l_new_component->allow_continue_on_error = DVLib::ConvBoolString(l_Node_component->Attribute("allow_continue_on_error"), true);
-            l_new_component->failed_exec_command_continue = l_Node_component->AttributeT("failed_exec_command_continue").data();
-			l_new_component->required = DVLib::ConvBoolString(l_Node_component->Attribute("required"), true);
-			l_new_component->processor_architecture_filter = l_Node_component->AttributeT("processor_architecture_filter").data();
+			l_new_component->description = l_Node_component->AttributeW("description").data();
+			l_new_component->status_installed = l_Node_component->AttributeW("status_installed").data();
+			l_new_component->os_filter_greater = l_Node_component->AttributeW("os_filter_greater").data();
+			l_new_component->os_filter_smaller = l_Node_component->AttributeW("os_filter_smaller").data();
+			l_new_component->os_filter_lcid = l_Node_component->AttributeW("os_filter_lcid").data();
+			l_new_component->installcompletemessage = l_Node_component->AttributeW("installcompletemessage").data();
+			l_new_component->mustreboot = DVLib::string2bool(l_Node_component->Attribute("mustreboot"), false);
+            l_new_component->reboot_required = l_Node_component->AttributeW("reboot_required").data();
+			l_new_component->must_reboot_required = DVLib::string2bool(l_Node_component->Attribute("must_reboot_required"), false);
+            l_new_component->allow_continue_on_error = DVLib::string2bool(l_Node_component->Attribute("allow_continue_on_error"), true);
+            l_new_component->failed_exec_command_continue = l_Node_component->AttributeW("failed_exec_command_continue").data();
+			l_new_component->required = DVLib::string2bool(l_Node_component->Attribute("required"), true);
+			l_new_component->processor_architecture_filter = l_Node_component->AttributeW("processor_architecture_filter").data();
 
 			// installed checks
 			TiXmlNode * childInstalled = NULL;
@@ -294,7 +294,7 @@ bool ConfigFile::LoadReferenceConfigNode(TiXmlElement * p_Node, CdotNetInstaller
 	{
 		TiXmlElement * l_Node_configfile = p_Node->FirstChildElement("configfile");
 
-		CString l_configfile_filename = m_Setting.ValidatePath(l_Node_configfile->AttributeT("filename").data());
+		CString l_configfile_filename = m_Setting.ValidatePath(l_Node_configfile->AttributeW("filename").data());
 		//CString l_configfile_banner = m_Setting.ValidatePath(l_Node_configfile->GetAttrValue("banner"));
 		LoadConfigFromFile(l_configfile_filename);
 	}
@@ -314,8 +314,8 @@ int ConfigFile::LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additio
 	configSetting l_ConfigSetting;
 	SaveAppState(l_ConfigSetting);
 
-    ProcessUILevel(InstallUILevelSetting::ToUILevel(p_Node->AttributeT("ui_level").data()));
-    ProcessLcidType(p_Node->AttributeT("lcid_type").data());
+    ProcessUILevel(InstallUILevelSetting::ToUILevel(p_Node->AttributeW("ui_level").data()));
+    ProcessLcidType(p_Node->AttributeW("lcid_type").data());
 
 	LoadSchemaVersion(p_Node);
 
@@ -328,10 +328,10 @@ int ConfigFile::LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additio
 		TiXmlElement * l_Node_configuration = child->ToElement();
 		if (l_Node_configuration != NULL && strcmp(l_Node_configuration->Value(), "configuration") == 0)
 		{
-			CString l_Config_LCID = l_Node_configuration->AttributeT("lcid").data();
-			CString l_os_filter_greater = l_Node_configuration->AttributeT("os_filter_greater").data();
-			CString l_os_filter_smaller = l_Node_configuration->AttributeT("os_filter_smaller").data();
-            CString l_processor_architecture_filter = l_Node_configuration->AttributeT("processor_architecture_filter").data();
+			CString l_Config_LCID = l_Node_configuration->AttributeW("lcid").data();
+			CString l_os_filter_greater = l_Node_configuration->AttributeW("os_filter_greater").data();
+			CString l_os_filter_smaller = l_Node_configuration->AttributeW("os_filter_smaller").data();
+            CString l_processor_architecture_filter = l_Node_configuration->AttributeW("processor_architecture_filter").data();
 
 			ApplicationLog.Write( TEXT("Reading configuration node with LCID: "), l_Config_LCID);
 
@@ -346,16 +346,16 @@ int ConfigFile::LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additio
 					if (strcmp(l_Node_next_configuration->Value(), "configuration") == 0)
 					{
 						l_additional_config_found = CheckConfigFilter(
-								l_Node_next_configuration->AttributeT("lcid").data(),
-								l_Node_next_configuration->AttributeT("os_filter_greater").data(),
-								l_Node_next_configuration->AttributeT("os_filter_smaller").data(),
-                                l_Node_next_configuration->AttributeT("processor_architecture_filter").data());
+								l_Node_next_configuration->AttributeW("lcid").data(),
+								l_Node_next_configuration->AttributeW("os_filter_greater").data(),
+								l_Node_next_configuration->AttributeW("os_filter_smaller").data(),
+                                l_Node_next_configuration->AttributeW("processor_architecture_filter").data());
 					}
 					
 					l_Node_next_configuration = l_Node_next_configuration->NextSiblingElement();
 				}
 
-				CString l_type = l_Node_configuration->AttributeT("type").data();
+				CString l_type = l_Node_configuration->AttributeW("type").data();
 				if (l_type =="reference")
 				{
 					ApplicationLog.Write( TEXT("Loading reference configuration"));
@@ -410,9 +410,9 @@ int ConfigFile::LoadConfigsNode(TiXmlElement * p_Node, bool p_Caller_Has_Additio
 
 	if ( (!l_bFound) && (!l_bAbort) )
     {
-        CString configuration_no_match_message = p_Node->AttributeT("configuration_no_match_message").data();
+        CString configuration_no_match_message = p_Node->AttributeW("configuration_no_match_message").data();
         if (configuration_no_match_message.IsEmpty()) configuration_no_match_message = "System not supported or invalid configuration.";
-        throw std::exception(DVLib::Tstring2string(configuration_no_match_message).c_str());
+        throw std::exception(DVLib::wstring2string((LPCTSTR) configuration_no_match_message).c_str());
     }
 
 	return dlg.GetRecordedError();
@@ -475,7 +475,7 @@ bool ConfigFile::LoadDocumentFromFile(const CString & p_FileName)
 	m_XmlDocument.Parse(l_Buffer);
 	if (m_XmlDocument.Error())
 	{
-		ApplicationLog.Write(TEXT("***Parsing error: "), DVLib::string2Tstring(m_XmlDocument.ErrorDesc()).data());
+		ApplicationLog.Write(TEXT("***Parsing error: "), DVLib::string2wstring(m_XmlDocument.ErrorDesc()).data());
 		return false;
 	}
 
@@ -581,9 +581,9 @@ void ConfigFile::LoadSchemaVersion(TiXmlElement * p_Node)
 		TiXmlElement * l_Child = child->ToElement();
 		if (l_Child != NULL && strcmp(l_Child->Value(), "schema") == 0)
 		{
-			schema_generator = l_Child->AttributeT("generator").data();
+			schema_generator = l_Child->AttributeW("generator").data();
 			ApplicationLog.Write( TEXT("Configuration generator: "), schema_generator);
-			schema_version = l_Child->AttributeT("version").data();
+			schema_version = l_Child->AttributeW("version").data();
 			ApplicationLog.Write( TEXT("Generator version: "), schema_version);
 		}
 	}
