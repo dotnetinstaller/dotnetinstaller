@@ -26,7 +26,7 @@ BOOL ExtractCABProcessor::OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param
         {
             m_pComponent->m_pDialog->PostMessage(WM_USER_SETSTATUSINSTALL, 
                 (WPARAM) InstallStatusParam::CreateStatus(k_FI.u16_File, 
-                    DVLib::FormatNumberToBytes(k_FI.s32_Size)));
+                    DVLib::FormatBytesW(k_FI.s32_Size).c_str()));
         }
 
         if (m_pComponent->cancelled)
@@ -57,7 +57,7 @@ int ExtractCABComponent::GetCabCount(HMODULE p_Module)
 {
 	int currentIndex = 1;	
 	std::wstring resname = TEXT("RES_CAB");
-	resname.append(DVLib::FormatNumber(currentIndex));
+	resname.append(DVLib::towstring(currentIndex));
 	
 	HRSRC l_res = FindResource(p_Module, resname.c_str(), TEXT("BINARY"));
 	if (l_res == NULL)
@@ -67,7 +67,7 @@ int ExtractCABComponent::GetCabCount(HMODULE p_Module)
 	{
 		currentIndex++;
 		resname = TEXT("RES_CAB");
-		resname.append(DVLib::FormatNumber(currentIndex));
+		resname.append(DVLib::towstring(currentIndex));
 		l_res = FindResource(p_Module, resname.c_str(), TEXT("BINARY"));
 	} while(l_res);
 
@@ -79,7 +79,7 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
 	ULONG currentIndex = 1;
 
 	std::wstring resname = TEXT("RES_CAB");
-	resname.append(DVLib::FormatNumber(currentIndex));
+	resname.append(DVLib::towstring(currentIndex));
     ApplicationLog.Write( TEXT("Extracting Setup.cab") );
 
     CString cabpath = (m_Settings.cab_path.GetLength() > 0) ? m_Settings.cab_path : DVLib::GetSessionTempPath();
@@ -108,7 +108,7 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
         }
 
 		std::wstring resname = TEXT("RES_CAB");
-		resname.append(DVLib::FormatNumber(i));
+		resname.append(DVLib::towstring(i));
 		ApplicationLog.Write( TEXT("Extracting: "), resname.c_str() );
 
 		HRSRC l_res = FindResource(p_Module, resname.c_str(), TEXT("BINARY"));

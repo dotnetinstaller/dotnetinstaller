@@ -157,13 +157,13 @@
     <CppUnitTests Include="UnitTests\dotNetInstallerToolsLibUnitTests\$(Configuration)\dotNetInstallerToolsLibUnitTests.exe" />
   </ItemGroup>
   <Target Name="unittests" DependsOnTargets="version">
+    <Message Text="Running %(CppUnitTests.Identity) ..." />
+    <Exec Command="%(CppUnitTests.Identity)" />
     <CreateItem Include="UnitTests\**\bin\$(Configuration)\*UnitTests.dll">
       <Output TaskParameter="Include" ItemName="UnitTestBinaries" />
     </CreateItem>
     <MakeDir Directories="$(ReleaseDir)" />
     <NUnit Assemblies="@(UnitTestBinaries)" ToolPath="$(NUnitDir)\bin" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
-    <Message Text="Running %(CppUnitTests.Identity) ..." />
-    <Exec Command="%(CppUnitTests.Identity)" />
   </Target>
   <Target Name="zip" DependsOnTargets="version">
     <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip;$(ReleaseDir)\UnitTests.xml;$(ReleaseDir)\*.msi">

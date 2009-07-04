@@ -92,7 +92,7 @@ bool InstalledCheckRegistry::IsInstalled()
 				throw std::exception("Invalid registry value to check expected DWORD.");
 			}
 
-            ApplicationLog.Write( TEXT("Value: "), DVLib::FormatNumber(wordValue));
+            ApplicationLog.Write( TEXT("Value: "), DVLib::towstring(wordValue).c_str());
 
 			if (comparison == TEXT("match"))
 			{

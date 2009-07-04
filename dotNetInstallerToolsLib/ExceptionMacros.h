@@ -8,8 +8,8 @@
 	if ( macro_dw_err_ != 0 ) \
 	{ \
 		std::wstringstream ss_message; ss_message << message; \
-        throw std::exception(DVLib::GetErrorString(macro_dw_err_, \
-            ss_message.str().c_str()).c_str()); \
+		throw std::exception(DVLib::wstring2string(DVLib::GetErrorStringW(macro_dw_err_, \
+            ss_message.str().c_str())).c_str()); \
 	} \
 }
 
@@ -18,8 +18,8 @@
 	if ( FALSE == ( func ) ) \
 	{ \
 		std::wstringstream ss_message; ss_message << message; \
-        throw std::exception(DVLib::GetLastErrorString( \
-            ss_message.str().c_str()).c_str()); \
+		throw std::exception(DVLib::wstring2string(DVLib::GetLastErrorStringW( \
+            ss_message.str().c_str())).c_str()); \
 	} \
 }
 
@@ -28,14 +28,14 @@
 	if ( FALSE == ( func ) ) \
 	{ \
 		std::wstringstream ss_message; ss_message << message; \
-		throw std::exception(DVLib::StringUtils::wstring2string(ss_message.str()).c_str()); \
+		throw std::exception(DVLib::wstring2string(ss_message.str()).c_str()); \
 	} \
 }
 
 #define THROW_EX( message ) \
 { \
 	std::wstringstream ss_message; ss_message << message; \
-	throw std::exception(DVLib::StringUtils::wstring2string(ss_message.str()).c_str()); \
+	throw std::exception(DVLib::wstring2string(ss_message.str()).c_str()); \
 }
 
 #define CHECK_HR( func, message ) \
@@ -44,7 +44,7 @@
 	if (FAILED(macro_hr_)) \
 	{ \
 		std::wstringstream ss_message; ss_message << message; \
-        throw std::exception(DVLib::Exceptions::Win32Exceptions::GetErrorString(macro_hr_, \
-            ss_message.str().c_str()).c_str()); \
+		throw std::exception(DVLib::wstring2string(DVLib::GetErrorStringW(macro_hr_, \
+            ss_message.str().c_str())).c_str()); \
 	} \
 }

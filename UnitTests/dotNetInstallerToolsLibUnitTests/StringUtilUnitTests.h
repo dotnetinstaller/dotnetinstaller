@@ -17,6 +17,8 @@ namespace DVLib
 				CPPUNIT_TEST( testwstring2string );
 				CPPUNIT_TEST( testlong2string );
 				CPPUNIT_TEST( testlong2wstring );
+				CPPUNIT_TEST( testtostring );
+				CPPUNIT_TEST( testtowstring );
 				CPPUNIT_TEST_SUITE_END();
 			public:
 				void teststring2long();
@@ -27,6 +29,8 @@ namespace DVLib
 				void testwstring2string();
 				void testlong2string();
 				void testlong2wstring();
+				void testtostring();
+				void testtowstring();
 			};
 		}
 	}

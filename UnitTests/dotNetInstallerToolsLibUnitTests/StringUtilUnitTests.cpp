@@ -312,7 +312,7 @@ void StringUtilUnitTests::testlong2string(void)
 	
 	for (int i=0; i < ARRAYSIZE(testData); i++)
 	{
-        std::string number = DVLib::ss2string(testData[i].testIn);
+        std::string number = DVLib::tostring(testData[i].testIn);
         std::cout << std::endl << testData[i].testIn << " => " << number << " (expecting " << testData[i].testOut << ")";
 		CPPUNIT_ASSERT(testData[i].testOut == number);
 	}
@@ -337,8 +337,18 @@ void StringUtilUnitTests::testlong2wstring(void)
 	
 	for (int i=0; i < ARRAYSIZE(testData); i++)
 	{
-        std::wstring number = DVLib::ss2wstring(testData[i].testIn);
+        std::wstring number = DVLib::towstring(testData[i].testIn);
         std::cout << std::endl << testData[i].testIn << " => " << DVLib::wstring2string(number) << " (expecting " << DVLib::wstring2string(testData[i].testOut) << ")";
 		CPPUNIT_ASSERT(testData[i].testOut == number);
 	}
+}
+
+void StringUtilUnitTests::testtostring(void)
+{
+	CPPUNIT_ASSERT(DVLib::tostring(0) == "0");
+}
+
+void StringUtilUnitTests::testtowstring(void)
+{
+	CPPUNIT_ASSERT(DVLib::towstring(0) == L"0");
 }

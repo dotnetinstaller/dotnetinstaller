@@ -94,7 +94,7 @@ void DownloadComponent::CopyFromSourcePath()
 		error.append("\" to \"");
 		error.append(DVLib::wstring2string((LPCWSTR) l_destinationFullFileName));
 		error.append("\r\n");
-		error.append(DVLib::GetLastErrorString());
+		error.append(DVLib::GetLastErrorStringA());
 		throw std::exception(error.c_str());
 	}
 }
@@ -125,7 +125,7 @@ void DownloadComponent::StartDownload()
 		error.append("\" to \"");
 		error.append(DVLib::wstring2string((LPCTSTR) l_destinationFullFileName));
 		error.append(": ");
-		error.append(DVLib::wstring2string((LPCTSTR) DVLib::TranslateErrorMsg(l_hrRet, "urlmon.dll")));
+		error.append(DVLib::FormatMessageFromHRA(l_hrRet, "urlmon.dll"));
 		throw std::exception(error.c_str());
 	}
 }
@@ -141,7 +141,7 @@ HRESULT DownloadComponent::OnProgress(ULONG ulProgress, ULONG ulProgressMax, ULO
 
 	CString tmp;
 	tmp.Format(TEXT("%s (%s of %s) - %d/%d"), m_Component->ComponentName, 
-		DVLib::FormatNumberToBytes(ulProgress), DVLib::FormatNumberToBytes(ulProgressMax), 
+		DVLib::FormatBytesW(ulProgress), DVLib::FormatBytesW(ulProgressMax), 
 		m_CurrentComponent, m_TotalComponents );
 
 	m_Callback->Status(ulProgress, ulProgressMax, tmp);

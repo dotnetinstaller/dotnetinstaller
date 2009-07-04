@@ -1,11 +1,10 @@
 #pragma once
 
 #include "ExceptionMacros.h"
-#include "Win32Exception.h"
+#include "ErrorUtil.h"
 #include "StringUtil.h"
 
 #include "AppPath.h"
-#include "ErrorUtil.h"
 #include "ExecCmd.h"
 #include "File.h"
 #include "Format.h"

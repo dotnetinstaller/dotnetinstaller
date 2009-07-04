@@ -3,7 +3,7 @@
 #include "StringUtil.h"
 #include "StringUtilImpl.h"
 #include "ExceptionMacros.h"
-#include "Win32Exception.h"
+#include "ErrorUtil.h"
 
 std::wstring DVLib::UTF8string2wstring(const std::string& s)
 {

@@ -326,7 +326,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 							}
 							else //error restituito dal setup
 							{
-                                ApplicationLog.Write( TEXT("***Component ERROR ON EXIT CODE: "), DVLib::FormatNumber(l_ExitCode));
+                                ApplicationLog.Write( TEXT("***Component ERROR ON EXIT CODE: "), DVLib::towstring(l_ExitCode).c_str());
 								RecordError(l_ExitCode);
 								l_retVal = false;
 							}

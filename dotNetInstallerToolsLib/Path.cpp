@@ -161,7 +161,7 @@ bool DVLib::CreateDirectoryPath(const CString& path)
 		std::string error = "Error creating directory \"";
 		error.append(DVLib::wstring2string((LPCWSTR) path));
 		error.append("\"\r\n");
-		error.append(DVLib::wstring2string((LPCWSTR) DVLib::TranslateErrorMsg(HRESULT_FROM_WIN32(::GetLastError()))));
+		error.append(DVLib::GetLastErrorStringA());
 		throw std::exception(error.c_str());
 	}
 

@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "Format.h"
 #include "StringUtil.h"
+#include "ExceptionMacros.h"
+#include "ErrorUtil.h"
 
 std::string DVLib::FormatMessageFromHRA(HRESULT hr)
 {
@@ -29,7 +31,42 @@ std::string DVLib::FormatMessageFromHRA(HRESULT hr)
 		result = result_s.str();
 	}
 
-	::LocalFree(lpMsgBuf);
+	::LocalFree(lpMsgBuf);  // bug: need a smart pointer, this will leak on exception
+    return result;
+}
+
+std::string DVLib::FormatMessageFromHRA(HRESULT hr, LPCSTR dllname)
+{
+    std::string result;
+	LPSTR lpMsgBuf = NULL;
+	DWORD rc = 0;
+
+	HMODULE dllhandle = ::LoadLibraryA(dllname);
+
+    rc = ::FormatMessageA(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_HMODULE,
+		dllhandle,
+		hr,
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+		reinterpret_cast<LPSTR>(& lpMsgBuf),
+		0,
+		NULL );
+
+	::FreeLibrary(dllhandle);
+
+	if (rc != 0)
+	{
+		result = DVLib::trim(lpMsgBuf);
+	}
+	else
+	{
+        std::stringstream result_s;
+        result_s << "0x" << std::hex << hr;
+		result = result_s.str();
+	}
+
+	::LocalFree(lpMsgBuf); // bug: need a smart pointer, this will leak on exception
     return result;
 }
 
@@ -59,6 +96,43 @@ std::wstring DVLib::FormatMessageFromHRW(HRESULT hr)
         result_s << L"0x" << std::hex << hr;
 		result = result_s.str();
 	}
+
+	::LocalFree(lpMsgBuf); // bug: need a smart pointer, this will leak on exception
+    return result;
+}
+
+std::wstring DVLib::FormatMessageFromHRW(HRESULT hr, LPCWSTR dllname)
+{
+    std::wstring result;
+	LPWSTR lpMsgBuf = NULL;
+	DWORD rc = 0;
+
+	HMODULE dllhandle = ::LoadLibraryW(dllname);
+
+    rc = ::FormatMessageW(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_HMODULE,
+		dllhandle,
+		hr,
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+		reinterpret_cast<LPWSTR>(& lpMsgBuf),
+		0,
+		NULL );
+
+	::FreeLibrary(dllhandle);
+
+	if (rc != 0)
+	{
+		result = DVLib::trim(lpMsgBuf);
+	}
+	else
+	{
+        std::wstringstream result_s;
+        result_s << L"0x" << std::hex << hr;
+		result = result_s.str();
+	}
+
+	::LocalFree(lpMsgBuf); // bug: need a smart pointer, this will leak on exception
     return result;
 }
 
@@ -115,5 +189,82 @@ std::wstring DVLib::FormatMessage(wchar_t * fmt, ...)
 	va_start(args, fmt);
     std::wstring result = FormatMessageFromVArgs(fmt, args);
 	va_end(args);
-	return result;		
+	return result;
+}
+
+std::string DVLib::FormatCurrentDateTimeA(LPCSTR fmt)
+{
+	__time64_t tt;
+	CHECK_BOOL(-1 != _time64(& tt), L"_time64");
+	return FormatDateTimeA(tt, fmt);
+}
+
+std::wstring DVLib::FormatCurrentDateTimeW(LPCWSTR fmt)
+{
+	__time64_t tt;
+	CHECK_BOOL(-1 != _time64(& tt), L"_time64");
+	return FormatDateTimeW(tt, fmt);
+}
+
+std::string DVLib::FormatDateTimeA(__time64_t tt, LPCSTR fmt)
+{
+	struct tm tm = { 0 };
+	CHECK_WIN32_DWORD(_localtime64_s(& tm, & tt), L"_localtime64_s");
+	char buffer[128];
+	CHECK_BOOL(0 != strftime(buffer, ARRAYSIZE(buffer), fmt, & tm), L"strftime");
+	return buffer;
+}
+
+std::wstring DVLib::FormatDateTimeW(__time64_t tt, LPCWSTR fmt)
+{
+	struct tm tm = { 0 };
+	CHECK_WIN32_DWORD(_localtime64_s(& tm, & tt), L"_localtime64_s");
+	wchar_t buffer[128];
+	CHECK_BOOL(0 != wcsftime(buffer, ARRAYSIZE(buffer), fmt, & tm), L"wcsftime");
+	return buffer;
+}
+
+// same as StrFormatByteSize (which is not supported on Windows 95)
+std::string DVLib::FormatBytesA(ULONG bytes)
+{
+	if (bytes == 1) // bytes
+		return DVLib::FormatMessage("%lu byte", bytes);
+	else if (bytes < 1024) // bytes
+		return DVLib::FormatMessage("%lu bytes", bytes);
+	else if (bytes < 1048576 && bytes % 1024 == 0) // Kb
+		return DVLib::FormatMessage("%.0fKB", (double) bytes / 1024);
+	else if (bytes < 1048576) // Kb
+		return DVLib::FormatMessage("%.2fKB", (double) bytes / 1024);
+	else if (bytes % 1048576 == 0 && bytes < 1073741824) // Mb
+		return DVLib::FormatMessage("%.0fMB", (double) bytes / 1048576);
+	else if (bytes < 1073741824) // Mb
+		return DVLib::FormatMessage("%.2fMB", (double) bytes / 1048576);
+	else if (bytes % 1073741824 == 0 && bytes < 1099511627776 ) // GB
+		return DVLib::FormatMessage("%.0fGB", (double) bytes / 1073741824);
+	else if (bytes < 1099511627776 ) // GB
+		return DVLib::FormatMessage("%.2fGB", (double) bytes / 1073741824);
+	else
+		return DVLib::FormatMessage("%lu bytes", bytes);
+}
+
+std::wstring DVLib::FormatBytesW(ULONG bytes)
+{
+	if (bytes == 1) // bytes
+		return DVLib::FormatMessage(L"%lu byte", bytes);
+	else if (bytes < 1024) // bytes
+		return DVLib::FormatMessage(L"%lu bytes", bytes);
+	else if (bytes < 1048576 && bytes % 1024 == 0) // Kb
+		return DVLib::FormatMessage(L"%.0fKB", (double) bytes / 1024);
+	else if (bytes < 1048576) // Kb
+		return DVLib::FormatMessage(L"%.2fKB", (double) bytes / 1024);
+	else if (bytes % 1048576 == 0 && bytes < 1073741824) // Mb
+		return DVLib::FormatMessage(L"%.0fMB", (double) bytes / 1048576);
+	else if (bytes < 1073741824) // Mb
+		return DVLib::FormatMessage(L"%.2fMB", (double) bytes / 1048576);
+	else if (bytes % 1073741824 == 0 && bytes < 1099511627776 ) // GB
+		return DVLib::FormatMessage(L"%.0fGB", (double) bytes / 1073741824);
+	else if (bytes < 1099511627776 ) // GB
+		return DVLib::FormatMessage(L"%.2fGB", (double) bytes / 1073741824);
+	else
+		return DVLib::FormatMessage(L"%lu bytes", bytes);
 }

@@ -150,6 +150,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\ErrorUtil.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\File.cpp"
 				>
 			</File>
@@ -203,10 +207,6 @@
 			</File>
 			<File
 				RelativePath=".\tinyxmlparser.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Win32Exception.cpp"
 				>
 			</File>
 		</Filter>
@@ -285,10 +285,6 @@
 			</File>
 			<File
 				RelativePath=".\VersionCompare.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Win32Exception.h"
 				>
 			</File>
 		</Filter>

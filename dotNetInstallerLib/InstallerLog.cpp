@@ -47,7 +47,7 @@ void InstallerLog::Write(LPCTSTR message)
 	DWORD l_BytesWritten = 0;
 
     std::string strMessage;
-    strMessage.append(DVLib::wstring2string((LPCTSTR) DVLib::FormatCurrentDateTime()));
+    strMessage.append(DVLib::FormatCurrentDateTimeA());
     strMessage.append("\t");
     strMessage.append(DVLib::wstring2string(message));
 	strMessage.append("\r\n");

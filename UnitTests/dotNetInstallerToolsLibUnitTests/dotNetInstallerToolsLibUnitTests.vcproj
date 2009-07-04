@@ -186,6 +186,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ErrorUtilUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ExceptionMacrosUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FormatUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -209,10 +221,6 @@
 				RelativePath=".\StringUtilUnitTests.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\Win32ExceptionUnitTests.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -220,15 +228,23 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\ErrorUtilUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ExceptionMacrosUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FormatUnitTests.h"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.h"
 				>
 			</File>
 			<File
 				RelativePath=".\StringUtilUnitTests.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Win32ExceptionUnitTests.h"
 				>
 			</File>
 		</Filter>

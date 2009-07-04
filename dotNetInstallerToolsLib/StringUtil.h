@@ -47,7 +47,7 @@ namespace DVLib
 
     // convert any streamable data into a UNICODE string
     template<class T>
-    std::wstring ss2wstring(const T& t)
+    std::wstring towstring(const T& t)
     {
 	    std::wstringstream ss;
 	    ss << t;
@@ -56,7 +56,7 @@ namespace DVLib
 
     // convert any streamable data into an ANSI string
     template<class T>
-    std::string ss2string(const T& t)
+    std::string tostring(const T& t)
     {
 	    std::stringstream ss;
 	    ss << t;

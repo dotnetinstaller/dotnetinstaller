@@ -470,7 +470,7 @@ bool ConfigFile::LoadDocumentFromFile(const CString & p_FileName)
 	}
 	CloseHandle(l_hFile);
 
-    ApplicationLog.Write(TEXT("Parsing "), DVLib::FormatNumberToBytes(l_Size));
+    ApplicationLog.Write(TEXT("Parsing "), DVLib::FormatBytesW(l_Size).c_str());
 
 	m_XmlDocument.Parse(l_Buffer);
 	if (m_XmlDocument.Error())
