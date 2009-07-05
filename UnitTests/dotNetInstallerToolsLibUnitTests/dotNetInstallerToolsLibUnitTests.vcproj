@@ -198,6 +198,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GuidUtilUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ShellUtilUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -237,6 +245,14 @@
 			</File>
 			<File
 				RelativePath=".\FormatUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GuidUtilUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ShellUtilUnitTests.h"
 				>
 			</File>
 			<File

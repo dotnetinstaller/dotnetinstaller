@@ -51,6 +51,7 @@ bool MsiComponent::Exec()
 	}
 	
     ApplicationLog.Write(TEXT("Executing: "), l_command);
-	return DVLib::ExecCmd(l_command, &m_process_info);
+	DVLib::DetachCmd((LPCWSTR) l_command, &m_process_info);
+	return true;
 };
 

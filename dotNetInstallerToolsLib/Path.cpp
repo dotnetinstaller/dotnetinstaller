@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "File.h"
 #include "Path.h"
-#include "Guid.h"
+#include "GuidUtil.h"
 #include "StringUtil.h"
 #include "ErrorUtil.h"
 
@@ -64,7 +64,7 @@ CString DVLib::GetSessionGUID()
     static CString s_GUID;
     if (! s_GUID.GetLength())
     {
-        s_GUID = DVLib::GenerateGUIDString();
+        s_GUID = DVLib::GenerateGUIDStringW().c_str();
     }
     return s_GUID;
 }

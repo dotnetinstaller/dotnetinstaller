@@ -162,11 +162,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GuidUtil.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Path.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\ProcessorIdentifier.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ShellUtil.cpp"
 				>
 			</File>
 			<File
@@ -216,19 +224,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\AppPath.h"
-				>
-			</File>
-			<File
 				RelativePath=".\ErrorUtil.h"
 				>
 			</File>
 			<File
 				RelativePath=".\ExceptionMacros.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ExecCmd.h"
 				>
 			</File>
 			<File
@@ -240,7 +240,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Guid.h"
+				RelativePath=".\GuidUtil.h"
 				>
 			</File>
 			<File
@@ -257,6 +257,18 @@
 			</File>
 			<File
 				RelativePath=".\ProcessorIdentifier.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ShellUtil.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SmartAny.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SmartAnyFwd.h"
 				>
 			</File>
 			<File

@@ -673,11 +673,6 @@ void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
 	{
 		ApplicationLog.Write( TEXT("Executing complete command: "), l_complete_command);
         DWORD dwExitCode = 0;
-        if (! DVLib::ExecCmdAndWait(l_complete_command, & dwExitCode))
-        {
-            std::string error = "***Error executing complete command: ";
-            error.append(DVLib::wstring2string((LPCWSTR) l_complete_command));
-            throw std::exception(error.c_str());
-	    }
+        dwExitCode = DVLib::ExecCmd((LPCWSTR) l_complete_command);
 	}
 }
