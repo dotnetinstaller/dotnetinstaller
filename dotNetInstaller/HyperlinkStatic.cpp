@@ -41,14 +41,14 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CHyperlinkStatic message handlers
 
-void CHyperlinkStatic::SetHyperlink(CString strHyperlink)
+void CHyperlinkStatic::SetHyperlink(std::wstring strHyperlink)
 {
-	_strHyperlink = strHyperlink;
+	_strHyperlink = strHyperlink.c_str();
 }
 
-void CHyperlinkStatic::SetCaption(CString strCaption)
+void CHyperlinkStatic::SetCaption(std::wstring strCaption)
 {
-	_strCaption = strCaption;
+	_strCaption = strCaption.c_str();
 	_bGetCaptionSize = false;	
 }
 
@@ -59,8 +59,7 @@ void CHyperlinkStatic::OnLButtonDown(UINT nFlags, CPoint point)
 		if ( _bGetCaptionSize == false )
 			GetCaptionSize();
 		if (InCaptionRange(point))
-			//ShellExecute(0, TEXT("open"), _strHyperlink, 0, 0, SW_SHOWNORMAL);
-			DVLib::ShellExecuteDefault(_strHyperlink);
+			DVLib::ShellCmd(_strHyperlink.GetBuffer());
 		CStatic::OnLButtonDown(nFlags, point);
 	}
 	catch(...)

@@ -3,7 +3,6 @@
 #include "ExceptionMacros.h"
 #include "StringUtil.h"
 #include "ErrorUtil.h"
-#include "SmartAny.h"
 
 std::wstring DVLib::GetEnvironmentVariable(const std::wstring& name)
 {
@@ -57,7 +56,6 @@ void DVLib::DetachCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi)
 	si.cb = sizeof(si);
 
 	PROCESS_INFORMATION pi = { 0 };
-	
 
 	std::wstring cmd_expanded = DVLib::ExpandEnvironmentVariables(cmd);
 	CHECK_WIN32_BOOL(::CreateProcessW(NULL, & * cmd_expanded.begin(), NULL, NULL, FALSE, 0, NULL, NULL, & si, lpi == NULL ? & pi : lpi),
@@ -82,4 +80,22 @@ DWORD DVLib::ExecCmd(const std::wstring& cmd)
 	CHECK_WIN32_BOOL(::GetExitCodeProcess(pi.hProcess, & dwExitCode),
 		L"GetExitCodeProcess");
 	return dwExitCode;
+}
+
+void DVLib::ShellCmd(const std::wstring& cmd)
+{
+	std::wstring cmd_expanded = DVLib::ExpandEnvironmentVariables(cmd);
+	CHECK_BOOL(! cmd_expanded.empty(), L"Missing command");
+
+	// split arguments
+	std::vector<std::wstring> cmd_args;
+	cmd_args = DVLib::split(cmd_expanded, (cmd_expanded[0] == L'\"') ? L"\" " : L" ", 2);
+
+	HINSTANCE h = ::ShellExecuteW(NULL, NULL, DVLib::trim(cmd_args[0], L"\"").c_str(), 
+		cmd_args.size() == 2 ? cmd_args[1].c_str() : NULL, NULL, SW_SHOWNORMAL);
+
+	if (h <= (HINSTANCE) 32) 
+	{
+		CHECK_WIN32_DWORD((DWORD) h, L"Error running " <<  cmd_expanded);
+	}
 }

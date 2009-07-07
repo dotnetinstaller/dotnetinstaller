@@ -6,16 +6,17 @@ ProcessComponent::ProcessComponent(void)
 
 }
 
-DWORD ProcessComponent::GetExitCode()
+DWORD ProcessComponent::GetExitCode() const
 {
 	DWORD l_ExitCode;
-	if (! GetExitCodeProcess(m_process_info.hProcess, &l_ExitCode))
-        throw std::exception("Error getting exit code from process");
+
+	CHECK_WIN32_BOOL(::GetExitCodeProcess(m_process_info.hProcess, & l_ExitCode),
+		L"GetExitCodeProcess");
 
     return l_ExitCode;
 }
 
-bool ProcessComponent::IsExecuting()
+bool ProcessComponent::IsExecuting() const
 {
 	DWORD l_ExitCode;
 	if (GetExitCodeProcess(m_process_info.hProcess, &l_ExitCode))

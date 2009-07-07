@@ -23,47 +23,47 @@ public:
 	// component type: cmd, msi, openfile
 	component_type type;
 	// component description
-	CString description;
+	std::wstring description;
 	// component status when installed
-	CString status_installed;
+	std::wstring status_installed;
 	// component status when not installed
-	CString status_notinstalled;
+	std::wstring status_notinstalled;
 	// filtro che indica il minimo sistema operativo in cui lanciare il componente (estremo escluso)
-	CString os_filter_greater;
+	std::wstring os_filter_greater;
 	// filtro che indica il massimo sistema operativo in cui lanciare il componente (estremo escluso)
-	CString os_filter_smaller;
+	std::wstring os_filter_smaller;
 	// filtro che indica il filtro per lingua del sistema operativo (es. Italy = 1040, English - United Kingdom = 2057, English - United States = 1033)
-	CString os_filter_lcid;
+	std::wstring os_filter_lcid;
 	// testo da visualizzare a fine installazione (se vuoto non visualizza niente)
-	CString installcompletemessage;
+	std::wstring installcompletemessage;
 	// true per forzare il reboot al termine dell'installazione altrimenti false
 	bool mustreboot;
     // message for a reboot after this component
-    CString reboot_required;
+    std::wstring reboot_required;
     // true to force a reboot when required
     bool must_reboot_required;
     // message to display on error
-    CString failed_exec_command_continue;
+    std::wstring failed_exec_command_continue;
     // allow to continue setup on error
     bool allow_continue_on_error;
 	// filter for processor architecture
-	CString processor_architecture_filter;
+	std::wstring processor_architecture_filter;
     // cancelled by user
     bool cancelled;
     // true if component is required for final command to execute
     bool required;
 	// classi per gestire la verifica se il componente è installato o no
-	std::vector<InstalledCheck*> installedchecks;
+	std::vector<InstalledCheck *> installedchecks;
 	// informazioni sull'eventuale download dei componenti (fa riferimento al nodo downloaddialog all'interno di Component, se non è presente non viene scaricato nessun componente)
 	DownloadGroupConfiguration DownloadDialogConfiguration;
 	// indica se il componente contiene o meno dei componenti da scaricare (in pratica dice se il nodo downloaddialog è presente o no)
 	bool download;
 	// funzione virtuale specifica per il tipo di componente
-	virtual bool Exec() = 0;
-	virtual DWORD GetExitCode() = 0;
-	virtual bool IsExecuting() = 0;
+	virtual void Exec() = 0;
+	virtual DWORD GetExitCode() const = 0;
+	virtual bool IsExecuting() const = 0;
 	virtual void Init(CDialog * pDialog = NULL);
-	bool IsInstalled();
+	virtual bool IsInstalled() const;
 	// indica se il componente verrà eseguito o no
 	bool selected;
 };

@@ -21,20 +21,20 @@ void InsertRegistryRun()
 			return;
 
 		// get the installer launcher command (if specified)
-		CString l_Cmd = DNILauncher.GetLauncherCmd();
+		std::wstring l_Cmd = DNILauncher.GetLauncherCmd();
 
 		// if no launcher argument was specified, use the DNI command line
-		if (l_Cmd.GetLength() == 0)
+		if (l_Cmd.empty())
 		{
-			l_Cmd = _T("\"") + DVLib::GetAppFullName() + _T("\"");
+			l_Cmd = _T("\"") + std::wstring(DVLib::GetModuleFileNameW().c_str()) + _T("\"");
             if (__argc > 1)
             {                
-                l_Cmd.Append(::GetCommandLineW() + wcslen(__targv[0]) 
+                l_Cmd.append(::GetCommandLineW() + wcslen(__targv[0]) 
                     + (::GetCommandLineW()[0] == '\"' ? 2 : 0));
             }
 		}
 
-		RegSetValueEx(l_HKey, c_dotNetInstaller,0,REG_SZ,(LPBYTE)(LPCTSTR)l_Cmd, (DWORD)(l_Cmd.GetLength()+1) * sizeof(TCHAR) );
+		RegSetValueEx(l_HKey, c_dotNetInstaller,0,REG_SZ,(LPBYTE)l_Cmd.c_str(), (DWORD)(l_Cmd.length()+1) * sizeof(TCHAR) );
 
 		RegCloseKey(l_HKey);
 	}

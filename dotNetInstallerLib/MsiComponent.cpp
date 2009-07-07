@@ -8,50 +8,49 @@ MsiComponent::MsiComponent()
 
 }
 
-bool MsiComponent::Exec()
+void MsiComponent::Exec()
 {
-	CString l_command = TEXT("msiexec /I ");
-	l_command += TEXT("\"");
+	std::wstring l_command = TEXT("msiexec /I ");
+	l_command.append(L"\"");
 	l_command += package;
-	l_command += TEXT("\"");
+	l_command.append(L"\"");
 
 	switch(CurrentInstallUILevel.GetUILevel())
 	{
 	case InstallUILevelSilent:
-		if (cmdparameters_silent.GetLength()) 
+		if (! cmdparameters_silent.empty()) 
 		{
-			l_command += TEXT(" ");
-			l_command.Append(cmdparameters_silent);
+			l_command.append(L" ");
+			l_command.append(cmdparameters_silent);
 		}
-		else if (cmdparameters_basic.GetLength()) 
+		else if (! cmdparameters_basic.empty()) 
 		{
-			l_command += TEXT(" ");
-			l_command.Append(cmdparameters_basic);
+			l_command.append(L" ");
+			l_command.append(cmdparameters_basic);
 		}
 		break;
 	case InstallUILevelBasic:
-		if (cmdparameters_basic.GetLength()) 
+		if (! cmdparameters_basic.empty()) 
 		{
-			l_command += TEXT(" ");
-			l_command.Append(cmdparameters_basic);
+			l_command.append(L" ");
+			l_command.append(cmdparameters_basic);
 		}
-		else if (cmdparameters_silent.GetLength()) 
+		else if (! cmdparameters_silent.empty()) 
 		{
-			l_command += TEXT(" ");
-			l_command.Append(cmdparameters_silent);
+			l_command.append(L" ");
+			l_command.append(cmdparameters_silent);
 		}
 		break;
 	default:
-		if (cmdparameters.GetLength())
+		if (! cmdparameters.empty())
 		{
-			l_command += TEXT(" ");
-			l_command.Append(cmdparameters);
+			l_command.append(L" ");
+			l_command.append(cmdparameters);
 		}
 		break;
 	}
 	
     ApplicationLog.Write(TEXT("Executing: "), l_command);
-	DVLib::DetachCmd((LPCWSTR) l_command, &m_process_info);
-	return true;
+	DVLib::DetachCmd(l_command, &m_process_info);
 };
 

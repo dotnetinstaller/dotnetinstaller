@@ -1,4 +1,5 @@
 #pragma once
+
 namespace DVLib
 {
 	// format bytes
@@ -10,16 +11,12 @@ namespace DVLib
 	// format a date/time
 	std::string FormatDateTimeA(__time64_t tt, LPCSTR fmt = "%Y-%m-%d %H:%M:%S");
 	std::wstring FormatDateTimeW(__time64_t tt, LPCWSTR fmt = L"%Y-%m-%d %H:%M:%S");
-	// format an ANSI message from an HRESULT
-	std::string FormatMessageFromHRA(HRESULT hr);
 	// format an ANSI message from an HRESULT and a specific DLL
-	std::string FormatMessageFromHRA(HRESULT hr, LPCSTR dllname);
+	std::string FormatMessageFromHRA(HRESULT hr, LPCSTR dllname = NULL);
 	// format an ANSI message from a Win32 error code
 	std::string FormatMessageFromLastErrorCodeA(DWORD);
-	// format a UNICODE message from an HRESULT
-	std::wstring FormatMessageFromHRW(HRESULT hr);
 	// format a UNICODE message from an HRESULT and a specific DLL
-	std::wstring FormatMessageFromHRW(HRESULT hr, LPCWSTR dllname);
+	std::wstring FormatMessageFromHRW(HRESULT hr, LPCWSTR dllname = NULL);
 	// format a UNICODE message from a Win32 error code
 	std::wstring FormatMessageFromLastErrorCodeW(DWORD);
 	// format a message with a list of arguments (printf-style)

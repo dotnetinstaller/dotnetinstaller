@@ -6,9 +6,9 @@ class OpenFileComponent : public Component
 public:
     OpenFileComponent();
 public:
-	CString file; //file to open. Can be a web link or a standard file
-	bool Exec();
-	DWORD GetExitCode();
-	bool IsExecuting();
+	std::wstring file; //file to open. Can be a web link or a standard file
+	void Exec();
+	DWORD GetExitCode() const;
+	bool IsExecuting() const;
 };
 

@@ -7,7 +7,7 @@ class InstalledCheck
 public:
     InstalledCheck(void);
     virtual ~InstalledCheck(void);
-	virtual bool IsInstalled() = 0;
-    virtual void Load(TiXmlElement * l_Node, InstallerSetting & p_Setting) = 0;
-    static InstalledCheck * LoadFromXml(TiXmlElement * l_Node, InstallerSetting & p_Setting);
+	virtual bool IsInstalled() const = 0;
+    virtual void Load(TiXmlElement * node, InstallerSetting & setting) = 0;
+    static InstalledCheck * LoadFromXml(TiXmlElement * node, InstallerSetting & setting);
 };

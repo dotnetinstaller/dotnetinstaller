@@ -6,10 +6,10 @@ class MsiComponent : public ProcessComponent
 public:
     MsiComponent();
 public:
-	CString package;
-	CString cmdparameters; // es. "/qn REBOOT=ReallySuppress"
-    CString cmdparameters_silent;
-	CString cmdparameters_basic;
-	bool Exec();
+	std::wstring package;
+	std::wstring cmdparameters; // es. "/qn REBOOT=ReallySuppress"
+    std::wstring cmdparameters_silent;
+	std::wstring cmdparameters_basic;
+	void Exec();
 };
 

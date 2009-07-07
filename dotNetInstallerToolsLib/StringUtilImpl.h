@@ -1,7 +1,7 @@
 #pragma once
 
 template<class T>
-class StringUtilsImpl
+class StringUtilImpl
 {
 public:
 
@@ -95,5 +95,23 @@ public:
 	static std::basic_string<T> trim(const std::basic_string<T>& ss, const std::basic_string<T>& whitespaces) 
 	{
 		return trimleft(trimright(ss, whitespaces), whitespaces);
+	}
+
+	static bool startswith(const std::basic_string<T>& what, const std::basic_string<T>& with) 
+	{
+		if (what.length() < with.length())
+			return false;
+		if (what.substr(0, with.length()) == with)
+			return true;
+		return false;
+	}
+   
+	static bool endswith(const std::basic_string<T>& what, const std::basic_string<T>& with) 
+	{
+		if (what.length() < with.length())
+			return false;
+		if (what.substr(what.length() - with.length(), what.length()) == with)
+			return true;
+		return false;
 	}
 };

@@ -1,51 +1,20 @@
 #include "StdAfx.h"
-#include "Format.h"
+#include "FormatUtil.h"
 #include "StringUtil.h"
 #include "ExceptionMacros.h"
 #include "ErrorUtil.h"
-#include "SmartAny.h"
-
-std::string DVLib::FormatMessageFromHRA(HRESULT hr)
-{
-    std::string result;
-	auto_hlocal lpMsgBuf;
-	DWORD rc = 0;
-
-    rc = ::FormatMessageA(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER |
-		FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL,
-		hr,
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-		reinterpret_cast<LPSTR>(address(lpMsgBuf)),
-		0,
-		NULL );
-
-	if (rc != 0)
-	{
-		result = DVLib::trim(reinterpret_cast<LPSTR>(get(lpMsgBuf)));
-	}
-	else
-	{
-        std::stringstream result_s;
-        result_s << "0x" << std::hex << hr;
-		result = result_s.str();
-	}
-
-    return result;
-}
 
 std::string DVLib::FormatMessageFromHRA(HRESULT hr, LPCSTR dllname)
 {
     std::string result;
 	DWORD rc = 0;
 
-	auto_library dllhandle(::LoadLibraryA(dllname));
+	auto_library dllhandle(dllname != NULL ? ::LoadLibraryA(dllname) : NULL);
 	auto_hlocal lpMsgBuf;
 
     rc = ::FormatMessageA(
 		FORMAT_MESSAGE_ALLOCATE_BUFFER |
-		FORMAT_MESSAGE_FROM_HMODULE,
+		((get(dllhandle) != NULL) ? FORMAT_MESSAGE_FROM_HMODULE : FORMAT_MESSAGE_FROM_SYSTEM),
 		get(dllhandle),
 		hr,
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
@@ -67,47 +36,17 @@ std::string DVLib::FormatMessageFromHRA(HRESULT hr, LPCSTR dllname)
     return result;
 }
 
-std::wstring DVLib::FormatMessageFromHRW(HRESULT hr)
-{
-    std::wstring result;
-	auto_hlocal lpMsgBuf;
-	DWORD rc = 0;
-
-    rc = ::FormatMessageW(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER |
-		FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL,
-		hr,
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-		reinterpret_cast<LPWSTR>(address(lpMsgBuf)),
-		0,
-		NULL );
-
-	if (rc != 0)
-	{
-		result = DVLib::trim(reinterpret_cast<LPCWSTR>(get(lpMsgBuf)));
-	}
-	else
-	{
-        std::wstringstream result_s;
-        result_s << L"0x" << std::hex << hr;
-		result = result_s.str();
-	}
-
-    return result;
-}
-
 std::wstring DVLib::FormatMessageFromHRW(HRESULT hr, LPCWSTR dllname)
 {
     std::wstring result;
 	DWORD rc = 0;
 
-	auto_library dllhandle(::LoadLibraryW(dllname));
+	auto_library dllhandle(dllname != NULL ? ::LoadLibraryW(dllname) : NULL);
 	auto_hlocal lpMsgBuf;
 
     rc = ::FormatMessageW(
 		FORMAT_MESSAGE_ALLOCATE_BUFFER |
-		FORMAT_MESSAGE_FROM_HMODULE,
+		((get(dllhandle) != NULL) ? FORMAT_MESSAGE_FROM_HMODULE : FORMAT_MESSAGE_FROM_SYSTEM),
 		get(dllhandle),
 		hr,
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language

@@ -15,24 +15,24 @@ InstallerSetting::InstallerSetting()
 
 }
 
-CString InstallerSetting::ValidatePath(LPCTSTR p_Path)
+std::wstring InstallerSetting::ValidatePath(const std::wstring& path)
 {
     //ApplicationPath
-    CString l_CurrentPath = DVLib::GetAppPath();
-    CString l_SystemPath = DVLib::GetSystemPath();
-    CString l_WindowsPath = DVLib::GetWindowsPath();
-    CString l_SystemWindowsPath = DVLib::GetSystemWindowsPath();
-    CString l_CabPath = cab_path.GetLength() ? cab_path : DVLib::GetSessionTempPath();
+	std::wstring l_CurrentPath = DVLib::GetModuleDirectoryW();
+    std::wstring l_SystemPath = DVLib::GetSystemDirectoryW();
+    std::wstring l_WindowsPath = DVLib::GetWindowsDirectoryW();
+    std::wstring l_SystemWindowsPath = DVLib::GetSystemWindowsDirectory();
+	std::wstring l_CabPath = cab_path.empty() ? GetSessionTempPath() : cab_path;
 
-    CString tmp = p_Path;
-    tmp.Replace(c_CABPATH, l_CabPath);
-    tmp.Replace(c_APPPATH, l_CurrentPath);
-    tmp.Replace(c_SYSTEMPATH, l_SystemPath);
-    tmp.Replace(c_WINDOWSPATH, l_WindowsPath);
-    tmp.Replace(c_SYSTEMWINDOWSPATH, l_SystemWindowsPath);
-    tmp.Replace(c_TEMPPATH, DVLib::GetTempPath());
-    tmp.Replace(c_GUID, DVLib::GetSessionGUID());
-	tmp.Replace(c_PID, DVLib::towstring(::GetCurrentProcessId()).c_str());
+    std::wstring tmp = path;
+	tmp = DVLib::replace(tmp, c_CABPATH, l_CabPath);
+    tmp = DVLib::replace(tmp, c_APPPATH, l_CurrentPath);
+    tmp = DVLib::replace(tmp, c_SYSTEMPATH, l_SystemPath);
+    tmp = DVLib::replace(tmp, c_WINDOWSPATH, l_WindowsPath);
+    tmp = DVLib::replace(tmp, c_SYSTEMWINDOWSPATH, l_SystemWindowsPath);
+	tmp = DVLib::replace(tmp, c_TEMPPATH, DVLib::GetTemporaryDirectoryW());
+    tmp = DVLib::replace(tmp, c_GUID, GetSessionGUID());
+	tmp = DVLib::replace(tmp, c_PID, DVLib::towstring(::GetCurrentProcessId()));
     return tmp;
 }
 
@@ -51,4 +51,28 @@ void InstallerSetting::ClearComponents()
 
     components.clear();
     components_map.clear();
+}
+
+std::wstring InstallerSetting::GetSessionGUID()
+{
+    static std::wstring s_GUID;
+    if (s_GUID.empty())
+    {
+        s_GUID = DVLib::GenerateGUIDStringW().c_str();
+    }
+    return s_GUID;
+}
+
+std::wstring InstallerSetting::GetSessionTempPath(bool returnonly)
+{
+    // not threadsafe
+    static std::wstring s_tempDirectory;
+
+    if (s_tempDirectory.empty() && ! returnonly)
+    {
+		s_tempDirectory = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), GetSessionGUID());
+		DVLib::DirectoryCreate(s_tempDirectory);
+    }
+
+    return s_tempDirectory;
 }

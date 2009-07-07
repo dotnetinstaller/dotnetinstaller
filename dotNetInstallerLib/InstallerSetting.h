@@ -7,31 +7,29 @@ class Component;
 class InstallerSetting
 {
 public:
-    InstallerSetting();
-public:
-	CString dialog_caption;
-	CString dialog_message;
-	CString dialog_bitmap;
-	CString skip_caption;
-	CString install_caption;
-	CString cancel_caption;
-	CString status_installed;
-	CString status_notinstalled;
-	CString failed_exec_command_continue;
-	CString installation_none;
-	CString installation_completed;
+	std::wstring dialog_caption;
+	std::wstring dialog_message;
+	std::wstring dialog_bitmap;
+	std::wstring skip_caption;
+	std::wstring install_caption;
+	std::wstring cancel_caption;
+	std::wstring status_installed;
+	std::wstring status_notinstalled;
+	std::wstring failed_exec_command_continue;
+	std::wstring installation_none;
+	std::wstring installation_completed;
     bool must_reboot_required;
-	CString reboot_required;
-	CString installing_component_wait;
+	std::wstring reboot_required;
+	std::wstring installing_component_wait;
 	// link properties
-	CString dialog_otherinfo_caption;
-	CString dialog_otherinfo_link;
+	std::wstring dialog_otherinfo_caption;
+	std::wstring dialog_otherinfo_link;
 	// complete command (executed when all components are installed correctly)
-	CString complete_command;
+	std::wstring complete_command;
 	// complete command on silent install
-	CString complete_command_silent;
+	std::wstring complete_command_silent;
 	// complete command on a basic UI install
-	CString complete_command_basic;
+	std::wstring complete_command_basic;
 	// if true auto close the dialog (display installation_completed or installation_none message 
 	// and execute the complete_command) if all the components are already installed
 	bool auto_close_if_installed;
@@ -44,21 +42,21 @@ public:
 	// allow user to continue on error
 	bool allow_continue_on_error;
 	// filter for minimum operating system version
-	CString os_filter_greater;
+	std::wstring os_filter_greater;
 	// filter for maximum operating system version
-	CString os_filter_smaller;
+	std::wstring os_filter_smaller;
 	// filter for processor architecture
-	CString processor_architecture_filter;
+	std::wstring processor_architecture_filter;
     // message and caption to show during CAB extraction
-    CString cab_dialog_message;
-    CString cab_dialog_caption;
-    CString cab_cancelled_message;
-    CString cab_path;
+    std::wstring cab_dialog_message;
+    std::wstring cab_dialog_caption;
+    std::wstring cab_cancelled_message;
+    std::wstring cab_path;
     bool cab_path_autodelete;
     // auto-enabled log
     bool log_enabled;
-    CString log_file;
-    CString ValidatePath(LPCTSTR p_Path);
+    std::wstring log_file;
+	std::wstring ValidatePath(const std::wstring& path);
     // dialog elements position
     WidgetPosition dialog_position;
     WidgetPosition dialog_components_list_position;
@@ -75,10 +73,15 @@ private:
     // an ordered list of components
     std::vector<Component *> components;
 public:
-    // use these functions to add/clear components
+	InstallerSetting();
+	// use these functions to add/clear components
     void AddComponent(Component *);
     void ClearComponents();
     bool HasComponent(const std::wstring& description) const { return components_map.find(description) != components_map.end(); }
     std::vector<Component *>& GetComponents() { return components; }
+public:
+	static std::wstring GetSessionGUID();
+    // get a unique temporary directory for this run of dotNetInstaller
+    static std::wstring GetSessionTempPath(bool returnonly = false);
 };
 

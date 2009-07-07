@@ -9,39 +9,39 @@ InstalledCheckOperator::InstalledCheckOperator()
 
 }
 
-void InstalledCheckOperator::Load(TiXmlElement * p_Node, InstallerSetting & p_Setting)
+void InstalledCheckOperator::Load(TiXmlElement * node, InstallerSetting & setting)
 {
-    type = p_Node->AttributeW("type").data();
-    description = p_Node->AttributeW("description").data();
+    type = node->AttributeW("type").data();
+    description = node->AttributeW("description").data();
     ApplicationLog.Write(TEXT("----Reading installed check operator: "), description + TEXT(" (") + type + TEXT(")"));
 
 	// installed checks
 	TiXmlNode * l_Child = NULL;
-	while ( (l_Child = p_Node->IterateChildren(l_Child)) != NULL)
+	while ( (l_Child = node->IterateChildren(l_Child)) != NULL)
 	{
-		TiXmlElement * l_Node = l_Child->ToElement();
-		if (l_Node != NULL && strcmp(l_Node->Value(), "installedcheck") == 0)
+		TiXmlElement * node = l_Child->ToElement();
+		if (node != NULL && strcmp(node->Value(), "installedcheck") == 0)
 		{
-            InstalledCheck * l_new_installedcheck = InstalledCheck::LoadFromXml(l_Node, p_Setting);
-            installedchecks.push_back(l_new_installedcheck);
+            InstalledCheck * l_new_installedcheck = InstalledCheck::LoadFromXml(node, setting);
+            installed_checks.push_back(l_new_installedcheck);
 		}
-		else if (l_Node != NULL && strcmp(l_Node->Value(), "installedcheckoperator") == 0)
+		else if (node != NULL && strcmp(node->Value(), "installedcheckoperator") == 0)
 		{
             InstalledCheckOperator * l_new_installedcheckoperator = new InstalledCheckOperator();
-            l_new_installedcheckoperator->Load(l_Node, p_Setting);			
-            installedchecks.push_back(l_new_installedcheckoperator);
+            l_new_installedcheckoperator->Load(node, setting);			
+            installed_checks.push_back(l_new_installedcheckoperator);
 		}
     }
 }
 
-bool InstalledCheckOperator::IsInstalled()
+bool InstalledCheckOperator::IsInstalled() const
 {
-    if (type == "And")
+    if (type == L"And")
     {
-        if (installedchecks.size() == 0)
+        if (installed_checks.size() == 0)
             return false;
 
-        for each(InstalledCheck * installedcheck in installedchecks)
+        for each(InstalledCheck * installedcheck in installed_checks)
         {
             if (! installedcheck->IsInstalled())
                 return false;
@@ -49,9 +49,9 @@ bool InstalledCheckOperator::IsInstalled()
 
         return true;
     }
-    else if (type == "Or")
+    else if (type == L"Or")
     {
-        for each(InstalledCheck * installedcheck in installedchecks)
+        for each(InstalledCheck * installedcheck in installed_checks)
         {
             if (installedcheck->IsInstalled())
                 return true;
@@ -59,12 +59,12 @@ bool InstalledCheckOperator::IsInstalled()
         
         return false;
     }
-    else if (type == "Not")
+    else if (type == L"Not")
     {
-        if (installedchecks.size() == 0)
+        if (installed_checks.size() == 0)
             return true;
 
-        for each(InstalledCheck * installedcheck in installedchecks)
+        for each(InstalledCheck * installedcheck in installed_checks)
         {
             if (installedcheck->IsInstalled())
                 return false;
@@ -74,6 +74,6 @@ bool InstalledCheckOperator::IsInstalled()
     }
     else
     {
-        throw std::exception("Invalid check operator");
+		THROW_EX("Invalid check operator \"" << type << L"\"");
     }
 }

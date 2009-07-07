@@ -150,15 +150,19 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\DirectoryUtil.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ErrorUtil.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\File.cpp"
+				RelativePath=".\FileUtil.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Format.cpp"
+				RelativePath=".\FormatUtil.cpp"
 				>
 			</File>
 			<File
@@ -166,11 +170,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Path.cpp"
+				RelativePath=".\ImageUtil.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ProcessorIdentifier.cpp"
+				RelativePath=".\OsUtil.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PathUtil.cpp"
 				>
 			</File>
 			<File
@@ -201,28 +209,16 @@
 				RelativePath=".\StringUtil.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\tinystr.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\tinyxml.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\tinyxmlerror.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\tinyxmlparser.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\DirectoryUtil.h"
+				>
+			</File>
 			<File
 				RelativePath=".\ErrorUtil.h"
 				>
@@ -232,11 +228,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\File.h"
+				RelativePath=".\FileUtil.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Format.h"
+				RelativePath=".\FormatUtil.h"
 				>
 			</File>
 			<File
@@ -244,31 +240,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Image.h"
+				RelativePath=".\ImageUtil.h"
 				>
 			</File>
 			<File
-				RelativePath=".\OsIdentifier.h"
+				RelativePath=".\OsUtil.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Path.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ProcessorIdentifier.h"
+				RelativePath=".\PathUtil.h"
 				>
 			</File>
 			<File
 				RelativePath=".\ShellUtil.h"
-				>
-			</File>
-			<File
-				RelativePath=".\SmartAny.h"
-				>
-			</File>
-			<File
-				RelativePath=".\SmartAnyFwd.h"
 				>
 			</File>
 			<File
@@ -284,19 +268,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\tinystr.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tinyxml.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Tools.h"
-				>
-			</File>
-			<File
-				RelativePath=".\VersionCompare.h"
 				>
 			</File>
 		</Filter>

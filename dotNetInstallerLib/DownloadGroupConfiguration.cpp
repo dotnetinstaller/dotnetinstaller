@@ -2,7 +2,7 @@
 #include "DownloadGroupConfiguration.h"
 
 DownloadGroupConfiguration::DownloadGroupConfiguration()
-	: AutoStartDownload(true)
+	: auto_start(true)
 {
 
 }

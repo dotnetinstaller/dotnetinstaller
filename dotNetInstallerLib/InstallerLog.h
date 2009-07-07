@@ -5,40 +5,17 @@ class InstallerLog
 public:
 	InstallerLog(void);
 	~InstallerLog(void);
-
-	void DisableLog()
-	{
-		m_EnableLog = false;
-	}
-
-	bool IsEnableLog() const
-	{
-		return m_EnableLog;
-	}
-
-    void EnableLog()
-    {
-        m_EnableLog = true;
-    }
-
-    const CString& GetLogFile() const 
-    { 
-        return m_LogFile; 
-    }
-
-    void SetLogFile(LPCTSTR filename)
-    {
-        m_LogFile = filename;
-    }
-
-	void Write(LPCTSTR message);
-	void Write(LPCTSTR message, LPCTSTR appendMessage);
-
+	void DisableLog() { m_enabled = false; }
+	bool IsEnableLog() const { return m_enabled; }
+    void EnableLog() { m_enabled = true; }
+	const std::wstring& GetLogFile() const { return m_logfile; }
+	void SetLogFile(const std::wstring& filename) { m_logfile = filename; }
+	void Write(const std::wstring& message);
+	void Write(const std::wstring& message, const std::wstring& appendMessage);
 private:
-	bool m_EnableLog;
-    CString m_LogFile;
+	bool m_enabled;
+	std::wstring m_logfile;
     HANDLE m_hFile;
 };
 
 extern InstallerLog ApplicationLog;
-

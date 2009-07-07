@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cppunitd.lib"
+				AdditionalDependencies="cppunitd.lib Version.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(SolutionDir)\UnitTests\CppUnit\lib"
 				GenerateDebugInformation="true"
@@ -139,7 +139,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cppunit.lib"
+				AdditionalDependencies="cppunit.lib Version.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(SolutionDir)\UnitTests\CppUnit\lib"
 				GenerateDebugInformation="true"
@@ -182,6 +182,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\DirectoryUtilUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\dotNetInstallerToolsLibUnitTests.cpp"
 				>
 			</File>
@@ -194,11 +198,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FileUtilUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FormatUnitTests.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\GuidUtilUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ImageUtilUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\OsUtilUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PathUtilUnitTests.cpp"
 				>
 			</File>
 			<File
@@ -236,6 +256,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\DirectoryUtilUnitTests.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ErrorUtilUnitTests.h"
 				>
 			</File>
@@ -244,11 +268,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FileUtilUnitTests.h"
+				>
+			</File>
+			<File
 				RelativePath=".\FormatUnitTests.h"
 				>
 			</File>
 			<File
 				RelativePath=".\GuidUtilUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ImageUtilUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\OsUtilUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PathUtilUnitTests.h"
 				>
 			</File>
 			<File
@@ -271,6 +311,11 @@
 			>
 			<File
 				RelativePath=".\dotNetInstallerToolsLibUnitTests.rc"
+				>
+			</File>
+			<File
+				RelativePath=".\test.bmp"
+				DeploymentContent="true"
 				>
 			</File>
 		</Filter>

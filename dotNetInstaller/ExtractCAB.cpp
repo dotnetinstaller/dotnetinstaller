@@ -31,9 +31,9 @@ BOOL ExtractCABProcessor::OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param
 
         if (m_pComponent->cancelled)
         {
-            CString cancelled_message = m_pComponent->m_Settings.cab_cancelled_message;
-            if (cancelled_message.Trim().GetLength() == 0) cancelled_message = L"Cancelled by user";
-            throw std::exception(DVLib::wstring2string((LPCWSTR) cancelled_message).c_str());
+            std::wstring cancelled_message = m_pComponent->m_Settings.cab_cancelled_message;
+            if (cancelled_message.empty()) cancelled_message = L"Cancelled by user";
+            THROW_EX(cancelled_message);
         }
     }
 
@@ -82,14 +82,14 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
 	resname.append(DVLib::towstring(currentIndex));
     ApplicationLog.Write( TEXT("Extracting Setup.cab") );
 
-    CString cabpath = (m_Settings.cab_path.GetLength() > 0) ? m_Settings.cab_path : DVLib::GetSessionTempPath();
+	std::wstring cabpath = (! m_Settings.cab_path.empty()) ? m_Settings.cab_path : InstallerSetting::GetSessionTempPath();
     cabpath = m_Settings.ValidatePath(cabpath);
 	ApplicationLog.Write( TEXT("Cabpath: "), cabpath );
-	DVLib::CreateDirectoryPath(cabpath);
+	DVLib::DirectoryCreate(cabpath);
 
-    CString tempFile = DVLib::PathCombineT(cabpath, TEXT("setup.cab") );
+    std::wstring tempFile = DVLib::DirectoryCombine(cabpath, TEXT("setup.cab") );
 	ApplicationLog.Write( TEXT("TempFile: "), tempFile );
-    HANDLE l_hFile = CreateFile(tempFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    HANDLE l_hFile = CreateFile(tempFile.c_str(), GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if (l_hFile == INVALID_HANDLE_VALUE)
     {
 	    throw std::exception("Failed to create temp file");
@@ -101,8 +101,7 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
 	{
         if (m_pDialog != NULL)
         {
-            CString percent;
-            percent.Format(L"%d%%", (i * 100) / cabCount);
+			std::wstring percent = DVLib::FormatMessage(L"%d%%", (i * 100) / cabCount);
             m_pDialog->PostMessage(WM_USER_SETSTATUSINSTALL, 
                 (WPARAM) InstallStatusParam::CreateStatus(L"Setup.cab", percent));
         }
@@ -121,9 +120,9 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
         if (cancelled)
         {
 			ApplicationLog.Write( TEXT("Cancelled: "), resname.c_str() );
-            CString cancelled_message = m_Settings.cab_cancelled_message;
-            if (cancelled_message.Trim().GetLength() == 0) cancelled_message = L"Cancelled by user";
-            throw std::exception(DVLib::wstring2string((LPCWSTR) cancelled_message).c_str());
+            std::wstring cancelled_message = m_Settings.cab_cancelled_message;
+            if (cancelled_message.empty()) cancelled_message = L"Cancelled by user";
+			THROW_EX(cancelled_message);
         }
 
 		HGLOBAL l_hRes = LoadResource(p_Module, l_res);
@@ -165,7 +164,7 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
         throw std::exception("Failed to initialize CAB context");
     }
 
-    if (!i_Extract.ExtractFileW(tempFile.GetBuffer(), cabpath.GetBuffer()))
+    if (!i_Extract.ExtractFileW(const_cast<wchar_t *>(tempFile.c_str()), const_cast<wchar_t *>(cabpath.c_str())))
     {
 		ApplicationLog.Write( TEXT("Failed to extract file:"), tempFile );
         throw std::exception("Error extracting files from setup.cab");

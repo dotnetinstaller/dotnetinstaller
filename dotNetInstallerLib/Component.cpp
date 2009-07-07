@@ -30,18 +30,18 @@ void Component::Init(CDialog * pDialog)
     cancelled = false;
 }
 
-bool Component::IsInstalled()
+bool Component::IsInstalled() const
 {
 	if (installedchecks.size() == 0)
 		return false;
 
-	bool l_installed = true;
+	bool installed = true;
 	
     for (size_t j = 0; j < installedchecks.size(); j++)
 	{
-		l_installed &= installedchecks[j]->IsInstalled();
+		installed &= installedchecks[j]->IsInstalled();
 	}
 
-	return l_installed;
+	return installed;
 }
 

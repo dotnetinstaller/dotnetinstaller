@@ -23,6 +23,13 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// Manifest
+//
+#define MANIFEST_RESOURCE_ID 1
+MANIFEST_RESOURCE_ID RT_MANIFEST "res\\dotNetInstaller.manifest"
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // Icon
 //
 
@@ -132,61 +139,10 @@ IDC_CUSTOM_HAND         CURSOR                  "res\\Hand.cur"
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
-
-/////////////////////////////////////////////////////////////////////////////
-// Italian (Italy) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ITA)
-#ifdef _WIN32
-LANGUAGE LANG_ITALIAN, SUBLANG_ITALIAN
-#pragma code_page(1252)
-#endif //_WIN32
-
-#ifdef APSTUDIO_INVOKED
-/////////////////////////////////////////////////////////////////////////////
-//
-// TEXTINCLUDE
-//
-
-1 TEXTINCLUDE 
-BEGIN
-    "resource.h\0"
-END
-
-2 TEXTINCLUDE 
-BEGIN
-    "#include ""afxres.h""\r\n"
-    "\0"
-END
-
-3 TEXTINCLUDE 
-BEGIN
-    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
-    "#define _AFX_NO_OLE_RESOURCES\r\n"
-    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
-    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
-    "\r\n"
-    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ITA)\r\n"
-    "LANGUAGE 16, 1\r\n"
-    "#pragma code_page(1252)\r\n"
-    "#include ""res\\dotNetInstaller.rc2""  // risorse non Microsoft Visual C++ modificate\r\n"
-    "#include ""afxres.rc""         // Componenti standard\r\n"
-    "#endif\r\n"
-    "\0"
-END
-
-#endif    // APSTUDIO_INVOKED
-
-#endif    // Italian (Italy) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
-// Generated from the TEXTINCLUDE 3 resource.
-//
+// Generated from the TEXTINCLUDE 3 resource.//
 #define _AFX_NO_SPLITTER_RESOURCES
 #define _AFX_NO_OLE_RESOURCES
 #define _AFX_NO_TRACKER_RESOURCES
@@ -195,7 +151,6 @@ END
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ITA)
 LANGUAGE 16, 1
 #pragma code_page(1252)
-#include "res\dotNetInstaller.rc2"  // risorse non Microsoft Visual C++ modificate
 #include "afxres.rc"         // Componenti standard
 #endif
 

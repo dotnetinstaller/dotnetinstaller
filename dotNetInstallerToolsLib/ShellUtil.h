@@ -10,4 +10,6 @@ namespace DVLib
 	void DetachCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi = NULL);
 	// execute a process, wait and return exit code
 	DWORD ExecCmd(const std::wstring& cmd);
+	// shell-execute a process
+	void ShellCmd(const std::wstring& cmd);
 }

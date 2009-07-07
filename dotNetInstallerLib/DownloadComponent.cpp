@@ -3,26 +3,26 @@
 #include "InstallerLog.h"
 
 DownloadComponent::DownloadComponent(
-	IDownloadCallback * p_Callback, 
-	DownloadComponentInfo * p_Component, 
-	int p_CurrentComponent, 
-	int p_TotalComponents)
+	IDownloadCallback * callback, 
+	DownloadComponentInfo * component, 
+	int current, 
+	int total)
 {
-	m_bCanceledByTheUser = false;
-	m_Callback = p_Callback;
-	m_Component = p_Component;
-	m_CurrentComponent = p_CurrentComponent;
-	m_TotalComponents = p_TotalComponents;
+	m_bCancel = false;
+	m_Callback = callback;
+	m_Component = component;
+	m_CurrentComponent = current;
+	m_TotalComponents = total;
 }
 
 bool DownloadComponent::IsCopyRequired() const
 {
 	// no source path, nothing to copy
-	if (m_Component->SourcePath.IsEmpty())
+	if (m_Component->source_path.empty())
 		return false;
 
 	// download every time
-	if (m_Component->AlwaysDownload)
+	if (m_Component->always_download)
 		return false;
 
 	// destination file has already been downloaded/copied
@@ -30,7 +30,7 @@ bool DownloadComponent::IsCopyRequired() const
 		return false;
 
 	// source path file exists, copy it
-	if (DVLib::FileExists(m_Component->SourcePath))
+	if (DVLib::FileExists(m_Component->source_path))
 		return true;
 
 	// source path file doesn't exist
@@ -39,10 +39,10 @@ bool DownloadComponent::IsCopyRequired() const
 
 bool DownloadComponent::IsDownloadRequired() const
 {
-	if (m_Component->SourceURL.IsEmpty())
+	if (m_Component->source_url.empty())
 		return false;
 
-	if (! m_Component->AlwaysDownload)
+	if (! m_Component->always_download)
 	{
 		// destination file has already been donwloaded
 		if (DVLib::FileExists(GetDestinationFileName()))
@@ -55,31 +55,22 @@ bool DownloadComponent::IsDownloadRequired() const
 	return true;
 }
 
-CString DownloadComponent::GetDestinationFileName() const
+std::wstring DownloadComponent::GetDestinationFileName() const
 {
-	if (m_Component->DestinationFileName.GetLength() <= 0)
-	{
-		return DVLib::PathCombineT(
-			m_Component->DestinationPath, 
-			DVLib::GetFileNameFromFullFilePath(m_Component->SourceURL));
-	}
-	else
-	{
-		return DVLib::PathCombineT(
-			m_Component->DestinationPath, 
-			m_Component->DestinationFileName);
-	}
+	return m_Component->destination_filename.empty()
+		? DVLib::DirectoryCombine(m_Component->destination_path, DVLib::GetFileNameW(m_Component->source_url))
+		: DVLib::DirectoryCombine(m_Component->destination_path, m_Component->destination_filename);
 }
 
 void DownloadComponent::CopyFromSourcePath()
 {
-	ApplicationLog.Write( TEXT("SourcePath: "), m_Component->SourcePath);
-	ApplicationLog.Write( TEXT("DestinationPath: "), m_Component->DestinationPath);
-	DVLib::CreateDirectoryPath(m_Component->DestinationPath);
-	CString l_destinationFullFileName = GetDestinationFileName();
-	ApplicationLog.Write( TEXT("DestinationFullFileName: "), l_destinationFullFileName);
-	ApplicationLog.Write( TEXT("AlwaysDownload: "), m_Component->AlwaysDownload ? TEXT("True") : TEXT("False") );
-	ApplicationLog.Write( TEXT("FileExists: "), DVLib::FileExists(l_destinationFullFileName) ? TEXT("True") : TEXT("False") );
+	ApplicationLog.Write( TEXT("source_path: "), m_Component->source_path);
+	ApplicationLog.Write( TEXT("DestinationPath: "), m_Component->destination_path);
+	DVLib::DirectoryCreate(m_Component->destination_path);
+	std::wstring destination_full_filename = GetDestinationFileName();
+	ApplicationLog.Write( TEXT("DestinationFullFileName: "), destination_full_filename);
+	ApplicationLog.Write( TEXT("AlwaysDownload: "), m_Component->always_download ? TEXT("True") : TEXT("False") );
+	ApplicationLog.Write( TEXT("FileExists: "), DVLib::FileExists(destination_full_filename) ? TEXT("True") : TEXT("False") );
 
 	if (! IsCopyRequired())
 	{
@@ -87,28 +78,19 @@ void DownloadComponent::CopyFromSourcePath()
 		return;
 	}
 
-	if (! CopyFile(m_Component->SourcePath, l_destinationFullFileName, false))
-	{
-		std::string error = "Error copying \"";
-		error.append(DVLib::wstring2string((LPCWSTR) m_Component->SourcePath));
-		error.append("\" to \"");
-		error.append(DVLib::wstring2string((LPCWSTR) l_destinationFullFileName));
-		error.append("\r\n");
-		error.append(DVLib::GetLastErrorStringA());
-		throw std::exception(error.c_str());
-	}
+	DVLib::FileCopy(m_Component->source_path, destination_full_filename, true);
 }
 
 void DownloadComponent::StartDownload()
 {
-	CString l_destinationFullFileName = GetDestinationFileName();
+	std::wstring destination_full_filename = GetDestinationFileName();
 
-	ApplicationLog.Write( TEXT("SourceURL: "), m_Component->SourceURL);
-	ApplicationLog.Write( TEXT("DestinationPath: "), m_Component->DestinationPath);
-	DVLib::CreateDirectoryPath(m_Component->DestinationPath);
-	ApplicationLog.Write( TEXT("DestinationFullFileName: "), l_destinationFullFileName);
-	ApplicationLog.Write( TEXT("AlwaysDownload: "), m_Component->AlwaysDownload ? TEXT("True") : TEXT("False") );
-	ApplicationLog.Write( TEXT("FileExists: "), DVLib::FileExists(l_destinationFullFileName) ? TEXT("True") : TEXT("False") );
+	ApplicationLog.Write( TEXT("SourceURL: "), m_Component->source_url);
+	ApplicationLog.Write( TEXT("DestinationPath: "), m_Component->destination_path);
+	DVLib::DirectoryCreate(m_Component->destination_path);
+	ApplicationLog.Write( TEXT("DestinationFullFileName: "), destination_full_filename);
+	ApplicationLog.Write( TEXT("AlwaysDownload: "), m_Component->always_download ? TEXT("True") : TEXT("False") );
+	ApplicationLog.Write( TEXT("FileExists: "), DVLib::FileExists(destination_full_filename) ? TEXT("True") : TEXT("False") );
 
 	if (! IsDownloadRequired())
 	{
@@ -116,33 +98,24 @@ void DownloadComponent::StartDownload()
 		return;
 	}
 
-	ApplicationLog.Write( TEXT("Downloading: "), m_Component->SourceURL);
-	HRESULT l_hrRet = URLDownloadToFile(NULL, m_Component->SourceURL, l_destinationFullFileName, 0, this);
-	if (FAILED(l_hrRet))
-	{
-		std::string error = "Error downloading \"";
-		error.append(DVLib::wstring2string((LPCTSTR) m_Component->SourceURL));
-		error.append("\" to \"");
-		error.append(DVLib::wstring2string((LPCTSTR) l_destinationFullFileName));
-		error.append(": ");
-		error.append(DVLib::FormatMessageFromHRA(l_hrRet, "urlmon.dll"));
-		throw std::exception(error.c_str());
-	}
+	ApplicationLog.Write( TEXT("Downloading: "), m_Component->source_url);
+
+	CHECK_HR_DLL(URLDownloadToFile(NULL, m_Component->source_url.c_str(), destination_full_filename.c_str(), 0, this),
+		L"Error downloading \"" << m_Component->source_url << L"\" to \"" << destination_full_filename << L"\"", L"urlmon.dll");
 }
 
 HRESULT DownloadComponent::OnProgress(ULONG ulProgress, ULONG ulProgressMax, ULONG ulStatusCode, LPCWSTR wszStatusText)
 {
 	// Did the user hit the Stop button?
-	if ( m_Callback->WantToStop() )
+	if ( m_Callback->IsDownloadCancelled() )
 	{
-		m_bCanceledByTheUser = true;
+		m_bCancel = true;
 		return E_ABORT;
 	}
 
-	CString tmp;
-	tmp.Format(TEXT("%s (%s of %s) - %d/%d"), m_Component->ComponentName, 
-		DVLib::FormatBytesW(ulProgress), DVLib::FormatBytesW(ulProgressMax), 
-		m_CurrentComponent, m_TotalComponents );
+	std::wstring tmp = DVLib::FormatMessage(L"%s (%s of %s) - %d/%d", 
+		m_Component->component_name.c_str(), DVLib::FormatBytesW(ulProgress).c_str(), DVLib::FormatBytesW(ulProgressMax).c_str(), 
+		m_CurrentComponent, m_TotalComponents);
 
 	m_Callback->Status(ulProgress, ulProgressMax, tmp);
 	return S_OK;

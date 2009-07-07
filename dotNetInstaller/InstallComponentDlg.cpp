@@ -33,9 +33,9 @@ END_MESSAGE_MAP()
 
 // InstallComponentDlg message handlers
 
-void InstallComponentDlg::LoadComponent(InstallerSetting * p_Setting, Component * p_Component)
+void InstallComponentDlg::LoadComponent(InstallerSetting * setting, Component * p_Component)
 {
-	m_Setting = p_Setting;
+	m_Setting = setting;
 	m_Component = p_Component;
 }
 
@@ -43,7 +43,7 @@ void InstallComponentDlg::LoadComponent(InstallerSetting * p_Setting, Component 
 //{
 //	bool l_retVal;
 //
-//	CString l_tmp;
+//	std::wstring l_tmp;
 //	l_tmp.Format(m_Setting->installing_component_wait, m_Component->description);
 //	m_InstallMessage.SetWindowText(l_tmp);
 //
@@ -124,11 +124,10 @@ BOOL InstallComponentDlg::OnInitDialog()
 	m_BusyControl.Recalc();
 	m_BusyControl.Start();
 
-	SetWindowText(m_Component->description);
+	SetWindowText(m_Component->description.c_str());
 
-	CString l_tmp;
-	l_tmp.Format(m_Setting->installing_component_wait, m_Component->description);
-    m_InstallMessage.SetWindowText(l_tmp);
+	std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(m_Setting->installing_component_wait.c_str()), m_Component->description.c_str());
+    m_InstallMessage.SetWindowText(l_tmp.c_str());
     m_iTimer = this->SetTimer(1,1000,NULL);
 	return TRUE;
 }
@@ -139,9 +138,8 @@ afx_msg LRESULT InstallComponentDlg::OnSetStatusInstall(WPARAM wParam, LPARAM lP
     if (wParam != NULL)
     {
         InstallStatusParam * status = (InstallStatusParam *) wParam;
-		CString l_tmp;
-		l_tmp.Format(m_Setting->installing_component_wait, (LPCWSTR) status->Status);
-		m_InstallMessage.SetWindowText(l_tmp);
+		std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(m_Setting->installing_component_wait.c_str()), status->Status.c_str());
+		m_InstallMessage.SetWindowText(l_tmp.c_str());
         InstallStatusParam::Free(status);
     }
 

@@ -9,61 +9,66 @@ InstalledCheckRegistry::InstalledCheckRegistry(void)
 
 HKEY InstalledCheckRegistry::GetRootKey() const
 {
-    if(rootkey == "HKEY_CLASSES_ROOT")   return HKEY_CLASSES_ROOT;
-    if(rootkey == "HKEY_CURRENT_USER")   return HKEY_CURRENT_USER;
-    if(rootkey == "HKEY_USERS")          return HKEY_USERS;
-    if(rootkey == "HKEY_CURRENT_CONFIG") return HKEY_CURRENT_CONFIG;
-    return HKEY_LOCAL_MACHINE;
+    if (rootkey == L"HKEY_CLASSES_ROOT")
+		return HKEY_CLASSES_ROOT;
+    if (rootkey == L"HKEY_CURRENT_USER")
+		return HKEY_CURRENT_USER;
+    if (rootkey == L"HKEY_USERS")
+		return HKEY_USERS;
+    if (rootkey == L"HKEY_CURRENT_CONFIG")
+		return HKEY_CURRENT_CONFIG;
+    
+	return HKEY_LOCAL_MACHINE;
 }
 
-void InstalledCheckRegistry::Load(TiXmlElement * l_Node, InstallerSetting& p_Setting)
+void InstalledCheckRegistry::Load(TiXmlElement * node, InstallerSetting& setting)
 {
-    ApplicationLog.Write(TEXT("----Reading REGISTRY installed check: "), l_Node->AttributeW("path").data());
-    fieldname = l_Node->AttributeW("fieldname").data();
-    fieldtype = l_Node->AttributeW("fieldtype").data();
-    fieldvalue = l_Node->AttributeW("fieldvalue").data();
-    path = l_Node->AttributeW("path").data();
-    comparison = l_Node->AttributeW("comparison").data();
-    rootkey = l_Node->AttributeW("rootkey").data();
-    wowoption = l_Node->AttributeW("wowoption").data();
+    ApplicationLog.Write(TEXT("----Reading REGISTRY installed check: "), node->AttributeW("path").data());
+    fieldname = node->AttributeW("fieldname").data();
+    fieldtype = node->AttributeW("fieldtype").data();
+    fieldvalue = node->AttributeW("fieldvalue").data();
+    path = node->AttributeW("path").data();
+    comparison = node->AttributeW("comparison").data();
+    rootkey = node->AttributeW("rootkey").data();
+    wowoption = node->AttributeW("wowoption").data();
 }
 
-bool InstalledCheckRegistry::IsInstalled()
+// \todo: rewrite with a registry class
+bool InstalledCheckRegistry::IsInstalled() const
 {
 	try
 	{
-		//http://msdn.microsoft.com/en-us/library/aa384129(VS.85).aspx
+		// http://msdn.microsoft.com/en-us/library/aa384129(VS.85).aspx
 		
-		CString keypath(path);
-		keypath.Append(L"\\");
-		keypath.Append(fieldname);
+		std::wstring keypath(path);
+		keypath.append(L"\\");
+		keypath.append(fieldname);
 
         ApplicationLog.Write( TEXT("Reading Registry: "), keypath);
 
-		HKEY l_HKey;
-		LONG l_result = 0;
-		
-		DVLib::OperatingSystem type = DVLib::GetOsVersion();
+		DVLib::OperatingSystem type = DVLib::GetOperatingSystemVersion();
 		DWORD dwKeyOption = KEY_READ;
 
-		//Alternate registry view is available from Windows XP onwards for 64 bit systems.
+		// alternate registry view is available from Windows XP onwards for 64 bit systems
 		if (type >= DVLib::winXP)
 		{
-			//Indicates that an application on 64-bit Windows should operate on the 64-bit registry view.
-			if ("WOW64_64" == (wowoption.MakeUpper()))
+			// indicates that an application on 64-bit Windows should operate on the 64-bit registry view
+			if (_wcsicmp(wowoption.c_str(), L"WOW64_64") == 0)
 			{	
 				ApplicationLog.Write( TEXT("Opening 64-bit registry view (KEY_WOW64_64KEY)"));
 				dwKeyOption |= KEY_WOW64_64KEY;
 			}
 			//Indicates that an application on 64-bit Windows should operate on the 32-bit registry view.
-			else if ("WOW64_32" == (wowoption.MakeUpper()))
+			else if (_wcsicmp(wowoption.c_str(), L"WOW64_32") == 0)
 			{
 				ApplicationLog.Write( TEXT("Opening 32-bit registry view (KEY_WOW64_32KEY)"));
 				dwKeyOption |= KEY_WOW64_32KEY;
 			}
 		}
 
-		l_result = RegOpenKeyEx(GetRootKey(), path, 0, dwKeyOption, &l_HKey);
+		HKEY l_hkey = NULL;
+		LONG l_result = RegOpenKeyEx(GetRootKey(), path.c_str(), 0, dwKeyOption, &l_hkey);
+		auto_hkey l_hkey_ptr(l_hkey);
 
 		if (l_result != ERROR_SUCCESS)
 		{
@@ -77,17 +82,12 @@ bool InstalledCheckRegistry::IsInstalled()
 			DWORD wordValue;
 			DWORD l_dwordLen = sizeof(DWORD);
 			DWORD l_type = REG_DWORD;
-			l_result = RegQueryValueEx(l_HKey,fieldname, NULL, &l_type, (LPBYTE)&wordValue, &l_dwordLen);
+			l_result = RegQueryValueEx(l_hkey, fieldname.c_str(), NULL, &l_type, (LPBYTE)&wordValue, &l_dwordLen);
 			if (l_result != ERROR_SUCCESS)
-			{
-				RegCloseKey(l_HKey);
 				return false;
-			}
-
-			RegCloseKey(l_HKey);
 
 			DWORD l_checkValue;
-			if (_stscanf_s(fieldvalue, TEXT("%d"), &l_checkValue) != 1)
+			if (_stscanf_s(fieldvalue.c_str(), TEXT("%d"), & l_checkValue) != 1)
 			{
 				throw std::exception("Invalid registry value to check expected DWORD.");
 			}
@@ -121,27 +121,19 @@ bool InstalledCheckRegistry::IsInstalled()
 		{
 			DWORD l_dwordLen = 0;//number of bytes
 			DWORD l_type = REG_SZ;
-			l_result = RegQueryValueEx(l_HKey,fieldname, NULL, &l_type, NULL, &l_dwordLen);
+			l_result = RegQueryValueEx(l_hkey,fieldname.c_str(), NULL, &l_type, NULL, &l_dwordLen);
 			if (l_result != ERROR_SUCCESS)
-			{
-				RegCloseKey(l_HKey);
 				return false;
-			}
 
 			size_t numberOfChars = l_dwordLen / sizeof(TCHAR);
 			TCHAR * charsRegValue = new TCHAR[ numberOfChars + 1 ];
 			ZeroMemory(charsRegValue, numberOfChars+1);
 
-			l_result = RegQueryValueEx(l_HKey,fieldname, NULL, &l_type, (LPBYTE)charsRegValue, &l_dwordLen);
+			l_result = RegQueryValueEx(l_hkey,fieldname.c_str(), NULL, &l_type, (LPBYTE)charsRegValue, &l_dwordLen);
 			if (l_result != ERROR_SUCCESS)
-			{
-				RegCloseKey(l_HKey);
 				return false;
-			}
 
-			RegCloseKey(l_HKey);
-
-			CString registryValue = charsRegValue;
+			std::wstring registryValue = charsRegValue;
 			delete [] charsRegValue;
 
             ApplicationLog.Write( TEXT("Value: "), registryValue);
@@ -155,7 +147,7 @@ bool InstalledCheckRegistry::IsInstalled()
 			}
 			else if (comparison == TEXT("version"))
 			{
-				if ( DVLib::stringVersionCompare(fieldvalue, registryValue) <= 0 )
+				if ( DVLib::CompareVersion(fieldvalue, registryValue) <= 0 )
 					return true;
 				else
 					return false;
@@ -166,7 +158,7 @@ bool InstalledCheckRegistry::IsInstalled()
 			}
 			else if (comparison == TEXT("contains"))
 			{
-				if (registryValue.Find(fieldvalue) >= 0)
+				if (registryValue.find(fieldvalue) != registryValue.npos)
 					return true;
 				else
 					return false;
@@ -180,26 +172,18 @@ bool InstalledCheckRegistry::IsInstalled()
 		{
 			DWORD l_dwordLen = 0;//number of bytes
 			DWORD l_type = REG_MULTI_SZ;
-			l_result = RegQueryValueEx(l_HKey,fieldname, NULL, &l_type, NULL, &l_dwordLen);
+			l_result = RegQueryValueEx(l_hkey,fieldname.c_str(), NULL, &l_type, NULL, &l_dwordLen);
 			if (l_result != ERROR_SUCCESS)
-			{
-				RegCloseKey(l_HKey);
 				return false;
-			}
-
 
 			size_t numberOfChars = l_dwordLen / sizeof(TCHAR);
 			TCHAR * charsRegValue = new TCHAR[ numberOfChars + 1 ];
 			ZeroMemory(charsRegValue, numberOfChars+1);
 
-			l_result = RegQueryValueEx(l_HKey,fieldname, NULL, &l_type, (LPBYTE)charsRegValue, &l_dwordLen);
+			l_result = RegQueryValueEx(l_hkey,fieldname.c_str(), NULL, &l_type, (LPBYTE)charsRegValue, &l_dwordLen);
 			if (l_result != ERROR_SUCCESS)
-			{
-				RegCloseKey(l_HKey);
 				return false;
-			}
 
-			RegCloseKey(l_HKey);
 			// Check for null values and replace them with spaces.  Because the return value from the 
 			// registry can be a series of null terminated strings, it's easiest to replace the null values 
 			// at the end of each string with a space in order to make it easier to deal with.
@@ -211,7 +195,7 @@ bool InstalledCheckRegistry::IsInstalled()
 					charsRegValue[ii] = ' ';
 				}
 			}
-			CString registryValue = charsRegValue;
+			std::wstring registryValue = charsRegValue;
 			delete [] charsRegValue;
 
 			if (comparison == TEXT("match"))
@@ -223,7 +207,7 @@ bool InstalledCheckRegistry::IsInstalled()
 			}
 			else if (comparison == TEXT("version"))
 			{
-				if ( DVLib::stringVersionCompare(fieldvalue, registryValue) <= 0 )
+				if ( DVLib::CompareVersion(fieldvalue, registryValue) <= 0 )
 					return true;
 				else
 					return false;
@@ -234,21 +218,18 @@ bool InstalledCheckRegistry::IsInstalled()
 			}
 			else if (comparison == TEXT("contains"))
 			{
-				if (registryValue.Find(fieldvalue) >= 0)
+				if (registryValue.find(fieldvalue) != registryValue.npos)
 					return true;
 				else
 					return false;
 			}
-
 			else
 			{
 				throw std::exception("Invalid comparison type; expected match, version, exists, or contains.");
-				return false;
 			}
 		}
 		else
 		{
-			RegCloseKey(l_HKey);
 			throw std::exception("Invalid registry type");
 		}
 	}
@@ -257,4 +238,3 @@ bool InstalledCheckRegistry::IsInstalled()
 		return false;
 	}
 }
-

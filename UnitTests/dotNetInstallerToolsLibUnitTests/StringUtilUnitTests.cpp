@@ -43,89 +43,39 @@ void StringUtilUnitTests::teststring2long(void)
 	typedef struct  
 	{
 		LPCSTR testIn;
-        long defaultOnError;
         long testOut;
 		int base;
 	} TestData;
 
 	TestData testData[] = 
 	{
-		{ "", -1, -1 , 10},
-		{ "-2147483647", -1, LONG_MIN + 1 , 10},
-		{ "2147483646", -1, LONG_MAX - 1 , 10},
-		{ "0", 0, 0 , 10},
-		{ "", 0, 0 , 10},
-		{ "-65", 0, -65 , 10},
-		{ "65", 0, 65 , 10},
-		{ "65y", 0, 0 , 10},
-		{ "-", 0, 0 , 10},
-		{ "9-9", 0, 0 , 10},
-		{ "-1", 0, -1 , 10},
-		{ "q", 0, 0 , 10},
-		{ "66-", 0, 0 , 10},
-		{ "0.9", 0, 0 , 10},
-		{ " ", 0, 0 , 10},
-		{ "\n", 0, 0 , 10},
-        // with default on error changed
-		{ "0", -1, 0 , 10},
-		{ "", -1, -1 , 10},
-		{ "-65", -1, -65 , 10},
-		{ "65", -1, 65 , 10},
-		{ "65y", -1, -1 , 10},
-		{ "y65y", -1, -1 , 10},
-		{ "-", -1, -1 , 10},
-		{ "9-9", -1, -1 , 10},
-		{ "-2", -1, -2 , 10},
-		{ "q", -1, -1 , 10},
-		{ "66-", -1, -1 , 10},
-		{ "0.9", -1, -1 , 10},
-		{ "9.9", -1, -1 , 10},
-		{ " ", -1, -1 , 10},
-		{ "\n", -1, -1 , 10},
+		{ "-2147483647", LONG_MIN + 1 , 10},
+		{ "2147483646", LONG_MAX - 1 , 10},
+		{ "0", 0, 10},
+		{ "-65", -65 , 10},
+		{ "65", 65 , 10},
+		{ "-1", -1 , 10},
 		// base 2
-		{ "", -1, -1 , 2},
-		{ "1100100", -1, 100, 2 },
-		{ "1100100y", -1, -1, 2 },
-		{ "0", -1, 0, 2 },
-		{ "-0", -1, 0, 2 },
-		{ "", -1, -1, 2 },
-		{ " ", -1, -1, 2 },
-		{ "-100", -1, -4, 2 },
-		{ "Y56", -1, -1, 2 },
+		{ "1100100", 100, 2 },
+		{ "0", 0, 2 },
+		{ "-0", 0, 2 },
+		{ "-100", -4, 2 },
 		//base 8
-		{ "", -1, -1 , 8},
-		{ "40", -1, 32, 8 },
-		{ "0", -1, 0, 8 },
-		{ "", -1, -1, 8 },
-		{ " ", -1, -1, 8 },
-		{ "-40", -1, -32, 8 },
-		{ "40www", -1, -1, 8 },
-		{ "-", -1, -1, 8 },
-		{ "y40", -1, -1, 8 },
-		{ "40.0", -1, -1, 8 },
-		{ "0xDEADBEEF", -1, -1, 8 },
+		{ "40", 32, 8 },
+		{ "0", 0, 8 },
+		{ "-40", -32, 8 },
 		//base 16
-		{ "", -1, -1 , 16},
-		{ "40", -1, 64, 16 },
-		{ "0xDEADBEEF", -1, -1, 16 },
-		{ "-0xDEADBEEF", -1, -1, 16 },
-		{ "0xBAADF00D", -1, -1, 16 },
-		{ "0x", -1, -1, 16 },
-		{ "0", -1, 0, 16 },
-		{ "", -1, -1, 16 },
-		{ " ", -1, -1, 16 },
-		{ "-", -1, -1, 16 },
-		{ "-0x", -1, -1, 16 },
-		{ "0xYY", -1, -1, 16 },
-		{ "0xabcd", -1, 43981, 16 },
+		{ "40", 64, 16 },
+		{ "0", 0, 16 },
+		{ "0xabcd", 43981, 16 },
 	};
 
 	for (unsigned int i = 0; i < ARRAYSIZE(testData); i++)
 	{
-        int result = DVLib::string2long(testData[i].testIn, testData[i].defaultOnError, testData[i].base);
+        int result = DVLib::string2long(testData[i].testIn, testData[i].base);
 		std::stringstream s;
 		s << "[" << (testData[i].testIn ? testData[i].testIn : "NULL") << "] => [" << result << "] (expected: " 
-			<< testData[i].testOut << " with default " << testData[i].defaultOnError << " Base: " << testData[i].base << ")";
+			<< testData[i].testOut << ", base: " << testData[i].base << ")";
 		CPPUNIT_ASSERT_MESSAGE(s.str().c_str(), result == testData[i].testOut);
 	}
 }
@@ -351,4 +301,78 @@ void StringUtilUnitTests::testtostring(void)
 void StringUtilUnitTests::testtowstring(void)
 {
 	CPPUNIT_ASSERT(DVLib::towstring(0) == L"0");
+}
+
+void StringUtilUnitTests::teststartswith()
+{
+	typedef struct  
+	{
+		LPCSTR testIn;
+		LPCSTR testWhat;
+        bool testExpectedResult;
+	} TestData;
+
+	TestData testData[] = 
+	{
+		{ "", "", true },
+		{ "x", "x", true },
+		{ "x", "X", false },
+		{ "X", "x", false },
+		{ "x", "y", false },
+		{ "xx", "xy", false },
+		{ "xx", "yx", false },
+		{ "xxx", "", true },
+		{ "x x x", "x x", true },
+		{ "123", "231", false },
+	};
+
+	for( unsigned int i = 0; i < ARRAYSIZE(testData); i++ )
+	{
+		std::stringstream message;
+		message << "'" << testData[i].testIn << "'.startswith('" << 
+			testData[i].testWhat << "') didn't return '" << 
+			(testData[i].testExpectedResult ? "true" : "false") << "'";
+		
+		CPPUNIT_ASSERT_MESSAGE(message.str().c_str(),
+			testData[i].testExpectedResult == DVLib::startswith(
+				testData[i].testIn, testData[i].testWhat));
+	}
+}
+
+void StringUtilUnitTests::testendswith()
+{
+	typedef struct  
+	{
+		LPCSTR testIn;
+		LPCSTR testWhat;
+        bool testExpectedResult;
+	} TestData;
+
+	TestData testData[] = 
+	{
+		{ "", "", true },
+		{ "x", "x", true },
+		{ "X", "x", false },
+		{ "x", "X", false },
+		{ "x", "y", false },
+		{ "xx", "xy", false },
+		{ "xx", "yx", false },
+		{ "xxx", "", true },
+		{ "x x x", "x x", true },
+		{ "xyz", "yz", true },
+		{ "xyz", "xxxxxxxxxxyz", false },
+		{ "123", "231", false },
+	};
+
+	for( unsigned int i = 0; i < ARRAYSIZE(testData); i++ )
+	{
+		std::stringstream message;
+		message << "'" << testData[i].testIn << "'.endswith('" << 
+			testData[i].testWhat << "') didn't return '" << 
+			(testData[i].testExpectedResult ? "true" : "false") << "'";
+		
+		CPPUNIT_ASSERT_MESSAGE(message.str().c_str(),
+			testData[i].testExpectedResult == DVLib::endswith(
+				testData[i].testIn, testData[i].testWhat));
+	}
 }

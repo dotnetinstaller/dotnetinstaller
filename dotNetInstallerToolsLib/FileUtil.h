@@ -1,0 +1,53 @@
+#pragma once
+
+namespace DVLib
+{
+	// does a file exist?
+	bool FileExists(const std::string& filename);
+	bool FileExists(const std::wstring& filename);
+	// create a temporary file and return its name
+	std::string GetTemporaryFileNameA();
+	std::wstring GetTemporaryFileNameW();
+	// copy a file
+	void FileCopy(const std::string& from, const std::string& to, bool overwrite = true);
+	void FileCopy(const std::wstring& from, const std::wstring& to, bool overwrite = true);
+	// delete a file
+	void FileDelete(const std::string& filename);
+	void FileDelete(const std::wstring& filename);
+	// get file size (< 2GB)
+	long GetFileSize(const std::wstring& filename);
+	long GetFileSize(const std::string& filename);
+    // write data to a file
+	void FileWrite(
+		const std::wstring& filename, 
+        const std::vector<char>& data,
+        DWORD dwShareMode = GENERIC_READ | GENERIC_WRITE,
+        DWORD dwCreationDisposition = CREATE_ALWAYS,
+        DWORD dwFlagsAndAttributes = FILE_ATTRIBUTE_NORMAL);
+	// create an empty file
+	void FileCreate(
+		const std::wstring& filename, 
+		DWORD dwDesiredAccess = GENERIC_READ | GENERIC_WRITE,
+		DWORD dwShareMode = 0,
+        DWORD dwCreationDisposition = CREATE_ALWAYS,
+        DWORD dwFlagsAndAttributes = FILE_ATTRIBUTE_NORMAL);
+	// read contents of a file
+	std::vector<char> FileReadToEnd(const std::wstring& filename);
+	
+	struct TranslationInfo 
+	{
+		WORD wLanguage;
+		WORD wCodePage;
+	};
+	
+	struct FileVersionInfo
+	{
+		VS_FIXEDFILEINFO fixed_info;
+		TranslationInfo translation_info;
+	};
+
+	// get executable file version information
+	FileVersionInfo GetFileVersionInfo(const std::wstring& filename);
+	// get executable file version string
+	std::wstring GetFileVersion(const std::wstring& filename);
+}

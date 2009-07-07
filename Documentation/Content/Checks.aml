@@ -225,6 +225,11 @@
               <entry>102</entry>
             </row>
             <row>
+              <entry>Windows Vista Service Pack 2</entry>
+              <entry>winVistaSp2</entry>
+              <entry>103</entry>
+            </row>
+            <row>
               <entry>Windows Server 2008</entry>
               <entry>winServer2008</entry>
               <entry>110</entry>

@@ -1,0 +1,404 @@
+#include "StdAfx.h"
+#include "OsUtil.h"
+#include "StringUtil.h"
+#include "ExceptionMacros.h"
+#include "ErrorUtil.h"
+#include "PathUtil.h"
+#include "FileUtil.h"
+
+DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
+{
+	DVLib::OperatingSystem os = winNotSupported;
+	OSVERSIONINFOEX osvi = { 0 };
+
+	// use GetVersionEx, fallback on GetVersion when unavaialble
+	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+	if(! ::GetVersionEx(reinterpret_cast<LPOSVERSIONINFO>(& osvi)))
+	{
+		osvi.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
+		CHECK_WIN32_BOOL(GetVersionEx(reinterpret_cast<LPOSVERSIONINFO>(& osvi)),
+			L"GetVersionEx");
+	}
+
+	switch (osvi.dwPlatformId)
+	{
+		// Test for the Windows NT product family.
+		case VER_PLATFORM_WIN32_NT:
+			// Windows Server 2008
+			if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType == 3)
+			{
+				os = winServer2008;
+			}
+			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType == 1)
+			{
+				os = winVista;
+
+				if (osvi.wServicePackMajor == 1) 
+					os = winVistaSp1;
+				else if (osvi.wServicePackMajor >= 2) 
+					os = winVistaSp2;
+			}
+			// Windows Server 2003 versions
+			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && osvi.wProductType == 3)
+			{
+				os = winServer2003;
+
+				if (osvi.wServicePackMajor >= 2)
+					os = winServer2003sp2;
+				else if (osvi.wServicePackMajor == 1)
+					os = winServer2003sp1;
+			}
+			// Windows XP 64 bit versions
+			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && osvi.wProductType == 1)
+			{
+				os = winXP;
+
+				if (osvi.wServicePackMajor == 2)
+					os = winXPsp2;
+				else if (osvi.wServicePackMajor == 1)
+					os = winXPsp1;
+			}
+			// Windows XP 32 bit versions
+			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1 )
+			{
+				os = winXP;
+
+				if (osvi.wServicePackMajor >= 3)
+					os = winXPsp3;
+				else if (osvi.wServicePackMajor == 2)
+					os = winXPsp2;
+				else if (osvi.wServicePackMajor == 1)
+					os = winXPsp1;
+			}
+			// Windows 2000 versions
+			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0 )
+			{
+				os = win2000;
+
+				if (osvi.wServicePackMajor >= 4)
+					os = win2000sp4;
+				else if (osvi.wServicePackMajor == 3)
+					os = win2000sp3;
+				else if (osvi.wServicePackMajor == 2)
+					os = win2000sp2;
+				else if (osvi.wServicePackMajor == 1)
+					os = win2000sp1;
+
+			}
+			// Windows NT versions
+			else if ( osvi.dwMajorVersion = 4 )
+			{
+				os = winNT4;
+				// check if Sp6a
+				if(0 == _wcsicmp(osvi.szCSDVersion, L"Service Pack 6"))
+				{
+					HKEY hKey = 0;
+					LONG lRet;
+
+					// Test for SP6 versus SP6a.
+					lRet = RegOpenKeyEx(
+						HKEY_LOCAL_MACHINE,
+						L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Hotfix\\Q246009",
+						0, KEY_QUERY_VALUE, & hKey);
+
+					if( lRet == ERROR_SUCCESS ) //sp6a
+						os = winNT4sp6a;
+					else // Windows NT 4.0 prior to SP6a
+						os = winNT4sp6;
+
+					::RegCloseKey(hKey);
+				}
+			}
+
+			break;
+		// Test for the Windows 95 product family.
+		case VER_PLATFORM_WIN32_WINDOWS:
+			if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 90)
+			{
+				os = winME;
+			}
+			else if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 10)
+			{
+				os = win98;
+				//test windows 98 se
+				if ( osvi.szCSDVersion[1] == 'A' )
+					os = win98se;
+			}
+			else if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 0)
+			{
+				os = win95;
+				//test Win95 osr2
+				if ( osvi.szCSDVersion[1] == 'C' || osvi.szCSDVersion[1] == 'B' )
+					os = win95osr2;
+			} 
+			break;
+	}
+
+	CHECK_BOOL(os != winNotSupported, 
+		L"Unsupported operating system");
+	
+	return os;
+}
+
+std::wstring DVLib::GetOperatingSystemVersionString()
+{
+	OperatingSystem os = GetOperatingSystemVersion();
+
+	switch(os)
+	{
+	case win95:
+		return L"Windows 95";
+	case win95osr2:
+		return L"Windows 95 OSR2";
+	case win98:
+		return L"Windows 98";
+	case win98se:
+		return L"Windows 98 Second Edition";
+	case winME:
+		return L"Windows ME";
+	case winNT4:
+		return L"Windows NT 4";
+	case winNT4sp6:
+		return L"Windows NT 4 Sp6";
+	case winNT4sp6a:
+		return L"Windows NT 4 Sp6a";
+	case win2000:
+		return L"Windows 2000";
+	case win2000sp1:
+		return L"Windows 2000 Sp1";
+	case win2000sp2:
+		return L"Windows 2000 Sp2";
+	case win2000sp3:
+		return L"Windows 2000 Sp3";
+	case win2000sp4:
+		return L"Windows 2000 Sp4";
+	case winXP:
+		return L"Windows XP";
+	case winXPsp1:
+		return L"Windows XP Sp1";
+	case winXPsp2:
+		return L"Windows XP Sp2";
+	case winXPsp3:
+		return L"Windows XP Sp3";
+	case winServer2003:
+		return L"Windows Server 2003";
+	case winServer2003sp1:
+		return L"Windows Server 2003 Sp1";
+	case winServer2003sp2:
+		return L"Windows Server 2003 Sp2";
+	case winServer2008:
+		return L"Windows Server 2008";
+	case winVista:
+		return L"Windows Vista";
+	case winVistaSp1:
+		return L"Windows Vista Sp1";
+	case winVistaSp2:
+		return L"Windows Vista Sp2";
+	default:
+		throw std::exception("Unsupported operating system");
+	}
+}
+
+bool DVLib::IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& l, const std::wstring& r)
+{
+	long min = l.empty() ? winMin : DVLib::wstring2long(l);
+	long max = r.empty() ? winMax : DVLib::wstring2long(r);
+	return os > min && os < max;
+}
+
+LCID DVLib::GetOperatingSystemLCID(LcidType lcidtype)
+{
+	switch(lcidtype)
+	{
+	case LcidSystem:
+		return ::GetSystemDefaultLCID();
+	case LcidUser:
+		return ::GetUserDefaultLCID();
+	case LcidUserExe:
+	default:
+		// see http://support.microsoft.com/kb/q181604/
+		std::wstring userexepath = DVLib::DirectoryCombine(DVLib::GetSystemDirectoryW(), L"user.exe");
+		DVLib::FileVersionInfo versioninfo = DVLib::GetFileVersionInfo(userexepath);
+		return versioninfo.translation_info.wLanguage;
+	}
+}
+
+// \todo: this should probably move to dotNetInstallerLib since lcid is dotNetInstaller-format-specific
+bool DVLib::IsOperatingSystemLCID(LcidType lcidtype, const std::wstring& lcid)
+{
+	if (lcid.empty())
+		return true;
+
+	LCID pa = GetOperatingSystemLCID(lcidtype);
+	std::vector<std::wstring> lcids = DVLib::split(lcid, L",");
+
+	for (size_t i = 0; i < lcids.size(); i++)
+	{
+		if (lcids[i].empty())
+			continue; // tolerate an empty value
+
+		bool not = false;
+		LCID lcid = 0;
+		if (lcids[i][0] == L'!')
+		{
+			not = true;
+			lcid = DVLib::wstring2long(lcids[i].substr(1));
+		}
+		else
+		{
+			lcid = DVLib::wstring2long(lcids[i]);
+		}
+
+		if (lcid == pa && ! not)
+			return true;
+		else if (lcid != pa && not)
+			return true;
+	}
+
+	return false;
+}
+
+int DVLib::CompareVersion(const std::wstring& l, const std::wstring& r)
+{
+	if (l.empty() && r.empty()) return 0;
+	else if (l.empty() && ! r.empty()) return -1;
+	else if (! l.empty() && r.empty()) return 1;
+
+	std::vector<std::wstring> parts_l = DVLib::split(l, L".", 4);
+	long vA_1 = ((parts_l.size() >= 1) ? DVLib::wstring2long(parts_l[0]) : 0);
+	long vA_2 = ((parts_l.size() >= 2) ? DVLib::wstring2long(parts_l[1]) : 0);
+	long vA_3 = ((parts_l.size() >= 3) ? DVLib::wstring2long(parts_l[2]) : 0);
+	long vA_4 = ((parts_l.size() >= 4) ? DVLib::wstring2long(parts_l[3]) : 0);
+
+	std::vector<std::wstring> parts_r = DVLib::split(r, L".", 4);
+	long vB_1 = ((parts_r.size() >= 1) ? DVLib::wstring2long(parts_r[0]) : 0);
+	long vB_2 = ((parts_r.size() >= 2) ? DVLib::wstring2long(parts_r[1]) : 0);
+	long vB_3 = ((parts_r.size() >= 3) ? DVLib::wstring2long(parts_r[2]) : 0);
+	long vB_4 = ((parts_r.size() >= 4) ? DVLib::wstring2long(parts_r[3]) : 0);
+
+	if (vA_1 < vB_1)
+		return -1;
+	else if (vA_1 > vB_1)
+		return 1;
+
+	if (vA_2 < vB_2)
+		return -1;
+	else if (vA_2 > vB_2)
+		return 1;
+
+	if (vA_3 < vB_3)
+		return -1;
+	else if (vA_3 > vB_3)
+		return 1;
+
+	if (vA_4 < vB_4)
+		return -1;
+	else if (vA_4 > vB_4)
+		return 1;
+
+	return 0;
+}
+
+WORD DVLib::wstring2pa(const std::wstring& pa)
+{
+	for (int i = 0; i < ARRAYSIZE(DVLib::processor_architectures); i++)
+	{
+		if (pa == DVLib::processor_architectures[i].name)
+		{
+			return DVLib::processor_architectures[i].pa;
+		}
+	}
+
+	THROW_EX("Invalid processor architecture: " << pa);
+}
+
+std::wstring DVLib::pa2wstring(WORD pa)
+{
+    for (int i = 0; i < ARRAYSIZE(DVLib::processor_architectures); i++)
+    {
+		if (pa == DVLib::processor_architectures[i].pa)
+			return DVLib::processor_architectures[i].name;
+    }
+
+	THROW_EX("Invalid processor architecture: " << pa);
+}
+
+bool DVLib::IsWow64()
+{
+    BOOL bIsWow64 = FALSE;
+
+	typedef BOOL (WINAPI * LPFN_ISWOW64PROCESS)(HANDLE, PBOOL);
+    LPFN_ISWOW64PROCESS fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress(
+        GetModuleHandle(TEXT("kernel32")), "IsWow64Process");
+  
+    if (NULL != fnIsWow64Process)
+    {
+        fnIsWow64Process(GetCurrentProcess(), & bIsWow64);
+    }
+
+	return bIsWow64 ? true : false;
+}
+
+bool GetNativeSystemInfo(LPSYSTEM_INFO p)
+{
+	typedef void (WINAPI * LPFN_GETSYSTEMINFO)(LPSYSTEM_INFO);
+    LPFN_GETSYSTEMINFO pGetNativeSystemInfo = (LPFN_GETSYSTEMINFO) GetProcAddress(
+        GetModuleHandle(TEXT("kernel32.dll")), "GetNativeSystemInfo");
+
+    if (NULL == pGetNativeSystemInfo)
+		return false;
+
+	pGetNativeSystemInfo(p);
+	return true;
+}
+
+WORD DVLib::GetProcessorArchitecture()
+{
+    SYSTEM_INFO info = {0};
+	::GetSystemInfo(&info);
+
+    if (info.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_INTEL)
+    {
+        if (IsWow64())
+        {
+            GetNativeSystemInfo(& info);
+        }
+    }
+
+    return info.wProcessorArchitecture;
+}
+	
+bool DVLib::IsProcessorArchitecture(WORD pa, const std::wstring& pa_list)
+{
+	if (pa_list.empty())
+		return true;
+
+	std::vector<std::wstring> pa_vector = DVLib::split(pa_list, L",");
+
+	for (size_t i = 0; i < pa_vector.size(); i++)
+	{
+		// tolerate blanks
+		if (pa_vector[i].empty())
+			continue;
+
+		bool not = false;
+		std::wstring pa_s;
+		if (pa_vector[i][0] == L'!')
+		{
+			not = true;
+			pa_s = pa_vector[i].substr(1);
+		}
+		else
+		{
+			pa_s = pa_vector[i];
+		}
+
+		WORD pa_c = wstring2pa(pa_s);
+		if (not && pa_c == pa)
+			return false;
+		else if (! not && pa_c == pa)
+			return true;
+	}
+
+	return false;
+}

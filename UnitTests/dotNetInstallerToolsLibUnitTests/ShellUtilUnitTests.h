@@ -11,12 +11,14 @@ namespace DVLib
 			CPPUNIT_TEST( testExpandEnvironmentVariables );
 			CPPUNIT_TEST( testDetachCmd );
 			CPPUNIT_TEST( testExecCmd );
+			CPPUNIT_TEST( testShellCmd );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testGetEnvironmentVariable();
 			void testExpandEnvironmentVariables();
 			void testDetachCmd();
 			void testExecCmd();
+			void testShellCmd();
 		};
 	}
 }

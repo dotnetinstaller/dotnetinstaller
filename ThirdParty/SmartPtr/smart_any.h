@@ -21,7 +21,7 @@
 #ifndef AUTO_ANY
 #define AUTO_ANY
 #include <cassert>
-#include "SmartAnyFwd.h"
+#include "smart_any_fwd.h"
 
 #pragma warning(push)
 

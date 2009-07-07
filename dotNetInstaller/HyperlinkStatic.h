@@ -49,8 +49,8 @@ protected:
 	afx_msg LRESULT OnMouseLeave(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 public:
-	void SetHyperlink(CString strHyperlink);
-	void SetCaption(CString strCaption);
+	void SetHyperlink(std::wstring strHyperlink);
+	void SetCaption(std::wstring strCaption);
 private:
 	CString _strCaption, _strHyperlink;
 	CFont _fontCaption;

@@ -12,6 +12,7 @@ namespace DVLib
 			CPPUNIT_TEST( testCHECK_BOOL );
 			CPPUNIT_TEST( testTHROW_EX );
 			CPPUNIT_TEST( testCHECK_HR );
+			CPPUNIT_TEST( testCHECK_HR_DLL );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testCHECK_WIN32_DWORD();
@@ -19,6 +20,7 @@ namespace DVLib
 			void testCHECK_BOOL();
 			void testTHROW_EX();
 			void testCHECK_HR();
+			void testCHECK_HR_DLL();
 		};
 	}
 }

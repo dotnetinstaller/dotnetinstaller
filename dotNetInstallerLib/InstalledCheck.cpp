@@ -13,26 +13,26 @@ InstalledCheck::~InstalledCheck(void)
 
 }
 
-InstalledCheck * InstalledCheck::LoadFromXml(TiXmlElement *l_Node, InstallerSetting &p_Setting)
+InstalledCheck * InstalledCheck::LoadFromXml(TiXmlElement *node, InstallerSetting &setting)
 {
-    CString l_installedcheck_type = l_Node->AttributeW("type").data();
-	InstalledCheck * l_new_installedcheck = NULL;
-	if(l_installedcheck_type == "check_registry_value")
+    std::wstring installedcheck_type = node->AttributeW("type").data();
+	InstalledCheck * new_installedcheck = NULL;
+	if (installedcheck_type == L"check_registry_value")
 	{
-		InstalledCheckRegistry * l_new_check_registry_value = new InstalledCheckRegistry();
-        l_new_check_registry_value->Load(l_Node, p_Setting);
-		l_new_installedcheck = l_new_check_registry_value;
+		InstalledCheckRegistry * new_check_registry_value = new InstalledCheckRegistry();
+        new_check_registry_value->Load(node, setting);
+		new_installedcheck = new_check_registry_value;
 	}
-	else if(l_installedcheck_type == "check_file")
+	else if (installedcheck_type == L"check_file")
 	{
-		InstalledCheckFile * l_new_check_file = new InstalledCheckFile();
-        l_new_check_file->Load(l_Node, p_Setting);
-		l_new_installedcheck = l_new_check_file;
+		InstalledCheckFile * new_check_file = new InstalledCheckFile();
+        new_check_file->Load(node, setting);
+		new_installedcheck = new_check_file;
 	}
 	else
 	{
-		throw std::exception("Invalid configuration file, installed check type not supported");
+		THROW_EX(L"Invalid configuration file, installed check type \"" << installedcheck_type << L"\" not supported");
 	}
 
-    return l_new_installedcheck;
+    return new_installedcheck;
 }

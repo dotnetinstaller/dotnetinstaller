@@ -13,7 +13,7 @@ public:
 					BOOL bFlag,
 					BOOL bLast);
 
-    const CString& GetCompleteCommandArgs() const { return m_completeCommandArgs; }
+    const std::wstring& GetCompleteCommandArgs() const { return m_completeCommandArgs; }
     bool ExtractCab() const { return m_extractCab; }
 public:
     std::map<std::wstring, std::wstring> m_componentCmdArgs;
@@ -33,7 +33,7 @@ private:
 		componentArgs 
 	};
 	m_argFlags m_lastArgFlag;
-    CString m_completeCommandArgs;
+    std::wstring m_completeCommandArgs;
     bool m_extractCab;
 };
 

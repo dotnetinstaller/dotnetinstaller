@@ -16,28 +16,22 @@ class DownloadComponent : public IBindStatusCallback
 private:
 	IDownloadCallback * m_Callback;
 	DownloadComponentInfo * m_Component;
-
-	//solo per messaggi
 	int m_CurrentComponent; 
 	int m_TotalComponents;
-
-	bool m_bCanceledByTheUser;
-public:
-	
+	bool m_bCancel;
+public:	
 	DownloadComponent(
-		IDownloadCallback * p_Callback, 
-		DownloadComponentInfo * p_Component, 
+		IDownloadCallback * callback, 
+		DownloadComponentInfo * component, 
 		int p_CurrentComponent, 
 		int p_TotalComponents);
-
-	inline bool IsCanceledByTheUser() { return m_bCanceledByTheUser; }
-
+	inline bool IsCancelled() { return m_bCancel; }
 	// returns true if a download is required (local file doesn't exist, etc.)
 	bool IsDownloadRequired() const;
 	// returns true if a local copy from source path is required (or possible)
 	bool IsCopyRequired() const;
 	// destination filename
-	CString GetDestinationFileName() const;
+	std::wstring GetDestinationFileName() const;
 	// IBindStatusCallback
 	STDMETHOD(OnStartBinding)(DWORD dwReserved, IBinding __RPC_FAR *pib);
 	STDMETHOD(GetPriority)(LONG __RPC_FAR *pnPriority);

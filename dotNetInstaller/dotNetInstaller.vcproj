@@ -61,7 +61,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="1040"
 				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)..\&quot;"
 			/>
 			<Tool
@@ -71,17 +70,16 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
 				LinkIncremental="2"
+				UACExecutionLevel="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AdditionalManifestFiles="res\dotNetInstaller.manifest"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -144,7 +142,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="1040"
 				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;&quot;$(SolutionDir)&quot;;&quot;$(SolutionDir)..\&quot;"
 			/>
 			<Tool
@@ -155,6 +152,7 @@
 				AdditionalOptions="/nod:kernel32.lib /nod:advapi32.lib /nod:user32.lib /nod:gdi32.lib /nod:shell32.lib /nod:comdlg32.lib /nod:version.lib /nod:mpr.lib /nod:rasapi32.lib /nod:winmm.lib /nod:winspool.lib /nod:vfw32.lib /nod:secur32.lib /nod:oleacc.lib /nod:oledlg.lib /nod:sensapi.lib&#x0D;&#x0A;"
 				AdditionalDependencies="UnicoWS.lib kernel32.lib Advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winspool.lib oleacc.lib"
 				LinkIncremental="1"
+				UACExecutionLevel="2"
 				IgnoreAllDefaultLibraries="false"
 				DelayLoadDLLs=""
 				GenerateDebugInformation="true"
@@ -162,15 +160,14 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AdditionalManifestFiles="res\dotNetInstaller.manifest"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -354,11 +351,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\dotNetInstaller.rc"
+				RelativePath=".\res\dotNetInstaller.manifest"
 				>
 			</File>
 			<File
-				RelativePath=".\res\dotNetInstaller.rc2"
+				RelativePath=".\dotNetInstaller.rc"
 				>
 			</File>
 			<File
@@ -366,26 +363,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\res\dotNetInstaller.manifest"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				ExcludedFromBuild="true"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				ExcludedFromBuild="true"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-				/>
-			</FileConfiguration>
-		</File>
 	</Files>
 	<Globals>
 		<Global

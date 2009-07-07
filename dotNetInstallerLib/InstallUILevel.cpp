@@ -68,7 +68,7 @@ InstallUILevel InstallUILevelSetting::GetUILevel(InstallUILevel defaultValue) co
 	return defaultValue;
 }
 
-InstallUILevel InstallUILevelSetting::ToUILevel(const CString& level, InstallUILevel defaultValue)
+InstallUILevel InstallUILevelSetting::ToUILevel(const std::wstring& level, InstallUILevel defaultValue)
 {
 	if (level == TEXT("full"))
 		return InstallUILevelFull;

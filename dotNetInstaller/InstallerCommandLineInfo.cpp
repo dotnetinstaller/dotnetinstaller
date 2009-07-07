@@ -16,56 +16,56 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 {
 	if (bFlag)
     {
-		if (_tcsicmp(pszParam, TEXT("log")) == 0 )
+		if (_wcsicmp(pszParam, TEXT("log")) == 0 )
 		{
 			m_lastArgFlag = log;
 			ApplicationLog.EnableLog();
 		}
 
 		// specify log filename and path
-		else if (_tcsicmp(pszParam, TEXT("logfile")) == 0)
+		else if (_wcsicmp(pszParam, TEXT("logfile")) == 0)
 		{
 			m_lastArgFlag = logfile;
 		}
 		// enable silent installs from the command line
-		else if (_tcsicmp(pszParam, TEXT("q")) == 0)
+		else if (_wcsicmp(pszParam, TEXT("q")) == 0)
 		{
 			m_lastArgFlag = silent;
 			CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelSilent);
 		}
         // disable silent installs from the command line
-		else if (_tcsicmp(pszParam, TEXT("nq")) == 0)
+		else if (_wcsicmp(pszParam, TEXT("nq")) == 0)
 		{
 			m_lastArgFlag = noSilent;
 			CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelFull);
 		}
 		// enable silent installs from the command line
-		else if (_tcsicmp(pszParam, TEXT("qb")) == 0)
+		else if (_wcsicmp(pszParam, TEXT("qb")) == 0)
 		{
 			m_lastArgFlag = basic;
 			CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelBasic);
 		}
 		// accept another command to use in RegistryRun
-		else if (_tcsicmp(pszParam, TEXT("launcher")) == 0)
+		else if (_wcsicmp(pszParam, TEXT("launcher")) == 0)
 		{
 			m_lastArgFlag = launcher;
 		}
 		// accept arguments to use with the launcher RegistryRun command
-		else if (_tcsicmp(pszParam, TEXT("launcherArgs")) == 0)
+		else if (_wcsicmp(pszParam, TEXT("launcherArgs")) == 0)
 		{
 			m_lastArgFlag = launcherArgs;
 		}
         // accept arguments to use in complete command args
-		else if (_tcsicmp(pszParam, TEXT("completeCommandArgs")) == 0)
+		else if (_wcsicmp(pszParam, TEXT("completeCommandArgs")) == 0)
 		{
 			m_lastArgFlag = completeCommandArgs;
 		}
-		else if (_tcsicmp(pszParam, TEXT("extractCab")) == 0 )
+		else if (_wcsicmp(pszParam, TEXT("extractCab")) == 0 )
 		{
 			m_lastArgFlag = extractCab;
             m_extractCab = true;
 		}
-        else if (_tcsicmp(pszParam, TEXT("componentArgs")) == 0)
+        else if (_wcsicmp(pszParam, TEXT("componentArgs")) == 0)
         {
             m_lastArgFlag = componentArgs;
         }

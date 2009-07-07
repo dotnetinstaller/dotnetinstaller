@@ -16,8 +16,8 @@ namespace DVLib
 	bool wstring2bool(const std::wstring&, bool defaultvalue = false);
 
 	// convert a string representation of long
-    long string2long(const std::string& ss, long default_on_error = 0, int base = 10);
-    long wstring2long(const std::wstring& ss, long default_on_error = 0, int base = 10);
+    long string2long(const std::string& ss, int base = 10);
+    long wstring2long(const std::wstring& ss, int base = 10);
 
     // perform a string replace on every instance
 	std::string replace(const std::string& s, const std::string& from, const std::string& to);
@@ -44,6 +44,14 @@ namespace DVLib
     // left and right trim
 	std::string trim(const std::string& s, const std::string& whitespaces = " \t\n\r");
 	std::wstring trim(const std::wstring& s, const std::wstring& whitespaces = L" \t\n\r");
+
+    // returns true if a string starts with (case-sensitive) another string
+    bool startswith(const std::string& ss, const std::string& what);
+    bool startswith(const std::wstring& ss, const std::wstring& what);
+
+    // returns true if a string ends with (case-sensitive) another string
+    bool endswith(const std::string& ss, const std::string& what);
+    bool endswith(const std::wstring& ss, const std::wstring& what);
 
     // convert any streamable data into a UNICODE string
     template<class T>

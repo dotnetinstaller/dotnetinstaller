@@ -48,3 +48,10 @@ void ShellUtilUnitTests::testExecCmd()
 	CPPUNIT_ASSERT(0 == DVLib::ExecCmd(L"cmd.exe /C"));
 	CPPUNIT_ASSERT(123 == DVLib::ExecCmd(L"cmd.exe /C exit /b 123"));
 }
+
+void ShellUtilUnitTests::testShellCmd()
+{
+	DVLib::ShellCmd(L"cmd.exe /C");
+	DVLib::ShellCmd(L"\"" + DVLib::GetEnvironmentVariable(L"SystemRoot") + L"\\system32\\cmd.exe\" /C");
+	DVLib::ShellCmd(L"\"cmd.exe\" /C dir");
+}

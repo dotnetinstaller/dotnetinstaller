@@ -39,7 +39,7 @@ void GuidUtilUnitTests::testGenerateGUIDString()
 	CPPUNIT_ASSERT(wstring_guid != DVLib::string2wstring(string_guid));
 	CPPUNIT_ASSERT(wstring_guid.length() == string_guid.length());
 	CPPUNIT_ASSERT(wstring_guid.length() == 38);
-	for (int i = 0; i < wstring_guid.length(); i++)
+	for (unsigned int i = 0; i < wstring_guid.length(); i++)
 	{
 		switch(i)
 		{

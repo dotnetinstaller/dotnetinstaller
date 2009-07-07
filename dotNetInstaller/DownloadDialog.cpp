@@ -14,13 +14,13 @@ IMPLEMENT_DYNAMIC(DownloadDialog, CDialog)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
-	m_Caption = p_Configuration.Caption;
-	m_HelpMessage = p_Configuration.HelpMessage;
-	m_HelpMessageDownloading = p_Configuration.HelpMessageDownloading;
-	m_ButtonStartCaption = p_Configuration.ButtonStartCaption;
-	m_ButtonCancelCaption = p_Configuration.ButtonCancelCaption;
-	m_Components.Copy(p_Configuration.Components);
-	m_bAutoStartDownload = p_Configuration.AutoStartDownload;
+	m_Caption = p_Configuration.caption;
+	m_HelpMessage = p_Configuration.help_message;
+	m_HelpMessageDownloading = p_Configuration.downloading_message;
+	m_ButtonStartCaption = p_Configuration.start_caption;
+	m_ButtonCancelCaption = p_Configuration.cancel_caption;
+	m_Components = p_Configuration.components;
+	m_bAutoStartDownload = p_Configuration.auto_start;
 
 	ApplicationLog.Write( TEXT("Opening Download Dialog: "), m_Caption);
 }
@@ -62,10 +62,10 @@ BOOL DownloadDialog::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Impostare icona grande.
 	SetIcon(m_hIcon, FALSE);		// Impostare icona piccola.
 
-	m_LabelHelpDownload.SetWindowText(m_HelpMessage);
-	SetWindowText(m_Caption);
-	m_btnCancel.SetWindowText(m_ButtonCancelCaption);
-	m_btStart.SetWindowText(m_ButtonStartCaption);
+	m_LabelHelpDownload.SetWindowText(m_HelpMessage.c_str());
+	SetWindowText(m_Caption.c_str());
+	m_btnCancel.SetWindowText(m_ButtonCancelCaption.c_str());
+	m_btStart.SetWindowText(m_ButtonStartCaption.c_str());
 	m_ProgressControl.SetRange(0,1000);
 	m_LabelStatus.SetWindowText(TEXT(""));
 
@@ -90,14 +90,14 @@ void DownloadDialog::OnOK()
 
 void DownloadDialog::OnBnClickedCancel() //Cancel Button
 {
-	CanceledByTheUser();
+	DownloadCancel();
 }
 
 void DownloadDialog::OnBnClickedStart()
 {
 	ApplicationLog.Write( TEXT("Starting download thread"));
 
-	m_LabelHelpDownload.SetWindowText(m_HelpMessageDownloading);
+	m_LabelHelpDownload.SetWindowText(m_HelpMessageDownloading.c_str());
 	m_pDownloadThread = AfxBeginThread(ThreadProc, this);
 	m_btStart.EnableWindow(FALSE);
 }
@@ -123,7 +123,7 @@ afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM lParam
 				m_ProgressControl.SetPos( (int)((double)l_Param->CurrentProgress/(double)l_Param->ProgressMax*1000.0));
 			else
 				m_ProgressControl.SetPos( 0 );
-			m_LabelStatus.SetWindowText(l_Param->Status);
+			m_LabelStatus.SetWindowText(l_Param->Status.c_str());
 			DownloadStatusParam::Free(l_Param);
 		}
 		else if (l_Param->Type == StatusType_Error) //ERROR
@@ -159,7 +159,7 @@ afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM lParam
 //  dovendogli però passare dei puntatori devo fare la new qui e poi la delete quando leggo il puntatore
 //  nella OnSetStatusDownload.
 //IDownloadCallback
-void DownloadDialog::Status(ULONG p_CurrentProgress, ULONG p_MaxProgress, LPCTSTR p_Description)
+void DownloadDialog::Status(ULONG p_CurrentProgress, ULONG p_MaxProgress, const std::wstring& p_Description)
 {
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(DownloadStatusParam::CreateProgress(p_Description, p_CurrentProgress, p_MaxProgress)), 0L );
 }
@@ -169,17 +169,17 @@ void DownloadDialog::DownloadComplete()
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(DownloadStatusParam::CreateComplete() ), 0L );
 }
 
-void DownloadDialog::DownloadError(LPCTSTR p_Message)
+void DownloadDialog::DownloadError(const std::wstring& p_Message)
 {
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(DownloadStatusParam::CreateError(p_Message)), 0L );
 }
 
-bool DownloadDialog::WantToStop()
+bool DownloadDialog::IsDownloadCancelled() const
 {
 	return m_bCancelOrErrorDownload;
 }
 
-void DownloadDialog::CanceledByTheUser()
+void DownloadDialog::DownloadCancel()
 {
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(DownloadStatusParam::CreateCanceled()), 0L );
 
@@ -187,11 +187,6 @@ void DownloadDialog::CanceledByTheUser()
 	{
 		::PostMessage(GetSafeHwnd(), WM_USER_CLOSE_DIALOG, 0, 0);
 	}
-}
-
-DownloadComponentInfoVector * DownloadDialog::GetComponents()
-{
-	return &m_Components;
 }
 
 LRESULT DownloadDialog::OnCloseDialog( WPARAM, LPARAM )
@@ -210,9 +205,9 @@ UINT DownloadDialog::ThreadProc(LPVOID pParam)
 
 void DownloadDialog::CopyFromSourcePath()
 {
-	for (int i = 0; i < m_Components.GetCount(); i++)
+	for (size_t i = 0; i < m_Components.size(); i++)
 	{
-		DownloadComponent l_Component(this, &(m_Components.GetAt(i)), i + 1, (int) m_Components.GetCount());
+		DownloadComponent l_Component(this, & m_Components[i], i + 1, m_Components.size());
 		if (l_Component.IsCopyRequired())
 		{
 			l_Component.CopyFromSourcePath();
@@ -220,14 +215,17 @@ void DownloadDialog::CopyFromSourcePath()
 	}
 }
 
-bool DownloadDialog::IsCopyRequired()
+bool DownloadDialog::IsCopyRequired() const
 {
-	for (int i = 0; i < m_Components.GetCount(); i++)
+	for (size_t i = 0; i < m_Components.size(); i++)
 	{
-		DownloadComponent l_Component(this, &(m_Components.GetAt(i)), i + 1, (int) m_Components.GetCount());
+		DownloadComponent l_Component(
+			const_cast<DownloadDialog *>(this), 
+			const_cast<DownloadComponentInfo *>(& m_Components[i]),
+			i + 1, m_Components.size());
 		bool l_CopyRequired = l_Component.IsCopyRequired();
 				
-		CString l_destinationFullFileName = l_Component.GetDestinationFileName();
+		std::wstring l_destinationFullFileName = l_Component.GetDestinationFileName();
 		ApplicationLog.Write( TEXT("DestinationFullFileName: "), l_destinationFullFileName);
 		ApplicationLog.Write( TEXT("FileExists: "), DVLib::FileExists(l_destinationFullFileName) ? TEXT("True") : TEXT("False") );
 		ApplicationLog.Write( TEXT("Copy: "), l_CopyRequired ? TEXT("True") : TEXT("False") );
@@ -241,14 +239,17 @@ bool DownloadDialog::IsCopyRequired()
 	return false;
 }
 
-bool DownloadDialog::IsDownloadRequired()
+bool DownloadDialog::IsDownloadRequired() const
 {
-	for (int i = 0; i < m_Components.GetCount(); i++)
+	for (size_t i = 0; i < m_Components.size(); i++)
 	{
-		DownloadComponent l_Component(this, &(m_Components.GetAt(i)), i + 1, (int) m_Components.GetCount());
+		DownloadComponent l_Component(
+			const_cast<DownloadDialog *>(this), 
+			const_cast<DownloadComponentInfo *>(& m_Components[i]),
+			i + 1, m_Components.size());
 		bool l_DownloadRequired = l_Component.IsDownloadRequired();
 				
-		CString l_destinationFullFileName = l_Component.GetDestinationFileName();
+		std::wstring l_destinationFullFileName = l_Component.GetDestinationFileName();
 		ApplicationLog.Write( TEXT("DestinationFullFileName: "), l_destinationFullFileName);
 		ApplicationLog.Write( TEXT("FileExists: "), DVLib::FileExists(l_destinationFullFileName) ? TEXT("True") : TEXT("False") );
 		ApplicationLog.Write( TEXT("Download: "), l_DownloadRequired ? TEXT("True") : TEXT("False") );
@@ -262,39 +263,32 @@ bool DownloadDialog::IsDownloadRequired()
 	return false;
 }
 
-void DownloadDialog::DownloadComponents(IDownloadCallback * p_Callback)
+void DownloadDialog::DownloadComponents(IDownloadCallback * callback)
 {
-	CString l_tmpLastComponent = TEXT("-");
 	try
 	{
-		DownloadComponentInfoVector * l_List = p_Callback->GetComponents();
-		for (int i = 0; i < l_List->GetCount(); i++)
+		for (size_t i = 0; i < callback->GetComponents().size(); i++)
 		{
-			//verifico se l'utente ha premuto cancel
-			if (p_Callback->WantToStop())
+			if (callback->IsDownloadCancelled())
 			{
-				p_Callback->CanceledByTheUser();
+				callback->DownloadCancel();
 				return;
 			}
 
-			l_tmpLastComponent = l_List->GetAt(i).ComponentName;
+			DownloadComponent component(callback, const_cast<DownloadComponentInfo *>(& callback->GetComponents()[i]), i + 1, callback->GetComponents().size());
+			component.StartDownload();
 
-			//Download del componente
-			DownloadComponent l_Component(p_Callback, &(l_List->GetAt(i)), i+1, (int)l_List->GetCount() );
-			l_Component.StartDownload();
-
-			//verifico se l'utente ha premuto cancel
-			if (l_Component.IsCanceledByTheUser())
+			if (component.IsCancelled())
 			{
-				p_Callback->CanceledByTheUser();
+				callback->DownloadCancel();
 				return;
 			}
 		}
 
-		p_Callback->DownloadComplete();
+		callback->DownloadComplete();
 	}
 	catch(std::exception& ex)
 	{
-	    p_Callback->DownloadError(DVLib::string2wstring(ex.what()).c_str());
+	    callback->DownloadError(DVLib::string2wstring(ex.what()).c_str());
 	}
 }

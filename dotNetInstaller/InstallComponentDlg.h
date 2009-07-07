@@ -26,7 +26,7 @@ protected:
     DECLARE_MESSAGE_MAP()
 public:
 	CStatic m_InstallMessage;
-	void LoadComponent(InstallerSetting * p_Setting, Component * p_Component);
+	void LoadComponent(InstallerSetting * setting, Component * p_Component);
 
 private:
 	
@@ -45,12 +45,14 @@ public:
 
 struct InstallStatusParam
 {
-	CString Status;
+	std::wstring Status;
 
-	static InstallStatusParam * CreateStatus(const CString& p_Status, const CString& p_Size)
+	static InstallStatusParam * CreateStatus(const std::wstring& p_Status, const std::wstring& p_Size)
 	{
 		InstallStatusParam * param = new InstallStatusParam();
-		param->Status.Format(L"%s - %s", (LPCWSTR) p_Status, (LPCWSTR) p_Size);
+		std::wstringstream status;
+		status << p_Status << L" - " << p_Size;
+		param->Status = status.str();
 		return param;
 	}
 

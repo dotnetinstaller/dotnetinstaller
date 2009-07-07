@@ -4,12 +4,14 @@
 class InstalledCheckOperator : public InstalledCheck
 {
 public:
+	// operator type
+	std::wstring type;
+	// operator description
+    std::wstring description; 
+	// installed checks
+    std::vector<InstalledCheck *> installed_checks;
+public:	
     InstalledCheckOperator();
-public:
-	CString type; // operator type
-    CString description; // operator description
-    //installed checks
-	std::vector<InstalledCheck*> installedchecks;
-	bool IsInstalled();
-    void Load(TiXmlElement * p_Node, InstallerSetting & p_Setting);
+	bool IsInstalled() const;
+    void Load(TiXmlElement * node, InstallerSetting & setting);
 };

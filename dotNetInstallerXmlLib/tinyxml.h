@@ -37,9 +37,6 @@ distribution.
 #include <string.h>
 #include <assert.h>
 
-//Davide additions
-#include "StringUtil.h"
-
 // Help out windows:
 #if defined( _DEBUG ) && !defined( DEBUG )
 #define DEBUG
@@ -812,7 +809,16 @@ public:
 
 	std::wstring AttributeW(const std::string & name) const
 	{
-		return DVLib::UTF8string2wstring(Attribute(name));
+		std::string s = Attribute(name);
+		int req = ::MultiByteToWideChar(CP_UTF8, 0, s.c_str(), -1, NULL, 0);
+		if (0 == req) throw std::exception("MultiByteToWideChar");
+		std::vector<wchar_t> result;
+		result.resize(req);
+		req = MultiByteToWideChar(CP_UTF8, 0, s.c_str(), -1, & * result.begin(), result.size());
+		if (0 == req) throw std::exception("MultiByteToWideChar");
+		std::wstring to;
+		to.assign(& * result.begin(), req - 1);
+		return to;
 	}
 
 	#endif

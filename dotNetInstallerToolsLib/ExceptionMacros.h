@@ -48,3 +48,14 @@
             ss_message.str().c_str())).c_str()); \
 	} \
 }
+
+#define CHECK_HR_DLL( func, message, dllname ) \
+{ \
+	HRESULT macro_hr_ = ( func ); \
+	if (FAILED(macro_hr_)) \
+	{ \
+		std::wstringstream ss_message; ss_message << message; \
+		throw std::exception(DVLib::wstring2string(DVLib::GetErrorStringW(macro_hr_, \
+            ss_message.str().c_str(), dllname)).c_str()); \
+	} \
+}

@@ -16,26 +16,18 @@ public:
 	enum { IDD = IDD_DOWNLOAD_DIALOG };
 
 private:
-	CString m_Caption;
-	CString m_HelpMessage;
-	CString m_HelpMessageDownloading;
-	CString m_ButtonStartCaption;
-	CString m_ButtonCancelCaption;
-	DownloadComponentInfoVector m_Components;
+	std::wstring m_Caption;
+	std::wstring m_HelpMessage;
+	std::wstring m_HelpMessageDownloading;
+	std::wstring m_ButtonStartCaption;
+	std::wstring m_ButtonCancelCaption;
+	std::vector<DownloadComponentInfo> m_Components;
 	bool m_bAutoStartDownload;
-
 	bool m_bCancelOrErrorDownload;
 	bool m_bDownloadCompleted;
-
 	HICON m_hIcon;
-
 	CWinThread * m_pDownloadThread;
-
-	//HWND m_HWNDProgressBar;
-	//HWND m_HWNDLabelStatus;
-
 	static void DownloadComponents(IDownloadCallback *);
-
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
@@ -52,24 +44,20 @@ public:
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedStart();
 	afx_msg void OnOK();
-
 	afx_msg LRESULT OnSetStatusDownload(WPARAM wParam, LPARAM lParam);
-
-	inline bool IsDownloadCompleted() { return m_bDownloadCompleted; };
-	inline bool IsDownloadStarted() { return m_pDownloadThread != NULL; }
-	bool IsDownloadRequired();
-	bool IsCopyRequired();
-
+	inline bool IsDownloadCompleted() const { return m_bDownloadCompleted; };
+	inline bool IsDownloadStarted() const { return m_pDownloadThread != NULL; }
+	bool IsDownloadRequired() const;
+	bool IsCopyRequired() const;
 	// copy local SourcePath files
 	void CopyFromSourcePath();
-
 	// IDownloadCallback
-	virtual void Status(ULONG p_CurrentProgress, ULONG p_MaxProgress, LPCTSTR p_Description);
-	virtual void DownloadComplete();
-	virtual void DownloadError(LPCTSTR);
-	virtual bool WantToStop();
-	virtual void CanceledByTheUser();
-	virtual DownloadComponentInfoVector * GetComponents();
+	void Status(ULONG progress_current, ULONG progress_max, const std::wstring& description);
+	void DownloadComplete();
+	void DownloadError(const std::wstring& error);
+	bool IsDownloadCancelled() const;
+	void DownloadCancel();
+	inline const std::vector<DownloadComponentInfo>& GetComponents() const { return m_Components; }
 };
 
 
@@ -86,10 +74,10 @@ struct DownloadStatusParam
 	StatusType Type;
 	ULONG CurrentProgress;
 	ULONG ProgressMax;
-	CString Status;
-	CString Error;
+	std::wstring Status;
+	std::wstring Error;
 
-	static DownloadStatusParam * CreateProgress(CString p_Status, ULONG p_CurrentProgress, ULONG p_ProgressMax)
+	static DownloadStatusParam * CreateProgress(const std::wstring& p_Status, ULONG p_CurrentProgress, ULONG p_ProgressMax)
 	{
 		DownloadStatusParam * param = new DownloadStatusParam();
 		param->Type = StatusType_Downloading;
@@ -104,7 +92,7 @@ struct DownloadStatusParam
 		param->Type = StatusType_Completed;
 		return param;
 	}
-	static DownloadStatusParam * CreateError(CString p_Error)
+	static DownloadStatusParam * CreateError(const std::wstring& p_Error)
 	{
 		DownloadStatusParam * param = new DownloadStatusParam();
 		param->Type = StatusType_Error;

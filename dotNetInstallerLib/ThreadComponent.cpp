@@ -5,12 +5,12 @@ thread_component::thread_component()
 {
 }
 
-DWORD thread_component::GetExitCode()
+DWORD thread_component::GetExitCode() const
 {
-    return m_ExitCode;
+    return m_exitcode;
 }
 
-bool thread_component::IsExecuting()
+bool thread_component::IsExecuting() const
 {
     if (m_pThread == NULL)
         return false;
@@ -23,48 +23,47 @@ UINT thread_component::ExecuteThread(LPVOID pParam)
 	thread_component * pComponent = (thread_component *) pParam;
 	try
 	{
-		pComponent->m_ExitCode = pComponent->ExecOnThread();
+		pComponent->m_exitcode = pComponent->ExecOnThread();
 	}
 	catch(std::exception& ex)
 	{
-        pComponent->m_Error = ex.what();
-		pComponent->m_ExitCode = -1;
+		pComponent->m_error = DVLib::string2wstring(ex.what());
+		pComponent->m_exitcode = -1;
 	}
 	catch(...)
 	{
-        pComponent->m_Error = TEXT("Failed to execute threaded Component");
-		pComponent->m_ExitCode = -1;
+        pComponent->m_error = L"Failed to execute threaded component";
+		pComponent->m_exitcode = -1;
 	}
-	return pComponent->m_ExitCode;
+	
+	return pComponent->m_exitcode;
 }
 
 void thread_component::Init(CDialog * pDialog)
 {
-	m_ExitCode = 0;
+	m_exitcode = 0;
     Component::Init(pDialog);
     m_pThread = AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED);
 	m_pThread->m_bAutoDelete = false;
     m_pThread->ResumeThread();
 }
 
-bool thread_component::Exec()
+void thread_component::Exec()
 {
     if (m_pThread != NULL)
     {
-        if (WAIT_FAILED == WaitForSingleObject(m_pThread->m_hThread, INFINITE))
-		{
-			throw std::exception("WaitForSingleObject failed");
-		}
+        CHECK_WIN32_BOOL(WAIT_FAILED != WaitForSingleObject(m_pThread->m_hThread, INFINITE),
+			L"WaitForSingleObject");
 
 		delete m_pThread;
 		m_pThread = NULL;
-
-        if (m_Error.GetLength())
-        {
-            throw std::exception(DVLib::wstring2string((LPCWSTR) m_Error).c_str());
-        }
     }
 
-    return m_ExitCode == 0 ? true : false;
-}
+    if (! m_error.empty())
+    {
+        throw std::exception(DVLib::wstring2string(m_error).c_str());
+    }
 
+	CHECK_BOOL(m_exitcode != 0,
+		L"Unexpected error executing threaded component");
+}

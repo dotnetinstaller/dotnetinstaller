@@ -2,18 +2,8 @@
 
 // support silent installs
 
-int DniMessageBox(LPCTSTR p_lpszText, UINT p_nType = MB_OK, UINT p_nDefaultResult = MB_OK, UINT p_nIDHelp = 0);
+int DniMessageBox(const std::wstring& p_lpszText, UINT p_nType = MB_OK, UINT p_nDefaultResult = MB_OK, UINT p_nIDHelp = 0);
 
-int DniTimedMessageBox(bool p_bTimed, LPCTSTR p_lpszText, UINT p_nType = MB_OK, UINT p_nDefaultResult = MB_OK, UINT p_nIDHelp = 0);
+int DniTimedMessageBox(bool p_bTimed, const std::wstring& p_lpszText, UINT p_nType = MB_OK, UINT p_nDefaultResult = MB_OK, UINT p_nIDHelp = 0);
 
-int DniSilentMessageBox(LPCTSTR p_lpszText, UINT p_nType = MB_OK, UINT p_nDefaultResult = MB_OK, UINT p_nIDHelp = 0);
-
-
-/*
-int AFXAPI DniMessageBox(
-   UINT nIDPrompt,
-   UINT nType = MB_OK,
-   UINT nIDHelp = (UINT) -1,
-   UINT nDefaultResult = MD_OK
-);
-*/
+int DniSilentMessageBox(const std::wstring& p_lpszText, UINT p_nType = MB_OK, UINT p_nDefaultResult = MB_OK, UINT p_nIDHelp = 0);

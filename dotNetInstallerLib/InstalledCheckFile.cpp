@@ -6,51 +6,43 @@ InstalledCheckFile::InstalledCheckFile()
 {
 }
 
-void InstalledCheckFile::Load(TiXmlElement * l_Node, InstallerSetting& p_Setting)
+void InstalledCheckFile::Load(TiXmlElement * node, InstallerSetting& setting)
 {
-    ApplicationLog.Write(TEXT("----Reading CHECKFILE installed check: "), l_Node->AttributeW("filename").data());
-    filename = p_Setting.ValidatePath(l_Node->AttributeW("filename").data());
-    fileversion = l_Node->AttributeW("fileversion").data();
-    comparison = l_Node->AttributeW("comparison").data();
+    ApplicationLog.Write(TEXT("----Reading CHECKFILE installed check: "), node->AttributeW("filename").data());
+    filename = setting.ValidatePath(node->AttributeW("filename").data());
+    fileversion = node->AttributeW("fileversion").data();
+    comparison = node->AttributeW("comparison").data();
 }
 
-bool InstalledCheckFile::IsInstalled()
+bool InstalledCheckFile::IsInstalled() const
 {
-	try
+	if (DVLib::FileExists(filename))
 	{
-		if (DVLib::FileExists(filename))
+		if (! fileversion.empty())
 		{
-			CString l_FileVersion = DVLib::GetFileVersionString(filename);
-
-			if (fileversion.GetLength() > 0)
+			if (comparison == TEXT("exists"))
 			{
-				if (comparison == TEXT("exists"))
-				{
-					return DVLib::FileExists(filename);
-				}
-				else if (comparison == TEXT("match"))
-				{
-					return (l_FileVersion == fileversion);
-				}
-				else if (comparison == TEXT("version"))
-				{
-					//se la versione è uguale o maggiore
-					return (DVLib::stringVersionCompare(l_FileVersion, fileversion) >= 0);
-				}
-				else
-				{
-					throw std::exception("Invalid comparison type; expected match, version, or exists.");
-				}
+				return DVLib::FileExists(filename);
+			}
+			else if (comparison == TEXT("match"))
+			{
+				return (DVLib::GetFileVersion(filename) == fileversion);
+			}
+			else if (comparison == TEXT("version"))
+			{
+				return (DVLib::CompareVersion(DVLib::GetFileVersion(filename), fileversion) >= 0);
 			}
 			else
 			{
-				return true;
+				THROW_EX(L"Invalid comparison type \"" << comparison << L"\"");
 			}
 		}
 		else
-			return false;
+		{
+			return true;
+		}
 	}
-	catch(...)
+	else
 	{
 		return false;
 	}

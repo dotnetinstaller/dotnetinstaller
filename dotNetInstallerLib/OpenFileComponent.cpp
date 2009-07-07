@@ -5,17 +5,17 @@ OpenFileComponent::OpenFileComponent()
 {
 }
 
-bool OpenFileComponent::Exec()
+void OpenFileComponent::Exec()
 {
-	return DVLib::ShellExecuteDefault(file);
+	DVLib::ShellCmd(file);
 }
 
-DWORD OpenFileComponent::GetExitCode()
+DWORD OpenFileComponent::GetExitCode() const
 {
 	return ERROR_SUCCESS;
 }
 
-bool OpenFileComponent::IsExecuting()
+bool OpenFileComponent::IsExecuting() const
 {
 	return false;
 }

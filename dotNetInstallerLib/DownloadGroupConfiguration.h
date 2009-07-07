@@ -5,19 +5,20 @@
 class DownloadGroupConfiguration
 {
 public:
-	//caption della finestra di download
-	CString Caption;
-	//messaggio visualizzato nella finestra di download prima che il download cominci (o perchè l'utente preme il tasto Start o perchè è impostato autodownload)
-	CString HelpMessage;
-	//messaggio visualizzato nella finestra di download quando il download è in corso
-	CString HelpMessageDownloading;
-	//Testo del bottone di start
-	CString ButtonStartCaption;
-	//Testo del bottone di Cancel
-	CString ButtonCancelCaption;
-	//Elenco componenti da scaricare
-	DownloadComponentInfoVector Components;
-	//Indica se iniziare automaticamente il download appena la finestra viene aperta
-	bool AutoStartDownload;
+	// download window caption
+	std::wstring caption;
+	// help message
+	std::wstring help_message;
+	// progress message
+	std::wstring downloading_message;
+	// start button caption
+	std::wstring start_caption;
+	// cancel button caption
+	std::wstring cancel_caption;
+	// download components
+	std::vector<DownloadComponentInfo> components;
+	// auto-start download
+	bool auto_start;
+public:
 	DownloadGroupConfiguration();
 };

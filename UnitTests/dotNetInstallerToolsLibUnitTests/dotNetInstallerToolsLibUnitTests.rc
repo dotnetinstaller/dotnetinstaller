@@ -1,1 +1,2 @@
 #include <Version/Version.rc>
+RES_TEST CUSTOM "test.bmp"

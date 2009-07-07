@@ -49,7 +49,7 @@ public:
 	CComponentsList m_ListBoxComponents;
 	CStatic m_PictureBox;
 	CStatic m_lblOperatingSystem;
-	INT_PTR RunDni(InstallerSetting & p_Setting, bool p_additional_config);
+	INT_PTR RunDni(InstallerSetting & setting, bool p_additional_config);
 	afx_msg void OnBnClickedInstall();
 	bool LoadComponentsList(void);
 	CHyperlinkStatic m_InfoLink;

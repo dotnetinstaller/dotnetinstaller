@@ -1,5 +1,4 @@
 #pragma once
 
-#define TIXML_USE_STL
-
 #include <dotNetInstaller/StdAfxCommon.h>
+#include <ThirdParty/SmartPtr/smart_any.h>

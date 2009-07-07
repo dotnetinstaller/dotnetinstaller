@@ -7,14 +7,14 @@ public:
     thread_component();
 public:
     CWinThread * m_pThread;
-	DWORD m_ExitCode;
-    CString m_Error;
+	DWORD m_exitcode;
+    std::wstring m_error;
 public:
-    bool IsExecuting();
+    bool IsExecuting() const;
     virtual UINT ExecOnThread() = 0;
-    DWORD GetExitCode();
+    DWORD GetExitCode() const;
     void Init(CDialog * pDialog);
-    bool Exec();
+    void Exec();
 private:
     static UINT ExecuteThread(LPVOID pParam);
 };
