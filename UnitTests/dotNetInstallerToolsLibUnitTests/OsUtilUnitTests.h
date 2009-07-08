@@ -17,6 +17,7 @@ namespace DVLib
 			CPPUNIT_TEST( testProcessorArchitectureToFromString );
 			CPPUNIT_TEST( testIsProcessorArchitecture );
 			CPPUNIT_TEST( testIsWow64 );
+			// CPPUNIT_TEST( testExistWindowsSystem );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testGetOperatingSystemVersion();
@@ -29,6 +30,7 @@ namespace DVLib
 			void testProcessorArchitectureToFromString();
 			void testIsProcessorArchitecture();
 			void testIsWow64();
+			void testExistWindowsSystem();
 		};
 	}
 }

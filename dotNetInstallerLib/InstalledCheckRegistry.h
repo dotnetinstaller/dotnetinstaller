@@ -19,7 +19,6 @@ public:
 	std::wstring wowoption; 
 public:
     InstalledCheckRegistry();
-	HKEY GetRootKey() const;
     void Load(TiXmlElement * node, InstallerSetting& setting);
 	bool IsInstalled() const;
 };

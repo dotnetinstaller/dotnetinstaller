@@ -29,6 +29,10 @@
             configuration.xml).</li>
         <li>Converted the projects to Visual Studio 2008 format.</li>
         <li>Added OS filter identifier for Windows Vista SP2.</li>
+        <li>Registry search for REG_MULTI_SZ semantics have been extended. You can now specify
+            a comma-delimited list of values to <code>match</code> exactly all values, 
+            <code>contains</code> to match a subset of values and you can no longer specify a 
+            <code>version</code> match.</li>
     </ul>
     <h3>
         1.6 (29 June 2009)</h3>
@@ -233,6 +237,8 @@
         <li>Added OS filter functionality. You can now specify on which OS your setup will be
             running. </li>
         <li>In the complete_command you can now use environment variables (e.g. %Temp%)
+        
+        
         </li>
         <li>A template for german language is available in the InstallerEditor\templates\ folder
             (Thanks to Rainer Halanek for the translation) </li>

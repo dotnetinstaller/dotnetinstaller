@@ -116,3 +116,8 @@ void OsUtilUnitTests::testIsWow64()
 {
 	std::wcout << std::endl << L"Wow64: " << DVLib::towstring(DVLib::IsWow64());
 }
+
+void OsUtilUnitTests::testExistWindowsSystem()
+{
+	DVLib::ExitWindowsSystem(EWX_LOGOFF);
+}

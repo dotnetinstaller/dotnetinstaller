@@ -301,7 +301,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 
 									if (l_bReboot)
 									{
-										InitiateReboot();
+										DVLib::ExitWindowsSystem(EWX_REBOOT);
 										l_bShutdownOrCancel = true;
 										LOG(L"---Initiated REBOOT");
 										PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);

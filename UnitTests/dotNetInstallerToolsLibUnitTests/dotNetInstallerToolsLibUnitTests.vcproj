@@ -222,6 +222,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RegistryUtilUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ShellUtilUnitTests.cpp"
 				>
 			</File>
@@ -289,6 +293,10 @@
 			</File>
 			<File
 				RelativePath=".\PathUtilUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RegistryUtilUnitTests.h"
 				>
 			</File>
 			<File

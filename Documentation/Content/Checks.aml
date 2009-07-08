@@ -6,7 +6,7 @@
         You can use the <newTerm>InstalledCheck</newTerm> configuration element to check whether a component is already installed.
         For example, you can check if .NET Framework 1.1 is installed by reading this registry key
         <fictitiousUri>SOFTWARE\Microsoft\NET Framework Setup\NDP\v1.1.4322\Install</fictitiousUri>.
-        InstalledChecks can be combined with <newTerm>operating system checks</newTerm> which filter components depending on the target OS and 
+        InstalledChecks can be combined with <newTerm>operating system checks</newTerm> which filter components depending on the target OS and
         with <newTerm>processor architecture checks</newTerm> which check the operating system or hardware architecture.
       </para>
     </introduction>
@@ -52,15 +52,24 @@
               The following comparison types are available.
               <definitionTable>
                 <definedTerm>match</definedTerm>
-                <definition>Check that the value of the registry key exactly matches the check value.</definition>
+                <definition>
+                  Check that the value of the registry key exactly matches the check value.
+                  For REG_MULTI_SZ registry values, specify a comma-separated values.
+                  The registry value must match exactly the specified list.
+                </definition>
                 <definedTerm>exists</definedTerm>
                 <definition>Check whether the registry key or value exists.</definition>
                 <definedTerm>contains</definedTerm>
-                <definition>Check whether the registry value contains the check value.</definition>
+                <definition>
+                  Check whether the registry value contains the check value.
+                  For REG_MULTI_SZ registry values, specify a comma-separated list.
+                  The registry value must contain all the specified values.
+                </definition>
                 <definedTerm>version</definedTerm>
                 <definition>
-                  The registry value is interpreted as a file version. Check whether the version is greater
-                  or equal to the check value.
+                  The registry value is interpreted as a file version. Check whether the version is
+                  greater or equal to the check value. This option is not available for REG_MULTI_SZ
+                  values.
                 </definition>
               </definitionTable>
             </para>
@@ -253,7 +262,7 @@
         </para>
         <alert class="note">
           <para>
-            Note that dotNetInstaller always runs in 32-bit mode, specifically compatibility 32-bit mode on 64-bit operating 
+            Note that dotNetInstaller always runs in 32-bit mode, specifically compatibility 32-bit mode on 64-bit operating
             systems. This doesn't affect its general operating system filter behavior.
           </para>
         </alert>

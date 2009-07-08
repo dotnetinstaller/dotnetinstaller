@@ -5,6 +5,7 @@
 #include "ErrorUtil.h"
 #include "PathUtil.h"
 #include "FileUtil.h"
+#include "RegistryUtil.h"
 
 DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 {
@@ -92,21 +93,15 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 				// check if Sp6a
 				if(0 == _wcsicmp(osvi.szCSDVersion, L"Service Pack 6"))
 				{
-					HKEY hKey = 0;
-					LONG lRet;
-
 					// Test for SP6 versus SP6a.
-					lRet = RegOpenKeyEx(
-						HKEY_LOCAL_MACHINE,
-						L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Hotfix\\Q246009",
-						0, KEY_QUERY_VALUE, & hKey);
-
-					if( lRet == ERROR_SUCCESS ) //sp6a
+					if (DVLib::RegistryKeyExists(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Hotfix\\Q246009"))
+					{
 						os = winNT4sp6a;
+					}
 					else // Windows NT 4.0 prior to SP6a
+					{
 						os = winNT4sp6;
-
-					::RegCloseKey(hKey);
+					}
 				}
 			}
 
@@ -401,4 +396,30 @@ bool DVLib::IsProcessorArchitecture(WORD pa, const std::wstring& pa_list)
 	}
 
 	return false;
+}
+
+void DVLib::ExitWindowsSystem(DWORD ulFlags, DWORD ulReason)
+{
+    HANDLE hprocess = NULL; // handle to process token 
+	TOKEN_PRIVILEGES tkp = { 0 }; // pointer to token structure     
+	
+    // get the current process token handle so we can get shutdown privilege         
+	CHECK_WIN32_BOOL(::OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hprocess),
+		L"OpenProcessToken");
+
+	auto_handle hprocess_ptr(hprocess);
+
+	// get the LUID for shutdown privilege         
+	CHECK_WIN32_BOOL(::LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, & tkp.Privileges[0].Luid),
+		L"LookupPrivilegeValue(SE_SHUTDOWN_NAME)"); 
+         
+	tkp.PrivilegeCount = 1;  // one privilege to set    
+    tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED; 
+         
+	// set shutdown privilege for this process
+	CHECK_WIN32_BOOL(::AdjustTokenPrivileges(hprocess, FALSE, & tkp, 0, NULL, 0),
+		L"AdjustTokenPrivileges");
+
+	CHECK_WIN32_BOOL(::ExitWindowsEx(ulFlags, ulReason),
+		L"ExitWindowsEx");
 }

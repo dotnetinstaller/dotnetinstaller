@@ -11,3 +11,4 @@
 #include "OsUtil.h"
 #include "DirectoryUtil.h"
 #include "PathUtil.h"
+#include "RegistryUtil.h"

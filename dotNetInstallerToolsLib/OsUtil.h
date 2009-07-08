@@ -95,4 +95,7 @@ namespace DVLib
 	bool IsProcessorArchitecture(WORD pa, const std::wstring& pa_list);
 	// is windows-on-windows 64
 	bool IsWow64();
+
+	// reboot
+	void ExitWindowsSystem(DWORD ulFlags /* = EWX_REBOOT */, DWORD ulReason = 0);
 }

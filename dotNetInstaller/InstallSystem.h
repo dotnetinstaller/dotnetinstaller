@@ -2,4 +2,3 @@
 
 void InsertRegistryRun();
 void RemoveRegistryRun();
-bool InitiateReboot();
