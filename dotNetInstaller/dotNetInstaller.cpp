@@ -47,16 +47,16 @@ BOOL CdotNetInstallerApp::InitInstance()
 	{
 		ParseCommandLine(commandLineInfo);
 
-		ApplicationLog.Write(TEXT("-------------------------------------------------------------------"));
-		ApplicationLog.Write(TEXT("dotNetInstaller (DNI) started, version "), TEXT(VERSION_VALUE));
-		ApplicationLog.Write(TEXT(VERSION_LEGALCOPYRIGHT_VALUE));
-		ApplicationLog.Write(TEXT("Operating system: "), DVLib::GetOperatingSystemVersionString().c_str());
-		ApplicationLog.Write(TEXT("-------------------------------------------------------------------"));
+		LOG(L"-------------------------------------------------------------------");
+		LOG(L"dotNetInstaller (DNI) started, version " << TEXT(VERSION_VALUE));
+		LOG(VERSION_LEGALCOPYRIGHT_VALUE);
+		LOG(L"Operating system: " << DVLib::GetOperatingSystemVersionString());
+		LOG(L"-------------------------------------------------------------------");
 
 		std::map<std::wstring, std::wstring>::iterator arg = commandLineInfo.m_componentCmdArgs.begin();
 		while(arg != commandLineInfo.m_componentCmdArgs.end())
 		{
-			ApplicationLog.Write((TEXT("Component arguments: \"") + arg->first + TEXT("\": ")).c_str(), arg->second.c_str());
+			LOG(L"Component arguments: \"" + arg->first + L"\": " << arg->second);
 			arg ++;
 		}
 

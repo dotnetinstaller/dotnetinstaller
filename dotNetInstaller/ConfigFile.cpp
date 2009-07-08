@@ -37,18 +37,16 @@ void ConfigFile::LoadDownloadConfiguration(TiXmlElement * node_downloaddialog, D
 		TiXmlElement * node_download = child->ToElement();
 		if (node_download != NULL)
 		{
-			ApplicationLog.Write( TEXT("--Reading Download component"));
 
 			DownloadComponentInfo l_download_component;
-			l_download_component.component_name = node_download->AttributeW("componentname");
+			l_download_component.component_name = node_download->AttributeW("componentname");			
 			l_download_component.source_url = m_Setting.ValidatePath(node_download->AttributeW("sourceurl"));
 			l_download_component.source_path = m_Setting.ValidatePath(node_download->AttributeW("sourcepath"));
 			l_download_component.destination_path = m_Setting.ValidatePath(node_download->AttributeW("destinationpath"));
 			l_download_component.destination_filename = m_Setting.ValidatePath(node_download->AttributeW("destinationfilename"));
-			l_download_component.always_download = DVLib::string2bool(node_download->Attribute("alwaysdownload"), true);
+			l_download_component.always_download = DVLib::string2bool(node_download->Attribute("alwaysdownload"), true);			
+			LOG(L"--Read download component: " << l_download_component.source_url);
 			configuration.components.push_back(l_download_component);
-
-			ApplicationLog.Write( TEXT("--Finished reading download component: "), l_download_component.source_url);
 		}
 	}
 
@@ -63,17 +61,17 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * node)
 {
 	DVLib::OperatingSystem l_CurrentOs = DVLib::GetOperatingSystemVersion();
 
-	ApplicationLog.Write( TEXT("Reading configuration attributes") );
+	LOG(L"Reading configuration attributes");
 
     // auto-enabled log options
     m_Setting.log_enabled = DVLib::string2bool(node->Attribute("log_enabled"), false);
     m_Setting.log_file = node->AttributeW("log_file");
 
     // enable logging if log is not enabled by a command line switch and enabled in the configuration
-    if (! ApplicationLog.IsEnableLog() && m_Setting.log_enabled)
+    if (! ApplicationLogInstance.IsEnableLog() && m_Setting.log_enabled)
     {
-        ApplicationLog.SetLogFile(m_Setting.ValidatePath(m_Setting.log_file));
-        ApplicationLog.EnableLog();
+        ApplicationLogInstance.SetLogFile(m_Setting.ValidatePath(m_Setting.log_file));
+        ApplicationLogInstance.EnableLog();
     }
 
     // defines where to extract files and auto-delete options
@@ -126,7 +124,7 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * node)
     m_Setting.cab_dialog_message = node->AttributeW("cab_dialog_message");
     m_Setting.cab_cancelled_message = node->AttributeW("cab_cancelled_message");
 
-	ApplicationLog.Write( TEXT("Finished reading configuration attributes") );
+	LOG(L"Read configuration attributes");
 
 	m_Setting.ClearComponents();
 
@@ -159,12 +157,13 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * node)
                     l_msi_Comp->cmdparameters_silent += cmdline->second.c_str();
                     l_msi_Comp->cmdparameters_basic += TEXT(" ");
                     l_msi_Comp->cmdparameters_basic += cmdline->second.c_str();
-                    ApplicationLog.Write(TEXT("--Additional component arguments: "), cmdline->second.c_str());
+					
+					LOG(L"--Additional component arguments: " << cmdline->second);
                 }
 
 				l_new_component = l_msi_Comp;
 
-				ApplicationLog.Write(TEXT("--Reading MSI component: "), l_msi_Comp->package);
+				LOG(L"--Read msi component: " << l_msi_Comp->package);
 			}
 			else if (l_comp_type == L"cmd")
 			{
@@ -184,22 +183,20 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * node)
                     l_cmd_Comp->command_silent += cmdline->second.c_str();
                     l_cmd_Comp->command_basic += TEXT(" ");
                     l_cmd_Comp->command_basic += cmdline->second.c_str();
-                    ApplicationLog.Write(TEXT("--Additional component arguments: "), cmdline->second.c_str());
+                    
+					LOG("--Additional component arguments: " << cmdline->second);
                 }
 
+				LOG(L"--Read command component: " << l_cmd_Comp->command);
 				l_new_component = l_cmd_Comp;
-
-				ApplicationLog.Write(TEXT("--Reading COMMAND component: "), l_cmd_Comp->command);
 			}
 			else if (l_comp_type == L"openfile")
 			{
 				OpenFileComponent * l_openfile_Comp = new OpenFileComponent();
 				l_openfile_Comp->file = m_Setting.ValidatePath(node_component->AttributeW("file"));
 				l_openfile_Comp->type = openfile;
-
+				LOG(L"--Read openfile component: " << l_openfile_Comp->file);
 				l_new_component = l_openfile_Comp;
-
-				ApplicationLog.Write(TEXT("--Reading OPENFILE component: "), l_openfile_Comp->file);
 			}
 			else
 			{
@@ -244,7 +241,7 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * node)
 			TiXmlElement * node_downloaddialog = node_component->FirstChildElement("downloaddialog");
 			if (node_downloaddialog != NULL)
 			{
-			    ApplicationLog.Write( TEXT("---Loading DownloadDialog") );
+			    LOG(L"---Loading DownloadDialog");
 				LoadDownloadConfiguration(node_downloaddialog, l_new_component->DownloadDialogConfiguration);
 				l_new_component->download = true;
 			}
@@ -253,12 +250,12 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * node)
 			if ( CheckConfigFilter(l_new_component->os_filter_lcid, l_new_component->os_filter_greater, l_new_component->os_filter_smaller, l_new_component->processor_architecture_filter) )
 			{
 				m_Setting.AddComponent(l_new_component);
-                ApplicationLog.Write( TEXT("--Component OK: "), l_new_component->description );
+                LOG(L"--Loaded component: " << l_new_component->description);
 			}
 			else
 			{
+                LOG(L"--Skipped component: " << l_new_component->description);
 				delete l_new_component;
-				ApplicationLog.Write( TEXT("--Component SKIPPED") );
 			}
 
 		} //if node_component != NULL
@@ -270,8 +267,7 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * node)
     {
         if (! m_Setting.HasComponent(arg->first))
         {
-            ApplicationLog.Write(TEXT("WARNING: Command line argument specified for a missing component: "), 
-                (TEXT("\"") + arg->first + TEXT("\"")).c_str());
+            LOG(L"Warning, command line argument specified for a missing component: " << arg->first);
         }
         
         arg ++;
@@ -330,7 +326,10 @@ int ConfigFile::LoadConfigsNode(TiXmlElement * node, bool p_Caller_Has_Additiona
 			std::wstring l_os_filter_smaller = node_configuration->AttributeW("os_filter_smaller");
             std::wstring l_processor_architecture_filter = node_configuration->AttributeW("processor_architecture_filter");
 
-			ApplicationLog.Write( TEXT("Reading configuration node with LCID: "), l_Config_LCID);
+			LOG(L"Reading configuration node: lcid=" << l_Config_LCID
+				<< L", os_filter_greater=" << l_os_filter_greater
+				<< L", os_filter_smaller=" << l_os_filter_smaller
+				<< L", processor_architecture_filter=" << l_processor_architecture_filter);
 
 			// OS Version configuration filter (in addition to LCID)
 			if (CheckConfigFilter(l_Config_LCID, l_os_filter_greater, l_os_filter_smaller, l_processor_architecture_filter))
@@ -355,7 +354,7 @@ int ConfigFile::LoadConfigsNode(TiXmlElement * node, bool p_Caller_Has_Additiona
 				std::wstring l_type = node_configuration->AttributeW("type");
 				if (l_type == L"reference")
 				{
-					ApplicationLog.Write( TEXT("Loading reference configuration"));
+					LOG(L"Loading reference configuration");
 
 					// load the reference config file and process recursively
                     ConfigFile ref_config_file;
@@ -371,7 +370,7 @@ int ConfigFile::LoadConfigsNode(TiXmlElement * node, bool p_Caller_Has_Additiona
 				}
 				else if (l_type == L"install")
 				{
-					ApplicationLog.Write( TEXT("Loading install configuration"));
+					LOG(L"Loading install configuration");
 					LoadInstallConfigNode(node_configuration);
 
 					// launch the installer dialog
@@ -396,7 +395,7 @@ int ConfigFile::LoadConfigsNode(TiXmlElement * node, bool p_Caller_Has_Additiona
 			}
 			else
 			{
-				ApplicationLog.Write( TEXT("Configuration node skipped for the current LCID"));
+				LOG("Skipped configuration");
 			}
 		}
 	}
@@ -448,20 +447,20 @@ bool ConfigFile::CheckConfigFilter(
 
 void ConfigFile::LoadConfigFromFile(const std::wstring & filename)
 {
+	LOG(L"Loading configuration file: " << filename);
 	std::vector<char> xml = DVLib::FileReadToEnd(filename);
-
-    ApplicationLog.Write(TEXT("Parsing "), DVLib::FormatBytesW(xml.size()));
+	LOG(L"Parsing: " << DVLib::FormatBytesW(xml.size()));
 
 	m_XmlDocument.Parse(& * xml.begin());
 	CHECK_BOOL(! m_XmlDocument.Error(),
 		L"Error reading \"" << filename << L"\": " << DVLib::string2wstring(m_XmlDocument.ErrorDesc()));
 
-	ApplicationLog.Write(TEXT("Successfully parsed configuration from file: "), filename);
+	LOG(L"Loaded configuration: " << filename);
 }
 
 void ConfigFile::LoadConfigFromResource(HMODULE h)
 {
-	ApplicationLog.Write( TEXT("Loading configuration from resource") );
+	LOG("Loading configuration from embedded resource");
 	HRSRC res = ::FindResource(h, L"RES_CONFIGURATION", L"CUSTOM");
 	CHECK_WIN32_BOOL(res != NULL, L"Invalid RES_CONFIGURATION resource");
 	HGLOBAL hgl = ::LoadResource(h, res);
@@ -476,7 +475,7 @@ void ConfigFile::LoadConfigFromResource(HMODULE h)
 	CHECK_BOOL(! m_XmlDocument.Error(),
 		L"Error reading RES_CONFIGURATION: " << DVLib::string2wstring(m_XmlDocument.ErrorDesc()));
 
-	ApplicationLog.Write( TEXT("Successfully parsed configuration from resource.") );
+	LOG(L"Loaded configuration from embedded resource");
 }
 
 bool ConfigFile::HasConfigResource(HMODULE p_Module)
@@ -490,17 +489,15 @@ void ConfigFile::LoadXmlSettings()
 	std::wstring settings_file = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), TEXT("configuration.xml")).c_str();
 	if (DVLib::FileExists(settings_file))
 	{
-		ApplicationLog.Write(TEXT("Loading configuration from file: "), settings_file);
 		LoadConfigFromFile(settings_file);
 	}
 	else if (HasConfigResource(AfxGetApp()->m_hInstance))
 	{
-		ApplicationLog.Write(TEXT("Loading configuration from resource."));
 		LoadConfigFromResource(AfxGetApp()->m_hInstance);
 	}
 	else
 	{
-		ApplicationLog.Write(TEXT("Missing configuration.xml."));
+		LOG(L"Missing configuration.xml");
 		throw std::exception("Missing configuration.xml");
 	}
 }
@@ -535,9 +532,9 @@ void ConfigFile::LoadSchemaVersion(TiXmlElement * node)
 		if (l_Child != NULL && strcmp(l_Child->Value(), "schema") == 0)
 		{
 			schema_generator = l_Child->AttributeW("generator");
-			ApplicationLog.Write( TEXT("Configuration generator: "), schema_generator);
+			LOG(L"Configuration generator: " << schema_generator);
 			schema_version = l_Child->AttributeW("version");
-			ApplicationLog.Write( TEXT("Generator version: "), schema_version);
+			LOG(L"Generator version: " << schema_version);
 		}
 	}
 

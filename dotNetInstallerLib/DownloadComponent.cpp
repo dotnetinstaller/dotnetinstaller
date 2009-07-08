@@ -64,17 +64,17 @@ std::wstring DownloadComponent::GetDestinationFileName() const
 
 void DownloadComponent::CopyFromSourcePath()
 {
-	ApplicationLog.Write( TEXT("source_path: "), m_Component->source_path);
-	ApplicationLog.Write( TEXT("DestinationPath: "), m_Component->destination_path);
+	LOG(L"Source path: " << m_Component->source_path);
+	LOG(L"Destination path: " << m_Component->destination_path);
 	DVLib::DirectoryCreate(m_Component->destination_path);
 	std::wstring destination_full_filename = GetDestinationFileName();
-	ApplicationLog.Write( TEXT("DestinationFullFileName: "), destination_full_filename);
-	ApplicationLog.Write( TEXT("AlwaysDownload: "), m_Component->always_download ? TEXT("True") : TEXT("False") );
-	ApplicationLog.Write( TEXT("FileExists: "), DVLib::FileExists(destination_full_filename) ? TEXT("True") : TEXT("False") );
+	LOG(L"Destination full path: " << destination_full_filename);
+	LOG(L"Always download: " << m_Component->always_download ? L"True" : L"False");
+	LOG(L"Destination exists: " << DVLib::FileExists(destination_full_filename) ? L"True" : L"False");
 
 	if (! IsCopyRequired())
 	{
-		ApplicationLog.Write( TEXT("Skipping copy.") );
+		LOG(L"Skipping copy.");
 		return;
 	}
 
@@ -85,20 +85,20 @@ void DownloadComponent::StartDownload()
 {
 	std::wstring destination_full_filename = GetDestinationFileName();
 
-	ApplicationLog.Write( TEXT("SourceURL: "), m_Component->source_url);
-	ApplicationLog.Write( TEXT("DestinationPath: "), m_Component->destination_path);
+	LOG(L"Source url: " << m_Component->source_url);
+	LOG(L"Destination path: " << m_Component->destination_path);
 	DVLib::DirectoryCreate(m_Component->destination_path);
-	ApplicationLog.Write( TEXT("DestinationFullFileName: "), destination_full_filename);
-	ApplicationLog.Write( TEXT("AlwaysDownload: "), m_Component->always_download ? TEXT("True") : TEXT("False") );
-	ApplicationLog.Write( TEXT("FileExists: "), DVLib::FileExists(destination_full_filename) ? TEXT("True") : TEXT("False") );
+	LOG(L"Destination full path: " << destination_full_filename);
+	LOG(L"Always download: " << m_Component->always_download ? L"True" : L"False" );
+	LOG(L"Destination exists: " << DVLib::FileExists(destination_full_filename) ? L"True" : L"False" );
 
 	if (! IsDownloadRequired())
 	{
-		ApplicationLog.Write( TEXT("Skipping download.") );
+		LOG(L"Skipping download.");
 		return;
 	}
 
-	ApplicationLog.Write( TEXT("Downloading: "), m_Component->source_url);
+	LOG(L"Downloading: " << m_Component->source_url);
 
 	CHECK_HR_DLL(URLDownloadToFile(NULL, m_Component->source_url.c_str(), destination_full_filename.c_str(), 0, this),
 		L"Error downloading \"" << m_Component->source_url << L"\" to \"" << destination_full_filename << L"\"", L"urlmon.dll");

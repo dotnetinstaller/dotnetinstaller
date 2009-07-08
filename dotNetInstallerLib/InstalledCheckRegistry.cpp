@@ -23,14 +23,14 @@ HKEY InstalledCheckRegistry::GetRootKey() const
 
 void InstalledCheckRegistry::Load(TiXmlElement * node, InstallerSetting& setting)
 {
-    ApplicationLog.Write(TEXT("----Reading REGISTRY installed check: "), node->AttributeW("path").data());
-    fieldname = node->AttributeW("fieldname").data();
-    fieldtype = node->AttributeW("fieldtype").data();
-    fieldvalue = node->AttributeW("fieldvalue").data();
-    path = node->AttributeW("path").data();
-    comparison = node->AttributeW("comparison").data();
-    rootkey = node->AttributeW("rootkey").data();
-    wowoption = node->AttributeW("wowoption").data();
+    LOG(L"----Reading REGISTRY installed check: " << node->AttributeW("path"));
+    fieldname = node->AttributeW("fieldname");
+    fieldtype = node->AttributeW("fieldtype");
+    fieldvalue = node->AttributeW("fieldvalue");
+    path = node->AttributeW("path");
+    comparison = node->AttributeW("comparison");
+    rootkey = node->AttributeW("rootkey");
+    wowoption = node->AttributeW("wowoption");
 }
 
 // \todo: rewrite with a registry class
@@ -44,7 +44,7 @@ bool InstalledCheckRegistry::IsInstalled() const
 		keypath.append(L"\\");
 		keypath.append(fieldname);
 
-        ApplicationLog.Write( TEXT("Reading Registry: "), keypath);
+        LOG(L"Reading Registry: " << keypath);
 
 		DVLib::OperatingSystem type = DVLib::GetOperatingSystemVersion();
 		DWORD dwKeyOption = KEY_READ;
@@ -55,13 +55,13 @@ bool InstalledCheckRegistry::IsInstalled() const
 			// indicates that an application on 64-bit Windows should operate on the 64-bit registry view
 			if (_wcsicmp(wowoption.c_str(), L"WOW64_64") == 0)
 			{	
-				ApplicationLog.Write( TEXT("Opening 64-bit registry view (KEY_WOW64_64KEY)"));
+				LOG(L"Opening 64-bit registry view (KEY_WOW64_64KEY)");
 				dwKeyOption |= KEY_WOW64_64KEY;
 			}
 			//Indicates that an application on 64-bit Windows should operate on the 32-bit registry view.
 			else if (_wcsicmp(wowoption.c_str(), L"WOW64_32") == 0)
 			{
-				ApplicationLog.Write( TEXT("Opening 32-bit registry view (KEY_WOW64_32KEY)"));
+				LOG(L"Opening 32-bit registry view (KEY_WOW64_32KEY)");
 				dwKeyOption |= KEY_WOW64_32KEY;
 			}
 		}
@@ -72,11 +72,11 @@ bool InstalledCheckRegistry::IsInstalled() const
 
 		if (l_result != ERROR_SUCCESS)
 		{
-			ApplicationLog.Write( TEXT("***No Registry Entry Found: "), keypath);
+			LOG(L"***No Registry Entry Found: " << keypath);
 			return false;
 		}
 
-		ApplicationLog.Write( TEXT("Registry Entry Found: "), keypath);
+		LOG(L"Registry Entry Found: " << keypath);
 		if (fieldtype == TEXT("REG_DWORD"))
 		{
 			DWORD wordValue;
@@ -92,7 +92,7 @@ bool InstalledCheckRegistry::IsInstalled() const
 				throw std::exception("Invalid registry value to check expected DWORD.");
 			}
 
-            ApplicationLog.Write( TEXT("Value: "), DVLib::towstring(wordValue).c_str());
+            LOG(L"Value: " << DVLib::towstring(wordValue));
 
 			if (comparison == TEXT("match"))
 			{
@@ -136,7 +136,7 @@ bool InstalledCheckRegistry::IsInstalled() const
 			std::wstring registryValue = charsRegValue;
 			delete [] charsRegValue;
 
-            ApplicationLog.Write( TEXT("Value: "), registryValue);
+            LOG(L"Value: " << registryValue);
 
 			if (comparison == TEXT("match"))
 			{

@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="dotNetInstallerCabLib"
+	Name="Cab"
 	ProjectGUID="{6A9AD5E1-624C-478F-9921-8400B3AD84A8}"
-	RootNamespace="dotNetInstallerCabLib"
+	RootNamespace="Cab"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>

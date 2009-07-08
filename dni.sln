@@ -141,9 +141,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerToolsLibUnit
 		{173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43} = {173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerCabLib", "dotNetInstallerCabLib\dotNetInstallerCabLib.vcproj", "{6A9AD5E1-624C-478F-9921-8400B3AD84A8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cab", "ThirdParty\Cab\Cab.vcproj", "{6A9AD5E1-624C-478F-9921-8400B3AD84A8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerXmlLib", "dotNetInstallerXmlLib\dotNetInstallerXmlLib.vcproj", "{1EAFD902-5203-47E0-965B-AB7C2B582746}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Xml", "ThirdParty\Xml\Xml.vcproj", "{1EAFD902-5203-47E0-965B-AB7C2B582746}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rd party", "3rd party", "{810198E0-3014-4F44-92B5-DF78730E1FDC}"
 EndProject

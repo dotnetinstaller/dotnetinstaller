@@ -19,7 +19,7 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 		if (_wcsicmp(pszParam, TEXT("log")) == 0 )
 		{
 			m_lastArgFlag = log;
-			ApplicationLog.EnableLog();
+			ApplicationLogInstance.EnableLog();
 		}
 
 		// specify log filename and path
@@ -85,7 +85,7 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
             case extractCab:
 				break;
             case logfile:
-                ApplicationLog.SetLogFile(pszParam);
+                ApplicationLogInstance.SetLogFile(pszParam);
                 break;
 			case launcher:
 				DNILauncher.SetLauncherPath(pszParam);

@@ -9,6 +9,5 @@ public:
 	PROCESS_INFORMATION m_process_info;
 	DWORD GetExitCode() const;
 	bool IsExecuting() const;
-	void Init();
 };
 

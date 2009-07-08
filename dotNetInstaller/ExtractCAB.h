@@ -20,7 +20,9 @@ struct ExtractCABComponent : public thread_component
 public:
     ExtractCABComponent(InstallerSetting& settings);
 	static int GetCabCount(HMODULE p_Module);
+	void SetDialog(CDialog * pDialog) { m_pDialog = pDialog; }
 private:
+	CDialog * m_pDialog;
     InstallerSetting& m_Settings;
 	UINT ExecOnThread();
     void ExtractCab(HMODULE p_Module, Component * pComponent);

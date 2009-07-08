@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "InstallerLog.h"
 
-InstallerLog ApplicationLog;
+InstallerLog ApplicationLogInstance;
 
 InstallerLog::InstallerLog(void)
     : m_enabled(false)
@@ -47,9 +47,4 @@ void InstallerLog::Write(const std::wstring& message)
 
 	CHECK_WIN32_BOOL(WriteFile(m_hFile, message_s.str().c_str(), message_s.str().size(),  & l_BytesWritten, NULL),
 		L"Error writing to \"" << m_logfile << L"\"");
-}
-
-void InstallerLog::Write(const std::wstring& message, const std::wstring& appendMessage)
-{
-	Write(message + appendMessage);
 }

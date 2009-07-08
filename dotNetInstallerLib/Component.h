@@ -7,9 +7,10 @@ class InstalledCheckOperator;
 
 enum component_type
 {
-	cmd, //shell command
-	msi, //windows installer setup
-	openfile //ShellExecute call to open a file
+	undefined = 0, 
+	cmd, // shell command
+	msi, // windows installer setup
+	openfile // ShellExecute call to open a file
 };
 
 class Component
@@ -18,8 +19,6 @@ public:
     Component();
     virtual ~Component();
 public:
-    // dialog where to post messages to
-    CDialog * m_pDialog;
 	// component type: cmd, msi, openfile
 	component_type type;
 	// component description
@@ -62,7 +61,6 @@ public:
 	virtual void Exec() = 0;
 	virtual DWORD GetExitCode() const = 0;
 	virtual bool IsExecuting() const = 0;
-	virtual void Init(CDialog * pDialog = NULL);
 	virtual bool IsInstalled() const;
 	// indica se il componente verrà eseguito o no
 	bool selected;

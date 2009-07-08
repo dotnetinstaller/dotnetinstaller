@@ -22,7 +22,7 @@ IMPLEMENT_DYNAMIC(DownloadDialog, CDialog)
 	m_Components = p_Configuration.components;
 	m_bAutoStartDownload = p_Configuration.auto_start;
 
-	ApplicationLog.Write( TEXT("Opening Download Dialog: "), m_Caption);
+	LOG(L"Opening download dialog: " << m_Caption);
 }
 
 DownloadDialog::~DownloadDialog()
@@ -95,8 +95,7 @@ void DownloadDialog::OnBnClickedCancel() //Cancel Button
 
 void DownloadDialog::OnBnClickedStart()
 {
-	ApplicationLog.Write( TEXT("Starting download thread"));
-
+	LOG(L"Starting download");
 	m_LabelHelpDownload.SetWindowText(m_HelpMessageDownloading.c_str());
 	m_pDownloadThread = AfxBeginThread(ThreadProc, this);
 	m_btStart.EnableWindow(FALSE);
@@ -128,20 +127,20 @@ afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM lParam
 		}
 		else if (l_Param->Type == StatusType_Error) //ERROR
 		{
-			ApplicationLog.Write( TEXT("***Download ERROR: "), l_Param->Error);
+			LOG(L"***Download ERROR: " << l_Param->Error);
 			DniSilentMessageBox(l_Param->Error, MB_OK|MB_ICONSTOP);
 			m_bCancelOrErrorDownload = true;
 			DownloadStatusParam::Free(l_Param);
 		}
 		else if (l_Param->Type == StatusType_Canceled) //CANCELED
 		{
-			ApplicationLog.Write( TEXT("***Download CANCELED"));
+			LOG(L"***Download CANCELED");
 			m_bCancelOrErrorDownload = true;
 			DownloadStatusParam::Free(l_Param);
 		}
 		else if (l_Param->Type == StatusType_Completed) //COMPLETED
 		{
-			ApplicationLog.Write( TEXT("---Download OK"));
+			LOG(L"---Download OK");
 			m_bDownloadCompleted = true; //Download OK
 			DownloadStatusParam::Free(l_Param);
 		}
@@ -226,9 +225,9 @@ bool DownloadDialog::IsCopyRequired() const
 		bool l_CopyRequired = l_Component.IsCopyRequired();
 				
 		std::wstring l_destinationFullFileName = l_Component.GetDestinationFileName();
-		ApplicationLog.Write( TEXT("DestinationFullFileName: "), l_destinationFullFileName);
-		ApplicationLog.Write( TEXT("FileExists: "), DVLib::FileExists(l_destinationFullFileName) ? TEXT("True") : TEXT("False") );
-		ApplicationLog.Write( TEXT("Copy: "), l_CopyRequired ? TEXT("True") : TEXT("False") );
+		LOG(L"DestinationFullFileName: " << l_destinationFullFileName);
+		LOG(L"FileExists: " << DVLib::FileExists(l_destinationFullFileName) ? L"True" : L"False");
+		LOG(L"Copy: " << l_CopyRequired ? L"True" : L"False");
 
 		if (l_CopyRequired)
 		{
@@ -250,9 +249,9 @@ bool DownloadDialog::IsDownloadRequired() const
 		bool l_DownloadRequired = l_Component.IsDownloadRequired();
 				
 		std::wstring l_destinationFullFileName = l_Component.GetDestinationFileName();
-		ApplicationLog.Write( TEXT("DestinationFullFileName: "), l_destinationFullFileName);
-		ApplicationLog.Write( TEXT("FileExists: "), DVLib::FileExists(l_destinationFullFileName) ? TEXT("True") : TEXT("False") );
-		ApplicationLog.Write( TEXT("Download: "), l_DownloadRequired ? TEXT("True") : TEXT("False") );
+		LOG(L"DestinationFullFileName: " << l_destinationFullFileName);
+		LOG(L"FileExists: " << DVLib::FileExists(l_destinationFullFileName) ? L"True" : L"False");
+		LOG(L"Download: " << l_DownloadRequired ? L"True" : L"False");
 
 		if (l_DownloadRequired)
 		{

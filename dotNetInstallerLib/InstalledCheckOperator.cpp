@@ -13,7 +13,7 @@ void InstalledCheckOperator::Load(TiXmlElement * node, InstallerSetting & settin
 {
     type = node->AttributeW("type").data();
     description = node->AttributeW("description").data();
-    ApplicationLog.Write(TEXT("----Reading installed check operator: "), description + TEXT(" (") + type + TEXT(")"));
+	LOG(L"----Reading installed check operator: " << description << L" (" << type << L")");
 
 	// installed checks
 	TiXmlNode * l_Child = NULL;

@@ -2,7 +2,18 @@
 #include "ThreadComponent.h"
 
 thread_component::thread_component()
+	: m_exitcode(0)
+	, m_pThread(NULL)
 {
+
+}
+
+thread_component::~thread_component()
+{
+	if (m_pThread != NULL) 
+	{
+		delete m_pThread;
+	}
 }
 
 DWORD thread_component::GetExitCode() const
@@ -39,31 +50,22 @@ UINT thread_component::ExecuteThread(LPVOID pParam)
 	return pComponent->m_exitcode;
 }
 
-void thread_component::Init(CDialog * pDialog)
-{
-	m_exitcode = 0;
-    Component::Init(pDialog);
-    m_pThread = AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED);
-	m_pThread->m_bAutoDelete = false;
-    m_pThread->ResumeThread();
-}
-
 void thread_component::Exec()
 {
-    if (m_pThread != NULL)
-    {
-        CHECK_WIN32_BOOL(WAIT_FAILED != WaitForSingleObject(m_pThread->m_hThread, INFINITE),
-			L"WaitForSingleObject");
+    m_pThread = AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED);
 
-		delete m_pThread;
-		m_pThread = NULL;
-    }
+	CHECK_WIN32_BOOL(m_pThread != NULL,
+		L"AfxBeginThread");
 
-    if (! m_error.empty())
-    {
-        throw std::exception(DVLib::wstring2string(m_error).c_str());
-    }
+	m_pThread->m_bAutoDelete = false;
+    m_pThread->ResumeThread();
 
-	CHECK_BOOL(m_exitcode != 0,
-		L"Unexpected error executing threaded component");
+    CHECK_WIN32_BOOL(WAIT_FAILED != WaitForSingleObject(m_pThread->m_hThread, INFINITE),
+		L"WaitForSingleObject");
+
+	delete m_pThread;
+	m_pThread = NULL;
+
+	CHECK_BOOL(m_error.empty(), m_error);
+	CHECK_BOOL(m_exitcode == 0, L"Unexpected error");
 }

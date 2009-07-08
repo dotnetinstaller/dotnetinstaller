@@ -23,7 +23,7 @@ void cmd_component::Exec()
 		break;
 	}
 
-	ApplicationLog.Write(TEXT("Executing: "), l_command);
+	LOG(L"Executing: " << l_command);
 	DVLib::DetachCmd(l_command, & m_process_info);
 };
 

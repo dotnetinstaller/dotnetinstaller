@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="dotNetInstallerXmlLib"
+	Name="Xml"
 	ProjectGUID="{1EAFD902-5203-47E0-965B-AB7C2B582746}"
-	RootNamespace="dotNetInstallerXmlLib"
+	RootNamespace="Xml"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>

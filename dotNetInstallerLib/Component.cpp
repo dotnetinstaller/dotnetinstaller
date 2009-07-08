@@ -3,8 +3,7 @@
 #include "InstalledCheck.h"
 
 Component::Component()
-    : m_pDialog(NULL)
-    , type(msi)
+	: type(undefined)
     , mustreboot(false)
     , must_reboot_required(false)
     , allow_continue_on_error(true)
@@ -22,12 +21,6 @@ Component::~Component(void)
 	{
 		delete installedchecks[j];
 	}
-}
-
-void Component::Init(CDialog * pDialog)
-{
-    m_pDialog = pDialog;
-    cancelled = false;
 }
 
 bool Component::IsInstalled() const

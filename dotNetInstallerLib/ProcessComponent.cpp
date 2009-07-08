@@ -3,7 +3,7 @@
 
 ProcessComponent::ProcessComponent(void)
 {
-
+	ZeroMemory(& m_process_info, sizeof(PROCESS_INFORMATION));
 }
 
 DWORD ProcessComponent::GetExitCode() const
@@ -21,18 +21,10 @@ bool ProcessComponent::IsExecuting() const
 	DWORD l_ExitCode;
 	if (GetExitCodeProcess(m_process_info.hProcess, &l_ExitCode))
 	{
-		if (l_ExitCode == STILL_ACTIVE)
-			return true;
-		else
-			return false;
+		return (l_ExitCode == STILL_ACTIVE);
 	}
 	else
     {
 		return false;
     }
-}
-
-void ProcessComponent::Init()
-{
-	ZeroMemory(& m_process_info, sizeof(PROCESS_INFORMATION));
 }

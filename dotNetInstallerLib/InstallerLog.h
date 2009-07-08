@@ -11,11 +11,16 @@ public:
 	const std::wstring& GetLogFile() const { return m_logfile; }
 	void SetLogFile(const std::wstring& filename) { m_logfile = filename; }
 	void Write(const std::wstring& message);
-	void Write(const std::wstring& message, const std::wstring& appendMessage);
 private:
 	bool m_enabled;
 	std::wstring m_logfile;
     HANDLE m_hFile;
 };
 
-extern InstallerLog ApplicationLog;
+extern InstallerLog ApplicationLogInstance;
+
+#define LOG( message ) \
+{ \
+	std::wstringstream ss_message; ss_message << message; \
+	ApplicationLogInstance.Write(ss_message.str()); \
+}
