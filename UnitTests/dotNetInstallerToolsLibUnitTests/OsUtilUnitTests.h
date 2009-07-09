@@ -18,6 +18,8 @@ namespace DVLib
 			CPPUNIT_TEST( testIsProcessorArchitecture );
 			CPPUNIT_TEST( testIsWow64 );
 			// CPPUNIT_TEST( testExistWindowsSystem );
+			CPPUNIT_TEST( testwstring2lcidtype );
+			CPPUNIT_TEST( testlcidtype2wstring );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testGetOperatingSystemVersion();
@@ -31,6 +33,8 @@ namespace DVLib
 			void testIsProcessorArchitecture();
 			void testIsWow64();
 			void testExistWindowsSystem();
+			void testwstring2lcidtype();
+			void testlcidtype2wstring();
 		};
 	}
 }

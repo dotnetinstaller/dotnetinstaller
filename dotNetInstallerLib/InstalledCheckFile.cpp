@@ -6,7 +6,7 @@ InstalledCheckFile::InstalledCheckFile()
 {
 }
 
-void InstalledCheckFile::Load(TiXmlElement * node, InstallerSetting& setting)
+void InstalledCheckFile::Load(TiXmlElement * node, Configuration& setting)
 {
     LOG(L"----Reading CHECKFILE installed check: " << node->AttributeW("filename"));
     filename = setting.ValidatePath(node->AttributeW("filename"));

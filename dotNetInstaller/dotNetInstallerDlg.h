@@ -30,7 +30,7 @@ protected:
 private:
 	int m_recorded_error;	
 	bool m_additional_config;
-	InstallerSetting m_Settings;
+	Configuration m_Settings;
     void ExtractCab();
     void SelectComponents();
     // move a window to the coordinates defined by a rectangle with defaults
@@ -49,7 +49,7 @@ public:
 	CComponentsList m_ListBoxComponents;
 	CStatic m_PictureBox;
 	CStatic m_lblOperatingSystem;
-	INT_PTR RunDni(InstallerSetting & setting, bool p_additional_config);
+	INT_PTR RunDni(Configuration & setting, bool p_additional_config);
 	afx_msg void OnBnClickedInstall();
 	bool LoadComponentsList(void);
 	CHyperlinkStatic m_InfoLink;

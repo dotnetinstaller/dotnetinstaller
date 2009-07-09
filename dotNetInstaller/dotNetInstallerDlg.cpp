@@ -47,7 +47,7 @@ END_MESSAGE_MAP()
 
 // gestori di messaggi di CdotNetInstallerDlg
 
-INT_PTR CdotNetInstallerDlg::RunDni(InstallerSetting & settings, bool p_additional_config)
+INT_PTR CdotNetInstallerDlg::RunDni(Configuration & settings, bool p_additional_config)
 {
 	// settings must be "in scope" through the duration of the dialog display
 	m_Settings = settings;
@@ -505,7 +505,7 @@ void CdotNetInstallerDlg::OnDestroy()
 
         // delete temporary directory
         // even if a reboot is required, the temporary folder is gone; next run will re-extract components
-        std::wstring cabpath = (! m_Settings.cab_path.empty()) ? m_Settings.cab_path : InstallerSetting::GetSessionTempPath(true);
+        std::wstring cabpath = (! m_Settings.cab_path.empty()) ? m_Settings.cab_path : Configuration::GetSessionTempPath(true);
         cabpath = m_Settings.ValidatePath(cabpath);
         if (m_Settings.cab_path_autodelete && ! cabpath.empty() && DVLib::FileExists(cabpath))
         {
@@ -538,7 +538,7 @@ void CdotNetInstallerDlg::ExtractCab()
 		return;
 
     ExtractCABComponent e_component(m_Settings);
-    InstallerSetting e_setting;
+    Configuration e_setting;
     e_setting.installing_component_wait = m_Settings.cab_dialog_message;
     e_component.description = m_Settings.cab_dialog_caption;
     InstallComponentDlg l_dg;

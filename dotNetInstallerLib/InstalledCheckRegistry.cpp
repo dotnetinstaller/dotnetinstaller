@@ -7,7 +7,7 @@ InstalledCheckRegistry::InstalledCheckRegistry(void)
 
 }
 
-void InstalledCheckRegistry::Load(TiXmlElement * node, InstallerSetting& setting)
+void InstalledCheckRegistry::Load(TiXmlElement * node, Configuration& setting)
 {
     LOG(L"----Reading REGISTRY installed check: " << node->AttributeW("path"));
     fieldname = node->AttributeW("fieldname");

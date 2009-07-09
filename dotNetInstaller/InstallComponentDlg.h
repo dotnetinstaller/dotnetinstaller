@@ -3,7 +3,7 @@
 #include "KCBusyProgressCtrl.h"
 #include "resource.h"
 
-class InstallerSetting;
+class Configuration;
 class Component;
 
 #define WM_USER_SETSTATUSINSTALL (WM_USER+1)
@@ -26,14 +26,14 @@ protected:
     DECLARE_MESSAGE_MAP()
 public:
 	CStatic m_InstallMessage;
-	void LoadComponent(InstallerSetting * setting, Component * p_Component);
+	void LoadComponent(Configuration * setting, Component * p_Component);
 
 private:
 	
 	UINT_PTR m_iTimer; //0 se il timer non è attivo
 
 private:
-	InstallerSetting * m_Setting;
+	Configuration * m_Setting;
 	Component * m_Component;
 public:
 	afx_msg void OnBnClickedSkip();

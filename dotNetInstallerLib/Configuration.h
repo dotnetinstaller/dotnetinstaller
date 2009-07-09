@@ -4,7 +4,7 @@ class Component;
 
 #include "WidgetPosition.h"
 
-class InstallerSetting
+class Configuration
 {
 public:
 	std::wstring dialog_caption;
@@ -73,7 +73,7 @@ private:
     // an ordered list of components
     std::vector<Component *> components;
 public:
-	InstallerSetting();
+	Configuration();
 	// use these functions to add/clear components
     void AddComponent(Component *);
     void ClearComponents();

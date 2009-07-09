@@ -18,14 +18,14 @@ struct ExtractCABComponent : public ThreadComponent
 {
     friend class ExtractCABProcessor;
 public:
-    ExtractCABComponent(InstallerSetting& settings);
+    ExtractCABComponent(Configuration& settings);
 	static int GetCabCount(HMODULE p_Module);
 	void SetDialog(CDialog * pDialog) { m_pDialog = pDialog; }
 protected:
 	UINT ExecOnThread();
 private:
 	CDialog * m_pDialog;
-    InstallerSetting& m_Settings;
+    Configuration& m_Settings;
     void ExtractCab(HMODULE p_Module, Component * pComponent);
 };
 

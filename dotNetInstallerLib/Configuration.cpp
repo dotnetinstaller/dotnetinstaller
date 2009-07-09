@@ -1,9 +1,9 @@
 #include "StdAfx.h"
-#include "InstallerSetting.h"
+#include "Configuration.h"
 #include "InstallerTypes.h"
 #include "InstallerLog.h"
 
-InstallerSetting::InstallerSetting()
+Configuration::Configuration()
     : must_reboot_required(false)
     , auto_close_if_installed(false)
     , auto_close_on_error(false)
@@ -15,7 +15,7 @@ InstallerSetting::InstallerSetting()
 
 }
 
-std::wstring InstallerSetting::ValidatePath(const std::wstring& path)
+std::wstring Configuration::ValidatePath(const std::wstring& path)
 {
     //ApplicationPath
 	std::wstring l_CurrentPath = DVLib::GetModuleDirectoryW();
@@ -36,13 +36,13 @@ std::wstring InstallerSetting::ValidatePath(const std::wstring& path)
     return tmp;
 }
 
-void InstallerSetting::AddComponent(Component * c)
+void Configuration::AddComponent(Component * c)
 {
     components_map.insert(std::make_pair(c->description, c));
     components.push_back(c);
 }
 
-void InstallerSetting::ClearComponents()
+void Configuration::ClearComponents()
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
@@ -53,7 +53,7 @@ void InstallerSetting::ClearComponents()
     components_map.clear();
 }
 
-std::wstring InstallerSetting::GetSessionGUID()
+std::wstring Configuration::GetSessionGUID()
 {
     static std::wstring s_GUID;
     if (s_GUID.empty())
@@ -63,7 +63,7 @@ std::wstring InstallerSetting::GetSessionGUID()
     return s_GUID;
 }
 
-std::wstring InstallerSetting::GetSessionTempPath(bool returnonly)
+std::wstring Configuration::GetSessionTempPath(bool returnonly)
 {
     // not threadsafe
     static std::wstring s_tempDirectory;

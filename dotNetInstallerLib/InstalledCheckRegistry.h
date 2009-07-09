@@ -19,6 +19,6 @@ public:
 	std::wstring wowoption; 
 public:
     InstalledCheckRegistry();
-    void Load(TiXmlElement * node, InstallerSetting& setting);
+    void Load(TiXmlElement * node, Configuration& setting);
 	bool IsInstalled() const;
 };

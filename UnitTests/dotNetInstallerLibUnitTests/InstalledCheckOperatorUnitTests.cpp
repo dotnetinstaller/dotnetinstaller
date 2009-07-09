@@ -9,7 +9,7 @@ class InstalledCheckTrue : public InstalledCheck
 {
 public:
 	bool IsInstalled() const { return true; }
-	void Load(TiXmlElement * node, InstallerSetting & setting) { }
+	void Load(TiXmlElement * node, Configuration & setting) { }
 	static InstalledCheckTrue Instance;
 };
 
@@ -17,7 +17,7 @@ class InstalledCheckFalse : public InstalledCheck
 {
 public:
 	bool IsInstalled() const { return false; }
-	void Load(TiXmlElement * node, InstallerSetting & setting) { }
+	void Load(TiXmlElement * node, Configuration & setting) { }
 	static InstalledCheckFalse Instance;
 };
 

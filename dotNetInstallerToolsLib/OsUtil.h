@@ -9,6 +9,22 @@ namespace DVLib
         LcidUser // GetUserDefaultLCID
     };
 
+	struct LcidType2wstringMapEntry
+	{
+		LcidType lcidtype;
+		LPCWSTR name;
+	};
+
+	static const LcidType2wstringMapEntry LcidType2wstringMap[] = 
+	{
+		{ LcidUserExe, L"LcidUserExe" },
+		{ LcidSystem, L"LcidSystem" },
+		{ LcidUser, L"LcidUser" },
+	};
+
+	LcidType wstring2lcidtype(const std::wstring& name);
+	std::wstring lcidtype2wstring(LcidType lcidtype);
+
 	enum OperatingSystem
 	{
 		winMin = -1,

@@ -7,7 +7,7 @@ class ConfigFile
 private:
 	DVLib::LcidType m_lcidtype;
     TiXmlDocument m_XmlDocument;
-	InstallerSetting m_Setting;
+	Configuration m_Setting;
 	std::wstring schema_generator;
 	std::wstring schema_version;
 public:

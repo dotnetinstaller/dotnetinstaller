@@ -12,7 +12,7 @@
 #include "InstalledCheckOperator.h"
 #include "InstalledCheckRegistry.h"
 #include "InstallerLog.h"
-#include "InstallerSetting.h"
+#include "Configuration.h"
 #include "installerTypes.h"
 #include "InstallUILevel.h"
 #include "MsiComponent.h"

@@ -214,10 +214,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\InstallerSettingUnitTests.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\InstallUILevelUnitTests.cpp"
 				>
 			</File>
@@ -285,10 +281,6 @@
 			</File>
 			<File
 				RelativePath=".\InstallerLogUnitTests.h"
-				>
-			</File>
-			<File
-				RelativePath=".\InstallerSettingUnitTests.h"
 				>
 			</File>
 			<File

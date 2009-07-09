@@ -121,3 +121,17 @@ void OsUtilUnitTests::testExistWindowsSystem()
 {
 	DVLib::ExitWindowsSystem(EWX_LOGOFF);
 }
+
+void OsUtilUnitTests::testwstring2lcidtype()
+{
+	CPPUNIT_ASSERT(DVLib::lcidtype2wstring(LcidUserExe) == L"LcidUserExe");
+	CPPUNIT_ASSERT(DVLib::lcidtype2wstring(LcidSystem) == L"LcidSystem");
+	CPPUNIT_ASSERT(DVLib::lcidtype2wstring(LcidUser) == L"LcidUser" );
+}
+
+void OsUtilUnitTests::testlcidtype2wstring()
+{
+	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"LcidUserExe") == DVLib::LcidUserExe);
+	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"LcidSystem") == DVLib::LcidSystem);
+	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"LcidUser") == DVLib::LcidUser);
+}

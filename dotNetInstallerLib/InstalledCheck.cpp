@@ -13,9 +13,9 @@ InstalledCheck::~InstalledCheck(void)
 
 }
 
-InstalledCheck * InstalledCheck::LoadFromXml(TiXmlElement *node, InstallerSetting &setting)
+InstalledCheck * InstalledCheck::LoadFromXml(TiXmlElement *node, Configuration &setting)
 {
-    std::wstring installedcheck_type = node->AttributeW("type").data();
+    std::wstring installedcheck_type = node->AttributeW("type");
 	InstalledCheck * new_installedcheck = NULL;
 	if (installedcheck_type == L"check_registry_value")
 	{

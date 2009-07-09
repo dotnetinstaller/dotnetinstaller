@@ -158,6 +158,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Configuration.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DownloadComponent.cpp"
 				>
 			</File>
@@ -183,10 +187,6 @@
 			</File>
 			<File
 				RelativePath=".\InstallerLog.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\InstallerSetting.cpp"
 				>
 			</File>
 			<File
@@ -248,6 +248,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Configuration.h"
+				>
+			</File>
+			<File
 				RelativePath=".\dotNetInstallerLib.h"
 				>
 			</File>
@@ -285,10 +289,6 @@
 			</File>
 			<File
 				RelativePath=".\InstallerLog.h"
-				>
-			</File>
-			<File
-				RelativePath=".\InstallerSetting.h"
 				>
 			</File>
 			<File

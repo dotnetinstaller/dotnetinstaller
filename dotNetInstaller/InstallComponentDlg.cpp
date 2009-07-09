@@ -33,7 +33,7 @@ END_MESSAGE_MAP()
 
 // InstallComponentDlg message handlers
 
-void InstallComponentDlg::LoadComponent(InstallerSetting * setting, Component * p_Component)
+void InstallComponentDlg::LoadComponent(Configuration * setting, Component * p_Component)
 {
 	m_Setting = setting;
 	m_Component = p_Component;

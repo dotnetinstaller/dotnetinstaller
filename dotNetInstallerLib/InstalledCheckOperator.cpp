@@ -9,10 +9,10 @@ InstalledCheckOperator::InstalledCheckOperator()
 
 }
 
-void InstalledCheckOperator::Load(TiXmlElement * node, InstallerSetting & setting)
+void InstalledCheckOperator::Load(TiXmlElement * node, Configuration & setting)
 {
-    type = node->AttributeW("type").data();
-    description = node->AttributeW("description").data();
+    type = node->AttributeW("type");
+    description = node->AttributeW("description");
 	LOG(L"----Reading installed check operator: " << description << L" (" << type << L")");
 
 	// installed checks

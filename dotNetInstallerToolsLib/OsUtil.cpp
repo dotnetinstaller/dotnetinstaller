@@ -423,3 +423,26 @@ void DVLib::ExitWindowsSystem(DWORD ulFlags, DWORD ulReason)
 	CHECK_WIN32_BOOL(::ExitWindowsEx(ulFlags, ulReason),
 		L"ExitWindowsEx");
 }
+
+
+DVLib::LcidType DVLib::wstring2lcidtype(const std::wstring& name)
+{
+	for (int i = 0; i < ARRAYSIZE(LcidType2wstringMap); i++)
+	{
+		if (LcidType2wstringMap[i].name == name)
+			return LcidType2wstringMap[i].lcidtype;
+	}
+
+	THROW_EX(L"Invalid LCID type: " << name);
+}
+
+std::wstring DVLib::lcidtype2wstring(LcidType lcidtype)
+{
+	for (int i = 0; i < ARRAYSIZE(LcidType2wstringMap); i++)
+	{
+		if (LcidType2wstringMap[i].lcidtype == lcidtype)
+			return LcidType2wstringMap[i].name;
+	}
+
+	THROW_EX(L"Invalid LCID type: " << lcidtype);
+}

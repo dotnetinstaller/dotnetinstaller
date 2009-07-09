@@ -47,7 +47,7 @@ UINT ExtractCABComponent::ExecOnThread()
     return ERROR_SUCCESS;
 };
 
-ExtractCABComponent::ExtractCABComponent(InstallerSetting& settings)
+ExtractCABComponent::ExtractCABComponent(Configuration& settings)
     : m_Settings(settings)
 	, m_pDialog(NULL)
 {
@@ -83,7 +83,7 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
 	resname.append(DVLib::towstring(currentIndex));
     LOG(L"Extracting Setup.cab");
 
-	std::wstring cabpath = (! m_Settings.cab_path.empty()) ? m_Settings.cab_path : InstallerSetting::GetSessionTempPath();
+	std::wstring cabpath = (! m_Settings.cab_path.empty()) ? m_Settings.cab_path : Configuration::GetSessionTempPath();
     cabpath = m_Settings.ValidatePath(cabpath);
 	LOG(L"Cabpath: " << cabpath);
 	DVLib::DirectoryCreate(cabpath);

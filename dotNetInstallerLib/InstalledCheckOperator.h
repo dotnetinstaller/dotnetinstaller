@@ -13,5 +13,5 @@ public:
 public:	
     InstalledCheckOperator();
 	bool IsInstalled() const;
-    void Load(TiXmlElement * node, InstallerSetting & setting);
+    void Load(TiXmlElement * node, Configuration & setting);
 };
