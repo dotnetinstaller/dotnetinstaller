@@ -1,10 +1,10 @@
 #pragma once
 #include "ProcessComponent.h"
 
-class cmd_component : public ProcessComponent
+class CmdComponent : public ProcessComponent
 {
 public:
-    cmd_component();
+    CmdComponent();
 public:
 	std::wstring command;
     std::wstring command_silent;

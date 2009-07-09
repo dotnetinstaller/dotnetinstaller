@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cppunitd.lib"
+				AdditionalDependencies="cppunitd.lib version.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(SolutionDir)\UnitTests\CppUnit\lib"
 				GenerateDebugInformation="true"
@@ -139,7 +139,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cppunit.lib"
+				AdditionalDependencies="cppunit.lib version.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(SolutionDir)\UnitTests\CppUnit\lib"
 				GenerateDebugInformation="true"
@@ -182,7 +182,31 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\CmdComponentUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\dotNetInstallerLibUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckFileUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckOperatorUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckRegistryUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MsiComponentUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\OpenFileComponentUnitTests.cpp"
 				>
 			</File>
 			<File
@@ -211,6 +235,30 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\CmdComponentUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckFileUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckOperatorUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckRegistryUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MsiComponentUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\OpenFileComponentUnitTests.h"
+				>
+			</File>
 			<File
 				RelativePath=".\stdafx.h"
 				>

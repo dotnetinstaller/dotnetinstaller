@@ -118,10 +118,10 @@ bool InstalledCheckRegistry::IsInstalled() const
 		}
 		else if (comparison == TEXT("contains"))
 		{
-			for each (const std::wstring& regfieldvalue in regfieldvalues)
+			for each (const std::wstring currentfieldvalue in fieldvalues)
 			{
 				bool found = false;
-				for each (const std::wstring currentfieldvalue in fieldvalues)
+				for each (const std::wstring& regfieldvalue in regfieldvalues)
 				{
 					if (regfieldvalue == currentfieldvalue)
 					{

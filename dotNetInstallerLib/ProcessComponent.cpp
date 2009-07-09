@@ -28,3 +28,13 @@ bool ProcessComponent::IsExecuting() const
 		return false;
     }
 }
+
+DWORD ProcessComponent::Wait() const
+{
+	CHECK_WIN32_BOOL(WAIT_OBJECT_0 == WaitForSingleObject(m_process_info.hProcess, INFINITE),
+		L"WaitForSingleObject");
+	DWORD dwExitCode = 0;
+	CHECK_WIN32_BOOL(::GetExitCodeProcess(m_process_info.hProcess, & dwExitCode),
+		L"GetExitCodeProcess");
+	return dwExitCode;
+}

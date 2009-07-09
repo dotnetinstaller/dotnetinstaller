@@ -3,12 +3,12 @@
 #include "InstallUILevel.h"
 #include "InstallerLog.h"
 
-cmd_component::cmd_component()
+CmdComponent::CmdComponent()
 {
 
 }
 
-void cmd_component::Exec()
+void CmdComponent::Exec()
 {
 	std::wstring l_command = command;
 	switch(CurrentInstallUILevel.GetUILevel())

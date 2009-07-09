@@ -167,7 +167,7 @@ void ConfigFile::LoadInstallConfigNode(TiXmlElement * node)
 			}
 			else if (l_comp_type == L"cmd")
 			{
-				cmd_component * l_cmd_Comp = new cmd_component();
+				CmdComponent * l_cmd_Comp = new CmdComponent();
 				l_cmd_Comp->command = m_Setting.ValidatePath(node_component->AttributeW("command"));
                 l_cmd_Comp->command_silent = m_Setting.ValidatePath(node_component->AttributeW("command_silent"));
 				l_cmd_Comp->command_basic = m_Setting.ValidatePath(node_component->AttributeW("command_basic"));
