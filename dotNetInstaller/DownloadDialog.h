@@ -27,7 +27,7 @@ private:
 	bool m_bDownloadCompleted;
 	HICON m_hIcon;
 	CWinThread * m_pDownloadThread;
-	static void DownloadComponents(IDownloadCallback *);
+	static void DownloadComponents(IDownloadCallback *, const std::vector<DownloadComponentInfo>& components);
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();

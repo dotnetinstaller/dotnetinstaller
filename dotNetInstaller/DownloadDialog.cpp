@@ -197,7 +197,7 @@ LRESULT DownloadDialog::OnCloseDialog( WPARAM, LPARAM )
 UINT DownloadDialog::ThreadProc(LPVOID pParam)
 {
 	DownloadDialog * dlg = (DownloadDialog *) pParam;
-	DownloadComponents(dlg);
+	DownloadComponents(dlg, dlg->GetComponents());
 	::PostMessage(dlg->GetSafeHwnd(), WM_USER_CLOSE_DIALOG, 0, 0);
 	return 0;
 }
@@ -206,7 +206,7 @@ void DownloadDialog::CopyFromSourcePath()
 {
 	for (size_t i = 0; i < m_Components.size(); i++)
 	{
-		DownloadComponent l_Component(this, & m_Components[i], i + 1, m_Components.size());
+		DownloadComponent l_Component(this, m_Components[i], i + 1, m_Components.size());
 		if (l_Component.IsCopyRequired())
 		{
 			l_Component.CopyFromSourcePath();
@@ -220,7 +220,7 @@ bool DownloadDialog::IsCopyRequired() const
 	{
 		DownloadComponent l_Component(
 			const_cast<DownloadDialog *>(this), 
-			const_cast<DownloadComponentInfo *>(& m_Components[i]),
+			m_Components[i],
 			i + 1, m_Components.size());
 		bool l_CopyRequired = l_Component.IsCopyRequired();
 				
@@ -244,7 +244,7 @@ bool DownloadDialog::IsDownloadRequired() const
 	{
 		DownloadComponent l_Component(
 			const_cast<DownloadDialog *>(this), 
-			const_cast<DownloadComponentInfo *>(& m_Components[i]),
+			m_Components[i],
 			i + 1, m_Components.size());
 		bool l_DownloadRequired = l_Component.IsDownloadRequired();
 				
@@ -262,11 +262,11 @@ bool DownloadDialog::IsDownloadRequired() const
 	return false;
 }
 
-void DownloadDialog::DownloadComponents(IDownloadCallback * callback)
+void DownloadDialog::DownloadComponents(IDownloadCallback * callback, const std::vector<DownloadComponentInfo>& components)
 {
 	try
 	{
-		for (size_t i = 0; i < callback->GetComponents().size(); i++)
+		for (size_t i = 0; i < components.size(); i++)
 		{
 			if (callback->IsDownloadCancelled())
 			{
@@ -274,7 +274,7 @@ void DownloadDialog::DownloadComponents(IDownloadCallback * callback)
 				return;
 			}
 
-			DownloadComponent component(callback, const_cast<DownloadComponentInfo *>(& callback->GetComponents()[i]), i + 1, callback->GetComponents().size());
+			DownloadComponent component(callback, components[i], i + 1, components.size());
 			component.StartDownload();
 
 			if (component.IsCancelled())

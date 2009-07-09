@@ -1,20 +1,21 @@
 #pragma once
 #include "Component.h"
 
-class thread_component : public Component
+class ThreadComponent : public Component
 {
 public:
-    thread_component();
-	~thread_component();
-public:
-    CWinThread * m_pThread;
-	DWORD m_exitcode;
-    std::wstring m_error;
+    ThreadComponent();
+	~ThreadComponent();
 public:
     bool IsExecuting() const;
-    virtual UINT ExecOnThread() = 0;
-    DWORD GetExitCode() const;
+	DWORD GetExitCode() const { return m_exitcode; }
+	const std::wstring& GetError() const { return m_error; }
     void Exec();
+protected:
+    virtual UINT ExecOnThread() = 0;
 private:
+    CWinThread * m_pThread;
+    std::wstring m_error;
+	DWORD m_exitcode;
     static UINT ExecuteThread(LPVOID pParam);
 };

@@ -15,16 +15,16 @@ class DownloadComponent : public IBindStatusCallback
 {
 private:
 	IDownloadCallback * m_Callback;
-	DownloadComponentInfo * m_Component;
+	DownloadComponentInfo m_Component;
 	int m_CurrentComponent; 
 	int m_TotalComponents;
 	bool m_bCancel;
 public:	
 	DownloadComponent(
 		IDownloadCallback * callback, 
-		DownloadComponentInfo * component, 
-		int p_CurrentComponent, 
-		int p_TotalComponents);
+		const DownloadComponentInfo& component, 
+		int p_CurrentComponent = 0, 
+		int p_TotalComponents = 1);
 	inline bool IsCancelled() { return m_bCancel; }
 	// returns true if a download is required (local file doesn't exist, etc.)
 	bool IsDownloadRequired() const;

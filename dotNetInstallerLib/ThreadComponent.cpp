@@ -1,14 +1,14 @@
 #include "StdAfx.h"
 #include "ThreadComponent.h"
 
-thread_component::thread_component()
+ThreadComponent::ThreadComponent()
 	: m_exitcode(0)
 	, m_pThread(NULL)
 {
 
 }
 
-thread_component::~thread_component()
+ThreadComponent::~ThreadComponent()
 {
 	if (m_pThread != NULL) 
 	{
@@ -16,12 +16,7 @@ thread_component::~thread_component()
 	}
 }
 
-DWORD thread_component::GetExitCode() const
-{
-    return m_exitcode;
-}
-
-bool thread_component::IsExecuting() const
+bool ThreadComponent::IsExecuting() const
 {
     if (m_pThread == NULL)
         return false;
@@ -29,9 +24,9 @@ bool thread_component::IsExecuting() const
     return (WAIT_TIMEOUT == WaitForSingleObject(m_pThread->m_hThread, 0));
 }
 
-UINT thread_component::ExecuteThread(LPVOID pParam)
+UINT ThreadComponent::ExecuteThread(LPVOID pParam)
 {
-	thread_component * pComponent = (thread_component *) pParam;
+	ThreadComponent * pComponent = (ThreadComponent *) pParam;
 	try
 	{
 		pComponent->m_exitcode = pComponent->ExecOnThread();
@@ -50,7 +45,7 @@ UINT thread_component::ExecuteThread(LPVOID pParam)
 	return pComponent->m_exitcode;
 }
 
-void thread_component::Exec()
+void ThreadComponent::Exec()
 {
     m_pThread = AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED);
 
@@ -67,5 +62,5 @@ void thread_component::Exec()
 	m_pThread = NULL;
 
 	CHECK_BOOL(m_error.empty(), m_error);
-	CHECK_BOOL(m_exitcode == 0, L"Unexpected error");
+	CHECK_BOOL(m_exitcode == 0, L"Unexpected error code " << m_exitcode);
 }

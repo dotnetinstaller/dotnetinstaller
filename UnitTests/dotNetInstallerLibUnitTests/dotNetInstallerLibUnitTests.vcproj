@@ -190,6 +190,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DownloadComponentCallbackImpl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DownloadComponentUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\InstalledCheckFileUnitTests.cpp"
 				>
 			</File>
@@ -199,6 +207,18 @@
 			</File>
 			<File
 				RelativePath=".\InstalledCheckRegistryUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InstallerLogUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InstallerSettingUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InstallUILevelUnitTests.cpp"
 				>
 			</File>
 			<File
@@ -229,6 +249,10 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\ThreadComponentUnitTests.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -237,6 +261,14 @@
 			>
 			<File
 				RelativePath=".\CmdComponentUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DownloadComponentCallbackImpl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DownloadComponentUnitTests.h"
 				>
 			</File>
 			<File
@@ -252,6 +284,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstallerLogUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstallerSettingUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstallUILevelUnitTests.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MsiComponentUnitTests.h"
 				>
 			</File>
@@ -261,6 +305,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ThreadComponentUnitTests.h"
 				>
 			</File>
 		</Filter>

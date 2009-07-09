@@ -10,5 +10,4 @@ public:
 	virtual void DownloadError(const std::wstring& message) = 0;
 	virtual bool IsDownloadCancelled() const = 0;
 	virtual void DownloadCancel() = 0;
-	virtual const std::vector<DownloadComponentInfo>& GetComponents() const = 0;
 };

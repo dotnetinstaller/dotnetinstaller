@@ -14,17 +14,18 @@ public:
 	void OnAfterCopyFile(char* s8_File, WCHAR* u16_File, void* p_Param);
 };
 
-struct ExtractCABComponent : public thread_component
+struct ExtractCABComponent : public ThreadComponent
 {
     friend class ExtractCABProcessor;
 public:
     ExtractCABComponent(InstallerSetting& settings);
 	static int GetCabCount(HMODULE p_Module);
 	void SetDialog(CDialog * pDialog) { m_pDialog = pDialog; }
+protected:
+	UINT ExecOnThread();
 private:
 	CDialog * m_pDialog;
     InstallerSetting& m_Settings;
-	UINT ExecOnThread();
     void ExtractCab(HMODULE p_Module, Component * pComponent);
 };
 
