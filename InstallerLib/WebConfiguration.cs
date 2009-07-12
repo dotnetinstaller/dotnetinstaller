@@ -25,22 +25,30 @@ namespace InstallerLib
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
+            base.OnXmlWriteTag(e);
             e.XmlWriter.WriteStartElement("configfile");
             e.XmlWriter.WriteAttributeString("filename", m_referencefile);
             e.XmlWriter.WriteEndElement();
-            base.OnXmlWriteTag(e);
         }
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            XmlElement l_ConfigFile = (XmlElement)e.XmlElement.SelectSingleNode("configfile");
-            if (l_ConfigFile != null)
-            {
-                if (l_ConfigFile.Attributes["filename"] != null)
-                    m_referencefile = l_ConfigFile.Attributes["filename"].InnerText;
-            }
-
             base.OnXmlReadTag(e);
+        }
+
+        protected override bool OnXmlChild(XmlElement child)
+        {
+            bool processed = false;
+            switch (child.LocalName)
+            {
+                case "configfile":
+                    m_referencefile = child.Attributes["filename"].InnerText;
+                    processed = true;
+                    break;
+                default:
+                    break;
+            }
+            return processed;
         }
 
         private string m_referencefile; // tag: configfile/@filename;

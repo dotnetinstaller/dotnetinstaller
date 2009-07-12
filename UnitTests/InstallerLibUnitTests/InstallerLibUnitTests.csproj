@@ -75,6 +75,11 @@
       <Link>Samples\DownloadSetup\Configuration.xml</Link>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\Samples\ReferenceSetup\Configuration.xml">
+      <Link>Samples\ReferenceSetup\Configuration.xml</Link>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
