@@ -1,7 +1,5 @@
 #pragma once
 
-#include "ConfigFile.h"
-
 struct ExtractCABComponent;
 
 class ExtractCABProcessor : public Cabinet::CExtractT<ExtractCABProcessor> 
@@ -18,14 +16,14 @@ struct ExtractCABComponent : public ThreadComponent
 {
     friend class ExtractCABProcessor;
 public:
-    ExtractCABComponent(Configuration& settings);
+    ExtractCABComponent(InstallConfiguration * configuration);
 	static int GetCabCount(HMODULE p_Module);
 	void SetDialog(CDialog * pDialog) { m_pDialog = pDialog; }
 protected:
 	UINT ExecOnThread();
 private:
 	CDialog * m_pDialog;
-    Configuration& m_Settings;
+    InstallConfiguration * m_pConfiguration;
     void ExtractCab(HMODULE p_Module, Component * pComponent);
 };
 

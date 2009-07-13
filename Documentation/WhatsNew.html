@@ -30,10 +30,12 @@
         <li>Converted the projects to Visual Studio 2008 format.</li>
         <li>Added OS filter identifier for Windows Vista SP2.</li>
         <li>Registry search for REG_MULTI_SZ semantics have been extended. You can now specify
-            a comma-delimited list of values to <code>match</code> exactly all values, 
-            <code>contains</code> to match a subset of values and you can no longer specify a 
-            <code>version</code> match.</li>
+            a comma-delimited list of values to <code>match</code> exactly all values, <code>contains</code>
+            to match a subset of values and you can no longer specify a <code>version</code>
+            match.</li>
         <li>Bug: reference (web) configurations broken in the editor.</li>
+        <li>Added support for nested reference configurations. Each downloaded configuration
+            file is checked for more reference configurations.</li>
     </ul>
     <h3>
         1.6 (29 June 2009)</h3>
@@ -103,8 +105,7 @@
             option to true will prevent users from continuing when a reboot is required.
         </li>
         <li>Added <code>failed_exec_command_continue</code> per-component extending the global
-            setting that defines the message to show when a component fails to install.
-        </li>
+            setting that defines the message to show when a component fails to install.</li>
         <li>Added optional <code>reboot_required</code>: a message that can be configured per
             component, extending the global setting. </li>
         <li>Added <code>auto_close_on_error</code>: changes behavior on component error, now
@@ -154,77 +155,71 @@
     <ul>
         <li>Added support for installing 64-bit applications, including WOW support for component
             installed checks, processor architecture restrictions per installation and/or component,
-            etc. </li>
+            etc.</li>
         <li>Added support for silent installs; silent mode can be declared either in the configuration
-            XML or from the command line </li>
+            XML or from the command line.</li>
         <li>Added command_silent to the component of type "command" and cmdparameters_silent
             to the component of type "msi" that optionally replace command and cmdparameters
-            parameters in a silent install </li>
+            parameters in a silent install.</li>
         <li>Added an "alwaysdownload" configuration XML attribute to the download element; if
             this value is false, the file will not be download if it already exists locally
-            (this enables using the same configuration XML for both online and offline installs)
-        </li>
+            (this enables using the same configuration XML for both online and offline installs).</li>
         <li>Modified configuration-level OS filter matching to be included as part of the configuration
             filter checks (previously, the program would exit if an unmatched configuration-level
-            OS filter was encounter) </li>
+            OS filter was encounter).</li>
         <li>Updated configuration element processing so that all valid configuration blocks
             (matching both OS and LCID filters) will be executed (previously, only the first
-            matching block was executed) </li>
+            matching block was executed).</li>
         <li>Added environment variable processing support to component commands where the component
-            type is "cmd" or "msi" </li>
+            type is "cmd" or "msi".</li>
         <li>Modified complete_command handling so that dotNetInstaller will wait for Command_Complete
-            to finish executing </li>
-        <li>Added complete_command_silent to allow overriding complete_command on silent install
-        </li>
+            to finish executing.</li>
+        <li>Added complete_command_silent to allow overriding complete_command on silent install.</li>
         <li>Added OS filter identifiers for Windows XP SP3, Windows Server 2003 SP1, Windows
-            Server 2003 SP2, and Windows Vista SP1 </li>
+            Server 2003 SP2, and Windows Vista SP1.</li>
         <li>Added optional configuration-level and component-level OS filter matching system
             architecture (x86, x64, etc). See "processor_architecture_filter". This filter restricts
             the entire boostrapper from running on non-supported processors and enables installation
-            of different dependencies on different processor architectures </li>
+            of different dependencies on different processor architectures.</li>
         <li>Added CABing, embedding of support files using <a href="http://www.codeproject.com/KB/files/CABCompressExtract.aspx">
-            Elmü's CAB library</a> and a PackagedSetup sample </li>
+            Elmue's CAB library</a> and a PackagedSetup sample.</li>
         <li>Added an "Embed File" component, child of "configuration" and "component", to embed
-            support files when /Embed is specified </li>
+            support files when /Embed is specified.</li>
         <li>Added /ExtractCab command line option to dotNetInstaller.exe that extracts the embedded
-            CAB file and its contents in the current directory </li>
+            CAB file and its contents in the current directory.</li>
         <li>Added InstallerLinker.exe with command line options /e (Embed) and /a (AppPath)
-            and /v (Verbose) for using in build processes </li>
+            and /v (Verbose) for using in build processes.</li>
         <li>Added /EmbedFile and /EmbedFolder command line options to InstallerLinker to embed
-            individual files and folder structures </li>
-        <li>Added support for embedding an icon that can replace the default setup icon
-        
-        </li>
+            individual files and folder structures.</li>
+        <li>Added support for embedding an icon that can replace the default setup icon.</li>
         <li>Added "cab_dialog_message", "cab_cancelled_message", "cab_dialog_caption", "cab_path"
-            and "cab_path_autodelete" options </li>
-        <li>Temporary files (eg. downloaded files) will be deleted upon completion of dotNetInstaller
-        </li>
+            and "cab_path_autodelete" options.</li>
+        <li>Temporary files (eg. downloaded files) will be deleted upon completion of dotNetInstaller.</li>
         <li>Added /Log command-line option and "log_enabled" configuration file parameter that
-            enables logging for dotNetInstaller and all MSI components executed </li>
+            enables logging for dotNetInstaller and all MSI components executed.</li>
         <li>Added /LogFile &lt;path\filename&gt; command-line option and a log_file configuration
             file parameter to specify the resulting full path to the log filename for the dotNetInstaller
-            itself </li>
+            itself.</li>
         <li>Added application version and operating system header to the log output as well
-            as a timestamp in front of every log entry </li>
-        <li>Added #CABPATH variable that can be used in path settings </li>
-        <li>Added #GUID variable that represents a unique GUID across a single instance of dotNetInstaller
-        </li>
+            as a timestamp in front of every log entry.</li>
+        <li>Added #CABPATH variable that can be used in path settings.</li>
+        <li>Added #GUID variable that represents a unique GUID across a single instance of dotNetInstaller.</li>
         <li>Added an MSBuild script that centrally versions, builds and packages dotNetInstaller
-            into target/Debug|Release, including a sample </li>
+            into target/Debug|Release, including a sample.</li>
         <li>Added a combined Visual Studio solution, dni.sln with automatic versioning (reqiures
             <a href="http://msbuildtasks.tigris.org/">MSBuild Community Tasks</a>); the major
             and minor version number can be incremented in dni.proj, the build number is the
-            latest SVN revision and the release number is a timestamp </li>
+            latest SVN revision and the release number is a timestamp.</li>
         <li>Added features to specify additional binary information, including copyright or
             company name, specifically "file_version" and "product_version" configuration attributes,
             as well as free-formed string attributes, using <a href="http://www.codeproject.com/KB/library/ResourceLib.aspx">
-                ResourceLib</a> </li>
+                ResourceLib</a>.</li>
         <li>Added a component "required" option; a required component cannot be de-selected
             in the Advanced tab and complete_command is only executed when all reqiured components
-            have been installed </li>
+            have been installed.</li>
         <li>Added /CompleteCommandArgs "value" to dotNetInstaller.exe to pass additional parameters
-            to "complete_command" and "complete_command_silent" </li>
-        <li>Added horizontal scrollbars in component lists that can't fit all the text in</li>
+            to "complete_command" and "complete_command_silent".</li>
+        <li>Added horizontal scrollbars in component lists that can't fit all the text in.</li>
     </ul>
     <h3>
         1.3.3.0 (19 March 2007)</h3>

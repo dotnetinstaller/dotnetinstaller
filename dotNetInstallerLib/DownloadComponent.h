@@ -15,14 +15,14 @@ class DownloadComponent : public IBindStatusCallback
 {
 private:
 	IDownloadCallback * m_Callback;
-	DownloadComponentInfo m_Component;
-	int m_CurrentComponent; 
+	DownloadComponentInfoPtr m_pComponent;
+	int m_CurrentComponent;
 	int m_TotalComponents;
 	bool m_bCancel;
 public:	
 	DownloadComponent(
 		IDownloadCallback * callback, 
-		const DownloadComponentInfo& component, 
+		DownloadComponentInfoPtr componentinfo, 
 		int p_CurrentComponent = 0, 
 		int p_TotalComponents = 1);
 	inline bool IsCancelled() { return m_bCancel; }

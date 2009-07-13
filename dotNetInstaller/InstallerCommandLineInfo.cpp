@@ -111,7 +111,7 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
                     error.append(DVLib::wstring2string(pszParam));
                     throw std::exception(error.c_str());
                 }
-                m_componentCmdArgs[l_componentArgsArray[0]] = l_componentArgsArray[1];
+                componentCmdArgs[l_componentArgsArray[0]] = l_componentArgsArray[1];
                 break;
 		}
 

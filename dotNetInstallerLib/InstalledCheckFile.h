@@ -12,6 +12,6 @@ public:
 	std::wstring comparison; 
 public:
     InstalledCheckFile();
-    void Load(TiXmlElement * node, Configuration& setting);
+    void Load(TiXmlElement * node);
 	virtual bool IsInstalled() const;
 };

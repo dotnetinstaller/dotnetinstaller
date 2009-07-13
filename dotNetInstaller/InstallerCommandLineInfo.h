@@ -16,7 +16,7 @@ public:
     const std::wstring& GetCompleteCommandArgs() const { return m_completeCommandArgs; }
     bool ExtractCab() const { return m_extractCab; }
 public:
-    std::map<std::wstring, std::wstring> m_componentCmdArgs;
+    std::map<std::wstring, std::wstring> componentCmdArgs;
 private:
 	enum m_argFlags 
 	{ 

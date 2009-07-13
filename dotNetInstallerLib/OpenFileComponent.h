@@ -10,5 +10,5 @@ public:
 	void Exec();
 	DWORD GetExitCode() const;
 	bool IsExecuting() const;
+	void Load(TiXmlElement * node);
 };
-

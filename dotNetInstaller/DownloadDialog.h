@@ -21,13 +21,13 @@ private:
 	std::wstring m_HelpMessageDownloading;
 	std::wstring m_ButtonStartCaption;
 	std::wstring m_ButtonCancelCaption;
-	std::vector<DownloadComponentInfo> m_Components;
+	std::vector<DownloadComponentInfoPtr> m_Components;
 	bool m_bAutoStartDownload;
 	bool m_bCancelOrErrorDownload;
 	bool m_bDownloadCompleted;
 	HICON m_hIcon;
 	CWinThread * m_pDownloadThread;
-	static void DownloadComponents(IDownloadCallback *, const std::vector<DownloadComponentInfo>& components);
+	static void DownloadComponents(IDownloadCallback *, const std::vector<DownloadComponentInfoPtr>& components);
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
@@ -57,7 +57,7 @@ public:
 	void DownloadError(const std::wstring& error);
 	bool IsDownloadCancelled() const;
 	void DownloadCancel();
-	inline const std::vector<DownloadComponentInfo>& GetComponents() const { return m_Components; }
+	inline const std::vector<DownloadComponentInfoPtr>& GetComponents() const { return m_Components; }
 };
 
 

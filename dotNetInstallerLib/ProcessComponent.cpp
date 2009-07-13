@@ -1,7 +1,9 @@
 #include "StdAfx.h"
 #include "ProcessComponent.h"
+#include "InstallConfiguration.h"
 
-ProcessComponent::ProcessComponent(void)
+ProcessComponent::ProcessComponent(component_type t)
+	: Component(t)
 {
 	ZeroMemory(& m_process_info, sizeof(PROCESS_INFORMATION));
 }

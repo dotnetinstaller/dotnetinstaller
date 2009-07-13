@@ -1,10 +1,11 @@
 #pragma once
 #include "Component.h"
+#include "InstallConfiguration.h"
 
 class ThreadComponent : public Component
 {
 public:
-    ThreadComponent();
+    ThreadComponent(component_type t);
 	~ThreadComponent();
 public:
     bool IsExecuting() const;
@@ -14,7 +15,7 @@ public:
 protected:
     virtual UINT ExecOnThread() = 0;
 private:
-    CWinThread * m_pThread;
+    auto_any<CWinThread *, close_delete> m_pThread;
     std::wstring m_error;
 	DWORD m_exitcode;
     static UINT ExecuteThread(LPVOID pParam);

@@ -8,60 +8,57 @@ using namespace DVLib::UnitTests;
 class InstalledCheckTrue : public InstalledCheck
 {
 public:
+	InstalledCheckTrue() {  }
 	bool IsInstalled() const { return true; }
-	void Load(TiXmlElement * node, Configuration & setting) { }
-	static InstalledCheckTrue Instance;
+	void Load(TiXmlElement * node) { }
 };
 
 class InstalledCheckFalse : public InstalledCheck
 {
 public:
+	InstalledCheckFalse() {  }
 	bool IsInstalled() const { return false; }
-	void Load(TiXmlElement * node, Configuration & setting) { }
-	static InstalledCheckFalse Instance;
+	void Load(TiXmlElement * node) { }
 };
-
-InstalledCheckFalse InstalledCheckFalse::Instance;
-InstalledCheckTrue InstalledCheckTrue::Instance;
 
 void InstalledCheckOperatorUnitTests::testAnd()
 {
-	InstalledCheckOperator check;
-	check.type = L"And";
-	CPPUNIT_ASSERT(! check.IsInstalled());
-	check.installed_checks.push_back(& InstalledCheckTrue::Instance);
-	CPPUNIT_ASSERT(check.IsInstalled());
-	check.installed_checks.push_back(& InstalledCheckFalse::Instance);
-	CPPUNIT_ASSERT(! check.IsInstalled());
-	check.installed_checks.clear();
-	check.installed_checks.push_back(& InstalledCheckFalse::Instance);
-	CPPUNIT_ASSERT(! check.IsInstalled());
+	InstalledCheckOperatorPtr check(new InstalledCheckOperator());
+	check->type = L"And";
+	CPPUNIT_ASSERT(! check->IsInstalled());
+	check->installedchecks.push_back(InstalledCheckPtr(new InstalledCheckTrue()));
+	CPPUNIT_ASSERT(check->IsInstalled());
+	check->installedchecks.push_back(InstalledCheckPtr(new InstalledCheckFalse()));
+	CPPUNIT_ASSERT(! check->IsInstalled());
+	check->installedchecks.clear();
+	check->installedchecks.push_back(InstalledCheckPtr(new InstalledCheckFalse()));
+	CPPUNIT_ASSERT(! check->IsInstalled());
 }
 
 void InstalledCheckOperatorUnitTests::testOr()
 {
-	InstalledCheckOperator check;
-	check.type = L"Or";
-	CPPUNIT_ASSERT(! check.IsInstalled());
-	check.installed_checks.push_back(& InstalledCheckTrue::Instance);
-	CPPUNIT_ASSERT(check.IsInstalled());
-	check.installed_checks.push_back(& InstalledCheckFalse::Instance);
-	CPPUNIT_ASSERT(check.IsInstalled());
-	check.installed_checks.clear();
-	check.installed_checks.push_back(& InstalledCheckFalse::Instance);
-	CPPUNIT_ASSERT(! check.IsInstalled());
+	InstalledCheckOperatorPtr check(new InstalledCheckOperator());
+	check->type = L"Or";
+	CPPUNIT_ASSERT(! check->IsInstalled());
+	check->installedchecks.push_back(InstalledCheckPtr(new InstalledCheckTrue()));
+	CPPUNIT_ASSERT(check->IsInstalled());
+	check->installedchecks.push_back(InstalledCheckPtr(new InstalledCheckFalse()));
+	CPPUNIT_ASSERT(check->IsInstalled());
+	check->installedchecks.clear();
+	check->installedchecks.push_back(InstalledCheckPtr(new InstalledCheckFalse()));
+	CPPUNIT_ASSERT(! check->IsInstalled());
 }
 
 void InstalledCheckOperatorUnitTests::testNot()
 {
-	InstalledCheckOperator check;
-	check.type = L"Not";
-	CPPUNIT_ASSERT(check.IsInstalled());
-	check.installed_checks.push_back(& InstalledCheckTrue::Instance);
-	CPPUNIT_ASSERT(! check.IsInstalled());
-	check.installed_checks.push_back(& InstalledCheckFalse::Instance);
-	CPPUNIT_ASSERT(! check.IsInstalled());
-	check.installed_checks.clear();
-	check.installed_checks.push_back(& InstalledCheckFalse::Instance);
-	CPPUNIT_ASSERT(check.IsInstalled());
+	InstalledCheckOperatorPtr check(new InstalledCheckOperator());
+	check->type = L"Not";
+	CPPUNIT_ASSERT(check->IsInstalled());
+	check->installedchecks.push_back(InstalledCheckPtr(new InstalledCheckTrue()));
+	CPPUNIT_ASSERT(! check->IsInstalled());
+	check->installedchecks.push_back(InstalledCheckPtr(new InstalledCheckFalse()));
+	CPPUNIT_ASSERT(! check->IsInstalled());
+	check->installedchecks.clear();
+	check->installedchecks.push_back(InstalledCheckPtr(new InstalledCheckFalse()));
+	CPPUNIT_ASSERT(check->IsInstalled());
 }

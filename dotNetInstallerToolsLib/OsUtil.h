@@ -17,9 +17,9 @@ namespace DVLib
 
 	static const LcidType2wstringMapEntry LcidType2wstringMap[] = 
 	{
-		{ LcidUserExe, L"LcidUserExe" },
-		{ LcidSystem, L"LcidSystem" },
-		{ LcidUser, L"LcidUser" },
+		{ LcidUserExe, L"UserExe" },
+		{ LcidSystem, L"System" },
+		{ LcidUser, L"User" },
 	};
 
 	LcidType wstring2lcidtype(const std::wstring& name);

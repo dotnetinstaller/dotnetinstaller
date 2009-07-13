@@ -10,4 +10,5 @@ public:
     std::wstring command_silent;
 	std::wstring command_basic;
 	void Exec();
+	void Load(TiXmlElement * node);
 };

@@ -28,15 +28,16 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 private:
-	int m_recorded_error;	
+	int m_recorded_error;
 	bool m_additional_config;
-	Configuration m_Settings;
+	InstallConfiguration * m_configuration;
     void ExtractCab();
     void SelectComponents();
     // move a window to the coordinates defined by a rectangle with defaults
     static bool MoveWindow(CWnd& dlg, const WidgetPosition& pos);
 public:
 	void ExecuteCompleteCode(bool componentsInstalled);
+	bool RunInstallConfiguration(InstallConfiguration * configuration, bool additional_config);
 	bool RunDownloadConfiguration(DownloadGroupConfiguration & p_Configuration);
 	bool DownloadComponents(Component& p_Component);
 	inline int GetRecordedError() const { return m_recorded_error; }
@@ -49,7 +50,6 @@ public:
 	CComponentsList m_ListBoxComponents;
 	CStatic m_PictureBox;
 	CStatic m_lblOperatingSystem;
-	INT_PTR RunDni(Configuration & setting, bool p_additional_config);
 	afx_msg void OnBnClickedInstall();
 	bool LoadComponentsList(void);
 	CHyperlinkStatic m_InfoLink;

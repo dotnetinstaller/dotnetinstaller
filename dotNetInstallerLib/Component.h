@@ -1,9 +1,8 @@
 #pragma once
 
-class InstalledCheck;
-class InstalledCheckOperator;
-
 #include "DownloadGroupConfiguration.h"
+#include "EmbedFile.h"
+#include "InstalledCheck.h"
 
 enum component_type
 {
@@ -16,7 +15,7 @@ enum component_type
 class Component
 {
 public:
-    Component();
+    Component(component_type t);
     virtual ~Component();
 public:
 	// component type: cmd, msi, openfile
@@ -52,9 +51,11 @@ public:
     // true if component is required for final command to execute
     bool required;
 	// classi per gestire la verifica se il componente è installato o no
-	std::vector<InstalledCheck *> installedchecks;
+	std::vector<InstalledCheckPtr> installedchecks;
 	// informazioni sull'eventuale download dei componenti (fa riferimento al nodo downloaddialog all'interno di Component, se non è presente non viene scaricato nessun componente)
-	DownloadGroupConfiguration DownloadDialogConfiguration;
+	DownloadGroupConfigurationPtr downloadconfiguration;
+	// embedded files
+	std::vector< EmbedFilePtr > embedfiles;
 	// indica se il componente contiene o meno dei componenti da scaricare (in pratica dice se il nodo downloaddialog è presente o no)
 	bool download;
 	// funzione virtuale specifica per il tipo di componente
@@ -64,4 +65,8 @@ public:
 	virtual bool IsInstalled() const;
 	// indica se il componente verrà eseguito o no
 	bool selected;
+	// load a component from an xml node
+	virtual void Load(TiXmlElement * node);
 };
+
+typedef shared_any<Component *, close_delete> ComponentPtr;

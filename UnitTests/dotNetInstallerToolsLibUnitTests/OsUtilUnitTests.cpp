@@ -124,14 +124,14 @@ void OsUtilUnitTests::testExistWindowsSystem()
 
 void OsUtilUnitTests::testwstring2lcidtype()
 {
-	CPPUNIT_ASSERT(DVLib::lcidtype2wstring(LcidUserExe) == L"LcidUserExe");
-	CPPUNIT_ASSERT(DVLib::lcidtype2wstring(LcidSystem) == L"LcidSystem");
-	CPPUNIT_ASSERT(DVLib::lcidtype2wstring(LcidUser) == L"LcidUser" );
+	CPPUNIT_ASSERT(DVLib::lcidtype2wstring(LcidUserExe) == L"UserExe");
+	CPPUNIT_ASSERT(DVLib::lcidtype2wstring(LcidSystem) == L"System");
+	CPPUNIT_ASSERT(DVLib::lcidtype2wstring(LcidUser) == L"User" );
 }
 
 void OsUtilUnitTests::testlcidtype2wstring()
 {
-	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"LcidUserExe") == DVLib::LcidUserExe);
-	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"LcidSystem") == DVLib::LcidSystem);
-	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"LcidUser") == DVLib::LcidUser);
+	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"UserExe") == DVLib::LcidUserExe);
+	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"System") == DVLib::LcidSystem);
+	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"User") == DVLib::LcidUser);
 }

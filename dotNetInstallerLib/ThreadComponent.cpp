@@ -1,8 +1,10 @@
 #include "StdAfx.h"
 #include "ThreadComponent.h"
+#include "InstallConfiguration.h"
 
-ThreadComponent::ThreadComponent()
-	: m_exitcode(0)
+ThreadComponent::ThreadComponent(component_type t)
+	: Component(t)
+	, m_exitcode(0)
 	, m_pThread(NULL)
 {
 
@@ -10,15 +12,11 @@ ThreadComponent::ThreadComponent()
 
 ThreadComponent::~ThreadComponent()
 {
-	if (m_pThread != NULL) 
-	{
-		delete m_pThread;
-	}
 }
 
 bool ThreadComponent::IsExecuting() const
 {
-    if (m_pThread == NULL)
+    if (get(m_pThread) == NULL)
         return false;
 
     return (WAIT_TIMEOUT == WaitForSingleObject(m_pThread->m_hThread, 0));
@@ -47,9 +45,9 @@ UINT ThreadComponent::ExecuteThread(LPVOID pParam)
 
 void ThreadComponent::Exec()
 {
-    m_pThread = AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED);
+    m_pThread = auto_any<CWinThread *, close_delete>(AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED));
 
-	CHECK_WIN32_BOOL(m_pThread != NULL,
+	CHECK_WIN32_BOOL(get(m_pThread) != NULL,
 		L"AfxBeginThread");
 
 	m_pThread->m_bAutoDelete = false;
@@ -58,8 +56,7 @@ void ThreadComponent::Exec()
     CHECK_WIN32_BOOL(WAIT_FAILED != WaitForSingleObject(m_pThread->m_hThread, INFINITE),
 		L"WaitForSingleObject");
 
-	delete m_pThread;
-	m_pThread = NULL;
+	reset(m_pThread);
 
 	CHECK_BOOL(m_error.empty(), m_error);
 	CHECK_BOOL(m_exitcode == 0, L"Unexpected error code " << m_exitcode);

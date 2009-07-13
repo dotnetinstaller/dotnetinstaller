@@ -10,9 +10,16 @@ class ThreadComponentImpl : public ThreadComponent
 private:
 	int m_exitcode;
 public:
-	ThreadComponentImpl(int exitcode) : m_exitcode(exitcode) { }
+	ThreadComponentImpl(int exitcode);
 	UINT ExecOnThread() { return m_exitcode; }
 };
+
+ThreadComponentImpl::ThreadComponentImpl(int exitcode) 
+	: ThreadComponent(undefined), 
+	m_exitcode(exitcode) 
+{ 
+
+}
 
 void ThreadComponentUnitTests::testExec()
 {

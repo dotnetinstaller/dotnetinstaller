@@ -199,7 +199,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ConfigFile.cpp"
+				RelativePath=".\ConfigFileManager.cpp"
 				>
 			</File>
 			<File
@@ -277,7 +277,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ConfigFile.h"
+				RelativePath=".\ConfigFileManager.h"
 				>
 			</File>
 			<File

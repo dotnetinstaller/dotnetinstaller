@@ -2,8 +2,11 @@
 #include "MsiComponent.h"
 #include "InstallUILevel.h"
 #include "InstallerLog.h"
+#include "InstallConfiguration.h"
+#include "InstallerSession.h"
 
 MsiComponent::MsiComponent()
+	: ProcessComponent(msi)
 {
 
 }
@@ -50,7 +53,24 @@ void MsiComponent::Exec()
 		break;
 	}
 	
+	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::s_AdditionalCmdLineArgs.find(description);
+    if (cmdline != InstallerSession::s_AdditionalCmdLineArgs.end())
+    {
+		l_command += TEXT(" ");
+		l_command += cmdline->second.c_str();
+		LOG(L"-- Additional component arguments: " << cmdline->second);
+    }
+
     LOG(L"Executing: " << l_command);
 	DVLib::DetachCmd(l_command, &m_process_info);
-};
+}
 
+void MsiComponent::Load(TiXmlElement * node)
+{
+	package = InstallerSession::MakePath(node->AttributeW("package"));
+	cmdparameters = InstallerSession::MakePath(node->AttributeW("cmdparameters"));
+	cmdparameters_silent = InstallerSession::MakePath(node->AttributeW("cmdparameters_silent"));
+	cmdparameters_basic = InstallerSession::MakePath(node->AttributeW("cmdparameters_basic"));
+	Component::Load(node);
+	LOG(L"Loaded 'msi' component '" << package << L"'");
+}

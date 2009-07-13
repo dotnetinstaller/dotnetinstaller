@@ -186,6 +186,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ConfigFileUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\dotNetInstallerLibUnitTests.cpp"
 				>
 			</File>
@@ -257,6 +261,10 @@
 			>
 			<File
 				RelativePath=".\CmdComponentUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ConfigFileUnitTests.h"
 				>
 			</File>
 			<File

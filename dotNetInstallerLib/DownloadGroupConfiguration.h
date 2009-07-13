@@ -16,9 +16,13 @@ public:
 	// cancel button caption
 	std::wstring cancel_caption;
 	// download components
-	std::vector<DownloadComponentInfo> components;
+	std::vector< DownloadComponentInfoPtr > downloadcomponents;
 	// auto-start download
 	bool auto_start;
 public:
 	DownloadGroupConfiguration();
+	~DownloadGroupConfiguration();
+	void Load(TiXmlElement * node);
 };
+
+typedef shared_any<DownloadGroupConfiguration *, close_delete> DownloadGroupConfigurationPtr;

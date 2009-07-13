@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 #include "ExtractCAB.h"
-#include "ConfigFile.h"
 #include "InstallComponentDlg.h"
 #include "Resource.h"
 
@@ -31,7 +30,7 @@ BOOL ExtractCABProcessor::OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param
 
         if (m_pComponent->cancelled)
         {
-            std::wstring cancelled_message = m_pComponent->m_Settings.cab_cancelled_message;
+            std::wstring cancelled_message = m_pComponent->m_pConfiguration->cab_cancelled_message;
             if (cancelled_message.empty()) cancelled_message = L"Cancelled by user";
             THROW_EX(cancelled_message);
         }
@@ -47,8 +46,9 @@ UINT ExtractCABComponent::ExecOnThread()
     return ERROR_SUCCESS;
 };
 
-ExtractCABComponent::ExtractCABComponent(Configuration& settings)
-    : m_Settings(settings)
+ExtractCABComponent::ExtractCABComponent(InstallConfiguration * configuration)
+    : ThreadComponent(undefined)
+	, m_pConfiguration(configuration)
 	, m_pDialog(NULL)
 {
 
@@ -83,8 +83,10 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
 	resname.append(DVLib::towstring(currentIndex));
     LOG(L"Extracting Setup.cab");
 
-	std::wstring cabpath = (! m_Settings.cab_path.empty()) ? m_Settings.cab_path : Configuration::GetSessionTempPath();
-    cabpath = m_Settings.ValidatePath(cabpath);
+	std::wstring cabpath = (! m_pConfiguration->cab_path.empty()) 
+		? m_pConfiguration->cab_path 
+		: InstallerSession::GetSessionTempPath();
+	cabpath = InstallerSession::MakePath(cabpath);
 	LOG(L"Cabpath: " << cabpath);
 	DVLib::DirectoryCreate(cabpath);
 
@@ -121,7 +123,7 @@ void ExtractCABComponent::ExtractCab(HMODULE p_Module, Component * pComponent)
         if (cancelled)
         {
 			LOG(L"Cancelled: " << resname);
-            std::wstring cancelled_message = m_Settings.cab_cancelled_message;
+            std::wstring cancelled_message = m_pConfiguration->cab_cancelled_message;
             if (cancelled_message.empty()) cancelled_message = L"Cancelled by user";
 			THROW_EX(cancelled_message);
         }

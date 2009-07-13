@@ -7,10 +7,65 @@ CPPUNIT_TEST_SUITE_REGISTRATION(PathUtilUnitTests);
 
 void PathUtilUnitTests::testGetFileDirectory()
 {
+	struct TestData
+	{
+		LPCWSTR path;
+		LPCWSTR dir;
+	};
+
+	TestData testdata[] = 
+	{
+		{ L"", L"" },
+		{ L"x", L"" },
+		{ L"C:\\", L"C:\\" },
+		{ L"file://", L"file://" },
+		{ L"file://x", L"file://" },
+		{ L"file://x/", L"file://x/" },
+		{ L"file://x/y", L"file://x/" },
+		{ L"C:\\temp", L"C:\\" },
+		{ L"C:\\temp\\", L"C:\\temp\\" },
+		{ L"C:\\temp\\file", L"C:\\temp\\" },
+		{ L"C:\\temp\\path\\file", L"C:\\temp\\path\\" },
+	};
+
+	for (int i = 0; i < ARRAYSIZE(testdata); i++)
+	{
+		std::wstring dir = DVLib::GetFileDirectoryW(testdata[i].path);
+		std::wcout << std::endl << testdata[i].path << L" => " << dir;
+		CPPUNIT_ASSERT(dir == testdata[i].dir);
+	}
 }
 
 void PathUtilUnitTests::testGetFileName()
 {
+	struct TestData
+	{
+		LPCWSTR path;
+		LPCWSTR filename;
+	};
+
+	TestData testdata[] = 
+	{
+		{ L"", L"" },
+		{ L"x", L"x" },
+		{ L"filename.txt", L"filename.txt" },
+		{ L"C:\\", L"" },
+		{ L"file://", L"" },
+		{ L"file://x", L"x" },
+		{ L"file://x/", L"" },
+		{ L"file://x/y", L"y" },
+		{ L"C:\\temp", L"temp" },
+		{ L"C:\\temp\\", L"" },
+		{ L"C:\\temp\\file", L"file" },
+		{ L"C:\\temp\\path\\file", L"file" },
+	};
+
+	for (int i = 0; i < ARRAYSIZE(testdata); i++)
+	{
+		std::wstring filename = DVLib::GetFileNameW(testdata[i].path);
+		std::wcout << std::endl << testdata[i].path << L" => " << filename;
+		CPPUNIT_ASSERT(filename == testdata[i].filename);
+	}
 }
 
 void PathUtilUnitTests::testGetModuleDirectory()

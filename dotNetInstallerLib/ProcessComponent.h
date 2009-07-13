@@ -4,7 +4,7 @@
 class ProcessComponent : public Component
 {
 public:
-    ProcessComponent();
+    ProcessComponent(component_type t);
 public:
 	PROCESS_INFORMATION m_process_info;
 	DWORD GetExitCode() const;

@@ -47,13 +47,11 @@ END_MESSAGE_MAP()
 
 // gestori di messaggi di CdotNetInstallerDlg
 
-INT_PTR CdotNetInstallerDlg::RunDni(Configuration & settings, bool p_additional_config)
+bool CdotNetInstallerDlg::RunInstallConfiguration(InstallConfiguration * configuration, bool p_additional_config)
 {
-	// settings must be "in scope" through the duration of the dialog display
-	m_Settings = settings;
+	m_configuration = configuration;
 	m_additional_config = p_additional_config;
-
-	return this->DoModal();
+	return(IDOK == this->DoModal());
 }
 
 BOOL CdotNetInstallerDlg::OnInitDialog()
@@ -70,7 +68,8 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 
 	// determinating operating system
     m_lblOperatingSystem.SetWindowText(
-		(DVLib::GetOperatingSystemVersionString() + L" (" + DVLib::pa2wstring(DVLib::GetProcessorArchitecture()) + L")").c_str());
+		(DVLib::GetOperatingSystemVersionString() + L" (" + 
+		DVLib::pa2wstring(DVLib::GetProcessorArchitecture()) + L")").c_str());
 
 	// hide the "Skip" button if there are no additional configurations
 	if (!m_additional_config)
@@ -79,36 +78,36 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	}
 
 	// load xml file
-	this->SetWindowText(m_Settings.dialog_caption.c_str());
-    AfxGetApp()->m_pszAppName = _tcsdup(m_Settings.dialog_caption.c_str());
+	this->SetWindowText(m_configuration->dialog_caption.c_str());
+    AfxGetApp()->m_pszAppName = _tcsdup(m_configuration->dialog_caption.c_str());
 
-	m_btnCancel.SetWindowText(m_Settings.cancel_caption.c_str());
-	m_btnSkip.SetWindowText(m_Settings.skip_caption.c_str());
-	m_btnInstall.SetWindowText(m_Settings.install_caption.c_str());
-	m_lblMessage.SetWindowText(m_Settings.dialog_message.c_str());
+	m_btnCancel.SetWindowText(m_configuration->cancel_caption.c_str());
+	m_btnSkip.SetWindowText(m_configuration->skip_caption.c_str());
+	m_btnInstall.SetWindowText(m_configuration->install_caption.c_str());
+	m_lblMessage.SetWindowText(m_configuration->dialog_message.c_str());
 
-    MoveWindow(* this, m_Settings.dialog_position);
-    MoveWindow(m_ListBoxComponents, m_Settings.dialog_components_list_position);
-    MoveWindow(m_lblMessage, m_Settings.dialog_message_position);
-    MoveWindow(m_PictureBox, m_Settings.dialog_bitmap_position);
-    MoveWindow(m_InfoLink, m_Settings.dialog_otherinfo_link_position);
-    MoveWindow(m_lblOperatingSystem, m_Settings.dialog_osinfo_position);
-    MoveWindow(m_btnInstall, m_Settings.dialog_install_button_position);
-    MoveWindow(m_btnCancel, m_Settings.dialog_cancel_button_position);
-    MoveWindow(m_btnSkip, m_Settings.dialog_skip_button_position);
+    MoveWindow(* this, m_configuration->dialog_position);
+    MoveWindow(m_ListBoxComponents, m_configuration->dialog_components_list_position);
+    MoveWindow(m_lblMessage, m_configuration->dialog_message_position);
+    MoveWindow(m_PictureBox, m_configuration->dialog_bitmap_position);
+    MoveWindow(m_InfoLink, m_configuration->dialog_otherinfo_link_position);
+    MoveWindow(m_lblOperatingSystem, m_configuration->dialog_osinfo_position);
+    MoveWindow(m_btnInstall, m_configuration->dialog_install_button_position);
+    MoveWindow(m_btnCancel, m_configuration->dialog_cancel_button_position);
+    MoveWindow(m_btnSkip, m_configuration->dialog_skip_button_position);
     
-	m_InfoLink.SetCaption(m_Settings.dialog_otherinfo_caption);
-	m_InfoLink.SetHyperlink(m_Settings.dialog_otherinfo_link);
-	if (m_Settings.dialog_otherinfo_caption.empty())
+	m_InfoLink.SetCaption(m_configuration->dialog_otherinfo_caption);
+	m_InfoLink.SetHyperlink(m_configuration->dialog_otherinfo_link);
+	if (m_configuration->dialog_otherinfo_caption.empty())
 		m_InfoLink.ShowWindow(SW_HIDE);
 
 	try
 	{
 		HBITMAP hBitmap;
-		if ( (! m_Settings.dialog_bitmap.empty()) &&
-			DVLib::FileExists(m_Settings.dialog_bitmap) )
+		if ( (! m_configuration->dialog_bitmap.empty()) &&
+			DVLib::FileExists(m_configuration->dialog_bitmap) )
 		{
-			hBitmap = DVLib::LoadBitmapFromFile(m_Settings.dialog_bitmap);
+			hBitmap = DVLib::LoadBitmapFromFile(m_configuration->dialog_bitmap);
 		}
 		else
 		{
@@ -128,9 +127,9 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
     // just extract the CABs
     if (commandLineInfo.ExtractCab())
     {
-		m_Settings.cab_path = DVLib::GetCurrentDirectoryW();
-        m_Settings.cab_path.append(L"\\SupportFiles");
-        m_Settings.cab_path_autodelete = false;
+		m_configuration->cab_path = DVLib::GetCurrentDirectoryW();
+        m_configuration->cab_path.append(L"\\SupportFiles");
+        m_configuration->cab_path_autodelete = false;
         ExtractCab();
         OnOK();
         return FALSE;
@@ -138,11 +137,11 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 
 	if (LoadComponentsList())
 	{
-		if (m_Settings.auto_close_if_installed || CurrentInstallUILevel.IsSilent())
+		if (m_configuration->auto_close_if_installed || CurrentInstallUILevel.IsSilent())
 		{
-            if (! m_Settings.complete_command.empty()
-				|| ! m_Settings.complete_command_silent.empty()
-				|| ! m_Settings.complete_command_basic.empty())
+            if (! m_configuration->complete_command.empty()
+				|| ! m_configuration->complete_command_silent.empty()
+				|| ! m_configuration->complete_command_basic.empty())
             {
                 ExtractCab(); // the command may need to execute a file
             }
@@ -223,19 +222,19 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		bool l_bRemoveRunOnce = true;
 		bool l_bShutdownOrCancel = false;
 
-	    for each(Component * component in m_Settings.GetComponents())
+	    for each(const ComponentPtr& component in m_configuration->components)
 		{
 			bool l_retVal = false;
 			try
 			{
 				if (component->selected)
 				{
-					LOG(L"--Executing component: " << component->description);
+					LOG(L"--- Executing component: " << component->description);
 
 					InstallComponentDlg l_dg;
 					if (CurrentInstallUILevel.IsAnyUI())
 					{
-						l_dg.LoadComponent(& m_Settings, component);
+						l_dg.LoadComponent(m_configuration, get(component));
 					}
 
 					if (DownloadComponents(* component))
@@ -254,11 +253,11 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 							}
 						}
 
-						LOG("---Component DIALOG CLOSED");
+						LOG("--- Component DIALOG CLOSED");
 						
 						if (component->IsExecuting()) // se l'installazione è ancora attiva non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
 						{
-							LOG(L"---Component STILL ACTIVE");
+							LOG(L"--- Component STILL ACTIVE");
 
 							l_bRemoveRunOnce = false;
 							break; //esco dal for
@@ -268,7 +267,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 							DWORD l_ExitCode = component->GetExitCode();
 							if (l_ExitCode == ERROR_SUCCESS || l_ExitCode == ERROR_SUCCESS_REBOOT_REQUIRED)
 							{
-								LOG(L"---Component SUCCEEDED");
+								LOG(L"--- Component SUCCEEDED");
 
 								//se è presente un messaggio di completamento installazione
 								std::wstring l_completeMsg = component->installcompletemessage;
@@ -280,22 +279,22 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 								if (component->mustreboot ||
 									l_ExitCode == ERROR_SUCCESS_REBOOT_REQUIRED) //se l'installazione ha chiesto di riavviare non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
 								{
-									LOG(L"---Component NEEDS REBOOT");
+									LOG(L"--- Component NEEDS REBOOT");
 
 									l_bRemoveRunOnce = false;
 
                                     bool l_bReboot = false;
                                     std::wstring reboot_required = component->reboot_required;
-                                    if (reboot_required.empty()) reboot_required = m_Settings.reboot_required;
-                                    if (m_Settings.must_reboot_required || component->must_reboot_required)
+                                    if (reboot_required.empty()) reboot_required = m_configuration->reboot_required;
+                                    if (m_configuration->must_reboot_required || component->must_reboot_required)
                                     {
-										LOG(L"---Required REBOOT");
+										LOG(L"--- Required REBOOT");
                                         DniMessageBox(reboot_required, MB_OK|MB_ICONQUESTION);
                                         l_bReboot = true;
                                     }
                                     else 
                                     {
-										LOG(L"---Prompt for REBOOT");
+										LOG(L"--- Prompt for REBOOT");
                                         l_bReboot = (DniMessageBox(reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES);
                                     }
 
@@ -303,7 +302,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 									{
 										DVLib::ExitWindowsSystem(EWX_REBOOT);
 										l_bShutdownOrCancel = true;
-										LOG(L"---Initiated REBOOT");
+										LOG(L"--- Initiated REBOOT");
 										PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);
 										break;
 									}
@@ -316,13 +315,13 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 								}
 								else //installazione completata con sucesso
 								{
-									LOG(L"---Component INSTALLED");
+									LOG(L"--- Component INSTALLED");
 									l_retVal = true;
 								}
 							}
 							else //error restituito dal setup
 							{
-                                LOG(L"***Component ERROR ON EXIT CODE: " << l_ExitCode);
+                                LOG(L"*** Component ERROR ON EXIT CODE: " << l_ExitCode);
 								RecordError(l_ExitCode);
 								l_retVal = false;
 							}
@@ -330,7 +329,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 					}
 					else //download non riuscito o eseguzione del setup non riuscita
 					{
-						LOG(L"***Component ERROR ON DOWNLOAD OR EXECUTING");
+						LOG(L"*** Component ERROR ON DOWNLOAD OR EXECUTING");
 						RecordError();
 						l_retVal = false;
 					}
@@ -342,7 +341,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 			}
 			catch(std::exception& ex)
 			{
-                LOG(L"***ERROR in component: " << DVLib::string2wstring(ex.what()));
+                LOG(L"*** ERROR in component: " << DVLib::string2wstring(ex.what()));
 				RecordError();
 				l_retVal = false;
 			}
@@ -353,11 +352,11 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
                 // unless global or component setting decides otherwise
 
                 std::wstring failed_exec_command_continue = component->failed_exec_command_continue;
-                if (failed_exec_command_continue.empty()) failed_exec_command_continue = m_Settings.failed_exec_command_continue;
+                if (failed_exec_command_continue.empty()) failed_exec_command_continue = m_configuration->failed_exec_command_continue;
 				std::wstring l_msg = DVLib::FormatMessage(const_cast<wchar_t *>(failed_exec_command_continue.c_str()), component->description.c_str());
 
                 bool l_breakSequence = false;
-                if (m_Settings.allow_continue_on_error && component->allow_continue_on_error)
+                if (m_configuration->allow_continue_on_error && component->allow_continue_on_error)
                 {
 				    l_breakSequence = (DniMessageBox(l_msg, MB_YESNO, IDNO, MB_YESNO|MB_ICONEXCLAMATION) == IDNO);
                 }
@@ -369,7 +368,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 
                 if (l_breakSequence)
                 {
-                    if (m_Settings.auto_close_on_error)
+                    if (m_configuration->auto_close_on_error)
                     {
                         l_bShutdownOrCancel = true;
                     }
@@ -385,7 +384,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		}
 		else
 		{
-			LOG(L"--dotNetInstaller is configured to auto execute on the next reboot");
+			LOG(L"-- dotNetInstaller is configured to auto execute on the next reboot");
 		}
 
 		if (l_bShutdownOrCancel)
@@ -414,7 +413,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
     }
 	catch(...)
 	{
-		LOG(L"***Failed to install one or more components");
+		LOG(L"*** Failed to install one or more components");
 		DniSilentMessageBox(TEXT("Failed to install one or more components"), MB_OK|MB_ICONSTOP);
 		RecordError();
 	}
@@ -430,7 +429,7 @@ bool CdotNetInstallerDlg::LoadComponentsList(void)
 	ASSERT(pDC);
 
 	bool l_AllInstalled = true;
-    for each(Component * component in m_Settings.GetComponents())
+    for each(const ComponentPtr& component in m_configuration->components)
 	{
         bool component_installed = component->IsInstalled();
         
@@ -450,17 +449,17 @@ bool CdotNetInstallerDlg::LoadComponentsList(void)
 		std::wstring l_descr = component->description;
 	    l_descr += L" ";
         l_descr += component_installed
-			? (component->status_installed.empty() ? m_Settings.status_installed : component->status_installed)
-			: (component->status_notinstalled.empty() ? m_Settings.status_notinstalled : component->status_notinstalled);
+			? (component->status_installed.empty() ? m_configuration->status_installed : component->status_installed)
+			: (component->status_notinstalled.empty() ? m_configuration->status_notinstalled : component->status_notinstalled);
 
-        if (! m_Settings.dialog_show_installed && component_installed)
+        if (! m_configuration->dialog_show_installed && component_installed)
             continue;
 
-        if (! m_Settings.dialog_show_required && component->required)
+        if (! m_configuration->dialog_show_required && component->required)
             continue;
 
 		int id = m_ListBoxComponents.AddString(l_descr.c_str());
-		m_ListBoxComponents.SetItemDataPtr(id, component);
+		m_ListBoxComponents.SetItemDataPtr(id, get(component));
 
         if (component->selected)
         {
@@ -500,14 +499,11 @@ void CdotNetInstallerDlg::OnDestroy()
 
 	try
 	{
-		LOG(L"Releasing components");
-        m_Settings.ClearComponents();
-
         // delete temporary directory
         // even if a reboot is required, the temporary folder is gone; next run will re-extract components
-        std::wstring cabpath = (! m_Settings.cab_path.empty()) ? m_Settings.cab_path : Configuration::GetSessionTempPath(true);
-        cabpath = m_Settings.ValidatePath(cabpath);
-        if (m_Settings.cab_path_autodelete && ! cabpath.empty() && DVLib::FileExists(cabpath))
+        std::wstring cabpath = (! m_configuration->cab_path.empty()) ? m_configuration->cab_path : InstallerSession::GetSessionTempPath(true);
+		cabpath = InstallerSession::MakePath(cabpath);
+        if (m_configuration->cab_path_autodelete && ! cabpath.empty() && DVLib::FileExists(cabpath))
         {
 		    LOG(L"Deleting temporary folder: " << cabpath);
 			DVLib::DirectoryDelete(cabpath);
@@ -537,10 +533,11 @@ void CdotNetInstallerDlg::ExtractCab()
 	if (ExtractCABComponent::GetCabCount(AfxGetApp()->m_hInstance) == 0)
 		return;
 
-    ExtractCABComponent e_component(m_Settings);
-    Configuration e_setting;
-    e_setting.installing_component_wait = m_Settings.cab_dialog_message;
-    e_component.description = m_Settings.cab_dialog_caption;
+    ExtractCABComponent e_component(m_configuration);
+    InstallConfiguration e_setting;
+    e_setting.installing_component_wait = m_configuration->cab_dialog_message;
+    e_component.description = m_configuration->cab_dialog_caption;
+    e_component.Exec();
     InstallComponentDlg l_dg;
 	if (CurrentInstallUILevel.IsAnyUI())
 	{
@@ -548,8 +545,6 @@ void CdotNetInstallerDlg::ExtractCab()
 		e_component.SetDialog(& l_dg);
 		l_dg.DoModal();
 	}
-
-    e_component.Exec();
 }
 
 // the pos rectangle is the top left point, width and height, not l/r/t/b
@@ -608,7 +603,7 @@ bool CdotNetInstallerDlg::DownloadComponents(Component& p_Component)
 {
 	if (p_Component.download)
     {
-		return RunDownloadConfiguration(p_Component.DownloadDialogConfiguration);
+		return RunDownloadConfiguration(* get(p_Component.downloadconfiguration));
     }
 
 	return true;
@@ -616,13 +611,13 @@ bool CdotNetInstallerDlg::DownloadComponents(Component& p_Component)
 
 void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
 {
-	LOG(L"--Complete Command");
+	LOG(L"--- Complete Command");
 
-    std::wstring message = m_Settings.installation_completed;
+    std::wstring message = m_configuration->installation_completed;
 	// installation completed, but no components have been installed
-	if (! componentsInstalled && ! m_Settings.installation_none.empty())
+	if (! componentsInstalled && ! m_configuration->installation_none.empty())
 	{
-		message = m_Settings.installation_none;
+		message = m_configuration->installation_none;
 	}
 
 	if (! message.empty())
@@ -630,16 +625,16 @@ void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
 		DniMessageBox(message, MB_OK|MB_ICONINFORMATION);
     }
 
-	std::wstring l_complete_command = m_Settings.complete_command;
+	std::wstring l_complete_command = m_configuration->complete_command;
 	switch(CurrentInstallUILevel.GetUILevel())
 	{
 	case InstallUILevelSilent:
-		if (! m_Settings.complete_command_silent.empty()) l_complete_command = m_Settings.complete_command_silent;
-		else if (! m_Settings.complete_command_basic.empty()) l_complete_command = m_Settings.complete_command_basic;
+		if (! m_configuration->complete_command_silent.empty()) l_complete_command = m_configuration->complete_command_silent;
+		else if (! m_configuration->complete_command_basic.empty()) l_complete_command = m_configuration->complete_command_basic;
 		break;
 	case InstallUILevelBasic:
-		if (! m_Settings.complete_command_basic.empty()) l_complete_command = m_Settings.complete_command_basic;
-		else if (! m_Settings.complete_command_silent.empty()) l_complete_command = m_Settings.complete_command_silent;
+		if (! m_configuration->complete_command_basic.empty()) l_complete_command = m_configuration->complete_command_basic;
+		else if (! m_configuration->complete_command_silent.empty()) l_complete_command = m_configuration->complete_command_silent;
 		break;
 	}
 

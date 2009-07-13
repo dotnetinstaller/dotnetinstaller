@@ -1,1 +1,4 @@
 #include <Version/Version.rc>
+
+RES_CONFIGURATION CUSTOM "..\\..\\Samples\\PackagedSetup\\Configuration.xml"
+

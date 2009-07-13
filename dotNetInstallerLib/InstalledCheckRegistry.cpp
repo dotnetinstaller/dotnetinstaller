@@ -2,14 +2,13 @@
 #include "InstalledCheckRegistry.h"
 #include "InstallerLog.h"
 
-InstalledCheckRegistry::InstalledCheckRegistry(void)
+InstalledCheckRegistry::InstalledCheckRegistry()
 {
 
 }
 
-void InstalledCheckRegistry::Load(TiXmlElement * node, Configuration& setting)
+void InstalledCheckRegistry::Load(TiXmlElement * node)
 {
-    LOG(L"----Reading REGISTRY installed check: " << node->AttributeW("path"));
     fieldname = node->AttributeW("fieldname");
     fieldtype = node->AttributeW("fieldtype");
     fieldvalue = node->AttributeW("fieldvalue");
@@ -17,6 +16,7 @@ void InstalledCheckRegistry::Load(TiXmlElement * node, Configuration& setting)
     comparison = node->AttributeW("comparison");
     rootkey = node->AttributeW("rootkey");
     wowoption = node->AttributeW("wowoption");
+	LOG(L"Loaded 'registry' installed check '" << rootkey << L"\\" << path << L"\\" << fieldname << L"'");
 }
 
 bool InstalledCheckRegistry::IsInstalled() const
@@ -46,7 +46,7 @@ bool InstalledCheckRegistry::IsInstalled() const
 
 	if (! DVLib::RegistryKeyExists(DVLib::wstring2HKEY(rootkey), path, fieldname, dwKeyOption))
 	{
-		LOG(L"***No registry key found: " << keypath);
+		LOG(L"*** No registry key found: " << keypath);
 		return false;
 	}
 

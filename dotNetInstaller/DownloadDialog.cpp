@@ -19,7 +19,7 @@ IMPLEMENT_DYNAMIC(DownloadDialog, CDialog)
 	m_HelpMessageDownloading = p_Configuration.downloading_message;
 	m_ButtonStartCaption = p_Configuration.start_caption;
 	m_ButtonCancelCaption = p_Configuration.cancel_caption;
-	m_Components = p_Configuration.components;
+	m_Components = p_Configuration.downloadcomponents;
 	m_bAutoStartDownload = p_Configuration.auto_start;
 
 	LOG(L"Opening download dialog: " << m_Caption);
@@ -127,20 +127,20 @@ afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM lParam
 		}
 		else if (l_Param->Type == StatusType_Error) //ERROR
 		{
-			LOG(L"***Download ERROR: " << l_Param->Error);
+			LOG(L"*** Download ERROR: " << l_Param->Error);
 			DniSilentMessageBox(l_Param->Error, MB_OK|MB_ICONSTOP);
 			m_bCancelOrErrorDownload = true;
 			DownloadStatusParam::Free(l_Param);
 		}
 		else if (l_Param->Type == StatusType_Canceled) //CANCELED
 		{
-			LOG(L"***Download CANCELED");
+			LOG(L"*** Download CANCELED");
 			m_bCancelOrErrorDownload = true;
 			DownloadStatusParam::Free(l_Param);
 		}
 		else if (l_Param->Type == StatusType_Completed) //COMPLETED
 		{
-			LOG(L"---Download OK");
+			LOG(L"--- Download OK");
 			m_bDownloadCompleted = true; //Download OK
 			DownloadStatusParam::Free(l_Param);
 		}
@@ -262,7 +262,7 @@ bool DownloadDialog::IsDownloadRequired() const
 	return false;
 }
 
-void DownloadDialog::DownloadComponents(IDownloadCallback * callback, const std::vector<DownloadComponentInfo>& components)
+void DownloadDialog::DownloadComponents(IDownloadCallback * callback, const std::vector<DownloadComponentInfoPtr>& components)
 {
 	try
 	{

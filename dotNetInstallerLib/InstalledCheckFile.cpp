@@ -1,17 +1,19 @@
 #include "StdAfx.h"
 #include "InstalledCheckFile.h"
 #include "InstallerLog.h"
+#include "InstallConfiguration.h"
+#include "InstallerSession.h"
 
 InstalledCheckFile::InstalledCheckFile()
 {
 }
 
-void InstalledCheckFile::Load(TiXmlElement * node, Configuration& setting)
+void InstalledCheckFile::Load(TiXmlElement * node)
 {
-    LOG(L"----Reading CHECKFILE installed check: " << node->AttributeW("filename"));
-    filename = setting.ValidatePath(node->AttributeW("filename"));
+    filename = InstallerSession::MakePath(node->AttributeW("filename"));
     fileversion = node->AttributeW("fileversion");
     comparison = node->AttributeW("comparison");
+	LOG(L"Loaded 'file' installed check '" << filename << L"'");
 }
 
 bool InstalledCheckFile::IsInstalled() const

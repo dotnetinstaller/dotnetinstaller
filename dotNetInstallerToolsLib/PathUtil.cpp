@@ -8,27 +8,36 @@
 
 std::string DVLib::GetFileDirectoryA(const std::string& path)
 {
-	int backslashPos = path.rfind('\\', path.length());
-	if (backslashPos == path.npos)
-		throw std::exception("missing \\");
+	if (DVLib::startswith(path, "file://"))
+		return "file://" + GetFileDirectoryA(path.substr(ARRAYSIZE("file://") - 1));
 
-	return path.substr(0, backslashPos);
+	int backslashPos = path.rfind('\\', path.length());
+	if (backslashPos == path.npos) backslashPos = path.rfind('/', path.length());
+	if (backslashPos == path.npos)
+		return "";
+
+	return path.substr(0, backslashPos + 1);
 }
 
 std::wstring DVLib::GetFileDirectoryW(const std::wstring& path)
 {
-	int backslashPos = path.rfind(L'\\', path.length());
-	if (backslashPos == path.npos)
-		throw std::exception("missing \\");
+	if (DVLib::startswith(path, L"file://"))
+		return L"file://" + GetFileDirectoryW(path.substr(ARRAYSIZE(L"file://") - 1));
 
-	return path.substr(0, backslashPos);
+	int backslashPos = path.rfind(L'\\', path.length());
+	if (backslashPos == path.npos) backslashPos = path.rfind(L'/', path.length());
+	if (backslashPos == path.npos)
+		return L"";
+
+	return path.substr(0, backslashPos + 1);
 }
 
 std::string DVLib::GetFileNameA(const std::string& path)
 {
 	int backslashPos = path.rfind('\\', path.length());
+	if (backslashPos == path.npos) backslashPos = path.rfind('/', path.length());
 	if (backslashPos == path.npos)
-		throw std::exception("missing \\");
+		return path;
 
 	return path.substr(backslashPos + 1, path.length() - backslashPos - 1);
 }
@@ -36,8 +45,9 @@ std::string DVLib::GetFileNameA(const std::string& path)
 std::wstring DVLib::GetFileNameW(const std::wstring& path)
 {
 	int backslashPos = path.rfind(L'\\', path.length());
+	if (backslashPos == path.npos) backslashPos = path.rfind(L'/', path.length());
 	if (backslashPos == path.npos)
-		throw std::exception("missing \\");
+		return path;
 
 	return path.substr(backslashPos + 1, path.length() - backslashPos - 1);
 }

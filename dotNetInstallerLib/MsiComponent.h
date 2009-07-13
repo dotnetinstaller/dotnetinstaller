@@ -11,5 +11,6 @@ public:
     std::wstring cmdparameters_silent;
 	std::wstring cmdparameters_basic;
 	void Exec();
+	void Load(TiXmlElement * node);
 };
 

@@ -9,13 +9,13 @@ using namespace DVLib::UnitTests;
 void DownloadComponentUnitTests::testDownload()
 {
 	// download via URL
-	DownloadComponentInfo info;
-	info.always_download = false;
-	info.component_name = L"test download";
-	info.source_path = L"";
-	info.source_url = L"file://" + DVLib::GetModuleFileNameW();
-	info.destination_path = DVLib::GetTemporaryDirectoryW();
-	info.destination_filename = DVLib::GenerateGUIDStringW();
+	DownloadComponentInfoPtr info(new DownloadComponentInfo());
+	info->alwaysdownload = false;
+	info->componentname = L"test download";
+	info->sourcepath = L"";
+	info->sourceurl = L"file://" + DVLib::GetModuleFileNameW();
+	info->destinationpath = DVLib::GetTemporaryDirectoryW();
+	info->destinationfilename = DVLib::GenerateGUIDStringW();
 	DownloadComponentCallbackImpl callback;
 	DownloadComponent component(& callback, info);
 	CPPUNIT_ASSERT(! component.IsCopyRequired());
@@ -23,7 +23,7 @@ void DownloadComponentUnitTests::testDownload()
 	component.StartDownload();
 	callback.DownloadComplete();
 	CPPUNIT_ASSERT(! component.IsCancelled());
-	std::wstring fullpath = DVLib::DirectoryCombine(info.destination_path, info.destination_filename);
+	std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
 	CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
 	DVLib::FileDelete(fullpath);
 }
@@ -31,13 +31,13 @@ void DownloadComponentUnitTests::testDownload()
 void DownloadComponentUnitTests::testCopyFromSource()
 {
 	// download via URL
-	DownloadComponentInfo info;
-	info.always_download = false;
-	info.component_name = L"test download";
-	info.source_url = L"file://this is a bogus url";
-	info.source_path = DVLib::GetModuleFileNameW();
-	info.destination_path = DVLib::GetTemporaryDirectoryW();
-	info.destination_filename = DVLib::GenerateGUIDStringW();
+	DownloadComponentInfoPtr info(new DownloadComponentInfo());
+	info->alwaysdownload = false;
+	info->componentname = L"test download";
+	info->sourceurl = L"file://this is a bogus url";
+	info->sourcepath = DVLib::GetModuleFileNameW();
+	info->destinationpath = DVLib::GetTemporaryDirectoryW();
+	info->destinationfilename = DVLib::GenerateGUIDStringW();
 	DownloadComponentCallbackImpl callback;
 	DownloadComponent component(& callback, info);
 	CPPUNIT_ASSERT(component.IsCopyRequired());
@@ -45,7 +45,7 @@ void DownloadComponentUnitTests::testCopyFromSource()
 	component.CopyFromSourcePath();
 	callback.DownloadComplete();
 	CPPUNIT_ASSERT(! component.IsCancelled());
-	std::wstring fullpath = DVLib::DirectoryCombine(info.destination_path, info.destination_filename);
+	std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
 	CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
 	DVLib::FileDelete(fullpath);
 }

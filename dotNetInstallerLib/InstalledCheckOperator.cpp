@@ -9,39 +9,62 @@ InstalledCheckOperator::InstalledCheckOperator()
 
 }
 
-void InstalledCheckOperator::Load(TiXmlElement * node, Configuration & setting)
+void InstalledCheckOperator::Load(TiXmlElement * node)
 {
     type = node->AttributeW("type");
-    description = node->AttributeW("description");
-	LOG(L"----Reading installed check operator: " << description << L" (" << type << L")");
-
-	// installed checks
-	TiXmlNode * l_Child = NULL;
-	while ( (l_Child = node->IterateChildren(l_Child)) != NULL)
+    description = node->AttributeW("description");	
+	// child install checks
+	TiXmlNode * child = NULL;
+	while( (child = node->IterateChildren(child)) != NULL )
 	{
-		TiXmlElement * node = l_Child->ToElement();
-		if (node != NULL && strcmp(node->Value(), "installedcheck") == 0)
+		TiXmlElement * child_element = child->ToElement();
+		
+		if (child_element == NULL)
+			continue;
+		
+		if (strcmp(child_element->Value(), "installedcheck") == 0)
 		{
-            InstalledCheck * l_new_installedcheck = InstalledCheck::LoadFromXml(node, setting);
-            installed_checks.push_back(l_new_installedcheck);
+			InstalledCheckPtr installedcheck;
+			std::wstring installedcheck_type = child_element->AttributeW("type");
+			if (installedcheck_type == L"check_registry_value")
+			{
+				installedcheck = InstalledCheckPtr(new InstalledCheckRegistry());
+			}
+			else if (installedcheck_type == L"check_file")
+			{
+				installedcheck = InstalledCheckPtr(new InstalledCheckFile());
+			}
+			else
+			{
+				THROW_EX(L"Invalid installed check type '" << installedcheck_type << L"'");
+			}
+
+			installedcheck->Load(child_element);
+			installedchecks.push_back(installedcheck);
 		}
-		else if (node != NULL && strcmp(node->Value(), "installedcheckoperator") == 0)
+		else if (strcmp(child_element->Value(), "installedcheckoperator") == 0)
 		{
-            InstalledCheckOperator * l_new_installedcheckoperator = new InstalledCheckOperator();
-            l_new_installedcheckoperator->Load(node, setting);			
-            installed_checks.push_back(l_new_installedcheckoperator);
+			InstalledCheckPtr installedcheckoperator(new InstalledCheckOperator());
+			installedcheckoperator->Load(child_element);
+			installedchecks.push_back(installedcheckoperator);
 		}
-    }
+		else
+		{
+			THROW_EX(L"Unexpected node '" << child_element->Value() << L"'");
+		}
+	}
+
+	LOG(L"Loaded '" << type << L"' installed check operator");
 }
 
 bool InstalledCheckOperator::IsInstalled() const
 {
     if (type == L"And")
     {
-        if (installed_checks.size() == 0)
+        if (installedchecks.size() == 0)
             return false;
 
-        for each(InstalledCheck * installedcheck in installed_checks)
+        for each(const InstalledCheckPtr& installedcheck in installedchecks)
         {
             if (! installedcheck->IsInstalled())
                 return false;
@@ -51,7 +74,7 @@ bool InstalledCheckOperator::IsInstalled() const
     }
     else if (type == L"Or")
     {
-        for each(InstalledCheck * installedcheck in installed_checks)
+        for each(const InstalledCheckPtr& installedcheck in installedchecks)
         {
             if (installedcheck->IsInstalled())
                 return true;
@@ -61,10 +84,10 @@ bool InstalledCheckOperator::IsInstalled() const
     }
     else if (type == L"Not")
     {
-        if (installed_checks.size() == 0)
+        if (installedchecks.size() == 0)
             return true;
 
-        for each(InstalledCheck * installedcheck in installed_checks)
+        for each(const InstalledCheckPtr& installedcheck in installedchecks)
         {
             if (installedcheck->IsInstalled())
                 return false;

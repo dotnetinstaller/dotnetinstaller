@@ -26,14 +26,14 @@ protected:
     DECLARE_MESSAGE_MAP()
 public:
 	CStatic m_InstallMessage;
-	void LoadComponent(Configuration * setting, Component * p_Component);
+	void LoadComponent(InstallConfiguration * setting, Component * p_Component);
 
 private:
 	
 	UINT_PTR m_iTimer; //0 se il timer non è attivo
 
 private:
-	Configuration * m_Setting;
+	InstallConfiguration * m_Configuration;
 	Component * m_Component;
 public:
 	afx_msg void OnBnClickedSkip();

@@ -9,7 +9,7 @@ IMPLEMENT_DYNAMIC(InstallComponentDlg, CDialog)
 InstallComponentDlg::InstallComponentDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(InstallComponentDlg::IDD, pParent),
 	m_Component(NULL),
-	m_Setting(NULL),
+	m_Configuration(NULL),
 	m_iTimer(0)
 {
 }
@@ -33,34 +33,12 @@ END_MESSAGE_MAP()
 
 // InstallComponentDlg message handlers
 
-void InstallComponentDlg::LoadComponent(Configuration * setting, Component * p_Component)
+// \todo: all these pointers need to become shared_any
+void InstallComponentDlg::LoadComponent(InstallConfiguration * setting, Component * p_Component)
 {
-	m_Setting = setting;
+	m_Configuration = setting;
 	m_Component = p_Component;
 }
-
-//void InstallComponentDlg::OnBnClickedNext()
-//{
-//	bool l_retVal;
-//
-//	std::wstring l_tmp;
-//	l_tmp.Format(m_Setting->installing_component_wait, m_Component->description);
-//	m_InstallMessage.SetWindowText(l_tmp);
-//
-//	l_retVal = m_Component->Exec();
-//	
-//	if (l_retVal == false)
-//	{
-//		OnCancel();
-//	}
-//	else
-//	{
-//		m_bSkipped = false;
-//		m_iTimer = this->SetTimer(1,1000,NULL);
-//		m_Install_Next.EnableWindow(FALSE);
-//		m_Install_Skip.EnableWindow(FALSE);
-//	}
-//}
 
 void InstallComponentDlg::OnBnClickedSkip()
 {
@@ -84,20 +62,9 @@ void InstallComponentDlg::OnTimer(UINT nIDEvent)
 			if (m_Component->IsExecuting() == false && m_iTimer != 0)
 			{
 				m_BusyControl.End();
-
-				//Kill Timer
 				KillTimer(m_iTimer);
-				m_iTimer = 0;
-
-				DWORD l_ExitCode = m_Component->GetExitCode();
-				if (l_ExitCode == ERROR_SUCCESS || l_ExitCode == ERROR_SUCCESS_REBOOT_REQUIRED)
-				{
-					OnOK();
-				}
-				else //error
-				{
-					OnOK();
-				}
+				m_iTimer = 0;				
+				OnOK();
 			}
 		}
 	}
@@ -126,7 +93,7 @@ BOOL InstallComponentDlg::OnInitDialog()
 
 	SetWindowText(m_Component->description.c_str());
 
-	std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(m_Setting->installing_component_wait.c_str()), m_Component->description.c_str());
+	std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(m_Configuration->installing_component_wait.c_str()), m_Component->description.c_str());
     m_InstallMessage.SetWindowText(l_tmp.c_str());
     m_iTimer = this->SetTimer(1,1000,NULL);
 	return TRUE;
@@ -138,7 +105,7 @@ afx_msg LRESULT InstallComponentDlg::OnSetStatusInstall(WPARAM wParam, LPARAM lP
     if (wParam != NULL)
     {
         InstallStatusParam * status = (InstallStatusParam *) wParam;
-		std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(m_Setting->installing_component_wait.c_str()), status->Status.c_str());
+		std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(m_Configuration->installing_component_wait.c_str()), status->Status.c_str());
 		m_InstallMessage.SetWindowText(l_tmp.c_str());
         InstallStatusParam::Free(status);
     }
