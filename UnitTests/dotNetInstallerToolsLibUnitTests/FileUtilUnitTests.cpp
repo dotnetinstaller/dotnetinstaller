@@ -38,7 +38,7 @@ void FileUtilUnitTests::testGetTemporaryFileName()
 	std::cout << std::endl << "File: " << filename;
 	CPPUNIT_ASSERT(filename.length() > 0);
 	std::stringstream s_path;
-	s_path << directory << "\\" << filename;
+	s_path << directory << filename;
 	std::cout << std::endl << "Joined directory: " << s_path.str();
 	CPPUNIT_ASSERT(path == s_path.str());
 	CPPUNIT_ASSERT(DVLib::FileExists(path));
