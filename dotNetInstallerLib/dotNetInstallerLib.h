@@ -13,7 +13,6 @@
 #include "InstalledCheckRegistry.h"
 #include "InstallerLog.h"
 #include "Configuration.h"
-#include "installerTypes.h"
 #include "InstallUILevel.h"
 #include "MsiComponent.h"
 #include "OpenFileComponent.h"

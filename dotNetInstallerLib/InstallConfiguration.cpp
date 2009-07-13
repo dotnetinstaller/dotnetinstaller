@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 #include "Configuration.h"
-#include "InstallerTypes.h"
 #include "InstallerLog.h"
 #include "InstallerSession.h"
 #include "InstallConfiguration.h"

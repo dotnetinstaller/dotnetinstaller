@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--Packaged setup demo that embeds an MSI component.-->
 <configurations lcid_type="UserExe" configuration_no_match_message="" ui_level="full" fileversion="1.0.0.1" productversion="1.0.0.0">
-  <schema version="1.7.25684.0" generator="dotNetInstaller InstallerEditor" />
+  <schema version="1.7.25981.0" generator="dotNetInstaller InstallerEditor" />
   <fileattributes>
     <fileattribute name="FileDescription" value="Standalone setup sample" />
   </fileattributes>

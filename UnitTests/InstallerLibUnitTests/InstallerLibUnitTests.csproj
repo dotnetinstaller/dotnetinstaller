@@ -89,7 +89,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>$(SolutionDir)\build.cmd rewritesamples
+    <PreBuildEvent>$(SolutionDir)\build.cmd rewritesamples /p:Configuration=$(ConfigurationName)
 </PreBuildEvent>
   </PropertyGroup>
 </Project>
