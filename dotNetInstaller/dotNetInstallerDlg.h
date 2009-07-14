@@ -7,22 +7,13 @@
 // finestra di dialogo CdotNetInstallerDlg
 class CdotNetInstallerDlg : public CDialog
 {
-// Costruzione
 public:
 	CdotNetInstallerDlg(CWnd* pParent = NULL);	// costruttore standard
-
-// Dati della finestra di dialogo
 	enum { IDD = IDD_DOTNETINSTALLER_DIALOG };
-
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// supporto DDX/DDV
-
-
-// Implementazione
 protected:
 	HICON m_hIcon;
-
-	// Funzioni generate per la mappa dei messaggi
 	virtual BOOL OnInitDialog();
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
@@ -57,4 +48,3 @@ public:
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedSkip();
 };
-

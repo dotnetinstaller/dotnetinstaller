@@ -6,8 +6,15 @@ ConfigFileManager::ConfigFileManager()
 {
 }
 
-std::vector<ConfigurationPtr> ConfigFileManager::DownloadReferenceConfigurations(const std::vector<ConfigurationPtr>& configurations)
+std::vector<ConfigurationPtr> ConfigFileManager::DownloadReferenceConfigurations(
+	const std::vector<ConfigurationPtr>& configurations, int level)
 {
+	if (level >= max_levels)
+	{
+		THROW_EX(L"Maximum nested reference configuration level of " << max_levels 
+			<< L" reached. Do you have a circular reference?");
+	}
+
 	std::vector<ConfigurationPtr> result;
 	for (size_t i = 0; i < configurations.size(); i++)
 	{
@@ -19,7 +26,8 @@ std::vector<ConfigurationPtr> ConfigFileManager::DownloadReferenceConfigurations
 			dlg.RunDownloadConfiguration(* get(p->downloadconfiguration));
 			ConfigFile downloadedconfig;
 			downloadedconfig.LoadFile(p->filename);
-			std::vector<ConfigurationPtr> refs = DownloadReferenceConfigurations(downloadedconfig.GetSupportedConfigurations());
+			std::vector<ConfigurationPtr> refs = DownloadReferenceConfigurations(
+				downloadedconfig.GetSupportedConfigurations(), level + 1);
 			result.insert(result.end(), refs.begin(), refs.end());
 		}
 		else

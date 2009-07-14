@@ -219,7 +219,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ExtractCAB.cpp"
+				RelativePath=".\DownloadStatus.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ExtractCabProcessor.cpp"
 				>
 			</File>
 			<File
@@ -236,6 +240,10 @@
 			</File>
 			<File
 				RelativePath=".\InstallerLauncher.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InstallStatus.cpp"
 				>
 			</File>
 			<File
@@ -297,7 +305,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ExtractCAB.h"
+				RelativePath=".\DownloadStatus.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ExtractCabProcessor.h"
 				>
 			</File>
 			<File
@@ -314,6 +326,10 @@
 			</File>
 			<File
 				RelativePath=".\InstallerLauncher.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstallStatus.h"
 				>
 			</File>
 			<File

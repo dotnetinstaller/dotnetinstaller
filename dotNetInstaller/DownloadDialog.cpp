@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "DownloadDialog.h"
 #include "DniMessageBox.h"
+#include "DownloadStatus.h"
 
 #define WM_USER_SETSTATUSDOWNLOAD (WM_USER+1)
 #define WM_USER_CLOSE_DIALOG (WM_USER+2)
@@ -112,43 +113,44 @@ afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM lParam
 {
 	try
 	{
-		m_bDownloadCompleted = false; //flag per indicare al chiamante di questa finestra che il donload ha avuto successo
+		m_bDownloadCompleted = false; // flag per indicare al chiamante di questa finestra che il donload ha avuto successo
 
-		DownloadStatusParam * l_Param = (DownloadStatusParam*)wParam;
+		DownloadStatusPtr l_Param(reinterpret_cast<DownloadStatus *>(wParam));
 
-		if (l_Param->Type == StatusType_Downloading)
+		if (l_Param->type == StatusType_Downloading)
 		{
-			if (l_Param->ProgressMax!=0)
-				m_ProgressControl.SetPos( (int)((double)l_Param->CurrentProgress/(double)l_Param->ProgressMax*1000.0));
+			if (l_Param->progress_max != 0)
+			{
+				m_ProgressControl.SetPos((int) ((double) l_Param->progress_current / (double) l_Param->progress_max * 1000.0));
+			}
 			else
-				m_ProgressControl.SetPos( 0 );
-			m_LabelStatus.SetWindowText(l_Param->Status.c_str());
-			DownloadStatusParam::Free(l_Param);
+			{
+				m_ProgressControl.SetPos(0);
+			}
+
+			m_LabelStatus.SetWindowText(l_Param->status.c_str());
 		}
-		else if (l_Param->Type == StatusType_Error) //ERROR
+		else if (l_Param->type == StatusType_Error) //ERROR
 		{
-			LOG(L"*** Download ERROR: " << l_Param->Error);
-			DniSilentMessageBox(l_Param->Error, MB_OK|MB_ICONSTOP);
+			LOG(L"*** Download ERROR: " << l_Param->error);
+			DniSilentMessageBox(l_Param->error, MB_OK|MB_ICONSTOP);
 			m_bCancelOrErrorDownload = true;
-			DownloadStatusParam::Free(l_Param);
 		}
-		else if (l_Param->Type == StatusType_Canceled) //CANCELED
+		else if (l_Param->type == StatusType_Canceled) //CANCELED
 		{
 			LOG(L"*** Download CANCELED");
 			m_bCancelOrErrorDownload = true;
-			DownloadStatusParam::Free(l_Param);
 		}
-		else if (l_Param->Type == StatusType_Completed) //COMPLETED
+		else if (l_Param->type == StatusType_Completed) //COMPLETED
 		{
 			LOG(L"--- Download OK");
 			m_bDownloadCompleted = true; //Download OK
-			DownloadStatusParam::Free(l_Param);
 		}
 	}
 	catch(...)
 	{
 		m_bCancelOrErrorDownload = true;
-		DniSilentMessageBox(TEXT("Failed to read OnSetStatusDownload parameters"), MB_OK|MB_ICONSTOP);			
+		DniSilentMessageBox(TEXT("Failed to read OnSetStatusDownload parameters"), MB_OK | MB_ICONSTOP);			
 	}
 	return 0;
 }
@@ -158,19 +160,19 @@ afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM lParam
 //  dovendogli però passare dei puntatori devo fare la new qui e poi la delete quando leggo il puntatore
 //  nella OnSetStatusDownload.
 //IDownloadCallback
-void DownloadDialog::Status(ULONG p_CurrentProgress, ULONG p_MaxProgress, const std::wstring& p_Description)
+void DownloadDialog::Status(ULONG p_progress_current, ULONG p_MaxProgress, const std::wstring& p_Description)
 {
-	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(DownloadStatusParam::CreateProgress(p_Description, p_CurrentProgress, p_MaxProgress)), 0L );
+	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM) (release(DownloadStatus::CreateProgress(p_Description, p_progress_current, p_MaxProgress))), 0L );
 }
 
 void DownloadDialog::DownloadComplete()
 {
-	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(DownloadStatusParam::CreateComplete() ), 0L );
+	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(DownloadStatus::CreateComplete())), 0L );
 }
 
 void DownloadDialog::DownloadError(const std::wstring& p_Message)
 {
-	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(DownloadStatusParam::CreateError(p_Message)), 0L );
+	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(DownloadStatus::CreateError(p_Message))), 0L );
 }
 
 bool DownloadDialog::IsDownloadCancelled() const
@@ -180,7 +182,7 @@ bool DownloadDialog::IsDownloadCancelled() const
 
 void DownloadDialog::DownloadCancel()
 {
-	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(DownloadStatusParam::CreateCanceled()), 0L );
+	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(DownloadStatus::CreateCanceled())), 0L );
 
 	if (! IsDownloadStarted())
 	{

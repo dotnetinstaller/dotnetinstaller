@@ -108,14 +108,13 @@ afx_msg LRESULT InstallComponentDlg::OnSetStatusInstall(WPARAM wParam, LPARAM lP
 {
     if (wParam != NULL)
     {
-        InstallStatusParam * status = (InstallStatusParam *) wParam;
+        InstallStatusPtr status(reinterpret_cast<InstallStatus *>(wParam));
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_Configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-		std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(
+		std::wstring tmp = DVLib::FormatMessage(const_cast<wchar_t *>(
 			p_configuration->installing_component_wait.c_str()), 
-			status->Status.c_str());
-		m_InstallMessage.SetWindowText(l_tmp.c_str());
-        InstallStatusParam::Free(status);
+			status->status.c_str());
+		m_InstallMessage.SetWindowText(tmp.c_str());
     }
 
 	return 0;

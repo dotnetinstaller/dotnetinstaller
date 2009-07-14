@@ -43,19 +43,12 @@ public:
 	afx_msg LRESULT OnSetStatusInstall(WPARAM wParam, LPARAM lParam);
 };
 
-struct InstallStatusParam
+struct InstallStatus;
+typedef auto_any<InstallStatus *, close_delete> InstallStatusPtr;
+
+struct InstallStatus
 {
-	std::wstring Status;
+	std::wstring status;
 
-	static InstallStatusParam * CreateStatus(const std::wstring& status)
-	{
-		InstallStatusParam * param = new InstallStatusParam();
-		param->Status = status;
-		return param;
-	}
-
-	static void Free(InstallStatusParam * param)
-	{
-		delete param;
-	}
+	static InstallStatusPtr CreateStatus(const std::wstring& status);
 };

@@ -4,7 +4,7 @@
   <configuration type="reference" lcid="">
     <configfile filename="#TEMPPATH\dotNetInstallerReferenceSample\configuration.xml" />
     <downloaddialog dialog_caption="Download Reference Configuration" dialog_message="Press 'Start' to download the required components for installing COMPONENT_NAME." dialog_message_downloading="Download in progress. Wait..." autostartdownload="True" buttonstart_caption="Start" buttoncancel_caption="Cancel">
-      <download componentname="Download Reference Configuration.xml" sourceurl="file://Samples/PackagedSetup/Configuration.xml" sourcepath="" destinationpath="#TEMPPATH\dotNetInstallerReferenceSample\configuration.xml" destinationfilename="" alwaysdownload="True" />
+      <download componentname="Download Reference Configuration.xml" sourceurl="file://Samples/PackagedSetup/Configuration.xml" sourcepath="" destinationpath="#TEMPPATH\dotNetInstallerReferenceSample" destinationfilename="configuration.xml" alwaysdownload="True" />
     </downloaddialog>
   </configuration>
 </configurations>

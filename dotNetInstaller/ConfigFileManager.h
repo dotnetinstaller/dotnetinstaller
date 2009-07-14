@@ -3,10 +3,11 @@
 class ConfigFileManager : public Configurations
 {
 private:
+	static const int max_levels = 10;
 	InstallUILevel saved_ui_level;
 public:
-	// download reference configuratoins
-	std::vector<ConfigurationPtr> DownloadReferenceConfigurations(const std::vector<ConfigurationPtr>&);
+	std::vector<ConfigurationPtr> DownloadReferenceConfigurations(
+		const std::vector<ConfigurationPtr>&, int level = 0);
 	ConfigFileManager();
 	void SaveAppState();
 	void RestoreAppState();

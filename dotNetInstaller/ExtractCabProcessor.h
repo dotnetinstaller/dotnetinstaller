@@ -1,11 +1,11 @@
 #pragma once
 
-class ExtractCABProcessor : public ExtractComponent
+class ExtractCabProcessor : public ExtractComponent
 {
 private:
 	CDialog * m_pDialog;
 public:
-    ExtractCABProcessor(HMODULE h, CDialog * pDialog);
+    ExtractCabProcessor(HMODULE h, CDialog * pDialog);
 	void OnStatus(const std::wstring& status);
 };
 

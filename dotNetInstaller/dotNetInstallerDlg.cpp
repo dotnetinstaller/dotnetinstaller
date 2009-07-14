@@ -6,7 +6,7 @@
 #include "dotNetInstallerDlg.h"
 #include "InstallComponentDlg.h"
 #include "DniMessageBox.h"
-#include "ExtractCAB.h"
+#include "ExtractCabProcessor.h"
 #include "DownloadDialog.h"
 #include "InstallSystem.h"
 #include "InstallerCommandLineInfo.h"
@@ -539,11 +539,11 @@ void CdotNetInstallerDlg::OnBnClickedCancel()
 void CdotNetInstallerDlg::ExtractCab()
 {
     InstallComponentDlg dlg;
-	ComponentPtr extractcab(new ExtractCABProcessor(AfxGetApp()->m_hInstance, & dlg));
+	ComponentPtr extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, & dlg));
 
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	
-	ExtractCABProcessor * p = reinterpret_cast<ExtractCABProcessor *>(get(extractcab));
+	ExtractCabProcessor * p = reinterpret_cast<ExtractCabProcessor *>(get(extractcab));
 	p->cab_path = p_configuration->cab_path;
 	p->cab_cancelled_message = p_configuration->cab_cancelled_message;
 	p->description = p_configuration->cab_dialog_caption;

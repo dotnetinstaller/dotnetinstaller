@@ -2,19 +2,13 @@
 
 #include "Resource.h"
 
-// DownloadDialog dialog
-
 class DownloadDialog : public CDialog, public IDownloadCallback
 {
 	DECLARE_DYNAMIC(DownloadDialog)
-
 public:
 	DownloadDialog(const DownloadGroupConfiguration & p_Configuration, CWnd* pParent = NULL);
 	virtual ~DownloadDialog();
-
-// Dialog Data
 	enum { IDD = IDD_DOWNLOAD_DIALOG };
-
 private:
 	std::wstring m_Caption;
 	std::wstring m_HelpMessage;
@@ -58,56 +52,4 @@ public:
 	bool IsDownloadCancelled() const;
 	void DownloadCancel();
 	inline const std::vector<DownloadComponentInfoPtr>& GetComponents() const { return m_Components; }
-};
-
-
-enum StatusType
-{
-	StatusType_Error,
-	StatusType_Downloading,
-	StatusType_Completed,
-	StatusType_Canceled
-};
-
-struct DownloadStatusParam
-{
-	StatusType Type;
-	ULONG CurrentProgress;
-	ULONG ProgressMax;
-	std::wstring Status;
-	std::wstring Error;
-
-	static DownloadStatusParam * CreateProgress(const std::wstring& p_Status, ULONG p_CurrentProgress, ULONG p_ProgressMax)
-	{
-		DownloadStatusParam * param = new DownloadStatusParam();
-		param->Type = StatusType_Downloading;
-		param->CurrentProgress = p_CurrentProgress;
-		param->ProgressMax = p_ProgressMax;
-		param->Status = p_Status;
-		return param;
-	}
-	static DownloadStatusParam * CreateComplete()
-	{
-		DownloadStatusParam * param = new DownloadStatusParam();
-		param->Type = StatusType_Completed;
-		return param;
-	}
-	static DownloadStatusParam * CreateError(const std::wstring& p_Error)
-	{
-		DownloadStatusParam * param = new DownloadStatusParam();
-		param->Type = StatusType_Error;
-		param->Error = p_Error;
-		return param;
-	}
-	static DownloadStatusParam * CreateCanceled()
-	{
-		DownloadStatusParam * param = new DownloadStatusParam();
-		param->Type = StatusType_Canceled;
-		return param;
-	}
-
-	static void Free(DownloadStatusParam * param)
-	{
-		delete param;
-	}
 };
