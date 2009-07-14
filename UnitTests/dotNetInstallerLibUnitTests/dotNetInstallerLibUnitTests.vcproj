@@ -202,6 +202,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ExtractComponentUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\InstalledCheckFileUnitTests.cpp"
 				>
 			</File>
@@ -273,6 +277,10 @@
 			</File>
 			<File
 				RelativePath=".\DownloadComponentUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ExtractComponentUnitTests.h"
 				>
 			</File>
 			<File

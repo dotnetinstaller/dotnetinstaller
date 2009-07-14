@@ -34,10 +34,10 @@ END_MESSAGE_MAP()
 // InstallComponentDlg message handlers
 
 // \todo: all these pointers need to become shared_any
-void InstallComponentDlg::LoadComponent(InstallConfiguration * setting, Component * p_Component)
+void InstallComponentDlg::LoadComponent(const ConfigurationPtr& configuration, const ComponentPtr& component)
 {
-	m_Configuration = setting;
-	m_Component = p_Component;
+	m_Configuration = configuration;
+	m_Component = component;
 }
 
 void InstallComponentDlg::OnBnClickedSkip()
@@ -47,7 +47,7 @@ void InstallComponentDlg::OnBnClickedSkip()
 
 void InstallComponentDlg::OnCancel()
 {
-    if (m_Component != NULL)
+    if (get(m_Component) != NULL)
     {
         m_Component->cancelled = true;
     }
@@ -57,7 +57,7 @@ void InstallComponentDlg::OnTimer(UINT nIDEvent)
 {
 	try
 	{
-		if (m_Component != NULL)
+		if (get(m_Component) != NULL)
 		{
 			if (m_Component->IsExecuting() == false && m_iTimer != 0)
 			{
@@ -93,7 +93,11 @@ BOOL InstallComponentDlg::OnInitDialog()
 
 	SetWindowText(m_Component->description.c_str());
 
-	std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(m_Configuration->installing_component_wait.c_str()), m_Component->description.c_str());
+	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_Configuration));
+	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+	std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(
+		p_configuration->installing_component_wait.c_str()), 
+		m_Component->description.c_str());
     m_InstallMessage.SetWindowText(l_tmp.c_str());
     m_iTimer = this->SetTimer(1,1000,NULL);
 	return TRUE;
@@ -105,7 +109,11 @@ afx_msg LRESULT InstallComponentDlg::OnSetStatusInstall(WPARAM wParam, LPARAM lP
     if (wParam != NULL)
     {
         InstallStatusParam * status = (InstallStatusParam *) wParam;
-		std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(m_Configuration->installing_component_wait.c_str()), status->Status.c_str());
+		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_Configuration));
+		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+		std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(
+			p_configuration->installing_component_wait.c_str()), 
+			status->Status.c_str());
 		m_InstallMessage.SetWindowText(l_tmp.c_str());
         InstallStatusParam::Free(status);
     }

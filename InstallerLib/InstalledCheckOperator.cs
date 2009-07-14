@@ -4,6 +4,9 @@ using System.ComponentModel;
 
 namespace InstallerLib
 {
+    /// <summary>
+    /// Installed check operator types
+    /// </summary>
     public enum InstalledCheckOperatorType
     {
         And,

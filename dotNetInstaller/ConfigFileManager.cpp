@@ -64,8 +64,7 @@ void ConfigFileManager::Run()
 		if ((* this)[i]->type == configuration_install)
 		{
 			SaveAppState();
-			InstallConfiguration * p = reinterpret_cast<InstallConfiguration *>(get((* this)[i]));
-			if (! dlg.RunInstallConfiguration(p, i + 1 != size()))
+			if (! dlg.RunInstallConfiguration((* this)[i], i + 1 != size()))
 				break;
 			RestoreAppState();
 		}

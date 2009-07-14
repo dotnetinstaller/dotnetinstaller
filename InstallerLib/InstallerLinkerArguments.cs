@@ -6,6 +6,9 @@ using System.IO;
 
 namespace InstallerLib
 {
+    /// <summary>
+    /// Linker arguments
+    /// </summary>
     public class InstallerLinkerArguments
     {
         [Argument(ArgumentType.Required, HelpText = "Generated installer file", LongName = "Output", ShortName = "o")]

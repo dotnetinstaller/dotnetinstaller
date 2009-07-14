@@ -5,6 +5,9 @@ using System.Drawing;
 
 namespace InstallerLib
 {
+    /// <summary>
+    /// A rectangle represented in xml
+    /// </summary>
     public static class XmlRectangle
     {
         public static Rectangle FromString(string s)

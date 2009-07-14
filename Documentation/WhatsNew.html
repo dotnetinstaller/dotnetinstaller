@@ -25,33 +25,35 @@
     <h3>
         1.7 (TBD)</h3>
     <ul>
+        <li>First release built with Visual Studio 2008.</li>
+        <li>Refactored the dotNetInstaller bootstrapper into a dotNetInstallerLib C++ library
+            and a GUI driver.</li>
+        <li>Extended unit test coverage across C# and C++ installer and support tools libraries.</li>
         <li>Bug: wrong error when missing configuration.xml (invalid schema version vs. missing
             configuration.xml).</li>
-        <li>Converted the projects to Visual Studio 2008 format.</li>
         <li>Added OS filter identifier for Windows Vista SP2.</li>
         <li>Registry search for REG_MULTI_SZ semantics have been extended. You can now specify
             a comma-delimited list of values to <code>match</code> exactly all values, <code>contains</code>
-            to match a subset of values and you can no longer specify a <code>version</code>
+            to match a subset of values and you can no longer specify a broken <code>version</code>
             match.</li>
         <li>Bug: reference (web) configurations broken in the editor.</li>
         <li>Added support for nested reference configurations. Each downloaded configuration
-            file is checked for more reference configurations.</li>
+            file is checked for more reference configurations. There's no nested depth limit.</li>
     </ul>
     <h3>
         1.6 (29 June 2009)</h3>
     <ul>
-        <li>First release off <a href="http://www.codeplex.com/dotnetinstaller">CodePlex</a>.</li>
+        <li>First release off <a href="http://www.codeplex.com/dotnetinstaller">CodePlex</a>,
+            <a href="http://dotnetinstaller.codeplex.com">http://dotnetinstaller.codeplex.com</a>.</li>
         <li>New MSI installer. You can use the installer or a binary distribution package.</li>
         <li>New, largely rewritten, CHM documentation.</li>
         <li>Changed behavior of file embedding to explicit: disabled automatic embedding of
             files from <code>msi</code>, <code>download</code> and <code>openfile</code> components,
             set <code>/Embed</code> to <code>True</code> by default.</li>
-        <li>Added an <span style="color: #b22222; font-family: Courier New">EmbedFolder</span>
-            configuration component to embed directories and subdirectories with an optional
-            wildcard and configurable destination.</li>
+        <li>Added an <code>EmbedFolder</code> configuration component to embed directories and
+            subdirectories with an optional wildcard and configurable destination.</li>
         <li>Added parity between <code>EmbedFolder</code> and <code>EmbedFile</code> components
-            which can be now specified in both the configuration and on the command line.
-        </li>
+            which can be now specified in both the configuration and on the command line.</li>
         <li>InstallerLinker: embedded files that cannot be found are reported as errors with
             their full paths.</li>
         <li>InstallerLinker: Changed default value of <code>/AppPath</code>, now defaults to
@@ -102,8 +104,7 @@
         <li>Added <code>dialog_show_required</code>: when false, required components are hidden.</li>
         <li>Added <code>dialog_show_installed</code>: when false, installed components are hidden.</li>
         <li>Added <code>must_reboot_required</code>: globally and per-component. Setting this
-            option to true will prevent users from continuing when a reboot is required.
-        </li>
+            option to true will prevent users from continuing when a reboot is required.</li>
         <li>Added <code>failed_exec_command_continue</code> per-component extending the global
             setting that defines the message to show when a component fails to install.</li>
         <li>Added optional <code>reboot_required</code>: a message that can be configured per

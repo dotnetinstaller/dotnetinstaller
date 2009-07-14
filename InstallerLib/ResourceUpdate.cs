@@ -3,6 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace InstallerLib
 {
+    /// <summary>
+    /// Kernel32 interop for resource functions
+    /// </summary>
     public class ResourceUpdate
     {
         [DllImport("KERNEL32.DLL",

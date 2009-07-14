@@ -27,3 +27,4 @@
 #include "FileAttributes.h"
 #include "ReferenceConfiguration.h"
 #include "InstallerSession.h"
+#include "ExtractComponent.h"

@@ -4,6 +4,9 @@ using System.ComponentModel;
 
 namespace InstallerLib
 {
+    /// <summary>
+    /// Install check comparison types
+    /// </summary>
     public enum installcheck_comparison
     {
         match,

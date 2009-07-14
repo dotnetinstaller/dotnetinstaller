@@ -98,9 +98,9 @@ void InstallConfiguration::Load(TiXmlElement * node)
 		std::wstring component_type = node_component->AttributeW("type");
 
 		shared_any<Component *, close_delete> component;
-		if (component_type == L"msi") component = auto_any<Component *, close_delete>(new MsiComponent());
-		else if (component_type == L"cmd") component = auto_any<Component *, close_delete>(new CmdComponent());
-		else if (component_type == L"openfile") component = auto_any<Component *, close_delete>(new OpenFileComponent());
+		if (component_type == L"msi") component = shared_any<Component *, close_delete>(new MsiComponent());
+		else if (component_type == L"cmd") component = shared_any<Component *, close_delete>(new CmdComponent());
+		else if (component_type == L"openfile") component = shared_any<Component *, close_delete>(new OpenFileComponent());
 		else 
 		{
 			THROW_EX(L"Unsupported component type: " << component_type);

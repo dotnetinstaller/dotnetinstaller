@@ -107,3 +107,12 @@ void Component::Load(TiXmlElement * node)
 		}
 	}
 }
+
+void Component::Wait(DWORD tt)
+{
+	// \todo: change active wait to a semaphore
+	while(IsExecuting())
+	{
+		Sleep(tt);
+	}
+}

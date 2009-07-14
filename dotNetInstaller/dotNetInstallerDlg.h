@@ -30,14 +30,14 @@ protected:
 private:
 	int m_recorded_error;
 	bool m_additional_config;
-	InstallConfiguration * m_configuration;
+	ConfigurationPtr m_configuration;
     void ExtractCab();
     void SelectComponents();
     // move a window to the coordinates defined by a rectangle with defaults
     static bool MoveWindow(CWnd& dlg, const WidgetPosition& pos);
 public:
 	void ExecuteCompleteCode(bool componentsInstalled);
-	bool RunInstallConfiguration(InstallConfiguration * configuration, bool additional_config);
+	bool RunInstallConfiguration(const ConfigurationPtr& configuration, bool additional_config);
 	bool RunDownloadConfiguration(DownloadGroupConfiguration & p_Configuration);
 	bool DownloadComponents(Component& p_Component);
 	inline int GetRecordedError() const { return m_recorded_error; }

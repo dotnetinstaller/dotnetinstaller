@@ -26,15 +26,15 @@ protected:
     DECLARE_MESSAGE_MAP()
 public:
 	CStatic m_InstallMessage;
-	void LoadComponent(InstallConfiguration * setting, Component * p_Component);
+	void LoadComponent(const ConfigurationPtr& setting, const ComponentPtr& p_Component);
 
 private:
 	
 	UINT_PTR m_iTimer; //0 se il timer non è attivo
 
 private:
-	InstallConfiguration * m_Configuration;
-	Component * m_Component;
+	ConfigurationPtr m_Configuration;
+	ComponentPtr m_Component;
 public:
 	afx_msg void OnBnClickedSkip();
 	afx_msg void OnTimer(UINT nIDEvent);
@@ -47,12 +47,10 @@ struct InstallStatusParam
 {
 	std::wstring Status;
 
-	static InstallStatusParam * CreateStatus(const std::wstring& p_Status, const std::wstring& p_Size)
+	static InstallStatusParam * CreateStatus(const std::wstring& status)
 	{
 		InstallStatusParam * param = new InstallStatusParam();
-		std::wstringstream status;
-		status << p_Status << L" - " << p_Size;
-		param->Status = status.str();
+		param->Status = status;
 		return param;
 	}
 

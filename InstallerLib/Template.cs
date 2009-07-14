@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace InstallerLib
 {
+    /// <summary>
+    /// A configuration template
+    /// </summary>
     public class Template
     {
         private static Template m_CurrentTemplate = null;

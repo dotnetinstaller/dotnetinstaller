@@ -60,6 +60,7 @@ public:
 	bool download;
 	// funzione virtuale specifica per il tipo di componente
 	virtual void Exec() = 0;
+	virtual void Wait(DWORD tt = 1000);
 	virtual DWORD GetExitCode() const = 0;
 	virtual bool IsExecuting() const = 0;
 	virtual bool IsInstalled() const;

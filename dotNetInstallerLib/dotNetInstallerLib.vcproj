@@ -186,6 +186,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ExtractComponent.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FileAttribute.cpp"
 				>
 			</File>
@@ -321,6 +325,10 @@
 			</File>
 			<File
 				RelativePath=".\EmbedFile.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ExtractComponent.h"
 				>
 			</File>
 			<File
