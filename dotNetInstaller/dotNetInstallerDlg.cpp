@@ -409,8 +409,8 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 			bool all_components_installed = LoadComponentsList();
 
 			// auto-close the installer at the end
-			if (p_configuration->auto_close_if_installed // auto-close
-				&& ((m_recorded_error == 0) || all_components_installed)) // there was no error, everything chosen was installed or all components have been installed
+			if (all_components_installed // all components have been installed
+				|| (p_configuration->auto_close_if_installed && (m_recorded_error == 0))) // auto-close, there was no error
 			{
 				ExecuteCompleteCode(true);
 				OnOK();
