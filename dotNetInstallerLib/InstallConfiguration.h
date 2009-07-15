@@ -34,6 +34,8 @@ public:
 	// if true auto close the dialog (display installation_completed or installation_none message 
 	// and execute the complete_command) if all the components are already installed
 	bool auto_close_if_installed;
+	// auto-close if optional components remain
+	bool auto_close_optional;
     // if true, auto-close on error when the user chooses not to continue
     bool auto_close_on_error;
     // if false, don't display installed components

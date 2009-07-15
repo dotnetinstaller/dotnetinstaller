@@ -11,6 +11,7 @@ InstallConfiguration::InstallConfiguration()
 	: Configuration(configuration_install)
     , must_reboot_required(false)
     , auto_close_if_installed(false)
+	, auto_close_optional(true)
     , auto_close_on_error(false)
     , dialog_show_installed(false)
     , dialog_show_required(false)
@@ -74,6 +75,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	complete_command = InstallerSession::MakePath(node->AttributeW("complete_command"));
 	complete_command_silent = InstallerSession::MakePath(node->AttributeW("complete_command_silent"));
 	auto_close_if_installed = DVLib::wstring2bool(node->AttributeW("auto_close_if_installed"), true);
+	auto_close_optional = DVLib::wstring2bool(node->AttributeW("auto_close_optional"), true);
     auto_close_on_error = DVLib::wstring2bool(node->AttributeW("auto_close_on_error"), false);
     allow_continue_on_error = DVLib::wstring2bool(node->AttributeW("allow_continue_on_error"), true);
     dialog_show_installed = DVLib::wstring2bool(node->AttributeW("dialog_show_installed"), true);

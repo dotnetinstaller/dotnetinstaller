@@ -301,6 +301,14 @@ namespace InstallerLib
             set { m_auto_close_if_installed = value; }
         }
 
+        private bool m_auto_close_optional = true;
+        [Description("If true auto close the dialog when optional components remain to be installed, combined with auto_close_if_installed and auto_close_on_error.")]
+        public bool auto_close_optional
+        {
+            get { return m_auto_close_optional; }
+            set { m_auto_close_optional = value; }
+        }
+
         private bool m_auto_close_on_error = false;
         [Description("If true auto close the dialog when a component fails to install and the user chooses not to continue. If false, the component conditions will be re-evaluated and the updated list of components will be shown. (REQUIRED)")]
         public bool auto_close_on_error
@@ -481,6 +489,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("complete_command_basic", m_complete_command_basic);
             e.XmlWriter.WriteAttributeString("auto_close_if_installed", m_auto_close_if_installed.ToString());
             e.XmlWriter.WriteAttributeString("auto_close_on_error", m_auto_close_on_error.ToString());
+            e.XmlWriter.WriteAttributeString("auto_close_optional", m_auto_close_optional.ToString());
             e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
             e.XmlWriter.WriteAttributeString("dialog_show_installed", m_dialog_show_installed.ToString());
             e.XmlWriter.WriteAttributeString("dialog_show_required", m_dialog_show_required.ToString());
@@ -540,6 +549,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "complete_command_basic", ref m_complete_command_basic);
             ReadAttributeValue(e, "auto_close_if_installed", ref m_auto_close_if_installed);
             ReadAttributeValue(e, "auto_close_on_error", ref m_auto_close_on_error);
+            ReadAttributeValue(e, "auto_close_optional", ref m_auto_close_optional);
             ReadAttributeValue(e, "allow_continue_on_error", ref m_allow_continue_on_error);
             ReadAttributeValue(e, "dialog_show_installed", ref m_dialog_show_installed);
             ReadAttributeValue(e, "dialog_show_required", ref m_dialog_show_required);

@@ -71,3 +71,74 @@ void CComponentsList::PreDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	CCheckListBox::PreDrawItem(lpDrawItemStruct);
 }
+
+ComponentsListStatus CComponentsList::Load(const ConfigurationPtr& configuration)
+{
+	ComponentsListStatus status;
+	status.all_components_installed = true;
+	status.all_required_components_installed = true;
+
+	ResetContent();
+
+	CDC * pDC = GetDC();
+	ASSERT(pDC);
+
+	int hScrollWidth = 0;
+	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(configuration));
+	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+    
+	for each(const ComponentPtr& component in p_configuration->components)
+	{
+        bool component_installed = component->IsInstalled();
+        
+        LOG(L"-- " << component->description << L": " << component_installed ? L"INSTALLED" : L"NOT INSTALLED");
+
+		if (component_installed)
+		{
+			component->selected = false;
+		}
+
+        if (component->required) status.all_required_components_installed &= component_installed;
+		status.all_components_installed &= component_installed;
+
+		std::wstring l_descr = component->description;
+	    l_descr += L" ";
+        l_descr += component_installed
+			? (component->status_installed.empty() ? p_configuration->status_installed : component->status_installed)
+			: (component->status_notinstalled.empty() ? p_configuration->status_notinstalled : component->status_notinstalled);
+
+        if (! p_configuration->dialog_show_installed && component_installed)
+            continue;
+
+        if (! p_configuration->dialog_show_required && component->required)
+            continue;
+
+		int id = AddString(l_descr.c_str());
+		SetItemDataPtr(id, get(component));
+
+        if (component->selected)
+        {
+			SetCheck(id, 1);
+        }
+
+        // a component is considered installed when it has an install check which results
+        // in a clear positive; if a component doesn't have any install checks, it cannot
+        // be required (there's no way to check whether the component was installed)
+        if (component->required || component_installed)
+        {
+            Enable(id, 0);
+        }
+
+		CSize size = pDC->GetTextExtent(component->description.c_str());
+		if ((size.cx > 0) && (hScrollWidth < size.cx))
+			hScrollWidth = size.cx;
+    }
+
+	if (hScrollWidth > 0 )
+	{
+		SetHorizontalExtent(hScrollWidth);
+	}
+
+	ReleaseDC(pDC); 
+	return status;
+}

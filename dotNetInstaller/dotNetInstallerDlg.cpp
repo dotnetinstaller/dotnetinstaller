@@ -145,7 +145,8 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
         return FALSE;
     }
 	
-	if (LoadComponentsList())
+	ComponentsListStatus components_status = LoadComponentsList();
+	if (components_status.all_components_installed)
 	{
 		if (p_configuration->auto_close_if_installed || CurrentInstallUILevel.IsSilent())
 		{
@@ -399,23 +400,23 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 			LOG(L"-- dotNetInstaller is configured to auto execute on the next reboot");
 		}
 
-		if (l_bShutdownOrCancel)
+		if (l_bShutdownOrCancel || CurrentInstallUILevel.IsSilent())
 		{
 			OnOK();
 		}
 		else
 		{
-			if (LoadComponentsList())
+			ComponentsListStatus components_status = LoadComponentsList();
+
+			// auto-close the installer at the end
+			if (p_configuration->auto_close_if_installed // auto-close
+				&& (m_recorded_error == 0) // there was no error, everything chosen was installed
+				&& (components_status.all_required_components_installed || p_configuration->auto_close_optional)) // all required components have been installed or close on optional ones
 			{
 				ExecuteCompleteCode(true);
 				OnOK();
 			}
-			else if (CurrentInstallUILevel.IsSilent())
-			{
-				OnOK();
-			}
 		}
-
     }
     catch(std::exception& ex)
     {
@@ -431,74 +432,10 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 	}
 }
 
-// returns true if all required components have been properly installed
-bool CdotNetInstallerDlg::LoadComponentsList(void)
+// returns true if all required components have been properly installed and if auto_close_optional is true
+ComponentsListStatus CdotNetInstallerDlg::LoadComponentsList()
 {
-	m_ListBoxComponents.ResetContent();
-
-	int hScrollWidth = 0;
-	CDC *pDC = m_ListBoxComponents.GetDC();
-	ASSERT(pDC);
-
-	bool l_AllInstalled = true;
-	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
-	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-    for each(const ComponentPtr& component in p_configuration->components)
-	{
-        bool component_installed = component->IsInstalled();
-        
-        LOG(L"-- " << component->description << L": " 
-			<< component_installed ? L"INSTALLED" : L"NOT INSTALLED");
-
-		if (component_installed)
-		{
-			component->selected = false;
-		}
-
-        if (component->required)
-        {
-            l_AllInstalled &= component_installed;
-        }
-
-		std::wstring l_descr = component->description;
-	    l_descr += L" ";
-        l_descr += component_installed
-			? (component->status_installed.empty() ? p_configuration->status_installed : component->status_installed)
-			: (component->status_notinstalled.empty() ? p_configuration->status_notinstalled : component->status_notinstalled);
-
-        if (! p_configuration->dialog_show_installed && component_installed)
-            continue;
-
-        if (! p_configuration->dialog_show_required && component->required)
-            continue;
-
-		int id = m_ListBoxComponents.AddString(l_descr.c_str());
-		m_ListBoxComponents.SetItemDataPtr(id, get(component));
-
-        if (component->selected)
-        {
-			m_ListBoxComponents.SetCheck(id, 1);
-        }
-
-        // a component is considered installed when it has an install check which results
-        // in a clear positive; if a component doesn't have any install checks, it cannot
-        // be required (there's no way to check whether the component was installed)
-        if (component->required || component_installed)
-        {
-            m_ListBoxComponents.Enable(id, 0);
-        }
-
-		CSize size = pDC->GetTextExtent(component->description.c_str());
-		if ((size.cx > 0) && (hScrollWidth < size.cx))
-			hScrollWidth = size.cx;
-    }
-
-	if (hScrollWidth > 0 )
-		m_ListBoxComponents.SetHorizontalExtent(hScrollWidth);
-
-	m_ListBoxComponents.ReleaseDC(pDC); 
-
-	return l_AllInstalled;
+	return m_ListBoxComponents.Load(m_configuration);
 }
 
 // skip the current config section and go to the next valid one
