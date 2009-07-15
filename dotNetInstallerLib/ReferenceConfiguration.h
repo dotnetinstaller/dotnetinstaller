@@ -13,6 +13,5 @@ public:
 	ReferenceConfiguration();
 	~ReferenceConfiguration();
 	virtual void Load(TiXmlElement * node);
-	bool IsSupported(DVLib::LcidType lcidtype) const;
 };
 

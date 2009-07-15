@@ -14,7 +14,15 @@ enum configuration_type
 class Configuration
 {
 public:
+	// configuration lcid
 	std::wstring lcid;
+	// filter for minimum operating system version
+	std::wstring os_filter_greater;
+	// filter for maximum operating system version
+	std::wstring os_filter_smaller;
+	// filter for processor architecture
+	std::wstring processor_architecture_filter;
+	// configuration type
 	configuration_type type;
 public:
 	Configuration(configuration_type t);

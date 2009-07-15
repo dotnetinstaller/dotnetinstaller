@@ -78,11 +78,6 @@ void InstallConfiguration::Load(TiXmlElement * node)
     allow_continue_on_error = DVLib::wstring2bool(node->AttributeW("allow_continue_on_error"), true);
     dialog_show_installed = DVLib::wstring2bool(node->AttributeW("dialog_show_installed"), true);
     dialog_show_required = DVLib::wstring2bool(node->AttributeW("dialog_show_required"), true);
-	// os filters
-	os_filter_greater = node->AttributeW("os_filter_greater");
-	os_filter_smaller = node->AttributeW("os_filter_smaller");
-	// processor architecture filter
-	processor_architecture_filter = node->AttributeW("processor_architecture_filter");
     // message and caption to show during CAB extraction
     cab_dialog_caption = node->AttributeW("cab_dialog_caption");
     cab_dialog_message = node->AttributeW("cab_dialog_message");
@@ -120,12 +115,4 @@ void InstallConfiguration::Load(TiXmlElement * node)
 bool InstallConfiguration::HasComponent(const std::wstring& description) const 
 { 
 	return components_map.find(description) != components_map.end(); 
-}
-
-bool InstallConfiguration::IsSupported(DVLib::LcidType lcidtype) const
-{
-	return Configuration::IsSupported(lcidtype) &&
-		// \todo: support processor architecture and os range in reference configuration, move to base
-		DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), processor_architecture_filter) &&
-		DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter_greater, os_filter_smaller);
 }

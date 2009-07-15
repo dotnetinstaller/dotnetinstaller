@@ -42,12 +42,6 @@ public:
     bool dialog_show_required;
 	// allow user to continue on error
 	bool allow_continue_on_error;
-	// filter for minimum operating system version
-	std::wstring os_filter_greater;
-	// filter for maximum operating system version
-	std::wstring os_filter_smaller;
-	// filter for processor architecture
-	std::wstring processor_architecture_filter;
     // message and caption to show during CAB extraction
     std::wstring cab_dialog_message;
     std::wstring cab_dialog_caption;
@@ -76,7 +70,6 @@ public:
 	virtual void Load(TiXmlElement * node);
     void AddComponent(const ComponentPtr&);
     bool HasComponent(const std::wstring& description) const;
-	bool IsSupported(DVLib::LcidType lcidtype) const;
 };
 
 typedef shared_any<InstallConfiguration *, close_delete> InstallConfigurationPtr;

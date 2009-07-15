@@ -44,8 +44,3 @@ void ReferenceConfiguration::Load(TiXmlElement * node)
 	Configuration::Load(node);
 	LOG(L"Loaded 'reference' configuration '" << filename << L"'");
 }
-
-bool ReferenceConfiguration::IsSupported(DVLib::LcidType lcidtype) const
-{
-	return Configuration::IsSupported(lcidtype);
-}

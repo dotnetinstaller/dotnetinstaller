@@ -317,33 +317,6 @@ namespace InstallerLib
             set { m_allow_continue_on_error = value; }
         }
 
-        // filter for minimal OS version
-        private string m_os_filter_greater;
-        [Description("A filter to run this setup only on all operating system id greater than the id specified (see Help->Operating System Table). For example to run this setup only in Windows 2000 or later write '44'. (OPTIONAL)")]
-        public string os_filter_greater
-        {
-            get { return m_os_filter_greater; }
-            set { m_os_filter_greater = value; }
-        }
-
-        // filter for maximal OS version
-        private string m_os_filter_smaller;
-        [Description("A filter to run this setup only on all operating system id smaller than the id specified (see operating system table). For example to run this setup preceding Windows 2000 write '45'. (OPTIONAL)")]
-        public string os_filter_smaller
-        {
-            get { return m_os_filter_smaller; }
-            set { m_os_filter_smaller = value; }
-        }
-
-        // filter for processor architecture
-        private string m_processor_architecture_filter;
-        [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Separate by commas, can use the NOT sign ('!') to exclude. (es. 'x86,x64' or '!x86'). (OPTIONAL)")]
-        public string processor_architecture_filter
-        {
-            get { return m_processor_architecture_filter; }
-            set { m_processor_architecture_filter = value; }
-        }
-
         // message and caption to show during CAB extraction
         private string m_cab_dialog_message;
         [Description("CAB dialog message, this dialog shows when extracting an embedded CAB file")]
@@ -485,11 +458,6 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("dialog_show_installed", m_dialog_show_installed.ToString());
             e.XmlWriter.WriteAttributeString("dialog_show_required", m_dialog_show_required.ToString());
 
-            e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
-            e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
-
-            e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
-
             // message and caption to show during CAB extraction
             e.XmlWriter.WriteAttributeString("cab_dialog_message", m_cab_dialog_message);
             e.XmlWriter.WriteAttributeString("cab_cancelled_message", m_cab_cancelled_message);
@@ -543,9 +511,6 @@ namespace InstallerLib
             ReadAttributeValue(e, "allow_continue_on_error", ref m_allow_continue_on_error);
             ReadAttributeValue(e, "dialog_show_installed", ref m_dialog_show_installed);
             ReadAttributeValue(e, "dialog_show_required", ref m_dialog_show_required);
-            ReadAttributeValue(e, "os_filter_greater", ref m_os_filter_greater);
-            ReadAttributeValue(e, "os_filter_smaller", ref m_os_filter_smaller);
-            ReadAttributeValue(e, "processor_architecture_filter", ref m_processor_architecture_filter);
             // message and caption to show during CAB extraction
             ReadAttributeValue(e, "cab_dialog_message", ref m_cab_dialog_message);
             ReadAttributeValue(e, "cab_cancelled_message", ref m_cab_cancelled_message);

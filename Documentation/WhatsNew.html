@@ -45,8 +45,10 @@
         <li>Added support for relative paths in MSI components by resolving paths before execution.</li>
         <li>Added <code>version_lt</code>, <code>version_gt</code> and <code>version_eq</code>
             functions to installed check file and registry operators.</li>
-        <li>Fixed semantics of <code>auto_close_if_installed</code>. The bootstrapper will close
-            after any successful installation session when this option is set.</li>
+        <li>Bug: wrong semantics of <code>auto_close_if_installed</code>. The bootstrapper will
+            now close after any successful installation session when this option is set.</li>
+        <li>Added support for <code>os_filter_smaller</code>, <code>os_filter_greater</code>
+            and <code>processor_architecture_filter</code> in web configurations.</li>
     </ul>
     <h3>
         1.6 (29 June 2009)</h3>
