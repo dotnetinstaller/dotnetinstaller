@@ -145,8 +145,8 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
         return FALSE;
     }
 	
-	ComponentsListStatus components_status = LoadComponentsList();
-	if (components_status.all_components_installed)
+	bool all_components_installed = LoadComponentsList();
+	if (all_components_installed)
 	{
 		if (p_configuration->auto_close_if_installed || CurrentInstallUILevel.IsSilent())
 		{
@@ -406,12 +406,11 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		}
 		else
 		{
-			ComponentsListStatus components_status = LoadComponentsList();
+			bool all_components_installed = LoadComponentsList();
 
 			// auto-close the installer at the end
 			if (p_configuration->auto_close_if_installed // auto-close
-				&& (m_recorded_error == 0) // there was no error, everything chosen was installed
-				&& (components_status.all_required_components_installed || p_configuration->auto_close_optional)) // all required components have been installed or close on optional ones
+				&& ((m_recorded_error == 0) || all_components_installed)) // there was no error, everything chosen was installed or all components have been installed
 			{
 				ExecuteCompleteCode(true);
 				OnOK();
@@ -432,8 +431,8 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 	}
 }
 
-// returns true if all required components have been properly installed and if auto_close_optional is true
-ComponentsListStatus CdotNetInstallerDlg::LoadComponentsList()
+// returns true if all components have been installed
+bool CdotNetInstallerDlg::LoadComponentsList()
 {
 	return m_ListBoxComponents.Load(m_configuration);
 }

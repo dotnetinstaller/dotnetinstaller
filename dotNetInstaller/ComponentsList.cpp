@@ -72,11 +72,9 @@ void CComponentsList::PreDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CCheckListBox::PreDrawItem(lpDrawItemStruct);
 }
 
-ComponentsListStatus CComponentsList::Load(const ConfigurationPtr& configuration)
+bool CComponentsList::Load(const ConfigurationPtr& configuration)
 {
-	ComponentsListStatus status;
-	status.all_components_installed = true;
-	status.all_required_components_installed = true;
+	bool all_components_installed = true;
 
 	ResetContent();
 
@@ -98,8 +96,7 @@ ComponentsListStatus CComponentsList::Load(const ConfigurationPtr& configuration
 			component->selected = false;
 		}
 
-        if (component->required) status.all_required_components_installed &= component_installed;
-		status.all_components_installed &= component_installed;
+		all_components_installed &= component_installed;
 
 		std::wstring l_descr = component->description;
 	    l_descr += L" ";
@@ -140,5 +137,5 @@ ComponentsListStatus CComponentsList::Load(const ConfigurationPtr& configuration
 	}
 
 	ReleaseDC(pDC); 
-	return status;
+	return all_components_installed;
 }
