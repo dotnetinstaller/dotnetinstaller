@@ -21,7 +21,7 @@ void DownloadGroupConfiguration::Load(TiXmlElement * node)
 	downloading_message = node->AttributeW("dialog_message_downloading");
 	start_caption = node->AttributeW("buttonstart_caption");
 	cancel_caption = node->AttributeW("buttoncancel_caption");
-	auto_start = DVLib::string2bool(node->Attribute("autostartdownload"), false);
+	auto_start = DVLib::wstring2bool(node->AttributeW("autostartdownload"), false);
 
 	TiXmlNode * child = NULL;
 	while ( (child = node->IterateChildren(child)) != NULL)

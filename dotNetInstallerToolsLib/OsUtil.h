@@ -22,7 +22,7 @@ namespace DVLib
 		{ LcidUser, L"User" },
 	};
 
-	LcidType wstring2lcidtype(const std::wstring& name);
+	LcidType wstring2lcidtype(const std::wstring& name, LcidType defaultvalue = LcidUser);
 	std::wstring lcidtype2wstring(LcidType lcidtype);
 
 	enum OperatingSystem

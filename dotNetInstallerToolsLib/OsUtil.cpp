@@ -425,8 +425,13 @@ void DVLib::ExitWindowsSystem(DWORD ulFlags, DWORD ulReason)
 }
 
 
-DVLib::LcidType DVLib::wstring2lcidtype(const std::wstring& name)
+DVLib::LcidType DVLib::wstring2lcidtype(const std::wstring& name, LcidType defaultvalue)
 {
+	if (name.empty()) 
+	{
+		return defaultvalue;
+	}
+
 	for (int i = 0; i < ARRAYSIZE(LcidType2wstringMap); i++)
 	{
 		if (LcidType2wstringMap[i].name == name)

@@ -47,12 +47,12 @@ void Component::Load(TiXmlElement * node)
 	os_filter_smaller = node->AttributeW("os_filter_smaller");
 	os_filter_lcid = node->AttributeW("os_filter_lcid");
 	installcompletemessage = node->AttributeW("installcompletemessage");
-	mustreboot = DVLib::string2bool(node->Attribute("mustreboot"), false);
+	mustreboot = DVLib::wstring2bool(node->AttributeW("mustreboot"), false);
     reboot_required = node->AttributeW("reboot_required");
-	must_reboot_required = DVLib::string2bool(node->Attribute("must_reboot_required"), false);
-    allow_continue_on_error = DVLib::string2bool(node->Attribute("allow_continue_on_error"), true);
+	must_reboot_required = DVLib::wstring2bool(node->AttributeW("must_reboot_required"), false);
+    allow_continue_on_error = DVLib::wstring2bool(node->AttributeW("allow_continue_on_error"), true);
     failed_exec_command_continue = node->AttributeW("failed_exec_command_continue");
-	required = DVLib::string2bool(node->Attribute("required"), true);
+	required = DVLib::wstring2bool(node->AttributeW("required"), true);
 	processor_architecture_filter = node->AttributeW("processor_architecture_filter");	
 	// install checks, embed files, etc.
 	TiXmlNode * child = NULL;

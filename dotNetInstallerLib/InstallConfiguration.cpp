@@ -37,12 +37,12 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	Configuration::Load(node);
 
     // auto-enabled log options
-    log_enabled = DVLib::string2bool(node->Attribute("log_enabled"), false);
+    log_enabled = DVLib::wstring2bool(node->AttributeW("log_enabled"), false);
     log_file = node->AttributeW("log_file");
     // defines where to extract files and auto-delete options
     cab_path = node->AttributeW("cab_path");
 	InstallerSession::s_sessioncabpath = cab_path;
-    cab_path_autodelete = DVLib::string2bool(node->Attribute("cab_path_autodelete"), true);
+    cab_path_autodelete = DVLib::wstring2bool(node->AttributeW("cab_path_autodelete"), true);
     // positions within the dialog
     dialog_position.FromString(node->AttributeW("dialog_position"));
     dialog_components_list_position.FromString(node->AttributeW("dialog_components_list_position"));
@@ -66,18 +66,18 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	installation_completed = node->AttributeW("installation_completed");
 	installation_none = node->AttributeW("installation_none");
 	reboot_required = node->AttributeW("reboot_required");
-    must_reboot_required = DVLib::string2bool(node->Attribute("must_reboot_required"), false);
+    must_reboot_required = DVLib::wstring2bool(node->AttributeW("must_reboot_required"), false);
 	installing_component_wait = node->AttributeW("installing_component_wait");
 	dialog_otherinfo_caption = node->AttributeW("dialog_otherinfo_caption");
 	dialog_otherinfo_link = InstallerSession::MakePath(node->AttributeW("dialog_otherinfo_link"));
 	// completion commands
 	complete_command = InstallerSession::MakePath(node->AttributeW("complete_command"));
 	complete_command_silent = InstallerSession::MakePath(node->AttributeW("complete_command_silent"));
-	auto_close_if_installed = DVLib::string2bool(node->Attribute("auto_close_if_installed"), true);
-    auto_close_on_error = DVLib::string2bool(node->Attribute("auto_close_on_error"), false);
-    allow_continue_on_error = DVLib::string2bool(node->Attribute("allow_continue_on_error"), true);
-    dialog_show_installed = DVLib::string2bool(node->Attribute("dialog_show_installed"), true);
-    dialog_show_required = DVLib::string2bool(node->Attribute("dialog_show_required"), true);
+	auto_close_if_installed = DVLib::wstring2bool(node->AttributeW("auto_close_if_installed"), true);
+    auto_close_on_error = DVLib::wstring2bool(node->AttributeW("auto_close_on_error"), false);
+    allow_continue_on_error = DVLib::wstring2bool(node->AttributeW("allow_continue_on_error"), true);
+    dialog_show_installed = DVLib::wstring2bool(node->AttributeW("dialog_show_installed"), true);
+    dialog_show_required = DVLib::wstring2bool(node->AttributeW("dialog_show_required"), true);
 	// os filters
 	os_filter_greater = node->AttributeW("os_filter_greater");
 	os_filter_smaller = node->AttributeW("os_filter_smaller");

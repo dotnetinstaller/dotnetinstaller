@@ -22,7 +22,7 @@ void DownloadComponentInfo::Load(TiXmlElement * node)
 	sourcepath = InstallerSession::MakePath(node->AttributeW("sourcepath"));
 	destinationpath = InstallerSession::MakePath(node->AttributeW("destinationpath"));
 	destinationfilename = InstallerSession::MakePath(node->AttributeW("destinationfilename"));
-	alwaysdownload = DVLib::string2bool(node->Attribute("alwaysdownload"), true);		
+	alwaysdownload = DVLib::wstring2bool(node->AttributeW("alwaysdownload"), true);		
 
 	LOG(L"Loaded 'download' dialog component '" << componentname 
 		<< L"', source=" << (sourceurl.length() ? sourceurl : sourcepath));

@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "ConfigFileManager.h"
 #include "dotNetInstallerDlg.h"
+#include "DniMessageBox.h"
+#include <Version/Version.h>
 
 ConfigFileManager::ConfigFileManager()
 {
@@ -26,6 +28,23 @@ std::vector<ConfigurationPtr> ConfigFileManager::DownloadReferenceConfigurations
 			dlg.RunDownloadConfiguration(* get(p->downloadconfiguration));
 			ConfigFile downloadedconfig;
 			downloadedconfig.LoadFile(p->filename);
+
+			if (downloadedconfig.schema.version != TEXT(VERSION_VALUE))
+			{
+				std::wstring version_message = DVLib::FormatMessageW(
+					L"Downloaded configuration %s version %s does not match bootstrapper version.\r\n" \
+					L"Open and re-save configuration.xml with editor version %s.\r\n" \
+					L"Continue with installation?", 
+					p->filename.c_str(), downloadedconfig.schema.version.c_str(), TEXT(VERSION_VALUE));
+
+				if (DniSilentMessageBox(version_message, MB_YESNO|MB_ICONQUESTION, IDYES) != IDYES)
+				{
+					THROW_EX(L"Downloaded configuration " << p->filename << L" version " 
+						<< downloadedconfig.schema.version.c_str() << L" does not match bootstrapper version " 
+						<< TEXT(VERSION_VALUE));
+				}
+			}
+
 			std::vector<ConfigurationPtr> refs = DownloadReferenceConfigurations(
 				downloadedconfig.GetSupportedConfigurations(), level + 1);
 			result.insert(result.end(), refs.begin(), refs.end());
@@ -50,6 +69,20 @@ void ConfigFileManager::Load()
 	else 
 	{
 		THROW_EX(L"Missing '" << configfile << L"'");
+	}
+
+	if (config.schema.version != TEXT(VERSION_VALUE))
+	{
+		std::wstring version_message = DVLib::FormatMessageW(
+			L"Configuration version %s does not match bootstrapper version.\r\n" \
+			L"Open and re-save configuration.xml with editor version %s.\r\n" \
+			L"Continue with installation?", config.schema.version.c_str(), TEXT(VERSION_VALUE));
+
+		if (DniSilentMessageBox(version_message, MB_YESNO|MB_ICONQUESTION, IDYES) != IDYES)
+		{
+			THROW_EX(L"Configuration version " << config.schema.version << L" does not match bootstrapper version " 
+				<< TEXT(VERSION_VALUE));
+		}
 	}
 
 	// donwload reference configurations

@@ -131,6 +131,7 @@ void OsUtilUnitTests::testwstring2lcidtype()
 
 void OsUtilUnitTests::testlcidtype2wstring()
 {
+	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"") == DVLib::LcidUser);
 	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"UserExe") == DVLib::LcidUserExe);
 	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"System") == DVLib::LcidSystem);
 	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"User") == DVLib::LcidUser);
