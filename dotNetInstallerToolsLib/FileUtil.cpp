@@ -4,6 +4,7 @@
 #include "ExceptionMacros.h"
 #include "ErrorUtil.h"
 #include "PathUtil.h"
+#include "FormatUtil.h"
 
 bool DVLib::FileExists(const std::string& filename)
 {
@@ -196,4 +197,52 @@ std::wstring DVLib::GetFileVersion(const std::wstring& filename)
 bool DVLib::ResourceExists(HMODULE h, const std::wstring& resource, const std::wstring& type)
 {
 	return (NULL != ::FindResource(h, resource.c_str(), type.c_str()));
+}
+
+DVLib::FileVersion DVLib::wstring2fileversion(const std::wstring& version)
+{
+	FileVersion result = { 0, 0, 0, 0 };
+	if (! version.empty())
+	{
+		std::vector<std::wstring> parts_l = DVLib::split(version, L".", 4);
+		result.major = ((parts_l.size() >= 1) ? DVLib::wstring2long(parts_l[0]) : 0);
+		result.minor = ((parts_l.size() >= 2) ? DVLib::wstring2long(parts_l[1]) : 0);
+		result.build = ((parts_l.size() >= 3) ? DVLib::wstring2long(parts_l[2]) : 0);
+		result.rev = ((parts_l.size() == 4) ? DVLib::wstring2long(parts_l[3]) : 0);
+	}
+	return result;
+}
+
+std::wstring DVLib::fileversion2wstring(const FileVersion& version)
+{
+	return DVLib::FormatMessageW(L"%d.%d.%d.%d", 
+		version.major, version.minor, version.build, version.rev);
+}
+
+int DVLib::CompareVersion(const std::wstring& l, const std::wstring& r)
+{
+	FileVersion l_v = wstring2fileversion(l);
+	FileVersion r_v = wstring2fileversion(r);
+
+	if (l_v.major < r_v.major)
+		return -1;
+	else if (l_v.major > r_v.major)
+		return 1;
+
+	if (l_v.minor < r_v.minor)
+		return -1;
+	else if (l_v.minor > r_v.minor)
+		return 1;
+
+	if (l_v.build < r_v.build)
+		return -1;
+	else if (l_v.build > r_v.build)
+		return 1;
+
+	if (l_v.rev < r_v.rev)
+		return -1;
+	else if (l_v.rev > r_v.rev)
+		return 1;
+
+	return 0;
 }

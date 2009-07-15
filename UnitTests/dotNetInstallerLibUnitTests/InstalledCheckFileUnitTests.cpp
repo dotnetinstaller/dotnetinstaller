@@ -14,7 +14,7 @@ void InstalledCheckFileUnitTests::testIsInstalled()
 	struct TestData
 	{
 		LPCWSTR filename;
-		LPCWSTR fileversion;
+		LPCWSTR fileversion; // the version of user.exe is being compared to this version
 		LPCWSTR comparison;
 		bool expected_isinstalled;
 	};
@@ -26,7 +26,13 @@ void InstalledCheckFileUnitTests::testIsInstalled()
 		{ userexepath.c_str(), version.c_str(), L"match", true },
 		{ userexepath.c_str(), L"1.0", L"match", false },
 		{ userexepath.c_str(), version.c_str(), L"version", true },
+		{ userexepath.c_str(), version.c_str(), L"version_gt", false },
+		{ userexepath.c_str(), version.c_str(), L"version_lt", false },
+		{ userexepath.c_str(), version.c_str(), L"version_eq", true },
 		{ userexepath.c_str(), L"1.0", L"version", true },
+		{ userexepath.c_str(), L"1.0", L"version_lt", false },
+		{ userexepath.c_str(), L"1.0", L"version_gt", true },
+		{ userexepath.c_str(), L"1.0", L"version_eq", false },
 		{ userexepath.c_str(), L"999.0.0.0", L"version", false },
 	};
 

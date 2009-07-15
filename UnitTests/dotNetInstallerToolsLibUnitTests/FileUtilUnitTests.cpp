@@ -185,3 +185,43 @@ void FileUtilUnitTests::testResourceExists()
 	CPPUNIT_ASSERT(! DVLib::ResourceExists(NULL, L"RES_TEST", L"TypeDoesntExist"));
 	CPPUNIT_ASSERT(! DVLib::ResourceExists(NULL, L"ResourceDoesntExist", L"CUSTOM"));
 }
+
+void FileUtilUnitTests::testwstring2fileversion()
+{
+	struct TestData
+	{
+		LPCWSTR version_s;
+		DVLib::FileVersion version;
+	};
+
+	TestData testdata[] = 
+	{
+		{ L"", { 0, 0, 0, 0 } },
+		{ L"1", { 1, 0, 0, 0 } },
+		{ L"0.1", { 0, 1, 0, 0 } },
+		{ L"0.1.0", { 0, 1, 0, 0 } },
+		{ L"0.1.2.3", { 0, 1, 2, 3 } },
+		{ L"1.2.3.4", { 1, 2, 3, 4 } },
+		{ L"19.456.12345.5", { 19, 456, 12345, 5 } }
+	};
+
+	for (int i = 0; i < ARRAYSIZE(testdata); i++)
+	{
+		DVLib::FileVersion version = DVLib::wstring2fileversion(testdata[i].version_s);
+		std::wcout << std::endl << testdata[i].version_s << L" => "
+			<< version.major << L"." << version.minor << L"." 
+			<< version.build << L"." << version.rev;
+		CPPUNIT_ASSERT(version.major == testdata[i].version.major);
+		CPPUNIT_ASSERT(version.minor == testdata[i].version.minor);
+		CPPUNIT_ASSERT(version.build == testdata[i].version.build);
+		CPPUNIT_ASSERT(version.rev == testdata[i].version.rev);
+	}
+}
+
+void FileUtilUnitTests::testfileversion2wstring()
+{
+	FileVersion zero = { 0, 0, 0, 0};
+	CPPUNIT_ASSERT(DVLib::fileversion2wstring(zero) == L"0.0.0.0");
+	FileVersion notzero = { 12, 345, 6789, 100};
+	CPPUNIT_ASSERT(DVLib::fileversion2wstring(notzero) == L"12.345.6789.100");
+}

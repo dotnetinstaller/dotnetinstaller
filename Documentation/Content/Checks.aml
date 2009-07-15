@@ -33,6 +33,12 @@
                 <definition>Check whether the file exists.</definition>
                 <definedTerm>version</definedTerm>
                 <definition>Check whether the version of the file is greater or equal to the check value.</definition>
+                <definedTerm>version_eq</definedTerm>
+                <definition>Check whether the version of the file is equal to the check value.</definition>
+                <definedTerm>version_lt</definedTerm>
+                <definition>Check whether the version of the file is lesser than the check value.</definition>
+                <definedTerm>version_gt</definedTerm>
+                <definition>Check whether the version of the file is greater than the check value.</definition>
               </definitionTable>
             </para>
           </content>
@@ -70,6 +76,21 @@
                   The registry value is interpreted as a file version. Check whether the version is
                   greater or equal to the check value. This option is not available for REG_MULTI_SZ
                   values.
+                </definition>
+                <definedTerm>version_eq</definedTerm>
+                <definition>
+                  The registry value is interpreted as a file version. Check whether the version in registry is
+                  equal to the check value.
+                </definition>
+                <definedTerm>version_lt</definedTerm>
+                <definition>
+                  The registry value is interpreted as a file version. Check whether the version in registry is
+                  lesser than the check value.
+                </definition>
+                <definedTerm>version_gt</definedTerm>
+                <definition>
+                  The registry value is interpreted as a file version. Check whether the version in registry is
+                  greater than the check value.
                 </definition>
               </definitionTable>
             </para>

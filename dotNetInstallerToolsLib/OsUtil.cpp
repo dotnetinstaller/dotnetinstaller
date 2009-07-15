@@ -253,47 +253,6 @@ bool DVLib::IsOperatingSystemLCID(LcidType lcidtype, const std::wstring& lcid)
 	return false;
 }
 
-int DVLib::CompareVersion(const std::wstring& l, const std::wstring& r)
-{
-	if (l.empty() && r.empty()) return 0;
-	else if (l.empty() && ! r.empty()) return -1;
-	else if (! l.empty() && r.empty()) return 1;
-
-	std::vector<std::wstring> parts_l = DVLib::split(l, L".", 4);
-	long vA_1 = ((parts_l.size() >= 1) ? DVLib::wstring2long(parts_l[0]) : 0);
-	long vA_2 = ((parts_l.size() >= 2) ? DVLib::wstring2long(parts_l[1]) : 0);
-	long vA_3 = ((parts_l.size() >= 3) ? DVLib::wstring2long(parts_l[2]) : 0);
-	long vA_4 = ((parts_l.size() >= 4) ? DVLib::wstring2long(parts_l[3]) : 0);
-
-	std::vector<std::wstring> parts_r = DVLib::split(r, L".", 4);
-	long vB_1 = ((parts_r.size() >= 1) ? DVLib::wstring2long(parts_r[0]) : 0);
-	long vB_2 = ((parts_r.size() >= 2) ? DVLib::wstring2long(parts_r[1]) : 0);
-	long vB_3 = ((parts_r.size() >= 3) ? DVLib::wstring2long(parts_r[2]) : 0);
-	long vB_4 = ((parts_r.size() >= 4) ? DVLib::wstring2long(parts_r[3]) : 0);
-
-	if (vA_1 < vB_1)
-		return -1;
-	else if (vA_1 > vB_1)
-		return 1;
-
-	if (vA_2 < vB_2)
-		return -1;
-	else if (vA_2 > vB_2)
-		return 1;
-
-	if (vA_3 < vB_3)
-		return -1;
-	else if (vA_3 > vB_3)
-		return 1;
-
-	if (vA_4 < vB_4)
-		return -1;
-	else if (vA_4 > vB_4)
-		return 1;
-
-	return 0;
-}
-
 WORD DVLib::wstring2pa(const std::wstring& pa)
 {
 	for (int i = 0; i < ARRAYSIZE(DVLib::processor_architectures); i++)
@@ -451,3 +410,4 @@ std::wstring DVLib::lcidtype2wstring(LcidType lcidtype)
 
 	THROW_EX(L"Invalid LCID type: " << lcidtype);
 }
+

@@ -77,9 +77,6 @@ namespace DVLib
 	// does the filter match the operating system LCID
 	bool IsOperatingSystemLCID(LcidType lcidtype, const std::wstring& lcid);
 
-	// compare a Windows-specific 4-part version
-	int CompareVersion(const std::wstring& l, const std::wstring& r);
-
 	struct PROCESSOR_ARCHITECTURE
 	{
 		LPCWSTR name;

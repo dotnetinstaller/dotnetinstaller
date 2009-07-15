@@ -23,17 +23,17 @@ bool InstalledCheckFile::IsInstalled() const
 		if (! fileversion.empty())
 		{
 			if (comparison == TEXT("exists"))
-			{
 				return DVLib::FileExists(filename);
-			}
 			else if (comparison == TEXT("match"))
-			{
 				return (DVLib::GetFileVersion(filename) == fileversion);
-			}
 			else if (comparison == TEXT("version"))
-			{
 				return (DVLib::CompareVersion(DVLib::GetFileVersion(filename), fileversion) >= 0);
-			}
+			else if (comparison == TEXT("version_eq"))
+				return (DVLib::CompareVersion(DVLib::GetFileVersion(filename), fileversion) == 0);
+			else if (comparison == TEXT("version_gt"))
+				return (DVLib::CompareVersion(DVLib::GetFileVersion(filename), fileversion) > 0);
+			else if (comparison == TEXT("version_lt"))
+				return (DVLib::CompareVersion(DVLib::GetFileVersion(filename), fileversion) < 0);
 			else
 			{
 				THROW_EX(L"Invalid comparison type \"" << comparison << L"\"");

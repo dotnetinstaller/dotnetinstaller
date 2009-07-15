@@ -11,6 +11,9 @@ namespace InstallerLib
     {
         match,
         version,
+        version_eq,
+        version_lt,
+        version_gt,
         exists,
         contains
     }

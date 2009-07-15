@@ -32,9 +32,9 @@
         <li>Bug: wrong error when missing configuration.xml (invalid schema version vs. missing
             configuration.xml).</li>
         <li>Added OS filter identifier for Windows Vista SP2.</li>
-        <li>Registry search for REG_MULTI_SZ semantics have been extended. You can now specify
-            a comma-delimited list of values to <code>match</code> exactly all values, <code>contains</code>
-            to match a subset of values and you can no longer specify a broken <code>version</code>
+        <li>Extended registry search REG_MULTI_SZ semantics. You can now specify a comma-delimited
+            list of values to <code>match</code> exactly all values, <code>contains</code> to
+            match a subset of values and you can no longer specify a broken <code>version</code>
             match.</li>
         <li>Bug: reference (web) configurations broken in the editor.</li>
         <li>Added support for nested reference configurations. Each downloaded configuration
@@ -43,6 +43,8 @@
         <li>Added /DisplayCab command line option to dotNetInstaller.exe that displays the embedded
             CAB file contents when available.</li>
         <li>Added support for relative paths in MSI components by resolving paths before execution.</li>
+        <li>Added <code>version_lt</code>, <code>version_gt</code> and <code>version_eq</code>
+            functions to installed check file and registry operators.</li>
     </ul>
     <h3>
         1.6 (29 June 2009)</h3>
