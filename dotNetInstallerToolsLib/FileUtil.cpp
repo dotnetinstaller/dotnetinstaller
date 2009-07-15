@@ -192,3 +192,8 @@ std::wstring DVLib::GetFileVersion(const std::wstring& filename)
 		<< LOWORD(versioninfo.fixed_info.dwFileVersionLS);
 	return version.str();
 }
+
+bool DVLib::ResourceExists(HMODULE h, const std::wstring& resource, const std::wstring& type)
+{
+	return (NULL != ::FindResource(h, resource.c_str(), type.c_str()));
+}

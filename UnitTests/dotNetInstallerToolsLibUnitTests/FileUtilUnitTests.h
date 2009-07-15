@@ -17,6 +17,8 @@ namespace DVLib
 			CPPUNIT_TEST( testFileReadToEnd );
 			CPPUNIT_TEST( testGetFileVersionInfo );
 			CPPUNIT_TEST( testGetFileVersion );
+			CPPUNIT_TEST( testLoadResourceData );
+			CPPUNIT_TEST( testResourceExists );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testFileExists();
@@ -29,6 +31,8 @@ namespace DVLib
 			void testFileReadToEnd();
 			void testGetFileVersionInfo();
 			void testGetFileVersion();
+			void testLoadResourceData();
+			void testResourceExists();
 		};
 	}
 }

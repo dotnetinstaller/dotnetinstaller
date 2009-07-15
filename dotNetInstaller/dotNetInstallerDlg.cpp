@@ -126,6 +126,14 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 		//errore nel caricamento dell'immagine
 	}
 
+	// just display CAB contents
+	if (commandLineInfo.DisplayCab())
+	{
+		DisplayCab();
+		OnOK();
+		return FALSE;
+	}
+
     // just extract the CABs
     if (commandLineInfo.ExtractCab())
     {
@@ -136,7 +144,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
         OnOK();
         return FALSE;
     }
-
+	
 	if (LoadComponentsList())
 	{
 		if (p_configuration->auto_close_if_installed || CurrentInstallUILevel.IsSilent())
@@ -534,6 +542,14 @@ void CdotNetInstallerDlg::OnBnClickedCancel()
 {
 	RecordError(-2);
 	OnCancel();
+}
+
+void CdotNetInstallerDlg::DisplayCab()
+{
+    InstallComponentDlg dlg;
+	ComponentPtr extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, & dlg));
+	ExtractCabProcessor * p = reinterpret_cast<ExtractCabProcessor *>(get(extractcab));
+	DniMessageBox(DVLib::join(p->GetCabFiles(), L"\r\n"), MB_OK|MB_ICONINFORMATION);
 }
 
 void CdotNetInstallerDlg::ExtractCab()

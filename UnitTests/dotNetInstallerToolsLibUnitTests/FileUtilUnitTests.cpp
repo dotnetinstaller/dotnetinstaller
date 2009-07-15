@@ -172,3 +172,16 @@ void FileUtilUnitTests::testGetFileVersion()
 	CPPUNIT_ASSERT(version.length());
 	CPPUNIT_ASSERT(DVLib::split(version, L".").size() == 4);	
 }
+
+void FileUtilUnitTests::testLoadResourceData()
+{
+	std::vector<char> data = DVLib::LoadResourceData<char>(NULL, L"RES_TEST", L"CUSTOM");
+	CPPUNIT_ASSERT(data.size() == 3390);
+}
+
+void FileUtilUnitTests::testResourceExists()
+{
+	CPPUNIT_ASSERT(DVLib::ResourceExists(NULL, L"RES_TEST", L"CUSTOM"));
+	CPPUNIT_ASSERT(! DVLib::ResourceExists(NULL, L"RES_TEST", L"TypeDoesntExist"));
+	CPPUNIT_ASSERT(! DVLib::ResourceExists(NULL, L"ResourceDoesntExist", L"CUSTOM"));
+}

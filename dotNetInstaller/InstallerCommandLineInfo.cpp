@@ -65,6 +65,11 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 			m_lastArgFlag = extractCab;
             m_extractCab = true;
 		}
+		else if (_wcsicmp(pszParam, TEXT("displayCab")) == 0 )
+		{
+			m_lastArgFlag = displayCab;
+            m_displayCab = true;
+		}
         else if (_wcsicmp(pszParam, TEXT("componentArgs")) == 0)
         {
             m_lastArgFlag = componentArgs;
@@ -83,6 +88,7 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 			case noSilent:
 			case basic:
             case extractCab:
+			case displayCab:
 				break;
             case logfile:
                 ApplicationLogInstance.SetLogFile(pszParam);

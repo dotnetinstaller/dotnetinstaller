@@ -166,15 +166,15 @@ std::string DVLib::FormatBytesA(ULONG bytes)
 	else if (bytes < 1048576 && bytes % 1024 == 0) // Kb
 		return DVLib::FormatMessage("%.0fKB", (double) bytes / 1024);
 	else if (bytes < 1048576) // Kb
-		return DVLib::FormatMessage("%.2fKB", (double) bytes / 1024);
+		return DVLib::FormatMessage("%.1fKB", (double) bytes / 1024);
 	else if (bytes % 1048576 == 0 && bytes < 1073741824) // Mb
 		return DVLib::FormatMessage("%.0fMB", (double) bytes / 1048576);
 	else if (bytes < 1073741824) // Mb
-		return DVLib::FormatMessage("%.2fMB", (double) bytes / 1048576);
+		return DVLib::FormatMessage("%.1fMB", (double) bytes / 1048576);
 	else if (bytes % 1073741824 == 0 && bytes < 1099511627776 ) // GB
 		return DVLib::FormatMessage("%.0fGB", (double) bytes / 1073741824);
 	else if (bytes < 1099511627776 ) // GB
-		return DVLib::FormatMessage("%.2fGB", (double) bytes / 1073741824);
+		return DVLib::FormatMessage("%.1fGB", (double) bytes / 1073741824);
 	else
 		return DVLib::FormatMessage("%lu bytes", bytes);
 }
@@ -188,15 +188,15 @@ std::wstring DVLib::FormatBytesW(ULONG bytes)
 	else if (bytes < 1048576 && bytes % 1024 == 0) // Kb
 		return DVLib::FormatMessage(L"%.0fKB", (double) bytes / 1024);
 	else if (bytes < 1048576) // Kb
-		return DVLib::FormatMessage(L"%.2fKB", (double) bytes / 1024);
+		return DVLib::FormatMessage(L"%.1fKB", (double) bytes / 1024);
 	else if (bytes % 1048576 == 0 && bytes < 1073741824) // Mb
 		return DVLib::FormatMessage(L"%.0fMB", (double) bytes / 1048576);
 	else if (bytes < 1073741824) // Mb
-		return DVLib::FormatMessage(L"%.2fMB", (double) bytes / 1048576);
+		return DVLib::FormatMessage(L"%.1fMB", (double) bytes / 1048576);
 	else if (bytes % 1073741824 == 0 && bytes < 1099511627776 ) // GB
 		return DVLib::FormatMessage(L"%.0fGB", (double) bytes / 1073741824);
 	else if (bytes < 1099511627776 ) // GB
-		return DVLib::FormatMessage(L"%.2fGB", (double) bytes / 1073741824);
+		return DVLib::FormatMessage(L"%.1fGB", (double) bytes / 1073741824);
 	else
 		return DVLib::FormatMessage(L"%lu bytes", bytes);
 }

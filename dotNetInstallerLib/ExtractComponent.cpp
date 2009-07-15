@@ -71,13 +71,6 @@ void ExtractComponent::ExtractCab()
 		resname.append(DVLib::towstring(i));
 		LOG(L"Extracting: " << resname);
 
-		HRSRC l_res = FindResource(m_h, resname.c_str(), TEXT("BINARY"));
-		if (l_res == NULL)
-		{
-			LOG(L"Missing " << resname << L" resource");
-			THROW_EX(L"Missing " << resname << L" resource");
-		}
-
         if (cancelled)
         {
 			LOG(L"Cancelled: " << resname);
@@ -86,27 +79,12 @@ void ExtractComponent::ExtractCab()
 			THROW_EX(resolved_cancelled_message);
         }
 
-		HGLOBAL l_hRes = LoadResource(m_h, l_res);
-		if (l_hRes == NULL)
-		{
-			LOG(L"Error loading resource: " << resname);
-			THROW_EX("Error loading resource: " << resname);
-		}
+		std::vector<char> data = DVLib::LoadResourceData<char>(m_h, resname, L"BINARY");
 
-		LPVOID l_buffer = LockResource(l_hRes);
-		if (l_buffer == NULL)
-		{
-			LOG(L"Failed to lock resource: " << resname);
-			THROW_EX(L"Failed to lock resource: " << resname);
-		}
-
-		DWORD l_size = SizeofResource(m_h, l_res);
 		DWORD dwWritten = 0;
-
-        CHECK_WIN32_BOOL(WriteFile(get(hfile), (char *) l_buffer, l_size, & dwWritten, NULL),
+        CHECK_WIN32_BOOL(WriteFile(get(hfile), (LPCVOID) & * data.begin(), data.size(), & dwWritten, NULL),
 			L"Error writing setup.cab at '" << resname << L"' resource");
 
-		UnlockResource(l_buffer);
 		LOG(L"Extracted: " << resname);
     }
 
@@ -142,4 +120,11 @@ BOOL ExtractComponent::OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param)
     }
 
     return Cabinet::CExtractT<ExtractComponent>::OnBeforeCopyFile(k_FI, p_Param);
+}
+
+std::vector<std::wstring> ExtractComponent::GetCabFiles() const
+{
+	std::vector<wchar_t> v_buffer = DVLib::LoadResourceData<wchar_t>(m_h, L"RES_CAB_LIST", L"CUSTOM");
+	std::wstring s_buffer(& * v_buffer.begin(), v_buffer.size());
+	return DVLib::split(s_buffer, L"\r\n");
 }

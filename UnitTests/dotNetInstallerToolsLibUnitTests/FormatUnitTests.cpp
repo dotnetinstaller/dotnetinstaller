@@ -63,11 +63,11 @@ void FormatUnitTests::testFormatBytes()
 		{ 1, L"1 byte" },
 		{ 532, L"532 bytes" },
 		{ 1024, L"1KB" },
-		{ 1340, L"1.31KB" },
+		{ 1340, L"1.3KB" },
 		{ 1024 * 1024, L"1MB" },
-		{ 2400016, L"2.29MB" },
+		{ 2400016, L"2.3MB" },
 		{ 1024 * 1024 * 1024, L"1GB" },
-		{ 2400000000, L"2.24GB" },
+		{ 2400000000, L"2.2GB" },
 	};
 
 	for (int i = 0; i < ARRAYSIZE(testData); i++)

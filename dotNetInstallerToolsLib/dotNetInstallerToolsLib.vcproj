@@ -236,6 +236,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FileUtilImpl.h"
+				>
+			</File>
+			<File
 				RelativePath=".\FormatUtil.h"
 				>
 			</File>

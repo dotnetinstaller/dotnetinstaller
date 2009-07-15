@@ -277,6 +277,43 @@ namespace InstallerLib
             }
         }
 
+        public static string FormatBytes(long bytes)
+        {
+	        if (bytes == 1) // bytes
+                return String.Format("{0} byte", bytes);
+	        else if (bytes < 1024) // bytes
+                return String.Format("{0} bytes", bytes);
+	        else if (bytes < 1048576) // Kb
+                return String.Format("{0:F1}KB", (double)bytes / 1024);
+	        else if (bytes < 1073741824) // Mb
+                return String.Format("{0:F1}MB", (double)bytes / 1048576);
+	        else if (bytes < 1099511627776 ) // GB
+                return String.Format("{0:F1}GB", (double)bytes / 1073741824);
+	        else
+                return String.Format("{0} bytes", bytes);
+        }
+
+        public string[] GetFileValuesWithSize()
+        {
+            List<string> values = new List<string>();
+            foreach (EmbedFilePair pair in this)
+            {
+                values.Add(string.Format("{0} - {1}", pair.relativepath,
+                    FormatBytes(new FileInfo(pair.fullpath).Length)));
+            }
+            return values.ToArray();
+        }
+
+        public string[] GetFileValues()
+        {
+            List<string> values = new List<string>();
+            foreach (EmbedFilePair pair in this)
+            {
+                values.Add(pair.relativepath);
+            }
+            return values.ToArray();
+        }
+
         #endregion
 
         #region ICollection<EmbedFilePair> Members
@@ -340,7 +377,7 @@ namespace InstallerLib
 
         int ICollection<EmbedFilePair>.Count
         {
-            get { return _files.Count;  }
+            get { return _files.Count; }
         }
 
         bool ICollection<EmbedFilePair>.IsReadOnly

@@ -109,6 +109,14 @@ namespace InstallerLib
                 args.WriteLine(string.Format("Writing \"{0}\"", cabname));
                 cab.CompressFileList(files, cabname, true, 0);
 
+                args.WriteLine(string.Format("Embedding CAB directory", cabname));
+                StringBuilder fileslist = new StringBuilder();
+                fileslist.AppendLine(string.Format("Total embedded CAB size: {0}", EmbedFileCollection.FormatBytes(new FileInfo(cabname).Length)));
+                fileslist.AppendLine();
+                fileslist.Append(String.Join("\r\n", c_files.GetFileValuesWithSize()));
+                byte[] fileslist_b = Encoding.Unicode.GetBytes(fileslist.ToString());
+                ResourceUpdate.UpdateResource(args.output, "RES_CAB_LIST", "CUSTOM", fileslist_b, 0);
+
                 args.WriteLine(string.Format("Embedding \"{0}\"", cabname));
                 ResourceUpdate.UpdateResourceWithFile(args.output, "RES_CAB", "BINARY", 0, cabname, 32 * 1024 * 1024, args);
                 File.Delete(cabname);

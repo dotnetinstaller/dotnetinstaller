@@ -9,6 +9,7 @@ public:
 	std::wstring cab_cancelled_message;
     ExtractComponent(HMODULE h);
 	int GetCabCount() const;
+	std::vector<std::wstring> GetCabFiles() const;
 	BOOL OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param);
 	void OnAfterCopyFile(char* s8_File, WCHAR* u16_File, void* p_Param);
 protected:

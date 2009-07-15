@@ -43,7 +43,7 @@ void ConfigFileManager::Load()
 	// load configuration
     ConfigFile config;
 	std::wstring configfile = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), TEXT("configuration.xml"));
-	if (NULL != ::FindResource(AfxGetApp()->m_hInstance, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM")))
+	if (NULL != DVLib::ResourceExists(AfxGetApp()->m_hInstance, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM")))
 		config.LoadResource(AfxGetApp()->m_hInstance, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM"));
 	else if (DVLib::FileExists(configfile))
 		config.LoadFile(configfile);

@@ -23,6 +23,7 @@ private:
 	bool m_additional_config;
 	ConfigurationPtr m_configuration;
     void ExtractCab();
+	void DisplayCab();
     void SelectComponents();
     // move a window to the coordinates defined by a rectangle with defaults
     static bool MoveWindow(CWnd& dlg, const WidgetPosition& pos);

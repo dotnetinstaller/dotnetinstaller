@@ -40,15 +40,5 @@ HBITMAP DVLib::LoadBitmapFromBuffer(const std::vector<char>& data)
 
 HBITMAP DVLib::LoadBitmapFromResource(HMODULE h, const std::wstring& resource, const std::wstring& type)
 {
-	HRSRC res = ::FindResource(h, resource.c_str(), type.c_str());
-	CHECK_WIN32_BOOL(res != NULL, L"Invalid " << type << " resource: " << resource);
-	HGLOBAL hgl = ::LoadResource(h, res);
-	CHECK_WIN32_BOOL(hgl != NULL, L"Missing " << type << " resource: " << resource);
-	DWORD size = SizeofResource(h, res);
-	LPVOID buffer = LockResource(hgl);
-	CHECK_WIN32_BOOL(buffer != NULL, L"Cannot lock " << type << " resource: " << resource);
-	std::vector<char> data;
-	data.resize(size);
-	memcpy(& * data.begin(), buffer, size);
-	return LoadBitmapFromBuffer(data);
+	return LoadBitmapFromBuffer(DVLib::LoadResourceData<char>(h, resource, type));
 }

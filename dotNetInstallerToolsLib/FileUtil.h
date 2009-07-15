@@ -50,4 +50,10 @@ namespace DVLib
 	FileVersionInfo GetFileVersionInfo(const std::wstring& filename);
 	// get executable file version string
 	std::wstring GetFileVersion(const std::wstring& filename);
+
+	// returns true if the resource exists
+	bool ResourceExists(HMODULE h, const std::wstring& resource, const std::wstring& type);
+	// load resource data from a module
+	template<class T>
+	std::vector<T> LoadResourceData(HMODULE h, const std::wstring& resource, const std::wstring& type);
 }

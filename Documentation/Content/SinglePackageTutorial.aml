@@ -74,7 +74,9 @@
           <content>
             <para>
               Link your setup with <system>InstallLinker.exe</system> and test which files have been embedded. Run your 
-              <command>Setup.exe <system>/ExtractCab</system></command>. This will output all CAB contents in the current folder.
+              <command>Setup.exe <system>/DisplayCab</system></command> to display the CAB contents. You may also run
+              <command>Setup.exe <system>/ExtractCab</system></command> to output all CAB contents in the current folder under
+              a directory called <localUri>SupportFiles</localUri>.
             </para>
           </content>
         </step>
