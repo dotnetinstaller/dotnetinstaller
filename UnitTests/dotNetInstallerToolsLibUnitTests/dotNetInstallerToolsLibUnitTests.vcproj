@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="8.00"
 	Name="dotNetInstallerToolsLibUnitTests"
 	ProjectGUID="{56390342-5DE6-4FE4-A7A6-3EC30CF4B34F}"
 	RootNamespace="dotNetInstallerToolsLibUnitTests"
 	Keyword="Win32Proj"
-	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -42,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\UnitTests\CppUnit\include&quot;;&quot;$(SolutionDir)&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\include&quot;;&quot;$(SolutionDir)&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -65,11 +64,9 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="cppunitd.lib Version.lib msi.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(SolutionDir)\UnitTests\CppUnit\lib"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\lib&quot;;&quot;$(SolutionDir)\ThirdParty\Msi\lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -89,6 +86,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -120,7 +120,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\UnitTests\CppUnit\include&quot;;&quot;$(SolutionDir)&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\include&quot;;&quot;$(SolutionDir)&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
@@ -139,15 +139,14 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalOptions="/nod:kernel32.lib /nod:advapi32.lib /nod:user32.lib /nod:gdi32.lib /nod:shell32.lib /nod:comdlg32.lib /nod:version.lib /nod:mpr.lib /nod:rasapi32.lib /nod:winmm.lib /nod:winspool UnicoWS.lib Kernel32.lib Advapi32.lib User32.lib Gdi32.lib Shell32.lib Comdlg32.lib Version.lib Mpr.lib Rasapi32.lib Winmm.lib Winspool.lib Vfw32.lib Secur32.lib Oleacc.lib Oledlg.lib Sensapi.lib"
 				AdditionalDependencies="cppunit.lib Version.lib msi.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(SolutionDir)\UnitTests\CppUnit\lib"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\lib&quot;;&quot;$(SolutionDir)\ThirdParty\Msi\lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -167,6 +166,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

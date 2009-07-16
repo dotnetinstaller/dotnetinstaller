@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="8.00"
 	Name="dotNetInstallerLib"
 	ProjectGUID="{04DC59CF-750E-431F-A834-FB60BE03545C}"
 	RootNamespace="dotNetInstallerLib"

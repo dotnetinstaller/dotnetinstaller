@@ -4,8 +4,8 @@
 class CppUnitTestRunner
 {
 public:
-	CppUnitTestRunner(void);
-	~CppUnitTestRunner(void);
+	CppUnitTestRunner();
+	~CppUnitTestRunner();
 
     //! runs all tests or allows to specify which test(s) to run; using -? on the command line shows a list of tests
 	int Run(int argc, wchar_t * argv[]);

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="8.00"
 	Name="dotNetInstaller"
 	ProjectGUID="{F4E74CF8-37CD-4023-8B89-05EF4B34D363}"
 	RootNamespace="dotNetInstaller"
 	Keyword="MFCProj"
-	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -70,7 +69,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib msi.lib"
 				LinkIncremental="2"
-				UACExecutionLevel="2"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\ThirdParty\Msi\lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 			/>
@@ -92,6 +91,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -149,10 +151,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/nod:kernel32.lib /nod:advapi32.lib /nod:user32.lib /nod:gdi32.lib /nod:shell32.lib /nod:comdlg32.lib /nod:version.lib /nod:mpr.lib /nod:rasapi32.lib /nod:winmm.lib /nod:winspool.lib /nod:vfw32.lib /nod:secur32.lib /nod:oleacc.lib /nod:oledlg.lib /nod:sensapi.lib&#x0D;&#x0A;"
+				AdditionalOptions="/nod:kernel32.lib /nod:advapi32.lib /nod:user32.lib /nod:gdi32.lib /nod:shell32.lib /nod:comdlg32.lib /nod:version.lib /nod:mpr.lib /nod:rasapi32.lib /nod:winmm.lib /nod:winspool UnicoWS.lib Kernel32.lib Advapi32.lib User32.lib Gdi32.lib Shell32.lib Comdlg32.lib Version.lib Mpr.lib Rasapi32.lib Winmm.lib Winspool.lib Vfw32.lib Secur32.lib Oleacc.lib Oledlg.lib Sensapi.lib"
 				AdditionalDependencies="kernel32.lib Advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winspool.lib oleacc.lib msi.lib"
 				LinkIncremental="1"
-				UACExecutionLevel="2"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\ThirdParty\Msi\lib&quot;"
 				IgnoreAllDefaultLibraries="false"
 				DelayLoadDLLs=""
 				GenerateDebugInformation="true"
@@ -160,7 +162,6 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -180,6 +181,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
