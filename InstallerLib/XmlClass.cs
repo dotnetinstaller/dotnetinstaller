@@ -213,6 +213,20 @@ namespace InstallerLib
             }
         }
 
+        public bool ReadAttributeValue(XmlElementEventArgs e, string value, ref Guid propertyName)
+        {
+            XmlAttribute xmlattrib = e.XmlElement.Attributes[value];
+            if (xmlattrib != null && !string.IsNullOrEmpty(xmlattrib.InnerText))
+            {
+                propertyName = new Guid(xmlattrib.InnerText);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public bool ReadAttributeValue(XmlElementEventArgs e, string value, ref bool propertyName)
         {
             XmlAttribute xmlattrib = e.XmlElement.Attributes[value];

@@ -214,6 +214,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstalledCheckProduct.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\InstalledCheckRegistry.cpp"
 				>
 			</File>
@@ -353,6 +357,10 @@
 			</File>
 			<File
 				RelativePath=".\InstalledCheckOperator.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckProduct.h"
 				>
 			</File>
 			<File

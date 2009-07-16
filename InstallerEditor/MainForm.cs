@@ -15,48 +15,48 @@ namespace InstallerEditor
     public class MainForm : System.Windows.Forms.Form
     {
         private System.Windows.Forms.MainMenu mainMenu1;
-        private System.Windows.Forms.MenuItem mnFile;
-        private System.Windows.Forms.MenuItem mnNew;
-        private System.Windows.Forms.MenuItem mnClose;
-        private System.Windows.Forms.MenuItem mnSave;
-        private System.Windows.Forms.MenuItem mnExit;
-        private System.Windows.Forms.MenuItem mnOpen;
-        private System.Windows.Forms.MenuItem menuItem1;
-        private System.Windows.Forms.MenuItem menuItem2;
-        private System.Windows.Forms.MenuItem mnCreateExe;
-        private System.Windows.Forms.MenuItem menuItem4;
+        private MenuItem mnFile;
+        private MenuItem mnNew;
+        private MenuItem mnClose;
+        private MenuItem mnSave;
+        private MenuItem mnExit;
+        private MenuItem mnOpen;
+        private MenuItem menuItem1;
+        private MenuItem menuItem2;
+        private MenuItem mnCreateExe;
+        private MenuItem menuItem4;
         private System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.PropertyGrid propertyGrid;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.ContextMenu contextMenuTreeView;
         private System.Windows.Forms.Splitter splitter1;
-        private System.Windows.Forms.MenuItem mnAdd;
-        private System.Windows.Forms.MenuItem mnAddSetupConfiguration;
-        private System.Windows.Forms.MenuItem mnAddWebConfiguration;
-        private System.Windows.Forms.MenuItem menuItem7;
-        private System.Windows.Forms.MenuItem mnDelete;
-        private System.Windows.Forms.MenuItem menuItem3;
-        private System.Windows.Forms.MenuItem mnAddDownloadFile;
-        private System.Windows.Forms.MenuItem mnView;
-        private System.Windows.Forms.MenuItem mnRefresh;
-        private System.Windows.Forms.MenuItem menuItem5;
-        private System.Windows.Forms.MenuItem mnAddMsiComponent;
-        private System.Windows.Forms.MenuItem mnAddCommandComponent;
-        private System.Windows.Forms.MenuItem menuItem6;
-        private System.Windows.Forms.MenuItem mnAddInstalledCheckRegistry;
-        private System.Windows.Forms.MenuItem mnAddInstalledCheckFile;
-        private System.Windows.Forms.MenuItem mnAddDownloadDialog;
-        private System.Windows.Forms.MenuItem mnSaveAs;
-        private System.Windows.Forms.MenuItem mnEditWithNotepad;
-        private System.Windows.Forms.MenuItem mnTools;
-        private System.Windows.Forms.MenuItem mnLanguageForNewItem;
-        private System.Windows.Forms.MenuItem mnHelp;
-        private System.Windows.Forms.MenuItem mnHomePage;
-        private System.Windows.Forms.MenuItem mnAddOpenFileComponent;
-        private System.Windows.Forms.MenuItem mnHelpAbout;
-        private System.Windows.Forms.MenuItem mnCustomizeTemplates;
-        private System.Windows.Forms.MenuItem mnAddComponentWizard2;
-        private MenuItem menuItem8;
+        private MenuItem mnAdd;
+        private MenuItem mnAddSetupConfiguration;
+        private MenuItem mnAddWebConfiguration;
+        private MenuItem menuItem7;
+        private MenuItem mnDelete;
+        private MenuItem menuItem3;
+        private MenuItem mnAddDownloadFile;
+        private MenuItem mnView;
+        private MenuItem mnRefresh;
+        private MenuItem menuItem5;
+        private MenuItem mnAddMsiComponent;
+        private MenuItem mnAddCommandComponent;
+        private MenuItem menuItem6;
+        private MenuItem mnAddInstalledCheckRegistry;
+        private MenuItem mnAddInstalledCheckFile;
+        private MenuItem mnAddDownloadDialog;
+        private MenuItem mnSaveAs;
+        private MenuItem mnEditWithNotepad;
+        private MenuItem mnTools;
+        private MenuItem mnLanguageForNewItem;
+        private MenuItem mnHelp;
+        private MenuItem mnHomePage;
+        private MenuItem mnAddOpenFileComponent;
+        private MenuItem mnHelpAbout;
+        private MenuItem mnCustomizeTemplates;
+        private MenuItem mnAddComponentWizard2;
+        private MenuItem mnAddInstalledCheckProduct;
         private MenuItem mnAddEmbedFile;
         private MenuItem mnAddInstalledCheckOperator;
         private SplitContainer mainSplitContainer;
@@ -72,6 +72,7 @@ namespace InstallerEditor
         private MenuItem mnUsersGuide;
         private MenuItem menuItem10;
         private MenuItem mnAddEmbedFolder;
+        private MenuItem menuItem9;
         private System.ComponentModel.IContainer components;
 
         public MainForm()
@@ -146,7 +147,8 @@ namespace InstallerEditor
             this.mnAddInstalledCheckRegistry = new System.Windows.Forms.MenuItem();
             this.mnAddInstalledCheckFile = new System.Windows.Forms.MenuItem();
             this.mnAddInstalledCheckOperator = new System.Windows.Forms.MenuItem();
-            this.menuItem8 = new System.Windows.Forms.MenuItem();
+            this.mnAddInstalledCheckProduct = new System.Windows.Forms.MenuItem();
+            this.menuItem9 = new System.Windows.Forms.MenuItem();
             this.mnAddEmbedFile = new System.Windows.Forms.MenuItem();
             this.mnAddEmbedFolder = new System.Windows.Forms.MenuItem();
             this.mnMove = new System.Windows.Forms.MenuItem();
@@ -365,7 +367,8 @@ namespace InstallerEditor
             this.mnAddInstalledCheckRegistry,
             this.mnAddInstalledCheckFile,
             this.mnAddInstalledCheckOperator,
-            this.menuItem8,
+            this.mnAddInstalledCheckProduct,
+            this.menuItem9,
             this.mnAddEmbedFile,
             this.mnAddEmbedFolder});
             this.mnAdd.Text = "&Add";
@@ -448,23 +451,29 @@ namespace InstallerEditor
             // mnAddInstalledCheckOperator
             // 
             this.mnAddInstalledCheckOperator.Index = 13;
-            this.mnAddInstalledCheckOperator.Text = "Installed Check &Operator";
+            this.mnAddInstalledCheckOperator.Text = "Installed Check Operator";
             this.mnAddInstalledCheckOperator.Click += new System.EventHandler(this.mnAddInstalledCheckOperator_Click);
             // 
-            // menuItem8
+            // mnAddInstalledCheckProduct
             // 
-            this.menuItem8.Index = 14;
-            this.menuItem8.Text = "-";
+            this.mnAddInstalledCheckProduct.Index = 14;
+            this.mnAddInstalledCheckProduct.Text = "Installed Check ProductCode";
+            this.mnAddInstalledCheckProduct.Click += new System.EventHandler(this.mnAddInstalledCheckProduct_Click);
+            // 
+            // menuItem9
+            // 
+            this.menuItem9.Index = 15;
+            this.menuItem9.Text = "-";
             // 
             // mnAddEmbedFile
             // 
-            this.mnAddEmbedFile.Index = 15;
+            this.mnAddEmbedFile.Index = 16;
             this.mnAddEmbedFile.Text = "&Embed File";
             this.mnAddEmbedFile.Click += new System.EventHandler(this.mnAddEmbedFile_Click);
             // 
             // mnAddEmbedFolder
             // 
-            this.mnAddEmbedFolder.Index = 16;
+            this.mnAddEmbedFolder.Index = 17;
             this.mnAddEmbedFolder.Text = "Embed Folder";
             this.mnAddEmbedFolder.Click += new System.EventHandler(this.mnAddEmbedFolder_Click);
             // 
@@ -931,6 +940,7 @@ namespace InstallerEditor
                 mnAddDownloadFile.Enabled = (item.Children.CanAdd(typeof(Download)));
                 mnAddInstalledCheckFile.Enabled = (item.Children.CanAdd(typeof(InstalledCheckFile)));
                 mnAddInstalledCheckRegistry.Enabled = (item.Children.CanAdd(typeof(InstalledCheckRegistry)));
+                mnAddInstalledCheckProduct.Enabled = (item.Children.CanAdd(typeof(InstalledCheckProduct)));
                 mnAddInstalledCheckOperator.Enabled = (item.Children.CanAdd(typeof(InstalledCheckOperator)));
                 mnAddComponentWizard2.Enabled = (item is SetupConfiguration);
                 mnMoveUp.Enabled = (treeView.SelectedNode.PrevNode != null);
@@ -950,6 +960,7 @@ namespace InstallerEditor
                 mnAddDownloadDialog.Enabled = false;
                 mnAddInstalledCheckFile.Enabled = false;
                 mnAddInstalledCheckRegistry.Enabled = false;
+                mnAddInstalledCheckProduct.Enabled = false;
                 mnAddInstalledCheckOperator.Enabled = false;
                 mnAddComponentWizard2.Enabled = false;
                 mnMove.Enabled = false;
@@ -1010,6 +1021,13 @@ namespace InstallerEditor
         private InstalledCheck AddInstalledCheckRegistry(IXmlClass parent)
         {
             InstalledCheckRegistry l_Check = new InstalledCheckRegistry();
+            parent.Children.Add(l_Check);
+            return l_Check;
+        }
+        
+        private InstalledCheck AddInstalledCheckProduct(IXmlClass parent)
+        {
+            InstalledCheckProduct l_Check = new InstalledCheckProduct();
             parent.Children.Add(l_Check);
             return l_Check;
         }
@@ -1686,6 +1704,18 @@ namespace InstallerEditor
             node.Expand();
             treeView.SelectedNode = treeNode;
             treeNode.ExpandAll();
+        }
+
+        private void mnAddInstalledCheckProduct_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                AddTreeNode(new TreeNodeInstalledCheck(AddInstalledCheckProduct((IXmlClass)treeView.SelectedNode.Tag)));
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
         }
     }
 }

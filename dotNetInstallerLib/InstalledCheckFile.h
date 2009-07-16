@@ -15,3 +15,5 @@ public:
     void Load(TiXmlElement * node);
 	virtual bool IsInstalled() const;
 };
+
+typedef shared_any<InstalledCheckFile *, close_delete> InstalledCheckFilePtr;

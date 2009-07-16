@@ -18,6 +18,7 @@
 #  define _WIN32_WINNT 0x0403
 # endif
 # include <windows.h>
+# include <msi.h>
 #endif
 
 #include <cassert>

@@ -20,6 +20,10 @@
 #define _WIN32_IE 0x0400
 #endif
 
+#ifndef _WIN32_MSI
+#define _WIN32_MSI 110
+#endif
+
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS
 
 #define _AFX_ALL_WARNINGS
@@ -43,3 +47,4 @@
 #include <list>
 
 #include <strsafe.h>
+#include <msi.h>

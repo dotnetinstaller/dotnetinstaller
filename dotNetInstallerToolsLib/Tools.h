@@ -13,3 +13,4 @@
 #include "PathUtil.h"
 #include "RegistryUtil.h"
 #include "FileUtilImpl.h"
+#include "MsiUtil.h"

@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cppunitd.lib version.lib"
+				AdditionalDependencies="cppunitd.lib version.lib msi.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(SolutionDir)\UnitTests\CppUnit\lib"
 				GenerateDebugInformation="true"
@@ -139,7 +139,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cppunit.lib version.lib"
+				AdditionalDependencies="cppunit.lib version.lib msi.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(SolutionDir)\UnitTests\CppUnit\lib"
 				GenerateDebugInformation="true"
@@ -211,6 +211,10 @@
 			</File>
 			<File
 				RelativePath=".\InstalledCheckOperatorUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckProductUnitTests.cpp"
 				>
 			</File>
 			<File
@@ -289,6 +293,10 @@
 			</File>
 			<File
 				RelativePath=".\InstalledCheckOperatorUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckProductUnitTests.h"
 				>
 			</File>
 			<File

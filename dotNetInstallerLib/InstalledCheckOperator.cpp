@@ -2,6 +2,7 @@
 #include "InstalledCheckOperator.h"
 #include "InstalledCheckRegistry.h"
 #include "InstalledCheckFile.h"
+#include "InstalledCheckProduct.h"
 #include "InstallerLog.h"
 
 InstalledCheckOperator::InstalledCheckOperator()
@@ -33,6 +34,10 @@ void InstalledCheckOperator::Load(TiXmlElement * node)
 			else if (installedcheck_type == L"check_file")
 			{
 				installedcheck = InstalledCheckPtr(new InstalledCheckFile());
+			}
+			else if (installedcheck_type == L"check_product")
+			{
+				installedcheck = InstalledCheckPtr(new InstalledCheckProduct());
 			}
 			else
 			{

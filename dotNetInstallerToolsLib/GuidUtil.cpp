@@ -8,17 +8,17 @@ std::string DVLib::GenerateGUIDStringA()
 {
 	GUID pguid;	
 	CHECK_HR(CoCreateGuid(& pguid), _T("::CoCreateGuid"));
-	return StringFromGUID2A(pguid);
+	return guid2string(pguid);
 }
 
 std::wstring DVLib::GenerateGUIDStringW()
 {
 	GUID pguid;	
 	CHECK_HR(CoCreateGuid(& pguid), _T("::CoCreateGuid"));
-	return StringFromGUID2W(pguid);
+	return guid2wstring(pguid);
 }
 
-std::wstring DVLib::StringFromGUID2W(REFGUID rguid)
+std::wstring DVLib::guid2wstring(REFGUID rguid)
 {
     std::wstring progid;
 	progid.resize(39);
@@ -31,7 +31,22 @@ std::wstring DVLib::StringFromGUID2W(REFGUID rguid)
     return progid;
 }
 
-std::string DVLib::StringFromGUID2A(REFGUID rguid)
+IID DVLib::string2guid(const std::wstring& guid)
 {
-    return wstring2string(StringFromGUID2W(rguid));
+	IID iid = { 0 };
+
+	CHECK_HR(::IIDFromString(const_cast<LPOLESTR>(guid.c_str()), & iid),
+        _T("Error in ::IIDFromString"));
+
+    return iid;
+}
+
+IID DVLib::string2guid(const std::string& guid)
+{
+	return string2guid(DVLib::string2wstring(guid));
+}
+
+std::string DVLib::guid2string(REFGUID rguid)
+{
+    return wstring2string(guid2wstring(rguid));
 }

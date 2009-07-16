@@ -5,7 +5,7 @@ using namespace DVLib::UnitTests;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(GuidUtilUnitTests);
 
-void GuidUtilUnitTests::testStringFromGUID2()
+void GuidUtilUnitTests::testguid2wstring()
 {
 	typedef struct
 	{
@@ -23,10 +23,11 @@ void GuidUtilUnitTests::testStringFromGUID2()
 	{
 		std::wcout << std::endl << data[i].pszGuid;
 		
-		std::wstring wstring_fromguid2 = DVLib::StringFromGUID2W(data[i].clsid);
-		std::string string_fromguid2 = DVLib::StringFromGUID2A(data[i].clsid);
+		std::wstring wstring_fromguid2 = DVLib::guid2wstring(data[i].clsid);
+		std::string string_fromguid2 = DVLib::guid2string(data[i].clsid);
 		CPPUNIT_ASSERT(wstring_fromguid2 == data[i].pszGuid);
 		CPPUNIT_ASSERT(wstring_fromguid2 == DVLib::string2wstring(string_fromguid2));
+		CPPUNIT_ASSERT(DVLib::string2guid(data[i].pszGuid) == data[i].clsid);
 	}
 }
 

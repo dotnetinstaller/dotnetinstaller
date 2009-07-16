@@ -14,7 +14,8 @@
       <title>Installed Check Types</title>
       <content>
         <para>
-          There are two types of InstalledChecks: <newTerm>check_file</newTerm> and <newTerm>check_registry_value</newTerm>.
+          There are three types of installed checks: <newTerm>check_file</newTerm>, <newTerm>check_registry_value</newTerm>
+          and <newTerm>check_product</newTerm>. These can also be combined with installed check operators.
         </para>
       </content>
       <sections>
@@ -92,6 +93,62 @@
                   The registry value is interpreted as a file version. Check whether the version in registry is
                   greater than the check value.
                 </definition>
+              </definitionTable>
+            </para>
+          </content>
+        </section>
+        <section address="checktypesproduct">
+          <title>check_product</title>
+          <content>
+            <para>
+              Query the MSI database for a given product by product id or upgrade code. The following properties are availble
+              in the check.
+              <definitionTable>
+                <definedTerm>description</definedTerm>
+                <definition>A free-formed description of the check, appears in the logs.</definition>
+                <definedTerm>id</definedTerm>
+                <definition>
+                  A product code or upgrade code. A product code identifies a specific version of a product, while an upgrade code
+                  never changes and connects multiple product versions together. Note that it is possible to have multiple products
+                  relate via an upgrade code. See MSDN
+                  <externalLink>
+                    <linkText>ProductCode</linkText>
+                    <linkUri>http://msdn.microsoft.com/en-us/library/aa370855(VS.85).aspx</linkUri>
+                  </externalLink>
+                  and
+                  <externalLink>
+                    <linkText>UpgradeCode</linkText>
+                    <linkUri>http://msdn.microsoft.com/en-us/library/aa372375(VS.85).aspx</linkUri>
+                  </externalLink>
+                  for more information.
+                </definition>
+                <definedTerm>propertyname</definedTerm>
+                <definition>
+                  The name of the property to retrieve and use for comparison from the installed product once it
+                  has been located by product or upgrade code.
+                </definition>
+                <definedTerm>propertyvalue</definedTerm>
+                <definition>The comparison value.</definition>
+              </definitionTable>
+            </para>
+            <para>
+              The following comparison types can be made.
+              <definitionTable>
+                <definedTerm>exists</definedTerm>
+                <definition>Check that the product identified by its ProductCode or UpgradeCode exists.</definition>
+                <definedTerm>match</definedTerm>
+                <definition>
+                  Check that <code>propertyvalue</code> matches exactly the property value
+                  retrieved from the installed product. If multiple products are found, match all.
+                </definition>
+                <definedTerm>version</definedTerm>
+                <definition>Check whether the version of the installed product(s) is greater or equal to the check value.</definition>
+                <definedTerm>version_eq</definedTerm>
+                <definition>Check whether the version of the installed product(s) is equal to the check value.</definition>
+                <definedTerm>version_lt</definedTerm>
+                <definition>Check whether the version of the installed product(s) is lesser than the check value.</definition>
+                <definedTerm>version_gt</definedTerm>
+                <definition>Check whether the version of the installed product(s) is greater than the check value.</definition>
               </definitionTable>
             </para>
           </content>

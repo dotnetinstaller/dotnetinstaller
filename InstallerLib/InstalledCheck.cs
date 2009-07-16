@@ -89,9 +89,11 @@ namespace InstallerLib
                 l_check = new InstalledCheckFile();
             else if (element.Attributes["type"].InnerText == "check_registry_value")
                 l_check = new InstalledCheckRegistry();
+            else if (element.Attributes["type"].InnerText == "check_product")
+                l_check = new InstalledCheckProduct();
             else
                 throw new Exception(string.Format(
-                    "Invalid installcheck type: {0}", element.Attributes["type"]));
+                    "Invalid installcheck type: {0}", element.Attributes["type"].InnerText));
 
             l_check.FromXml(element);
             return l_check;

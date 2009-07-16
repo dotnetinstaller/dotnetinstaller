@@ -22,3 +22,5 @@ public:
     void Load(TiXmlElement * node);
 	bool IsInstalled() const;
 };
+
+typedef shared_any<InstalledCheckRegistry *, close_delete> InstalledCheckRegistryPtr;

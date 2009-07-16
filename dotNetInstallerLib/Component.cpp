@@ -4,6 +4,7 @@
 #include "InstalledCheckRegistry.h"
 #include "InstalledCheckFile.h"
 #include "InstalledCheckOperator.h"
+#include "InstalledCheckProduct.h"
 #include "EmbedFile.h"
 
 Component::Component(component_type t)
@@ -74,6 +75,10 @@ void Component::Load(TiXmlElement * node)
 			else if (installedcheck_type == L"check_file")
 			{
 				installedcheck = InstalledCheckPtr(new InstalledCheckFile());
+			}
+			else if (installedcheck_type == L"check_product")
+			{
+				installedcheck = InstalledCheckPtr(new InstalledCheckProduct());
 			}
 			else
 			{

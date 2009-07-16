@@ -30,6 +30,31 @@ void ConfigFileUnitTests::testLoadPackagedSetup()
 	CPPUNIT_ASSERT(component->type == msi);
 }
 
+void ConfigFileUnitTests::testLoadInstallCheckProductSetup()
+{
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+		L"..\\..\\..\\Samples\\InstallCheckProduct\\Configuration.xml");
+	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
+	ConfigFile config;
+	config.LoadFile(configxml);
+	// configurations properties
+	CPPUNIT_ASSERT(! config.schema.generator.empty());
+	CPPUNIT_ASSERT(! config.schema.version.empty());
+	CPPUNIT_ASSERT(config.lcidtype == DVLib::LcidUserExe);
+	CPPUNIT_ASSERT(config.uilevel == InstallUILevelFull);
+	CPPUNIT_ASSERT(config.fileversion == L"1.0.0.0");
+	CPPUNIT_ASSERT(config.productversion == L"1.0.0.0");
+	// file attributes
+	CPPUNIT_ASSERT(config.fileattributes.size() == 1);
+	CPPUNIT_ASSERT(config.fileattributes[L"FileDescription"]->name == L"FileDescription");
+	CPPUNIT_ASSERT(config.fileattributes[L"FileDescription"]->value == L"InstallCheckProduct setup sample");
+	// configurations with components
+	CPPUNIT_ASSERT(config.size() == 1);
+	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
+	CPPUNIT_ASSERT(configuration->components.size() == 2);
+	// \todo: verify that product checks are correct
+}
+
 void ConfigFileUnitTests::testLoadInstallCheckOperators()
 {
 	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 

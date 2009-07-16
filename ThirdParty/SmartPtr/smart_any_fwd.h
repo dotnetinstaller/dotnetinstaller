@@ -806,6 +806,7 @@ typedef close_fun<pfn_free_t,static_cast<pfn_free_t>(&free)>                clos
   typedef close_fun<BOOL (__stdcall *)( HWINSTA ),CloseWindowStation>       close_hwinsta;
   typedef close_fun<BOOL (__stdcall *)( HANDLE ),DeregisterEventSource>     close_event_source;
   typedef close_fun<HGLOBAL (__stdcall *)( HGLOBAL ),GlobalFree>            close_global_free;
+  typedef close_fun<UINT (__stdcall *)( MSIHANDLE ),MsiCloseHandle>         close_msihandle;
 
   typedef value_const<HANDLE,INVALID_HANDLE_VALUE>                          invalid_handle_t;
 #endif
@@ -913,6 +914,7 @@ typedef close_fun<pfn_free_t,static_cast<pfn_free_t>(&free)>                clos
   typedef prefix ## _any<HKEY,close_regkey>                                       prefix ## _hkey;                      \
   typedef prefix ## _any<HANDLE,close_find,invalid_handle_t>                      prefix ## _hfind;                     \
   typedef prefix ## _any<HANDLE,close_handle,invalid_handle_t>                    prefix ## _hfile;                     \
+  typedef prefix ## _any<MSIHANDLE,close_msihandle,null_t>                        prefix ## _msi;                       \
   typedef prefix ## _any<HANDLE,close_handle,invalid_handle_t,1>                  prefix ## _communications_device;     \
   typedef prefix ## _any<HANDLE,close_handle,invalid_handle_t,2>                  prefix ## _console_input;             \
   typedef prefix ## _any<HANDLE,close_handle,invalid_handle_t,3>                  prefix ## _console_input_buffer;      \
