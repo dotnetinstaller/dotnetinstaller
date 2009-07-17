@@ -80,7 +80,10 @@
       <Feature Id="SamplesFeature" Title="Samples" Level="1">
         <ComponentRef Id="InstallCheckOperatorsSample" />
         <ComponentGroupRef Id="StandaloneSetupSample" />
-        <ComponentGroupRef Id="PackagedSetupSample"/>
+        <ComponentGroupRef Id="PackagedSetupSample" />
+        <ComponentRef Id="InstallCheckProductSample" />
+        <ComponentRef Id="ReferenceSetupSample" />
+        <ComponentRef Id="OsFiltersSample" />
       </Feature>
     </Feature>
     <UIRef Id="dotNetInstallerUI_InstallDir" />
