@@ -66,6 +66,24 @@ DVLib::MsiProductInfo::MsiProductInfo(const MsiProductInfo& info)
 	operator=(info);
 }
 
+bool DVLib::MsiProductInfo::HasProperty(const std::wstring& property_name) const
+{
+	std::wstring product_id_string = DVLib::guid2wstring(product_id);
+	DWORD property_size = 0;
+	DWORD property_rc = ::MsiGetProductInfo(product_id_string.c_str(), property_name.c_str(), NULL, & property_size);
+	
+	if (property_rc == ERROR_UNKNOWN_PROPERTY)
+		return false;
+	
+	if (property_rc != ERROR_MORE_DATA)
+	{
+		CHECK_WIN32_DWORD(property_rc, 
+			L"MsiGetProductInfo");
+	}
+
+	return true;
+}
+
 std::wstring DVLib::MsiProductInfo::GetProperty(const std::wstring& property_name) const
 {
 	std::wstring product_id_string = DVLib::guid2wstring(product_id);

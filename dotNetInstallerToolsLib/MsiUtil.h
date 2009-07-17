@@ -8,6 +8,7 @@ namespace DVLib
 		GUID product_id;
 		// retrieve a property value for a given product
 		std::wstring GetProperty(const std::wstring& property_name) const;
+		bool HasProperty(const std::wstring& property_name) const;
 		MsiProductInfo& operator=(const MsiProductInfo&);
 		MsiProductInfo(GUID guid);
 		MsiProductInfo(const MsiProductInfo&);
