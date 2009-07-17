@@ -7,7 +7,8 @@
 #define WM_USER_CLOSE_DIALOG (WM_USER+2)
 
 IMPLEMENT_DYNAMIC(DownloadDialog, CDialog)
-	DownloadDialog::DownloadDialog(const DownloadGroupConfiguration & p_Configuration, CWnd* pParent /*=NULL*/)
+
+DownloadDialog::DownloadDialog(const DownloadGroupConfigurationPtr& p_Configuration, CWnd* pParent /*=NULL*/)
 	: CDialog(DownloadDialog::IDD, pParent)
 	, m_bCancelOrErrorDownload(false)
 	, m_bDownloadCompleted(false)
@@ -15,13 +16,13 @@ IMPLEMENT_DYNAMIC(DownloadDialog, CDialog)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
-	m_Caption = p_Configuration.caption;
-	m_HelpMessage = p_Configuration.help_message;
-	m_HelpMessageDownloading = p_Configuration.downloading_message;
-	m_ButtonStartCaption = p_Configuration.start_caption;
-	m_ButtonCancelCaption = p_Configuration.cancel_caption;
-	m_Components = p_Configuration.downloadcomponents;
-	m_bAutoStartDownload = p_Configuration.auto_start;
+	m_Caption = p_Configuration->caption;
+	m_HelpMessage = p_Configuration->help_message;
+	m_HelpMessageDownloading = p_Configuration->downloading_message;
+	m_ButtonStartCaption = p_Configuration->start_caption;
+	m_ButtonCancelCaption = p_Configuration->cancel_caption;
+	m_Components = p_Configuration->downloadcomponents;
+	m_bAutoStartDownload = p_Configuration->auto_start;
 
 	LOG(L"Opening download dialog: " << m_Caption);
 }

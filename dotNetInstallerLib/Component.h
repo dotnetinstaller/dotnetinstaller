@@ -57,8 +57,6 @@ public:
 	DownloadGroupConfigurationPtr downloadconfiguration;
 	// embedded files
 	std::vector< EmbedFilePtr > embedfiles;
-	// indica se il componente contiene o meno dei componenti da scaricare (in pratica dice se il nodo downloaddialog è presente o no)
-	bool download;
 	// funzione virtuale specifica per il tipo di componente
 	virtual void Exec() = 0;
 	virtual void Wait(DWORD tt = 1000);

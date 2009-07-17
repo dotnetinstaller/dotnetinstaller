@@ -25,7 +25,7 @@ std::vector<ConfigurationPtr> ConfigFileManager::DownloadReferenceConfigurations
 			CdotNetInstallerDlg dlg;
 			ReferenceConfiguration * p = reinterpret_cast<ReferenceConfiguration *>(get(configurations[i]));
 			LOG(L"Downloading reference configuration to '" << p->filename << L"'");
-			dlg.RunDownloadConfiguration(* get(p->downloadconfiguration));
+			dlg.RunDownloadConfiguration(p->downloadconfiguration);
 			ConfigFile downloadedconfig;
 			downloadedconfig.LoadFile(p->filename);
 

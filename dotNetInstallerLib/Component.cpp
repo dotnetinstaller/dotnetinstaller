@@ -14,7 +14,6 @@ Component::Component(component_type t)
     , allow_continue_on_error(true)
     , cancelled(false)
     , required(true)
-    , download(false)
     , selected(true)
 	, downloadconfiguration(NULL)
 {

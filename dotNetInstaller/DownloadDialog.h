@@ -6,7 +6,7 @@ class DownloadDialog : public CDialog, public IDownloadCallback
 {
 	DECLARE_DYNAMIC(DownloadDialog)
 public:
-	DownloadDialog(const DownloadGroupConfiguration & p_Configuration, CWnd* pParent = NULL);
+	DownloadDialog(const DownloadGroupConfigurationPtr& p_Configuration, CWnd* pParent = NULL);
 	virtual ~DownloadDialog();
 	enum { IDD = IDD_DOWNLOAD_DIALOG };
 private:

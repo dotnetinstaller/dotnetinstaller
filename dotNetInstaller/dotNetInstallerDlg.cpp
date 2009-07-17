@@ -255,7 +255,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 						l_dg.LoadComponent(m_configuration, component);
 					}
 
-					if (DownloadComponents(* component))
+					if (RunComponentDownload(component))
 					{
 						component->Exec();
 
@@ -556,7 +556,7 @@ void CdotNetInstallerDlg::ClearError()
 	m_recorded_error = 0; 
 }
 
-bool CdotNetInstallerDlg::RunDownloadConfiguration(DownloadGroupConfiguration & p_Configuration)
+bool CdotNetInstallerDlg::RunDownloadConfiguration(const DownloadGroupConfigurationPtr& p_Configuration)
 {
 	DownloadDialog l_dgDownload(p_Configuration, this);
 	
@@ -575,11 +575,11 @@ bool CdotNetInstallerDlg::RunDownloadConfiguration(DownloadGroupConfiguration & 
 	return true;
 }
 
-bool CdotNetInstallerDlg::DownloadComponents(Component& p_Component)
+bool CdotNetInstallerDlg::RunComponentDownload(const ComponentPtr& p_Component)
 {
-	if (p_Component.download)
+	if (get(p_Component->downloadconfiguration))
     {
-		return RunDownloadConfiguration(* get(p_Component.downloadconfiguration));
+		return RunDownloadConfiguration(p_Component->downloadconfiguration);
     }
 
 	return true;
