@@ -6,29 +6,55 @@
 
 std::wstring DVLib::UTF8string2wstring(const std::string& s)
 {
-	int req = ::MultiByteToWideChar(CP_UTF8, 0, s.c_str(), -1, NULL, 0);
+	return UTF8string2wstring(s.c_str());
+}
+
+std::wstring DVLib::UTF8string2wstring(const char * s)
+{
+	if (s == NULL) return L"";
+	int req = ::MultiByteToWideChar(CP_UTF8, 0, s, -1, NULL, 0);
 	CHECK_WIN32_BOOL(0 != req, "MultiByteToWideChar");
 	std::vector<wchar_t> result;
 	result.resize(req);
-	req = MultiByteToWideChar(CP_UTF8, 0, s.c_str(), -1, & * result.begin(), result.size());
+	req = MultiByteToWideChar(CP_UTF8, 0, s, -1, & * result.begin(), result.size());
+	CHECK_WIN32_BOOL(0 != req, "MultiByteToWideChar");
+	std::wstring to;
+	to.assign(& * result.begin(), req - 1); // length returned includes the null terminator
+	return to;
+}
+
+std::wstring DVLib::string2wstring(const std::string& s)
+{
+	return string2wstring(s.c_str());
+}
+
+std::wstring DVLib::string2wstring(const char * s)
+{
+	if (s == NULL) return L"";
+	int req = ::MultiByteToWideChar(CP_ACP, 0, s, -1, NULL, 0);
+	CHECK_WIN32_BOOL(0 != req, "MultiByteToWideChar");
+	std::vector<wchar_t> result;
+	result.resize(req);
+	req = MultiByteToWideChar(CP_ACP, 0, s, -1, & * result.begin(), result.size());
 	CHECK_WIN32_BOOL(0 != req, "MultiByteToWideChar");
 	std::wstring to;
 	to.assign(& * result.begin(), req - 1);
 	return to;
 }
 
-std::wstring DVLib::string2wstring(const std::string& s)
-{
-	return UTF8string2wstring(s);
-}
-
 std::string DVLib::wstring2string(const std::wstring& s)
 {
-	int req = ::WideCharToMultiByte(CP_ACP, 0, s.c_str(), -1, NULL, 0, NULL, NULL);
+	return wstring2string(s.c_str());
+}
+
+std::string DVLib::wstring2string(const wchar_t * s)
+{
+	if (s == NULL) return "";
+	int req = ::WideCharToMultiByte(CP_ACP, 0, s, -1, NULL, 0, NULL, NULL);
 	CHECK_WIN32_BOOL(0 != req, "WideCharToMultiByte");
 	std::vector<char> result;
 	result.resize(req);
-	req = WideCharToMultiByte(CP_ACP, 0, s.c_str(), -1, & * result.begin(), result.size(), NULL, NULL);
+	req = WideCharToMultiByte(CP_ACP, 0, s, -1, & * result.begin(), result.size(), NULL, NULL);
 	CHECK_WIN32_BOOL(0 != req, "WideCharToMultiByte");
 	std::string to;
 	to.assign(& * result.begin(), req - 1);
@@ -37,23 +63,38 @@ std::string DVLib::wstring2string(const std::wstring& s)
 
 std::string DVLib::UTF8string2string(const std::string& s)
 {
+	return UTF8string2string(s.c_str());
+}
+
+std::string DVLib::UTF8string2string(const char * s)
+{
 	return wstring2string(UTF8string2wstring(s));
 }
 
 bool DVLib::string2bool(const std::string& s, bool defaultValue)
 {
-    if (s.length() == 0) return defaultValue;
-    else if (0 == _stricmp(s.c_str(), "true")) return true;
-    else if (0 == _stricmp(s.c_str(), "false")) return false;
-    else return defaultValue;
+	return string2bool(s.c_str(), defaultValue);
+}
+
+bool DVLib::string2bool(const char * s, bool defaultValue)
+{
+    if (s == NULL || strlen(s) == 0) return defaultValue;
+    else if (0 == _stricmp(s, "true")) return true;
+    else if (0 == _stricmp(s, "false")) return false;
+	else THROW_EX(L"Invalid boolean value: " << s);
 }
 
 bool DVLib::wstring2bool(const std::wstring& s, bool defaultValue)
 {
-    if (s.length() == 0) return defaultValue;
-    else if (0 == _wcsicmp(s.c_str(), L"true")) return true;
-    else if (0 == _wcsicmp(s.c_str(), L"false")) return false;
-    else return defaultValue;
+	return wstring2bool(s.c_str(), defaultValue);
+}
+
+bool DVLib::wstring2bool(const wchar_t * s, bool defaultValue)
+{
+	if (s == NULL || wcslen(s) == 0) return defaultValue;
+    else if (0 == _wcsicmp(s, L"true")) return true;
+    else if (0 == _wcsicmp(s, L"false")) return false;
+	else THROW_EX(L"Invalid boolean value: " << s);
 }
 
 std::string DVLib::trim(const std::string& s, const std::string& whitespaces)

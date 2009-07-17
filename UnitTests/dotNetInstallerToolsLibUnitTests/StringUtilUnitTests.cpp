@@ -90,7 +90,7 @@ void StringUtilUnitTests::testsplitjoin(void)
 		LPCSTR testDelim;
 
 		int maxParts;
-		int numParts;
+		size_t numParts;
 
 	} TokenizeTestData;
 
@@ -374,5 +374,26 @@ void StringUtilUnitTests::testendswith()
 		CPPUNIT_ASSERT_MESSAGE(message.str().c_str(),
 			testData[i].testExpectedResult == DVLib::endswith(
 				testData[i].testIn, testData[i].testWhat));
+	}
+}
+
+void StringUtilUnitTests::testUTF82wstring()
+{
+	typedef struct  
+	{
+		LPCSTR testIn;
+		size_t len;
+	} TestData;
+
+	TestData testData[] = 
+	{
+		{ "\xe6\x97\xa5\xd1\x88", 2 },
+		{ "\xe6\x97\xa5\xd1\x88\xf0\x9d\x84\x9e", 4 }
+	};
+
+	for( unsigned int i = 0; i < ARRAYSIZE(testData); i++ )
+	{
+		std::wstring output = DVLib::UTF8string2wstring(testData[i].testIn);
+		CPPUNIT_ASSERT(output.length() == testData[i].len);
 	}
 }

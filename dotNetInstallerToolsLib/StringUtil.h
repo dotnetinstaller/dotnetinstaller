@@ -3,16 +3,22 @@
 namespace DVLib
 {
 	// convert UTF8 to UNICODE
+	std::wstring UTF8string2wstring(const char * s);
 	std::wstring UTF8string2wstring(const std::string& s);
 	// convert ASCII to UNICODE
 	std::wstring string2wstring(const std::string& s);
+	std::wstring string2wstring(const char * s);
 	// convert UNICODE to ASCII (CP_ACP)
+	std::string wstring2string(const wchar_t * s);
 	std::string wstring2string(const std::wstring& s);
 	// convert UTF8 to ASCII
-	std::string UTF8string2string(const std::string& strValue);
+	std::string UTF8string2string(const char * s);
+	std::string UTF8string2string(const std::string& s);
 
 	// convert a string representation of boolean
+	bool string2bool(const char *, bool defaultvalue = false);
 	bool string2bool(const std::string&, bool defaultvalue = false);
+	bool wstring2bool(const wchar_t *, bool defaultvalue = false);
 	bool wstring2bool(const std::wstring&, bool defaultvalue = false);
 
 	// convert a string representation of long

@@ -23,5 +23,4 @@ extern InstallerLog ApplicationLogInstance;
 { \
 	std::wstringstream ss_message; ss_message << message; \
 	ApplicationLogInstance.Write(ss_message.str()); \
-	std::wcout << std::endl << ss_message.str(); \
 }
