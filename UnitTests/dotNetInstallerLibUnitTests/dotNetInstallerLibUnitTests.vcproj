@@ -17,9 +17,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="..\..\dni.vsprops"
 			UseOfMFC="1"
 			CharacterSet="1"
 			>
@@ -62,9 +61,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cppunitd.lib version.lib msi.lib"
-				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\lib&quot;;&quot;$(SolutionDir)\ThirdParty\Msi\lib&quot;"
+				AdditionalDependencies="cppunitd.lib"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -96,9 +94,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="..\..\dni.vsprops"
 			UseOfMFC="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -120,32 +117,27 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\include&quot;;&quot;$(SolutionDir)&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\include&quot;"
+				PreprocessorDefinitions="NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
-				WarningLevel="3"
-				DebugInformationFormat="3"
+				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="$(SolutionDir)"
+				AdditionalIncludeDirectories=""
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cppunit.lib version.lib msi.lib"
-				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\lib&quot;;&quot;$(SolutionDir)\ThirdParty\Msi\lib&quot;"
-				GenerateDebugInformation="true"
+				AdditionalDependencies="cppunit.lib"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\lib&quot;"
 				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
 				TargetMachine="1"
 			/>
 			<Tool

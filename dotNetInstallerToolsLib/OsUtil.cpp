@@ -87,7 +87,7 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 
 			}
 			// Windows NT versions
-			else if ( osvi.dwMajorVersion = 4 )
+			else if ( osvi.dwMajorVersion == 4 )
 			{
 				os = winNT4;
 				// check if Sp6a
