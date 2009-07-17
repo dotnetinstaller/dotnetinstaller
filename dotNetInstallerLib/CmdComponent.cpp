@@ -40,9 +40,9 @@ void CmdComponent::Exec()
 
 void CmdComponent::Load(TiXmlElement * node)
 {
-	command = InstallerSession::MakePath(node->AttributeW("command"));
-    command_silent = InstallerSession::MakePath(node->AttributeW("command_silent"));
-	command_basic = InstallerSession::MakePath(node->AttributeW("command_basic"));	
+	command = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("command")));
+    command_silent = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("command_silent")));
+	command_basic = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("command_basic")));	
 	Component::Load(node);
 	LOG(L"Loaded 'cmd' component '" << description << L"'");
 }

@@ -23,10 +23,10 @@ void Configurations::Load(TiXmlElement * node)
 	CHECK_BOOL(0 == strcmp(node->Value(), "configurations"),
 		L"Expected 'configurations' node, got '" << DVLib::string2wstring(node->Value()) << L"'");
 
-    uilevel = InstallUILevelSetting::ToUILevel(node->AttributeW("ui_level"));
-	lcidtype = DVLib::wstring2lcidtype(node->AttributeW("lcid_type"));
-	fileversion = node->AttributeW("fileversion");
-	productversion = node->AttributeW("productversion");
+    uilevel = InstallUILevelSetting::ToUILevel(DVLib::UTF8string2wstring(node->Attribute("ui_level")));
+	lcidtype = DVLib::wstring2lcidtype(DVLib::UTF8string2wstring(node->Attribute("lcid_type")));
+	fileversion = DVLib::UTF8string2wstring(node->Attribute("fileversion"));
+	productversion = DVLib::UTF8string2wstring(node->Attribute("productversion"));
 
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )
@@ -38,7 +38,7 @@ void Configurations::Load(TiXmlElement * node)
 			
 		if (strcmp(child_element->Value(), "configuration") == 0)
 		{
-			std::wstring type = child_element->AttributeW("type");
+			std::wstring type = DVLib::UTF8string2wstring(child_element->Attribute("type"));
 			ConfigurationPtr configuration;
 			if (type == L"reference") configuration = ConfigurationPtr(new ReferenceConfiguration());
 			else if (type == L"install") configuration = ConfigurationPtr(new InstallConfiguration());

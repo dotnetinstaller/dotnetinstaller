@@ -12,8 +12,8 @@ InstalledCheckOperator::InstalledCheckOperator()
 
 void InstalledCheckOperator::Load(TiXmlElement * node)
 {
-    type = node->AttributeW("type");
-    description = node->AttributeW("description");	
+    type = DVLib::UTF8string2wstring(node->Attribute("type"));
+    description = DVLib::UTF8string2wstring(node->Attribute("description"));
 	// child install checks
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )
@@ -26,7 +26,7 @@ void InstalledCheckOperator::Load(TiXmlElement * node)
 		if (strcmp(child_element->Value(), "installedcheck") == 0)
 		{
 			InstalledCheckPtr installedcheck;
-			std::wstring installedcheck_type = child_element->AttributeW("type");
+			std::wstring installedcheck_type = DVLib::UTF8string2wstring(child_element->Attribute("type"));
 			if (installedcheck_type == L"check_registry_value")
 			{
 				installedcheck = InstalledCheckPtr(new InstalledCheckRegistry());

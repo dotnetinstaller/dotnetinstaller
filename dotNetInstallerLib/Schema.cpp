@@ -17,8 +17,8 @@ void Schema::Load(TiXmlElement * node)
 	CHECK_BOOL(0 == strcmp(node->Value(), "schema"),
 		L"Expected 'schema' node, got '" << DVLib::string2wstring(node->Value()) << L"'");
 
-	version = node->AttributeW("version");
-	generator = node->AttributeW("generator");
+	version = DVLib::UTF8string2wstring(node->Attribute("version"));
+	generator = DVLib::UTF8string2wstring(node->Attribute("generator"));
 
 	LOG(L"Loaded schema: version=" << version << L", generator=" << generator);
 }

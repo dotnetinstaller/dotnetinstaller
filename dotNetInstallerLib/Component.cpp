@@ -42,19 +42,19 @@ bool Component::IsInstalled() const
 
 void Component::Load(TiXmlElement * node)
 {
-	description = node->AttributeW("description");
-	status_installed = node->AttributeW("status_installed");
-	os_filter_greater = node->AttributeW("os_filter_greater");
-	os_filter_smaller = node->AttributeW("os_filter_smaller");
-	os_filter_lcid = node->AttributeW("os_filter_lcid");
-	installcompletemessage = node->AttributeW("installcompletemessage");
-	mustreboot = DVLib::wstring2bool(node->AttributeW("mustreboot"), false);
-    reboot_required = node->AttributeW("reboot_required");
-	must_reboot_required = DVLib::wstring2bool(node->AttributeW("must_reboot_required"), false);
-    allow_continue_on_error = DVLib::wstring2bool(node->AttributeW("allow_continue_on_error"), true);
-    failed_exec_command_continue = node->AttributeW("failed_exec_command_continue");
-	required = DVLib::wstring2bool(node->AttributeW("required"), true);
-	processor_architecture_filter = node->AttributeW("processor_architecture_filter");	
+	description = DVLib::UTF8string2wstring(node->Attribute("description"));
+	status_installed = DVLib::UTF8string2wstring(node->Attribute("status_installed"));
+	os_filter_greater = DVLib::UTF8string2wstring(node->Attribute("os_filter_greater"));
+	os_filter_smaller = DVLib::UTF8string2wstring(node->Attribute("os_filter_smaller"));
+	os_filter_lcid = DVLib::UTF8string2wstring(node->Attribute("os_filter_lcid"));
+	installcompletemessage = DVLib::UTF8string2wstring(node->Attribute("installcompletemessage"));
+	mustreboot = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("mustreboot")), false);
+    reboot_required = DVLib::UTF8string2wstring(node->Attribute("reboot_required"));
+	must_reboot_required = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("must_reboot_required")), false);
+    allow_continue_on_error = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("allow_continue_on_error")), true);
+    failed_exec_command_continue = DVLib::UTF8string2wstring(node->Attribute("failed_exec_command_continue"));
+	required = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("required")), true);
+	processor_architecture_filter = DVLib::UTF8string2wstring(node->Attribute("processor_architecture_filter"));	
 	// install checks, embed files, etc.
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )
@@ -67,7 +67,7 @@ void Component::Load(TiXmlElement * node)
 		if (strcmp(child_element->Value(), "installedcheck") == 0)
 		{
 			InstalledCheckPtr installedcheck;
-			std::wstring installedcheck_type = child_element->AttributeW("type");
+			std::wstring installedcheck_type = DVLib::UTF8string2wstring(child_element->Attribute("type"));
 			if (installedcheck_type == L"check_registry_value")
 			{
 				installedcheck = InstalledCheckPtr(new InstalledCheckRegistry());

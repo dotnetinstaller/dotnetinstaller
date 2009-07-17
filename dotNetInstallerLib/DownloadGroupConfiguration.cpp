@@ -16,12 +16,12 @@ void DownloadGroupConfiguration::Load(TiXmlElement * node)
 	CHECK_BOOL(0 == strcmp(node->Value(), "downloaddialog"),
 		L"Expected 'downloaddialog' node, got '" << DVLib::string2wstring(node->Value()) << L"'");
 
-	caption = node->AttributeW("dialog_caption");
-	help_message = node->AttributeW("dialog_message");
-	downloading_message = node->AttributeW("dialog_message_downloading");
-	start_caption = node->AttributeW("buttonstart_caption");
-	cancel_caption = node->AttributeW("buttoncancel_caption");
-	auto_start = DVLib::wstring2bool(node->AttributeW("autostartdownload"), false);
+	caption = DVLib::UTF8string2wstring(node->Attribute("dialog_caption"));
+	help_message = DVLib::UTF8string2wstring(node->Attribute("dialog_message"));
+	downloading_message = DVLib::UTF8string2wstring(node->Attribute("dialog_message_downloading"));
+	start_caption = DVLib::UTF8string2wstring(node->Attribute("buttonstart_caption"));
+	cancel_caption = DVLib::UTF8string2wstring(node->Attribute("buttoncancel_caption"));
+	auto_start = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("autostartdownload")), false);
 
 	TiXmlNode * child = NULL;
 	while ( (child = node->IterateChildren(child)) != NULL)

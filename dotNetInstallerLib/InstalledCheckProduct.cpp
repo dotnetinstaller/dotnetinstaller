@@ -10,11 +10,11 @@ InstalledCheckProduct::InstalledCheckProduct()
 
 void InstalledCheckProduct::Load(TiXmlElement * node)
 {
-	id_type = node->AttributeW("id_type");
-	id = node->AttributeW("id");
-	propertyname = node->AttributeW("propertyname");
-	comparison = node->AttributeW("comparison");
-	propertyvalue = node->AttributeW("propertyvalue");
+	id_type = DVLib::UTF8string2wstring(node->Attribute("id_type"));
+	id = DVLib::UTF8string2wstring(node->Attribute("id"));
+	propertyname = DVLib::UTF8string2wstring(node->Attribute("propertyname"));
+	comparison = DVLib::UTF8string2wstring(node->Attribute("comparison"));
+	propertyvalue = DVLib::UTF8string2wstring(node->Attribute("propertyvalue"));
 	LOG(L"Loaded 'product' installed check '" << id << L"'");
 }
 

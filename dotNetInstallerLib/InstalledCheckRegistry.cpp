@@ -9,13 +9,13 @@ InstalledCheckRegistry::InstalledCheckRegistry()
 
 void InstalledCheckRegistry::Load(TiXmlElement * node)
 {
-    fieldname = node->AttributeW("fieldname");
-    fieldtype = node->AttributeW("fieldtype");
-    fieldvalue = node->AttributeW("fieldvalue");
-    path = node->AttributeW("path");
-    comparison = node->AttributeW("comparison");
-    rootkey = node->AttributeW("rootkey");
-    wowoption = node->AttributeW("wowoption");
+    fieldname = DVLib::UTF8string2wstring(node->Attribute("fieldname"));
+    fieldtype = DVLib::UTF8string2wstring(node->Attribute("fieldtype"));
+    fieldvalue = DVLib::UTF8string2wstring(node->Attribute("fieldvalue"));
+    path = DVLib::UTF8string2wstring(node->Attribute("path"));
+    comparison = DVLib::UTF8string2wstring(node->Attribute("comparison"));
+    rootkey = DVLib::UTF8string2wstring(node->Attribute("rootkey"));
+    wowoption = DVLib::UTF8string2wstring(node->Attribute("wowoption"));
 	LOG(L"Loaded 'registry' installed check '" << rootkey << L"\\" << path << L"\\" << fieldname << L"'");
 }
 

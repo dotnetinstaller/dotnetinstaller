@@ -26,7 +26,7 @@ bool OpenFileComponent::IsExecuting() const
 
 void OpenFileComponent::Load(TiXmlElement * node)
 {
-	file = InstallerSession::MakePath(node->AttributeW("file"));
+	file = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("file")));
 	Component::Load(node);
 	LOG(L"Loaded 'openfile' component '" << file << L"'");
 }

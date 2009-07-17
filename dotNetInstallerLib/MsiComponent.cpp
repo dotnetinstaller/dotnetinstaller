@@ -67,10 +67,10 @@ void MsiComponent::Exec()
 
 void MsiComponent::Load(TiXmlElement * node)
 {
-	package = InstallerSession::MakePath(node->AttributeW("package"));
-	cmdparameters = InstallerSession::MakePath(node->AttributeW("cmdparameters"));
-	cmdparameters_silent = InstallerSession::MakePath(node->AttributeW("cmdparameters_silent"));
-	cmdparameters_basic = InstallerSession::MakePath(node->AttributeW("cmdparameters_basic"));
+	package = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("package")));
+	cmdparameters = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("cmdparameters")));
+	cmdparameters_silent = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("cmdparameters_silent")));
+	cmdparameters_basic = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("cmdparameters_basic")));
 	Component::Load(node);
 	LOG(L"Loaded 'msi' component '" << package << L"'");
 }

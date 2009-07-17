@@ -27,7 +27,7 @@ void ReferenceConfiguration::Load(TiXmlElement * node)
 		
 		if (strcmp(child_element->Value(), "configfile") == 0)
 		{
-			filename = InstallerSession::MakePath(child_element->AttributeW("filename"));
+			filename = InstallerSession::MakePath(DVLib::UTF8string2wstring(child_element->Attribute("filename")));
 		}
 		else if (strcmp(child_element->Value(), "downloaddialog") == 0)
 		{

@@ -17,12 +17,12 @@ void Configuration::Load(TiXmlElement * node)
 		L"Expected 'configuration' node, got '" << DVLib::string2wstring(node->Value()) << L"'");
 
 	// locale
-	lcid = node->AttributeW("lcid");
+	lcid = DVLib::UTF8string2wstring(node->Attribute("lcid"));
 	// os filters
-	os_filter_greater = node->AttributeW("os_filter_greater");
-	os_filter_smaller = node->AttributeW("os_filter_smaller");
+	os_filter_greater = DVLib::UTF8string2wstring(node->Attribute("os_filter_greater"));
+	os_filter_smaller = DVLib::UTF8string2wstring(node->Attribute("os_filter_smaller"));
 	// processor architecture filter
-	processor_architecture_filter = node->AttributeW("processor_architecture_filter");
+	processor_architecture_filter = DVLib::UTF8string2wstring(node->Attribute("processor_architecture_filter"));
 }
 
 bool Configuration::IsSupported(DVLib::LcidType lcidtype) const

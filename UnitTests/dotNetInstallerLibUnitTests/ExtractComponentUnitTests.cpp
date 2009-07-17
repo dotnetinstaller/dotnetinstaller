@@ -8,7 +8,7 @@ using namespace DVLib::UnitTests;
 class ExtractComponentStdOut : public ExtractComponent
 {
 public:
-	ExtractComponentStdOut(HMODULE h, const InstallConfigurationPtr& configuration)
+	ExtractComponentStdOut(HMODULE h)
 		: ExtractComponent(h)
 	{
 
@@ -23,8 +23,7 @@ public:
 
 void ExtractComponentUnitTests::testExtract()
 {
-	InstallConfigurationPtr configuration(new InstallConfiguration());
-	ExtractComponentStdOut extract(::GetModuleHandle(NULL), configuration);
+	ExtractComponentStdOut extract(::GetModuleHandle(NULL));
 	extract.Exec();
 	std::wstring readmetxt = DVLib::DirectoryCombine(InstallerSession::GetSessionTempPath(), L"readme.txt");
 	CPPUNIT_ASSERT(DVLib::FileExists(readmetxt));

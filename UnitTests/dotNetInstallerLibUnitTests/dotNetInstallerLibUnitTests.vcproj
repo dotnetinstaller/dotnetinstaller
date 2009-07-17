@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cppunitd.lib"
+				AdditionalDependencies="cppunitd.lib tinyxmld_STL.lib"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -117,11 +117,12 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\include&quot;"
 				PreprocessorDefinitions="NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
-				DebugInformationFormat="0"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -135,7 +136,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cppunit.lib"
+				AdditionalDependencies="cppunit.lib tinyxml_STL.lib"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\lib&quot;"
 				SubSystem="1"
 				TargetMachine="1"
