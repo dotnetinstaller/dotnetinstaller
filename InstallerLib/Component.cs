@@ -246,6 +246,8 @@ namespace InstallerLib
             string xmltype = element.Attributes["type"].InnerText;
             if (xmltype == "msi")
                 l_Comp = new ComponentMsi();
+            else if (xmltype == "msu")
+                l_Comp = new ComponentMsu();
             else if (xmltype == "cmd")
                 l_Comp = new ComponentCmd();
             else if (xmltype == "openfile")

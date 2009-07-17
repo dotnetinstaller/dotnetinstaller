@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E19C2177-78F8-4C52-81FE-F49E157D647F}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -64,6 +64,7 @@
     <Compile Include="ComponentCmd.cs">
     </Compile>
     <Compile Include="ComponentCollection.cs" />
+    <Compile Include="ComponentMsu.cs" />
     <Compile Include="Editor.cs" />
     <Compile Include="EmbedFile.cs" />
     <Compile Include="ComponentMsi.cs">

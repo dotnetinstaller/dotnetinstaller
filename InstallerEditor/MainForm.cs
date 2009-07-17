@@ -73,6 +73,7 @@ namespace InstallerEditor
         private MenuItem menuItem10;
         private MenuItem mnAddEmbedFolder;
         private MenuItem menuItem9;
+        private MenuItem mnAddMsuComponent;
         private System.ComponentModel.IContainer components;
 
         public MainForm()
@@ -141,6 +142,7 @@ namespace InstallerEditor
             this.menuItem5 = new System.Windows.Forms.MenuItem();
             this.mnAddComponentWizard2 = new System.Windows.Forms.MenuItem();
             this.mnAddMsiComponent = new System.Windows.Forms.MenuItem();
+            this.mnAddMsuComponent = new System.Windows.Forms.MenuItem();
             this.mnAddCommandComponent = new System.Windows.Forms.MenuItem();
             this.mnAddOpenFileComponent = new System.Windows.Forms.MenuItem();
             this.menuItem6 = new System.Windows.Forms.MenuItem();
@@ -361,6 +363,7 @@ namespace InstallerEditor
             this.menuItem5,
             this.mnAddComponentWizard2,
             this.mnAddMsiComponent,
+            this.mnAddMsuComponent,
             this.mnAddCommandComponent,
             this.mnAddOpenFileComponent,
             this.menuItem6,
@@ -419,61 +422,67 @@ namespace InstallerEditor
             this.mnAddMsiComponent.Text = "Msi Component";
             this.mnAddMsiComponent.Click += new System.EventHandler(this.mnAddMsiComponent_Click);
             // 
+            // mnAddMsuComponent
+            // 
+            this.mnAddMsuComponent.Index = 8;
+            this.mnAddMsuComponent.Text = "Msu Component";
+            this.mnAddMsuComponent.Click += new System.EventHandler(this.mnAddMsuComponent_Click);
+            // 
             // mnAddCommandComponent
             // 
-            this.mnAddCommandComponent.Index = 8;
+            this.mnAddCommandComponent.Index = 9;
             this.mnAddCommandComponent.Text = "Command Component";
             this.mnAddCommandComponent.Click += new System.EventHandler(this.mnAddCommandComponent_Click);
             // 
             // mnAddOpenFileComponent
             // 
-            this.mnAddOpenFileComponent.Index = 9;
+            this.mnAddOpenFileComponent.Index = 10;
             this.mnAddOpenFileComponent.Text = "OpenFile Component";
             this.mnAddOpenFileComponent.Click += new System.EventHandler(this.mnAddOpenFileComponent_Click);
             // 
             // menuItem6
             // 
-            this.menuItem6.Index = 10;
+            this.menuItem6.Index = 11;
             this.menuItem6.Text = "-";
             // 
             // mnAddInstalledCheckRegistry
             // 
-            this.mnAddInstalledCheckRegistry.Index = 11;
+            this.mnAddInstalledCheckRegistry.Index = 12;
             this.mnAddInstalledCheckRegistry.Text = "Installed Check Registry";
             this.mnAddInstalledCheckRegistry.Click += new System.EventHandler(this.mnAddInstalledCheckRegistry_Click);
             // 
             // mnAddInstalledCheckFile
             // 
-            this.mnAddInstalledCheckFile.Index = 12;
+            this.mnAddInstalledCheckFile.Index = 13;
             this.mnAddInstalledCheckFile.Text = "Installed Check File";
             this.mnAddInstalledCheckFile.Click += new System.EventHandler(this.mnInstalledCheckFile_Click);
             // 
             // mnAddInstalledCheckOperator
             // 
-            this.mnAddInstalledCheckOperator.Index = 13;
+            this.mnAddInstalledCheckOperator.Index = 14;
             this.mnAddInstalledCheckOperator.Text = "Installed Check Operator";
             this.mnAddInstalledCheckOperator.Click += new System.EventHandler(this.mnAddInstalledCheckOperator_Click);
             // 
             // mnAddInstalledCheckProduct
             // 
-            this.mnAddInstalledCheckProduct.Index = 14;
+            this.mnAddInstalledCheckProduct.Index = 15;
             this.mnAddInstalledCheckProduct.Text = "Installed Check ProductCode";
             this.mnAddInstalledCheckProduct.Click += new System.EventHandler(this.mnAddInstalledCheckProduct_Click);
             // 
             // menuItem9
             // 
-            this.menuItem9.Index = 15;
+            this.menuItem9.Index = 16;
             this.menuItem9.Text = "-";
             // 
             // mnAddEmbedFile
             // 
-            this.mnAddEmbedFile.Index = 16;
+            this.mnAddEmbedFile.Index = 17;
             this.mnAddEmbedFile.Text = "&Embed File";
             this.mnAddEmbedFile.Click += new System.EventHandler(this.mnAddEmbedFile_Click);
             // 
             // mnAddEmbedFolder
             // 
-            this.mnAddEmbedFolder.Index = 17;
+            this.mnAddEmbedFolder.Index = 18;
             this.mnAddEmbedFolder.Text = "Embed Folder";
             this.mnAddEmbedFolder.Click += new System.EventHandler(this.mnAddEmbedFolder_Click);
             // 
@@ -545,6 +554,7 @@ namespace InstallerEditor
             this.imageList.Images.SetKeyName(13, "");
             this.imageList.Images.SetKeyName(14, "");
             this.imageList.Images.SetKeyName(15, "");
+            this.imageList.Images.SetKeyName(16, "");
             // 
             // mainSplitContainer
             // 
@@ -933,6 +943,7 @@ namespace InstallerEditor
                 mnAddWebConfiguration.Enabled = (item.Children.CanAdd(typeof(WebConfiguration)));
                 mnAddCommandComponent.Enabled = (item.Children.CanAdd(typeof(ComponentCmd)));
                 mnAddMsiComponent.Enabled = (item.Children.CanAdd(typeof(ComponentMsi)));
+                mnAddMsuComponent.Enabled = (item.Children.CanAdd(typeof(ComponentMsu)));
                 mnAddOpenFileComponent.Enabled = (item.Children.CanAdd(typeof(ComponentOpenFile)));
                 mnAddEmbedFile.Enabled = (item.Children.CanAdd(typeof(EmbedFile)));
                 mnAddEmbedFolder.Enabled = (item.Children.CanAdd(typeof(EmbedFolder)));
@@ -954,6 +965,7 @@ namespace InstallerEditor
                 mnAddWebConfiguration.Enabled = false;
                 mnAddCommandComponent.Enabled = false;
                 mnAddMsiComponent.Enabled = false;
+                mnAddMsuComponent.Enabled = false;
                 mnAddOpenFileComponent.Enabled = false;
                 mnAddEmbedFile.Enabled = false;
                 mnAddEmbedFolder.Enabled = false;
@@ -1000,6 +1012,13 @@ namespace InstallerEditor
         private Component AddMsiComponent(IXmlClass parent)
         {
             ComponentMsi l_Component = new ComponentMsi();
+            parent.Children.Add(l_Component);
+            return l_Component;
+        }
+
+        private Component AddMsuComponent(IXmlClass parent)
+        {
+            ComponentMsu l_Component = new ComponentMsu();
             parent.Children.Add(l_Component);
             return l_Component;
         }
@@ -1711,6 +1730,18 @@ namespace InstallerEditor
             try
             {
                 AddTreeNode(new TreeNodeInstalledCheck(AddInstalledCheckProduct((IXmlClass)treeView.SelectedNode.Tag)));
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
+        }
+
+        private void mnAddMsuComponent_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                AddTreeNode(new TreeNodeComponent(AddMsuComponent((IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {

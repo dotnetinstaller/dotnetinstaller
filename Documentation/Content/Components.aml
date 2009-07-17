@@ -31,6 +31,15 @@
           </para>
         </content>
       </section>
+      <section address="msucomponents">
+        <title>Windows Update MSU Components</title>
+        <content>
+          <para>
+            A component of type <literal>msu</literal> that executes a Windows Update package using the
+            <command>wusa.exe</command> command.
+          </para>
+        </content>
+      </section>
       <section address="commandlinecomponents">
         <title>Command Line Components</title>
         <content>

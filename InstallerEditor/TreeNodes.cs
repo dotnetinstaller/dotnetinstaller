@@ -251,7 +251,7 @@ namespace InstallerEditor
 				base.ImageIndex = 11;
 				base.SelectedImageIndex = 11;
 			}
-			else if (p_Component is ComponentCmd)
+            else if (p_Component is ComponentCmd)
 			{
 				base.ImageIndex = 4;
 				base.SelectedImageIndex = 4;
@@ -260,6 +260,11 @@ namespace InstallerEditor
             {
                 base.ImageIndex = 12;
                 base.SelectedImageIndex = 12;
+            }
+            else if (p_Component is ComponentMsu)
+            {
+                base.ImageIndex = 16;
+                base.SelectedImageIndex = 16;
             }
 
 			m_Component = p_Component;

@@ -4,7 +4,7 @@
     <introduction>
       <para>
         You can find several samples in the distribution package: a standalone setup, an all-in-one packaged setup and a demo of 
-        component operators.
+        component operators and several other examples of configuration files.
       </para>
     </introduction>
     <section address="standalonesetupsample">
@@ -41,8 +41,8 @@
       <title>Packaged Setup Sample</title>
       <content>
         <para>
-          The packaged setup is compiled with <application>InstallerLinker</application> into a single Setup.exe with all its 
-          dependencies, including a simple MSI setup package.
+          A working packaged setup, compiled with <application>InstallerLinker</application> into a 
+          single Setup.exe with all its dependencies, including a simple MSI setup package.
         </para>
       </content>
     </section>
@@ -50,7 +50,7 @@
       <title>Component Operators Sample</title>
       <content>
         <para>
-          A demo of component operators. Shows how logical functions can be applied to install checks.
+          A demo configuration of component operators. Shows how logical functions can be applied to install checks.
         </para>
       </content>
     </section>
@@ -58,7 +58,33 @@
       <title>Download Setup Sample</title>
       <content>
         <para>
-          A demo of downloadable components.
+          A demo configuration of downloadable components.
+        </para>
+      </content>
+    </section>
+    <section address="installcheckproductsample">
+      <title>Install Check Product Sample</title>
+      <content>
+        <para>
+          A demo configuration of product installed checks that use the MSI database to lookup previously installed
+          products or products related by UpgradeCode.
+        </para>
+      </content>
+    </section>
+    <section address="osfilterssample">
+      <title>Operating System Filters Sample</title>
+      <content>
+        <para>
+          A demo configuration that installs MSI 4.5 on three ranges of operating systems. Also demonstrates the
+          'msu' Windows Update component on Windows Vista.
+        </para>
+      </content>
+    </section>
+    <section address="referecesetupsample">
+      <title>Reference Setup Sample</title>
+      <content>
+        <para>
+          A demo configuration with multiple web-based reference setups.
         </para>
       </content>
     </section>

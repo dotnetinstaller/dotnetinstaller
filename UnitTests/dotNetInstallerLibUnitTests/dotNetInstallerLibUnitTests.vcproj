@@ -232,6 +232,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MsuComponentUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\OpenFileComponentUnitTests.cpp"
 				>
 			</File>
@@ -315,6 +319,10 @@
 			</File>
 			<File
 				RelativePath=".\MsiComponentUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MsuComponentUnitTests.h"
 				>
 			</File>
 			<File

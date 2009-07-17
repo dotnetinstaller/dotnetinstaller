@@ -17,6 +17,7 @@
 #include "Configuration.h"
 #include "InstallUILevel.h"
 #include "MsiComponent.h"
+#include "MsuComponent.h"
 #include "OpenFileComponent.h"
 #include "ProcessComponent.h"
 #include "ThreadComponent.h"

@@ -9,6 +9,7 @@ enum component_type
 	undefined = 0, 
 	cmd, // shell command
 	msi, // windows installer setup
+	msu, // windows update
 	openfile // ShellExecute call to open a file
 };
 
