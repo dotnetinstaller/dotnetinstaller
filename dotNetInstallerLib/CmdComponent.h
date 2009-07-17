@@ -12,3 +12,5 @@ public:
 	void Exec();
 	void Load(TiXmlElement * node);
 };
+
+typedef shared_any<CmdComponent *, close_delete> CmdComponentPtr;

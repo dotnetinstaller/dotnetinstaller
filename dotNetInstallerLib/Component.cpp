@@ -121,3 +121,10 @@ void Component::Wait(DWORD tt)
 		Sleep(tt);
 	}
 }
+
+bool Component::IsSupported(DVLib::LcidType lcidtype) const
+{
+	return DVLib::IsOperatingSystemLCID(lcidtype, os_filter_lcid) &&
+		DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), processor_architecture_filter) &&
+		DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter_greater, os_filter_smaller);
+}

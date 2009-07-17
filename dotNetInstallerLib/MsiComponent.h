@@ -14,3 +14,4 @@ public:
 	void Load(TiXmlElement * node);
 };
 
+typedef shared_any<MsiComponent *, close_delete> MsiComponentPtr;

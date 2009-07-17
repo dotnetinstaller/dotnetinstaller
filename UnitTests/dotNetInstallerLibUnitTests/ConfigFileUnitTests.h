@@ -13,8 +13,9 @@ namespace DVLib
 			CPPUNIT_TEST( testLoadDownloadSetup );
 			CPPUNIT_TEST( testLoadReferenceSetup );
 			CPPUNIT_TEST( testLoadInstallCheckProductSetup );
+			CPPUNIT_TEST( testLoadOsFiltersSetup );
 			CPPUNIT_TEST( testLoadResource );
-			CPPUNIT_TEST( testGetSupportedConfigurations);
+			CPPUNIT_TEST( testGetSupportedConfigurations );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testLoadPackagedSetup();
@@ -23,6 +24,7 @@ namespace DVLib
 			void testLoadStandaloneSetup();
 			void testLoadDownloadSetup();
 			void testLoadReferenceSetup();
+			void testLoadOsFiltersSetup();
 			void testLoadResource();
 			void testGetSupportedConfigurations();
 		};

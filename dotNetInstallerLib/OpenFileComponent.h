@@ -12,3 +12,5 @@ public:
 	bool IsExecuting() const;
 	void Load(TiXmlElement * node);
 };
+
+typedef shared_any<OpenFileComponent *, close_delete> OpenFileComponentPtr;

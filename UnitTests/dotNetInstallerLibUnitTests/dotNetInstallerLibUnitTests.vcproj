@@ -179,6 +179,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ComponentsUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ConfigFileUnitTests.cpp"
 				>
 			</File>
@@ -262,6 +266,10 @@
 			>
 			<File
 				RelativePath=".\CmdComponentUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ComponentsUnitTests.h"
 				>
 			</File>
 			<File

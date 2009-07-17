@@ -3,6 +3,21 @@
   <Fragment>
     <DirectoryRef Id="INSTALLLOCATION">
       <Directory Id="Samples" Name="samples">
+        <Directory Id="InstallCheckProductFolder" Name="InstallCheckProduct">
+          <Component Id="InstallCheckProductSample" Guid="1722EA85-8D73-45ca-A38C-F5BCF1E5518F">
+            <File Id="InstallCheckProduct.Configuration.xml" Name="Configuration.xml" Source="..\Samples\InstallCheckProduct\Configuration.xml" />
+          </Component>
+        </Directory>
+        <Directory Id="ReferenceSetupFolder" Name="ReferenceSetup">
+          <Component Id="ReferenceSetupSample" Guid="09F467BB-686D-47a3-B30B-53A959D24199">
+            <File Id="ReferenceSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\ReferenceSetup\Configuration.xml" />
+          </Component>
+        </Directory>
+        <Directory Id="OsFiltersFolder" Name="OsFilters">
+          <Component Id="OsFiltersSample" Guid="62B22E8A-D813-4bd0-8C82-A0A40497418F">
+            <File Id="OsFilters.Configuration.xml" Name="Configuration.xml" Source="..\Samples\OsFilters\Configuration.xml" />
+          </Component>
+        </Directory>
         <Directory Id="InstallCheckOperatorsFolder" Name="InstallCheckOperators">
           <Component Id="InstallCheckOperatorsSample" Guid="30AD6A29-CCC9-40D0-BDAB-D2414C39247A">
             <File Id="InstallCheckOperators.banner.bmp" Name="banner.bmp" Source="..\Samples\InstallCheckOperators\banner.bmp" />

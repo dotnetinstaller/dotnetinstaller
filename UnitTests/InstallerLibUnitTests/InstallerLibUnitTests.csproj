@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{49A3BD48-D506-4108-8F47-7CD7081C046C}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -83,6 +83,11 @@
   <ItemGroup>
     <EmbeddedResource Include="..\..\Samples\InstallCheckProduct\Configuration.xml">
       <Link>Samples\InstallCheckProduct\Configuration.xml</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\Samples\OsFilters\Configuration.xml">
+      <Link>Samples\OsFilters\Configuration.xml</Link>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

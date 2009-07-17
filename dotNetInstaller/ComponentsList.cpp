@@ -72,7 +72,7 @@ void CComponentsList::PreDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CCheckListBox::PreDrawItem(lpDrawItemStruct);
 }
 
-bool CComponentsList::Load(const ConfigurationPtr& configuration)
+bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration)
 {
 	bool all_components_installed = true;
 
@@ -85,11 +85,12 @@ bool CComponentsList::Load(const ConfigurationPtr& configuration)
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
     
-	for each(const ComponentPtr& component in p_configuration->components)
+	std::vector<ComponentPtr> components = p_configuration->GetSupportedComponents(lcidtype);
+	for each(const ComponentPtr& component in components)
 	{
         bool component_installed = component->IsInstalled();
         
-        LOG(L"-- " << component->description << L": " << component_installed ? L"INSTALLED" : L"NOT INSTALLED");
+        LOG(L"-- " << component->description << L": " << (component_installed ? L"INSTALLED" : L"NOT INSTALLED"));
 
 		if (component_installed)
 		{

@@ -9,7 +9,7 @@ protected:
 	void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct); 
 	DECLARE_MESSAGE_MAP();
 public:
-	bool Load(const ConfigurationPtr& configuration);
+	bool Load(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration);
 	CComponentsList(void);
 	~CComponentsList(void);
 };

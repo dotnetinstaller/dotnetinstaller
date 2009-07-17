@@ -68,6 +68,8 @@ public:
 	bool selected;
 	// load a component from an xml node
 	virtual void Load(TiXmlElement * node);
+	// returns true if this component is supported on this operating system/lcid
+	virtual bool IsSupported(DVLib::LcidType lcidtype) const;
 };
 
 typedef shared_any<Component *, close_delete> ComponentPtr;

@@ -2,7 +2,7 @@
 
 #include "WidgetPosition.h"
 #include "Configuration.h"
-#include "Component.h"
+#include "Components.h"
 
 class InstallConfiguration : public Configuration
 {
@@ -61,15 +61,12 @@ public:
     WidgetPosition dialog_install_button_position;
     WidgetPosition dialog_cancel_button_position;
     WidgetPosition dialog_skip_button_position;
-    // a description-component map
-    std::map<std::wstring, ComponentPtr> components_map;
-    // an ordered list of components
-    std::vector<ComponentPtr> components;
+	Components components;
 public:
 	InstallConfiguration();
 	virtual void Load(TiXmlElement * node);
-    void AddComponent(const ComponentPtr&);
-    bool HasComponent(const std::wstring& description) const;
+	// returns components that match current platform and processor architecture
+	std::vector< ComponentPtr > GetSupportedComponents(DVLib::LcidType lcidtype) const;
 };
 
 typedef shared_any<InstallConfiguration *, close_delete> InstallConfigurationPtr;

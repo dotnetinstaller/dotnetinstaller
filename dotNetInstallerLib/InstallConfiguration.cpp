@@ -20,12 +20,6 @@ InstallConfiguration::InstallConfiguration()
 
 }
 
-void InstallConfiguration::AddComponent(const ComponentPtr& c)
-{
-    components_map.insert(std::make_pair(c->description, c));
-    components.push_back(c);
-}
-
 void InstallConfiguration::Load(TiXmlElement * node)
 {
 	CHECK_BOOL(node != NULL,
@@ -102,17 +96,18 @@ void InstallConfiguration::Load(TiXmlElement * node)
 		}
 
 		component->Load(node_component);
-		AddComponent(component);
+		components.add(component);
 	}
 
-	LOG(L"Loaded " << components.size() << L" components from configuration type=" << type 
-		<< L", lcid=" << lcid
+	LOG(L"Loaded " << components.size() << L" component(s) from configuration type=" << type 
+		<< L" (lcid=" << lcid
 		<< L", os_filter_greater=" << os_filter_greater
 		<< L", os_filter_smaller=" << os_filter_smaller
-		<< L", processor_architecture_filter=" << processor_architecture_filter);
+		<< L", processor_architecture_filter=" << processor_architecture_filter
+		<< L")");
 }
 
-bool InstallConfiguration::HasComponent(const std::wstring& description) const 
-{ 
-	return components_map.find(description) != components_map.end(); 
+std::vector< ComponentPtr > InstallConfiguration::GetSupportedComponents(DVLib::LcidType lcidtype) const
+{
+	return components.GetSupportedComponents(lcidtype);
 }

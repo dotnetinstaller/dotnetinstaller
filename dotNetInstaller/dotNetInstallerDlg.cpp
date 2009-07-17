@@ -47,9 +47,13 @@ END_MESSAGE_MAP()
 
 // gestori di messaggi di CdotNetInstallerDlg
 
-bool CdotNetInstallerDlg::RunInstallConfiguration(const ConfigurationPtr& configuration, bool p_additional_config)
+bool CdotNetInstallerDlg::RunInstallConfiguration(
+	DVLib::LcidType lcidtype, 
+	const ConfigurationPtr& configuration, 
+	bool p_additional_config)
 {
 	m_configuration = configuration;
+	m_lcidtype = lcidtype;
 	m_additional_config = p_additional_config;
 	return(IDOK == this->DoModal());
 }
@@ -235,7 +239,8 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-	    for each(const ComponentPtr& component in p_configuration->components)
+		std::vector<ComponentPtr> components = p_configuration->GetSupportedComponents(m_lcidtype);
+	    for each(const ComponentPtr& component in components)
 		{
 			bool l_retVal = false;
 			try
@@ -434,7 +439,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 // returns true if all components have been installed
 bool CdotNetInstallerDlg::LoadComponentsList()
 {
-	return m_ListBoxComponents.Load(m_configuration);
+	return m_ListBoxComponents.Load(m_lcidtype, m_configuration);
 }
 
 // skip the current config section and go to the next valid one

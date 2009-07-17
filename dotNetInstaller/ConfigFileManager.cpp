@@ -105,7 +105,7 @@ void ConfigFileManager::Run()
 		if ((* this)[i]->type == configuration_install)
 		{
 			SaveAppState();
-			if (! dlg.RunInstallConfiguration((* this)[i], i + 1 != size()))
+			if (! dlg.RunInstallConfiguration(lcidtype, (* this)[i], i + 1 != size()))
 				break;
 			RestoreAppState();
 		}

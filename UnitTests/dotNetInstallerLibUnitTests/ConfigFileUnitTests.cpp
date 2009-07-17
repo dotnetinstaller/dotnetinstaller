@@ -188,3 +188,17 @@ void ConfigFileUnitTests::testGetSupportedConfigurations()
 	// there're two configurations in this sample, opposite of each other
 	CPPUNIT_ASSERT(config.GetSupportedConfigurations().size() == 1);
 }
+
+void ConfigFileUnitTests::testLoadOsFiltersSetup()
+{
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+		L"..\\..\\..\\Samples\\OsFilters\\Configuration.xml");
+	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
+	ConfigFile config;
+	config.LoadFile(configxml);
+	// there're three components in this sample, but only 1 will show because the os filters don't overlap
+	CPPUNIT_ASSERT(config.size() == 1);
+	CPPUNIT_ASSERT(config.GetSupportedConfigurations().size() == 1);
+	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
+	CPPUNIT_ASSERT(configuration->components.size() == 3);	
+}

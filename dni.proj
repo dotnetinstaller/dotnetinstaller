@@ -33,6 +33,15 @@
     <DownloadSetupSample Include="Samples/DownloadSetup/**/*.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ReferenceSetupSample Include="Samples/ReferenceSetup/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <InstallCheckProductSample Include="Samples/InstallCheckProduct/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <OsFiltersSetupSample Include="Samples/OsFiltersSetup/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <Documentation Include="Documentation/$(Configuration)/dotNetInstaller.chm" />
     <Documentation Include="Documentation/WhatsNew.html" />
   </ItemGroup>
@@ -144,6 +153,12 @@
     <!-- Sample: DownloadSetup -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\DownloadSetup" />
     <Copy SourceFiles="@(DownloadSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\DownloadSetup\%(RecursiveDir)" />
+    <!-- Sample: InstallCheckProduct -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckProduct" />
+    <Copy SourceFiles="@(InstallCheckProductSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckProduct\%(RecursiveDir)" />
+    <!-- Sample: OsFiltersSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup" />
+    <Copy SourceFiles="@(OsFiltersSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup\%(RecursiveDir)" />
   </Target>
   <Target Name="doc" DependsOnTargets="version">
     <Error Condition="'$(DXROOT)'==''" Text="Missing Sandcastle, DXROOT environment variable not set, install from http://www.codeplex.com/Sandcastle" />

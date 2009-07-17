@@ -154,6 +154,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Components.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ConfigFile.cpp"
 				>
 			</File>
@@ -289,6 +293,10 @@
 			</File>
 			<File
 				RelativePath=".\Component.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Components.h"
 				>
 			</File>
 			<File

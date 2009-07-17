@@ -21,6 +21,7 @@ protected:
 private:
 	int m_recorded_error;
 	bool m_additional_config;
+	DVLib::LcidType m_lcidtype;
 	ConfigurationPtr m_configuration;
     void ExtractCab();
 	void DisplayCab();
@@ -29,7 +30,7 @@ private:
     static bool MoveWindow(CWnd& dlg, const WidgetPosition& pos);
 public:
 	void ExecuteCompleteCode(bool componentsInstalled);
-	bool RunInstallConfiguration(const ConfigurationPtr& configuration, bool additional_config);
+	bool RunInstallConfiguration(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration, bool additional_config);
 	bool RunDownloadConfiguration(DownloadGroupConfiguration & p_Configuration);
 	bool DownloadComponents(Component& p_Component);
 	inline int GetRecordedError() const { return m_recorded_error; }

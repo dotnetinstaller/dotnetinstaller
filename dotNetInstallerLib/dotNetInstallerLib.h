@@ -1,7 +1,8 @@
 #pragma once
 
-#include "CmdComponent.h"
 #include "Component.h"
+#include "Components.h"
+#include "CmdComponent.h"
 #include "dotNetInstallerLib.h"
 #include "DownloadCallback.h"
 #include "DownloadComponent.h"
