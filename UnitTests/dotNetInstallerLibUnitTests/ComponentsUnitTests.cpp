@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "ComponentsUnitTests.h"
+#include "ExecuteComponentCallbackImpl.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::ComponentsUnitTests);
 
@@ -64,4 +65,52 @@ void ComponentsUnitTests::testPAFilters()
 	CPPUNIT_ASSERT(components.size() == 2);
 	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser).size() == 1);
 	CPPUNIT_ASSERT(get(components.GetSupportedComponents(LcidUser)[0]) == get(component_anotherpa));
+}
+
+void ComponentsUnitTests::testExecNoCallback()
+{
+	Components components;
+	CmdComponent * component1 = new CmdComponent();
+	component1->description = DVLib::GenerateGUIDStringW();
+	std::wstring check_file = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), component1->description);
+	CPPUNIT_ASSERT(! DVLib::FileExists(check_file));
+	component1->command = L"cmd.exe /C dir > \"" + check_file + L"\"";
+	components.add(ComponentPtr(component1));
+	components.Exec(NULL);
+	CPPUNIT_ASSERT(DVLib::FileExists(check_file));
+	DVLib::FileDelete(check_file);
+}
+
+void ComponentsUnitTests::testExecWithCallback()
+{
+	Components components;
+	CmdComponent * component1 = new CmdComponent();
+	component1->description = DVLib::GenerateGUIDStringW();
+	std::wstring check_file = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), component1->description);
+	CPPUNIT_ASSERT(! DVLib::FileExists(check_file));
+	component1->command = L"cmd.exe /C dir > \"" + check_file + L"\"";
+	components.add(ComponentPtr(component1));
+	ExecuteComponentCallbackImpl callback;
+	components.Exec(& callback);
+	CPPUNIT_ASSERT(DVLib::FileExists(check_file));
+	DVLib::FileDelete(check_file);
+	CPPUNIT_ASSERT(1 == callback.begins);
+	CPPUNIT_ASSERT(1 == callback.waits);
+	CPPUNIT_ASSERT(1 == callback.successes);
+	CPPUNIT_ASSERT(0 == callback.errors);
+}
+
+void ComponentsUnitTests::testExecWithError()
+{
+	Components components;
+	CmdComponent * component1 = new CmdComponent();
+	component1->description = DVLib::GenerateGUIDStringW();
+	component1->command = L"foobar.exe";
+	components.add(ComponentPtr(component1));
+	ExecuteComponentCallbackImpl callback;
+	components.Exec(& callback);
+	CPPUNIT_ASSERT(1 == callback.begins);
+	CPPUNIT_ASSERT(0 == callback.waits);
+	CPPUNIT_ASSERT(0 == callback.successes);
+	CPPUNIT_ASSERT(1 == callback.errors);
 }

@@ -85,9 +85,10 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
     
-	std::vector<ComponentPtr> components = p_configuration->GetSupportedComponents(lcidtype);
-	for each(const ComponentPtr& component in components)
+	Components components = p_configuration->GetSupportedComponents(lcidtype);
+	for (size_t i = 0; i < components.size(); i++)
 	{
+		ComponentPtr component(components[i]);
         bool component_installed = component->IsInstalled();
         
         LOG(L"-- " << component->description << L": " << (component_installed ? L"INSTALLED" : L"NOT INSTALLED"));

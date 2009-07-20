@@ -109,7 +109,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
 		<< L")");
 }
 
-std::vector< ComponentPtr > InstallConfiguration::GetSupportedComponents(DVLib::LcidType lcidtype) const
+Components InstallConfiguration::GetSupportedComponents(DVLib::LcidType lcidtype) const
 {
 	return components.GetSupportedComponents(lcidtype);
 }

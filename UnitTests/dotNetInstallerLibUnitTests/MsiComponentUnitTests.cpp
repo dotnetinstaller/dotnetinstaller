@@ -11,6 +11,14 @@ void MsiComponentUnitTests::testExec()
 	component.package = L"msidoesntexist.msi"; 
 	component.cmdparameters = L"/qn";
 	component.Exec();
-	// msi file cannot be opened
-	CPPUNIT_ASSERT(1619 == component.Wait());
+	try
+	{
+		component.Wait();
+		throw "expected std::exception";
+	}
+	catch(std::exception& ex)
+	{
+		// msi file cannot be opened
+		CPPUNIT_ASSERT(1619 == component.GetProcessExitCode());
+	}
 }

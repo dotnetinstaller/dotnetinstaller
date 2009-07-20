@@ -11,6 +11,7 @@ public:
 	std::wstring command_basic;
 	void Exec();
 	void Load(TiXmlElement * node);
+	void Wait(DWORD tt = 1000);
 };
 
 typedef shared_any<CmdComponent *, close_delete> CmdComponentPtr;

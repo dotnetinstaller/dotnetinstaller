@@ -74,3 +74,11 @@ void MsuComponent::Load(TiXmlElement * node)
 	Component::Load(node);
 	LOG(L"Loaded 'msu' component '" << package << L"'");
 }
+
+void MsuComponent::Wait(DWORD tt)
+{
+	ProcessComponent::Wait(tt);
+
+	CHECK_WIN32_DWORD(ProcessComponent::GetProcessExitCode(),
+		L"Error executing '" << description << "'");
+}

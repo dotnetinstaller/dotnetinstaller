@@ -10,10 +10,18 @@ void CmdComponentUnitTests::testExec()
 	CmdComponent component;
 	component.command = L"cmd.exe /C exit /b 0";
 	component.Exec();
-	CPPUNIT_ASSERT(0 == component.Wait());	
-	component.command = L"cmd.exe /C exit /b 1";
-	component.Exec();
-	CPPUNIT_ASSERT(1 == component.Wait());
+	component.Wait();
+	try
+	{
+		component.command = L"cmd.exe /C exit /b 1";
+		component.Exec();
+		component.Wait();
+		throw "expected std::exception";
+	}
+	catch(std::exception& ex)
+	{
+		std::cout << std::endl << ex.what();
+	}
 }
 
 void CmdComponentUnitTests::testExecUISilent()
@@ -21,10 +29,10 @@ void CmdComponentUnitTests::testExecUISilent()
 	CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelSilent);
 	CmdComponent component;
 	component.command = L"cmd.exe /C exit /b 1";
-	component.command_silent = L"cmd.exe /C exit /b 2";
+	component.command_silent = L"cmd.exe /C exit /b 0";
 	component.command_basic = L"cmd.exe /C exit /b 3";
 	component.Exec();
-	CPPUNIT_ASSERT(2 == component.Wait());
+	component.Wait();
 	CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelNotSet);
 }
 
@@ -34,8 +42,8 @@ void CmdComponentUnitTests::testExecUIBasic()
 	CmdComponent component;
 	component.command = L"cmd.exe /C exit /b 1";
 	component.command_silent = L"cmd.exe /C exit /b 2";
-	component.command_basic = L"cmd.exe /C exit /b 3";
+	component.command_basic = L"cmd.exe /C exit /b 0";
 	component.Exec();
-	CPPUNIT_ASSERT(3 == component.Wait());
+	component.Wait();
 	CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelNotSet);
 }

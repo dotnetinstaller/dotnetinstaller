@@ -7,8 +7,8 @@ public:
     ProcessComponent(component_type t);
 public:
 	PROCESS_INFORMATION m_process_info;
-	DWORD GetExitCode() const;
 	bool IsExecuting() const;
-	DWORD Wait() const;
+	DWORD GetProcessExitCode() const;
+	void Wait(DWORD tt = 1000);
 };
 

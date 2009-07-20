@@ -2,10 +2,11 @@
 
 #include "HyperlinkStatic.h"
 #include "ComponentsList.h"
+#include "InstallComponentDlg.h"
 #include "resource.h"
 
 // finestra di dialogo CdotNetInstallerDlg
-class CdotNetInstallerDlg : public CDialog
+class CdotNetInstallerDlg : public CDialog, public IExecuteCallback
 {
 public:
 	CdotNetInstallerDlg(CWnd* pParent = NULL);	// costruttore standard
@@ -20,9 +21,11 @@ protected:
 	DECLARE_MESSAGE_MAP()
 private:
 	int m_recorded_error;
+	bool m_reboot;
 	bool m_additional_config;
 	DVLib::LcidType m_lcidtype;
 	ConfigurationPtr m_configuration;
+	InstallComponentDlg l_component_dlg;
     void ExtractCab();
 	void DisplayCab();
     void SelectComponents();
@@ -49,4 +52,9 @@ public:
 	afx_msg void OnDestroy();
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedSkip();
+	// IExecuteCallback
+	bool OnComponentExecBegin(const ComponentPtr& component);
+	bool OnComponentExecWait(const ComponentPtr& component);
+	bool OnComponentExecSuccess(const ComponentPtr& component);
+	bool OnComponentExecError(const ComponentPtr& component, std::exception& ex);
 };

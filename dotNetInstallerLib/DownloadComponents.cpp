@@ -15,7 +15,7 @@ DownloadComponents::DownloadComponents(
 	}
 }
 
-UINT DownloadComponents::ExecOnThread()
+void DownloadComponents::ExecOnThread()
 {
 	try
 	{
@@ -24,7 +24,7 @@ UINT DownloadComponents::ExecOnThread()
 			const DownloadComponentPtr& component = (* this)[i];
 
 			if (callback && callback->IsDownloadCancelled())
-				return 0;
+				return;
 
 			if (component->IsCopyRequired())
 			{
@@ -48,8 +48,6 @@ UINT DownloadComponents::ExecOnThread()
 			callback->DownloadError(DVLib::string2wstring(ex.what()).c_str());
 		}
 	}	
-
-	return 0;
 }
 
 bool DownloadComponents::IsCopyRequired() const

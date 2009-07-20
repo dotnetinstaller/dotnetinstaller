@@ -8,7 +8,7 @@ ProcessComponent::ProcessComponent(component_type t)
 	ZeroMemory(& m_process_info, sizeof(PROCESS_INFORMATION));
 }
 
-DWORD ProcessComponent::GetExitCode() const
+DWORD ProcessComponent::GetProcessExitCode() const
 {
 	DWORD l_ExitCode;
 
@@ -31,12 +31,8 @@ bool ProcessComponent::IsExecuting() const
     }
 }
 
-DWORD ProcessComponent::Wait() const
+void ProcessComponent::Wait(DWORD tt)
 {
 	CHECK_WIN32_BOOL(WAIT_OBJECT_0 == WaitForSingleObject(m_process_info.hProcess, INFINITE),
 		L"WaitForSingleObject");
-	DWORD dwExitCode = 0;
-	CHECK_WIN32_BOOL(::GetExitCodeProcess(m_process_info.hProcess, & dwExitCode),
-		L"GetExitCodeProcess");
-	return dwExitCode;
 }

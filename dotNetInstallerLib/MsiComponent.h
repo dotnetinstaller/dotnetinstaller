@@ -11,7 +11,9 @@ public:
     std::wstring cmdparameters_silent;
 	std::wstring cmdparameters_basic;
 	void Exec();
+	void Wait(DWORD tt = 1000);
 	void Load(TiXmlElement * node);
+	bool IsRebootRequired() const;
 };
 
 typedef shared_any<MsiComponent *, close_delete> MsiComponentPtr;

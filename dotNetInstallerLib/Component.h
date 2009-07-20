@@ -60,7 +60,7 @@ public:
 	// funzione virtuale specifica per il tipo di componente
 	virtual void Exec() = 0;
 	virtual void Wait(DWORD tt = 1000);
-	virtual DWORD GetExitCode() const = 0;
+	virtual bool IsRebootRequired() const { return mustreboot; }
 	virtual bool IsExecuting() const = 0;
 	virtual bool IsInstalled() const;
 	// indica se il componente verrà eseguito o no

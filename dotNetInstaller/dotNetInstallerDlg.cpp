@@ -16,7 +16,8 @@
 CdotNetInstallerDlg::CdotNetInstallerDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CdotNetInstallerDlg::IDD, pParent)
 	, m_additional_config(false)
-	, m_recorded_error(false)
+	, m_recorded_error(0)
+	, m_reboot(false)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -234,188 +235,41 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
         SelectComponents();
         ExtractCab();
 		InsertRegistryRun();
-		bool l_bRemoveRunOnce = true;
-		bool l_bShutdownOrCancel = false;
-
+		
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-		std::vector<ComponentPtr> components = p_configuration->GetSupportedComponents(m_lcidtype);
-	    for each(const ComponentPtr& component in components)
+
+		Components components = p_configuration->GetSupportedComponents(m_lcidtype);
+		bool success = components.Exec(this);
+
+		if (m_reboot)
 		{
-			bool l_retVal = false;
-			try
-			{
-				if (component->selected)
-				{
-					LOG(L"--- Executing component: " << component->description);
-
-					InstallComponentDlg l_dg;
-					if (CurrentInstallUILevel.IsAnyUI())
-					{
-						l_dg.LoadComponent(m_configuration, component);
-					}
-
-					if (get(component->downloadconfiguration) && ! RunDownloadConfiguration(component->downloadconfiguration))
-					{
-						LOG(L"*** Component ERROR ON DOWNLOAD");
-						RecordError();
-						l_retVal = false;
-					}
-					else
-					{
-						component->Exec();
-
-						if (CurrentInstallUILevel.IsAnyUI())
-						{
-							l_dg.DoModal();
-						}
-						else
-						{
-							while(component->IsExecuting())
-							{
-								Sleep(1000);
-							}
-						}
-
-						LOG("--- Component DIALOG CLOSED");
-						
-						if (component->IsExecuting()) // se l'installazione è ancora attiva non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
-						{
-							LOG(L"--- Component STILL ACTIVE");
-
-							l_bRemoveRunOnce = false;
-							break; //esco dal for
-						}
-						else //setup finished
-						{
-							DWORD l_ExitCode = component->GetExitCode();
-							if (l_ExitCode == ERROR_SUCCESS || l_ExitCode == ERROR_SUCCESS_REBOOT_REQUIRED)
-							{
-								LOG(L"--- Component SUCCEEDED");
-
-								//se è presente un messaggio di completamento installazione
-								std::wstring l_completeMsg = component->installcompletemessage;
-								if (! l_completeMsg.empty())
-								{
-									DniMessageBox(l_completeMsg, MB_OK|MB_ICONINFORMATION);
-								}
-
-								if (component->mustreboot ||
-									l_ExitCode == ERROR_SUCCESS_REBOOT_REQUIRED) //se l'installazione ha chiesto di riavviare non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
-								{
-									LOG(L"--- Component NEEDS REBOOT");
-
-									l_bRemoveRunOnce = false;
-
-									bool l_bReboot = false;
-									std::wstring reboot_required = component->reboot_required;
-									if (reboot_required.empty()) reboot_required = p_configuration->reboot_required;
-									if (p_configuration->must_reboot_required || component->must_reboot_required)
-									{
-										LOG(L"--- Required REBOOT");
-										DniMessageBox(reboot_required, MB_OK|MB_ICONQUESTION);
-										l_bReboot = true;
-									}
-									else 
-									{
-										LOG(L"--- Prompt for REBOOT");
-										l_bReboot = (DniMessageBox(reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES);
-									}
-
-									if (l_bReboot)
-									{
-										DVLib::ExitWindowsSystem(EWX_REBOOT);
-										l_bShutdownOrCancel = true;
-										LOG(L"--- Initiated REBOOT");
-										PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);
-										break;
-									}
-									else
-									{
-										l_retVal = true;
-									}
-
-									//break; //esco dal for
-								}
-								else //installazione completata con sucesso
-								{
-									LOG(L"--- Component INSTALLED");
-									l_retVal = true;
-								}
-							}
-							else //error restituito dal setup
-							{
-								LOG(L"*** Component ERROR ON EXIT CODE: " << l_ExitCode);
-								RecordError(l_ExitCode);
-								l_retVal = false;
-							}
-						}
-					}
-				}
-				else //già installato
-				{
-					l_retVal = true;
-				}
-			}
-			catch(std::exception& ex)
-			{
-                LOG(L"*** ERROR in component: " << DVLib::string2wstring(ex.what()));
-				RecordError();
-				l_retVal = false;
-			}
-
-			if (l_retVal == false)
-			{
-                // the component failed to install, display an error message and let the user choose to continue or not
-                // unless global or component setting decides otherwise
-
-                std::wstring failed_exec_command_continue = component->failed_exec_command_continue;
-                if (failed_exec_command_continue.empty()) failed_exec_command_continue = p_configuration->failed_exec_command_continue;
-				std::wstring l_msg = DVLib::FormatMessage(const_cast<wchar_t *>(failed_exec_command_continue.c_str()), component->description.c_str());
-
-                bool l_breakSequence = false;
-                if (p_configuration->allow_continue_on_error && component->allow_continue_on_error)
-                {
-				    l_breakSequence = (DniMessageBox(l_msg, MB_YESNO, IDNO, MB_YESNO|MB_ICONEXCLAMATION) == IDNO);
-                }
-                else
-                {
-                    DniMessageBox(l_msg, MB_OK, 0, MB_ICONEXCLAMATION);
-                    l_breakSequence = true;
-                }
-
-                if (l_breakSequence)
-                {
-                    if (p_configuration->auto_close_on_error)
-                    {
-                        l_bShutdownOrCancel = true;
-                    }
-                    
-                    break;
-                }
-			}
+			DVLib::ExitWindowsSystem(EWX_REBOOT);
+			PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);
+			return;
 		}
 
-		if (l_bRemoveRunOnce)
-		{
-			RemoveRegistryRun();
-		}
-		else
-		{
-			LOG(L"-- dotNetInstaller is configured to auto execute on the next reboot");
-		}
+		RemoveRegistryRun();
 
-		if (l_bShutdownOrCancel || CurrentInstallUILevel.IsSilent())
+		// silent execution, 
+		if (CurrentInstallUILevel.IsSilent()) 
 		{
 			OnOK();
+			return;
 		}
-		else
+
+		// failure and auto-close-on-error
+		if (! success && p_configuration->auto_close_on_error)
+		{
+			OnOK();
+			return;
+		}
+
+		// success and possibly auto-close with a complete code if all components have been installed
+		if (success)
 		{
 			bool all_components_installed = LoadComponentsList();
-
-			// auto-close the installer at the end
-			if (all_components_installed // all components have been installed
-				|| (p_configuration->auto_close_if_installed && (m_recorded_error == 0))) // auto-close, there was no error
+			if (all_components_installed || p_configuration->auto_close_if_installed) 
 			{
 				ExecuteCompleteCode(true);
 				OnOK();
@@ -616,4 +470,102 @@ void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
         DWORD dwExitCode = 0;
         dwExitCode = DVLib::ExecCmd(l_complete_command);
 	}
+}
+
+
+// IExecuteCallback
+bool CdotNetInstallerDlg::OnComponentExecBegin(const ComponentPtr& component)
+{
+	if (get(component->downloadconfiguration))
+	{
+		if (! RunDownloadConfiguration(component->downloadconfiguration))
+		{
+			LOG(L"*** Component '" << component->description << L": ERROR ON DOWNLOAD");
+			THROW_EX(L"Error downloading '" << component->description << L"'");
+		}
+	}
+
+	l_component_dlg.LoadComponent(m_configuration, component);
+	return true;
+}
+
+bool CdotNetInstallerDlg::OnComponentExecWait(const ComponentPtr& component)
+{
+	if (CurrentInstallUILevel.IsAnyUI())
+	{
+		l_component_dlg.DoModal();
+	}
+
+	LOG(L"--- Component '" << component->description << L": DIALOG CLOSED");
+	return true;
+}
+
+bool CdotNetInstallerDlg::OnComponentExecSuccess(const ComponentPtr& component)
+{
+	// se è presente un messaggio di completamento installazione
+	if (! component->installcompletemessage.empty())
+	{
+		DniSilentMessageBox(component->installcompletemessage, MB_OK | MB_ICONINFORMATION);
+	}
+
+	// se l'installazione ha chiesto di riavviare non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
+	if (component->IsRebootRequired())
+	{
+		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
+		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+
+		LOG(L"--- Component '" << component->description << L": REQUESTS REBOOT");
+
+		std::wstring reboot_required = component->reboot_required;
+		if (reboot_required.empty()) reboot_required = p_configuration->reboot_required;
+		
+		if (p_configuration->must_reboot_required || component->must_reboot_required)
+		{
+			LOG(L"--- Component '" << component->description << L": REQUIRES REBOOT");
+			DniSilentMessageBox(reboot_required, MB_OK | MB_ICONQUESTION);
+			m_reboot = true;
+		}
+		else if (DniMessageBox(reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES)
+		{
+			m_reboot = true;
+		}
+
+		if (m_reboot)
+		{
+			LOG(L"--- Component '" << component->description << L": CAUSED A REBOOT");
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, std::exception& ex)
+{
+	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
+	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+    // the component failed to install, display an error message and let the user choose to continue or not
+    // unless global or component setting decides otherwise
+	std::wstring failed_exec_command_continue = component->failed_exec_command_continue;
+	if (failed_exec_command_continue.empty()) failed_exec_command_continue = p_configuration->failed_exec_command_continue;
+	std::wstring error_message = DVLib::FormatMessage(const_cast<wchar_t *>(failed_exec_command_continue.c_str()), component->description.c_str());
+
+    bool break_sequence = false;
+    if (p_configuration->allow_continue_on_error && component->allow_continue_on_error)
+    {
+	    break_sequence = (DniSilentMessageBox(error_message, MB_YESNO, IDNO, MB_YESNO | MB_ICONEXCLAMATION) == IDNO);
+    }
+    else
+    {
+        DniSilentMessageBox(error_message, MB_OK, 0, MB_ICONEXCLAMATION);
+        break_sequence = true;
+    }
+
+    if (break_sequence)
+	{
+		LOG(L"--- Component '" << component->description << L": FAILED, ABORTING");
+		return false;
+	}
+
+	return true;
 }

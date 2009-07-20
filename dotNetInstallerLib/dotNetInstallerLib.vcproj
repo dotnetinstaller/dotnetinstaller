@@ -348,6 +348,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ExecuteCallback.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ExtractComponent.h"
 				>
 			</File>

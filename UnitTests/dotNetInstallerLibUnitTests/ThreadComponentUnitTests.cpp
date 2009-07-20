@@ -11,7 +11,7 @@ private:
 	int m_exitcode;
 public:
 	ThreadComponentImpl(int exitcode);
-	UINT ExecOnThread() { return m_exitcode; }
+	void ExecOnThread() { if(m_exitcode != 0) THROW_EX(L"exit code: " << m_exitcode); }
 };
 
 ThreadComponentImpl::ThreadComponentImpl(int exitcode) 
@@ -25,7 +25,6 @@ void ThreadComponentUnitTests::testExec()
 {
 	ThreadComponentImpl component(0);
 	component.Exec();
-	CPPUNIT_ASSERT(0 == component.GetExitCode());
 }
 
 void ThreadComponentUnitTests::testExecWithError()
@@ -39,5 +38,4 @@ void ThreadComponentUnitTests::testExecWithError()
 	catch(std::exception&)
 	{
 	}
-	CPPUNIT_ASSERT(123 == component.GetExitCode());
 }

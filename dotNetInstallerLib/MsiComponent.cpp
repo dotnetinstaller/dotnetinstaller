@@ -74,3 +74,20 @@ void MsiComponent::Load(TiXmlElement * node)
 	Component::Load(node);
 	LOG(L"Loaded 'msi' component '" << package << L"'");
 }
+
+void MsiComponent::Wait(DWORD tt)
+{
+	ProcessComponent::Wait(tt);
+
+	DWORD exitcode = ProcessComponent::GetProcessExitCode();
+
+	// a non-zero error code represents failure
+	CHECK_BOOL(exitcode == ERROR_SUCCESS || exitcode == ERROR_SUCCESS_REBOOT_REQUIRED,
+		L"Error executing '" << description << "': " << DVLib::FormatMessage(L"0x%x", exitcode));
+}
+
+bool MsiComponent::IsRebootRequired() const
+{
+	return ProcessComponent::IsRebootRequired() 
+		|| (GetProcessExitCode() == ERROR_SUCCESS_REBOOT_REQUIRED);
+}

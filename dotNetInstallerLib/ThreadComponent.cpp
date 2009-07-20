@@ -4,7 +4,6 @@
 
 ThreadComponent::ThreadComponent(component_type t)
 	: Component(t)
-	, m_exitcode(0)
 	, m_pThread(NULL)
 {
 
@@ -25,22 +24,17 @@ bool ThreadComponent::IsExecuting() const
 UINT ThreadComponent::ExecuteThread(LPVOID pParam)
 {
 	ThreadComponent * pComponent = (ThreadComponent *) pParam;
+	
 	try
 	{
-		pComponent->m_exitcode = pComponent->ExecOnThread();
+		pComponent->ExecOnThread();
 	}
 	catch(std::exception& ex)
 	{
 		pComponent->m_error = DVLib::string2wstring(ex.what());
-		pComponent->m_exitcode = -1;
 	}
-	catch(...)
-	{
-        pComponent->m_error = L"Failed to execute threaded component";
-		pComponent->m_exitcode = -1;
-	}
-	
-	return pComponent->m_exitcode;
+
+	return 0;
 }
 
 void ThreadComponent::Exec()
@@ -68,5 +62,4 @@ void ThreadComponent::EndExec()
 	reset(m_pThread);
 
 	CHECK_BOOL(m_error.empty(), m_error);
-	CHECK_BOOL(m_exitcode == 0, L"Unexpected error code " << m_exitcode);
 }

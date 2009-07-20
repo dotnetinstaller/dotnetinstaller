@@ -46,3 +46,13 @@ void CmdComponent::Load(TiXmlElement * node)
 	Component::Load(node);
 	LOG(L"Loaded 'cmd' component '" << description << L"'");
 }
+
+void CmdComponent::Wait(DWORD tt)
+{
+	ProcessComponent::Wait(tt);
+
+	DWORD exitcode = ProcessComponent::GetProcessExitCode();
+	// a non-zero error code represents failure
+	CHECK_BOOL(exitcode == 0,
+		L"Error executing '" << description << "': " << DVLib::FormatMessage(L"0x%x", exitcode));
+}

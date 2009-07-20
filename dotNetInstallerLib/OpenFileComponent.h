@@ -8,7 +8,6 @@ public:
 public:
 	std::wstring file; //file to open. Can be a web link or a standard file
 	void Exec();
-	DWORD GetExitCode() const;
 	bool IsExecuting() const;
 	void Load(TiXmlElement * node);
 };

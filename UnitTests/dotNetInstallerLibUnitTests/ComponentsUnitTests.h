@@ -11,12 +11,18 @@ namespace DVLib
 			CPPUNIT_TEST( testOsFilters );
 			CPPUNIT_TEST( testLcidFilters );
 			CPPUNIT_TEST( testPAFilters );
+			CPPUNIT_TEST( testExecNoCallback );
+			CPPUNIT_TEST( testExecWithCallback );
+			CPPUNIT_TEST( testExecWithError );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testAdd();
 			void testOsFilters();
 			void testLcidFilters();
 			void testPAFilters();
+			void testExecNoCallback();
+			void testExecWithCallback();
+			void testExecWithError();
 		};
 	}
 }

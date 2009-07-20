@@ -11,6 +11,14 @@ void MsuComponentUnitTests::testExec()
 	component.package = L"msidoesntexist.msu"; 
 	component.cmdparameters = L"/quiet";
 	component.Exec();
-	// msu file cannot be opened
-	CPPUNIT_ASSERT(ERROR_FILE_NOT_FOUND == component.Wait());
+	try
+	{
+		component.Wait();
+		throw "expected std::exception";
+	}
+	catch(std::exception&)
+	{
+		// msu file cannot be opened
+		CPPUNIT_ASSERT(ERROR_FILE_NOT_FOUND == component.GetProcessExitCode());
+	}
 }

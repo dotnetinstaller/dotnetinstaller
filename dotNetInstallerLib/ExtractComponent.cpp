@@ -11,11 +11,10 @@ ExtractComponent::ExtractComponent(HMODULE h)
 }
 
 
-UINT ExtractComponent::ExecOnThread()
+void ExtractComponent::ExecOnThread()
 {
     ExtractCab();
 	LOG(L"ExtractComponent: extracted Setup.cab");
-    return ERROR_SUCCESS;
 };
 
 int ExtractComponent::GetCabCount() const

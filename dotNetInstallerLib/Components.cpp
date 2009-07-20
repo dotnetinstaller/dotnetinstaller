@@ -17,9 +17,21 @@ bool Components::contains(const std::wstring& description) const
 	return components_map.find(description) != components_map.end();
 }
 
-std::vector< ComponentPtr > Components::GetSupportedComponents(DVLib::LcidType lcidtype) const
+Components::Components(const Components& rhs)
 {
-	std::vector<ComponentPtr> result;
+	operator=(rhs);
+}
+
+Components& Components::operator=(const Components& rhs)
+{
+	components_map = rhs.components_map;
+	std::vector<ComponentPtr>::operator=(rhs);
+	return * this;
+}
+
+Components Components::GetSupportedComponents(DVLib::LcidType lcidtype) const
+{
+	Components result;
 	for each (const ComponentPtr& component in * this)
 	{
 		bool supported = component->IsSupported(lcidtype);
@@ -37,4 +49,48 @@ std::vector< ComponentPtr > Components::GetSupportedComponents(DVLib::LcidType l
 
 	LOG(L"--- Loaded " << result.size() << L" supported component(s)");
 	return result;
+}
+
+bool Components::Exec(IExecuteCallback * callback)
+{
+	bool success = true;
+	for each(const ComponentPtr& component in * this)
+	{
+		if (! component->selected)
+		{
+			LOG(L"--- Component '" << component->description << L"': SKIPPED");
+			continue;
+		}
+
+		try
+		{
+			LOG(L"--- Component '" << component->description << L"': EXECUTING");
+			
+			if (callback && ! callback->OnComponentExecBegin(component))
+				break;
+
+			component->Exec();
+			
+			if (callback && ! callback->OnComponentExecWait(component))
+				break;
+
+			component->Wait();
+
+			LOG(L"*** Component '" << component->description << L"': SUCCESS");
+
+			if (callback && ! callback->OnComponentExecSuccess(component))
+				break;
+		}
+		catch(std::exception& ex)
+		{
+			success = false;
+
+			LOG(L"*** Component '" << component->description << L"' ERROR: " << DVLib::string2wstring(ex.what()));
+			
+			if (callback && ! callback->OnComponentExecError(component, ex))
+				break;
+		}
+	}
+
+	return success;
 }

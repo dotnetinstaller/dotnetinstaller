@@ -12,6 +12,7 @@ public:
 	std::wstring cmdparameters_basic;
 	void Exec();
 	void Load(TiXmlElement * node);
+	void Wait(DWORD tt = 1000);
 };
 
 typedef shared_any<MsuComponent *, close_delete> MsuComponentPtr;
