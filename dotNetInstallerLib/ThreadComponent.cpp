@@ -45,6 +45,12 @@ UINT ThreadComponent::ExecuteThread(LPVOID pParam)
 
 void ThreadComponent::Exec()
 {
+	BeginExec();
+	EndExec();
+}
+
+void ThreadComponent::BeginExec()
+{
     m_pThread = auto_any<CWinThread *, close_delete>(AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED));
 
 	CHECK_WIN32_BOOL(get(m_pThread) != NULL,
@@ -52,7 +58,10 @@ void ThreadComponent::Exec()
 
 	m_pThread->m_bAutoDelete = false;
     m_pThread->ResumeThread();
+}
 
+void ThreadComponent::EndExec()
+{
     CHECK_WIN32_BOOL(WAIT_FAILED != WaitForSingleObject(m_pThread->m_hThread, INFINITE),
 		L"WaitForSingleObject");
 

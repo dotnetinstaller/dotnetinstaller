@@ -196,6 +196,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DownloadComponentsUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DownloadComponentUnitTests.cpp"
 				>
 			</File>
@@ -283,6 +287,10 @@
 			</File>
 			<File
 				RelativePath=".\DownloadComponentCallbackImpl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DownloadComponentsUnitTests.h"
 				>
 			</File>
 			<File

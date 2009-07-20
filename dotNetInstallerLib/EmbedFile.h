@@ -1,7 +1,5 @@
 #pragma once
 
-class InstallConfiguration;
-
 class EmbedFile
 {
 public:

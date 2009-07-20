@@ -18,14 +18,12 @@ private:
 	DownloadComponentInfoPtr m_pComponent;
 	int m_CurrentComponent;
 	int m_TotalComponents;
-	bool m_bCancel;
 public:	
 	DownloadComponent(
 		IDownloadCallback * callback, 
 		DownloadComponentInfoPtr componentinfo, 
 		int p_CurrentComponent = 0, 
 		int p_TotalComponents = 1);
-	inline bool IsCancelled() { return m_bCancel; }
 	// returns true if a download is required (local file doesn't exist, etc.)
 	bool IsDownloadRequired() const;
 	// returns true if a local copy from source path is required (or possible)
@@ -50,3 +48,5 @@ public:
 	// Copy the component from SourcePath.
 	void CopyFromSourcePath();
 };
+
+typedef shared_any<DownloadComponent *, close_delete> DownloadComponentPtr;

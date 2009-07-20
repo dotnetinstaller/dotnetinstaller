@@ -1,0 +1,81 @@
+#include "StdAfx.h"
+#include "DownloadComponentsUnitTests.h"
+#include "DownloadComponentCallbackImpl.h"
+
+CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::DownloadComponentsUnitTests);
+
+using namespace DVLib::UnitTests;
+
+void DownloadComponentsUnitTests::testIsCopyDownloadRequiredEmpty()
+{
+	std::vector<DownloadComponentInfoPtr> component_info;
+	DownloadComponents components(NULL, component_info);
+	// empty components, no copy required, but download is
+	CPPUNIT_ASSERT(! components.IsCopyRequired());
+	CPPUNIT_ASSERT(! components.IsDownloadRequired());	
+}
+
+void DownloadComponentsUnitTests::testIsCopyDownloadRequired()
+{
+	DownloadComponentInfoPtr c(new DownloadComponentInfo());
+	c->alwaysdownload = false;
+	c->sourceurl = L"http://download.microsoft.com/download/5/6/7/567758a3-759e-473e-bf8f-52154438565a/dotnetfx.exe";
+	std::vector<DownloadComponentInfoPtr> component_info;
+	component_info.push_back(c);
+	DownloadComponents components(NULL, component_info);
+	// component with no source path
+	CPPUNIT_ASSERT(! components.IsCopyRequired());	
+	CPPUNIT_ASSERT(components.IsDownloadRequired());
+	// component with both source and destination path, source path must exist
+	c->sourcepath = DVLib::GetModuleFileNameW();
+	CPPUNIT_ASSERT(components.IsCopyRequired());
+	CPPUNIT_ASSERT(! components.IsDownloadRequired());
+	DownloadComponentInfoPtr c2(new DownloadComponentInfo());
+	component_info.push_back(c2);
+	c2->alwaysdownload = true;
+	c2->sourceurl = L"http://download.microsoft.com/download/5/6/7/567758a3-759e-473e-bf8f-52154438565a/dotnetfx.exe";
+	CPPUNIT_ASSERT(components.IsCopyRequired());
+	CPPUNIT_ASSERT(! components.IsDownloadRequired());
+}
+
+void DownloadComponentsUnitTests::testDownload()
+{
+	// download via URL
+	DownloadComponentInfoPtr info(new DownloadComponentInfo());
+	info->alwaysdownload = false;
+	info->componentname = L"test download";
+	info->sourcepath = L"";
+	info->sourceurl = L"file://" + DVLib::GetModuleFileNameW();
+	info->destinationpath = DVLib::GetTemporaryDirectoryW();
+	info->destinationfilename = DVLib::GenerateGUIDStringW();
+	DownloadComponentCallbackImpl callback;
+	std::vector<DownloadComponentInfoPtr> component_info;
+	component_info.push_back(info);
+	DownloadComponents components(& callback, component_info);
+	components.Exec();
+	components.Wait();
+	std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
+	CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
+	DVLib::FileDelete(fullpath);
+}
+
+void DownloadComponentsUnitTests::testCopyFromSource()
+{
+	// download via URL
+	DownloadComponentInfoPtr info(new DownloadComponentInfo());
+	info->alwaysdownload = false;
+	info->componentname = L"test download";
+	info->sourceurl = L"file://this is a bogus url";
+	info->sourcepath = DVLib::GetModuleFileNameW();
+	info->destinationpath = DVLib::GetTemporaryDirectoryW();
+	info->destinationfilename = DVLib::GenerateGUIDStringW();
+	DownloadComponentCallbackImpl callback;
+	std::vector<DownloadComponentInfoPtr> component_info;
+	component_info.push_back(info);
+	DownloadComponents components(& callback, component_info);
+	components.Exec();
+	components.Wait();
+	std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
+	CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
+	DVLib::FileDelete(fullpath);
+}

@@ -22,7 +22,6 @@ void DownloadComponentUnitTests::testDownload()
 	CPPUNIT_ASSERT(component.IsDownloadRequired());
 	component.StartDownload();
 	callback.DownloadComplete();
-	CPPUNIT_ASSERT(! component.IsCancelled());
 	std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
 	CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
 	DVLib::FileDelete(fullpath);
@@ -44,7 +43,6 @@ void DownloadComponentUnitTests::testCopyFromSource()
 	CPPUNIT_ASSERT(! component.IsDownloadRequired());
 	component.CopyFromSourcePath();
 	callback.DownloadComplete();
-	CPPUNIT_ASSERT(! component.IsCancelled());
 	std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
 	CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
 	DVLib::FileDelete(fullpath);

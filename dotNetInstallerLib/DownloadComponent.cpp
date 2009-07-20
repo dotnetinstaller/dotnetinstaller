@@ -8,7 +8,6 @@ DownloadComponent::DownloadComponent(
 	int current, 
 	int total)
 {
-	m_bCancel = false;
 	m_Callback = callback;
 	m_pComponent = componentinfo;
 	m_CurrentComponent = current;
@@ -64,60 +63,84 @@ std::wstring DownloadComponent::GetDestinationFileName() const
 
 void DownloadComponent::CopyFromSourcePath()
 {
-	LOG(L"Source path: " << m_pComponent->sourcepath);
-	LOG(L"Destination path: " << m_pComponent->destinationpath);
-	DVLib::DirectoryCreate(m_pComponent->destinationpath);
 	std::wstring destination_full_filename = GetDestinationFileName();
-	LOG(L"Destination full path: " << destination_full_filename);
-	LOG(L"Always download: " << m_pComponent->alwaysdownload ? L"True" : L"False");
-	LOG(L"Destination exists: " << DVLib::FileExists(destination_full_filename) ? L"True" : L"False");
+	LOG(L"Copying '" << m_pComponent->componentname 
+		<< L"', source='" << m_pComponent->sourcepath 
+		<< L"', destination='" << m_pComponent->destinationpath 
+		<< L"', full='" << destination_full_filename
+		<< L"', always download=" << (m_pComponent->alwaysdownload ? L"True" : L"False")
+		<< L"', destination exists=" << (DVLib::FileExists(destination_full_filename) ? L"True" : L"False"));
+
+	DVLib::DirectoryCreate(m_pComponent->destinationpath);
 
 	if (! IsCopyRequired())
 	{
-		LOG(L"Skipping copy.");
+		LOG(L"Copy '" << m_pComponent->componentname << L"': SKIPPED");
 		return;
 	}
 
+	long source_size = DVLib::GetFileSize(m_pComponent->sourcepath);
+	std::wstring tmp = DVLib::FormatMessage(L"%s (%s) - %d/%d", 
+		m_pComponent->componentname.c_str(), DVLib::FormatBytesW(source_size).c_str(),
+		m_CurrentComponent, m_TotalComponents);
+	m_Callback->Status(0, source_size, tmp);
+
 	DVLib::FileCopy(m_pComponent->sourcepath, destination_full_filename, true);
+
+	long dest_size = DVLib::GetFileSize(destination_full_filename);
+	LOG(L"Copy '" << m_pComponent->componentname << L"', size=" 
+		<< DVLib::FormatBytesW(dest_size) << L": OK");
+	m_Callback->Status(dest_size, source_size, tmp);
 }
 
 void DownloadComponent::StartDownload()
 {
 	std::wstring destination_full_filename = GetDestinationFileName();
 
-	LOG(L"Source url: " << m_pComponent->sourceurl);
-	LOG(L"Destination path: " << m_pComponent->destinationpath);
+	LOG(L"Downloading '" << m_pComponent->componentname 
+		<< L"', source='" << m_pComponent->sourceurl 
+		<< L"', destination='" << m_pComponent->destinationpath 
+		<< L"', full='" << destination_full_filename
+		<< L"', always download=" << (m_pComponent->alwaysdownload ? L"True" : L"False")
+		<< L"', destination exists=" << (DVLib::FileExists(destination_full_filename) ? L"True" : L"False"));
+
 	DVLib::DirectoryCreate(m_pComponent->destinationpath);
-	LOG(L"Destination full path: " << destination_full_filename);
-	LOG(L"Always download: " << m_pComponent->alwaysdownload ? L"True" : L"False" );
-	LOG(L"Destination exists: " << DVLib::FileExists(destination_full_filename) ? L"True" : L"False" );
 
 	if (! IsDownloadRequired())
 	{
-		LOG(L"Skipping download.");
+		LOG(L"Download '" << m_pComponent->componentname << L"': SKIPPED");
 		return;
 	}
 
-	LOG(L"Downloading: " << m_pComponent->sourceurl);
-
 	CHECK_HR_DLL(URLDownloadToFile(NULL, m_pComponent->sourceurl.c_str(), destination_full_filename.c_str(), 0, this),
 		L"Error downloading \"" << m_pComponent->sourceurl << L"\" to \"" << destination_full_filename << L"\"", L"urlmon.dll");
+
+	LOG(L"Download '" << m_pComponent->componentname << L"', size=" 
+		<< DVLib::FormatBytesW(DVLib::GetFileSize(destination_full_filename)) << L": OK");
 }
 
 HRESULT DownloadComponent::OnProgress(ULONG ulProgress, ULONG ulProgressMax, ULONG ulStatusCode, LPCWSTR wszStatusText)
 {
 	// Did the user hit the Stop button?
-	if ( m_Callback->IsDownloadCancelled() )
-	{
-		m_bCancel = true;
+	if ( m_Callback && m_Callback->IsDownloadCancelled() )
 		return E_ABORT;
+
+	switch(ulStatusCode)
+	{
+	case BINDSTATUS_CONNECTING:
+		// \todo provide localized messages
+		break;
+	case BINDSTATUS_SENDINGREQUEST:
+		// \todo provide localized messages
+		break;
+	case BINDSTATUS_DOWNLOADINGDATA:
+		std::wstring tmp = DVLib::FormatMessage(L"%s (%s of %s) - %d/%d", 
+			m_pComponent->componentname.c_str(), DVLib::FormatBytesW(ulProgress).c_str(), DVLib::FormatBytesW(ulProgressMax).c_str(), 
+			m_CurrentComponent, m_TotalComponents);
+		m_Callback->Status(ulProgress, ulProgressMax, tmp);
+		break;
 	}
 
-	std::wstring tmp = DVLib::FormatMessage(L"%s (%s of %s) - %d/%d", 
-		m_pComponent->componentname.c_str(), DVLib::FormatBytesW(ulProgress).c_str(), DVLib::FormatBytesW(ulProgressMax).c_str(), 
-		m_CurrentComponent, m_TotalComponents);
-
-	m_Callback->Status(ulProgress, ulProgressMax, tmp);
 	return S_OK;
 }
 

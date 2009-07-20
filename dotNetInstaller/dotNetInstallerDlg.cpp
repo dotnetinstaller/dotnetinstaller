@@ -255,7 +255,13 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 						l_dg.LoadComponent(m_configuration, component);
 					}
 
-					if (RunComponentDownload(component))
+					if (get(component->downloadconfiguration) && ! RunDownloadConfiguration(component->downloadconfiguration))
+					{
+						LOG(L"*** Component ERROR ON DOWNLOAD");
+						RecordError();
+						l_retVal = false;
+					}
+					else
 					{
 						component->Exec();
 
@@ -301,20 +307,20 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 
 									l_bRemoveRunOnce = false;
 
-                                    bool l_bReboot = false;
-                                    std::wstring reboot_required = component->reboot_required;
-                                    if (reboot_required.empty()) reboot_required = p_configuration->reboot_required;
-                                    if (p_configuration->must_reboot_required || component->must_reboot_required)
-                                    {
+									bool l_bReboot = false;
+									std::wstring reboot_required = component->reboot_required;
+									if (reboot_required.empty()) reboot_required = p_configuration->reboot_required;
+									if (p_configuration->must_reboot_required || component->must_reboot_required)
+									{
 										LOG(L"--- Required REBOOT");
-                                        DniMessageBox(reboot_required, MB_OK|MB_ICONQUESTION);
-                                        l_bReboot = true;
-                                    }
-                                    else 
-                                    {
+										DniMessageBox(reboot_required, MB_OK|MB_ICONQUESTION);
+										l_bReboot = true;
+									}
+									else 
+									{
 										LOG(L"--- Prompt for REBOOT");
-                                        l_bReboot = (DniMessageBox(reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES);
-                                    }
+										l_bReboot = (DniMessageBox(reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES);
+									}
 
 									if (l_bReboot)
 									{
@@ -339,17 +345,11 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 							}
 							else //error restituito dal setup
 							{
-                                LOG(L"*** Component ERROR ON EXIT CODE: " << l_ExitCode);
+								LOG(L"*** Component ERROR ON EXIT CODE: " << l_ExitCode);
 								RecordError(l_ExitCode);
 								l_retVal = false;
 							}
 						}
-					}
-					else //download non riuscito o eseguzione del setup non riuscita
-					{
-						LOG(L"*** Component ERROR ON DOWNLOAD OR EXECUTING");
-						RecordError();
-						l_retVal = false;
 					}
 				}
 				else //già installato
@@ -558,21 +558,9 @@ void CdotNetInstallerDlg::ClearError()
 
 bool CdotNetInstallerDlg::RunDownloadConfiguration(const DownloadGroupConfigurationPtr& p_Configuration)
 {
-	DownloadDialog l_dgDownload(p_Configuration, this);
-	
-	if (l_dgDownload.IsCopyRequired())
-	{
-		l_dgDownload.CopyFromSourcePath();
-		return true;
-	}
-
-	if (l_dgDownload.IsDownloadRequired())
-	{
-		l_dgDownload.DoModal();
-		return l_dgDownload.IsDownloadCompleted();
-	}
-
-	return true;
+	DownloadDialog downloaddlg(p_Configuration, this);
+	downloaddlg.DoModal();
+	return downloaddlg.IsDownloadCompleted();
 }
 
 bool CdotNetInstallerDlg::RunComponentDownload(const ComponentPtr& p_Component)

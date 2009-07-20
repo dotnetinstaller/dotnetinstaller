@@ -26,4 +26,9 @@ void DownloadComponentInfo::Load(TiXmlElement * node)
 
 	LOG(L"Loaded 'download' dialog component '" << componentname 
 		<< L"', source=" << (sourceurl.length() ? sourceurl : sourcepath));
+
+	if (sourceurl.empty() && sourcepath.empty())
+	{
+		THROW_EX(L"Error in 'download' dialog component '" << componentname << L"', missing source url or path");
+	}
 }

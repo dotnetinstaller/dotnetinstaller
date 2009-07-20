@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-#include "InstallConfiguration.h"
 
 class ThreadComponent : public Component
 {
@@ -12,6 +11,8 @@ public:
 	DWORD GetExitCode() const { return m_exitcode; }
 	const std::wstring& GetError() const { return m_error; }
     void Exec();
+	void BeginExec();
+	void EndExec();
 protected:
     virtual UINT ExecOnThread() = 0;
 private:

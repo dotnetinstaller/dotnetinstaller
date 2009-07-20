@@ -31,3 +31,5 @@
 #include "ReferenceConfiguration.h"
 #include "InstallerSession.h"
 #include "ExtractComponent.h"
+#include "DownloadComponents.h"
+#include "InstallConfiguration.h"

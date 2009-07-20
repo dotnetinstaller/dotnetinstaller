@@ -178,6 +178,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DownloadComponents.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DownloadGroupConfiguration.cpp"
 				>
 			</File>
@@ -329,6 +333,10 @@
 			</File>
 			<File
 				RelativePath=".\DownloadComponentInfo.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DownloadComponents.h"
 				>
 			</File>
 			<File
