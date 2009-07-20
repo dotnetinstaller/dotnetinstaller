@@ -152,10 +152,7 @@ std::wstring DVLib::GetWindowsDirectoryW()
 
 std::string DVLib::GetSystemWindowsDirectoryA()
 {
-	char td[MAX_PATH] = { 0 };
-	CHECK_WIN32_BOOL(::GetSystemWindowsDirectoryA(td, MAX_PATH),
-        L"GetSystemWindowsDirectoryA");
-	return td;
+	return DVLib::wstring2string(GetSystemWindowsDirectoryW());
 }
 
 std::wstring DVLib::GetSystemWindowsDirectoryW()
