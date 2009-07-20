@@ -128,6 +128,8 @@ bool DVLib::DirectoryDelete(const std::wstring& path, int flags)
     default:
         CHECK_WIN32_DWORD(rc, "Error in FindFirst/NextFile");
     }
+
+	reset(h);
         
 	if (directory_exists && directory_empty && ((flags & DELETE_DIRECTORY_FOLDERS) > 0))
 	{

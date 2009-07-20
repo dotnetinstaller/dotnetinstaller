@@ -102,7 +102,7 @@ void DVLib::RegistryDeleteValue(HKEY root, const std::wstring& key, const std::w
 void DVLib::RegistryDeleteKey(HKEY root, const std::wstring& key, DWORD ulFlags)
 {
 	DWORD namesize, subkeys, maxkeyname;
-	if (ERROR_SUCCESS != ::RegDeleteKeyEx(root, key.c_str(), ulFlags, 0))
+	if (ERROR_SUCCESS != ::RegDeleteKey(root, key.c_str()))
 	{
 		HKEY reg = NULL;
 
@@ -125,7 +125,7 @@ void DVLib::RegistryDeleteKey(HKEY root, const std::wstring& key, DWORD ulFlags)
 			namesize = MAX_PATH;
 		}
 
-		CHECK_WIN32_DWORD(::RegDeleteKeyEx(root, key.c_str(), ulFlags, 0), 
+		CHECK_WIN32_DWORD(::RegDeleteKey(root, key.c_str()), 
 			L"Error deleting \"" << HKEY2wstring(root) << L"\\" << key << L"\"");
 	}
 }
