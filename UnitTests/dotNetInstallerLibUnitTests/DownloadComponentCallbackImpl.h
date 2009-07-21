@@ -14,7 +14,9 @@ namespace DVLib
 			void DownloadComplete();
 			void DownloadError(const std::wstring& message);
 			bool IsDownloadCancelled() const { return m_cancelled; }
-			virtual void DownloadCancel() { m_cancelled = true; }
+			void DownloadCancel() { m_cancelled = true; }
+			void Connecting();
+			void SendingRequest();
 		};
 	}
 }

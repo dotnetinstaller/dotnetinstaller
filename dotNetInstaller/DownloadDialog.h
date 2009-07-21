@@ -12,6 +12,8 @@ private:
 	std::wstring m_Caption;
 	std::wstring m_HelpMessage;
 	std::wstring m_HelpMessageDownloading;
+	std::wstring m_HelpMessageConnecting;
+	std::wstring m_HelpMessageSendingRequest;
 	std::wstring m_ButtonStartCaption;
 	std::wstring m_ButtonCancelCaption;
 	HICON m_hIcon;
@@ -40,6 +42,8 @@ public:
 	afx_msg void OnOK();
 	afx_msg LRESULT OnSetStatusDownload(WPARAM wParam, LPARAM lParam);
 	// IDownloadCallback
+	void Connecting();
+	void SendingRequest();
 	void Status(ULONG progress_current, ULONG progress_max, const std::wstring& description);
 	void DownloadComplete();
 	void DownloadError(const std::wstring& error);

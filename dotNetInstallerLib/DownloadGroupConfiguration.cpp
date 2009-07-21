@@ -19,6 +19,8 @@ void DownloadGroupConfiguration::Load(TiXmlElement * node)
 	caption = DVLib::UTF8string2wstring(node->Attribute("dialog_caption"));
 	help_message = DVLib::UTF8string2wstring(node->Attribute("dialog_message"));
 	downloading_message = DVLib::UTF8string2wstring(node->Attribute("dialog_message_downloading"));
+	connecting_message = DVLib::UTF8string2wstring(node->Attribute("dialog_message_connecting"));
+	sendingrequest_message = DVLib::UTF8string2wstring(node->Attribute("dialog_message_sendingrequest"));
 	start_caption = DVLib::UTF8string2wstring(node->Attribute("buttonstart_caption"));
 	cancel_caption = DVLib::UTF8string2wstring(node->Attribute("buttoncancel_caption"));
 	auto_start = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("autostartdownload")), false);

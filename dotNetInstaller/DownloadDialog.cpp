@@ -19,11 +19,13 @@ DownloadDialog::DownloadDialog(const DownloadGroupConfigurationPtr& p_Configurat
 	, m_HelpMessage(p_Configuration->help_message)
 	, m_hIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME))
 	, m_HelpMessageDownloading(p_Configuration->downloading_message)
+	, m_HelpMessageConnecting(p_Configuration->connecting_message)
+	, m_HelpMessageSendingRequest(p_Configuration->sendingrequest_message)
 	, m_ButtonStartCaption(p_Configuration->start_caption)
 	, m_ButtonCancelCaption(p_Configuration->cancel_caption)
 	, m_bDownloadStarted(false)
 {
-	LOG(L"Opening download dialog: " << m_Caption);
+	LOG(L"Opening download dialog '" << m_Caption << L"'");
 }
 
 void DownloadDialog::DoDataExchange(CDataExchange* pDX)
@@ -166,6 +168,16 @@ void DownloadDialog::DownloadComplete()
 void DownloadDialog::DownloadError(const std::wstring& p_Message)
 {
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(DownloadStatus::CreateError(p_Message))), 0L );
+}
+
+void DownloadDialog::Connecting()
+{
+	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(DownloadStatus::CreateProgress(m_HelpMessageConnecting, 0, 0))), 0L );
+}
+
+void DownloadDialog::SendingRequest()
+{
+	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(DownloadStatus::CreateProgress(m_HelpMessageSendingRequest, 0, 0))), 0L );
 }
 
 bool DownloadDialog::IsDownloadCancelled() const

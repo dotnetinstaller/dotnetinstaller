@@ -131,10 +131,10 @@ HRESULT DownloadComponent::OnProgress(ULONG ulProgress, ULONG ulProgressMax, ULO
 	switch(ulStatusCode)
 	{
 	case BINDSTATUS_CONNECTING:
-		// \todo provide localized messages
+		m_Callback->Connecting();
 		break;
 	case BINDSTATUS_SENDINGREQUEST:
-		// \todo provide localized messages
+		m_Callback->SendingRequest();
 		break;
 	case BINDSTATUS_DOWNLOADINGDATA:
 		std::wstring tmp = DVLib::FormatMessage(L"%s (%s of %s) - %d/%d", 

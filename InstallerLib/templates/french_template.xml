@@ -56,6 +56,8 @@ There are three types of variables:
 		dialog_caption = "##COMPONENT_NAME - Télécharger des composants"
 		dialog_message = "Cliquer sur 'Démarrer' pour télécharger les éléments requis pour l'installation de ##COMPONENT_NAME."
 		dialog_message_downloading = "Téléchargement en cours. Patienter..."
+		dialog_message_connecting="Connexion en cours ..."
+		dialog_message_sendingrequest="Envoi de demande ..."
 		>
 	</downloaddialog>
 </editortemplate>

@@ -32,8 +32,6 @@ BEGIN_MESSAGE_MAP(InstallComponentDlg, CDialog)
 END_MESSAGE_MAP()
 
 // InstallComponentDlg message handlers
-
-// \todo: all these pointers need to become shared_any
 void InstallComponentDlg::LoadComponent(const ConfigurationPtr& configuration, const ComponentPtr& component)
 {
 	m_Configuration = configuration;

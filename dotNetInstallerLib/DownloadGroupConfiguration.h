@@ -9,8 +9,10 @@ public:
 	std::wstring caption;
 	// help message
 	std::wstring help_message;
-	// progress message
+	// progress messages
 	std::wstring downloading_message;
+	std::wstring connecting_message;
+	std::wstring sendingrequest_message;
 	// start button caption
 	std::wstring start_caption;
 	// cancel button caption

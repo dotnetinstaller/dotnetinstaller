@@ -8,6 +8,16 @@ DownloadComponentCallbackImpl::DownloadComponentCallbackImpl()
 {
 }
 
+void DownloadComponentCallbackImpl::Connecting()
+{
+	std::wcout << std::endl << "Connecting ...";
+}
+
+void DownloadComponentCallbackImpl::SendingRequest()
+{
+	std::wcout << std::endl << "Sending request ...";
+}
+
 void DownloadComponentCallbackImpl::Status(ULONG progress_current, ULONG progress_max, const std::wstring& description)
 {
 	std::wcout << std::endl << description << L" (" << progress_current << L"/" << progress_max << L")";

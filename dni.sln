@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{401947AE-AA1F-4FB3-8949-14C91A9504E4}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		build.cmd = build.cmd
 		dni.proj = dni.proj
@@ -9,6 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{401947AE
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{2F6E6EC2-78ED-4D9F-A549-FDBB92E10C1A}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Documentation\Dni.content = Documentation\Dni.content
 		Documentation\Dni.shfbproj = Documentation\Dni.shfbproj
@@ -16,30 +24,47 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{2F6E6EC2-78E
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{C5E3E607-AA22-4796-B113-E9A1BAA374E9}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StandaloneSetup", "StandaloneSetup", "{7A7F3F3A-C319-4E83-AB2F-95C8B7C85614}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Samples\StandaloneSetup\banner.bmp = Samples\StandaloneSetup\banner.bmp
-		Samples\StandaloneSetup\configuration.xml = Samples\StandaloneSetup\configuration.xml
 		Samples\StandaloneSetup\SampleApp.msi.readme.txt = Samples\StandaloneSetup\SampleApp.msi.readme.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PackagedSetup", "PackagedSetup", "{AA6599BC-B3BA-4EC0-980D-5B66336A1350}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Samples\PackagedSetup\banner.bmp = Samples\PackagedSetup\banner.bmp
-		Samples\PackagedSetup\Configuration.xml = Samples\PackagedSetup\Configuration.xml
 		Samples\PackagedSetup\Readme.txt = Samples\PackagedSetup\Readme.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InstallCheckOperators", "InstallCheckOperators", "{F4D5A955-C6B7-4989-9DC7-6565035D0ECF}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Samples\InstallCheckOperators\banner.bmp = Samples\InstallCheckOperators\banner.bmp
-		Samples\InstallCheckOperators\Configuration.xml = Samples\InstallCheckOperators\Configuration.xml
 		Samples\InstallCheckOperators\icon.ico = Samples\InstallCheckOperators\icon.ico
 		Samples\InstallCheckOperators\Readme.txt = Samples\InstallCheckOperators\Readme.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA2111-8FFF-42BC-AB3B-1B6549E5EFCE}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Documentation\Content\BuildingStandaloneSetupForDotNet.aml = Documentation\Content\BuildingStandaloneSetupForDotNet.aml
 		Documentation\Content\BuildingWebSetupForDotNet.aml = Documentation\Content\BuildingWebSetupForDotNet.aml
@@ -64,6 +89,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{02C1E614-3F23-4363-B899-920ECE2DD56E}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Documentation\Images\dotNetInstaller.jpg = Documentation\Images\dotNetInstaller.jpg
 		Documentation\Images\dotNetInstallerLayout.jpg = Documentation\Images\dotNetInstallerLayout.jpg
@@ -74,8 +103,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{02C1E6
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit tests", "unit tests", "{E1BC9224-5EAE-4C49-B54D-39210DA8C43C}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstaller", "dotNetInstaller\dotNetInstaller.vcproj", "{F4E74CF8-37CD-4023-8B89-05EF4B34D363}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{6A9AD5E1-624C-478F-9921-8400B3AD84A8} = {6A9AD5E1-624C-478F-9921-8400B3AD84A8}
 		{04DC59CF-750E-431F-A834-FB60BE03545C} = {04DC59CF-750E-431F-A834-FB60BE03545C}
@@ -85,33 +122,65 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstaller", "dotNetIn
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerEditor", "InstallerEditor\InstallerEditor.csproj", "{170AAA63-64CE-404F-8FDE-D0D64DA9214F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Version", "Version\Version.csproj", "{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Simple", "Samples\PackagedSetup\Simple\Simple.vdproj", "{5DDA5610-5927-404B-9B03-76071159F8BE}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerLinker", "InstallerLinker\InstallerLinker.csproj", "{E1B1FD8B-23FE-46CC-A675-BAA6FFBF16F7}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerLib", "InstallerLib\InstallerLib.csproj", "{E19C2177-78F8-4C52-81FE-F49E157D647F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerLibUnitTests", "UnitTests\InstallerLibUnitTests\InstallerLibUnitTests.csproj", "{49A3BD48-D506-4108-8F47-7CD7081C046C}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 		{6E0789A6-234C-4B1C-AEB7-8C51BD754458} = {6E0789A6-234C-4B1C-AEB7-8C51BD754458}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerConfig", "InstallerConfig\InstallerConfig.csproj", "{6E0789A6-234C-4B1C-AEB7-8C51BD754458}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallerMsi", "InstallerMsi\InstallerMsi.wixproj", "{E9CBA0F0-543D-4076-8D9C-10C2348665A5}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{F4E74CF8-37CD-4023-8B89-05EF4B34D363} = {F4E74CF8-37CD-4023-8B89-05EF4B34D363}
 		{6E0789A6-234C-4B1C-AEB7-8C51BD754458} = {6E0789A6-234C-4B1C-AEB7-8C51BD754458}
@@ -122,6 +191,10 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallerMsi", "InstallerMs
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerLibUnitTests", "UnitTests\dotNetInstallerLibUnitTests\dotNetInstallerLibUnitTests.vcproj", "{48FFB2FD-215B-4DEE-8C38-EC1DB518477F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{6A9AD5E1-624C-478F-9921-8400B3AD84A8} = {6A9AD5E1-624C-478F-9921-8400B3AD84A8}
 		{04DC59CF-750E-431F-A834-FB60BE03545C} = {04DC59CF-750E-431F-A834-FB60BE03545C}
@@ -132,15 +205,31 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerLibUnitTests
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppUnitTestsRunner", "UnitTests\CppUnitTestsRunner\CppUnitTestsRunner.vcproj", "{6542C25E-A71E-401E-A818-71910821444C}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerLib", "dotNetInstallerLib\dotNetInstallerLib.vcproj", "{04DC59CF-750E-431F-A834-FB60BE03545C}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerToolsLib", "dotNetInstallerToolsLib\dotNetInstallerToolsLib.vcproj", "{173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerToolsLibUnitTests", "UnitTests\dotNetInstallerToolsLibUnitTests\dotNetInstallerToolsLibUnitTests.vcproj", "{56390342-5DE6-4FE4-A7A6-3EC30CF4B34F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8} = {8185F399-F6DE-40B3-ADD6-42FC5F330CA8}
 		{173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43} = {173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43}
@@ -150,22 +239,40 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerToolsLibUnit
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cab", "ThirdParty\Cab\Cab.vcproj", "{6A9AD5E1-624C-478F-9921-8400B3AD84A8}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rd party", "3rd party", "{810198E0-3014-4F44-92B5-DF78730E1FDC}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SmartPtr", "ThirdParty\SmartPtr\SmartPtr.vcproj", "{8185F399-F6DE-40B3-ADD6-42FC5F330CA8}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InstallCheckProduct", "InstallCheckProduct", "{22893B7A-F27F-4083-A4C1-DF98927A694A}"
-	ProjectSection(SolutionItems) = preProject
-		Samples\InstallCheckProduct\Configuration.xml = Samples\InstallCheckProduct\Configuration.xml
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OsFilters", "OsFilters", "{F691A44A-8753-4E95-AA4C-7C58A271A214}"
-	ProjectSection(SolutionItems) = preProject
-		Samples\OsFilters\Configuration.xml = Samples\OsFilters\Configuration.xml
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNetInstallerUnitTests", "UnitTests\dotNetInstallerUnitTests\dotNetInstallerUnitTests.csproj", "{23B25369-53E1-4819-ADA2-EEE0A772BD02}"	
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNetInstallerUnitTests", "UnitTests\dotNetInstallerUnitTests\dotNetInstallerUnitTests.csproj", "{23B25369-53E1-4819-ADA2-EEE0A772BD02}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
