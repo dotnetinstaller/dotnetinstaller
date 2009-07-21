@@ -284,13 +284,13 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
     catch(std::exception& ex)
     {
 		LOG(L"*** Failed to install one or more components: " << DVLib::string2wstring(ex.what()));
-		DniSilentMessageBox(DVLib::string2wstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
+		DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
 		RecordError();
     }
 	catch(...)
 	{
 		LOG(L"*** Failed to install one or more components");
-		DniSilentMessageBox(TEXT("Failed to install one or more components"), MB_OK|MB_ICONSTOP);
+		DniMessageBox::Show(TEXT("Failed to install one or more components"), MB_OK|MB_ICONSTOP);
 		RecordError();
 	}
 }
@@ -330,7 +330,7 @@ void CdotNetInstallerDlg::OnDestroy()
     catch(std::exception& ex)
     {
 		LOG("Error terminating dotNetInstaller: " << DVLib::string2wstring(ex.what()));
-		DniSilentMessageBox(DVLib::string2wstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
+		DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
     }
 	catch(...)
 	{
@@ -349,7 +349,7 @@ void CdotNetInstallerDlg::DisplayCab()
     InstallComponentDlg dlg;
 	ComponentPtr extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, & dlg));
 	ExtractCabProcessor * p = reinterpret_cast<ExtractCabProcessor *>(get(extractcab));
-	DniMessageBox(DVLib::join(p->GetCabFiles(), L"\r\n"), MB_OK|MB_ICONINFORMATION);
+	DniMessageBox::Show(DVLib::join(p->GetCabFiles(), L"\r\n"), MB_OK|MB_ICONINFORMATION);
 }
 
 void CdotNetInstallerDlg::ExtractCab()
@@ -447,7 +447,7 @@ void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
 
 	if (! message.empty())
     {
-		DniMessageBox(message, MB_OK|MB_ICONINFORMATION);
+		DniMessageBox::Show(message, MB_OK|MB_ICONINFORMATION);
     }
 
 	std::wstring l_complete_command = p_configuration->complete_command;
@@ -510,7 +510,7 @@ bool CdotNetInstallerDlg::OnComponentExecSuccess(const ComponentPtr& component)
 	// se è presente un messaggio di completamento installazione
 	if (! component->installcompletemessage.empty())
 	{
-		DniSilentMessageBox(component->installcompletemessage, MB_OK | MB_ICONINFORMATION);
+		DniMessageBox::Show(component->installcompletemessage, MB_OK | MB_ICONINFORMATION);
 	}
 
 	// se l'installazione ha chiesto di riavviare non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
@@ -527,10 +527,10 @@ bool CdotNetInstallerDlg::OnComponentExecSuccess(const ComponentPtr& component)
 		if (p_configuration->must_reboot_required || component->must_reboot_required)
 		{
 			LOG(L"--- Component '" << component->description << L": REQUIRES REBOOT");
-			DniSilentMessageBox(reboot_required, MB_OK | MB_ICONQUESTION);
+			DniMessageBox::Show(reboot_required, MB_OK | MB_ICONQUESTION);
 			m_reboot = true;
 		}
-		else if (DniSilentMessageBox(reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES)
+		else if (DniMessageBox::Show(reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES)
 		{
 			m_reboot = true;
 		}
@@ -558,11 +558,11 @@ bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, st
     bool break_sequence = false;
     if (p_configuration->allow_continue_on_error && component->allow_continue_on_error)
     {
-	    break_sequence = (DniSilentMessageBox(error_message, MB_YESNO, IDNO, MB_YESNO | MB_ICONEXCLAMATION) == IDNO);
+	    break_sequence = (DniMessageBox::Show(error_message, MB_YESNO, IDNO, MB_YESNO | MB_ICONEXCLAMATION) == IDNO);
     }
     else
     {
-        DniSilentMessageBox(error_message, MB_OK, 0, MB_ICONEXCLAMATION);
+        DniMessageBox::Show(error_message, MB_OK, 0, MB_ICONEXCLAMATION);
         break_sequence = true;
     }
 

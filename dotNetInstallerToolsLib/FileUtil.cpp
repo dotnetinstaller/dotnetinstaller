@@ -202,6 +202,13 @@ bool DVLib::ResourceExists(HMODULE h, const std::wstring& resource, const std::w
 DVLib::FileVersion DVLib::wstring2fileversion(const std::wstring& version)
 {
 	FileVersion result = { 0, 0, 0, 0 };
+	
+	for (size_t i = 0; i < version.length(); i++)
+	{
+		CHECK_BOOL(version[i] == '.' || isdigit(version[i]),
+			L"Invalid version format: " << version);
+	}
+
 	if (! version.empty())
 	{
 		std::vector<std::wstring> parts_l = DVLib::split(version, L".", 4);

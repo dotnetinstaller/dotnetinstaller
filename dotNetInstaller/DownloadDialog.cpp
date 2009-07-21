@@ -127,7 +127,7 @@ afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM lParam
 		if (! IsDownloadCancelled())
 		{
 			LOG(L"*** Download ERROR: " << l_Param->error);
-			DniSilentMessageBox(l_Param->error, MB_OK|MB_ICONSTOP);
+			DniMessageBox::Show(l_Param->error, MB_OK|MB_ICONSTOP);
 			m_bDownloadError = true;
 		}
 

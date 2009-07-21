@@ -1,55 +1,42 @@
 #include "stdafx.h"
 #include "DniMessageBox.h"
 
-// support for silent installs
-int DniMessageBox(const std::wstring& p_lpszText, UINT p_nType /*=MB_OK*/, UINT p_nDefaultResult /*=MB_OK*/, UINT p_nIDHelp /*=0*/)
-{
-	// Determine whether to display a message to the end user or just return the default value
-	if(CurrentInstallUILevel.IsSilent())
-	{
-		return p_nDefaultResult;
-	}
-	else
-	{
-		return AfxMessageBox(p_lpszText.c_str(), p_nType, p_nIDHelp);
-	}
-}
-
-
 void CALLBACK CloseMessageBox(HWND p_hwnd, UINT p_uiMsg, UINT p_idEvent, DWORD p_dwTime)
 {
 	HWND hwnd = FindWindow(NULL, AfxGetApp()->m_pszAppName);
 	if (hwnd != NULL)
 	{
-		EndDialog(hwnd, IDOK);
+		EndDialog(hwnd, 0xFFFFFF);
 	}
 }
 
-int DniTimedMessageBox(bool p_bTimed, const std::wstring& p_lpszText, UINT p_nType /*=MB_OK*/, UINT p_nDefaultResult /*=MB_OK*/, UINT p_nIDHelp /*=0*/)
+int DniMessageBox::Show(const std::wstring& p_lpszText, UINT p_nType /*=MB_OK*/, UINT p_nDefaultResult /*=MB_OK*/, UINT p_nIDHelp /*=0*/, UINT p_nTime)
 {
-	int result;
-	UINT_PTR idTimer;
-
-	if(p_bTimed)
+	int result = p_nDefaultResult;
+	switch(CurrentInstallUILevel.GetUILevel())
 	{
-		DWORD milli = 3500; // timeout
-		idTimer = SetTimer(NULL, 0, milli, (TIMERPROC)CloseMessageBox);
+	// basic UI, dialogs appear and disappear
+	case InstallUILevelBasic:
+		{
+			UINT_PTR timer = SetTimer(NULL, 0, p_nTime, (TIMERPROC) CloseMessageBox);
+			CHECK_BOOL(timer != NULL, L"Error setting message box timer");
+			result = AfxMessageBox(p_lpszText.c_str(), p_nType, p_nIDHelp);
+			if (result == 0xFFFFFF) result = p_nDefaultResult;
+			KillTimer(NULL, timer);
+		}
+		break;
 
-		// Display the message box
-		result = AfxMessageBox(p_lpszText.c_str(), p_nType, p_nIDHelp);
+	// silent, no UI
+	case InstallUILevelSilent:
+		result = p_nDefaultResult;
+		break;
 
-		// Cancel the timer & delete the timer queue
-		KillTimer(NULL, idTimer);
-	}
-	else
-	{
+	// full UI
+	case InstallUILevelFull:
+	default:
 		result = AfxMessageBox(p_lpszText.c_str(), p_nType, p_nIDHelp);
+		break;
 	}
 
 	return result;
-}
-
-int DniSilentMessageBox(const std::wstring& p_lpszText, UINT p_nType /*=MB_OK*/, UINT p_nDefaultResult /*=MB_OK*/, UINT p_nIDHelp /*=0*/)
-{
-	return DniTimedMessageBox(CurrentInstallUILevel.IsSilent(), p_lpszText, p_nType, p_nDefaultResult, p_nIDHelp);
 }

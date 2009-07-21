@@ -38,7 +38,7 @@ std::vector<ConfigurationPtr> ConfigFileManager::DownloadReferenceConfigurations
 					L"Continue with installation?", 
 					p->filename.c_str(), downloadedconfig.schema.version.c_str(), TEXT(VERSION_VALUE));
 
-				if (DniSilentMessageBox(version_message, MB_YESNO|MB_ICONQUESTION, IDYES) != IDYES)
+				if (DniMessageBox::Show(version_message, MB_YESNO|MB_ICONQUESTION, IDYES) != IDYES)
 				{
 					THROW_EX(L"Downloaded configuration " << p->filename << L" version " 
 						<< downloadedconfig.schema.version.c_str() << L" does not match bootstrapper version " 
@@ -90,7 +90,7 @@ void ConfigFileManager::Load()
 			L"Open and re-save configuration.xml with editor version %s. " \
 			L"Continue with installation?", config.schema.version.c_str(), TEXT(VERSION_VALUE));
 
-		if (DniSilentMessageBox(version_message, MB_YESNO|MB_ICONQUESTION, IDYES) != IDYES)
+		if (DniMessageBox::Show(version_message, MB_YESNO|MB_ICONQUESTION, IDYES) != IDYES)
 		{
 			THROW_EX(L"Configuration version " << config.schema.version << L" does not match bootstrapper version " 
 				<< TEXT(VERSION_VALUE));
