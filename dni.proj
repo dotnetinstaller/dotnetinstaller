@@ -57,7 +57,6 @@
     <Binaries Include="InstallerLinker\bin\$(Configuration)\Vestris.ResourceLib.dll" />
     <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
     <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
-    <Binaries Include="Samples\Misc\unicows.dll" />
   </ItemGroup>
   <Target Name="all">
     <Message Importance="high" Text="Building project ..." />

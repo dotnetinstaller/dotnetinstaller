@@ -115,6 +115,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="1"
 				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)\ThirdParty\CppUnit\include&quot;"
 				PreprocessorDefinitions="NDEBUG;_CONSOLE"

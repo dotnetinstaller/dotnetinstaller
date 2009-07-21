@@ -233,8 +233,7 @@
           <content>
             <para>
               Copy <localUri>dotNetInstaller.exe</localUri> from the distribution package into <localUri>MyWebSetup</localUri>.
-              You may call this file <localUri>setup.exe</localUri>. If your application installs on Windows 95, place 
-              <localUri>unicows.dll</localUri> in the same location.
+              You may call this file <localUri>setup.exe</localUri>.
             </para>
           </content>
         </step>

@@ -54,6 +54,8 @@
         <li>Added an "msu" component type, similar to "msi" for Windows Update (.msu) packages.</li>
         <li>InstallerEditor and InstallerLinker no longer require elevation on Windows Vista
             and Windows Server 2008.</li>
+        <li>Unicows.dll is embedded and is no longer required for Windows 95 and 98 installers.
+            You can now distribute a single packaged setup for Windows 95 and 98 platforms.</li>
     </ul>
     <h3>
         1.6 (29 June 2009)</h3>
@@ -309,10 +311,8 @@
         <li>Added full UTF-8 support fot the configuration file, the editor and the installer.
         </li>
         <li>Now dotNetInstaller is compiled using UNICODE for full compatibility with non english
-            language. </li>
-        <li><b>For Win 9x and ME now you must distribuite with dotNetInstaller.Exe the Microsoft
-            Layer for Unicode, unicows.dll. For more informations see section "Multilanguage
-            features".</b> </li>
+            language. For Win 9x and ME now you must distribuite with dotNetInstaller.exe the
+            Microsoft Layer for Unicode, unicows.dll.</li>
         <li>Now I use TinyXml to parse XML file for best compatibility on UTF-8 and XML standards.
         </li>
         <li>Added enum for Windows Xp Sp2 (winXPsp2 = 82). </li>

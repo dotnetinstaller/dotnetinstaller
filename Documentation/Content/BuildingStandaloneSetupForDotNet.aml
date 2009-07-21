@@ -45,7 +45,6 @@
           <content>
             <para>
               Copy dotNetInstaller.exe from the distribution under <localUri>c:\MyRelease\</localUri>.
-              If you're planning to run setup on Windows 95, copy unicows.dll under <localUri>c:\MyRelease\</localUri>.
             </para>
           </content>
         </step>

@@ -77,9 +77,12 @@
         </para>
         <alert class="note">
           <para>
-            Unicode character set is not supported on Windows 95, 98 and ME. If you plan to run installations on one of
-            these operating system you must copy the Microsoft Layer for Unicode (<localUri>unicows.dll</localUri>) in
-            the same path as <localUri>dotNetInstaller.exe</localUri>.
+            Unicode character set is not supported on Windows 95, 98 and ME.
+            The Microsoft Layer for Unicode (<localUri>unicows.dll</localUri>) is required
+            if you plan to run installations on one of these operating systems. dotNetInstaller
+            has an embedded <localUri>unicows.dll</localUri> that it writes to the TEMP 
+            directory. In order to disable this behavior, copy <localUri>unicows.dll</localUri> 
+            in the same path as <localUri>dotNetInstaller.exe</localUri>.
           </para>
           <para>
             See <externalLink>

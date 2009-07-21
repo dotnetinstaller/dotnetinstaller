@@ -44,7 +44,6 @@
             </Component>
             <Component Id="dotNetInstaller" Guid="E28F4986-00F0-489f-99A3-99745FEC243D">
               <File Id="dotNetInstaller.exe" Source="..\dotNetInstaller\$(var.Configuration)\dotNetInstaller.exe" />
-              <File Id="unicows.dll" Source="..\Samples\Misc\unicows.dll" />
             </Component>
           </Directory>
           <Directory Id="doc" Name="doc">

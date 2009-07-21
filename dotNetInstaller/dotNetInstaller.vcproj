@@ -121,6 +121,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="1"
 				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="NDEBUG"
@@ -240,6 +241,10 @@
 			</File>
 			<File
 				RelativePath=".\KCBusyProgressCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MSLU.cpp"
 				>
 			</File>
 			<File
