@@ -80,6 +80,7 @@
     <Compile Include="FileAttribute.cs" />
     <Compile Include="FileAttributeCollection.cs" />
     <Compile Include="InstalledCheck.cs" />
+    <Compile Include="InstalledCheckDirectory.cs" />
     <Compile Include="InstalledCheckFile.cs" />
     <Compile Include="InstalledCheckOperator.cs" />
     <Compile Include="InstalledCheckProduct.cs" />

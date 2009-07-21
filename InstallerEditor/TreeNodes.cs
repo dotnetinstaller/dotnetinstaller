@@ -302,7 +302,12 @@ namespace InstallerEditor
 				base.ImageIndex = 9;
 				base.SelectedImageIndex = 9;
 			}
-			else if (p_InstalledCheck is InstalledCheckRegistry)
+            else if (p_InstalledCheck is InstalledCheckDirectory)
+            {
+                base.ImageIndex = 17;
+                base.SelectedImageIndex = 17;
+            }
+            else if (p_InstalledCheck is InstalledCheckRegistry)
 			{
 				base.ImageIndex = 10;
 				base.SelectedImageIndex = 10;

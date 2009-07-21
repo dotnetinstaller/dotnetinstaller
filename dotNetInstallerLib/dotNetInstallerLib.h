@@ -10,6 +10,7 @@
 #include "DownloadGroupConfiguration.h"
 #include "InstalledCheck.h"
 #include "InstalledCheckFile.h"
+#include "InstalledCheckDirectory.h"
 #include "InstalledCheckOperator.h"
 #include "InstalledCheckRegistry.h"
 #include "InstalledCheckProduct.h"

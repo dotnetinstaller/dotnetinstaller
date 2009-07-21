@@ -74,6 +74,7 @@ namespace InstallerEditor
         private MenuItem mnAddEmbedFolder;
         private MenuItem menuItem9;
         private MenuItem mnAddMsuComponent;
+        private MenuItem mnAddInstalledCheckDirectory;
         private System.ComponentModel.IContainer components;
 
         public MainForm()
@@ -148,6 +149,7 @@ namespace InstallerEditor
             this.menuItem6 = new System.Windows.Forms.MenuItem();
             this.mnAddInstalledCheckRegistry = new System.Windows.Forms.MenuItem();
             this.mnAddInstalledCheckFile = new System.Windows.Forms.MenuItem();
+            this.mnAddInstalledCheckDirectory = new System.Windows.Forms.MenuItem();
             this.mnAddInstalledCheckOperator = new System.Windows.Forms.MenuItem();
             this.mnAddInstalledCheckProduct = new System.Windows.Forms.MenuItem();
             this.menuItem9 = new System.Windows.Forms.MenuItem();
@@ -369,6 +371,7 @@ namespace InstallerEditor
             this.menuItem6,
             this.mnAddInstalledCheckRegistry,
             this.mnAddInstalledCheckFile,
+            this.mnAddInstalledCheckDirectory,
             this.mnAddInstalledCheckOperator,
             this.mnAddInstalledCheckProduct,
             this.menuItem9,
@@ -457,32 +460,38 @@ namespace InstallerEditor
             this.mnAddInstalledCheckFile.Text = "Installed Check File";
             this.mnAddInstalledCheckFile.Click += new System.EventHandler(this.mnInstalledCheckFile_Click);
             // 
+            // mnAddInstalledCheckDirectory
+            // 
+            this.mnAddInstalledCheckDirectory.Index = 14;
+            this.mnAddInstalledCheckDirectory.Text = "Installed Check Directory";
+            this.mnAddInstalledCheckDirectory.Click += new System.EventHandler(this.mnAddInstalledCheckDirectory_Click);
+            // 
             // mnAddInstalledCheckOperator
             // 
-            this.mnAddInstalledCheckOperator.Index = 14;
+            this.mnAddInstalledCheckOperator.Index = 15;
             this.mnAddInstalledCheckOperator.Text = "Installed Check Operator";
             this.mnAddInstalledCheckOperator.Click += new System.EventHandler(this.mnAddInstalledCheckOperator_Click);
             // 
             // mnAddInstalledCheckProduct
             // 
-            this.mnAddInstalledCheckProduct.Index = 15;
+            this.mnAddInstalledCheckProduct.Index = 16;
             this.mnAddInstalledCheckProduct.Text = "Installed Check ProductCode";
             this.mnAddInstalledCheckProduct.Click += new System.EventHandler(this.mnAddInstalledCheckProduct_Click);
             // 
             // menuItem9
             // 
-            this.menuItem9.Index = 16;
+            this.menuItem9.Index = 17;
             this.menuItem9.Text = "-";
             // 
             // mnAddEmbedFile
             // 
-            this.mnAddEmbedFile.Index = 17;
+            this.mnAddEmbedFile.Index = 18;
             this.mnAddEmbedFile.Text = "&Embed File";
             this.mnAddEmbedFile.Click += new System.EventHandler(this.mnAddEmbedFile_Click);
             // 
             // mnAddEmbedFolder
             // 
-            this.mnAddEmbedFolder.Index = 18;
+            this.mnAddEmbedFolder.Index = 19;
             this.mnAddEmbedFolder.Text = "Embed Folder";
             this.mnAddEmbedFolder.Click += new System.EventHandler(this.mnAddEmbedFolder_Click);
             // 
@@ -555,6 +564,7 @@ namespace InstallerEditor
             this.imageList.Images.SetKeyName(14, "");
             this.imageList.Images.SetKeyName(15, "");
             this.imageList.Images.SetKeyName(16, "");
+            this.imageList.Images.SetKeyName(17, "");
             // 
             // mainSplitContainer
             // 
@@ -950,6 +960,7 @@ namespace InstallerEditor
                 mnAddDownloadDialog.Enabled = (item.Children.CanAdd(typeof(DownloadDialog)));
                 mnAddDownloadFile.Enabled = (item.Children.CanAdd(typeof(Download)));
                 mnAddInstalledCheckFile.Enabled = (item.Children.CanAdd(typeof(InstalledCheckFile)));
+                mnAddInstalledCheckDirectory.Enabled = (item.Children.CanAdd(typeof(InstalledCheckDirectory)));
                 mnAddInstalledCheckRegistry.Enabled = (item.Children.CanAdd(typeof(InstalledCheckRegistry)));
                 mnAddInstalledCheckProduct.Enabled = (item.Children.CanAdd(typeof(InstalledCheckProduct)));
                 mnAddInstalledCheckOperator.Enabled = (item.Children.CanAdd(typeof(InstalledCheckOperator)));
@@ -971,6 +982,7 @@ namespace InstallerEditor
                 mnAddEmbedFolder.Enabled = false;
                 mnAddDownloadDialog.Enabled = false;
                 mnAddInstalledCheckFile.Enabled = false;
+                mnAddInstalledCheckDirectory.Enabled = false;
                 mnAddInstalledCheckRegistry.Enabled = false;
                 mnAddInstalledCheckProduct.Enabled = false;
                 mnAddInstalledCheckOperator.Enabled = false;
@@ -1054,6 +1066,13 @@ namespace InstallerEditor
         private InstalledCheck AddInstalledCheckFile(IXmlClass parent)
         {
             InstalledCheckFile l_Check = new InstalledCheckFile();
+            parent.Children.Add(l_Check);
+            return l_Check;
+        }
+
+        private InstalledCheck AddInstalledCheckDirectory(IXmlClass parent)
+        {
+            InstalledCheckDirectory l_Check = new InstalledCheckDirectory();
             parent.Children.Add(l_Check);
             return l_Check;
         }
@@ -1742,6 +1761,18 @@ namespace InstallerEditor
             try
             {
                 AddTreeNode(new TreeNodeComponent(AddMsuComponent((IXmlClass)treeView.SelectedNode.Tag)));
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
+        }
+
+        private void mnAddInstalledCheckDirectory_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                AddTreeNode(new TreeNodeInstalledCheck(AddInstalledCheckDirectory((IXmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {

@@ -3,6 +3,7 @@
 #include "InstalledCheck.h"
 #include "InstalledCheckRegistry.h"
 #include "InstalledCheckFile.h"
+#include "InstalledCheckDirectory.h"
 #include "InstalledCheckOperator.h"
 #include "InstalledCheckProduct.h"
 #include "EmbedFile.h"
@@ -65,25 +66,8 @@ void Component::Load(TiXmlElement * node)
 		
 		if (strcmp(child_element->Value(), "installedcheck") == 0)
 		{
-			InstalledCheckPtr installedcheck;
 			std::wstring installedcheck_type = DVLib::UTF8string2wstring(child_element->Attribute("type"));
-			if (installedcheck_type == L"check_registry_value")
-			{
-				installedcheck = InstalledCheckPtr(new InstalledCheckRegistry());
-			}
-			else if (installedcheck_type == L"check_file")
-			{
-				installedcheck = InstalledCheckPtr(new InstalledCheckFile());
-			}
-			else if (installedcheck_type == L"check_product")
-			{
-				installedcheck = InstalledCheckPtr(new InstalledCheckProduct());
-			}
-			else
-			{
-				THROW_EX(L"Invalid installed check type '" << installedcheck_type << L"'");
-			}
-
+			InstalledCheckPtr installedcheck(InstalledCheck::Create(installedcheck_type));
 			installedcheck->Load(child_element);
 			installedchecks.push_back(installedcheck);
 		}

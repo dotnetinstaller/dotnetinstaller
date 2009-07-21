@@ -14,8 +14,9 @@
       <title>Installed Check Types</title>
       <content>
         <para>
-          There are three types of installed checks: <newTerm>check_file</newTerm>, <newTerm>check_registry_value</newTerm>
-          and <newTerm>check_product</newTerm>. These can also be combined with installed check operators.
+          There are four types of installed checks: <newTerm>check_file</newTerm>, <newTerm>check_directory</newTerm>, 
+          <newTerm>check_registry_value</newTerm> and <newTerm>check_product</newTerm>. These can also be combined 
+          with installed check operators.
         </para>
       </content>
       <sections>
@@ -41,6 +42,14 @@
                 <definedTerm>version_gt</definedTerm>
                 <definition>Check whether the version of the file is greater than the check value.</definition>
               </definitionTable>
+            </para>
+          </content>
+        </section>
+        <section address="checktypesdirectory">
+          <title>check_directory</title>
+          <content>
+            <para>
+              Check whether a specific directory exists.
             </para>
           </content>
         </section>

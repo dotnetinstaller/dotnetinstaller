@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configurations lcid_type="UserExe" configuration_no_match_message="" ui_level="full" fileversion="1.0.0.0" productversion="1.0.0.0">
-  <schema version="1.7.26030.0" generator="dotNetInstaller InstallerEditor" />
+  <schema version="1.7.26142.0" generator="dotNetInstaller InstallerEditor" />
   <fileattributes>
     <fileattribute name="FileDescription" value="InstallCheckOperators setup sample" />
   </fileattributes>
@@ -22,6 +22,11 @@
     <component command="#APPPATH\Readme.txt" command_silent="" command_basic="" os_filter_greater="" os_filter_smaller="" os_filter_lcid="" type="cmd" installcompletemessage="" mustreboot="False" reboot_required="" must_reboot_required="False" failed_exec_command_continue="" allow_continue_on_error="False" required="True" description="Install if .NET Framework 1.1 is installed" note="" processor_architecture_filter="" status_installed="" status_notinstalled="">
       <installedcheckoperator type="Not" description="Install if .NET 1.1 IS installed">
         <installedcheck path="SOFTWARE\Microsoft\NET Framework Setup\NDP\v1.1.4322" fieldname="Install" fieldvalue="1" fieldtype="REG_DWORD" comparison="match" rootkey="HKEY_LOCAL_MACHINE" wowoption="NONE" type="check_registry_value" description="Installed" />
+      </installedcheckoperator>
+    </component>
+    <component command="#APPPATH\Readme.txt" command_silent="" command_basic="" os_filter_greater="" os_filter_smaller="" os_filter_lcid="" type="cmd" installcompletemessage="" mustreboot="False" reboot_required="" must_reboot_required="False" failed_exec_command_continue="" allow_continue_on_error="False" required="True" description="Install if .NET Framework 1.1 is installed" note="" processor_architecture_filter="" status_installed="" status_notinstalled="">
+      <installedcheckoperator type="Not" description="Install if .NET 1.1 IS installed (directory check)">
+        <installedcheck path="#WINDOWSPATH\Microsoft.NET\Framework\v1.1.4322" type="check_directory" description="Installed" />
       </installedcheckoperator>
     </component>
     <embedfile sourcefilepath="#APPPATH\Readme.txt" targetfilepath="" />

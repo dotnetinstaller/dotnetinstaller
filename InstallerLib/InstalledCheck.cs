@@ -87,6 +87,8 @@ namespace InstallerLib
             InstalledCheck l_check;
             if (element.Attributes["type"].InnerText == "check_file")
                 l_check = new InstalledCheckFile();
+            else if (element.Attributes["type"].InnerText == "check_directory")
+                l_check = new InstalledCheckDirectory();
             else if (element.Attributes["type"].InnerText == "check_registry_value")
                 l_check = new InstalledCheckRegistry();
             else if (element.Attributes["type"].InnerText == "check_product")

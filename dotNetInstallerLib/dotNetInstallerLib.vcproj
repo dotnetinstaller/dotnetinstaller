@@ -211,6 +211,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstalledCheckDirectory.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\InstalledCheckFile.cpp"
 				>
 			</File>
@@ -370,6 +374,10 @@
 			</File>
 			<File
 				RelativePath=".\InstalledCheck.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstalledCheckDirectory.h"
 				>
 			</File>
 			<File

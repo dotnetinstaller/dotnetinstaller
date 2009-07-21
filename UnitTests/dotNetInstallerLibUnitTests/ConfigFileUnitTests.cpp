@@ -76,10 +76,11 @@ void ConfigFileUnitTests::testLoadInstallCheckOperators()
 	// configurations with components
 	CPPUNIT_ASSERT(config.size() == 1);
 	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
-	CPPUNIT_ASSERT(configuration->components.size() == 3);
+	CPPUNIT_ASSERT(configuration->components.size() == 4);
 	CPPUNIT_ASSERT(configuration->components[0]->type == cmd);
 	CPPUNIT_ASSERT(configuration->components[1]->type == cmd);
 	CPPUNIT_ASSERT(configuration->components[2]->type == cmd);
+	CPPUNIT_ASSERT(configuration->components[3]->type == cmd);
 	// \todo: verify that operators tree is correct
 }
 
