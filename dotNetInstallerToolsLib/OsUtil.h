@@ -63,7 +63,12 @@ namespace DVLib
 
 		winServer2008 = 110, // or later
 
-		winMax = 110
+		//
+		// winMax must be +1 the highest configuration 
+		// since IsInOperatingSystemInRange is not inclusive
+		// 
+
+		winMax = 111 
 	};
 
 	// operating system version

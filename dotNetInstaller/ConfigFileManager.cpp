@@ -86,8 +86,8 @@ void ConfigFileManager::Load()
 	if (config.schema.version != TEXT(VERSION_VALUE))
 	{
 		std::wstring version_message = DVLib::FormatMessageW(
-			L"Configuration version %s does not match bootstrapper version.\r\n" \
-			L"Open and re-save configuration.xml with editor version %s.\r\n" \
+			L"Configuration version %s does not match bootstrapper version. " \
+			L"Open and re-save configuration.xml with editor version %s. " \
 			L"Continue with installation?", config.schema.version.c_str(), TEXT(VERSION_VALUE));
 
 		if (DniSilentMessageBox(version_message, MB_YESNO|MB_ICONQUESTION, IDYES) != IDYES)

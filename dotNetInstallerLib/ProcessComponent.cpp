@@ -37,7 +37,7 @@ bool ProcessComponent::IsExecuting() const
     }
 }
 
-void ProcessComponent::Wait(DWORD tt)
+void ProcessComponent::Wait(DWORD /* tt */)
 {
 	CHECK_WIN32_BOOL(WAIT_OBJECT_0 == WaitForSingleObject(m_process_info.hProcess, INFINITE),
 		L"WaitForSingleObject");
