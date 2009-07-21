@@ -26,7 +26,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 // Manifest
 //
 #define MANIFEST_RESOURCE_ID 1
-MANIFEST_RESOURCE_ID RT_MANIFEST "res\\dotNetInstaller.manifest"
+MANIFEST_RESOURCE_ID RT_MANIFEST "dotNetInstaller.exe.manifest"
 
 /////////////////////////////////////////////////////////////////////////////
 //

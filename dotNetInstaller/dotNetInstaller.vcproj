@@ -74,7 +74,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="res\dotNetInstaller.manifest"
+				AdditionalManifestFiles="$(ProjectDir)$(TargetFileName).manifest"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -152,7 +152,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="res\dotNetInstaller.manifest"
+				AdditionalManifestFiles="$(ProjectDir)$(TargetFileName).manifest"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -352,10 +352,6 @@
 			</File>
 			<File
 				RelativePath=".\res\dotNetInstaller.ico"
-				>
-			</File>
-			<File
-				RelativePath=".\res\dotNetInstaller.manifest"
 				>
 			</File>
 			<File
