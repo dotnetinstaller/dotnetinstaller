@@ -3,9 +3,9 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        <application>dotNetInstaller.exe</application> is a <literal>bootstrapper</literal>, a lightweight driver for 
-        your setup process. Simply put, this is your <command>setup.exe</command>. It offers a user interface, progress, 
-        status, supports silent installs and enables user selection of optional components. The workflow is highly flexible 
+        <application>dotNetInstaller.exe</application> is a <literal>bootstrapper</literal>, a lightweight driver for
+        your setup process. Simply put, this is your <command>setup.exe</command>. It offers a user interface, progress,
+        status, supports silent installs and enables user selection of optional components. The workflow is highly flexible
         and the UI can be somewhat customized.
       </para>
     </introduction>
@@ -14,6 +14,11 @@
       <content>
         <para>
           <definitionTable>
+            <definedTerm>/ConfigFile [path]</definedTerm>
+            <definition>
+              Optional configuration file name and location, defaults to configuration.xml in the
+              same location as the dotNetInstaller executable.
+            </definition>
             <definedTerm>/q</definedTerm>
             <definition>
               Forces silent UI mode, overriding the configuration's <literal>ui_mode</literal> attribute.

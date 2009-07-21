@@ -43,17 +43,11 @@ BOOL CdotNetInstallerApp::InitInstance()
 
 		ConfigFileManager config;
 		config.Load();
-		config.Run();
+		m_rc = config.Run();
 	}
 	catch(std::exception& ex)
 	{
         DniSilentMessageBox(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
-		m_rc = -1;
-		return FALSE;
-	}
-	catch(...)
-	{
-		DniSilentMessageBox(TEXT("Error loading configuration file"), MB_OK|MB_ICONSTOP);
 		m_rc = -1;
 		return FALSE;
 	}

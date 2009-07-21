@@ -10,5 +10,6 @@ public:
 	bool IsExecuting() const;
 	DWORD GetProcessExitCode() const;
 	void Wait(DWORD tt = 1000);
+	int GetExitCode() const;
 };
 

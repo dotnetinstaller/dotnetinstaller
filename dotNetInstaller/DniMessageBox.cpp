@@ -18,13 +18,12 @@ int DniMessageBox(const std::wstring& p_lpszText, UINT p_nType /*=MB_OK*/, UINT 
 
 void CALLBACK CloseMessageBox(HWND p_hwnd, UINT p_uiMsg, UINT p_idEvent, DWORD p_dwTime)
 {
-	HWND hwnd = FindWindow(NULL, AfxGetAppName());
+	HWND hwnd = FindWindow(NULL, AfxGetApp()->m_pszAppName);
 	if (hwnd != NULL)
 	{
 		EndDialog(hwnd, IDOK);
 	}
 }
-
 
 int DniTimedMessageBox(bool p_bTimed, const std::wstring& p_lpszText, UINT p_nType /*=MB_OK*/, UINT p_nDefaultResult /*=MB_OK*/, UINT p_nIDHelp /*=0*/)
 {

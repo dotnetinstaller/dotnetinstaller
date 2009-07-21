@@ -27,6 +27,11 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 		{
 			m_lastArgFlag = logfile;
 		}
+		// specify configuration filename and path
+		else if (_wcsicmp(pszParam, TEXT("configfile")) == 0)
+		{
+			m_lastArgFlag = configfile;
+		}
 		// enable silent installs from the command line
 		else if (_wcsicmp(pszParam, TEXT("q")) == 0)
 		{
@@ -89,6 +94,9 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 			case basic:
             case extractCab:
 			case displayCab:
+				break;
+			case configfile:
+				configFile = pszParam;
 				break;
             case logfile:
                 ApplicationLogInstance.SetLogFile(pszParam);

@@ -12,5 +12,5 @@ public:
 	void SaveAppState();
 	void RestoreAppState();
 	void Load();
-	void Run();
+	int Run();
 };

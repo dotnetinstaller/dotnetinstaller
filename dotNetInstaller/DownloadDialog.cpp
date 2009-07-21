@@ -11,7 +11,8 @@ IMPLEMENT_DYNAMIC(DownloadDialog, CDialog)
 DownloadDialog::DownloadDialog(const DownloadGroupConfigurationPtr& p_Configuration, CWnd* pParent /*=NULL*/)
 	: CDialog(DownloadDialog::IDD, pParent)
 	, m_DownloadComponents(this, p_Configuration->downloadcomponents)
-	, m_bCancelOrErrorDownload(false)
+	, m_bDownloadCancelled(false)
+	, m_bDownloadError(false)
 	, m_bDownloadCompleted(false)
 	, m_bAutoStartDownload(p_Configuration->auto_start)
 	, m_Caption(p_Configuration->caption)
@@ -89,7 +90,6 @@ void DownloadDialog::OnBnClickedCancel() //Cancel Button
 
 void DownloadDialog::OnBnClickedStart()
 {
-	LOG(L"Starting download");
 	m_LabelHelpDownload.SetWindowText(m_HelpMessageDownloading.c_str());
 	m_DownloadComponents.BeginExec();
 	m_bDownloadStarted = true;
@@ -128,7 +128,7 @@ afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM lParam
 		{
 			LOG(L"*** Download ERROR: " << l_Param->error);
 			DniSilentMessageBox(l_Param->error, MB_OK|MB_ICONSTOP);
-			m_bCancelOrErrorDownload = true;
+			m_bDownloadError = true;
 		}
 
 		::PostMessage(GetSafeHwnd(), WM_USER_CLOSE_DIALOG, 0, 0);
@@ -136,7 +136,7 @@ afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM lParam
 	else if (l_Param->type == StatusType_Canceled) //CANCELED
 	{
 		LOG(L"*** Download CANCELED");
-		m_bCancelOrErrorDownload = true;
+		m_bDownloadCancelled = true;
 	}
 	else if (l_Param->type == StatusType_Completed) //COMPLETED
 	{
@@ -161,18 +161,21 @@ void DownloadDialog::Status(ULONG p_progress_current, ULONG p_MaxProgress, const
 void DownloadDialog::DownloadComplete()
 {
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(DownloadStatus::CreateComplete())), 0L );
-	m_bDownloadCompleted = true;
 }
 
 void DownloadDialog::DownloadError(const std::wstring& p_Message)
 {
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(DownloadStatus::CreateError(p_Message))), 0L );
-	m_bCancelOrErrorDownload = true;
 }
 
 bool DownloadDialog::IsDownloadCancelled() const
 {
-	return m_bCancelOrErrorDownload;
+	return m_bDownloadCancelled;
+}
+
+bool DownloadDialog::IsDownloadError() const
+{
+	return m_bDownloadError;
 }
 
 void DownloadDialog::DownloadCancel()

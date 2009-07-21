@@ -18,7 +18,8 @@ private:
 	// download components and flags
 	DownloadComponents m_DownloadComponents;
 	bool m_bAutoStartDownload;
-	bool m_bCancelOrErrorDownload;
+	bool m_bDownloadCancelled;
+	bool m_bDownloadError;
 	bool m_bDownloadCompleted;
 	bool m_bDownloadStarted;
 protected:
@@ -43,6 +44,7 @@ public:
 	void DownloadComplete();
 	void DownloadError(const std::wstring& error);
 	bool IsDownloadCancelled() const;
+	bool IsDownloadError() const;
 	void DownloadCancel();
 	bool IsDownloadCompleted() const;
 	bool IsDownloadStarted() const;

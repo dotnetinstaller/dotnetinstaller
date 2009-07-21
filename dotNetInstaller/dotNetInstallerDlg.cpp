@@ -240,7 +240,12 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
 		Components components = p_configuration->GetSupportedComponents(m_lcidtype);
-		bool success = components.Exec(this);
+		int rc = components.Exec(this);
+
+		if (rc != 0)
+		{
+			RecordError(rc);
+		}
 
 		if (m_reboot)
 		{
@@ -259,14 +264,14 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		}
 
 		// failure and auto-close-on-error
-		if (! success && p_configuration->auto_close_on_error)
+		if (rc != 0 && p_configuration->auto_close_on_error)
 		{
 			OnOK();
 			return;
 		}
 
 		// success and possibly auto-close with a complete code if all components have been installed
-		if (success)
+		if (rc == 0)
 		{
 			bool all_components_installed = LoadComponentsList();
 			if (all_components_installed || p_configuration->auto_close_if_installed) 
@@ -525,7 +530,7 @@ bool CdotNetInstallerDlg::OnComponentExecSuccess(const ComponentPtr& component)
 			DniSilentMessageBox(reboot_required, MB_OK | MB_ICONQUESTION);
 			m_reboot = true;
 		}
-		else if (DniMessageBox(reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES)
+		else if (DniSilentMessageBox(reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES)
 		{
 			m_reboot = true;
 		}

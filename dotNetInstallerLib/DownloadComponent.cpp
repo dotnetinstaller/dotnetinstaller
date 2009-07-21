@@ -101,10 +101,13 @@ void DownloadComponent::StartDownload()
 		<< L"', source='" << m_pComponent->sourceurl 
 		<< L"', destination='" << m_pComponent->destinationpath 
 		<< L"', full='" << destination_full_filename
-		<< L"', always download=" << (m_pComponent->alwaysdownload ? L"True" : L"False")
-		<< L"', destination exists=" << (DVLib::FileExists(destination_full_filename) ? L"True" : L"False"));
+		<< L"', always download=" << (m_pComponent->alwaysdownload ? L"True" : L"False"));
 
-	DVLib::DirectoryCreate(m_pComponent->destinationpath);
+	if (! DVLib::DirectoryExists(m_pComponent->destinationpath))
+	{
+		LOG(L"Creating directory '" << m_pComponent->destinationpath << L"'");
+		DVLib::DirectoryCreate(m_pComponent->destinationpath);
+	}
 
 	if (! IsDownloadRequired())
 	{

@@ -51,9 +51,9 @@ Components Components::GetSupportedComponents(DVLib::LcidType lcidtype) const
 	return result;
 }
 
-bool Components::Exec(IExecuteCallback * callback)
+int Components::Exec(IExecuteCallback * callback)
 {
-	bool success = true;
+	int rc = 0;
 	for each(const ComponentPtr& component in * this)
 	{
 		if (! component->selected)
@@ -83,7 +83,8 @@ bool Components::Exec(IExecuteCallback * callback)
 		}
 		catch(std::exception& ex)
 		{
-			success = false;
+			if (rc == 0) rc = component->GetExitCode();
+			if (rc == 0) rc = -1;
 
 			LOG(L"*** Component '" << component->description << L"' ERROR: " << DVLib::string2wstring(ex.what()));
 			
@@ -92,5 +93,5 @@ bool Components::Exec(IExecuteCallback * callback)
 		}
 	}
 
-	return success;
+	return rc;
 }

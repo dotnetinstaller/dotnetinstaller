@@ -11,5 +11,5 @@ namespace DVLib
 	// execute a process, wait and return exit code
 	DWORD ExecCmd(const std::wstring& cmd);
 	// shell-execute a process
-	void ShellCmd(const std::wstring& cmd);
+	void ShellCmd(const std::wstring& cmd, int * rc = NULL);
 }

@@ -6,12 +6,13 @@
 
 OpenFileComponent::OpenFileComponent()
 	: Component(openfile)
+	, m_rc(0)
 {
 }
 
 void OpenFileComponent::Exec()
 {
-	DVLib::ShellCmd(file);
+	DVLib::ShellCmd(file, & m_rc);
 }
 
 bool OpenFileComponent::IsExecuting() const
@@ -24,4 +25,9 @@ void OpenFileComponent::Load(TiXmlElement * node)
 	file = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("file")));
 	Component::Load(node);
 	LOG(L"Loaded 'openfile' component '" << file << L"'");
+}
+
+int OpenFileComponent::GetExitCode() const
+{
+	return m_rc;
 }

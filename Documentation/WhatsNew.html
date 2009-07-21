@@ -56,6 +56,14 @@
             and Windows Server 2008.</li>
         <li>Unicows.dll is embedded and is no longer required for Windows 95 and 98 installers.
             You can now distribute a single packaged setup for Windows 95 and 98 platforms.</li>
+        <li>Added /ConfigFile &lt;path\configuration.xml&gt; option to the bootstrapper to specify
+            an alternate configuration file.</li>
+        <li>dotNetInstaller process exit code is now 0 on success, process exit code is now
+            shell execute return code on an open file component failure, MSI return code on
+            an MSI component failure, process exit code on a non-zero cmd component return,
+            -2 on cancel from main dialog or download and -1 on any other error. Check <code>%ERRORLEVEL%</code>
+            in batch scripts.</li>
+        <li>Bug: silent install failures pop up error dialogs that don't auto-close.</li>
     </ul>
     <h3>
         1.6 (29 June 2009)</h3>

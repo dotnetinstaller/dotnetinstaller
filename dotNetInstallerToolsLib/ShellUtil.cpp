@@ -82,7 +82,7 @@ DWORD DVLib::ExecCmd(const std::wstring& cmd)
 	return dwExitCode;
 }
 
-void DVLib::ShellCmd(const std::wstring& cmd)
+void DVLib::ShellCmd(const std::wstring& cmd, int * rc)
 {
 	std::wstring cmd_expanded = DVLib::ExpandEnvironmentVariables(cmd);
 	CHECK_BOOL(! cmd_expanded.empty(), L"Missing command");
@@ -96,6 +96,17 @@ void DVLib::ShellCmd(const std::wstring& cmd)
 
 	if (h <= (HINSTANCE) 32) 
 	{
+		if (rc != NULL)
+		{
+			* rc = reinterpret_cast<int>(h);
+		}
 		CHECK_WIN32_DWORD((DWORD) h, L"Error running " <<  cmd_expanded);
+	}
+	else
+	{
+		if (rc != NULL)
+		{
+			* rc = 0;
+		}
 	}
 }

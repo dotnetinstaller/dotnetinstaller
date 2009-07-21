@@ -7,7 +7,7 @@ class DownloadComponents : public std::vector<DownloadComponentPtr>, public Thre
 private:
 	IDownloadCallback * callback;
 protected:
-	void ExecOnThread();
+	int ExecOnThread();
 public:
 	bool IsCopyRequired() const;
 	bool IsDownloadRequired() const;

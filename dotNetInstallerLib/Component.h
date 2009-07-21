@@ -69,6 +69,7 @@ public:
 	virtual void Load(TiXmlElement * node);
 	// returns true if this component is supported on this operating system/lcid
 	virtual bool IsSupported(DVLib::LcidType lcidtype) const;
+	virtual int GetExitCode() const = 0;
 };
 
 typedef shared_any<Component *, close_delete> ComponentPtr;

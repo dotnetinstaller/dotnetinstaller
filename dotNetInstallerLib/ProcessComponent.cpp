@@ -10,12 +10,18 @@ ProcessComponent::ProcessComponent(component_type t)
 
 DWORD ProcessComponent::GetProcessExitCode() const
 {
-	DWORD l_ExitCode;
-
-	CHECK_WIN32_BOOL(::GetExitCodeProcess(m_process_info.hProcess, & l_ExitCode),
-		L"GetExitCodeProcess");
-
+	DWORD l_ExitCode = 0xFFFFFF;
+	if (m_process_info.hProcess != NULL)
+	{
+		CHECK_WIN32_BOOL(::GetExitCodeProcess(m_process_info.hProcess, & l_ExitCode),
+			L"GetExitCodeProcess");
+	}
     return l_ExitCode;
+}
+
+int ProcessComponent::GetExitCode() const 
+{ 
+	return GetProcessExitCode(); 
 }
 
 bool ProcessComponent::IsExecuting() const

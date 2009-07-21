@@ -12,13 +12,15 @@ public:
     bool ExtractCab() const { return m_extractCab; }
 	bool DisplayCab() const { return m_displayCab; }
 public:
+	std::wstring configFile;
     std::map<std::wstring, std::wstring> componentCmdArgs;
 private:
 	enum m_argFlags 
 	{ 
 		unknown, 
 		log, 
-		logfile, 
+		logfile,
+		configfile,
 		silent, 
 		noSilent, 
 		basic, 

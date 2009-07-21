@@ -13,7 +13,7 @@ public:
 	BOOL OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param);
 	void OnAfterCopyFile(char* s8_File, WCHAR* u16_File, void* p_Param);
 protected:
-	void ExecOnThread();
+	int ExecOnThread();
 	virtual void OnStatus(const std::wstring&) = 0;
 private:
 	HMODULE m_h;

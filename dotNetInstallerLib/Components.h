@@ -22,5 +22,5 @@ public:
 	// reference
 	const_reference operator[](size_type pos) const { return std::vector<ComponentPtr>::operator[](pos); }
 	// execute components, returns true if all succeeded
-	bool Exec(IExecuteCallback * callback);
+	int Exec(IExecuteCallback * callback);
 };

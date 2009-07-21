@@ -165,6 +165,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OsFilters", "OsFilters", "{
 		Samples\OsFilters\Configuration.xml = Samples\OsFilters\Configuration.xml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNetInstallerUnitTests", "UnitTests\dotNetInstallerUnitTests\dotNetInstallerUnitTests.csproj", "{23B25369-53E1-4819-ADA2-EEE0A772BD02}"	
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -233,6 +235,10 @@ Global
 		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{23B25369-53E1-4819-ADA2-EEE0A772BD02}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{23B25369-53E1-4819-ADA2-EEE0A772BD02}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{23B25369-53E1-4819-ADA2-EEE0A772BD02}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{23B25369-53E1-4819-ADA2-EEE0A772BD02}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -250,6 +256,7 @@ Global
 		{48FFB2FD-215B-4DEE-8C38-EC1DB518477F} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{6542C25E-A71E-401E-A818-71910821444C} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{56390342-5DE6-4FE4-A7A6-3EC30CF4B34F} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
+		{23B25369-53E1-4819-ADA2-EEE0A772BD02} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{6A9AD5E1-624C-478F-9921-8400B3AD84A8} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 	EndGlobalSection

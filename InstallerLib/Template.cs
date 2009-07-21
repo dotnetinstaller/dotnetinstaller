@@ -14,7 +14,11 @@ namespace InstallerLib
 
         static Template()
         {
-            m_CurrentTemplate = EmbeddedTemplates[0];
+            foreach (Template template in EmbeddedTemplates)
+            {
+                if (m_CurrentTemplate == null || template.Name == "English")
+                    m_CurrentTemplate = template;
+            }
         }
 
         public static List<Template> EmbeddedTemplates

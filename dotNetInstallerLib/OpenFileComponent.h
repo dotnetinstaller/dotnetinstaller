@@ -3,6 +3,8 @@
 
 class OpenFileComponent : public Component
 {
+private:
+	int m_rc;
 public:
     OpenFileComponent();
 public:
@@ -10,6 +12,7 @@ public:
 	void Exec();
 	bool IsExecuting() const;
 	void Load(TiXmlElement * node);
+	int GetExitCode() const;
 };
 
 typedef shared_any<OpenFileComponent *, close_delete> OpenFileComponentPtr;

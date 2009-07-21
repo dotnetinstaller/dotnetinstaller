@@ -11,7 +11,7 @@ private:
 	int m_exitcode;
 public:
 	ThreadComponentImpl(int exitcode);
-	void ExecOnThread() { if(m_exitcode != 0) THROW_EX(L"exit code: " << m_exitcode); }
+	int ExecOnThread() { return m_exitcode; }
 };
 
 ThreadComponentImpl::ThreadComponentImpl(int exitcode) 

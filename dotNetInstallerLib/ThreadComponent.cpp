@@ -5,6 +5,7 @@
 ThreadComponent::ThreadComponent(component_type t)
 	: Component(t)
 	, m_pThread(NULL)
+	, m_rc(0)
 {
 
 }
@@ -27,11 +28,12 @@ UINT ThreadComponent::ExecuteThread(LPVOID pParam)
 	
 	try
 	{
-		pComponent->ExecOnThread();
+		pComponent->m_rc = pComponent->ExecOnThread();
 	}
 	catch(std::exception& ex)
 	{
 		pComponent->m_error = DVLib::string2wstring(ex.what());
+		pComponent->m_rc = -1;
 	}
 
 	return 0;
@@ -62,4 +64,5 @@ void ThreadComponent::EndExec()
 	reset(m_pThread);
 
 	CHECK_BOOL(m_error.empty(), m_error);
+	CHECK_BOOL(m_rc == 0, L"Component failed with error code: " << m_rc);
 }

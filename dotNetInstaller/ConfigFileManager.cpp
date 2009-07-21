@@ -2,6 +2,7 @@
 #include "ConfigFileManager.h"
 #include "dotNetInstallerDlg.h"
 #include "DniMessageBox.h"
+#include "InstallerCommandLineInfo.h"
 #include <Version/Version.h>
 
 ConfigFileManager::ConfigFileManager()
@@ -61,14 +62,25 @@ void ConfigFileManager::Load()
 {
 	// load configuration
     ConfigFile config;
-	std::wstring configfile = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), TEXT("configuration.xml"));
-	if (NULL != DVLib::ResourceExists(AfxGetApp()->m_hInstance, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM")))
-		config.LoadResource(AfxGetApp()->m_hInstance, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM"));
-	else if (DVLib::FileExists(configfile))
-		config.LoadFile(configfile);
-	else 
+
+	if (! commandLineInfo.configFile.empty())
 	{
-		THROW_EX(L"Missing '" << configfile << L"'");
+		CHECK_BOOL(DVLib::FileExists(commandLineInfo.configFile),
+			L"Missing '" << commandLineInfo.configFile << L"'");
+
+		config.LoadFile(commandLineInfo.configFile);
+	}
+	else if (NULL != DVLib::ResourceExists(AfxGetApp()->m_hInstance, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM")))
+	{
+		config.LoadResource(AfxGetApp()->m_hInstance, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM"));
+	}
+	else
+	{
+		std::wstring configfile = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), TEXT("configuration.xml"));
+		CHECK_BOOL(DVLib::FileExists(configfile),
+			L"Missing '" << configfile << L"'");
+
+		config.LoadFile(configfile);
 	}
 
 	if (config.schema.version != TEXT(VERSION_VALUE))
@@ -97,9 +109,10 @@ void ConfigFileManager::Load()
 	}
 }
 
-void ConfigFileManager::Run()
+int ConfigFileManager::Run()
 {
 	CdotNetInstallerDlg dlg;
+	
 	for (size_t i = 0; i < size(); i++)
 	{
 		if ((* this)[i]->type == configuration_install)
@@ -114,6 +127,8 @@ void ConfigFileManager::Run()
 			THROW_EX(L"Unexpected configuration type " << (* this)[i]->type);
 		}
 	}
+
+	return dlg.GetRecordedError();
 }
 
 void ConfigFileManager::SaveAppState()

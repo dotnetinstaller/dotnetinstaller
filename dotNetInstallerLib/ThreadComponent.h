@@ -13,9 +13,11 @@ public:
 	void BeginExec();
 	void EndExec();
 protected:
-    virtual void ExecOnThread() = 0;
+    virtual int ExecOnThread() = 0;
 private:
     auto_any<CWinThread *, close_delete> m_pThread;
     std::wstring m_error;
+	int m_rc;
     static UINT ExecuteThread(LPVOID pParam);
+	int GetExitCode() const { return m_rc; }
 };
