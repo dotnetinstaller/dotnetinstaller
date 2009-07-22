@@ -203,3 +203,15 @@ void ConfigFileUnitTests::testLoadOsFiltersSetup()
 	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
 	CPPUNIT_ASSERT(configuration->components.size() == 3);	
 }
+
+void ConfigFileUnitTests::testLoadMultilingualSetup()
+{
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+		L"..\\..\\..\\Samples\\MultilingualSetup\\Configuration.xml");
+	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
+	ConfigFile config;
+	config.LoadFile(configxml);
+	// there're two configurations this sample, but only 1 will show because the lcids don't overlap
+	CPPUNIT_ASSERT(config.size() == 2);
+	CPPUNIT_ASSERT(config.GetSupportedConfigurations().size() == 1);
+}

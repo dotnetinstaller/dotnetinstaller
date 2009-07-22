@@ -760,7 +760,7 @@ namespace InstallerEditor
                     }
 
                     m_TreeNodeConfigFile = new TreeNodeConfigFile(l_File);
-                    m_TreeNodeConfigFile.IsDirty = false;
+                    m_TreeNodeConfigFile.IsDirty = ! l_File.editor.IsCurrent();
                     m_TreeNodeConfigFile.CreateChildNodes();
                 }
                 else
@@ -1506,6 +1506,7 @@ namespace InstallerEditor
 
         private void mnMoveUp_Click(object sender, EventArgs e)
         {
+            treeView.BeginUpdate();
             try
             {
                 if (treeView.SelectedNode == null)
@@ -1525,10 +1526,16 @@ namespace InstallerEditor
             {
                 AppUtility.ShowError(this, err);
             }
+            finally
+            {
+                treeView.EndUpdate();
+            }
         }
 
         private void mnMoveDown_Click(object sender, EventArgs e)
         {
+            treeView.BeginUpdate();
+
             try
             {
                 if (treeView.SelectedNode == null)
@@ -1547,6 +1554,10 @@ namespace InstallerEditor
             catch (Exception err)
             {
                 AppUtility.ShowError(this, err);
+            }
+            finally
+            {
+                treeView.EndUpdate();
             }
         }
 
@@ -1589,21 +1600,30 @@ namespace InstallerEditor
 
         private void treeView_DragDrop(object sender, DragEventArgs e)
         {
-            if (!e.Data.GetDataPresent(typeof(TreeNodeImplContainer)))
-                return;
+            treeView.BeginUpdate();
 
-            // target node
-            Point pos = treeView.PointToClient(new Point(e.X, e.Y));
-            TreeNodeImpl targetNode = (TreeNodeImpl)treeView.GetNodeAt(pos);
+            try
+            {
+                if (!e.Data.GetDataPresent(typeof(TreeNodeImplContainer)))
+                    return;
 
-            // node being dragged
-            TreeNodeImpl dropNode = ((TreeNodeImplContainer)e.Data.GetData(typeof(TreeNodeImplContainer))).NodeData;
+                // target node
+                Point pos = treeView.PointToClient(new Point(e.X, e.Y));
+                TreeNodeImpl targetNode = (TreeNodeImpl)treeView.GetNodeAt(pos);
 
-            // check that this node data type can be dropped here at all
-            IXmlClass dropItem = (IXmlClass)dropNode.Tag;
+                // node being dragged
+                TreeNodeImpl dropNode = ((TreeNodeImplContainer)e.Data.GetData(typeof(TreeNodeImplContainer))).NodeData;
 
-            dropNode.MoveTo(targetNode);
-            m_TreeNodeConfigFile.IsDirty = true;
+                // check that this node data type can be dropped here at all
+                IXmlClass dropItem = (IXmlClass)dropNode.Tag;
+
+                dropNode.MoveTo(targetNode);
+                m_TreeNodeConfigFile.IsDirty = true;
+            }
+            finally
+            {
+                treeView.EndUpdate();
+            }
         }
 
         private void treeView_DragEnter(object sender, DragEventArgs e)

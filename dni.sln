@@ -165,7 +165,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OsFilters", "OsFilters", "{
 		Samples\OsFilters\Configuration.xml = Samples\OsFilters\Configuration.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNetInstallerUnitTests", "UnitTests\dotNetInstallerUnitTests\dotNetInstallerUnitTests.csproj", "{23B25369-53E1-4819-ADA2-EEE0A772BD02}"	
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNetInstallerUnitTests", "UnitTests\dotNetInstallerUnitTests\dotNetInstallerUnitTests.csproj", "{23B25369-53E1-4819-ADA2-EEE0A772BD02}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MultilingualSetup", "MultilingualSetup", "{57C3C23E-F287-4E9B-9A18-FF5E7430DD8E}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\MultilingualSetup\Configuration.xml = Samples\MultilingualSetup\Configuration.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -251,6 +256,7 @@ Global
 		{F4D5A955-C6B7-4989-9DC7-6565035D0ECF} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{22893B7A-F27F-4083-A4C1-DF98927A694A} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{F691A44A-8753-4E95-AA4C-7C58A271A214} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
+		{57C3C23E-F287-4E9B-9A18-FF5E7430DD8E} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{5DDA5610-5927-404B-9B03-76071159F8BE} = {AA6599BC-B3BA-4EC0-980D-5B66336A1350}
 		{49A3BD48-D506-4108-8F47-7CD7081C046C} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{48FFB2FD-215B-4DEE-8C38-EC1DB518477F} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}

@@ -52,7 +52,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("Log: {0}", logfile);
             Process p = new Process();
             p.StartInfo.FileName = Executable;
-            p.StartInfo.Arguments = string.Format("/ConfigFile \"{0}\" /qb /Log /LogFile \"{1}\"", configFile, logfile);
+            p.StartInfo.Arguments = string.Format("/ConfigFile \"{0}\" /q /Log /LogFile \"{1}\"", configFile, logfile);
             p.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
             p.Start();
             p.WaitForExit();

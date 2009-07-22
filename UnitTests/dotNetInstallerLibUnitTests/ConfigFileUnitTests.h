@@ -15,6 +15,7 @@ namespace DVLib
 			CPPUNIT_TEST( testLoadInstallCheckProductSetup );
 			CPPUNIT_TEST( testLoadOsFiltersSetup );
 			CPPUNIT_TEST( testLoadResource );
+			CPPUNIT_TEST( testLoadMultilingualSetup );
 			CPPUNIT_TEST( testGetSupportedConfigurations );
 			CPPUNIT_TEST_SUITE_END();
 		public:
@@ -27,6 +28,7 @@ namespace DVLib
 			void testLoadOsFiltersSetup();
 			void testLoadResource();
 			void testGetSupportedConfigurations();
+			void testLoadMultilingualSetup();
 		};
 	}
 }

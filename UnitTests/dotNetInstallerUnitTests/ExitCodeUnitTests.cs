@@ -8,7 +8,7 @@ using System.IO;
 namespace dotNetInstallerUnitTests
 {
     [TestFixture]
-    public class ExitCodeTests
+    public class ExitCodeUnitTests
     {
         [Test]
         public void TestNoComponentsSuccess()
