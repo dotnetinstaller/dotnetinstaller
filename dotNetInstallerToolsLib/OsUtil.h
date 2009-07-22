@@ -46,35 +46,81 @@ namespace DVLib
 		win2000sp1 = 50,
 		win2000sp2 = 55,
 		win2000sp3 = 60,
-		win2000sp4 = 65, // or later
+		win2000sp4 = 65,
 
 		winXP = 75,
 		winXPsp1 = 80, 
 		winXPsp2 = 82,
-		winXPsp3 = 84, // or later
+		winXPsp3 = 84,
 
 		winServer2003 = 90,
+		winServer2003R2 = 91,
 		winServer2003sp1 = 92,
-		winServer2003sp2 = 94, // or later
+		winServer2003R2sp1 = 93,
+		winServer2003sp2 = 94,
+		winServer2003R2sp2 = 95,
 
 		winVista = 100,
 		winVistaSp1 = 102, 
 		winVistaSp2 = 103, 
 
-		winServer2008 = 110, // or later
+		winServer2008 = 110,
+		winServer2008R2 = 111,
+
+		win7 = 120,
 
 		//
 		// winMax must be +1 the highest configuration 
 		// since IsInOperatingSystemInRange is not inclusive
 		// 
 
-		winMax = 111 
+		winMax = 121
+	};
+
+	struct Os2StringMapEntry
+	{
+		OperatingSystem os;
+		LPCWSTR name;
+	};
+
+	static const Os2StringMapEntry Os2StringMap[] =
+	{
+		{ win95, L"Windows 95" },
+		{ win95osr2, L"Windows 95 OSR2" },
+		{ win98, L"Windows 98" },
+		{ win98se, L"Windows 98 Second Edition" },
+		{ winME, L"Windows ME" },
+		{ winNT4, L"Windows NT 4" },
+		{ winNT4sp6, L"Windows NT 4 Sp6" },
+		{ winNT4sp6a, L"Windows NT 4 Sp6a" },
+		{ win2000, L"Windows 2000" },
+		{ win2000sp1, L"Windows 2000 Sp1" },
+		{ win2000sp2, L"Windows 2000 Sp2" },
+		{ win2000sp3, L"Windows 2000 Sp3" },
+		{ win2000sp4, L"Windows 2000 Sp4" },
+		{ winXP, L"Windows XP" },
+		{ winXPsp1, L"Windows XP Sp1" },
+		{ winXPsp2, L"Windows XP Sp2" },
+		{ winXPsp3, L"Windows XP Sp3" },
+		{ winServer2003, L"Windows Server 2003" },
+		{ winServer2003sp1, L"Windows Server 2003 Sp1" },
+		{ winServer2003sp2, L"Windows Server 2003 Sp2" },
+		{ winServer2003R2, L"Windows Server 2003 R2" },
+		{ winServer2003R2sp1, L"Windows Server 2003 R2 Sp1" },
+		{ winServer2003R2sp2, L"Windows Server 2003 R2 Sp2" },
+		{ winServer2008, L"Windows Server 2008" },
+		{ winServer2008R2, L"Windows Server 2008 R2" },
+		{ winVista, L"Windows Vista" },
+		{ winVistaSp1, L"Windows Vista Sp1" },
+		{ winVistaSp2, L"Windows Vista Sp2" },
+		{ win7, L"Windows 7" }
 	};
 
 	// operating system version
 	OperatingSystem GetOperatingSystemVersion();
 	// operating system version string
 	std::wstring GetOperatingSystemVersionString();
+	std::wstring os2wstring(OperatingSystem os);
 	// true if operating system within bounds
 	bool IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& l, const std::wstring& r);
 	// get the operating system LCID

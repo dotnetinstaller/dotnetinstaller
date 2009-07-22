@@ -21,16 +21,29 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 			L"GetVersionEx");
 	}
 
+    SYSTEM_INFO si = { 0 };
+	::GetSystemInfo(& si);
+
 	switch (osvi.dwPlatformId)
 	{
 		// Test for the Windows NT product family.
 		case VER_PLATFORM_WIN32_NT:
+			// Windows 7
+			if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 1 && osvi.wProductType == VER_NT_WORKSTATION)
+			{
+				os = win7;
+			}
+			// Windows Server 2008 R2
+			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 1 && osvi.wProductType != VER_NT_WORKSTATION)
+			{
+				os = winServer2008R2;
+			}
 			// Windows Server 2008
-			if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType == 3)
+			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType != VER_NT_WORKSTATION)
 			{
 				os = winServer2008;
 			}
-			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType == 1)
+			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType == VER_NT_WORKSTATION)
 			{
 				os = winVista;
 
@@ -40,51 +53,61 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 					os = winVistaSp2;
 			}
 			// Windows Server 2003 versions
-			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && osvi.wProductType == 3)
+			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && GetSystemMetrics(89 /* SM_SERVERR2 */) != 0)
 			{
 				os = winServer2003;
 
-				if (osvi.wServicePackMajor >= 2)
-					os = winServer2003sp2;
-				else if (osvi.wServicePackMajor == 1)
+				if (osvi.wServicePackMajor == 1)
 					os = winServer2003sp1;
+				else if (osvi.wServicePackMajor >= 2)
+					os = winServer2003sp2;
 			}
-			// Windows XP 64 bit versions
-			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && osvi.wProductType == 1)
+			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && GetSystemMetrics(89 /* SM_SERVERR2 */) == 0)
+			{
+				os = winServer2003R2;
+
+				if (osvi.wServicePackMajor == 1)
+					os = winServer2003R2sp1;
+				else if (osvi.wServicePackMajor >= 2)
+					os = winServer2003R2sp2;
+			}
+			// Windows XP 64 bit Professional
+			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && osvi.wProductType == VER_NT_WORKSTATION && si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64)
 			{
 				os = winXP;
 
-				if (osvi.wServicePackMajor == 2)
-					os = winXPsp2;
-				else if (osvi.wServicePackMajor == 1)
+				if (osvi.wServicePackMajor == 1)
 					os = winXPsp1;
+				else if (osvi.wServicePackMajor == 2)
+					os = winXPsp2;
+				else if (osvi.wServicePackMajor >= 3)
+					os = winXPsp3;
 			}
 			// Windows XP 32 bit versions
 			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1 )
 			{
 				os = winXP;
 
-				if (osvi.wServicePackMajor >= 3)
-					os = winXPsp3;
+				if (osvi.wServicePackMajor == 1)
+					os = winXPsp1;
 				else if (osvi.wServicePackMajor == 2)
 					os = winXPsp2;
-				else if (osvi.wServicePackMajor == 1)
-					os = winXPsp1;
+				else if (osvi.wServicePackMajor >= 3)
+					os = winXPsp3;
 			}
 			// Windows 2000 versions
 			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0 )
 			{
 				os = win2000;
 
-				if (osvi.wServicePackMajor >= 4)
-					os = win2000sp4;
-				else if (osvi.wServicePackMajor == 3)
-					os = win2000sp3;
+				if (osvi.wServicePackMajor == 1)
+					os = win2000sp1;
 				else if (osvi.wServicePackMajor == 2)
 					os = win2000sp2;
-				else if (osvi.wServicePackMajor == 1)
-					os = win2000sp1;
-
+				else if (osvi.wServicePackMajor == 3)
+					os = win2000sp3;
+				else if (osvi.wServicePackMajor >= 4)
+					os = win2000sp4;
 			}
 			// Windows NT versions
 			else if ( osvi.dwMajorVersion == 4 )
@@ -130,68 +153,17 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 	}
 
 	CHECK_BOOL(os != winNotSupported, 
-		L"Unsupported operating system");
+		L"Unsupported operating system, major=" << osvi.dwMajorVersion 
+			<< L", version=" << osvi.dwMinorVersion << L"." << osvi.dwMinorVersion
+			<< L", sp=" << osvi.wServicePackMajor << L"." << osvi.wServicePackMinor
+			<< L", type=" << osvi.wProductType);
 	
 	return os;
 }
 
 std::wstring DVLib::GetOperatingSystemVersionString()
 {
-	OperatingSystem os = GetOperatingSystemVersion();
-
-	switch(os)
-	{
-	case win95:
-		return L"Windows 95";
-	case win95osr2:
-		return L"Windows 95 OSR2";
-	case win98:
-		return L"Windows 98";
-	case win98se:
-		return L"Windows 98 Second Edition";
-	case winME:
-		return L"Windows ME";
-	case winNT4:
-		return L"Windows NT 4";
-	case winNT4sp6:
-		return L"Windows NT 4 Sp6";
-	case winNT4sp6a:
-		return L"Windows NT 4 Sp6a";
-	case win2000:
-		return L"Windows 2000";
-	case win2000sp1:
-		return L"Windows 2000 Sp1";
-	case win2000sp2:
-		return L"Windows 2000 Sp2";
-	case win2000sp3:
-		return L"Windows 2000 Sp3";
-	case win2000sp4:
-		return L"Windows 2000 Sp4";
-	case winXP:
-		return L"Windows XP";
-	case winXPsp1:
-		return L"Windows XP Sp1";
-	case winXPsp2:
-		return L"Windows XP Sp2";
-	case winXPsp3:
-		return L"Windows XP Sp3";
-	case winServer2003:
-		return L"Windows Server 2003";
-	case winServer2003sp1:
-		return L"Windows Server 2003 Sp1";
-	case winServer2003sp2:
-		return L"Windows Server 2003 Sp2";
-	case winServer2008:
-		return L"Windows Server 2008";
-	case winVista:
-		return L"Windows Vista";
-	case winVistaSp1:
-		return L"Windows Vista Sp1";
-	case winVistaSp2:
-		return L"Windows Vista Sp2";
-	default:
-		throw std::exception("Unsupported operating system");
-	}
+	return os2wstring(GetOperatingSystemVersion());
 }
 
 bool DVLib::IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& l, const std::wstring& r)
@@ -411,3 +383,15 @@ std::wstring DVLib::lcidtype2wstring(LcidType lcidtype)
 	THROW_EX(L"Invalid LCID type: " << lcidtype);
 }
 
+std::wstring DVLib::os2wstring(OperatingSystem os)
+{
+	for (int i = 0; i < ARRAYSIZE(Os2StringMap); i++)
+	{
+		if (Os2StringMap[i].os == os)
+		{
+			return Os2StringMap[i].name;
+		}
+	}
+
+	THROW_EX(L"Unsupported operating system, os=" << os);
+}

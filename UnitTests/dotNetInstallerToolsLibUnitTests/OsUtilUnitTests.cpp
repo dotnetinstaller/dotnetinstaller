@@ -136,3 +136,30 @@ void OsUtilUnitTests::testlcidtype2wstring()
 	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"System") == DVLib::LcidSystem);
 	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"User") == DVLib::LcidUser);
 }
+
+void OsUtilUnitTests::testos2wstring()
+{
+	for (int i = 0; i < ARRAYSIZE(Os2StringMap); i++)
+	{
+		std::wstring os_s = DVLib::os2wstring(Os2StringMap[i].os);
+		CPPUNIT_ASSERT(os_s == Os2StringMap[i].name);
+	}
+
+	OperatingSystem KnownOperatingSystems[] = 
+	{
+		win95, win95osr2, win98, win98se, winME,
+		winNT4, winNT4sp6, winNT4sp6a,
+		win2000, win2000sp1, win2000sp2, win2000sp3, win2000sp4,
+		winXP, winXPsp1, winXPsp2, winXPsp3,
+		winServer2003, winServer2003R2, winServer2003sp1, winServer2003R2sp1, winServer2003sp2, winServer2003R2sp2,
+		winVista, winVistaSp1, winVistaSp2,
+		winServer2008, winServer2008R2, 
+		win7
+	};
+
+	for (int i = 0; i < ARRAYSIZE(KnownOperatingSystems); i++)
+	{
+		std::wstring os_s = DVLib::os2wstring(KnownOperatingSystems[i]);
+		CPPUNIT_ASSERT(! os_s.empty());
+	}
+}

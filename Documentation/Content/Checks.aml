@@ -301,14 +301,29 @@
               <entry>90</entry>
             </row>
             <row>
+              <entry>Windows Server 2003 R2</entry>
+              <entry>winServer2003R2</entry>
+              <entry>91</entry>
+            </row>
+            <row>
               <entry>Windows Server 2003 Service Pack 1</entry>
               <entry>winServer2003sp1</entry>
               <entry>92</entry>
             </row>
             <row>
+              <entry>Windows Server 2003 R2 Service Pack 1</entry>
+              <entry>winServer2003R2sp1</entry>
+              <entry>93</entry>
+            </row>
+            <row>
               <entry>Windows Server 2003 Service Pack 2</entry>
               <entry>winServer2003sp2</entry>
               <entry>94</entry>
+            </row>
+            <row>
+              <entry>Windows Server 2003 R2 Service Pack 2</entry>
+              <entry>winServer2003R2sp2</entry>
+              <entry>95</entry>
             </row>
             <row>
               <entry>Windows Vista</entry>
@@ -331,9 +346,14 @@
               <entry>110</entry>
             </row>
             <row>
-              <entry>Next ...</entry>
-              <entry>winLater</entry>
-              <entry>200</entry>
+              <entry>Windows Server 2008 R2</entry>
+              <entry>winServer2008R2</entry>
+              <entry>111</entry>
+            </row>
+            <row>
+              <entry>Windows 7</entry>
+              <entry>win7</entry>
+              <entry>120</entry>
             </row>
           </table>
         </para>
