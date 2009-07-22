@@ -1,6 +1,8 @@
 #pragma once
 #include "Component.h"
 
+typedef shared_any<CWinThread *, close_delete> ThreadPtr;
+
 class ThreadComponent : public Component
 {
 public:
@@ -15,7 +17,7 @@ public:
 protected:
     virtual int ExecOnThread() = 0;
 private:
-    auto_any<CWinThread *, close_delete> m_pThread;
+    ThreadPtr m_pThread;
     std::wstring m_error;
 	int m_rc;
     static UINT ExecuteThread(LPVOID pParam);

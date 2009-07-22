@@ -77,8 +77,8 @@ void FileUtilUnitTests::testFileMove()
 	CPPUNIT_ASSERT(DVLib::FileExists(path));
 	std::string path_copy = path + ".move";
 	CPPUNIT_ASSERT(! DVLib::FileExists(path_copy));
-	DVLib::FileMove(path, path_copy, true);
-	CPPUNIT_ASSERT(DVLib::FileExists(! path));
+	DVLib::FileMove(path, path_copy);
+	CPPUNIT_ASSERT(! DVLib::FileExists(path));
 	CPPUNIT_ASSERT(DVLib::FileExists(path_copy));
 	DVLib::FileDelete(path_copy);
 }

@@ -108,39 +108,39 @@ void DownloadDialog::OnClose( ) //Chiusura della finestra tramite X
 // Messaggio custom per gestire la sincronizzazione e lo scambio di informazioni tra i due thread 
 afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM lParam)
 {
-	DownloadStatusPtr l_Param(reinterpret_cast<DownloadStatus *>(wParam));
+	DownloadStatusPtr downloadstatus(reinterpret_cast<DownloadStatus *>(wParam));
 
-	if (l_Param->type == StatusType_Downloading)
+	if (downloadstatus->type == StatusType_Downloading)
 	{
-		if (l_Param->progress_max != 0)
+		if (downloadstatus->progress_max != 0)
 		{
-			m_ProgressControl.SetPos((int) ((double) l_Param->progress_current / (double) l_Param->progress_max * 1000.0));
+			m_ProgressControl.SetPos((int) ((double) downloadstatus->progress_current / (double) downloadstatus->progress_max * 1000.0));
 		}
 		else
 		{
 			m_ProgressControl.SetPos(0);
 		}
 
-		m_LabelStatus.SetWindowText(l_Param->status.c_str());
+		m_LabelStatus.SetWindowText(downloadstatus->status.c_str());
 	}
-	else if (l_Param->type == StatusType_Error) //ERROR
+	else if (downloadstatus->type == StatusType_Error) //ERROR
 	{
 		// download fails with E_ABORT on cancel
 		if (! IsDownloadCancelled())
 		{
-			LOG(L"*** Download ERROR: " << l_Param->error);
-			DniMessageBox::Show(l_Param->error, MB_OK|MB_ICONSTOP);
+			LOG(L"*** Download ERROR: " << downloadstatus->error);
+			DniMessageBox::Show(downloadstatus->error, MB_OK|MB_ICONSTOP);
 			m_bDownloadError = true;
 		}
 
 		::PostMessage(GetSafeHwnd(), WM_USER_CLOSE_DIALOG, 0, 0);
 	}
-	else if (l_Param->type == StatusType_Canceled) //CANCELED
+	else if (downloadstatus->type == StatusType_Canceled) //CANCELED
 	{
 		LOG(L"*** Download CANCELED");
 		m_bDownloadCancelled = true;
 	}
-	else if (l_Param->type == StatusType_Completed) //COMPLETED
+	else if (downloadstatus->type == StatusType_Completed) //COMPLETED
 	{
 		LOG(L"--- Download OK");
 		m_bDownloadCompleted = true; //Download OK

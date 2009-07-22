@@ -42,13 +42,3 @@ public:
 	CKCBusyProgressCtrl m_BusyControl;
 	afx_msg LRESULT OnSetStatusInstall(WPARAM wParam, LPARAM lParam);
 };
-
-struct InstallStatus;
-typedef auto_any<InstallStatus *, close_delete> InstallStatusPtr;
-
-struct InstallStatus
-{
-	std::wstring status;
-
-	static InstallStatusPtr CreateStatus(const std::wstring& status);
-};

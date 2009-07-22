@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "dotNetInstaller.h"
+#include "InstallStatus.h"
 #include "InstallComponentDlg.h"
 
 IMPLEMENT_DYNAMIC(InstallComponentDlg, CDialog)
