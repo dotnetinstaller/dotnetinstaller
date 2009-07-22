@@ -70,6 +70,19 @@ void FileUtilUnitTests::testFileCopy()
 	DVLib::FileDelete(path_copy);
 }
 
+void FileUtilUnitTests::testFileMove()
+{
+	std::string path = DVLib::GetTemporaryFileNameA();
+	std::cout << std::endl << "Temporary filename: " << path;
+	CPPUNIT_ASSERT(DVLib::FileExists(path));
+	std::string path_copy = path + ".move";
+	CPPUNIT_ASSERT(! DVLib::FileExists(path_copy));
+	DVLib::FileMove(path, path_copy, true);
+	CPPUNIT_ASSERT(DVLib::FileExists(! path));
+	CPPUNIT_ASSERT(DVLib::FileExists(path_copy));
+	DVLib::FileDelete(path_copy);
+}
+
 void FileUtilUnitTests::testGetFileSize()
 {
     std::wstring moduledir = DVLib::GetModuleDirectoryW();

@@ -115,8 +115,12 @@ void DownloadComponent::StartDownload()
 		return;
 	}
 
-	CHECK_HR_DLL(URLDownloadToFile(NULL, m_pComponent->sourceurl.c_str(), destination_full_filename.c_str(), 0, this),
-		L"Error downloading \"" << m_pComponent->sourceurl << L"\" to \"" << destination_full_filename << L"\"", L"urlmon.dll");
+	// download to a .tmp file, then rename to avoid partially donwloaded installers
+	std::wstring destination_full_filename_tmp = destination_full_filename + L".tmp";
+	CHECK_HR_DLL(URLDownloadToFile(NULL, m_pComponent->sourceurl.c_str(), destination_full_filename_tmp.c_str(), 0, this),
+		L"Error downloading \"" << m_pComponent->sourceurl << L"\" to \"" << destination_full_filename_tmp << L"\"", L"urlmon.dll");
+
+	DVLib::FileMove(destination_full_filename_tmp, destination_full_filename);
 
 	LOG(L"Download '" << m_pComponent->componentname << L"', size=" 
 		<< DVLib::FormatBytesW(DVLib::GetFileSize(destination_full_filename)) << L": OK");

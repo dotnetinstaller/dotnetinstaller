@@ -77,6 +77,24 @@ void DVLib::FileCopy(const std::wstring& from, const std::wstring& to, bool over
 		L"Error copying \"" << from << L"\" to \"" << to << L"\"");
 }
 
+void DVLib::FileMove(const std::string& from, const std::string& to)
+{
+	if (FileExists(to)) 
+		FileDelete(to);
+
+	CHECK_WIN32_BOOL(::MoveFileA(from.c_str(), to.c_str()),
+		L"Error moving \"" << DVLib::string2wstring(from) << L"\" to \"" << DVLib::string2wstring(to) << L"\"");
+}
+
+void DVLib::FileMove(const std::wstring& from, const std::wstring& to)
+{
+	if (FileExists(to)) 
+		FileDelete(to);
+
+	CHECK_WIN32_BOOL(::MoveFileW(from.c_str(), to.c_str()),
+		L"Error moving \"" << from << L"\" to \"" << to << L"\"");
+}
+
 long DVLib::GetFileSize(const std::wstring& filename)
 {
     WIN32_FILE_ATTRIBUTE_DATA attr = { 0 };

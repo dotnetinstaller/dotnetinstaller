@@ -11,6 +11,9 @@ namespace DVLib
 	// copy a file
 	void FileCopy(const std::string& from, const std::string& to, bool overwrite = true);
 	void FileCopy(const std::wstring& from, const std::wstring& to, bool overwrite = true);
+	// move a file
+	void FileMove(const std::string& from, const std::string& to);
+	void FileMove(const std::wstring& from, const std::wstring& to);
 	// delete a file
 	void FileDelete(const std::string& filename);
 	void FileDelete(const std::wstring& filename);

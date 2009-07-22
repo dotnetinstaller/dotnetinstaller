@@ -11,6 +11,7 @@ namespace DVLib
 			CPPUNIT_TEST( testGetTemporaryFileName );
 			CPPUNIT_TEST( testFileDelete );
 			CPPUNIT_TEST( testFileCopy );
+			CPPUNIT_TEST( testFileMove );
 			CPPUNIT_TEST( testGetFileSize );
 			CPPUNIT_TEST( testFileWrite );
 			CPPUNIT_TEST( testFileCreate );
@@ -27,6 +28,7 @@ namespace DVLib
 			void testGetTemporaryFileName();
 			void testFileDelete();
 			void testFileCopy();
+			void testFileMove();
 			void testGetFileSize();
 			void testFileWrite();
 			void testFileCreate();
