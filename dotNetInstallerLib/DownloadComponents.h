@@ -11,7 +11,6 @@ protected:
 public:
 	bool IsCopyRequired() const;
 	bool IsDownloadRequired() const;
-	DownloadComponents(
-		IDownloadCallback * callback, 
-		const std::vector<DownloadComponentInfoPtr>& component_info);
+	DownloadComponents();
+	void Load(IDownloadCallback * callback, const std::vector<DownloadComponentInfoPtr>& component_info);
 };

@@ -27,7 +27,7 @@ int ProcessComponent::GetExitCode() const
 bool ProcessComponent::IsExecuting() const
 {
 	DWORD l_ExitCode;
-	if (GetExitCodeProcess(m_process_info.hProcess, &l_ExitCode))
+	if (m_process_info.hProcess != NULL && GetExitCodeProcess(m_process_info.hProcess, &l_ExitCode))
 	{
 		return (l_ExitCode == STILL_ACTIVE);
 	}

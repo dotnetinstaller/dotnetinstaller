@@ -9,7 +9,8 @@ using namespace DVLib::UnitTests;
 void DownloadComponentsUnitTests::testIsCopyDownloadRequiredEmpty()
 {
 	std::vector<DownloadComponentInfoPtr> component_info;
-	DownloadComponents components(NULL, component_info);
+	DownloadComponents components;
+	components.Load(NULL, component_info);
 	// empty components, no copy required, but download is
 	CPPUNIT_ASSERT(! components.IsCopyRequired());
 	CPPUNIT_ASSERT(! components.IsDownloadRequired());	
@@ -22,7 +23,8 @@ void DownloadComponentsUnitTests::testIsCopyDownloadRequired()
 	c->sourceurl = L"http://download.microsoft.com/download/5/6/7/567758a3-759e-473e-bf8f-52154438565a/dotnetfx.exe";
 	std::vector<DownloadComponentInfoPtr> component_info;
 	component_info.push_back(c);
-	DownloadComponents components(NULL, component_info);
+	DownloadComponents components;
+	components.Load(NULL, component_info);
 	// component with no source path
 	CPPUNIT_ASSERT(! components.IsCopyRequired());	
 	CPPUNIT_ASSERT(components.IsDownloadRequired());
@@ -51,7 +53,8 @@ void DownloadComponentsUnitTests::testDownload()
 	DownloadComponentCallbackImpl callback;
 	std::vector<DownloadComponentInfoPtr> component_info;
 	component_info.push_back(info);
-	DownloadComponents components(& callback, component_info);
+	DownloadComponents components;
+	components.Load(& callback, component_info);
 	components.Exec();
 	components.Wait();
 	std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
@@ -72,7 +75,8 @@ void DownloadComponentsUnitTests::testCopyFromSource()
 	DownloadComponentCallbackImpl callback;
 	std::vector<DownloadComponentInfoPtr> component_info;
 	component_info.push_back(info);
-	DownloadComponents components(& callback, component_info);
+	DownloadComponents components;
+	components.Load(& callback, component_info);
 	components.Exec();
 	components.Wait();
 	std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
@@ -103,7 +107,8 @@ void DownloadComponentsUnitTests::testDownloadMultiple()
 	std::vector<DownloadComponentInfoPtr> component_info;
 	component_info.push_back(info1);
 	component_info.push_back(info2);
-	DownloadComponents components(& callback, component_info);
+	DownloadComponents components;
+	components.Load(& callback, component_info);
 	components.Exec();
 	components.Wait();
 	std::wstring fullpath1 = DVLib::DirectoryCombine(info1->destinationpath, info1->destinationfilename);

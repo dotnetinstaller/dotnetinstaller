@@ -47,7 +47,7 @@ void ThreadComponent::Exec()
 
 void ThreadComponent::BeginExec()
 {
-    m_pThread = ThreadPtr(AfxBeginThread(ExecuteThread, this, 0, 0, CREATE_SUSPENDED));
+    m_pThread = ThreadPtr(AfxBeginThread(ExecuteThread, this, THREAD_PRIORITY_NORMAL, 0, CREATE_SUSPENDED));
 
 	CHECK_WIN32_BOOL(get(m_pThread) != NULL,
 		L"AfxBeginThread");
@@ -61,8 +61,11 @@ void ThreadComponent::EndExec()
 	if (! get(m_pThread))
 		return;
 
-	CHECK_WIN32_BOOL(WAIT_FAILED != WaitForSingleObject(m_pThread->m_hThread, INFINITE),
-		L"WaitForSingleObject");
+	if (m_pThread->m_hThread != NULL)
+	{
+		CHECK_WIN32_BOOL(WAIT_FAILED != WaitForSingleObject(m_pThread->m_hThread, INFINITE),
+			L"WaitForSingleObject");
+	}
 
 	reset(m_pThread);
 

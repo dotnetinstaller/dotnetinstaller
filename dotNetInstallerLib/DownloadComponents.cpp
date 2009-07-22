@@ -2,12 +2,17 @@
 #include "DownloadComponents.h"
 #include "InstallerLog.h"
 
-DownloadComponents::DownloadComponents(
-	IDownloadCallback * callback_impl, 
-	const std::vector<DownloadComponentInfoPtr>& component_info)
+DownloadComponents::DownloadComponents()
 	: ThreadComponent(undefined)
-	, callback(callback_impl)
+	, callback(NULL)
 {
+
+}
+
+void DownloadComponents::Load(IDownloadCallback * callback_ptr, const std::vector<DownloadComponentInfoPtr>& component_info)
+{
+	callback = callback_ptr;
+
 	for (size_t i = 0; i < component_info.size(); i++)
 	{
 		push_back(DownloadComponentPtr(new DownloadComponent(

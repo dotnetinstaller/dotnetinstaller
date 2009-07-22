@@ -28,7 +28,9 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
 	LRESULT OnCloseDialog(WPARAM, LPARAM);
-	virtual afx_msg void OnClose();
+	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+	afx_msg void OnCancel();
+	afx_msg void OnClose();
 	static UINT ThreadProc(LPVOID pParam);
 	DECLARE_MESSAGE_MAP()
 public:
