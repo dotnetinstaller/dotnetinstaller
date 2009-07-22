@@ -5,9 +5,8 @@ class CInstallerCommandLineInfo :
 	public CCommandLineInfo
 {
 public:
-	CInstallerCommandLineInfo(void);
-	virtual ~CInstallerCommandLineInfo(void);
-	virtual void ParseParam(const TCHAR* pszParam, BOOL bFlag);
+	CInstallerCommandLineInfo();
+	void ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast);
     const std::wstring& GetCompleteCommandArgs() const { return m_completeCommandArgs; }
     bool ExtractCab() const { return m_extractCab; }
 	bool DisplayCab() const { return m_displayCab; }

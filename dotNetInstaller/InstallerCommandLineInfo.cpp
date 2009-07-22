@@ -4,15 +4,11 @@
 
 CInstallerCommandLineInfo commandLineInfo;
 
-CInstallerCommandLineInfo::CInstallerCommandLineInfo(void)
+CInstallerCommandLineInfo::CInstallerCommandLineInfo()
 {
 }
 
-CInstallerCommandLineInfo::~CInstallerCommandLineInfo(void)
-{
-}
-
-void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag)
+void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL /*bLast*/)
 {
 	if (bFlag)
     {
