@@ -443,7 +443,11 @@ public:
 protected:
 
 	// Print Debug Output 
-	static void TraceA(char* s8_Format, ...)
+	static void TraceA(char* 
+		#if _TraceExtract
+		s8_Format
+		#endif
+		, ...)
 	{
 		#if _TraceExtract
 			char s8_Buf[5001];
@@ -914,26 +918,26 @@ protected:
 	// This function will be called for each file in a cabinet at the moment it is about to be extracted. This
 	// function can be overridden.
 	// Return TRUE to extract the file to the path specified by the second parameter or FALSE to skip.
-	BOOL OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param)
+	BOOL OnBeforeCopyFile(kCabinetFileInfo &/*k_FI*/, void* /*p_Param*/)
 	{
 		return TRUE;
 	}
 
 	// This function will be called when a file is succesfully extracted.
-	void OnAfterCopyFile(char* s8_File, WCHAR* u16_File, void* p_Param)
+	void OnAfterCopyFile(char* /*s8_File*/, WCHAR* /*u16_File*/, void* /*p_Param*/)
 	{ 
 	}
 
 	// This function will be called exactly once for each cabinet opened by Copy, including continuation
 	// cabinets opened due to files spanning cabinet boundaries. This function can be overridden.
-	void OnCabinetInfo(kCabinetInfo &ci, void* p_Param)
+	void OnCabinetInfo(kCabinetInfo &/*ci*/, void* /*p_Param*/)
 	{ 
 	}
 
 	// This function will be called when the next cabinet file in the sequence needs to be opened. The path
 	// has to be verified and can be changed if necessary. If the cabinet file cannot be opened this function
 	// will be called again with the second parameter set to an error that describes the problem.
-	void OnNextCabinet(kCabinetInfo &ci, FDIERROR s32_Error, void* p_Param)
+	void OnNextCabinet(kCabinetInfo &/*ci*/, FDIERROR /*s32_Error*/, void* /*p_Param*/)
 	{ 
 	}
 };

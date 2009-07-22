@@ -126,7 +126,7 @@ void DownloadComponent::StartDownload()
 		<< DVLib::FormatBytesW(DVLib::GetFileSize(destination_full_filename)) << L": OK");
 }
 
-HRESULT DownloadComponent::OnProgress(ULONG ulProgress, ULONG ulProgressMax, ULONG ulStatusCode, LPCWSTR wszStatusText)
+HRESULT DownloadComponent::OnProgress(ULONG ulProgress, ULONG ulProgressMax, ULONG ulStatusCode, LPCWSTR /* wszStatusText */)
 {
 	// Did the user hit the Stop button?
 	if ( m_Callback && m_Callback->IsDownloadCancelled() )
@@ -151,37 +151,37 @@ HRESULT DownloadComponent::OnProgress(ULONG ulProgress, ULONG ulProgressMax, ULO
 	return S_OK;
 }
 
-HRESULT DownloadComponent::OnStopBinding(HRESULT hresult, LPCWSTR szError)
+HRESULT DownloadComponent::OnStopBinding(HRESULT /* hresult */, LPCWSTR /* szError */)
 {
 	return E_NOTIMPL;
 }
 
-HRESULT DownloadComponent::OnStartBinding(DWORD dwReserved, IBinding __RPC_FAR *pib)
+HRESULT DownloadComponent::OnStartBinding(DWORD /* dwReserved */, IBinding __RPC_FAR *)
 {
 	return E_NOTIMPL;
 }
 
-HRESULT DownloadComponent::GetPriority(LONG __RPC_FAR *pnPriority)
+HRESULT DownloadComponent::GetPriority(LONG __RPC_FAR *)
 {
 	return E_NOTIMPL;
 }
 
-HRESULT DownloadComponent::OnLowResource(DWORD reserved)
+HRESULT DownloadComponent::OnLowResource(DWORD /* reserved */)
 {
 	return E_NOTIMPL;
 }
 
-HRESULT DownloadComponent::GetBindInfo(DWORD __RPC_FAR *grfBINDF, BINDINFO __RPC_FAR *pbindinfo)
+HRESULT DownloadComponent::GetBindInfo(DWORD __RPC_FAR * /* grfBINDF */, BINDINFO __RPC_FAR * /* pbindinfo */)
 {
 	return E_NOTIMPL;
 }
 
-HRESULT DownloadComponent::OnDataAvailable(DWORD grfBSCF, DWORD dwSize, FORMATETC __RPC_FAR *pformatetc, STGMEDIUM __RPC_FAR *pstgmed)
+HRESULT DownloadComponent::OnDataAvailable(DWORD /* grfBSCF */, DWORD /* dwSize */, FORMATETC __RPC_FAR * /* pformatetc */, STGMEDIUM __RPC_FAR * /* pstgmed */)
 {
 	return E_NOTIMPL;
 }
 
-HRESULT DownloadComponent::OnObjectAvailable(REFIID riid, IUnknown __RPC_FAR *punk)
+HRESULT DownloadComponent::OnObjectAvailable(REFIID /* riid */, IUnknown __RPC_FAR * /* punk */)
 {
 	return E_NOTIMPL;
 }
@@ -197,7 +197,7 @@ ULONG DownloadComponent::Release()
 	return 0;
 }
 
-HRESULT DownloadComponent::QueryInterface(REFIID riid, void __RPC_FAR *__RPC_FAR *ppvObject)
+HRESULT DownloadComponent::QueryInterface(REFIID /* riid */, void __RPC_FAR *__RPC_FAR * /* ppvObject */)
 { 
 	return E_NOTIMPL; 
 }

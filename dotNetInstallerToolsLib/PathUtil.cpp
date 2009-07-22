@@ -24,7 +24,7 @@ std::wstring DVLib::GetFileDirectoryW(const std::wstring& path)
 	if (DVLib::startswith(path, L"file://"))
 		return L"file://" + GetFileDirectoryW(path.substr(ARRAYSIZE(L"file://") - 1));
 
-	int backslashPos = path.rfind(L'\\', path.length());
+	std::wstring::size_type backslashPos = path.rfind(L'\\', path.length());
 	if (backslashPos == path.npos) backslashPos = path.rfind(L'/', path.length());
 	if (backslashPos == path.npos)
 		return L"";
@@ -44,7 +44,7 @@ std::string DVLib::GetFileNameA(const std::string& path)
 
 std::wstring DVLib::GetFileNameW(const std::wstring& path)
 {
-	int backslashPos = path.rfind(L'\\', path.length());
+	std::wstring::size_type backslashPos = path.rfind(L'\\', path.length());
 	if (backslashPos == path.npos) backslashPos = path.rfind(L'/', path.length());
 	if (backslashPos == path.npos)
 		return path;

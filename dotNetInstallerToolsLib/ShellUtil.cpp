@@ -29,7 +29,7 @@ std::wstring DVLib::GetEnvironmentVariable(const std::wstring& name)
 std::wstring DVLib::ExpandEnvironmentVariables(const std::wstring& s_in)
 {
 	std::wstring s(s_in);
-	int i = 0, j = 0;	
+	std::wstring::size_type i = 0, j = 0;	
 	while (((i = s.find(L"%", i)) != s.npos) && ((j = s.find(L"%", i + 1)) != s.npos))
 	{
 		if (i + 1 != j)

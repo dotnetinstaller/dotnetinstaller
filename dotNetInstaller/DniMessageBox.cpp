@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DniMessageBox.h"
 
-void CALLBACK CloseMessageBox(HWND p_hwnd, UINT p_uiMsg, UINT p_idEvent, DWORD p_dwTime)
+void CALLBACK CloseMessageBox(HWND /*p_hwnd*/, UINT /*p_uiMsg*/, UINT /*p_idEvent*/, DWORD /*p_dwTime*/)
 {
 	HWND hwnd = FindWindow(NULL, AfxGetApp()->m_pszAppName);
 	if (hwnd != NULL)

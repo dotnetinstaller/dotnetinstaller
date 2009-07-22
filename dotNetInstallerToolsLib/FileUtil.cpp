@@ -128,7 +128,7 @@ std::vector<char> DVLib::FileReadToEnd(const std::wstring& filename)
         CHECK_WIN32_BOOL(::ReadFile(get(hFile), & * data.begin(), size, & dwRead, NULL),
             L"Error reading \"" << filename << L"\"");
 
-        CHECK_BOOL(dwRead == size,
+        CHECK_BOOL(static_cast<long>(dwRead) == size,
             L"Invalid number of bytes read from \"" << filename << L"\"");
     }
 	return data;

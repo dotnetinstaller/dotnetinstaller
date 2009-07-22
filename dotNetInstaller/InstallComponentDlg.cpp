@@ -103,7 +103,7 @@ BOOL InstallComponentDlg::OnInitDialog()
 }
 
 // WM_USER_SETSTATUSINSTALL
-afx_msg LRESULT InstallComponentDlg::OnSetStatusInstall(WPARAM wParam, LPARAM lParam)
+afx_msg LRESULT InstallComponentDlg::OnSetStatusInstall(WPARAM wParam, LPARAM /*lParam*/)
 {
     if (wParam != NULL)
     {

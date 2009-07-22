@@ -8,7 +8,7 @@ public:
 	static std::basic_string<T> replace(const std::basic_string<T>& s_in, const std::basic_string<T>& from, const std::basic_string<T>& to) 
 	{
 		std::basic_string<T> s(s_in);
-		int ii = 0;
+		std::basic_string<T>::size_type ii = 0;
 		int result = 0; // \todo: return number of replacements
 		
 		if (s.length() != 0 && from.length() != 0)
@@ -26,7 +26,7 @@ public:
 	static std::vector<std::basic_string<T>> split(const std::basic_string<T>& ss, const std::basic_string<T>& delim, int max) 
 	{
 		std::vector<std::basic_string<T>> tokens;
-		int begin = 0, end = 0;
+		std::basic_string<T>::size_type begin = 0, end = 0;
 		std::basic_string<T> temp;
 
 		if (max == 1 || delim.empty()) 
@@ -42,7 +42,7 @@ public:
 			begin = end + delim.length();
 			temp = temp.substr(begin, temp.length() - begin);
 
-			if (tokens.size() + 1 == max) 
+			if (static_cast<int>(tokens.size() + 1) == max) 
 				break;
 		}
 

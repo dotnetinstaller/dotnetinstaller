@@ -113,7 +113,8 @@ std::wstring DVLib::MsiProductInfo::GetProperty(const std::wstring& property_nam
 
 bool DVLib::MsiIsProductInstalled(GUID guid)
 {
-	for each(const MsiProductInfo& pi in MsiGetInstalledProducts())
+	std::vector<MsiProductInfo> products = MsiGetInstalledProducts();
+	for each(const MsiProductInfo& pi in products)
 	{
 		if (pi.product_id == guid)
 			return true;

@@ -123,9 +123,6 @@ END_MESSAGE_MAP()
 
 void CKCBusyProgressCtrl::PreSubclassWindow() 
 {
-	DWORD			dwStyle = GetStyle();
-
-//	dwStyle |= SS_OWNERDRAW;
 	CStatic::PreSubclassWindow();
 	Recalc();
 }
@@ -188,7 +185,7 @@ void CKCBusyProgressCtrl::DrawBackground(CDC& dc, CRect& rect)
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CKCBusyProgressCtrl::DrawBlocks(CDC& dc, CRect& rect)
+void CKCBusyProgressCtrl::DrawBlocks(CDC& dc, CRect& /* rect */)
 {
 	CRect				bRect;
 	double				dXOffset = 0;
@@ -435,7 +432,7 @@ UINT CKCBusyProgressCtrl::thrdBusy(LPVOID pParam)
 	CKCBusyProgressCtrl*			pThis = (CKCBusyProgressCtrl*) pParam;
 
 	if ( !pThis )
-		return -1;
+		return 0;
 
 	while ( pThis->m_bBusyThrd )
 		Sleep(pThis->m_nSpeed);
@@ -470,7 +467,7 @@ void CKCBusyProgressCtrl::Reset()
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnSetNumSteps(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnSetNumSteps(WPARAM wParam, LPARAM /*lParam*/)
 {
 	SetNumSteps((int)wParam);
 	Invalidate();
@@ -479,7 +476,7 @@ LRESULT CKCBusyProgressCtrl::OnSetNumSteps(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnSetCurPos(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnSetCurPos(WPARAM wParam, LPARAM /*lParam*/)
 {
 	SetCurPos( (int)wParam );
 	Invalidate();
@@ -488,7 +485,7 @@ LRESULT CKCBusyProgressCtrl::OnSetCurPos(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnSetIBPad(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnSetIBPad(WPARAM wParam, LPARAM /*lParam*/)
 {
 	SetInterBlockPadding( (int) wParam );
 	Invalidate();
@@ -497,7 +494,7 @@ LRESULT CKCBusyProgressCtrl::OnSetIBPad(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnSetSpeed(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnSetSpeed(WPARAM wParam, LPARAM /*lParam*/)
 {
 	SetSpeed( (int) wParam );
 	return 0;
@@ -513,7 +510,7 @@ LRESULT CKCBusyProgressCtrl::OnSetRange(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnSetMode(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnSetMode(WPARAM wParam, LPARAM /*lParam*/)
 {
 	SetMode( (int) wParam );
 	return 0;
@@ -521,7 +518,7 @@ LRESULT CKCBusyProgressCtrl::OnSetMode(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnStartBusy(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnStartBusy(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	Start();
 	return 0;
@@ -529,7 +526,7 @@ LRESULT CKCBusyProgressCtrl::OnStartBusy(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnEndBusy(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnEndBusy(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	End();
 	return 0;
@@ -537,7 +534,7 @@ LRESULT CKCBusyProgressCtrl::OnEndBusy(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnStepIt(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnStepIt(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	StepIt();
 	Invalidate();
@@ -546,7 +543,7 @@ LRESULT CKCBusyProgressCtrl::OnStepIt(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnSetBusyType(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnSetBusyType(WPARAM wParam, LPARAM /*lParam*/)
 {
 	SetBusyType( (int) wParam );
 	return 0;
@@ -554,7 +551,7 @@ LRESULT CKCBusyProgressCtrl::OnSetBusyType(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnSetBusyFill(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnSetBusyFill(WPARAM wParam, LPARAM /*lParam*/)
 {
 	SetBusyFill( (int) wParam );
 	return 0;
@@ -562,7 +559,7 @@ LRESULT CKCBusyProgressCtrl::OnSetBusyFill(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnSetGranularity(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnSetGranularity(WPARAM wParam, LPARAM /*lParam*/)
 {
 	SetGranularity((int) wParam);
 	return 0;
@@ -570,7 +567,7 @@ LRESULT CKCBusyProgressCtrl::OnSetGranularity(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnSetColBkg(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnSetColBkg(WPARAM wParam, LPARAM /*lParam*/)
 {
 	SetColBkg( (COLORREF) wParam );
 	Invalidate();
@@ -579,7 +576,7 @@ LRESULT CKCBusyProgressCtrl::OnSetColBkg(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnSetColBFace(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnSetColBFace(WPARAM wParam, LPARAM /*lParam*/)
 {
 	SetColBlockFace( (COLORREF) wParam );
 	Invalidate();
@@ -588,7 +585,7 @@ LRESULT CKCBusyProgressCtrl::OnSetColBFace(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnSetColBEdge(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnSetColBEdge(WPARAM wParam, LPARAM /*lParam*/)
 {
 	SetColBlockEdge( (COLORREF) wParam );
 	Invalidate();
@@ -597,7 +594,7 @@ LRESULT CKCBusyProgressCtrl::OnSetColBEdge(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnSetColBFaceHi(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnSetColBFaceHi(WPARAM wParam, LPARAM /*lParam*/)
 {
 	SetColBlockFaceHi( (COLORREF) wParam );
 	Invalidate();
@@ -606,7 +603,7 @@ LRESULT CKCBusyProgressCtrl::OnSetColBFaceHi(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnSetColBEdgeHi(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnSetColBEdgeHi(WPARAM wParam, LPARAM /*lParam*/)
 {
 	SetColBlockEdgeHi( (COLORREF) wParam );
 	Invalidate();
@@ -615,7 +612,7 @@ LRESULT CKCBusyProgressCtrl::OnSetColBEdgeHi(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnRecalc(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnRecalc(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	Recalc();
 	return 0;
@@ -623,7 +620,7 @@ LRESULT CKCBusyProgressCtrl::OnRecalc(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnReset(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnReset(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	Reset();
 	return 0;
@@ -631,7 +628,7 @@ LRESULT CKCBusyProgressCtrl::OnReset(WPARAM wParam, LPARAM lParam)
 
 /////////////////////////////////////////////////////////////////////////////
 
-LRESULT CKCBusyProgressCtrl::OnUseSysCol(WPARAM wParam, LPARAM lParam)
+LRESULT CKCBusyProgressCtrl::OnUseSysCol(WPARAM wParam, LPARAM /*lParam*/)
 {
 	UseSysColBkg( wParam ? true : false );
 	return 0;

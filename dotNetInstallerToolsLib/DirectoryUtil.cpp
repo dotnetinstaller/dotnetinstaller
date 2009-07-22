@@ -235,7 +235,8 @@ std::list<std::wstring> DVLib::GetFiles(const std::wstring& path, const std::wst
                 if (flags & GET_FILES_RECURSIVE)
                 {
                     std::wstring fullsubpath = DirectoryCombine(path, data.cFileName);
-                    result.splice(result.end(), GetFiles(fullsubpath, wildcard, flags));
+					std::list<std::wstring> files = GetFiles(fullsubpath, wildcard, flags);
+                    result.splice(result.end(), files);
                 }
             }
 

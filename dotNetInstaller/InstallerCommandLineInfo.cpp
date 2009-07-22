@@ -12,7 +12,7 @@ CInstallerCommandLineInfo::~CInstallerCommandLineInfo(void)
 {
 }
 
-void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast)
+void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag)
 {
 	if (bFlag)
     {
