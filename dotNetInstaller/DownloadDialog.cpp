@@ -172,10 +172,14 @@ afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM /* lPa
 //  dovendogli però passare dei puntatori devo fare la new qui e poi la delete quando leggo il puntatore
 //  nella OnSetStatusDownload.
 //IDownloadCallback
-void DownloadDialog::Status(ULONG p_progress_current, ULONG p_MaxProgress, const std::wstring& p_Description)
+void DownloadDialog::Status(ULONG p_progress_current, ULONG p_MaxProgress, const std::wstring& message)
 {
-	DownloadStatusPtr status(DownloadStatus::CreateProgress(p_Description, p_progress_current, p_MaxProgress));
-	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM) (release(status)), 0L );
+	if (message != m_LastStatusMessage)
+	{
+		m_LastStatusMessage = message;
+		DownloadStatusPtr status(DownloadStatus::CreateProgress(message, p_progress_current, p_MaxProgress));
+		::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM) (release(status)), 0L );
+	}
 }
 
 void DownloadDialog::DownloadComplete()

@@ -545,7 +545,7 @@ bool CdotNetInstallerDlg::OnComponentExecSuccess(const ComponentPtr& component)
 	return true;
 }
 
-bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, std::exception& ex)
+bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, std::exception& /* ex */)
 {
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");

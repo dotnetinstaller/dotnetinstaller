@@ -9,6 +9,7 @@ public:
 	DownloadDialog(const DownloadGroupConfigurationPtr& p_Configuration, CWnd* pParent = NULL);
 	enum { IDD = IDD_DOWNLOAD_DIALOG };
 private:
+	std::wstring m_LastStatusMessage;
 	std::wstring m_Caption;
 	std::wstring m_HelpMessage;
 	std::wstring m_HelpMessageDownloading;
