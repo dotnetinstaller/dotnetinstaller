@@ -16,12 +16,15 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 {
 	if (bFlag)
     {
+		m_lastArgFlag = unknown;
+		if ((_wcsicmp(pszParam, TEXT("?")) == 0) || (_wcsicmp(pszParam, TEXT("help")) == 0))
+		{
+			m_displayHelp = true;
+		}
 		if (_wcsicmp(pszParam, TEXT("log")) == 0 )
 		{
-			m_lastArgFlag = log;
 			InstallerLog::Instance->EnableLog();
 		}
-
 		// specify log filename and path
 		else if (_wcsicmp(pszParam, TEXT("logfile")) == 0)
 		{
@@ -35,19 +38,16 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		// enable silent installs from the command line
 		else if (_wcsicmp(pszParam, TEXT("q")) == 0)
 		{
-			m_lastArgFlag = silent;
 			InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelSilent);
 		}
         // disable silent installs from the command line
 		else if (_wcsicmp(pszParam, TEXT("nq")) == 0)
 		{
-			m_lastArgFlag = noSilent;
 			InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelFull);
 		}
 		// enable silent installs from the command line
 		else if (_wcsicmp(pszParam, TEXT("qb")) == 0)
 		{
-			m_lastArgFlag = basic;
 			InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelBasic);
 		}
 		// accept another command to use in RegistryRun
@@ -67,34 +67,21 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		}
 		else if (_wcsicmp(pszParam, TEXT("extractCab")) == 0 )
 		{
-			m_lastArgFlag = extractCab;
             m_extractCab = true;
 		}
 		else if (_wcsicmp(pszParam, TEXT("displayCab")) == 0 )
 		{
-			m_lastArgFlag = displayCab;
             m_displayCab = true;
 		}
         else if (_wcsicmp(pszParam, TEXT("componentArgs")) == 0)
         {
             m_lastArgFlag = componentArgs;
         }
-		else
-		{
-			m_lastArgFlag = unknown;
-		}
 	}
 	else
 	{
 		switch (m_lastArgFlag)
 		{
-			case log:
-			case silent:
-			case noSilent:
-			case basic:
-            case extractCab:
-			case displayCab:
-				break;
 			case configfile:
 				configFile = pszParam;
 				break;

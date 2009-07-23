@@ -10,6 +10,7 @@
 #include "DownloadDialog.h"
 #include "InstallSystem.h"
 #include "InstallerCommandLineInfo.h"
+#include <Version/Version.h>
 
 // finestra di dialogo CdotNetInstallerDlg
 
@@ -108,39 +109,33 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	if (p_configuration->dialog_otherinfo_caption.empty())
 		m_InfoLink.ShowWindow(SW_HIDE);
 
-	try
+	HBITMAP hBitmap;
+	if (! p_configuration->dialog_bitmap.empty() && DVLib::FileExists(p_configuration->dialog_bitmap))
 	{
-		HBITMAP hBitmap;
-		if ( (! p_configuration->dialog_bitmap.empty()) &&
-			DVLib::FileExists(p_configuration->dialog_bitmap) )
-		{
-			hBitmap = DVLib::LoadBitmapFromFile(p_configuration->dialog_bitmap);
-		}
-		else
-		{
-			//l'immagine non è inserita come risorsa tipo BITMAP perchè avevo dei problemi poi a chiamare UpdateResource
-			// è quindi inserita come risorsa di tipo CUSTOM e letta manualmente
-			//hBitmap = LoadBitmap(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_BANNER));
-			hBitmap = DVLib::LoadBitmapFromResource(AfxGetApp()->m_hInstance, L"RES_BANNER");
-		}
-
-		m_PictureBox.SetBitmap(hBitmap);
+		hBitmap = DVLib::LoadBitmapFromFile(p_configuration->dialog_bitmap);
 	}
-	catch(std::exception&)
+	else if (DVLib::ResourceExists(AfxGetApp()->m_hInstance, L"RES_BANNER", L"CUSTOM"))
 	{
-		//errore nel caricamento dell'immagine
+		hBitmap = DVLib::LoadBitmapFromResource(AfxGetApp()->m_hInstance, L"RES_BANNER");
 	}
 
+	m_PictureBox.SetBitmap(hBitmap);
+
+	if (InstallerCommandLineInfo::Instance->DisplayHelp())
+	{
+		DisplayHelp();
+		OnOK();
+		return FALSE;
+	}
 	// just display CAB contents
-	if (InstallerCommandLineInfo::Instance->DisplayCab())
+	else if (InstallerCommandLineInfo::Instance->DisplayCab())
 	{
 		DisplayCab();
 		OnOK();
 		return FALSE;
 	}
-
     // just extract the CABs
-    if (InstallerCommandLineInfo::Instance->ExtractCab())
+    else if (InstallerCommandLineInfo::Instance->ExtractCab())
     {
 		p_configuration->cab_path = DVLib::GetCurrentDirectoryW();
         p_configuration->cab_path.append(L"\\SupportFiles");
@@ -350,6 +345,29 @@ void CdotNetInstallerDlg::DisplayCab()
 	ComponentPtr extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, & dlg));
 	ExtractCabProcessor * p = reinterpret_cast<ExtractCabProcessor *>(get(extractcab));
 	DniMessageBox::Show(DVLib::join(p->GetCabFiles(), L"\r\n"), MB_OK|MB_ICONINFORMATION);
+}
+
+void CdotNetInstallerDlg::DisplayHelp()
+{
+	std::wstringstream hs;
+	hs << L"Usage: " << DVLib::GetFileNameW(DVLib::GetModuleFileNameW()) << L" [args]" << std::endl;
+	hs << std::endl;
+	hs << L" /? or /help : this help screen" << std::endl;
+	hs << L" /q : force silent (no UI) mode" << std::endl;
+	hs << L" /qb : force basic UI mode" << std::endl;
+	hs << L" /nq : force full UI mode" << std::endl;
+	hs << L" /Log : enable logging" << std::endl;
+	hs << L" /LogFile [path] : specify log file" << std::endl;
+	hs << L" /ConfigFile [path] : specify configuration file" << std::endl;
+	hs << L" /ExtractCab: extract embedded components" << std::endl;
+	hs << L" /DisplayCab: display a list of embedded components" << std::endl;
+	hs << L" /ComponentArgs [\"name\":\"value\" ...] : additional component args" << std::endl;
+	hs << L" /CompleteCommandArgs [args] : additional complete command" << std::endl;
+	hs << L" /Launcher [path] : alternate launcher on reboot" << std::endl;
+	hs << L" /LauncherArgs [args] : additional launcher args on reboot" << std::endl;
+	hs << std::endl;
+	hs << L"Built by dotNetInstaller (DNI), version " << TEXT(VERSION_VALUE);		
+	DniMessageBox::Show(hs.str(), MB_OK|MB_ICONINFORMATION);
 }
 
 void CdotNetInstallerDlg::ExtractCab()

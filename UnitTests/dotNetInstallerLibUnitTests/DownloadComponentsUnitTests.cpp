@@ -148,6 +148,5 @@ void DownloadComponentsUnitTests::testDownloadMultipleError()
 	components.Load(& callback, component_info);
 	components.Exec();
 	components.Wait();
-	std::wcout << std::endl << L"Error count: " << callback.GetErrorCount();
 	CPPUNIT_ASSERT(1 == callback.GetErrorCount());
 }
