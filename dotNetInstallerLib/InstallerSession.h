@@ -3,17 +3,21 @@
 class InstallerSession
 {
 private:
-	static std::wstring s_GUID;
-	static std::wstring s_tempDirectory;
+	std::wstring m_tempDirectory;
+	std::wstring m_GUID;
 public:
-	// session CAB path
-	static std::wstring s_sessioncabpath;
+	// CAB path
+	std::wstring SessionCABPath;
 	// additional cmdline arguments
-	static std::map<std::wstring, std::wstring> s_AdditionalCmdLineArgs;
+	std::map<std::wstring, std::wstring> AdditionalCmdLineArgs;
 	// get a unique id for this session
-	static std::wstring GetSessionGUID();
+	std::wstring GetSessionGUID();
     // get a unique temporary directory for this session
-    static std::wstring GetSessionTempPath(bool returnonly = false);
+    std::wstring GetSessionTempPath(bool returnonly = false);
 	// make a session path
-	static std::wstring MakePath(const std::wstring&);
+	std::wstring MakePath(const std::wstring&);
+	// global instance
+	static shared_any<InstallerSession *, close_delete> Instance;
 };
+
+

@@ -1,11 +1,12 @@
 #pragma once
 #include "afxwin.h"
 
-class CInstallerCommandLineInfo :
+class InstallerCommandLineInfo :
 	public CCommandLineInfo
 {
 public:
-	CInstallerCommandLineInfo();
+	static shared_any<InstallerCommandLineInfo *, close_delete> Instance;
+	InstallerCommandLineInfo();
 	void ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast);
     const std::wstring& GetCompleteCommandArgs() const { return m_completeCommandArgs; }
     bool ExtractCab() const { return m_extractCab; }
@@ -36,4 +37,3 @@ private:
 	bool m_displayCab;
 };
 
-extern CInstallerCommandLineInfo commandLineInfo;

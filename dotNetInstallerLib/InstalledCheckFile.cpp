@@ -10,7 +10,7 @@ InstalledCheckFile::InstalledCheckFile()
 
 void InstalledCheckFile::Load(TiXmlElement * node)
 {
-    filename = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("filename")));
+    filename = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("filename")));
     fileversion = DVLib::UTF8string2wstring(node->Attribute("fileversion"));
     comparison = DVLib::UTF8string2wstring(node->Attribute("comparison"));
 	LOG(L"Loaded 'file' installed check '" << filename << L"'");

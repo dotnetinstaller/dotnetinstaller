@@ -1,29 +1,26 @@
 #include "StdAfx.h"
 #include "InstallerSession.h"
 
-std::wstring InstallerSession::s_sessioncabpath;
-std::wstring InstallerSession::s_GUID;
-std::wstring InstallerSession::s_tempDirectory;
-std::map<std::wstring, std::wstring> InstallerSession::s_AdditionalCmdLineArgs;
+shared_any<InstallerSession *, close_delete> InstallerSession::Instance;
 
 std::wstring InstallerSession::GetSessionGUID()
 {
-    if (s_GUID.empty())
+	if (m_GUID.empty())
     {
-        s_GUID = DVLib::GenerateGUIDStringW().c_str();
+        m_GUID = DVLib::GenerateGUIDStringW();
     }
-    return s_GUID;
+    return m_GUID;
 }
 
 std::wstring InstallerSession::GetSessionTempPath(bool returnonly)
 {
-    if (s_tempDirectory.empty() && ! returnonly)
+	if (m_tempDirectory.empty() && ! returnonly)
     {
-		s_tempDirectory = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), GetSessionGUID());
-		DVLib::DirectoryCreate(s_tempDirectory);
+		m_tempDirectory = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), GetSessionGUID());
+		DVLib::DirectoryCreate(m_tempDirectory);
     }
 
-    return s_tempDirectory;
+    return m_tempDirectory;
 }
 
 std::wstring InstallerSession::MakePath(const std::wstring& path)
@@ -32,7 +29,7 @@ std::wstring InstallerSession::MakePath(const std::wstring& path)
     std::wstring l_SystemPath = DVLib::GetSystemDirectoryW();
     std::wstring l_WindowsPath = DVLib::GetWindowsDirectoryW();
     std::wstring l_SystemWindowsPath = DVLib::GetSystemWindowsDirectory();
-	std::wstring l_CabPath = s_sessioncabpath.empty() ? InstallerSession::GetSessionTempPath() : s_sessioncabpath;
+	std::wstring l_CabPath = SessionCABPath.empty() ? GetSessionTempPath() : SessionCABPath;
 
     std::wstring tmp = path;
 	tmp = DVLib::replace(tmp, L"#CABPATH", l_CabPath);

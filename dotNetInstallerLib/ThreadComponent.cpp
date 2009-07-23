@@ -67,8 +67,6 @@ void ThreadComponent::EndExec()
 			L"WaitForSingleObject");
 	}
 
-	reset(m_pThread);
-
 	CHECK_BOOL(m_error.empty(), m_error);
 	CHECK_BOOL(m_rc == 0, L"Component failed with error code: " << m_rc);
 }

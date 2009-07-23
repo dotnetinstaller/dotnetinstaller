@@ -2,20 +2,24 @@
 #include "InstallerCommandLineInfo.h"
 #include "InstallerLauncher.h"
 
-CInstallerCommandLineInfo commandLineInfo;
+shared_any<InstallerCommandLineInfo *, close_delete> InstallerCommandLineInfo::Instance;
 
-CInstallerCommandLineInfo::CInstallerCommandLineInfo()
+InstallerCommandLineInfo::InstallerCommandLineInfo()
+	: m_displayCab(false)
+	, m_extractCab(false)
+	, m_lastArgFlag(unknown)
 {
+
 }
 
-void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL /*bLast*/)
+void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL /*bLast*/)
 {
 	if (bFlag)
     {
 		if (_wcsicmp(pszParam, TEXT("log")) == 0 )
 		{
 			m_lastArgFlag = log;
-			ApplicationLogInstance.EnableLog();
+			InstallerLog::Instance->EnableLog();
 		}
 
 		// specify log filename and path
@@ -32,19 +36,19 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 		else if (_wcsicmp(pszParam, TEXT("q")) == 0)
 		{
 			m_lastArgFlag = silent;
-			CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelSilent);
+			InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelSilent);
 		}
         // disable silent installs from the command line
 		else if (_wcsicmp(pszParam, TEXT("nq")) == 0)
 		{
 			m_lastArgFlag = noSilent;
-			CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelFull);
+			InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelFull);
 		}
 		// enable silent installs from the command line
 		else if (_wcsicmp(pszParam, TEXT("qb")) == 0)
 		{
 			m_lastArgFlag = basic;
-			CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelBasic);
+			InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelBasic);
 		}
 		// accept another command to use in RegistryRun
 		else if (_wcsicmp(pszParam, TEXT("launcher")) == 0)
@@ -95,10 +99,10 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 				configFile = pszParam;
 				break;
             case logfile:
-                ApplicationLogInstance.SetLogFile(pszParam);
+				InstallerLog::Instance->SetLogFile(pszParam);
                 break;
 			case launcher:
-				DNILauncher.SetLauncherPath(pszParam);
+				InstallerLauncher::Instance->SetLauncherPath(pszParam);
 				break;
 			case launcherArgs:
 				// NOTE: Actual LauncherArgs must be enclosed in quotes
@@ -108,7 +112,7 @@ void CInstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BO
 				//       launcherArg charater
 				// EXAMPLE: To set LauncherArgs as /q -Z, the format should be as follows (note quotes and spacing):
 				//    /launcherArgs " /q -Z"
-				DNILauncher.SetLauncherArgs(pszParam);
+				InstallerLauncher::Instance->SetLauncherArgs(pszParam);
 				break;
 			case completeCommandArgs:
 				m_completeCommandArgs = pszParam;

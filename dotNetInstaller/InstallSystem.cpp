@@ -10,7 +10,7 @@
 void InsertRegistryRun()
 {
 	// get the installer launcher command (if specified)
-	std::wstring l_Cmd = DNILauncher.GetLauncherCmd();
+	std::wstring l_Cmd = InstallerLauncher::Instance->GetLauncherCmd();
 
 	// if no launcher argument was specified, use the DNI command line
 	if (l_Cmd.empty())

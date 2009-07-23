@@ -13,7 +13,7 @@ void CALLBACK CloseMessageBox(HWND /*p_hwnd*/, UINT /*p_uiMsg*/, UINT /*p_idEven
 int DniMessageBox::Show(const std::wstring& p_lpszText, UINT p_nType /*=MB_OK*/, UINT p_nDefaultResult /*=MB_OK*/, UINT p_nIDHelp /*=0*/, UINT p_nTime)
 {
 	int result = p_nDefaultResult;
-	switch(CurrentInstallUILevel.GetUILevel())
+	switch(InstallUILevelSetting::Instance->GetUILevel())
 	{
 	// basic UI, dialogs appear and disappear
 	case InstallUILevelBasic:

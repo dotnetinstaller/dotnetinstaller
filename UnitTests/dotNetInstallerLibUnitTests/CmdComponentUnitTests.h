@@ -4,7 +4,7 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class CmdComponentUnitTests :  public CPPUNIT_NS::TestFixture
+		class CmdComponentUnitTests : public dotNetInstallerLibUnitTestFixture
 		{
 			CPPUNIT_TEST_SUITE( CmdComponentUnitTests );
 			CPPUNIT_TEST( testExec );

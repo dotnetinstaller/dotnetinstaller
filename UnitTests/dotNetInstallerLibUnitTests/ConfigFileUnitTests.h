@@ -4,7 +4,7 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class ConfigFileUnitTests :  public CPPUNIT_NS::TestFixture
+		class ConfigFileUnitTests : public dotNetInstallerLibUnitTestFixture
 		{
 			CPPUNIT_TEST_SUITE( ConfigFileUnitTests );
 			CPPUNIT_TEST( testLoadPackagedSetup );

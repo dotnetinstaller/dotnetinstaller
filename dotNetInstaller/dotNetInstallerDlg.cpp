@@ -132,7 +132,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	}
 
 	// just display CAB contents
-	if (commandLineInfo.DisplayCab())
+	if (InstallerCommandLineInfo::Instance->DisplayCab())
 	{
 		DisplayCab();
 		OnOK();
@@ -140,7 +140,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	}
 
     // just extract the CABs
-    if (commandLineInfo.ExtractCab())
+    if (InstallerCommandLineInfo::Instance->ExtractCab())
     {
 		p_configuration->cab_path = DVLib::GetCurrentDirectoryW();
         p_configuration->cab_path.append(L"\\SupportFiles");
@@ -153,7 +153,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	bool all_components_installed = LoadComponentsList();
 	if (all_components_installed)
 	{
-		if (p_configuration->auto_close_if_installed || CurrentInstallUILevel.IsSilent())
+		if (p_configuration->auto_close_if_installed || InstallUILevelSetting::Instance->IsSilent())
 		{
             if (! p_configuration->complete_command.empty()
 				|| ! p_configuration->complete_command_silent.empty()
@@ -169,7 +169,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	else
 	{
 		// initiate component install(s) silently, without end-user input
-		if(CurrentInstallUILevel.IsSilent())
+		if(InstallUILevelSetting::Instance->IsSilent())
 		{
 			m_btnInstall.EnableWindow(FALSE);
 			m_btnCancel.EnableWindow(FALSE);
@@ -257,7 +257,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		RemoveRegistryRun();
 
 		// silent execution, 
-		if (CurrentInstallUILevel.IsSilent()) 
+		if (InstallUILevelSetting::Instance->IsSilent()) 
 		{
 			OnOK();
 			return;
@@ -317,8 +317,8 @@ void CdotNetInstallerDlg::OnDestroy()
         // even if a reboot is required, the temporary folder is gone; next run will re-extract components
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-        std::wstring cabpath = (! p_configuration->cab_path.empty()) ? p_configuration->cab_path : InstallerSession::GetSessionTempPath(true);
-		cabpath = InstallerSession::MakePath(cabpath);
+        std::wstring cabpath = (! p_configuration->cab_path.empty()) ? p_configuration->cab_path : InstallerSession::Instance->GetSessionTempPath(true);
+		cabpath = InstallerSession::Instance->MakePath(cabpath);
         if (p_configuration->cab_path_autodelete && ! cabpath.empty() && DVLib::FileExists(cabpath))
         {
 		    LOG(L"Deleting temporary folder: " << cabpath);
@@ -371,12 +371,12 @@ void CdotNetInstallerDlg::ExtractCab()
 	c->install_caption = p_configuration->cab_dialog_caption;
 	c->installing_component_wait = p_configuration->cab_dialog_message;
 	
-	if (CurrentInstallUILevel.IsAnyUI())
+	if (InstallUILevelSetting::Instance->IsAnyUI())
 		dlg.LoadComponent(installconfiguration, extractcab);
 
 	p->Exec();
 
-	if (CurrentInstallUILevel.IsAnyUI())
+	if (InstallUILevelSetting::Instance->IsAnyUI())
 		dlg.DoModal();
 
 	p->Wait();
@@ -451,7 +451,7 @@ void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
     }
 
 	std::wstring l_complete_command = p_configuration->complete_command;
-	switch(CurrentInstallUILevel.GetUILevel())
+	switch(InstallUILevelSetting::Instance->GetUILevel())
 	{
 	case InstallUILevelSilent:
 		if (! p_configuration->complete_command_silent.empty()) l_complete_command = p_configuration->complete_command_silent;
@@ -463,10 +463,10 @@ void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
 		break;
 	}
 
-    if (! commandLineInfo.GetCompleteCommandArgs().empty())
+    if (! InstallerCommandLineInfo::Instance->GetCompleteCommandArgs().empty())
     {
         l_complete_command.append(L" ");
-        l_complete_command.append(commandLineInfo.GetCompleteCommandArgs());
+        l_complete_command.append(InstallerCommandLineInfo::Instance->GetCompleteCommandArgs());
     }
 
 	if (! l_complete_command.empty())
@@ -496,7 +496,7 @@ bool CdotNetInstallerDlg::OnComponentExecBegin(const ComponentPtr& component)
 
 bool CdotNetInstallerDlg::OnComponentExecWait(const ComponentPtr& component)
 {
-	if (CurrentInstallUILevel.IsAnyUI())
+	if (InstallUILevelSetting::Instance->IsAnyUI())
 	{
 		l_component_dlg.DoModal();
 	}

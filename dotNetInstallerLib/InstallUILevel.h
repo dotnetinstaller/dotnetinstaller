@@ -20,9 +20,8 @@ public:
 	bool IsAnyUI() const; // true if any UI level
 	InstallUILevel GetUILevel(InstallUILevel defaultValue = InstallUILevelFull) const; // current combined UI level
 	static InstallUILevel ToUILevel(const std::wstring& level, InstallUILevel defaultValue = InstallUILevelNotSet);
+	static shared_any<InstallUILevelSetting *, close_delete> Instance;
 private:
 	InstallUILevel m_ConfigLevel;
 	InstallUILevel m_RuntimeLevel;
 };
-
-extern InstallUILevelSetting CurrentInstallUILevel;

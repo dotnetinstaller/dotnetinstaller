@@ -26,24 +26,24 @@ void CmdComponentUnitTests::testExec()
 
 void CmdComponentUnitTests::testExecUISilent()
 {
-	CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelSilent);
+	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelSilent);
 	CmdComponent component;
 	component.command = L"cmd.exe /C exit /b 1";
 	component.command_silent = L"cmd.exe /C exit /b 0";
 	component.command_basic = L"cmd.exe /C exit /b 3";
 	component.Exec();
 	component.Wait();
-	CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelNotSet);
+	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelNotSet);
 }
 
 void CmdComponentUnitTests::testExecUIBasic()
 {
-	CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelBasic);
+	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelBasic);
 	CmdComponent component;
 	component.command = L"cmd.exe /C exit /b 1";
 	component.command_silent = L"cmd.exe /C exit /b 2";
 	component.command_basic = L"cmd.exe /C exit /b 0";
 	component.Exec();
 	component.Wait();
-	CurrentInstallUILevel.SetRuntimeLevel(InstallUILevelNotSet);
+	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelNotSet);
 }

@@ -18,7 +18,7 @@ void MsiComponent::Exec()
 	l_command += DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), package);
 	l_command.append(L"\"");
 
-	switch(CurrentInstallUILevel.GetUILevel())
+	switch(InstallUILevelSetting::Instance->GetUILevel())
 	{
 	case InstallUILevelSilent:
 		if (! cmdparameters_silent.empty()) 
@@ -53,8 +53,8 @@ void MsiComponent::Exec()
 		break;
 	}
 	
-	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::s_AdditionalCmdLineArgs.find(description);
-    if (cmdline != InstallerSession::s_AdditionalCmdLineArgs.end())
+	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::Instance->AdditionalCmdLineArgs.find(description);
+    if (cmdline != InstallerSession::Instance->AdditionalCmdLineArgs.end())
     {
 		l_command += TEXT(" ");
 		l_command += cmdline->second.c_str();
@@ -67,10 +67,10 @@ void MsiComponent::Exec()
 
 void MsiComponent::Load(TiXmlElement * node)
 {
-	package = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("package")));
-	cmdparameters = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("cmdparameters")));
-	cmdparameters_silent = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("cmdparameters_silent")));
-	cmdparameters_basic = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("cmdparameters_basic")));
+	package = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("package")));
+	cmdparameters = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("cmdparameters")));
+	cmdparameters_silent = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("cmdparameters_silent")));
+	cmdparameters_basic = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("cmdparameters_basic")));
 	Component::Load(node);
 	LOG(L"Loaded 'msi' component '" << package << L"'");
 }

@@ -25,9 +25,9 @@ void ExtractComponentUnitTests::testExtract()
 {
 	ExtractComponentStdOut extract(::GetModuleHandle(NULL));
 	extract.Exec();
-	std::wstring readmetxt = DVLib::DirectoryCombine(InstallerSession::GetSessionTempPath(), L"readme.txt");
+	std::wstring readmetxt = DVLib::DirectoryCombine(InstallerSession::Instance->GetSessionTempPath(), L"readme.txt");
 	CPPUNIT_ASSERT(DVLib::FileExists(readmetxt));
 	CPPUNIT_ASSERT(DVLib::GetFileSize(readmetxt) == 18);
 	std::wcout << std::endl << readmetxt << L" - " << DVLib::FormatBytesW(DVLib::GetFileSize(readmetxt));
-	DVLib::DirectoryDelete(InstallerSession::GetSessionTempPath());
+	DVLib::DirectoryDelete(InstallerSession::Instance->GetSessionTempPath());
 }

@@ -7,3 +7,4 @@
 #include <ThirdParty/SmartPtr/SmartPtr.h>
 #include <ThirdParty/Cab/Cab.h>
 #include <dotNetInstallerLib/dotNetInstallerLib.h>
+#include "dotNetInstallerLibUnitTestFixture.h"

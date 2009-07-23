@@ -4,7 +4,7 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class DownloadComponentsUnitTests :  public CPPUNIT_NS::TestFixture
+		class DownloadComponentsUnitTests : public dotNetInstallerLibUnitTestFixture
 		{
 			CPPUNIT_TEST_SUITE( DownloadComponentsUnitTests );
 			CPPUNIT_TEST( testIsCopyDownloadRequiredEmpty );

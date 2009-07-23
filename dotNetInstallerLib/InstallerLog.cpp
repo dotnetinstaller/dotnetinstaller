@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "InstallerLog.h"
 
-InstallerLog ApplicationLogInstance;
+shared_any<InstallerLog *, close_delete> InstallerLog::Instance;
 
 InstallerLog::InstallerLog(void)
     : m_enabled(false)

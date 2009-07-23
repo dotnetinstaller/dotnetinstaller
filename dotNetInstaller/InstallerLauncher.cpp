@@ -2,7 +2,7 @@
 #include "InstallerLauncher.h"
 
 // support alternate installer launchers
-InstallerLauncher DNILauncher;
+shared_any<InstallerLauncher *, close_delete> InstallerLauncher::Instance;
 
 InstallerLauncher::InstallerLauncher(void)
 {
@@ -11,6 +11,3 @@ InstallerLauncher::InstallerLauncher(void)
 	_tcscpy_s(m_LauncherCmd, TEXT(""));
 }
 
-InstallerLauncher::~InstallerLauncher(void)
-{
-}

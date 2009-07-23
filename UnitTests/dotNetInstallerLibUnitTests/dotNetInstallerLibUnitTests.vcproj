@@ -191,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\dotNetInstallerLibUnitTestFixture.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\dotNetInstallerLibUnitTests.cpp"
 				>
 			</File>
@@ -294,6 +298,10 @@
 			</File>
 			<File
 				RelativePath=".\ConfigFileUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\dotNetInstallerLibUnitTestFixture.h"
 				>
 			</File>
 			<File

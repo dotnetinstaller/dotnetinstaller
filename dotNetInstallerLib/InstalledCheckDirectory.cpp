@@ -10,7 +10,7 @@ InstalledCheckDirectory::InstalledCheckDirectory()
 
 void InstalledCheckDirectory::Load(TiXmlElement * node)
 {
-    path = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("path")));
+    path = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("path")));
 	LOG(L"Loaded 'directory' installed check '" << path << L"'");
 }
 

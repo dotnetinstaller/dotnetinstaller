@@ -14,7 +14,7 @@ CmdComponent::CmdComponent()
 void CmdComponent::Exec()
 {
 	std::wstring l_command = command;
-	switch(CurrentInstallUILevel.GetUILevel())
+	switch(InstallUILevelSetting::Instance->GetUILevel())
 	{
 	case InstallUILevelSilent:
 		if (! command_silent.empty()) l_command = command_silent;
@@ -26,8 +26,8 @@ void CmdComponent::Exec()
 		break;
 	}
 
-	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::s_AdditionalCmdLineArgs.find(description);
-    if (cmdline != InstallerSession::s_AdditionalCmdLineArgs.end())
+	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::Instance->AdditionalCmdLineArgs.find(description);
+    if (cmdline != InstallerSession::Instance->AdditionalCmdLineArgs.end())
     {
 		l_command += TEXT(" ");
 		l_command += cmdline->second.c_str();
@@ -40,9 +40,9 @@ void CmdComponent::Exec()
 
 void CmdComponent::Load(TiXmlElement * node)
 {
-	command = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("command")));
-    command_silent = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("command_silent")));
-	command_basic = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("command_basic")));	
+	command = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("command")));
+    command_silent = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("command_silent")));
+	command_basic = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("command_basic")));	
 	Component::Load(node);
 	LOG(L"Loaded 'cmd' component '" << description << L"'");
 }

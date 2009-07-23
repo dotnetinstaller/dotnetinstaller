@@ -84,7 +84,7 @@ BOOL DownloadDialog::OnInitDialog()
 	m_ProgressControl.SetRange(0,1000);
 	m_LabelStatus.SetWindowText(TEXT(""));
 
-	if (CurrentInstallUILevel.IsSilent())
+	if (InstallUILevelSetting::Instance->IsSilent())
 	{
 		m_btStart.EnableWindow(FALSE);
 		m_btnCancel.EnableWindow(FALSE);

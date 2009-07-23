@@ -36,7 +36,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
     log_file = DVLib::UTF8string2wstring(node->Attribute("log_file"));
     // defines where to extract files and auto-delete options
     cab_path = DVLib::UTF8string2wstring(node->Attribute("cab_path"));
-	InstallerSession::s_sessioncabpath = cab_path;
+	InstallerSession::Instance->SessionCABPath = cab_path;
     cab_path_autodelete = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("cab_path_autodelete")), true);
     // positions within the dialog
     dialog_position.FromString(DVLib::UTF8string2wstring(node->Attribute("dialog_position")));
@@ -50,7 +50,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
     dialog_skip_button_position.FromString(DVLib::UTF8string2wstring(node->Attribute("dialog_skip_button_position")));
     // other dialog options
 	cancel_caption = DVLib::UTF8string2wstring(node->Attribute("cancel_caption"));
-	dialog_bitmap = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("dialog_bitmap")));
+	dialog_bitmap = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("dialog_bitmap")));
 	dialog_caption = DVLib::UTF8string2wstring(node->Attribute("dialog_caption"));
 	dialog_message = DVLib::UTF8string2wstring(node->Attribute("dialog_message"));
 	skip_caption = DVLib::UTF8string2wstring(node->Attribute("skip_caption"));
@@ -64,10 +64,10 @@ void InstallConfiguration::Load(TiXmlElement * node)
     must_reboot_required = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("must_reboot_required")), false);
 	installing_component_wait = DVLib::UTF8string2wstring(node->Attribute("installing_component_wait"));
 	dialog_otherinfo_caption = DVLib::UTF8string2wstring(node->Attribute("dialog_otherinfo_caption"));
-	dialog_otherinfo_link = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("dialog_otherinfo_link")));
+	dialog_otherinfo_link = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("dialog_otherinfo_link")));
 	// completion commands
-	complete_command = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("complete_command")));
-	complete_command_silent = InstallerSession::MakePath(DVLib::UTF8string2wstring(node->Attribute("complete_command_silent")));
+	complete_command = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("complete_command")));
+	complete_command_silent = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("complete_command_silent")));
 	auto_close_if_installed = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_close_if_installed")), true);
     auto_close_on_error = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_close_on_error")), false);
     allow_continue_on_error = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("allow_continue_on_error")), true);

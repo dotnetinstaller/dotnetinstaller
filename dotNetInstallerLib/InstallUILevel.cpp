@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "InstallUILevel.h"
 
-InstallUILevelSetting CurrentInstallUILevel;
+shared_any<InstallUILevelSetting *, close_delete> InstallUILevelSetting::Instance;
 
 InstallUILevelSetting::InstallUILevelSetting()
 	: m_ConfigLevel(InstallUILevelNotSet)

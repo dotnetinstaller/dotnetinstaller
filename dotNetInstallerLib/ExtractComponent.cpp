@@ -47,8 +47,8 @@ void ExtractComponent::ExtractCab()
 	resname.append(DVLib::towstring(currentIndex));
     LOG(L"Extracting Setup.cab");
 
-	std::wstring resolved_cab_path = cab_path.empty() ? InstallerSession::GetSessionTempPath() : cab_path; 
-	resolved_cab_path = InstallerSession::MakePath(resolved_cab_path);
+	std::wstring resolved_cab_path = cab_path.empty() ? InstallerSession::Instance->GetSessionTempPath() : cab_path; 
+	resolved_cab_path = InstallerSession::Instance->MakePath(resolved_cab_path);
 	LOG(L"Cabpath: " << resolved_cab_path);
 	DVLib::DirectoryCreate(resolved_cab_path);
 

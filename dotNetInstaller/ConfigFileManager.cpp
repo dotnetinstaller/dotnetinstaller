@@ -63,12 +63,12 @@ void ConfigFileManager::Load()
 	// load configuration
     ConfigFile config;
 
-	if (! commandLineInfo.configFile.empty())
+	if (! InstallerCommandLineInfo::Instance->configFile.empty())
 	{
-		CHECK_BOOL(DVLib::FileExists(commandLineInfo.configFile),
-			L"Missing '" << commandLineInfo.configFile << L"'");
+		CHECK_BOOL(DVLib::FileExists(InstallerCommandLineInfo::Instance->configFile),
+			L"Missing '" << InstallerCommandLineInfo::Instance->configFile << L"'");
 
-		config.LoadFile(commandLineInfo.configFile);
+		config.LoadFile(InstallerCommandLineInfo::Instance->configFile);
 	}
 	else if (NULL != DVLib::ResourceExists(AfxGetApp()->m_hInstance, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM")))
 	{
@@ -133,17 +133,17 @@ int ConfigFileManager::Run()
 
 void ConfigFileManager::SaveAppState()
 {
-	saved_ui_level = CurrentInstallUILevel.GetUILevel();
+	saved_ui_level = InstallUILevelSetting::Instance->GetUILevel();
 }
 
 void ConfigFileManager::RestoreAppState()
 {
 	if (saved_ui_level != InstallUILevelNotSet)
 	{
-		CurrentInstallUILevel.SetConfigLevel(saved_ui_level);
+		InstallUILevelSetting::Instance->SetConfigLevel(saved_ui_level);
 	}
 	else
 	{
-		CurrentInstallUILevel.SetConfigLevel(InstallUILevelNotSet);
+		InstallUILevelSetting::Instance->SetConfigLevel(InstallUILevelNotSet);
 	}
 }

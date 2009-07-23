@@ -7,6 +7,7 @@ using namespace DVLib::UnitTests;
 
 void InstalledCheckRegistryUnitTests::setUp()
 {
+	dotNetInstallerLibUnitTestFixture::setUp();
 	DVLib::RegistryCreateKey(HKEY_CURRENT_USER, L"SOFTWARE\\DVLib");
 	DVLib::RegistrySetDWORDValue(HKEY_CURRENT_USER, L"SOFTWARE\\DVLib", L"DWORD", 1);
 	DVLib::RegistrySetStringValue(HKEY_CURRENT_USER, L"SOFTWARE\\DVLib", L"String", L"1.2.3.4");
@@ -19,6 +20,7 @@ void InstalledCheckRegistryUnitTests::setUp()
 void InstalledCheckRegistryUnitTests::tearDown()
 {
 	DVLib::RegistryDeleteKey(HKEY_CURRENT_USER, L"SOFTWARE\\DVLib");
+	dotNetInstallerLibUnitTestFixture::tearDown();
 }
 
 void InstalledCheckRegistryUnitTests::testIsInstalled()

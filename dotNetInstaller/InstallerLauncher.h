@@ -8,8 +8,10 @@
 class InstallerLauncher
 {
 public:
+
+	static shared_any<InstallerLauncher *, close_delete> Instance;
+
 	InstallerLauncher(void);
-	~InstallerLauncher(void);
 
 	void SetLauncherPath(const TCHAR* path)
 	{
@@ -44,8 +46,5 @@ public:
 private:
 	TCHAR m_LauncherPath[FILENAME_MAX];
 	TCHAR m_LauncherArgs[FILENAME_MAX];
-
 	TCHAR m_LauncherCmd[DNI_LAUNCHER_CMD_LEN];
 };
-
-extern InstallerLauncher DNILauncher;
