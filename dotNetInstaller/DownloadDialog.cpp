@@ -229,7 +229,10 @@ void DownloadDialog::DownloadCancel()
 
 LRESULT DownloadDialog::OnCloseDialog( WPARAM, LPARAM )
 {
-	if (IsDownloadStarted() && ! IsDownloadCancelled() && ! IsDownloadCompleted())
+	if (IsDownloadStarted() 
+		&& ! IsDownloadCancelled() 
+		&& ! IsDownloadCompleted() 
+		&& ! IsDownloadError())
 	{
 		DownloadCancel();
 		return 0;

@@ -5,6 +5,8 @@ using namespace DVLib::UnitTests;
 
 DownloadComponentCallbackImpl::DownloadComponentCallbackImpl()
 	: m_cancelled(false)
+	, m_complete(0)
+	, m_error(0)
 {
 }
 
@@ -25,10 +27,12 @@ void DownloadComponentCallbackImpl::Status(ULONG progress_current, ULONG progres
 
 void DownloadComponentCallbackImpl::DownloadComplete()
 {
+	InterlockedIncrement(& m_complete);
 	std::wcout << std::endl << "Download complete.";
 }
 
 void DownloadComponentCallbackImpl::DownloadError(const std::wstring& message)
 {
-	CPPUNIT_ASSERT_MESSAGE(DVLib::wstring2string(message).c_str(), false);
+	InterlockedIncrement(& m_error);
+	std::wcout << std::endl << message;	
 }

@@ -111,10 +111,43 @@ void DownloadComponentsUnitTests::testDownloadMultiple()
 	components.Load(& callback, component_info);
 	components.Exec();
 	components.Wait();
+	std::wcout << std::endl << L"Complete count: " << callback.GetCompleteCount();
+	CPPUNIT_ASSERT(1 == callback.GetCompleteCount());
 	std::wstring fullpath1 = DVLib::DirectoryCombine(info1->destinationpath, info1->destinationfilename);
 	CPPUNIT_ASSERT(DVLib::FileExists(fullpath1));
 	DVLib::FileDelete(fullpath1);
 	std::wstring fullpath2 = DVLib::DirectoryCombine(info2->destinationpath, info2->destinationfilename);
 	CPPUNIT_ASSERT(DVLib::FileExists(fullpath2));
 	DVLib::FileDelete(fullpath2);
+}
+
+void DownloadComponentsUnitTests::testDownloadMultipleError()
+{
+	// component 1
+	DownloadComponentInfoPtr info1(new DownloadComponentInfo());
+	info1->alwaysdownload = false;
+	info1->componentname = L"test download (1)";
+	info1->sourcepath = L"";
+	info1->sourceurl = L"file://" + DVLib::GenerateGUIDStringW();
+	info1->destinationpath = DVLib::GetTemporaryDirectoryW();
+	info1->destinationfilename = DVLib::GenerateGUIDStringW();
+	// component 2
+	DownloadComponentInfoPtr info2(new DownloadComponentInfo());
+	info2->alwaysdownload = false;
+	info2->componentname = L"test download (2)";
+	info2->sourcepath = L"";
+	info2->sourceurl = L"file://" + DVLib::GenerateGUIDStringW();
+	info2->destinationpath = DVLib::GetTemporaryDirectoryW();
+	info2->destinationfilename = DVLib::GenerateGUIDStringW();
+	// download
+	DownloadComponentCallbackImpl callback;
+	std::vector<DownloadComponentInfoPtr> component_info;
+	component_info.push_back(info1);
+	component_info.push_back(info2);
+	DownloadComponents components;
+	components.Load(& callback, component_info);
+	components.Exec();
+	components.Wait();
+	std::wcout << std::endl << L"Error count: " << callback.GetErrorCount();
+	CPPUNIT_ASSERT(1 == callback.GetErrorCount());
 }

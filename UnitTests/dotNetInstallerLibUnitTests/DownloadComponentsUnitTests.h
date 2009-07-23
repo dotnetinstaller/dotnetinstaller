@@ -11,6 +11,7 @@ namespace DVLib
 			CPPUNIT_TEST( testIsCopyDownloadRequired );
 			CPPUNIT_TEST( testDownload );
 			CPPUNIT_TEST( testDownloadMultiple );
+			CPPUNIT_TEST( testDownloadMultipleError );
 			CPPUNIT_TEST( testCopyFromSource );
 			CPPUNIT_TEST_SUITE_END();
 		public:
@@ -18,6 +19,7 @@ namespace DVLib
 			void testIsCopyDownloadRequired();
 			void testDownload();
 			void testDownloadMultiple();
+			void testDownloadMultipleError();
 			void testCopyFromSource();
 		};
 	}

@@ -7,6 +7,8 @@ namespace DVLib
 		class DownloadComponentCallbackImpl : public IDownloadCallback
 		{
 		private:
+			long m_error;
+			long m_complete;
 			bool m_cancelled;
 		public:
 			DownloadComponentCallbackImpl();
@@ -17,6 +19,8 @@ namespace DVLib
 			void DownloadCancel() { m_cancelled = true; }
 			void Connecting();
 			void SendingRequest();
+			long GetCompleteCount() const { return m_complete; }
+			long GetErrorCount() const { return m_error; }
 		};
 	}
 }
