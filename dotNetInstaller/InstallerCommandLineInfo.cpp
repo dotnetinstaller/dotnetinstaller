@@ -7,6 +7,7 @@ shared_any<InstallerCommandLineInfo *, close_delete> InstallerCommandLineInfo::I
 InstallerCommandLineInfo::InstallerCommandLineInfo()
 	: m_displayCab(false)
 	, m_extractCab(false)
+	, m_displayHelp(false)
 	, m_lastArgFlag(unknown)
 {
 

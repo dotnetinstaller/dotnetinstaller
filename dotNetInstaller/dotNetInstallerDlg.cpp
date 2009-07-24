@@ -109,17 +109,14 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	if (p_configuration->dialog_otherinfo_caption.empty())
 		m_InfoLink.ShowWindow(SW_HIDE);
 
-	HBITMAP hBitmap;
 	if (! p_configuration->dialog_bitmap.empty() && DVLib::FileExists(p_configuration->dialog_bitmap))
 	{
-		hBitmap = DVLib::LoadBitmapFromFile(p_configuration->dialog_bitmap);
+		m_PictureBox.SetBitmap(DVLib::LoadBitmapFromFile(p_configuration->dialog_bitmap));
 	}
 	else if (DVLib::ResourceExists(AfxGetApp()->m_hInstance, L"RES_BANNER", L"CUSTOM"))
 	{
-		hBitmap = DVLib::LoadBitmapFromResource(AfxGetApp()->m_hInstance, L"RES_BANNER");
+		m_PictureBox.SetBitmap(DVLib::LoadBitmapFromResource(AfxGetApp()->m_hInstance, L"RES_BANNER", L"CUSTOM"));
 	}
-
-	m_PictureBox.SetBitmap(hBitmap);
 
 	if (InstallerCommandLineInfo::Instance->DisplayHelp())
 	{
@@ -508,7 +505,7 @@ bool CdotNetInstallerDlg::OnComponentExecBegin(const ComponentPtr& component)
 		}
 	}
 
-	l_component_dlg.LoadComponent(m_configuration, component);
+	m_component_dlg.LoadComponent(m_configuration, component);
 	return true;
 }
 
@@ -516,7 +513,7 @@ bool CdotNetInstallerDlg::OnComponentExecWait(const ComponentPtr& component)
 {
 	if (InstallUILevelSetting::Instance->IsAnyUI())
 	{
-		l_component_dlg.DoModal();
+		m_component_dlg.DoModal();
 	}
 
 	LOG(L"--- Component '" << component->description << L": DIALOG CLOSED");
@@ -563,8 +560,9 @@ bool CdotNetInstallerDlg::OnComponentExecSuccess(const ComponentPtr& component)
 	return true;
 }
 
-bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, std::exception& /* ex */)
+bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, std::exception& ex)
 {
+	LOG(L"--- Component '" << component->description << L"' FAILED: " << DVLib::string2wstring(ex.what()));
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
     // the component failed to install, display an error message and let the user choose to continue or not
@@ -586,7 +584,7 @@ bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, st
 
     if (break_sequence)
 	{
-		LOG(L"--- Component '" << component->description << L": FAILED, ABORTING");
+		LOG(L"--- Component '" << component->description << L"': FAILED, ABORTING");
 		return false;
 	}
 

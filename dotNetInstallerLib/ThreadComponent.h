@@ -7,7 +7,6 @@ class ThreadComponent : public Component
 {
 public:
     ThreadComponent(component_type t);
-	~ThreadComponent();
 public:
     bool IsExecuting() const;
 	const std::wstring& GetError() const { return m_error; }

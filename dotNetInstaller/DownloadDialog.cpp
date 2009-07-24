@@ -100,6 +100,7 @@ BOOL DownloadDialog::OnInitDialog()
 
 void DownloadDialog::OnOK()
 {
+	LOG(L"Closing download dialog '" << m_Caption << L"'");
 	CDialog::OnOK();
 }
 
@@ -116,7 +117,7 @@ void DownloadDialog::OnBnClickedStart()
 	m_btStart.EnableWindow(FALSE);
 }
 
-void DownloadDialog::OnClose( ) //Chiusura della finestra tramite X 
+void DownloadDialog::OnClose()
 {
 	m_DownloadComponents.EndExec();
 }

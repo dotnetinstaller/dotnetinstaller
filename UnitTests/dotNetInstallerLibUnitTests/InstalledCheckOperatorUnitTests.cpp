@@ -10,7 +10,7 @@ class InstalledCheckTrue : public InstalledCheck
 public:
 	InstalledCheckTrue() {  }
 	bool IsInstalled() const { return true; }
-	void Load(TiXmlElement * node) { }
+	void Load(TiXmlElement * /*node*/) { }
 };
 
 class InstalledCheckFalse : public InstalledCheck
@@ -18,7 +18,7 @@ class InstalledCheckFalse : public InstalledCheck
 public:
 	InstalledCheckFalse() {  }
 	bool IsInstalled() const { return false; }
-	void Load(TiXmlElement * node) { }
+	void Load(TiXmlElement * /*node*/) { }
 };
 
 void InstalledCheckOperatorUnitTests::testAnd()

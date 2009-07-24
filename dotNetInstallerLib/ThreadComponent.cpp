@@ -10,10 +10,6 @@ ThreadComponent::ThreadComponent(component_type t)
 
 }
 
-ThreadComponent::~ThreadComponent()
-{
-}
-
 bool ThreadComponent::IsExecuting() const
 {
     if (get(m_pThread) == NULL)

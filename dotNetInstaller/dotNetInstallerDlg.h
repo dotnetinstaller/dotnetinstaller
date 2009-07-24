@@ -25,7 +25,7 @@ private:
 	bool m_additional_config;
 	DVLib::LcidType m_lcidtype;
 	ConfigurationPtr m_configuration;
-	InstallComponentDlg l_component_dlg;
+	InstallComponentDlg m_component_dlg;
     void ExtractCab();
 	void DisplayCab();
 	void DisplayHelp();
