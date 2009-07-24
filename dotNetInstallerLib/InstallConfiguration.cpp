@@ -16,7 +16,6 @@ InstallConfiguration::InstallConfiguration()
     , dialog_show_installed(false)
     , dialog_show_required(false)
     , allow_continue_on_error(true)
-    , log_enabled(false)
 {
 
 }
@@ -31,9 +30,6 @@ void InstallConfiguration::Load(TiXmlElement * node)
 
 	Configuration::Load(node);
 
-    // auto-enabled log options
-    log_enabled = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("log_enabled")), false);
-    log_file = DVLib::UTF8string2wstring(node->Attribute("log_file"));
     // defines where to extract files and auto-delete options
     cab_path = DVLib::UTF8string2wstring(node->Attribute("cab_path"));
 	InstallerSession::Instance->SessionCABPath = cab_path;

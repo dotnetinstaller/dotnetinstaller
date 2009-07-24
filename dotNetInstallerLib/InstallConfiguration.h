@@ -48,9 +48,6 @@ public:
     std::wstring cab_cancelled_message;
     std::wstring cab_path;
     bool cab_path_autodelete;
-    // auto-enabled log
-    bool log_enabled;
-    std::wstring log_file;
     // dialog elements position
     WidgetPosition dialog_position;
     WidgetPosition dialog_components_list_position;

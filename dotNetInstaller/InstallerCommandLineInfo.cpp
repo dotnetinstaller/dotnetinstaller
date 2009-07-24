@@ -87,6 +87,7 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 				configFile = pszParam;
 				break;
             case logfile:
+				logFile = pszParam;
 				InstallerLog::Instance->SetLogFile(pszParam);
                 break;
 			case launcher:

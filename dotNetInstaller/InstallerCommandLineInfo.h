@@ -14,6 +14,7 @@ public:
 	bool DisplayHelp() const { return m_displayHelp; }
 public:
 	std::wstring configFile;
+	std::wstring logFile;
     std::map<std::wstring, std::wstring> componentCmdArgs;
 private:
 	

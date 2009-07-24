@@ -179,17 +179,6 @@ namespace InstallerLib
             {
                 get { return bool.Parse(m_tpl.GetAttribute("setupconfiguration/@cab_path_autodelete")); }
             }
-
-            // auto-enabled log
-            public bool log_enabled
-            {
-                get { return bool.Parse(m_tpl.GetAttribute("setupconfiguration/@log_enabled")); }
-            }
-
-            public string log_file
-            {
-                get { return m_tpl.GetAttribute("setupconfiguration/@log_file"); }
-            }
         }
 
         public class Template_component

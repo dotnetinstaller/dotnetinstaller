@@ -14,6 +14,9 @@ public:
 	InstallUILevel uilevel;
 	Schema schema;
 	FileAttributes fileattributes;
+    // auto-enabled log
+    bool log_enabled;
+    std::wstring log_file;
 public:
 	Configurations();
 	virtual ~Configurations();

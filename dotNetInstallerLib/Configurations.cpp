@@ -7,6 +7,7 @@
 Configurations::Configurations()
     : lcidtype(DVLib::LcidUserExe)
 	, uilevel(InstallUILevelNotSet)
+    , log_enabled(false)
 {
 
 }
@@ -27,6 +28,9 @@ void Configurations::Load(TiXmlElement * node)
 	lcidtype = DVLib::wstring2lcidtype(DVLib::UTF8string2wstring(node->Attribute("lcid_type")));
 	fileversion = DVLib::UTF8string2wstring(node->Attribute("fileversion"));
 	productversion = DVLib::UTF8string2wstring(node->Attribute("productversion"));
+    // auto-enabled log options
+    log_enabled = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("log_enabled")), false);
+    log_file = DVLib::UTF8string2wstring(node->Attribute("log_file"));
 
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )

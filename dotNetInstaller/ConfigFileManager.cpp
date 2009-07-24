@@ -60,9 +60,6 @@ std::vector<ConfigurationPtr> ConfigFileManager::DownloadReferenceConfigurations
 
 void ConfigFileManager::Load()
 {
-	// load configuration
-    ConfigFile config;
-
 	if (! InstallerCommandLineInfo::Instance->configFile.empty())
 	{
 		CHECK_BOOL(DVLib::FileExists(InstallerCommandLineInfo::Instance->configFile),
@@ -113,6 +110,20 @@ int ConfigFileManager::Run()
 {
 	CdotNetInstallerDlg dlg;
 	
+	// enable logging per configuration(s)
+	if (InstallerLog::Instance->GetLogFile().empty())
+		InstallerLog::Instance->SetLogFile(config.log_file);
+
+	if (! InstallerLog::Instance->IsEnabled())
+	{
+		InstallerLog::Instance->SetEnabled(config.log_enabled);
+		LOG(L"-------------------------------------------------------------------");
+		LOG(L"dotNetInstaller (DNI), version " << TEXT(VERSION_VALUE));
+		LOG(VERSION_LEGALCOPYRIGHT_VALUE);
+		LOG(L"Operating system: " << DVLib::GetOperatingSystemVersionString());
+		LOG(L"-------------------------------------------------------------------");
+	}
+
 	for (size_t i = 0; i < size(); i++)
 	{
 		if ((* this)[i]->type == configuration_install)

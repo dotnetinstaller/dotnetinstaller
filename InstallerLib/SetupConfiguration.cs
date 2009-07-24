@@ -48,10 +48,6 @@ namespace InstallerLib
             m_cab_dialog_caption = tpl.cab_dialog_caption;
             m_cab_path = tpl.cab_path;
             m_cab_path_autodelete = tpl.cab_path_autodelete;
-
-            // auto-enabled logging options
-            m_log_enabled = tpl.log_enabled;
-            m_log_file = tpl.log_file;
         }
 
         #region Attributes
@@ -367,27 +363,6 @@ namespace InstallerLib
             set { m_cab_path_autodelete = value; }
         }
 
-        // auto-enabled logging options
-        private bool m_log_enabled;
-        [Description("Always enable logging; you can also enable logging with /Log on the dotNetInstaller commandline")]
-        [DefaultValue(false)]
-        [Category("Logging")]
-        public bool log_enabled
-        {
-            get { return m_log_enabled; }
-            set { m_log_enabled = value; }
-        }
-
-        private string m_log_file;
-        [Description("Log filename used for the dotNetInstaller log; msi package logs are named after the msi package and a .log extension")]
-        [DefaultValue("#TEMPPATH\\dotNetInstallerLog.txt")]
-        [Category("Logging")]
-        public string log_file
-        {
-            get { return m_log_file; }
-            set { m_log_file = value; }
-        }
-
         private Rectangle m_dialog_osinfo_position;
         [Description("Position of the main dialog osinfo. (OPTIONAL)")]
         [Category("Main Dialog Layout")]
@@ -467,10 +442,6 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("cab_path", m_cab_path);
             e.XmlWriter.WriteAttributeString("cab_path_autodelete", m_cab_path_autodelete.ToString());
 
-            // auto-enabled logging
-            e.XmlWriter.WriteAttributeString("log_enabled", m_log_enabled.ToString());
-            e.XmlWriter.WriteAttributeString("log_file", m_log_file);
-
             // dialog, message and button positions
             e.XmlWriter.WriteAttributeString("dialog_position", XmlRectangle.ToString(m_dialog_position));
             e.XmlWriter.WriteAttributeString("dialog_components_list_position", XmlRectangle.ToString(m_dialog_components_list_position));
@@ -518,9 +489,6 @@ namespace InstallerLib
             // CAB path
             ReadAttributeValue(e, "cab_path", ref m_cab_path);
             ReadAttributeValue(e, "cab_path_autodelete", ref m_cab_path_autodelete);
-            // auto-enable logging
-            ReadAttributeValue(e, "log_enabled", ref m_log_enabled);
-            ReadAttributeValue(e, "log_file", ref m_log_file);
             // dialog, message and button positions
             ReadAttributeValue(e, "dialog_position", ref m_dialog_position);
             ReadAttributeValue(e, "dialog_components_list_position", ref m_dialog_components_list_position);

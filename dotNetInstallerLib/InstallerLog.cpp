@@ -20,7 +20,7 @@ InstallerLog::~InstallerLog(void)
 
 void InstallerLog::Write(const std::wstring& message)
 {
-	if (IsEnableLog() == false || message.empty())
+	if (! IsEnabled() || message.empty())
 		return;
 
     if (m_hFile == INVALID_HANDLE_VALUE)

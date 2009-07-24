@@ -102,6 +102,27 @@ namespace InstallerLib
             set { m_lcidtype = value; }
         }
 
+        // auto-enabled logging options
+        private bool m_log_enabled = false;
+        [Description("Always enable logging; you can also enable logging with /Log on the dotNetInstaller commandline")]
+        [DefaultValue(false)]
+        [Category("Logging")]
+        public bool log_enabled
+        {
+            get { return m_log_enabled; }
+            set { m_log_enabled = value; }
+        }
+
+        private string m_log_file = @"#TEMPPATH\dotNetInstallerLog.txt";
+        [Description("Log filename used for the dotNetInstaller log; msi package logs are named after the msi package and a .log extension")]
+        [DefaultValue("#TEMPPATH\\dotNetInstallerLog.txt")]
+        [Category("Logging")]
+        public string log_file
+        {
+            get { return m_log_file; }
+            set { m_log_file = value; }
+        }
+
         private Editor m_editor = new Editor();
         [Description(@"Editor information.")]
         [Category("Configuration File")]
@@ -167,11 +188,34 @@ namespace InstallerLib
             // version information
             e.XmlWriter.WriteAttributeString("fileversion", m_fileversion);
             e.XmlWriter.WriteAttributeString("productversion", m_productversion);
+            // auto-enabled logging
+            e.XmlWriter.WriteAttributeString("log_enabled", m_log_enabled.ToString());
+            e.XmlWriter.WriteAttributeString("log_file", m_log_file);
             // tag schema
             editor.ToXml(e.XmlWriter);
             // file attributes
             fileattributes.ToXml(e.XmlWriter);
             base.OnXmlWriteTag(e);
+        }
+
+        private void OnXmlReadTagLegacy(XmlElementEventArgs e)
+        {
+            // [legacy] auto-enable logging (convert from 1.6 and older)
+            XmlNodeList configurations = e.XmlElement.SelectNodes("//configuration[@type='install']");
+            foreach(XmlNode configuration in configurations)
+            {
+                XmlElementEventArgs configurationArgs = new XmlElementEventArgs((XmlElement) configuration);
+                
+                string log_file = string.Empty;
+                if (ReadAttributeValue(configurationArgs, "log_file", ref log_file))
+                    m_log_file = log_file;
+                
+                bool log_enabled = false;
+                if (ReadAttributeValue(configurationArgs, "log_enabled", ref log_enabled))
+                    m_log_enabled = log_enabled;
+
+                break;
+            }
         }
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
@@ -180,6 +224,11 @@ namespace InstallerLib
             ReadAttributeValue(e, "lcid_type", ref m_lcidtype);
             // processor and os filter architecture messages
             ReadAttributeValue(e, "configuration_no_match_message", ref m_configuration_no_match_message);
+            // logging
+            ReadAttributeValue(e, "log_enabled", ref m_log_enabled);
+            ReadAttributeValue(e, "log_file", ref m_log_file);
+            // legacy
+            OnXmlReadTagLegacy(e);
             // ui level
             ReadAttributeValue<InstallUILevel>(e, "ui_level", ref m_ui_level);
             // backwards compatibility: silent_install

@@ -3,6 +3,7 @@
 class ConfigFileManager : public Configurations
 {
 private:
+    ConfigFile config;
 	static const int max_levels = 10;
 	InstallUILevel saved_ui_level;
 public:
