@@ -49,6 +49,7 @@
     <Compile Include="CompleteCommandUnitTests.cs" />
     <Compile Include="dotNetInstallerExeUtils.cs" />
     <Compile Include="DownloadComponentsUnitTests.cs" />
+    <Compile Include="LoggingUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExitCodeUnitTests.cs" />
   </ItemGroup>

@@ -45,14 +45,28 @@ namespace dotNetInstallerUnitTests
             }
         }
 
+        public static string DefaultLogFile
+        {
+            get
+            {
+                return Path.Combine(Path.GetTempPath(), "dotNetInstallerUnitTests.log");
+            }
+        }
+
         public static int Run(string configFile)
         {
-            string logfile = Path.Combine(Path.GetTempPath(), "dotNetInstallerUnitTests.log");
+            return Run(configFile, true, DefaultLogFile);
+        }
+
+        public static int Run(string configFile, bool log, string logfile)
+        {
             Console.WriteLine("dotNetInstaller: {0}", Executable);
             Console.WriteLine("Log: {0}", logfile);
             Process p = new Process();
             p.StartInfo.FileName = Executable;
-            p.StartInfo.Arguments = string.Format("/ConfigFile \"{0}\" /q /Log /LogFile \"{1}\"", configFile, logfile);
+            p.StartInfo.Arguments = string.Format("/ConfigFile \"{0}\" /q", configFile);
+            if (log) p.StartInfo.Arguments += " /Log";
+            if (!string.IsNullOrEmpty(logfile)) p.StartInfo.Arguments += string.Format(" /LogFile \"{0}\"", logfile);
             p.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
             p.Start();
             p.WaitForExit();
