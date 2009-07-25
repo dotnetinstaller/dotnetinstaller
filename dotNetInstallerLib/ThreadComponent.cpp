@@ -10,6 +10,11 @@ ThreadComponent::ThreadComponent(component_type t)
 
 }
 
+ThreadComponent::~ThreadComponent()
+{
+	WaitForCompletion();
+}
+
 bool ThreadComponent::IsExecuting() const
 {
     if (get(m_pThread) == NULL)
@@ -35,6 +40,15 @@ UINT ThreadComponent::ExecuteThread(LPVOID pParam)
 	return 0;
 }
 
+void ThreadComponent::WaitForCompletion()
+{
+    if (get(m_pThread) != NULL && m_pThread->m_hThread != NULL)
+	{
+		CHECK_WIN32_BOOL(WAIT_FAILED != WaitForSingleObject(m_pThread->m_hThread, INFINITE),
+			L"WaitForSingleObject");
+	}
+}
+
 void ThreadComponent::Exec()
 {
 	BeginExec();
@@ -54,15 +68,7 @@ void ThreadComponent::BeginExec()
 
 void ThreadComponent::EndExec()
 {
-	if (! get(m_pThread))
-		return;
-
-	if (m_pThread->m_hThread != NULL)
-	{
-		CHECK_WIN32_BOOL(WAIT_FAILED != WaitForSingleObject(m_pThread->m_hThread, INFINITE),
-			L"WaitForSingleObject");
-	}
-
+	WaitForCompletion();
 	CHECK_BOOL(m_error.empty(), m_error);
 	CHECK_BOOL(m_rc == 0, L"Component failed with error code: " << m_rc);
 }
