@@ -7,9 +7,9 @@ class CComponentsList :
 protected: 
 	void PreDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
 	void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct); 
+	void OnCheckChange();
 	DECLARE_MESSAGE_MAP();
 public:
 	bool Load(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration);
-	CComponentsList(void);
-	~CComponentsList(void);
+	CComponentsList();
 };

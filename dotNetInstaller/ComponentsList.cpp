@@ -1,18 +1,20 @@
 #include "StdAfx.h"
 #include "ComponentsList.h"
 
-CComponentsList::CComponentsList(void)
-{
-}
-
-CComponentsList::~CComponentsList(void)
+CComponentsList::CComponentsList()
 {
 }
 
 IMPLEMENT_DYNAMIC(CComponentsList, CCheckListBox)
 
 BEGIN_MESSAGE_MAP(CComponentsList, CCheckListBox) 
+  ON_CONTROL_REFLECT(CLBN_CHKCHANGE, OnCheckChange)
 END_MESSAGE_MAP()
+
+void CComponentsList::OnCheckChange()
+{
+	this->Invalidate();
+}
 
 void CComponentsList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 { 
