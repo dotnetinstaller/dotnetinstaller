@@ -236,10 +236,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\InstallSystem.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\KCBusyProgressCtrl.cpp"
 				>
 			</File>
@@ -323,10 +319,6 @@
 			</File>
 			<File
 				RelativePath=".\InstallStatus.h"
-				>
-			</File>
-			<File
-				RelativePath=".\InstallSystem.h"
 				>
 			</File>
 			<File

@@ -8,8 +8,8 @@
 #include "DniMessageBox.h"
 #include "ExtractCabProcessor.h"
 #include "DownloadDialog.h"
-#include "InstallSystem.h"
 #include "InstallerCommandLineInfo.h"
+#include "InstallerLauncher.h"
 #include <Version/Version.h>
 
 // finestra di dialogo CdotNetInstallerDlg
@@ -70,7 +70,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Impostare icona piccola.
 
 	// remove the Run key if exist
-	RemoveRegistryRun();
+	InstallerSession::Instance->DisableRunOnReboot();
 
 	// determinating operating system
     m_lblOperatingSystem.SetWindowText(
@@ -226,7 +226,6 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		ClearError();
         SelectComponents();
         ExtractCab();
-		InsertRegistryRun();
 		
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
@@ -241,12 +240,11 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 
 		if (m_reboot)
 		{
+			InstallerSession::Instance->EnableRunOnReboot(InstallerLauncher::Instance->GetLauncherCmd());
 			DVLib::ExitWindowsSystem(EWX_REBOOT);
 			PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);
 			return;
 		}
-
-		RemoveRegistryRun();
 
 		// silent execution, 
 		if (InstallUILevelSetting::Instance->IsSilent()) 

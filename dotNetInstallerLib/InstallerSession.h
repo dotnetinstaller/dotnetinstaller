@@ -18,6 +18,10 @@ public:
 	std::wstring MakePath(const std::wstring&);
 	// global instance
 	static shared_any<InstallerSession *, close_delete> Instance;
+	// save session for subsequent reboot
+	void EnableRunOnReboot(const std::wstring& cmd = L"");
+	// remove session from subsequent reboot
+	void DisableRunOnReboot();
 };
 
 

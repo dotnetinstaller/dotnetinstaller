@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "InstallerSession.h"
 
+#define REGISTRY_CURRENTVERSION_RUN L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
+
 shared_any<InstallerSession *, close_delete> InstallerSession::Instance;
 
 std::wstring InstallerSession::GetSessionGUID()
@@ -41,4 +43,36 @@ std::wstring InstallerSession::MakePath(const std::wstring& path)
     tmp = DVLib::replace(tmp, L"#GUID", InstallerSession::GetSessionGUID());
 	tmp = DVLib::replace(tmp, L"#PID", DVLib::towstring(::GetCurrentProcessId()));
     return tmp;
+}
+
+void InstallerSession::EnableRunOnReboot(const std::wstring& cmd)
+{
+	std::wstringstream reboot_cmd;
+	if (! cmd.empty())
+	{
+		reboot_cmd << cmd;
+	}
+	// if no launcher argument was specified, use the command line
+	else
+	{
+		reboot_cmd << L"\"" << DVLib::GetModuleFileNameW() << L"\"";
+        if (__argc > 1)
+        {
+            reboot_cmd << (::GetCommandLineW() + wcslen(__targv[0]) + (::GetCommandLineW()[0] == '\"' ? 2 : 0));
+        }
+	}
+
+	DVLib::RegistrySetStringValue(HKEY_LOCAL_MACHINE, 
+		REGISTRY_CURRENTVERSION_RUN, 
+		DVLib::GetFileNameW(DVLib::GetModuleFileNameW()),
+		reboot_cmd.str());
+};
+
+void InstallerSession::DisableRunOnReboot()
+{
+	std::wstring name = DVLib::GetFileNameW(DVLib::GetModuleFileNameW());
+	if (DVLib::RegistryKeyExists(HKEY_LOCAL_MACHINE, REGISTRY_CURRENTVERSION_RUN, name))
+	{
+		DVLib::RegistryDeleteValue(HKEY_LOCAL_MACHINE, REGISTRY_CURRENTVERSION_RUN, name);
+	}
 }
