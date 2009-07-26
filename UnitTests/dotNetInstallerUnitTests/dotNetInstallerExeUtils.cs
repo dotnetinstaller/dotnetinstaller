@@ -61,7 +61,8 @@ namespace dotNetInstallerUnitTests
         public static int Run(string configFile, bool log, string logfile)
         {
             Console.WriteLine("dotNetInstaller: {0}", Executable);
-            Console.WriteLine("Log: {0}", logfile);
+            if (! string.IsNullOrEmpty(logfile))
+                Console.WriteLine("Log: {0}", (logfile));
             Process p = new Process();
             p.StartInfo.FileName = Executable;
             p.StartInfo.Arguments = string.Format("/ConfigFile \"{0}\" /q", configFile);

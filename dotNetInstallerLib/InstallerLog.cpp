@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "InstallerLog.h"
+#include "InstallerSession.h"
 
 shared_any<InstallerLog *, close_delete> InstallerLog::Instance;
 
@@ -47,4 +48,9 @@ void InstallerLog::Write(const std::wstring& message)
 
 	CHECK_WIN32_BOOL(WriteFile(m_hFile, message_s.str().c_str(), message_s.str().size(),  & l_BytesWritten, NULL),
 		L"Error writing to \"" << m_logfile << L"\"");
+}
+
+void InstallerLog::SetLogFile(const std::wstring& filename)
+{ 
+	m_logfile = InstallerSession::Instance->MakePath(filename); 
 }

@@ -10,7 +10,7 @@ public:
     void EnableLog() { m_enabled = true; }
 	void SetEnabled(bool enabled) { m_enabled = enabled; }
 	const std::wstring& GetLogFile() const { return m_logfile; }
-	void SetLogFile(const std::wstring& filename) { m_logfile = filename; }
+	void SetLogFile(const std::wstring& filename);
 	void Write(const std::wstring& message);
 	static shared_any<InstallerLog *, close_delete> Instance;
 private:

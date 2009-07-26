@@ -67,5 +67,27 @@ namespace dotNetInstallerUnitTests
             Assert.IsTrue(File.Exists(dotNetInstallerExeUtils.DefaultLogFile));
             Assert.IsFalse(File.Exists(configFile.log_file));
         }
+
+        [Test]
+        public void TestLogAcceptsPathVariables()
+        {
+            string resolved_logfile = Path.Combine(Path.GetTempPath(), "TestLogAcceptsPathVariables.log");
+            if (File.Exists(dotNetInstallerExeUtils.DefaultLogFile))
+                File.Delete(dotNetInstallerExeUtils.DefaultLogFile);
+            if (File.Exists(resolved_logfile)) 
+                File.Delete(resolved_logfile);
+            ConfigFile configFile = new ConfigFile();
+            configFile.log_enabled = true;
+            configFile.log_file = @"#TEMPPATH\TestLogAcceptsPathVariables.log"; 
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename, false, string.Empty));
+            File.Delete(configFilename);
+            Assert.IsTrue(File.Exists(resolved_logfile), string.Format("Missing {0}", resolved_logfile));
+            Assert.IsFalse(File.Exists(dotNetInstallerExeUtils.DefaultLogFile));
+        }
     }
 }
