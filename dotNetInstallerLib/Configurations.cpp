@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include "InstallerSession.h"
+#include "XmlAttribute.h"
 #include "InstallConfiguration.h"
 #include "ReferenceConfiguration.h"
 #include "Configurations.h"
@@ -30,7 +32,7 @@ void Configurations::Load(TiXmlElement * node)
 	productversion = DVLib::UTF8string2wstring(node->Attribute("productversion"));
     // auto-enabled log options
     log_enabled = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("log_enabled")), false);
-    log_file = DVLib::UTF8string2wstring(node->Attribute("log_file"));
+    log_file = XML_ATTRIBUTE(node->Attribute("log_file"));
 
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )

@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "XmlAttribute.h"
 #include "InstalledCheckProduct.h"
 #include "InstallerLog.h"
 #include "InstallConfiguration.h"
@@ -11,10 +12,10 @@ InstalledCheckProduct::InstalledCheckProduct()
 void InstalledCheckProduct::Load(TiXmlElement * node)
 {
 	id_type = DVLib::UTF8string2wstring(node->Attribute("id_type"));
-	id = DVLib::UTF8string2wstring(node->Attribute("id"));
-	propertyname = DVLib::UTF8string2wstring(node->Attribute("propertyname"));
+	id = XML_ATTRIBUTE(node->Attribute("id"));
+	propertyname = XML_ATTRIBUTE(node->Attribute("propertyname"));
 	comparison = DVLib::UTF8string2wstring(node->Attribute("comparison"));
-	propertyvalue = DVLib::UTF8string2wstring(node->Attribute("propertyvalue"));
+	propertyvalue = XML_ATTRIBUTE(node->Attribute("propertyvalue"));
 	LOG(L"Loaded 'product' installed check '" << id << L"'");
 }
 

@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include "InstallerSession.h"
+#include "XmlAttribute.h"
 #include "DownloadGroupConfiguration.h"
 #include "InstallerLog.h"
 
@@ -16,13 +18,13 @@ void DownloadGroupConfiguration::Load(TiXmlElement * node)
 	CHECK_BOOL(0 == strcmp(node->Value(), "downloaddialog"),
 		L"Expected 'downloaddialog' node, got '" << DVLib::string2wstring(node->Value()) << L"'");
 
-	caption = DVLib::UTF8string2wstring(node->Attribute("dialog_caption"));
-	help_message = DVLib::UTF8string2wstring(node->Attribute("dialog_message"));
-	downloading_message = DVLib::UTF8string2wstring(node->Attribute("dialog_message_downloading"));
-	connecting_message = DVLib::UTF8string2wstring(node->Attribute("dialog_message_connecting"));
-	sendingrequest_message = DVLib::UTF8string2wstring(node->Attribute("dialog_message_sendingrequest"));
-	start_caption = DVLib::UTF8string2wstring(node->Attribute("buttonstart_caption"));
-	cancel_caption = DVLib::UTF8string2wstring(node->Attribute("buttoncancel_caption"));
+	caption = XML_ATTRIBUTE(node->Attribute("dialog_caption"));
+	help_message = XML_ATTRIBUTE(node->Attribute("dialog_message"));
+	downloading_message = XML_ATTRIBUTE(node->Attribute("dialog_message_downloading"));
+	connecting_message = XML_ATTRIBUTE(node->Attribute("dialog_message_connecting"));
+	sendingrequest_message = XML_ATTRIBUTE(node->Attribute("dialog_message_sendingrequest"));
+	start_caption = XML_ATTRIBUTE(node->Attribute("buttonstart_caption"));
+	cancel_caption = XML_ATTRIBUTE(node->Attribute("buttoncancel_caption"));
 	auto_start = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("autostartdownload")), false);
 
 	TiXmlNode * child = NULL;

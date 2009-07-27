@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "XmlAttribute.h"
 #include "CmdComponent.h"
 #include "InstallUILevel.h"
 #include "InstallerLog.h"
@@ -40,9 +41,9 @@ void CmdComponent::Exec()
 
 void CmdComponent::Load(TiXmlElement * node)
 {
-	command = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("command")));
-    command_silent = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("command_silent")));
-	command_basic = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("command_basic")));	
+	command = XML_ATTRIBUTE(node->Attribute("command"));
+    command_silent = XML_ATTRIBUTE(node->Attribute("command_silent"));
+	command_basic = XML_ATTRIBUTE(node->Attribute("command_basic"));	
 	Component::Load(node);
 	LOG(L"Loaded 'cmd' component '" << description << L"'");
 }

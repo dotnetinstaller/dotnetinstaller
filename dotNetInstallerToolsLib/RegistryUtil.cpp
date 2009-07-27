@@ -20,7 +20,7 @@ bool DVLib::RegistryKeyExists(HKEY root, const std::wstring& key, const std::wst
         break;
     default:
         CHECK_WIN32_DWORD(dwErr,
-            L"Error checking whether \"" << HKEY2wstring(root) << L"\\" << key << L"\" exists");
+            L"Error checking whether '" << HKEY2wstring(root) << L"\\" << key << L"' exists");
         break;
     }
 
@@ -39,7 +39,7 @@ bool DVLib::RegistryKeyExists(HKEY root, const std::wstring& key, const std::wst
             break;
         default:
             CHECK_WIN32_DWORD(dwErr,
-                L"Error checking whether \"" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"\" exists");
+                L"Error checking whether '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"' exists");
             break;        
         }
     }
@@ -60,10 +60,10 @@ std::wstring DVLib::RegistryGetStringValue(HKEY root, const std::wstring& key, c
     DWORD dwType = 0;
 
     CHECK_WIN32_DWORD(::RegQueryValueEx(reg, name.c_str(), 0, & dwType, NULL, & dwSize),
-        L"Error quering \"" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"\" value size");
+        L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"' value size");
 
 	CHECK_BOOL(dwType == REG_SZ || dwType == REG_EXPAND_SZ,
-        L"Error quering \"" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"\" value, unexpected type " << dwType);
+        L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"' value, unexpected type " << dwType);
 
     std::wstring value;
     if (dwSize > 0)
@@ -71,7 +71,7 @@ std::wstring DVLib::RegistryGetStringValue(HKEY root, const std::wstring& key, c
         value.resize(dwSize / sizeof(WCHAR));
 
         CHECK_WIN32_DWORD(::RegQueryValueEx(reg, name.c_str(), 0, & dwType, reinterpret_cast<LPBYTE>(& * value.begin()), & dwSize),
-			L"Error quering \"" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"\" value data");
+			L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"' value data");
 
         value.resize((dwSize - 1) / sizeof(WCHAR));
     }
@@ -79,12 +79,30 @@ std::wstring DVLib::RegistryGetStringValue(HKEY root, const std::wstring& key, c
     return value;
 }
 
+DWORD DVLib::RegistryGetValueType(HKEY root, const std::wstring& key, const std::wstring& name, DWORD ulFlags)
+{
+    HKEY reg = NULL;
+
+    CHECK_WIN32_DWORD(::RegOpenKeyEx(root, key.c_str(), 0, ulFlags | KEY_READ, & reg),
+        L"Error opening " << HKEY2wstring(root) << L"\\" << key);
+
+    auto_hkey reg_ptr(reg);
+
+    DWORD dwSize = 0;
+    DWORD dwType = 0;
+
+    CHECK_WIN32_DWORD(::RegQueryValueEx(reg, name.c_str(), 0, & dwType, NULL, & dwSize),
+        L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"'");
+
+	return dwType;
+}
+
 void DVLib::RegistryCreateKey(HKEY root, const std::wstring& key, DWORD ulFlags)
 {
 	HKEY hkey = NULL;
 
 	CHECK_WIN32_DWORD(::RegCreateKeyEx(root, key.c_str(), 0, NULL, REG_OPTION_NON_VOLATILE, ulFlags | KEY_WRITE, NULL, & hkey, NULL),
-        L"Error creating \"" << HKEY2wstring(root) << L"\\" << key << L"\"");
+        L"Error creating '" << HKEY2wstring(root) << L"\\" << key << L"'");
 
 	::RegCloseKey(hkey);
 }
@@ -93,10 +111,10 @@ void DVLib::RegistryDeleteValue(HKEY root, const std::wstring& key, const std::w
 {
 	HKEY reg = NULL;
 	CHECK_WIN32_DWORD(::RegOpenKeyEx(root, key.c_str(), 0, ulFlags | KEY_WRITE, & reg), 
-		L"Error opening \"" << HKEY2wstring(root) << L"\\" << key << L"\"");
+		L"Error opening '" << HKEY2wstring(root) << L"\\" << key << L"'");
     auto_hkey reg_ptr(reg);
 	CHECK_WIN32_DWORD(::RegDeleteValue(reg, name.c_str()),
-		L"Error deleting \"" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"\"");
+		L"Error deleting '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"'");
 }
 
 void DVLib::RegistryDeleteKey(HKEY root, const std::wstring& key, DWORD ulFlags)
@@ -107,13 +125,13 @@ void DVLib::RegistryDeleteKey(HKEY root, const std::wstring& key, DWORD ulFlags)
 		HKEY reg = NULL;
 
 		CHECK_WIN32_DWORD(::RegOpenKeyEx(root, key.c_str(), 0, ulFlags | KEY_READ, & reg), 
-			L"Error opening \"" << HKEY2wstring(root) << L"\\" << key << L"\"");
+			L"Error opening '" << HKEY2wstring(root) << L"\\" << key << L"'");
 
         auto_hkey reg_ptr(reg); 
 
 		// query subkey information
 		CHECK_WIN32_DWORD(::RegQueryInfoKey(reg, NULL, NULL, NULL, & subkeys, & maxkeyname, NULL, NULL, NULL, NULL, NULL, NULL), 
-			L"Error quering \"" << HKEY2wstring(root) << L"\\" << key << L"\" for subkeys");
+			L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"' for subkeys");
 
 		// walk through all subkeys, and recursively delete
 		wchar_t name[MAX_PATH] = {0};
@@ -126,7 +144,7 @@ void DVLib::RegistryDeleteKey(HKEY root, const std::wstring& key, DWORD ulFlags)
 		}
 
 		CHECK_WIN32_DWORD(::RegDeleteKey(root, key.c_str()), 
-			L"Error deleting \"" << HKEY2wstring(root) << L"\\" << key << L"\"");
+			L"Error deleting '" << HKEY2wstring(root) << L"\\" << key << L"'");
 	}
 }
 
@@ -136,13 +154,13 @@ void DVLib::RegistrySetStringValue(HKEY root, const std::wstring& key, const std
 
 	CHECK_WIN32_DWORD(::RegCreateKeyEx(root, key.c_str(), 0, NULL, REG_OPTION_NON_VOLATILE, 
 		ulFlags | KEY_SET_VALUE, NULL, & hkey, NULL),
-		L"Error creating \"" << HKEY2wstring(root) << L"\\" << key << L"\"");
+		L"Error creating '" << HKEY2wstring(root) << L"\\" << key << L"'");
 
     auto_hkey hkey_ptr(hkey);
 
 	CHECK_WIN32_DWORD(::RegSetValueEx(hkey, name.c_str(), 0L, REG_SZ, 
 		reinterpret_cast<const byte *>(value.c_str()), (value.length() + 1) * sizeof(WCHAR)),
-		L"Error setting \"" << HKEY2wstring(root) << L"\\" << key << L"\"" << name << L"\" value");
+		L"Error setting '" << HKEY2wstring(root) << L"\\" << key << L"'" << name << L"' value");
 }
 
 DWORD DVLib::RegistryGetDWORDValue(HKEY root, const std::wstring& key, const std::wstring& name, DWORD ulFlags)
@@ -150,7 +168,7 @@ DWORD DVLib::RegistryGetDWORDValue(HKEY root, const std::wstring& key, const std
     HKEY reg = NULL;
 
     CHECK_WIN32_DWORD(::RegOpenKeyEx(root, key.c_str(), 0, ulFlags | KEY_READ, & reg),
-		L"Error opening \"" << HKEY2wstring(root) << L"\\" << key << L"\"");
+		L"Error opening '" << HKEY2wstring(root) << L"\\" << key << L"'");
 
     auto_hkey reg_ptr(reg);
 
@@ -158,14 +176,14 @@ DWORD DVLib::RegistryGetDWORDValue(HKEY root, const std::wstring& key, const std
     DWORD dwType = 0;
 
     CHECK_WIN32_DWORD(::RegQueryValueEx(reg, name.c_str(), 0, & dwType, NULL, & dwSize),
-        L"Error quering \"" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"\" size");
+        L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"' size");
 
 	CHECK_BOOL(dwType == REG_DWORD && dwSize == sizeof(DWORD),
-        L"Error quering \"" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"\", unexpected type");
+        L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"', unexpected type");
 
     DWORD value = 0;
     CHECK_WIN32_DWORD(::RegQueryValueEx(reg, name.c_str(), 0, & dwType, reinterpret_cast<LPBYTE>(& value), & dwSize),
-        L"Error quering \"" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"\" value");
+        L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"' value");
     return value;
 }
 
@@ -175,13 +193,13 @@ void DVLib::RegistrySetDWORDValue(HKEY root, const std::wstring& key, const std:
 
 	CHECK_WIN32_DWORD(::RegCreateKeyEx(root, key.c_str(), 0, NULL, REG_OPTION_NON_VOLATILE, 
 		ulFlags | KEY_SET_VALUE, NULL, & hkey, NULL),
-		L"Error creating \"" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"\"");
+		L"Error creating '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"'");
 
     auto_hkey hkey_ptr(hkey);
 
 	CHECK_WIN32_DWORD(::RegSetValueEx(hkey, name.c_str(), 0L, REG_DWORD, 
 		reinterpret_cast<const byte *>(& value), sizeof(DWORD)),
-		L"Error setting \"" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"\" value");
+		L"Error setting '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"' value");
 }
 
 std::wstring DVLib::HKEY2wstring(HKEY root)
@@ -219,10 +237,10 @@ std::vector<std::wstring> DVLib::RegistryGetMultiStringValue(HKEY root, const st
     DWORD dwType = 0;
 
     CHECK_WIN32_DWORD(::RegQueryValueEx(reg, name.c_str(), 0, & dwType, NULL, & dwSize),
-        L"Error quering \"" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"\" value size");
+        L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"' value size");
 
 	CHECK_BOOL(dwType == REG_MULTI_SZ,
-        L"Error quering \"" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"\" value, unexpected type " << dwType);
+        L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"' value, unexpected type " << dwType);
 
 	std::vector<std::wstring> result;
     std::vector<wchar_t> value;
@@ -231,7 +249,7 @@ std::vector<std::wstring> DVLib::RegistryGetMultiStringValue(HKEY root, const st
         value.resize(dwSize / sizeof(WCHAR));
 
         CHECK_WIN32_DWORD(::RegQueryValueEx(reg, name.c_str(), 0, & dwType, reinterpret_cast<LPBYTE>(& * value.begin()), & dwSize),
-			L"Error quering \"" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"\" value data");
+			L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"' value data");
 
         value.resize((dwSize - 1) / sizeof(WCHAR));
 
@@ -260,7 +278,7 @@ void DVLib::RegistrySetMultiStringValue(HKEY root, const std::wstring& key, cons
 
 	CHECK_WIN32_DWORD(::RegCreateKeyEx(root, key.c_str(), 0, NULL, REG_OPTION_NON_VOLATILE, 
 		ulFlags | KEY_SET_VALUE, NULL, & hkey, NULL),
-		L"Error creating \"" << HKEY2wstring(root) << L"\\" << key << L"\"");
+		L"Error creating '" << HKEY2wstring(root) << L"\\" << key << L"'");
 
     auto_hkey hkey_ptr(hkey);
 
@@ -274,5 +292,5 @@ void DVLib::RegistrySetMultiStringValue(HKEY root, const std::wstring& key, cons
 
 	CHECK_WIN32_DWORD(::RegSetValueEx(hkey, name.c_str(), 0L, REG_MULTI_SZ, 
 		reinterpret_cast<const byte *>(& * data.begin()), data.size() * sizeof(WCHAR)),
-		L"Error setting \"" << HKEY2wstring(root) << L"\\" << key << L"\"" << name << L"\" value");
+		L"Error setting '" << HKEY2wstring(root) << L"\\" << key << L"'" << name << L"' value");
 }

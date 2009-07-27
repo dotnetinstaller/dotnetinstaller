@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include "InstallerSession.h"
+#include "XmlAttribute.h"
 #include "InstalledCheckOperator.h"
 #include "InstallerLog.h"
 
@@ -10,7 +12,7 @@ InstalledCheckOperator::InstalledCheckOperator()
 void InstalledCheckOperator::Load(TiXmlElement * node)
 {
     type = DVLib::UTF8string2wstring(node->Attribute("type"));
-    description = DVLib::UTF8string2wstring(node->Attribute("description"));
+    description = XML_ATTRIBUTE(node->Attribute("description"));
 	// child install checks
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )

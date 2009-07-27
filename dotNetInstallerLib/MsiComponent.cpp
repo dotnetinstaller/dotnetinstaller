@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "XmlAttribute.h"
 #include "MsiComponent.h"
 #include "InstallUILevel.h"
 #include "InstallerLog.h"
@@ -67,10 +68,10 @@ void MsiComponent::Exec()
 
 void MsiComponent::Load(TiXmlElement * node)
 {
-	package = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("package")));
-	cmdparameters = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("cmdparameters")));
-	cmdparameters_silent = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("cmdparameters_silent")));
-	cmdparameters_basic = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("cmdparameters_basic")));
+	package = XML_ATTRIBUTE(node->Attribute("package"));
+	cmdparameters = XML_ATTRIBUTE(node->Attribute("cmdparameters"));
+	cmdparameters_silent = XML_ATTRIBUTE(node->Attribute("cmdparameters_silent"));
+	cmdparameters_basic = XML_ATTRIBUTE(node->Attribute("cmdparameters_basic"));
 	Component::Load(node);
 	LOG(L"Loaded 'msi' component '" << package << L"'");
 }

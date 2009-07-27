@@ -243,6 +243,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstallerSessionUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\InstallUILevelUnitTests.cpp"
 				>
 			</File>
@@ -346,6 +350,10 @@
 			</File>
 			<File
 				RelativePath=".\InstallerLogUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstallerSessionUnitTests.h"
 				>
 			</File>
 			<File

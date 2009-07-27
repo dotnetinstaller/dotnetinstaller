@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include "InstallerSession.h"
+#include "XmlAttribute.h"
 #include "Component.h"
 #include "InstalledCheck.h"
 #include "InstalledCheckRegistry.h"
@@ -42,19 +44,19 @@ bool Component::IsInstalled() const
 
 void Component::Load(TiXmlElement * node)
 {
-	description = DVLib::UTF8string2wstring(node->Attribute("description"));
-	status_installed = DVLib::UTF8string2wstring(node->Attribute("status_installed"));
-	os_filter_greater = DVLib::UTF8string2wstring(node->Attribute("os_filter_greater"));
-	os_filter_smaller = DVLib::UTF8string2wstring(node->Attribute("os_filter_smaller"));
-	os_filter_lcid = DVLib::UTF8string2wstring(node->Attribute("os_filter_lcid"));
-	installcompletemessage = DVLib::UTF8string2wstring(node->Attribute("installcompletemessage"));
-	mustreboot = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("mustreboot")), false);
-    reboot_required = DVLib::UTF8string2wstring(node->Attribute("reboot_required"));
-	must_reboot_required = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("must_reboot_required")), false);
-    allow_continue_on_error = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("allow_continue_on_error")), true);
-    failed_exec_command_continue = DVLib::UTF8string2wstring(node->Attribute("failed_exec_command_continue"));
-	required = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("required")), true);
-	processor_architecture_filter = DVLib::UTF8string2wstring(node->Attribute("processor_architecture_filter"));	
+	description = XML_ATTRIBUTE(node->Attribute("description"));
+	status_installed = XML_ATTRIBUTE(node->Attribute("status_installed"));
+	os_filter_greater = XML_ATTRIBUTE(node->Attribute("os_filter_greater"));
+	os_filter_smaller = XML_ATTRIBUTE(node->Attribute("os_filter_smaller"));
+	os_filter_lcid = XML_ATTRIBUTE(node->Attribute("os_filter_lcid"));
+	installcompletemessage = XML_ATTRIBUTE(node->Attribute("installcompletemessage"));
+	mustreboot = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("mustreboot")), false);
+    reboot_required = XML_ATTRIBUTE(node->Attribute("reboot_required"));
+	must_reboot_required = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("must_reboot_required")), false);
+    allow_continue_on_error = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("allow_continue_on_error")), true);
+    failed_exec_command_continue = XML_ATTRIBUTE(node->Attribute("failed_exec_command_continue"));
+	required = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("required")), true);
+	processor_architecture_filter = XML_ATTRIBUTE(node->Attribute("processor_architecture_filter"));	
 	// install checks, embed files, etc.
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )

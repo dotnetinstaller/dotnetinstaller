@@ -17,6 +17,7 @@ namespace DVLib
 			CPPUNIT_TEST( testSetDWORDValue );
 			CPPUNIT_TEST( testGetSetMultiStringValue );
 			CPPUNIT_TEST( testDeleteValue );
+			CPPUNIT_TEST( testGetValueType );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testKeyExists();
@@ -29,6 +30,7 @@ namespace DVLib
 			void testDeleteValue();
 			void testHKEY2wstring();
 			void testwstring2HKEY();
+			void testGetValueType();
 		};
 	}
 }

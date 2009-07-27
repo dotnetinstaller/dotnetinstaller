@@ -14,8 +14,10 @@ public:
 	std::wstring GetSessionGUID();
     // get a unique temporary directory for this session
     std::wstring GetSessionTempPath(bool returnonly = false);
-	// make a session path
-	std::wstring MakePath(const std::wstring&);
+	// expand variables
+	std::wstring ExpandVariables(const std::wstring& value);
+	std::wstring ExpandRegistryVariables(const std::wstring& value);
+	std::wstring ExpandPathVariables(const std::wstring& path);
 	// global instance
 	static shared_any<InstallerSession *, close_delete> Instance;
 	// save session for subsequent reboot

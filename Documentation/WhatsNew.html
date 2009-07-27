@@ -72,6 +72,12 @@
             line syntax and options.</li>
         <li>Moved <code>log_enabled</code> and <code>log_file</code> options to the configuration
             top level from individual install configurations.</li>
+        <li>Added expansion of registry variables to configuration nodes in the format of <code>
+            @[KEY:OPTION\PATH\VALUE]</code> (eg. @[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\CommonFilesDir]).</li>
+        <li>Added expansion of environment variables to configuration nodes (eg. %TEMP%).</li>
+        <li>All nodes in the configuration file, except boolean and strongly typed enumerations,
+            accept path (eg. #TEMPPATH), environment (eg. %TEMP%) and registry (eg. @[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\CommonFilesDir])
+            variables.</li>
     </ul>
     <h3>
         1.6 (29 June 2009)</h3>

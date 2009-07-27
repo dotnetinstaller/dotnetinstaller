@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "XmlAttribute.h"
 #include "InstalledCheckFile.h"
 #include "InstallerLog.h"
 #include "InstallConfiguration.h"
@@ -10,8 +11,8 @@ InstalledCheckFile::InstalledCheckFile()
 
 void InstalledCheckFile::Load(TiXmlElement * node)
 {
-    filename = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("filename")));
-    fileversion = DVLib::UTF8string2wstring(node->Attribute("fileversion"));
+    filename = XML_ATTRIBUTE(node->Attribute("filename"));
+    fileversion = XML_ATTRIBUTE(node->Attribute("fileversion"));
     comparison = DVLib::UTF8string2wstring(node->Attribute("comparison"));
 	LOG(L"Loaded 'file' installed check '" << filename << L"'");
 }

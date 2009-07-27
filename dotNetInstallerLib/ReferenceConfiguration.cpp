@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "XmlAttribute.h"
 #include "Configuration.h"
 #include "InstallerLog.h"
 #include "ReferenceConfiguration.h"
@@ -27,7 +28,7 @@ void ReferenceConfiguration::Load(TiXmlElement * node)
 		
 		if (strcmp(child_element->Value(), "configfile") == 0)
 		{
-			filename = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(child_element->Attribute("filename")));
+			filename = XML_ATTRIBUTE(child_element->Attribute("filename"));
 		}
 		else if (strcmp(child_element->Value(), "downloaddialog") == 0)
 		{

@@ -154,3 +154,9 @@ void RegistryUtilUnitTests::testGetSetMultiStringValue()
 	DVLib::RegistryDeleteKey(HKEY_CURRENT_USER, L"SOFTWARE\\DVLib");
     CPPUNIT_ASSERT(! DVLib::RegistryKeyExists(HKEY_CURRENT_USER, L"SOFTWARE\\DVLib"));
 }
+
+void RegistryUtilUnitTests::testGetValueType()
+{
+	CPPUNIT_ASSERT(REG_DWORD == DVLib::RegistryGetValueType(HKEY_LOCAL_MACHINE, 
+		L"SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v2.0.50727", L"Install"));
+}

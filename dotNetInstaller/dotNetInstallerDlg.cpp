@@ -308,7 +308,7 @@ void CdotNetInstallerDlg::OnDestroy()
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
         std::wstring cabpath = (! p_configuration->cab_path.empty()) ? p_configuration->cab_path : InstallerSession::Instance->GetSessionTempPath(true);
-		cabpath = InstallerSession::Instance->MakePath(cabpath);
+		cabpath = InstallerSession::Instance->ExpandVariables(cabpath);
         if (p_configuration->cab_path_autodelete && ! cabpath.empty() && DVLib::FileExists(cabpath))
         {
 		    LOG(L"Deleting temporary folder: " << cabpath);

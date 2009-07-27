@@ -52,5 +52,5 @@ void InstallerLog::Write(const std::wstring& message)
 
 void InstallerLog::SetLogFile(const std::wstring& filename)
 { 
-	m_logfile = InstallerSession::Instance->MakePath(filename); 
+	m_logfile = InstallerSession::Instance->ExpandVariables(filename); 
 }

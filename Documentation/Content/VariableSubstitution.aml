@@ -2,10 +2,13 @@
 <topic id="4d997108-25a8-4158-8072-c47bf49324bb" revisionNumber="1">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
-      <para>The following section describes variables that are available in most commands and path settings.</para>
+      <para>
+        The following section describes variables that are available in all strings, commands and path settings.
+        These variables are not supported in boolean or enumeration options.
+      </para>
     </introduction>
-    <section address="variablesubstitution">
-      <title>Supported Variables</title>
+    <section address="pathvariables">
+      <title>Path Variables</title>
       <content>
         <para>
           <definitionTable>
@@ -23,10 +26,10 @@
             <definition>
               This string is replaced with the system windows directory (using <literal>GetSystemWindowsDirectory()</literal> API, usually
               <localUri>C:\WINDOWS</localUri>).
-              On a system that is running Terminal Services, each user has a unique Windows directory. The system Windows 
-              directory is shared by all users, so it is the directory where an application should store initialization and help 
-              files that apply to all users. With Terminal Services, this variable is the path 
-              of the system Windows directory, while the <literal>#WINDOWSPATH</literal> function is the path of a 
+              On a system that is running Terminal Services, each user has a unique Windows directory. The system Windows
+              directory is shared by all users, so it is the directory where an application should store initialization and help
+              files that apply to all users. With Terminal Services, this variable is the path
+              of the system Windows directory, while the <literal>#WINDOWSPATH</literal> function is the path of a
               Windows directory that is private for each user. On a single-user system, these values are the same.
             </definition>
             <definedTerm>#APPPATH</definedTerm>
@@ -51,6 +54,38 @@
             <definition>
               Current process ID. Provides a shorter alternative to #GUID for file locations.
             </definition>
+          </definitionTable>
+        </para>
+      </content>
+    </section>
+    <section address="environmentvariables">
+      <title>Environment Variables</title>
+      <content>
+        <para>
+          You can substititute environment variables with the <literal>%VARIABLE%</literal> syntax, eg. <literal>%TEMP%</literal>.
+          It is not recommended to rely on environment variables for system locations, use path variables instead.
+        </para>
+      </content>
+    </section>
+    <section address="registryvalues">
+      <title>Registry Values</title>
+      <content>
+        <para>
+          You can substitute registry values with the <literal>@[key(:options)\path(\value)]</literal> syntax.
+          For example <literal>@[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CommonFilesDir]</literal>.
+          The key must exist otherwise loading of the configuration file will fail. The value is optional, make
+          sure to terminate a path without a value with a backslash.
+        </para>
+        <para>
+          The following options are supported. For more information see <externalLink>
+            <linkUri>http://msdn.microsoft.com/en-us/library/aa384129(VS.85).aspx</linkUri>
+            <linkText>Accessing an Alternate Registry View</linkText>
+          </externalLink>.
+          <definitionTable>
+            <definedTerm>WOW64_64</definedTerm>
+            <definition>Indicates that an application on 64-bit Windows should operate on the 64-bit registry view.</definition>
+            <definedTerm>WOW64_32</definedTerm>
+            <definition>Indicates that an application on 64-bit Windows should operate on the 32-bit registry view.</definition>
           </definitionTable>
         </para>
       </content>

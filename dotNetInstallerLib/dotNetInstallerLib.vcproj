@@ -444,6 +444,10 @@
 				RelativePath=".\WidgetPosition.h"
 				>
 			</File>
+			<File
+				RelativePath=".\XmlAttribute.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

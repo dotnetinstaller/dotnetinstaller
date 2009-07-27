@@ -113,7 +113,7 @@ void FileUtilUnitTests::testFileWrite()
     std::vector<char> read_guid = DVLib::FileReadToEnd(tmpfile);
 	std::wcout << std::endl << L"Size: " << read_guid.size();    
     CPPUNIT_ASSERT(read_guid.size() > 0);
-    CPPUNIT_ASSERT(read_guid.size() == DVLib::GetFileSize(tmpfile));
+    CPPUNIT_ASSERT(static_cast<long>(read_guid.size()) == DVLib::GetFileSize(tmpfile));
     std::string read_guid_string(read_guid.begin(), read_guid.end());
     std::cout << std::endl << "Read GUID: " << read_guid_string;
     CPPUNIT_ASSERT(write_guid == read_guid_string);
@@ -157,7 +157,7 @@ void FileUtilUnitTests::testFileReadToEnd()
     std::vector<char> guiddata = DVLib::FileReadToEnd(tmpfile);
 	std::wcout << std::endl << L"Size: " << guiddata.size();    
     CPPUNIT_ASSERT(guiddata.size() > 0);
-    CPPUNIT_ASSERT(guiddata.size() == DVLib::GetFileSize(tmpfile));
+    CPPUNIT_ASSERT(static_cast<long>(guiddata.size()) == DVLib::GetFileSize(tmpfile));
     // delete temp file
     DVLib::FileDelete(tmpfile);
 }

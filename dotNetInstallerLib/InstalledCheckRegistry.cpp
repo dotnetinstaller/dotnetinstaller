@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include "InstallerSession.h"
+#include "XmlAttribute.h"
 #include "InstalledCheckRegistry.h"
 #include "InstallerLog.h"
 
@@ -9,10 +11,10 @@ InstalledCheckRegistry::InstalledCheckRegistry()
 
 void InstalledCheckRegistry::Load(TiXmlElement * node)
 {
-    fieldname = DVLib::UTF8string2wstring(node->Attribute("fieldname"));
+    fieldname = XML_ATTRIBUTE(node->Attribute("fieldname"));
     fieldtype = DVLib::UTF8string2wstring(node->Attribute("fieldtype"));
-    fieldvalue = DVLib::UTF8string2wstring(node->Attribute("fieldvalue"));
-    path = DVLib::UTF8string2wstring(node->Attribute("path"));
+    fieldvalue = XML_ATTRIBUTE(node->Attribute("fieldvalue"));
+    path = XML_ATTRIBUTE(node->Attribute("path"));
     comparison = DVLib::UTF8string2wstring(node->Attribute("comparison"));
     rootkey = DVLib::UTF8string2wstring(node->Attribute("rootkey"));
     wowoption = DVLib::UTF8string2wstring(node->Attribute("wowoption"));
@@ -28,7 +30,7 @@ bool InstalledCheckRegistry::IsInstalled() const
 	DWORD dwKeyOption = KEY_READ;
 
 	// alternate registry view is available from Windows XP onwards for 64 bit systems
-	if (type >= DVLib::winXP)
+	if (type >= DVLib::winXP && ! wowoption.empty())
 	{
 		// indicates that an application on 64-bit Windows should operate on the 64-bit registry view
 		if (_wcsicmp(wowoption.c_str(), L"WOW64_64") == 0)
@@ -41,6 +43,10 @@ bool InstalledCheckRegistry::IsInstalled() const
 		{
 			LOG(L"Opening 32-bit registry view (KEY_WOW64_32KEY)");
 			dwKeyOption |= KEY_WOW64_32KEY;
+		}
+		else
+		{
+			THROW_EX(L"Invalid WOW option '" << wowoption << L"'");
 		}
 	}
 

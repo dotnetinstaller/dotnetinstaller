@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "XmlAttribute.h"
 #include "OpenFileComponent.h"
 #include "InstallConfiguration.h"
 #include "InstallerLog.h"
@@ -22,7 +23,7 @@ bool OpenFileComponent::IsExecuting() const
 
 void OpenFileComponent::Load(TiXmlElement * node)
 {
-	file = InstallerSession::Instance->MakePath(DVLib::UTF8string2wstring(node->Attribute("file")));
+	file = XML_ATTRIBUTE(node->Attribute("file"));
 	Component::Load(node);
 	LOG(L"Loaded 'openfile' component '" << file << L"'");
 }
