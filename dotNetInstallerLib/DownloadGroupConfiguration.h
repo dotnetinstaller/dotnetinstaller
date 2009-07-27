@@ -25,6 +25,7 @@ public:
 	DownloadGroupConfiguration();
 	~DownloadGroupConfiguration();
 	void Load(TiXmlElement * node);
+	void Exec();
 };
 
 typedef shared_any<DownloadGroupConfiguration *, close_delete> DownloadGroupConfigurationPtr;

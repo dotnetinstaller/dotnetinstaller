@@ -45,3 +45,11 @@ void ReferenceConfiguration::Load(TiXmlElement * node)
 	Configuration::Load(node);
 	LOG(L"Loaded 'reference' configuration '" << filename << L"'");
 }
+
+void ReferenceConfiguration::Exec()
+{
+	if (get(downloadconfiguration))
+	{
+		downloadconfiguration->Exec();
+	}
+}

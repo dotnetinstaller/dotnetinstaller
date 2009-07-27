@@ -14,56 +14,9 @@ DownloadComponent::DownloadComponent(
 	m_TotalComponents = total;
 }
 
-bool DownloadComponent::IsCopyRequired() const
-{
-	// no source path, nothing to copy
-	if (m_pComponent->sourcepath.empty())
-		return false;
-
-	// download every time
-	if (m_pComponent->alwaysdownload)
-		return false;
-
-	// destination file has already been downloaded/copied
-	if (DVLib::FileExists(GetDestinationFileName()))
-		return false;
-
-	// source path file exists, copy it
-	if (DVLib::FileExists(m_pComponent->sourcepath))
-		return true;
-
-	// source path file doesn't exist
-	return false;
-}
-
-bool DownloadComponent::IsDownloadRequired() const
-{
-	if (m_pComponent->sourceurl.empty())
-		return false;
-
-	if (! m_pComponent->alwaysdownload)
-	{
-		// destination file has already been donwloaded
-		if (DVLib::FileExists(GetDestinationFileName()))
-			return false;
-		// file exists in a local path
-		if (IsCopyRequired())
-			return false;
-	}
-
-	return true;
-}
-
-std::wstring DownloadComponent::GetDestinationFileName() const
-{
-	return m_pComponent->destinationfilename.empty()
-		? DVLib::DirectoryCombine(m_pComponent->destinationpath, DVLib::GetFileNameW(m_pComponent->sourceurl))
-		: DVLib::DirectoryCombine(m_pComponent->destinationpath, m_pComponent->destinationfilename);
-}
-
 void DownloadComponent::CopyFromSourcePath()
 {
-	std::wstring destination_full_filename = GetDestinationFileName();
+	std::wstring destination_full_filename = m_pComponent->GetDestinationFileName();
 	LOG(L"Copying '" << m_pComponent->componentname 
 		<< L"', source='" << m_pComponent->sourcepath 
 		<< L"', destination='" << m_pComponent->destinationpath 
@@ -73,7 +26,7 @@ void DownloadComponent::CopyFromSourcePath()
 
 	DVLib::DirectoryCreate(m_pComponent->destinationpath);
 
-	if (! IsCopyRequired())
+	if (! m_pComponent->IsCopyRequired())
 	{
 		LOG(L"Copy '" << m_pComponent->componentname << L"': SKIPPED");
 		return;
@@ -93,9 +46,9 @@ void DownloadComponent::CopyFromSourcePath()
 	m_Callback->Status(dest_size, source_size, tmp);
 }
 
-void DownloadComponent::StartDownload()
+void DownloadComponent::DownloadFromSourceUrl()
 {
-	std::wstring destination_full_filename = GetDestinationFileName();
+	std::wstring destination_full_filename = m_pComponent->GetDestinationFileName();
 
 	LOG(L"Downloading '" << m_pComponent->componentname 
 		<< L"', source='" << m_pComponent->sourceurl 
@@ -109,7 +62,7 @@ void DownloadComponent::StartDownload()
 		DVLib::DirectoryCreate(m_pComponent->destinationpath);
 	}
 
-	if (! IsDownloadRequired())
+	if (! m_pComponent->IsDownloadRequired())
 	{
 		LOG(L"Download '" << m_pComponent->componentname << L"': SKIPPED");
 		return;
@@ -128,8 +81,11 @@ void DownloadComponent::StartDownload()
 
 HRESULT DownloadComponent::OnProgress(ULONG ulProgress, ULONG ulProgressMax, ULONG ulStatusCode, LPCWSTR /* wszStatusText */)
 {
-	// Did the user hit the Stop button?
-	if ( m_Callback && m_Callback->IsDownloadCancelled() )
+	if (! m_Callback)
+		return S_OK;
+
+	// did the user hit the Stop button?
+	if (m_Callback->IsDownloadCancelled() )
 		return E_ABORT;
 
 	switch(ulStatusCode)
@@ -200,4 +156,16 @@ ULONG DownloadComponent::Release()
 HRESULT DownloadComponent::QueryInterface(REFIID /* riid */, void __RPC_FAR *__RPC_FAR * /* ppvObject */)
 { 
 	return E_NOTIMPL; 
+}
+
+void DownloadComponent::Exec()
+{
+	if (m_pComponent->IsCopyRequired())
+	{
+		CopyFromSourcePath();
+	}
+	else if (m_pComponent->IsDownloadRequired())
+	{
+		DownloadFromSourceUrl();
+	}
 }

@@ -2,6 +2,7 @@
 #include "InstallerSession.h"
 #include "XmlAttribute.h"
 #include "DownloadGroupConfiguration.h"
+#include "DownloadComponents.h"
 #include "InstallerLog.h"
 
 DownloadGroupConfiguration::DownloadGroupConfiguration()
@@ -49,4 +50,11 @@ void DownloadGroupConfiguration::Load(TiXmlElement * node)
 
 DownloadGroupConfiguration::~DownloadGroupConfiguration()
 {
+}
+
+void DownloadGroupConfiguration::Exec()
+{
+	DownloadComponents components;
+	components.Load(NULL, downloadcomponents);
+	components.Exec();
 }

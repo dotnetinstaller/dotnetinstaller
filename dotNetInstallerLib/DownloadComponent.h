@@ -18,18 +18,14 @@ private:
 	DownloadComponentInfoPtr m_pComponent;
 	int m_CurrentComponent;
 	int m_TotalComponents;
+	void DownloadFromSourceUrl();
+	void CopyFromSourcePath();
 public:	
 	DownloadComponent(
 		IDownloadCallback * callback, 
 		DownloadComponentInfoPtr componentinfo, 
 		int p_CurrentComponent = 0, 
 		int p_TotalComponents = 1);
-	// returns true if a download is required (local file doesn't exist, etc.)
-	bool IsDownloadRequired() const;
-	// returns true if a local copy from source path is required (or possible)
-	bool IsCopyRequired() const;
-	// destination filename
-	std::wstring GetDestinationFileName() const;
 	// IBindStatusCallback
 	STDMETHOD(OnStartBinding)(DWORD dwReserved, IBinding __RPC_FAR *pib);
 	STDMETHOD(GetPriority)(LONG __RPC_FAR *pnPriority);
@@ -43,10 +39,12 @@ public:
 	STDMETHOD_(ULONG, AddRef)();
 	STDMETHOD_(ULONG, Release)();
 	STDMETHOD(QueryInterface)(REFIID riid, void __RPC_FAR *__RPC_FAR *ppvObject);
-	// Download the specified component.
-	void StartDownload();
-	// Copy the component from SourcePath.
-	void CopyFromSourcePath();
+	// execute
+	void Exec();
+	// properties
+	bool IsCopyRequired() const { return m_pComponent->IsCopyRequired(); }
+	bool IsDownloadRequired() const { return m_pComponent->IsDownloadRequired(); }
+	std::wstring GetDestinationFileName() const { return m_pComponent->GetDestinationFileName(); }
 };
 
 typedef shared_any<DownloadComponent *, close_delete> DownloadComponentPtr;

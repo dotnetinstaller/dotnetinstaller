@@ -31,14 +31,7 @@ int DownloadComponents::ExecOnThread()
 			if (callback && callback->IsDownloadCancelled())
 				return -2;
 
-			if (component->IsCopyRequired())
-			{
-				component->CopyFromSourcePath();
-			}
-			else if (component->IsDownloadRequired())
-			{
-				component->StartDownload();
-			}
+			component->Exec();
 		}
 
 		if (callback)
@@ -52,6 +45,8 @@ int DownloadComponents::ExecOnThread()
 		{
 			callback->DownloadError(DVLib::string2wstring(ex.what()).c_str());
 		}
+
+		throw ex;
 	}	
 
 	return 0;

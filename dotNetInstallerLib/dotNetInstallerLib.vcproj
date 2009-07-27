@@ -163,6 +163,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ConfigFiles.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Configuration.cpp"
 				>
 			</File>
@@ -314,6 +318,10 @@
 			</File>
 			<File
 				RelativePath=".\ConfigFile.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ConfigFiles.h"
 				>
 			</File>
 			<File

@@ -146,7 +146,16 @@ void DownloadComponentsUnitTests::testDownloadMultipleError()
 	component_info.push_back(info2);
 	DownloadComponents components;
 	components.Load(& callback, component_info);
-	components.Exec();
-	components.Wait();
+
+	try
+	{
+		components.Exec();
+		throw "expected std::exception";
+	}
+	catch(std::exception&)
+	{
+
+	}
+
 	CPPUNIT_ASSERT(1 == callback.GetErrorCount());
 }

@@ -1,17 +1,18 @@
 #pragma once
 
-class ConfigFileManager : public Configurations
+#include "dotNetInstallerDlg.h"
+
+class ConfigFileManager : private ConfigFiles
 {
 private:
-    ConfigFile config;
-	static const int max_levels = 10;
-	InstallUILevel saved_ui_level;
+	CdotNetInstallerDlg dlg;
+protected:
+	bool OnVersionError(const std::wstring& version, const std::wstring& filename);
+	bool OnDownload(const ConfigurationPtr& config);
+	bool OnRunConfiguration(const ConfigurationPtr& configuration);
+	bool OnLoad();
 public:
-	std::vector<ConfigurationPtr> DownloadReferenceConfigurations(
-		const std::vector<ConfigurationPtr>&, int level = 0);
 	ConfigFileManager();
-	void SaveAppState();
-	void RestoreAppState();
 	void Load();
 	int Run();
 };

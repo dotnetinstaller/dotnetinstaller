@@ -22,6 +22,6 @@ public:
 	virtual ~Configurations();
 	virtual void Load(TiXmlElement * node);
 	// returns configurations that match current platform, lcid and processor architecture
-	std::vector< ConfigurationPtr > GetSupportedConfigurations() const;
+	std::vector<ConfigurationPtr> GetSupportedConfigurations() const;
 };
 

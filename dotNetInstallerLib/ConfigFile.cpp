@@ -20,6 +20,7 @@ void ConfigFile::LoadFile(const std::wstring& filename)
 		L"Error loading configuration: " << DVLib::string2wstring(m_XmlDocument.ErrorDesc())
 		<< L" at " << m_XmlDocument.ErrorRow() << L":" << m_XmlDocument.ErrorCol());
 	Load(m_XmlDocument.FirstChildElement());
+	m_filename = filename;
 }
 
 void ConfigFile::LoadResource(HMODULE h, const std::wstring& res_name, const std::wstring& res_type)
@@ -32,4 +33,5 @@ void ConfigFile::LoadResource(HMODULE h, const std::wstring& res_name, const std
 		<< L" at " << m_XmlDocument.ErrorRow() << L":" << m_XmlDocument.ErrorCol());
 	LOG(L"Loaded configuration from embedded resource '" << res_name << L"'");
 	Load(m_XmlDocument.FirstChildElement());
+	m_filename = L"Resource: " + res_name;
 }

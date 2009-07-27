@@ -8,10 +8,11 @@ class ReferenceConfiguration : public Configuration
 public:
 	std::wstring filename;
 	std::wstring lcid;
-	auto_any<DownloadGroupConfiguration *, close_delete> downloadconfiguration;
+	DownloadGroupConfigurationPtr downloadconfiguration;
 public:
 	ReferenceConfiguration();
 	~ReferenceConfiguration();
 	virtual void Load(TiXmlElement * node);
+	void Exec();
 };
 

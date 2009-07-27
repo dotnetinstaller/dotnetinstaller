@@ -1,6 +1,6 @@
 #pragma once
 
-class DownloadComponentInfo
+class DownloadComponentInfo 
 {
 public:
 	// download url
@@ -16,6 +16,11 @@ public:
     // enable bypassing download if the file already exists locally
 	bool alwaysdownload;
 public:
+	// returns true if a download is required (local file doesn't exist, etc.)
+	bool IsDownloadRequired() const;
+	// returns true if a local copy from source path is required (or possible)
+	bool IsCopyRequired() const;
+	std::wstring GetDestinationFileName() const;
 	DownloadComponentInfo();
 	void Load(TiXmlElement * node);
 };
