@@ -70,7 +70,10 @@
     <CallTarget Targets="release" />
     <CallTarget Targets="zip" />
     <CallTarget Targets="installer" />
-    <Message Text="Built version $(Major).$(Minor).$(Build).$(Revision)."/>
+    <CallTarget Targets="built" />
+  </Target>
+  <Target Name="built" DependsOnTargets="version">
+    <Message Text="Built version: $(Major).$(Minor).$(Build).$(Revision)"/>
   </Target>
   <Target Name="version">
     <Version Major="1" Minor="7">
