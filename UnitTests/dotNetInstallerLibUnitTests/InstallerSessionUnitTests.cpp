@@ -38,4 +38,16 @@ void InstallerSessionUnitTests::testExpandRegistryVariables()
 		InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]"));
 	CPPUNIT_ASSERT(L"{" + common_files_dir + L"|" + common_files_dir + L"}" == 
 		InstallerSession::Instance->ExpandRegistryVariables(L"{@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]|@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]}"));
+	// missing value, missing default
+	try
+	{
+		InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\" + DVLib::GenerateGUIDStringW() + L"]");
+		throw "expected std::exception";
+	}
+	catch(std::exception&)
+	{
+	}
+	// with default
+	CPPUNIT_ASSERT(L"DefaultValue" == InstallerSession::Instance->ExpandRegistryVariables(
+		L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\" + DVLib::GenerateGUIDStringW() + L",DefaultValue]"));
 }

@@ -88,7 +88,8 @@ std::wstring InstallerSession::ExpandRegistryVariables(const std::wstring& s_in)
 		if (i + 2 != j)
 		{
 			std::wstring name = s.substr(i + 2, j - i - 2);
-			std::vector<std::wstring> parts = DVLib::split(name, L"\\");
+			std::vector<std::wstring> value_parts = DVLib::split(name, L",", 2);
+			std::vector<std::wstring> parts = DVLib::split(value_parts[0], L"\\");
 			if (parts.size() < 2) THROW_EX(L"Invalid registry path '" << name << L"' in '" << s_in << L"'");
 			// hkey
 			ULONG ulFlags = 0;
@@ -115,20 +116,28 @@ std::wstring InstallerSession::ExpandRegistryVariables(const std::wstring& s_in)
 			// path
 			std::wstring key_path = DVLib::join(parts, L"\\");
 			std::wstring value;
-			DWORD dwType = DVLib::RegistryGetValueType(hkey, key_path, key_name);
-			switch(dwType)
+
+			if (value_parts.size() > 1 && ! DVLib::RegistryKeyExists(hkey, key_path, key_name, ulFlags))
 			{
-			case REG_SZ:
-				value = DVLib::RegistryGetStringValue(hkey, key_path, key_name, ulFlags);
-				break;
-			case REG_DWORD:
-				value = DVLib::towstring(DVLib::RegistryGetDWORDValue(hkey, key_path, key_name, ulFlags));
-				break;
-			case REG_MULTI_SZ:
-				value = DVLib::join(DVLib::RegistryGetMultiStringValue(hkey, key_path, key_name, ulFlags), L",");
-				break;
-			default:
-				THROW_EX(L"Registry value '" << name << L"' is of unsupported type " << dwType);
+				value = value_parts[1];
+			}
+			else
+			{
+				DWORD dwType = DVLib::RegistryGetValueType(hkey, key_path, key_name, ulFlags);
+				switch(dwType)
+				{
+				case REG_SZ:
+					value = DVLib::RegistryGetStringValue(hkey, key_path, key_name, ulFlags);
+					break;
+				case REG_DWORD:
+					value = DVLib::towstring(DVLib::RegistryGetDWORDValue(hkey, key_path, key_name, ulFlags));
+					break;
+				case REG_MULTI_SZ:
+					value = DVLib::join(DVLib::RegistryGetMultiStringValue(hkey, key_path, key_name, ulFlags), L",");
+					break;
+				default:
+					THROW_EX(L"Registry value '" << name << L"' is of unsupported type " << dwType);
+				}
 			}
 
 			s.replace(i, j - i + 1, value);
