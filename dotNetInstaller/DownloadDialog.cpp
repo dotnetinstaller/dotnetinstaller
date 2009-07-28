@@ -6,10 +6,10 @@
 #define WM_USER_SETSTATUSDOWNLOAD (WM_USER+1)
 #define WM_USER_CLOSE_DIALOG (WM_USER+2)
 
-IMPLEMENT_DYNAMIC(DownloadDialog, CDialog)
+IMPLEMENT_DYNAMIC(CDownloadDialog, CDialog)
 
-DownloadDialog::DownloadDialog(const DownloadGroupConfigurationPtr& p_Configuration, CWnd* pParent /*=NULL*/)
-	: CDialog(DownloadDialog::IDD, pParent)
+CDownloadDialog::CDownloadDialog(const DownloadDialogPtr& p_Configuration, CWnd* pParent /*=NULL*/)
+	: CDialog(CDownloadDialog::IDD, pParent)
 	, m_bDownloadCancelled(false)
 	, m_bDownloadError(false)
 	, m_bDownloadCompleted(false)
@@ -25,10 +25,10 @@ DownloadDialog::DownloadDialog(const DownloadGroupConfigurationPtr& p_Configurat
 	, m_bDownloadStarted(false)
 {
 	LOG(L"Opening download dialog '" << m_Caption << L"'");
-	m_DownloadComponents.Load(this, p_Configuration->downloadcomponents);
+	m_DownloadDialog = p_Configuration;
 }
 
-void DownloadDialog::DoDataExchange(CDataExchange* pDX)
+void CDownloadDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_HELP_DOWNLOAD, m_LabelHelpDownload);
@@ -38,7 +38,7 @@ void DownloadDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PROGRESSDOWNLOAD, m_ProgressControl);
 }
 
-BEGIN_MESSAGE_MAP(DownloadDialog, CDialog)
+BEGIN_MESSAGE_MAP(CDownloadDialog, CDialog)
 	ON_BN_CLICKED(IDC_CANCEL, OnBnClickedCancel)
 	ON_BN_CLICKED(IDC_START, OnBnClickedStart)
 	ON_MESSAGE(WM_USER_SETSTATUSDOWNLOAD, OnSetStatusDownload)
@@ -49,9 +49,9 @@ BEGIN_MESSAGE_MAP(DownloadDialog, CDialog)
 	ON_COMMAND(IDOK, OnOK)
 END_MESSAGE_MAP()
 
-// DownloadDialog message handlers
+// CDownloadDialog message handlers
 
-void DownloadDialog::OnSysCommand(UINT nID, LPARAM lParam)
+void CDownloadDialog::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	switch(nID)
 	{
@@ -63,12 +63,12 @@ void DownloadDialog::OnSysCommand(UINT nID, LPARAM lParam)
 	CDialog::OnSysCommand(nID, lParam);
 }
 
-void DownloadDialog::OnCancel()
+void CDownloadDialog::OnCancel()
 {
 	DownloadCancel();
 }
 
-BOOL DownloadDialog::OnInitDialog()
+BOOL CDownloadDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -90,7 +90,7 @@ BOOL DownloadDialog::OnInitDialog()
 		m_btnCancel.EnableWindow(FALSE);
 		OnBnClickedStart();
 	}
-	else if (m_bAutoStartDownload || ! m_DownloadComponents.IsDownloadRequired())
+	else if (m_bAutoStartDownload || ! m_DownloadDialog->IsDownloadRequired())
 	{
 		OnBnClickedStart();
 	}
@@ -98,33 +98,34 @@ BOOL DownloadDialog::OnInitDialog()
 	return TRUE;
 }
 
-void DownloadDialog::OnOK()
+void CDownloadDialog::OnOK()
 {
 	LOG(L"Closing download dialog '" << m_Caption << L"'");
 	CDialog::OnOK();
 }
 
-void DownloadDialog::OnBnClickedCancel() //Cancel Button
+void CDownloadDialog::OnBnClickedCancel() //Cancel Button
 {
 	DownloadCancel();
 }
 
-void DownloadDialog::OnBnClickedStart()
+void CDownloadDialog::OnBnClickedStart()
 {
 	m_LabelHelpDownload.SetWindowText(m_HelpMessageDownloading.c_str());
-	m_DownloadComponents.BeginExec();
+	m_DownloadDialog->callback = this;
+	m_DownloadDialog->BeginExec();
 	m_bDownloadStarted = true;
 	m_btStart.EnableWindow(FALSE);
 }
 
-void DownloadDialog::OnClose()
+void CDownloadDialog::OnClose()
 {
-	m_DownloadComponents.EndExec();
+	m_DownloadDialog->EndExec();
 }
 
 //WM_USER_SETSTATUSDOWNLOAD
 // Messaggio custom per gestire la sincronizzazione e lo scambio di informazioni tra i due thread 
-afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM /* lParam */)
+afx_msg LRESULT CDownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM /* lParam */)
 {
 	DownloadStatusPtr downloadstatus(reinterpret_cast<DownloadStatus *>(wParam));
 
@@ -173,7 +174,7 @@ afx_msg LRESULT DownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM /* lPa
 //  dovendogli però passare dei puntatori devo fare la new qui e poi la delete quando leggo il puntatore
 //  nella OnSetStatusDownload.
 //IDownloadCallback
-void DownloadDialog::Status(ULONG p_progress_current, ULONG p_MaxProgress, const std::wstring& message)
+void CDownloadDialog::Status(ULONG p_progress_current, ULONG p_MaxProgress, const std::wstring& message)
 {
 	if (message != m_LastStatusMessage)
 	{
@@ -183,41 +184,41 @@ void DownloadDialog::Status(ULONG p_progress_current, ULONG p_MaxProgress, const
 	}
 }
 
-void DownloadDialog::DownloadComplete()
+void CDownloadDialog::DownloadComplete()
 {
 	DownloadStatusPtr status(DownloadStatus::CreateComplete());
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(status)), 0L );
 }
 
-void DownloadDialog::DownloadError(const std::wstring& p_Message)
+void CDownloadDialog::DownloadError(const std::wstring& p_Message)
 {
 	DownloadStatusPtr status(DownloadStatus::CreateError(p_Message));
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(status)), 0L );
 }
 
-void DownloadDialog::Connecting()
+void CDownloadDialog::Connecting()
 {
 	DownloadStatusPtr status(DownloadStatus::CreateProgress(m_HelpMessageConnecting, 0, 0));
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(status)), 0L );
 }
 
-void DownloadDialog::SendingRequest()
+void CDownloadDialog::SendingRequest()
 {
 	DownloadStatusPtr status(DownloadStatus::CreateProgress(m_HelpMessageSendingRequest, 0, 0));
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(status)), 0L );
 }
 
-bool DownloadDialog::IsDownloadCancelled() const
+bool CDownloadDialog::IsDownloadCancelled() const
 {
 	return m_bDownloadCancelled;
 }
 
-bool DownloadDialog::IsDownloadError() const
+bool CDownloadDialog::IsDownloadError() const
 {
 	return m_bDownloadError;
 }
 
-void DownloadDialog::DownloadCancel()
+void CDownloadDialog::DownloadCancel()
 {
 	DownloadStatusPtr cancel(DownloadStatus::CreateCanceled());
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(cancel)), 0L );
@@ -228,7 +229,7 @@ void DownloadDialog::DownloadCancel()
 	}
 }
 
-LRESULT DownloadDialog::OnCloseDialog( WPARAM, LPARAM )
+LRESULT CDownloadDialog::OnCloseDialog( WPARAM, LPARAM )
 {
 	if (IsDownloadStarted() 
 		&& ! IsDownloadCancelled() 
@@ -243,12 +244,12 @@ LRESULT DownloadDialog::OnCloseDialog( WPARAM, LPARAM )
 	return 1;
 }
 
-bool DownloadDialog::IsDownloadCompleted() const
+bool CDownloadDialog::IsDownloadCompleted() const
 {
 	return m_bDownloadCompleted;
 }
 
-bool DownloadDialog::IsDownloadStarted() const
+bool CDownloadDialog::IsDownloadStarted() const
 {
 	return m_bDownloadStarted;
 }

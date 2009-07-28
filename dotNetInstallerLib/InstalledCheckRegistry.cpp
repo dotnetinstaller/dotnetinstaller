@@ -44,6 +44,10 @@ bool InstalledCheckRegistry::IsInstalled() const
 			LOG(L"Opening 32-bit registry view (KEY_WOW64_32KEY)");
 			dwKeyOption |= KEY_WOW64_32KEY;
 		}
+		else if (_wcsicmp(wowoption.c_str(), L"NONE") == 0)
+		{
+			// ignore
+		}
 		else
 		{
 			THROW_EX(L"Invalid WOW option '" << wowoption << L"'");

@@ -1,14 +1,14 @@
 #pragma once
 
 #include "Configuration.h"
-#include "DownloadGroupConfiguration.h"
+#include "DownloadDialog.h"
 
 class ReferenceConfiguration : public Configuration
 {
 public:
 	std::wstring filename;
 	std::wstring lcid;
-	DownloadGroupConfigurationPtr downloadconfiguration;
+	DownloadDialogPtr downloaddialog;
 public:
 	ReferenceConfiguration();
 	~ReferenceConfiguration();

@@ -4,8 +4,8 @@
 #include "InstallerSession.h"
 
 ExtractComponent::ExtractComponent(HMODULE h)
-    : ThreadComponent(undefined)
-	, m_h(h)
+	: m_h(h)
+	, cancelled(false)
 {
 
 }

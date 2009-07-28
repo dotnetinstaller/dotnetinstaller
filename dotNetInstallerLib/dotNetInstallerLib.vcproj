@@ -175,19 +175,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DownloadComponent.cpp"
+				RelativePath=".\DownloadDialog.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\DownloadComponentInfo.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DownloadComponents.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DownloadGroupConfiguration.cpp"
+				RelativePath=".\DownloadFile.cpp"
 				>
 			</File>
 			<File
@@ -341,19 +333,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DownloadComponent.h"
+				RelativePath=".\DownloadDialog.h"
 				>
 			</File>
 			<File
-				RelativePath=".\DownloadComponentInfo.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DownloadComponents.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DownloadGroupConfiguration.h"
+				RelativePath=".\DownloadFile.h"
 				>
 			</File>
 			<File

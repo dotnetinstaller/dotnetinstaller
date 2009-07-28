@@ -35,7 +35,7 @@ private:
 public:
 	void ExecuteCompleteCode(bool componentsInstalled);
 	bool RunInstallConfiguration(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration, bool additional_config);
-	bool RunDownloadConfiguration(const DownloadGroupConfigurationPtr& p_Configuration);
+	bool RunDownloadConfiguration(const DownloadDialogPtr& p_Configuration);
 	bool RunComponentDownload(const ComponentPtr& p_Component);
 	inline int GetRecordedError() const { return m_recorded_error; }
 	void RecordError(int error = -1);

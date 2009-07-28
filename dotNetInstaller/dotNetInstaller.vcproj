@@ -212,6 +212,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ExtractCabDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ExtractCabProcessor.cpp"
 				>
 			</File>
@@ -295,6 +299,10 @@
 			</File>
 			<File
 				RelativePath=".\DownloadStatus.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ExtractCabDlg.h"
 				>
 			</File>
 			<File

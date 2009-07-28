@@ -2,9 +2,8 @@
 #include "ThreadComponent.h"
 #include "InstallConfiguration.h"
 
-ThreadComponent::ThreadComponent(component_type t)
-	: Component(t)
-	, m_pThread(NULL)
+ThreadComponent::ThreadComponent()
+	: m_pThread(NULL)
 	, m_rc(0)
 {
 

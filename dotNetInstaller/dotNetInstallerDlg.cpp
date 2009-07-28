@@ -5,6 +5,7 @@
 #include "dotNetInstaller.h"
 #include "dotNetInstallerDlg.h"
 #include "InstallComponentDlg.h"
+#include "ExtractCabDlg.h"
 #include "DniMessageBox.h"
 #include "ExtractCabProcessor.h"
 #include "DownloadDialog.h"
@@ -337,9 +338,8 @@ void CdotNetInstallerDlg::OnBnClickedCancel()
 void CdotNetInstallerDlg::DisplayCab()
 {
     InstallComponentDlg dlg;
-	ComponentPtr extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, & dlg));
-	ExtractCabProcessor * p = reinterpret_cast<ExtractCabProcessor *>(get(extractcab));
-	DniMessageBox::Show(DVLib::join(p->GetCabFiles(), L"\r\n"), MB_OK|MB_ICONINFORMATION);
+	ExtractCabProcessorPtr extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, & dlg));
+	DniMessageBox::Show(DVLib::join(extractcab->GetCabFiles(), L"\r\n"), MB_OK|MB_ICONINFORMATION);
 }
 
 void CdotNetInstallerDlg::DisplayHelp()
@@ -367,32 +367,19 @@ void CdotNetInstallerDlg::DisplayHelp()
 
 void CdotNetInstallerDlg::ExtractCab()
 {
-    InstallComponentDlg dlg;
-	ComponentPtr extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, & dlg));
+    ExtractCabDlg dlg;
 
-	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
-	
-	ExtractCabProcessor * p = reinterpret_cast<ExtractCabProcessor *>(get(extractcab));
-	p->cab_path = p_configuration->cab_path;
-	p->cab_cancelled_message = p_configuration->cab_cancelled_message;
-	p->description = p_configuration->cab_dialog_caption;
-	if (p->GetCabCount() == 0)
+	ExtractCabProcessorPtr p_extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, & dlg));	
+	if (p_extractcab->GetCabCount() == 0)
 		return;
 
-	ConfigurationPtr installconfiguration(new InstallConfiguration());
-	InstallConfiguration * c = reinterpret_cast<InstallConfiguration *>(get(installconfiguration));
-	c->install_caption = p_configuration->cab_dialog_caption;
-	c->installing_component_wait = p_configuration->cab_dialog_message;
-	
 	if (InstallUILevelSetting::Instance->IsAnyUI())
-		dlg.LoadComponent(installconfiguration, extractcab);
+		dlg.LoadComponent(m_configuration, p_extractcab);
 
-	p->Exec();
+	p_extractcab->Exec();
 
 	if (InstallUILevelSetting::Instance->IsAnyUI())
 		dlg.DoModal();
-
-	p->Wait();
 }
 
 // the pos rectangle is the top left point, width and height, not l/r/t/b
@@ -428,18 +415,18 @@ void CdotNetInstallerDlg::ClearError()
 	m_recorded_error = 0; 
 }
 
-bool CdotNetInstallerDlg::RunDownloadConfiguration(const DownloadGroupConfigurationPtr& p_Configuration)
+bool CdotNetInstallerDlg::RunDownloadConfiguration(const DownloadDialogPtr& p_Configuration)
 {
-	DownloadDialog downloaddlg(p_Configuration, this);
+	CDownloadDialog downloaddlg(p_Configuration, this);
 	downloaddlg.DoModal();
 	return downloaddlg.IsDownloadCompleted();
 }
 
 bool CdotNetInstallerDlg::RunComponentDownload(const ComponentPtr& p_Component)
 {
-	if (get(p_Component->downloadconfiguration))
+	if (get(p_Component->downloaddialog))
     {
-		return RunDownloadConfiguration(p_Component->downloadconfiguration);
+		return RunDownloadConfiguration(p_Component->downloaddialog);
     }
 
 	return true;
@@ -494,9 +481,9 @@ void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
 // IExecuteCallback
 bool CdotNetInstallerDlg::OnComponentExecBegin(const ComponentPtr& component)
 {
-	if (get(component->downloadconfiguration))
+	if (get(component->downloaddialog))
 	{
-		if (! RunDownloadConfiguration(component->downloadconfiguration))
+		if (! RunDownloadConfiguration(component->downloaddialog))
 		{
 			LOG(L"*** Component '" << component->description << L": ERROR ON DOWNLOAD");
 			THROW_EX(L"Error downloading '" << component->description << L"'");

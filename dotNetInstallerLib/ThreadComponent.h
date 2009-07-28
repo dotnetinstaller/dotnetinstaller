@@ -1,12 +1,11 @@
 #pragma once
-#include "Component.h"
 
 typedef shared_any<CWinThread *, close_delete> ThreadPtr;
 
-class ThreadComponent : public Component
+class ThreadComponent
 {
 public:
-    ThreadComponent(component_type t);
+    ThreadComponent();
 	~ThreadComponent();
 public:
     bool IsExecuting() const;

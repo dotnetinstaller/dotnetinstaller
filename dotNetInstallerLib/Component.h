@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DownloadGroupConfiguration.h"
+#include "DownloadDialog.h"
 #include "EmbedFile.h"
 #include "InstalledCheck.h"
 
@@ -54,7 +54,7 @@ public:
 	// classi per gestire la verifica se il componente è installato o no
 	std::vector<InstalledCheckPtr> installedchecks;
 	// informazioni sull'eventuale download dei componenti (fa riferimento al nodo downloaddialog all'interno di Component, se non è presente non viene scaricato nessun componente)
-	DownloadGroupConfigurationPtr downloadconfiguration;
+	DownloadDialogPtr downloaddialog;
 	// embedded files
 	std::vector< EmbedFilePtr > embedfiles;
 	// funzione virtuale specifica per il tipo di componente

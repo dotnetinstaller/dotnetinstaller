@@ -32,9 +32,9 @@ void ReferenceConfiguration::Load(TiXmlElement * node)
 		}
 		else if (strcmp(child_element->Value(), "downloaddialog") == 0)
 		{
-			auto_any<DownloadGroupConfiguration *, close_delete> d(new DownloadGroupConfiguration());
-			d->Load(child_element);
-			downloadconfiguration = d;
+			auto_any<DownloadDialog *, close_delete> newdownloaddialog(new DownloadDialog());
+			newdownloaddialog->Load(child_element);
+			downloaddialog = newdownloaddialog;
 		}
 		else
 		{
@@ -48,8 +48,8 @@ void ReferenceConfiguration::Load(TiXmlElement * node)
 
 void ReferenceConfiguration::Exec()
 {
-	if (get(downloadconfiguration))
+	if (get(downloaddialog))
 	{
-		downloadconfiguration->Exec();
+		downloaddialog->Exec();
 	}
 }

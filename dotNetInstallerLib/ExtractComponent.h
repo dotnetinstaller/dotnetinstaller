@@ -1,10 +1,12 @@
 #pragma once
 
+#include "Component.h"
 #include "ThreadComponent.h"
 
 struct ExtractComponent : public ThreadComponent, Cabinet::CExtractT<ExtractComponent> 
 {
 public:
+	bool cancelled;
 	std::wstring cab_path;
 	std::wstring cab_cancelled_message;
     ExtractComponent(HMODULE h);

@@ -15,8 +15,7 @@ public:
 };
 
 ThreadComponentImpl::ThreadComponentImpl(int exitcode) 
-	: ThreadComponent(undefined), 
-	m_exitcode(exitcode) 
+	: m_exitcode(exitcode) 
 { 
 
 }

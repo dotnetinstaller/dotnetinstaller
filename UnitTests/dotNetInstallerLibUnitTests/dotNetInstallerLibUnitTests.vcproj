@@ -207,15 +207,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DownloadComponentCallbackImpl.cpp"
+				RelativePath=".\DownloadCallbackImpl.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\DownloadComponentsUnitTests.cpp"
+				RelativePath=".\DownloadDialogUnitTests.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\DownloadComponentUnitTests.cpp"
+				RelativePath=".\DownloadFileUnitTests.cpp"
 				>
 			</File>
 			<File
@@ -325,15 +325,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DownloadComponentCallbackImpl.h"
+				RelativePath=".\DownloadCallbackImpl.h"
 				>
 			</File>
 			<File
-				RelativePath=".\DownloadComponentsUnitTests.h"
+				RelativePath=".\DownloadDialogUnitTests.h"
 				>
 			</File>
 			<File
-				RelativePath=".\DownloadComponentUnitTests.h"
+				RelativePath=".\DownloadFileUnitTests.h"
 				>
 			</File>
 			<File

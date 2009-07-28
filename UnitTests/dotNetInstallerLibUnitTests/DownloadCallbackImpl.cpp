@@ -1,37 +1,37 @@
 #include "StdAfx.h"
-#include "DownloadComponentCallbackImpl.h"
+#include "DownloadCallbackImpl.h"
 
 using namespace DVLib::UnitTests;
 
-DownloadComponentCallbackImpl::DownloadComponentCallbackImpl()
+DownloadCallbackImpl::DownloadCallbackImpl()
 	: m_cancelled(false)
 	, m_complete(0)
 	, m_error(0)
 {
 }
 
-void DownloadComponentCallbackImpl::Connecting()
+void DownloadCallbackImpl::Connecting()
 {
 	std::wcout << std::endl << "Connecting ...";
 }
 
-void DownloadComponentCallbackImpl::SendingRequest()
+void DownloadCallbackImpl::SendingRequest()
 {
 	std::wcout << std::endl << "Sending request ...";
 }
 
-void DownloadComponentCallbackImpl::Status(ULONG progress_current, ULONG progress_max, const std::wstring& description)
+void DownloadCallbackImpl::Status(ULONG progress_current, ULONG progress_max, const std::wstring& description)
 {
 	std::wcout << std::endl << description << L" (" << progress_current << L"/" << progress_max << L")";
 }
 
-void DownloadComponentCallbackImpl::DownloadComplete()
+void DownloadCallbackImpl::DownloadComplete()
 {
 	InterlockedIncrement(& m_complete);
 	std::wcout << std::endl << "Download complete.";
 }
 
-void DownloadComponentCallbackImpl::DownloadError(const std::wstring& message)
+void DownloadCallbackImpl::DownloadError(const std::wstring& message)
 {
 	InterlockedIncrement(& m_error);
 	std::wcout << std::endl << message;	

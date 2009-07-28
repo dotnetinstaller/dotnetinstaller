@@ -2,11 +2,11 @@
 
 #include "Resource.h"
 
-class DownloadDialog : public CDialog, public IDownloadCallback
+class CDownloadDialog : public CDialog, public IDownloadCallback
 {
-	DECLARE_DYNAMIC(DownloadDialog)
+	DECLARE_DYNAMIC(CDownloadDialog)
 public:
-	DownloadDialog(const DownloadGroupConfigurationPtr& p_Configuration, CWnd* pParent = NULL);
+	CDownloadDialog(const DownloadDialogPtr& p_Configuration, CWnd* pParent = NULL);
 	enum { IDD = IDD_DOWNLOAD_DIALOG };
 private:
 	std::wstring m_LastStatusMessage;
@@ -19,7 +19,7 @@ private:
 	std::wstring m_ButtonCancelCaption;
 	HICON m_hIcon;
 	// download components and flags
-	DownloadComponents m_DownloadComponents;
+	DownloadDialogPtr m_DownloadDialog;
 	bool m_bAutoStartDownload;
 	bool m_bDownloadCancelled;
 	bool m_bDownloadError;

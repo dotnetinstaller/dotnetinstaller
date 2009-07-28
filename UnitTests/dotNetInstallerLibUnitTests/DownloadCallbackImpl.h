@@ -4,14 +4,14 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class DownloadComponentCallbackImpl : public IDownloadCallback
+		class DownloadCallbackImpl : public IDownloadCallback
 		{
 		private:
 			long m_error;
 			long m_complete;
 			bool m_cancelled;
 		public:
-			DownloadComponentCallbackImpl();
+			DownloadCallbackImpl();
 			void Status(ULONG progress_current, ULONG progress_max, const std::wstring& description);
 			void DownloadComplete();
 			void DownloadError(const std::wstring& message);

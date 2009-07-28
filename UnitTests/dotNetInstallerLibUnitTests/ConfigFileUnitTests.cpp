@@ -128,8 +128,8 @@ void ConfigFileUnitTests::testLoadDownloadSetup()
 	ComponentPtr component = configuration->components[0];
 	CPPUNIT_ASSERT(component->type == cmd);
 	// the component has a download dialog with one file
-	CPPUNIT_ASSERT(get(component->downloadconfiguration) != NULL);
-	CPPUNIT_ASSERT(component->downloadconfiguration->downloadcomponents.size() == 1);
+	CPPUNIT_ASSERT(get(component->downloaddialog) != NULL);
+	CPPUNIT_ASSERT(component->downloaddialog->downloadfiles.size() == 1);
 }
 
 void ConfigFileUnitTests::testLoadReferenceSetup()
@@ -152,8 +152,8 @@ void ConfigFileUnitTests::testLoadReferenceSetup()
 	CPPUNIT_ASSERT(config.size() == 1);
 	const ReferenceConfiguration * configuration = reinterpret_cast<ReferenceConfiguration *>(get(config[0]));
 	// the reference has a download dialog
-	CPPUNIT_ASSERT(get(configuration->downloadconfiguration) != NULL);
-	CPPUNIT_ASSERT(configuration->downloadconfiguration->downloadcomponents.size() == 1);
+	CPPUNIT_ASSERT(get(configuration->downloaddialog) != NULL);
+	CPPUNIT_ASSERT(configuration->downloaddialog->downloadfiles.size() == 1);
 }
 
 void ConfigFileUnitTests::testLoadResource()

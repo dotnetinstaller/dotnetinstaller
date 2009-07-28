@@ -1,7 +1,5 @@
 #pragma once
 
-#include "DownloadComponentInfo.h"
-
 class IDownloadCallback
 {
 public:

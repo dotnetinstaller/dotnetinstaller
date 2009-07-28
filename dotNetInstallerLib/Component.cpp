@@ -18,7 +18,6 @@ Component::Component(component_type t)
     , cancelled(false)
     , required(true)
     , selected(true)
-	, downloadconfiguration(NULL)
 {
 
 }
@@ -87,9 +86,9 @@ void Component::Load(TiXmlElement * node)
 		}
 		else if (strcmp(child_element->Value(), "downloaddialog") == 0)
 		{
-			DownloadGroupConfigurationPtr newdownloadconfiguration(new DownloadGroupConfiguration());
-			newdownloadconfiguration->Load(child_element);
-			downloadconfiguration = newdownloadconfiguration;
+			auto_any<DownloadDialog *, close_delete> newdownloaddialog(new DownloadDialog());
+			newdownloaddialog->Load(child_element);
+			downloaddialog = newdownloaddialog;
 		}
 		else
 		{

@@ -1,10 +1,14 @@
 #pragma once
 
-#include "DownloadComponent.h"
+#include "DownloadCallback.h"
+#include "ThreadComponent.h"
+#include "DownloadFile.h"
 
-class DownloadGroupConfiguration
+class DownloadDialog : public ThreadComponent
 {
 public:
+	// download callback
+	IDownloadCallback * callback;
 	// download window caption
 	std::wstring caption;
 	// help message
@@ -18,14 +22,15 @@ public:
 	// cancel button caption
 	std::wstring cancel_caption;
 	// download components
-	std::vector< DownloadComponentInfoPtr > downloadcomponents;
+	std::vector< DownloadFilePtr > downloadfiles;
 	// auto-start download
 	bool auto_start;
 public:
-	DownloadGroupConfiguration();
-	~DownloadGroupConfiguration();
+	bool IsCopyRequired() const;
+	bool IsDownloadRequired() const;
+	DownloadDialog();
 	void Load(TiXmlElement * node);
-	void Exec();
+	int ExecOnThread();
 };
 
-typedef shared_any<DownloadGroupConfiguration *, close_delete> DownloadGroupConfigurationPtr;
+typedef shared_any<DownloadDialog *, close_delete> DownloadDialogPtr;

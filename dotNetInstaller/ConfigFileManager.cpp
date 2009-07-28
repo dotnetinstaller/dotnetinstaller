@@ -24,7 +24,7 @@ bool ConfigFileManager::OnDownload(const ConfigurationPtr& config)
 	CdotNetInstallerDlg dlg;
 	ReferenceConfiguration * p = reinterpret_cast<ReferenceConfiguration *>(get(config));
 	LOG(L"Downloading reference configuration to '" << p->filename << L"'");
-	dlg.RunDownloadConfiguration(p->downloadconfiguration);
+	dlg.RunDownloadConfiguration(p->downloaddialog);
 	return true;
 }
 

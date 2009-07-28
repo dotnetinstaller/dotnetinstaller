@@ -61,6 +61,7 @@ void ConfigFiles::Load()
 		std::wstring configfile = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), TEXT("configuration.xml"));
 		CHECK_BOOL(DVLib::FileExists(configfile),
 			L"Missing '" << configfile << L"'");
+		config.LoadFile(configfile);
 	}
 
 	if (config.schema.version != TEXT(VERSION_VALUE))
