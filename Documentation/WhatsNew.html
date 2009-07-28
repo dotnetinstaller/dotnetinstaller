@@ -43,8 +43,9 @@
         <li>Added /DisplayCab command line option to dotNetInstaller.exe that displays the embedded
             CAB file contents when available.</li>
         <li>Added support for relative paths in MSI components by resolving paths before execution.</li>
-        <li>Added <code>version_lt</code>, <code>version_gt</code> and <code>version_eq</code>
-            functions to installed check file and registry operators.</li>
+        <li>Added <code>version_lt</code>, <code>version_le</code>, <code>version_gt</code>,
+            <code>version_ge</code> and <code>version_eq</code> functions to installed check
+            file and registry operators.</li>
         <li>Bug: wrong semantics of <code>auto_close_if_installed</code>. The bootstrapper will
             now close after any successful installation session when this option is set.</li>
         <li>Added support for <code>os_filter_smaller</code>, <code>os_filter_greater</code>

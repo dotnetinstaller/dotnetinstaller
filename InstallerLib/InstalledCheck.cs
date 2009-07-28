@@ -13,7 +13,9 @@ namespace InstallerLib
         version,
         version_eq,
         version_lt,
+        version_le,
         version_gt,
+        version_ge,
         exists,
         contains
     }

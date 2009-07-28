@@ -35,8 +35,12 @@ void InstalledCheckProductUnitTests::testProductCode()
 		CPPUNIT_ASSERT(check->IsInstalled());
 		check->comparison = L"version_lt";
 		CPPUNIT_ASSERT(! check->IsInstalled());
+		check->comparison = L"version_le";
+		CPPUNIT_ASSERT(check->IsInstalled());
 		check->comparison = L"version_gt";
 		CPPUNIT_ASSERT(! check->IsInstalled());
+		check->comparison = L"version_ge";
+		CPPUNIT_ASSERT(check->IsInstalled());
 	}
 }
 
@@ -62,6 +66,10 @@ void InstalledCheckProductUnitTests::testUpgradeCode()
 	CPPUNIT_ASSERT(! check->IsInstalled());
 	check->comparison = L"version_lt";
 	CPPUNIT_ASSERT(! check->IsInstalled());
+	check->comparison = L"version_le";
+	CPPUNIT_ASSERT(! check->IsInstalled());
 	check->comparison = L"version_gt";
+	CPPUNIT_ASSERT(check->IsInstalled());
+	check->comparison = L"version_ge";
 	CPPUNIT_ASSERT(check->IsInstalled());
 }

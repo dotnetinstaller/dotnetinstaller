@@ -29,9 +29,13 @@ void InstalledCheckFileUnitTests::testIsInstalled()
 		{ userexepath.c_str(), version.c_str(), L"version_gt", false },
 		{ userexepath.c_str(), version.c_str(), L"version_lt", false },
 		{ userexepath.c_str(), version.c_str(), L"version_eq", true },
+		{ userexepath.c_str(), version.c_str(), L"version_le", true },
+		{ userexepath.c_str(), version.c_str(), L"version_ge", true },
 		{ userexepath.c_str(), L"1.0", L"version", true },
 		{ userexepath.c_str(), L"1.0", L"version_lt", false },
+		{ userexepath.c_str(), L"1.0", L"version_le", false },
 		{ userexepath.c_str(), L"1.0", L"version_gt", true },
+		{ userexepath.c_str(), L"1.0", L"version_ge", true },
 		{ userexepath.c_str(), L"1.0", L"version_eq", false },
 		{ userexepath.c_str(), L"999.0.0.0", L"version", false },
 	};

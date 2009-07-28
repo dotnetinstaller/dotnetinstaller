@@ -77,8 +77,12 @@ bool InstalledCheckRegistry::IsInstalled() const
 			return (checkvalue == regfieldvalue);
 		else if (comparison == L"version_lt")
 			return (checkvalue < regfieldvalue);
+		else if (comparison == L"version_le")
+			return (checkvalue <= regfieldvalue);
 		else if (comparison == L"version_gt")
 			return (checkvalue > regfieldvalue);
+		else if (comparison == L"version_ge")
+			return (checkvalue >= regfieldvalue);
 		else if (comparison == L"exists")
 			return true;  
 		else
@@ -99,8 +103,12 @@ bool InstalledCheckRegistry::IsInstalled() const
 			return (DVLib::CompareVersion(fieldvalue, regfieldvalue) == 0);
 		else if (comparison == TEXT("version_lt"))
 			return (DVLib::CompareVersion(fieldvalue, regfieldvalue) < 0);
+		else if (comparison == TEXT("version_le"))
+			return (DVLib::CompareVersion(fieldvalue, regfieldvalue) <= 0);
 		else if (comparison == TEXT("version_gt"))
 			return (DVLib::CompareVersion(fieldvalue, regfieldvalue) > 0);
+		else if (comparison == TEXT("version_ge"))
+			return (DVLib::CompareVersion(fieldvalue, regfieldvalue) >= 0);
 		else if (comparison == TEXT("exists"))
 			return true;
 		else if (comparison == TEXT("contains"))

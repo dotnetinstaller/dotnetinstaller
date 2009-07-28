@@ -138,6 +138,21 @@ bool InstalledCheckProduct::IsInstalled() const
 
 		return false;
 	}
+	else if (comparison == L"version_le")
+	{
+		for each(const DVLib::MsiProductInfo& pi in products)
+		{
+			std::wstring pi_propertyvalue = pi.GetProperty(propertyname);
+			LOG(L"Product '" << pi.GetProductName() << L"', " << propertyname << L"='" << pi_propertyvalue << L"'");
+			if (DVLib::CompareVersion(pi_propertyvalue, propertyvalue) <= 0)
+			{
+				LOG(L"Check value '" << propertyvalue << L"' version lesser or equal match.");
+				return true;
+			}
+		}
+
+		return false;
+	}
 	else if (comparison == L"version_gt")
 	{
 		for each(const DVLib::MsiProductInfo& pi in products)
@@ -147,6 +162,21 @@ bool InstalledCheckProduct::IsInstalled() const
 			if (DVLib::CompareVersion(pi_propertyvalue, propertyvalue) > 0) 
 			{
 				LOG(L"Check value '" << propertyvalue << L"' version greater match.");
+				return true;
+			}
+		}
+
+		return false;
+	}
+	else if (comparison == L"version_ge")
+	{
+		for each(const DVLib::MsiProductInfo& pi in products)
+		{
+			std::wstring pi_propertyvalue = pi.GetProperty(propertyname);
+			LOG(L"Product '" << pi.GetProductName() << L"', " << propertyname << L"='" << pi_propertyvalue << L"'");
+			if (DVLib::CompareVersion(pi_propertyvalue, propertyvalue) >= 0) 
+			{
+				LOG(L"Check value '" << propertyvalue << L"' version greater or equal match.");
 				return true;
 			}
 		}
