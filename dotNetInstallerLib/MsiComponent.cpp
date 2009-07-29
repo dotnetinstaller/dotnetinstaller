@@ -16,7 +16,9 @@ void MsiComponent::Exec()
 {
 	std::wstring l_command = TEXT("msiexec /I ");
 	l_command.append(L"\"");
-	l_command += DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), package);
+	l_command += DVLib::isguid(package) 
+		? package
+		: DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), package);
 	l_command.append(L"\"");
 
 	switch(InstallUILevelSetting::Instance->GetUILevel())

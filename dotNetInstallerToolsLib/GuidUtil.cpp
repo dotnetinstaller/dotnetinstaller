@@ -41,6 +41,29 @@ IID DVLib::string2guid(const std::wstring& guid)
     return iid;
 }
 
+bool DVLib::isguid(const std::wstring& guid)
+{
+	IID iid = { 0 };
+	HRESULT hr;
+
+	switch(hr = ::IIDFromString(const_cast<LPOLESTR>(guid.c_str()), & iid))
+	{
+	case E_INVALIDARG:
+		return false;
+	case S_OK:
+		return true;
+	default:
+		CHECK_HR(hr, _T("Error in ::IIDFromString"));
+	}
+
+    return false;
+}
+
+bool DVLib::isguid(const std::string& guid)
+{
+	return isguid(DVLib::string2wstring(guid));
+}
+
 IID DVLib::string2guid(const std::string& guid)
 {
 	return string2guid(DVLib::string2wstring(guid));

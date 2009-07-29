@@ -17,7 +17,7 @@ namespace InstallerLib
         }
 
         private string m_package;
-        [Description("Specifies the path to the msi package to execute when installing this component. Can contain path constant (see Help->Path Constant). (REQUIRED)")]
+        [Description("Specifies a full or a relative path to the msi package or an existing product GUID.")]
         public string package
         {
             get { return m_package; }
@@ -25,7 +25,7 @@ namespace InstallerLib
         }
 
         private string m_cmdparameters;
-        [Description("Specifies the command line parameters for the msiexec program. Can contain \" char and path constant (see Help->Path Constant). See MSDN for the command line you can use with Windows Installer. (OPTIONAL)")]
+        [Description("Optional command line parameters for the msiexec program. May contain quotes. See MSDN for the command line you can use with Windows Installer.")]
         public string cmdparameters
         {
             get { return m_cmdparameters; }
@@ -33,7 +33,7 @@ namespace InstallerLib
         }
 
         private string m_cmdparameters_basic = "/qb";
-        [Description("Specifies the command line parameters for the msiexec program when running a basic UI mode. Defaults to cmdparameters if blank. Can contain \" char and path constant (see Help->Path Constant). See MSDN for the command line you can use with Windows Installer. (OPTIONAL)")]
+        [Description("Optional command line parameters for the msiexec program when running in basic UI mode.")]
         public string cmdparameters_basic
         {
             get { return m_cmdparameters_basic; }
@@ -41,7 +41,7 @@ namespace InstallerLib
         }
 
         private string m_cmdparameters_silent = "/qn";
-        [Description("Specifies the command line parameters for the msiexec program when running a silent install. Defaults to cmdparameters if blank. Can contain \" char and path constant (see Help->Path Constant). See MSDN for the command line you can use with Windows Installer. (OPTIONAL)")]
+        [Description("Optional command line parameters for the msiexec program when running in silent UI mode.")]
         public string cmdparameters_silent
         {
             get { return m_cmdparameters_silent; }

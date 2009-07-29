@@ -18,7 +18,7 @@ namespace InstallerLib
         }
 
         private string m_package;
-        [Description("Specifies the path to the msu package to execute when installing this component. Can contain path constants (see Help->Path Constant). (REQUIRED)")]
+        [Description("Specifies the path to the windows update package to install.")]
         public string package
         {
             get { return m_package; }

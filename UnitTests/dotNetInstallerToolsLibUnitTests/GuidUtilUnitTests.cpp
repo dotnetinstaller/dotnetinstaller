@@ -31,6 +31,30 @@ void GuidUtilUnitTests::testguid2wstring()
 	}
 }
 
+void GuidUtilUnitTests::testisguid()
+{
+	typedef struct
+	{
+		LPCWSTR pszGuid;
+		bool guid;
+	} TestData;
+
+	TestData data[] = 
+	{
+		{ L"", false },
+		{ L"00000000", false },
+		{ L"abracadabra", false },
+		{ L"EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B", false },
+		{ L"{13709620-C279-11CE-A49E-444553540000}", true },		
+	};
+
+	for (int i = 0; i < ARRAYSIZE(data); i++)
+	{
+		std::wcout << std::endl << L"Guid?: " << data[i].pszGuid;
+		CPPUNIT_ASSERT(DVLib::isguid(data[i].pszGuid) == data[i].guid);
+	}
+}
+
 void GuidUtilUnitTests::testGenerateGUIDString()
 {
 	std::wstring wstring_guid = DVLib::GenerateGUIDStringW();
