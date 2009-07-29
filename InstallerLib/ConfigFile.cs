@@ -48,7 +48,7 @@ namespace InstallerLib
 
         private InstallUILevel m_ui_level = InstallUILevel.full;
         [Description("Set the install-time UI level. Default to silent or basic UI installation.")]
-        [Category("Installation Runtime")]
+        [Category("Runtime")]
         public InstallUILevel ui_level
         {
             get { return m_ui_level; }
@@ -95,11 +95,49 @@ namespace InstallerLib
 
         private LcidType m_lcidtype = LcidType.UserExe;
         [Description(@"Choose between using LCID from system32\user.exe, GetUserDefaultLCID or system GetSystemDefaultLCID.")]
-        [Category("Installation Runtime")]
+        [Category("Runtime")]
         public LcidType lcidtype
         {
             get { return m_lcidtype; }
             set { m_lcidtype = value; }
+        }
+
+        // show languange selector
+        private bool m_show_language_selector = false;
+        [Description("Show a language selector instead of automatically choosing the language based on the operating system's and user locale.")]
+        [DefaultValue(false)]
+        [Category("Runtime")]
+        public bool show_language_selector
+        {
+            get { return m_show_language_selector; }
+            set { m_show_language_selector = value; }
+        }
+
+        private string m_language_selector_title = "";
+        [Description("Optional text that appears above the list of supported locales.")]
+        [Category("Runtime")]
+        public string language_selector_title
+        {
+            get { return m_language_selector_title; }
+            set { m_language_selector_title = value; }
+        }
+
+        private string m_language_selector_ok = "OK";
+        [Description("Language selector OK button text.")]
+        [Category("Runtime")]
+        public string language_selector_ok
+        {
+            get { return m_language_selector_ok; }
+            set { m_language_selector_ok = value; }
+        }
+
+        private string m_language_selector_cancel = "Cancel";
+        [Description("Language selector cancel button text.")]
+        [Category("Runtime")]
+        public string language_selector_cancel
+        {
+            get { return m_language_selector_cancel; }
+            set { m_language_selector_cancel = value; }
         }
 
         // auto-enabled logging options
@@ -181,6 +219,10 @@ namespace InstallerLib
         {
             // lcid type
             e.XmlWriter.WriteAttributeString("lcid_type", m_lcidtype.ToString());
+            e.XmlWriter.WriteAttributeString("show_language_selector", m_show_language_selector.ToString());
+            e.XmlWriter.WriteAttributeString("language_selector_title", m_language_selector_title);
+            e.XmlWriter.WriteAttributeString("language_selector_ok", m_language_selector_ok);
+            e.XmlWriter.WriteAttributeString("language_selector_cancel", m_language_selector_cancel);
             // processor and os filter architecture messages
             e.XmlWriter.WriteAttributeString("configuration_no_match_message", m_configuration_no_match_message);
             // silent install
@@ -222,6 +264,10 @@ namespace InstallerLib
         {
             // lcid type
             ReadAttributeValue(e, "lcid_type", ref m_lcidtype);
+            ReadAttributeValue(e, "show_language_selector", ref m_show_language_selector);
+            ReadAttributeValue(e, "language_selector_title", ref m_language_selector_title);
+            ReadAttributeValue(e, "language_selector_ok", ref m_language_selector_ok);
+            ReadAttributeValue(e, "language_selector_cancel", ref m_language_selector_cancel);
             // processor and os filter architecture messages
             ReadAttributeValue(e, "configuration_no_match_message", ref m_configuration_no_match_message);
             // logging

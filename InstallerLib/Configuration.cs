@@ -44,12 +44,31 @@ namespace InstallerLib
             set { m_processor_architecture_filter = value; }
         }
 
-        private string m_lcid = string.Empty;
+        private string m_lcid_filter = string.Empty;
         [Description("A filter to install this configuration only on all operating system language equals or not equals than the LCID specified (see Help->LCID Table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter a specified component. (OPTIONAL)")]
-        public string lcid
+        [Category("Language")]
+        public string lcid_filter
         {
-            get { return m_lcid; }
-            set { m_lcid = value; OnLCIDChanged(); }
+            get { return m_lcid_filter; }
+            set { m_lcid_filter = value; OnLCIDChanged(); }
+        }
+
+        private string m_language = string.Empty;
+        [Description("An optional string that appears in the language selector for this configuration.")]
+        [Category("Language")]
+        public string language
+        {
+            get { return m_language; }
+            set { m_language = value; }
+        }
+
+        private string m_language_id = "";
+        [Description("The actual language ID chosen by the language dialog selector.")]
+        [Category("Language")]
+        public string language_id
+        {
+            get { return m_language_id; }
+            set { m_language_id = value; }
         }
 
         private string m_type;
@@ -63,7 +82,7 @@ namespace InstallerLib
 
         public override string ToString()
         {
-            return m_type + ":" + m_lcid;
+            return m_type + ":" + m_lcid_filter;
         }
 
         protected void OnLCIDChanged()
@@ -83,8 +102,10 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            if (ReadAttributeValue(e, "lcid", ref m_lcid)) 
+            if (ReadAttributeValue(e, "lcid", ref m_lcid_filter) || ReadAttributeValue(e, "lcid_filter", ref m_lcid_filter))
                 OnLCIDChanged();
+            ReadAttributeValue(e, "language", ref m_language);
+            ReadAttributeValue(e, "language_id", ref m_language_id);
             ReadAttributeValue(e, "os_filter_greater", ref m_os_filter_greater);
             ReadAttributeValue(e, "os_filter_smaller", ref m_os_filter_smaller);
             ReadAttributeValue(e, "processor_architecture_filter", ref m_processor_architecture_filter);
@@ -93,7 +114,9 @@ namespace InstallerLib
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
             e.XmlWriter.WriteAttributeString("type", m_type);
-            e.XmlWriter.WriteAttributeString("lcid", m_lcid);
+            e.XmlWriter.WriteAttributeString("lcid_filter", m_lcid_filter);
+            e.XmlWriter.WriteAttributeString("language_id", m_language_id);
+            e.XmlWriter.WriteAttributeString("language", m_language);
             e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
             e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);

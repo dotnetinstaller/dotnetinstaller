@@ -23,10 +23,10 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Manifest
+// RT_MANIFEST
 //
-#define MANIFEST_RESOURCE_ID 1
-MANIFEST_RESOURCE_ID RT_MANIFEST "dotNetInstaller.exe.manifest"
+
+MANIFEST_RESOURCE_ID    RT_MANIFEST             "dotNetInstaller.exe.manifest"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -80,6 +80,17 @@ BEGIN
     LTEXT           "Status .....",IDC_STATUS,7,37,219,8
 END
 
+IDD_LANGUAGE_SELECTOR_DIALOG DIALOGEX 0, 0, 170, 46
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Choose Language"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,61,23,50,14
+    COMBOBOX        IDC_LANGUAGES,7,7,156,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Cancel",IDCANCEL,113,23,50,14
+END
+
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -119,6 +130,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 77
     END
+
+    IDD_LANGUAGE_SELECTOR_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 163
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 39
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -129,7 +148,8 @@ END
 //
 
 RES_BANNER              CUSTOM                  "res\\banner.bmp"
-RES_UNICOWS				CUSTOM					"..\\ThirdParty\\Mslu\\unicows.dll"
+RES_UNICOWS             CUSTOM                  "..\\ThirdParty\\Mslu\\unicows.dll"
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Cursor
@@ -139,10 +159,44 @@ IDC_CUSTOM_HAND         CURSOR                  "res\\Hand.cur"
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.\0"
+END
+
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
-// Generated from the TEXTINCLUDE 3 resource.//
+// Generated from the TEXTINCLUDE 3 resource.
 #define _AFX_NO_SPLITTER_RESOURCES
 #define _AFX_NO_OLE_RESOURCES
 #define _AFX_NO_TRACKER_RESOURCES

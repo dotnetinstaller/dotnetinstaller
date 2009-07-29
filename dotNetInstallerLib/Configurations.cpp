@@ -33,6 +33,11 @@ void Configurations::Load(TiXmlElement * node)
     // auto-enabled log options
     log_enabled = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("log_enabled")), false);
     log_file = XML_ATTRIBUTE(node->Attribute("log_file"));
+	// language selection
+	show_language_selector = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("show_language_selector")), false);;
+	language_selector_title = XML_ATTRIBUTE(node->Attribute("language_selector_title"));
+	language_selector_ok = XML_ATTRIBUTE(node->Attribute("language_selector_ok"));
+	language_selector_cancel = XML_ATTRIBUTE(node->Attribute("language_selector_cancel"));
 
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )
@@ -73,13 +78,32 @@ void Configurations::Load(TiXmlElement * node)
 	LOG(L"--- Read " << size() << L" configuration(s)");
 }
 
-std::vector<ConfigurationPtr> Configurations::GetSupportedConfigurations() const
+std::vector<ConfigurationPtr> Configurations::GetSupportedConfigurations(DWORD oslcid) const
 {
+	if (oslcid == 0) 
+	{
+		oslcid = DVLib::GetOperatingSystemLCID(lcidtype);
+	}
+
 	std::vector<ConfigurationPtr> result;
 	for each(const ConfigurationPtr& configuration in (* this))
 	{
-		if (configuration->IsSupported(lcidtype))
+		if (configuration->IsSupported(oslcid))
+		{
 			result.push_back(configuration);
+		}
 	}
 	return result;
+}
+
+std::vector<std::wstring> Configurations::GetLanguages() const
+{
+	std::vector<std::wstring> languages;
+	languages.reserve(size());
+	for each(const ConfigurationPtr& configuration in (* this))
+	{
+		// \todo: make the list unique
+		languages.push_back(configuration->GetLanguageString());
+	}
+	return languages;
 }

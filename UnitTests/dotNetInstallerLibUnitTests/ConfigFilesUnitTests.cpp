@@ -67,3 +67,61 @@ void ConfigFilesUnitTests::testRun()
 	CPPUNIT_ASSERT(cf.GetDownloads() == 0);
 	CPPUNIT_ASSERT(cf.GetRuns() == 1);
 }
+
+void ConfigFilesUnitTests::testSelectLanguageNoSelection()
+{
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+		L"..\\..\\..\\Samples\\MultilingualSetup\\Configuration.xml");
+	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
+	ConfigFilesImpl cf(configxml);
+	cf.Load();
+	CPPUNIT_ASSERT(cf.IsLoaded());
+	// only one configuration out of the two opposite locales is loaded
+	CPPUNIT_ASSERT(cf.size() == 1);
+	CPPUNIT_ASSERT(cf[0]->lcid_filter == L"!1040");
+}
+
+void ConfigFilesUnitTests::testSelectLanguage1040()
+{
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+		L"..\\..\\..\\Samples\\MultilingualSetup\\Configuration.xml");
+	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
+	InstallerSession::Instance->languageid = 1040;
+	ConfigFilesImpl cf(configxml);
+	cf.Load();
+	CPPUNIT_ASSERT(cf.IsLoaded());
+	// only one configuration out of the two opposite locales is loaded
+	CPPUNIT_ASSERT(cf.size() == 1);
+	CPPUNIT_ASSERT(cf[0]->lcid_filter == L"1040");
+}
+
+void ConfigFilesUnitTests::testSelectLanguageNot1040()
+{
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+		L"..\\..\\..\\Samples\\MultilingualSetup\\Configuration.xml");
+	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
+	InstallerSession::Instance->languageid = 1041;
+	ConfigFilesImpl cf(configxml);
+	cf.Load();
+	CPPUNIT_ASSERT(cf.IsLoaded());
+	// only one configuration out of the two opposite locales is loaded
+	CPPUNIT_ASSERT(cf.size() == 1);
+	CPPUNIT_ASSERT(cf[0]->lcid_filter == L"!1040");
+}
+
+void ConfigFilesUnitTests::testGetLanguages()
+{
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+		L"..\\..\\..\\Samples\\MultilingualSetup\\Configuration.xml");
+	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
+	ConfigFilesImpl cf(configxml);
+	cf.Load();
+	CPPUNIT_ASSERT(cf.IsLoaded());
+	// only one configuration out of the two opposite locales is loaded
+	std::vector<std::wstring> config_languages = cf.GetConfigLanguages();
+	CPPUNIT_ASSERT(config_languages.size() == 2);
+	std::wcout << std::endl << L"Language: " << config_languages[0];
+	CPPUNIT_ASSERT(config_languages[0] == L"English");
+	std::vector<std::wstring> supported_languages = cf.GetLanguages();
+	CPPUNIT_ASSERT(supported_languages.size() == 1);
+}

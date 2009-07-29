@@ -29,12 +29,12 @@ Components& Components::operator=(const Components& rhs)
 	return * this;
 }
 
-Components Components::GetSupportedComponents(DVLib::LcidType lcidtype) const
+Components Components::GetSupportedComponents(DWORD oslcid) const
 {
 	Components result;
 	for each (const ComponentPtr& component in * this)
 	{
-		bool supported = component->IsSupported(lcidtype);
+		bool supported = component->IsSupported(oslcid);
 		if (supported)
 		{
 			result.push_back(component);

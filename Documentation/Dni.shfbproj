@@ -102,6 +102,9 @@
     <Image Include="Images\dotNetInstallerSample.jpg">
       <ImageId>dotNetInstallerSample.jpg</ImageId>
     </Image>
+    <Image Include="Images\LanguageSelector.jpg">
+      <ImageId>LanguageSelector.jpg</ImageId>
+    </Image>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />

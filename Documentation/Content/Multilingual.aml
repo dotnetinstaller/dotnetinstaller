@@ -3,17 +3,18 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        dotNetInstaller reads all the captions and messages from the configuration file.
-        Therefore, you can create installations in any language. In addition, dotNetInstaller allows you to define
-        different configurations depending on the LCID of the target system. You can present an Italian installer
-        on an Italian operating system and an English installer on all the other OSs.
+        dotNetInstaller reads all the captions and messages from configuration files.
+        Therefore, you can create installations in any language. In addition, dotNetInstaller
+        allows you to define different configurations depending on the locale of the target system,
+        of the currently logged-in user or let the user choose the installation language. You can also present
+        an Italian installer on an Italian operating system and an English installer on all the other systems.
       </para>
     </introduction>
-    <section address="selectinglcid">
-      <title>Selecting an LCID</title>
+    <section address="lcid_filter">
+      <title>Filtering by LCID</title>
       <content>
         <para>
-          You can define the <literal>lcid</literal> property of a configuration to set its <newTerm>Locale ID</newTerm>.
+          You can define the <literal>lcid_filter</literal> property of a configuration to set its <newTerm>Locale ID</newTerm>.
           A locale is either a language or a language in combination with a country. For example, a value of <literal>1033</literal>
           identifies <newTerm>English (United States)</newTerm>, while <literal>1049</literal> identifies <newTerm>Russian</newTerm>.
           See <externalLink>
@@ -54,6 +55,41 @@
         </para>
       </content>
     </section>
+    <section address="lcid_choose">
+      <title>Enabling User Selection of Language</title>
+      <content>
+        <para>
+          dotNetInstaller is capable of presenting a dialog in the beginning of an installation and let the user
+          choose the installation language.
+          <mediaLink>
+            <image xlink:href="LanguageSelector.jpg" />
+          </mediaLink>
+        </para>
+        <para>
+          In order to enable this behavior you must set the
+          <literal>show_language_selector</literal> property at the top-level and the following
+          properties in each individual configuration.
+          <tableDefinition>
+            <definedTerm>language_id</definedTerm>
+            <definition>
+              The actual locale ID at the configuration level. This is usually different from <literal>lcid_filter</literal>
+              and represents the language of the text in this configuration. For example, <literal>1033</literal>
+              identifies English and <literal>1049</literal> identifies Russian.
+            </definition>
+            <definedTerm>language</definedTerm>
+            <definition>
+              A string representing the language of the configuration. This value appears in the user selection
+              drop-down list.
+            </definition>
+          </tableDefinition>
+        </para>
+        <para>
+          Additional options, specifically <literal>language_selector_title</literal>,
+          <literal>language_selector_ok</literal> and <literal>language_selector_cancel</literal> options
+          allow controlling some aspects of the language selection dropdown.
+        </para>
+      </content>
+    </section>
     <section address="builtintemplates">
       <title>Built-In Templates</title>
       <content>
@@ -80,8 +116,8 @@
             Unicode character set is not supported on Windows 95, 98 and ME.
             The Microsoft Layer for Unicode (<localUri>unicows.dll</localUri>) is required
             if you plan to run installations on one of these operating systems. dotNetInstaller
-            has an embedded <localUri>unicows.dll</localUri> that it writes to the TEMP 
-            directory. In order to disable this behavior, copy <localUri>unicows.dll</localUri> 
+            has an embedded <localUri>unicows.dll</localUri> that it writes to the TEMP
+            directory. In order to disable this behavior, copy <localUri>unicows.dll</localUri>
             in the same path as <localUri>dotNetInstaller.exe</localUri>.
           </para>
           <para>

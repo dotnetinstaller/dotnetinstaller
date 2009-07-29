@@ -17,11 +17,18 @@ public:
     // auto-enabled log
     bool log_enabled;
     std::wstring log_file;
+	// language selection
+	bool show_language_selector;
+	std::wstring language_selector_title;
+	std::wstring language_selector_ok;
+	std::wstring language_selector_cancel;
 public:
 	Configurations();
 	virtual ~Configurations();
 	virtual void Load(TiXmlElement * node);
 	// returns configurations that match current platform, lcid and processor architecture
-	std::vector<ConfigurationPtr> GetSupportedConfigurations() const;
+	std::vector<ConfigurationPtr> GetSupportedConfigurations(DWORD oslcid) const;
+	std::vector<std::wstring> GetLanguages() const;
 };
 
+typedef shared_any<Configurations *, close_delete> ConfigurationsPtr;

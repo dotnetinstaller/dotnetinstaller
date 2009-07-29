@@ -244,6 +244,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LanguageSelectorDialog.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MSLU.cpp"
 				>
 			</File>
@@ -334,6 +338,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LanguageSelectorDialog.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Resource.h"
 				>
 			</File>
@@ -368,6 +376,14 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\dotNetInstaller.exe.manifest"
+			>
+		</File>
+		<File
+			RelativePath="..\ThirdParty\Mslu\unicows.dll"
+			>
+		</File>
 	</Files>
 	<Globals>
 		<Global

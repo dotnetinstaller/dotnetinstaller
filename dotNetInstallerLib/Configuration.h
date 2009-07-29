@@ -14,8 +14,11 @@ enum configuration_type
 class Configuration
 {
 public:
-	// configuration lcid
-	std::wstring lcid;
+	// configuration lcid filter
+	std::wstring lcid_filter;
+	// configuration language
+	std::wstring language;
+	std::wstring language_id;
 	// filter for minimum operating system version
 	std::wstring os_filter_greater;
 	// filter for maximum operating system version
@@ -28,7 +31,8 @@ public:
 	Configuration(configuration_type t);
 	virtual void Load(TiXmlElement * node);
 	// returns true if this configuration is supported on this operating system/lcid
-	virtual bool IsSupported(DVLib::LcidType lcidtype) const;
+	virtual bool IsSupported(DWORD oslcid) const;
+	std::wstring GetLanguageString() const;
 };
 
 typedef shared_any<Configuration *, close_delete> ConfigurationPtr;

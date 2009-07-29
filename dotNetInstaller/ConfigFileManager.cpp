@@ -21,7 +21,6 @@ bool ConfigFileManager::OnVersionError(const std::wstring& version, const std::w
 
 bool ConfigFileManager::OnDownload(const ConfigurationPtr& config)
 {
-	CdotNetInstallerDlg dlg;
 	ReferenceConfiguration * p = reinterpret_cast<ReferenceConfiguration *>(get(config));
 	LOG(L"Downloading reference configuration to '" << p->filename << L"'");
 	dlg.RunDownloadConfiguration(p->downloaddialog);
@@ -61,4 +60,21 @@ int ConfigFileManager::Run()
 {
 	ConfigFiles::Run();
 	return dlg.GetRecordedError();
+}
+
+bool ConfigFileManager::OnSelectLanguage()
+{
+	if (config.show_language_selector && ! InstallUILevelSetting::Instance->IsSilent())
+	{		
+		CLanguageSelectorDialog lsdlg(config);
+		switch(lsdlg.DoModal())
+		{
+		case IDOK:
+			return true;
+		case IDCANCEL:
+			THROW_EX(L"Language selection cancelled by user");
+		}
+	}
+
+	return false;
 }

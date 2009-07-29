@@ -5,20 +5,18 @@
 
 shared_any<InstallerSession *, close_delete> InstallerSession::Instance;
 
-std::wstring InstallerSession::GetSessionGUID()
+InstallerSession::InstallerSession()
+	: languageid(0)
+	, guid(DVLib::GenerateGUIDStringW())
 {
-	if (m_GUID.empty())
-    {
-        m_GUID = DVLib::GenerateGUIDStringW();
-    }
-    return m_GUID;
+
 }
 
 std::wstring InstallerSession::GetSessionTempPath(bool returnonly)
 {
 	if (m_tempDirectory.empty() && ! returnonly)
     {
-		m_tempDirectory = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), GetSessionGUID());
+		m_tempDirectory = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), guid);
 		DVLib::DirectoryCreate(m_tempDirectory);
     }
 
@@ -60,7 +58,7 @@ std::wstring InstallerSession::ExpandPathVariables(const std::wstring& path)
 			else if (name == L"TEMPPATH")
 				value = DVLib::GetTemporaryDirectoryW();
 			else if (name == L"GUID")
-				value = GetSessionGUID();
+				value = guid;
 			else if (name == L"PID")
 				value = DVLib::towstring(::GetCurrentProcessId());
 			else

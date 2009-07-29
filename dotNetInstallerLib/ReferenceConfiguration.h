@@ -7,7 +7,6 @@ class ReferenceConfiguration : public Configuration
 {
 public:
 	std::wstring filename;
-	std::wstring lcid;
 	DownloadDialogPtr downloaddialog;
 public:
 	ReferenceConfiguration();

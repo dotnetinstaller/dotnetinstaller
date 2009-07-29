@@ -18,7 +18,7 @@ public:
 	// returns whether the collection contains a component by this name
 	bool contains(const std::wstring& description) const;
 	// returns components that match current platform and processor architecture
-	Components GetSupportedComponents(DVLib::LcidType lcidtype) const;
+	Components GetSupportedComponents(DWORD oslcid) const;
 	// reference
 	const_reference operator[](size_type pos) const { return std::vector<ComponentPtr>::operator[](pos); }
 	// execute components, returns true if all succeeded

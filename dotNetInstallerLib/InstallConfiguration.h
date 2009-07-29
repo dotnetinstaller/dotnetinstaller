@@ -63,7 +63,7 @@ public:
 	InstallConfiguration();
 	virtual void Load(TiXmlElement * node);
 	// returns components that match current platform and processor architecture
-	Components GetSupportedComponents(DVLib::LcidType lcidtype) const;
+	Components GetSupportedComponents(DWORD oslcid) const;
 };
 
 typedef shared_any<InstallConfiguration *, close_delete> InstallConfigurationPtr;

@@ -99,14 +99,14 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	}
 
 	LOG(L"Loaded " << components.size() << L" component(s) from configuration type=" << type 
-		<< L" (lcid=" << lcid
+		<< L" (lcid_filter=" << lcid_filter
 		<< L", os_filter_greater=" << os_filter_greater
 		<< L", os_filter_smaller=" << os_filter_smaller
 		<< L", processor_architecture_filter=" << processor_architecture_filter
 		<< L")");
 }
 
-Components InstallConfiguration::GetSupportedComponents(DVLib::LcidType lcidtype) const
+Components InstallConfiguration::GetSupportedComponents(DWORD oslcid) const
 {
-	return components.GetSupportedComponents(lcidtype);
+	return components.GetSupportedComponents(oslcid);
 }

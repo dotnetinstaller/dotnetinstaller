@@ -68,7 +68,7 @@ public:
 	// load a component from an xml node
 	virtual void Load(TiXmlElement * node);
 	// returns true if this component is supported on this operating system/lcid
-	virtual bool IsSupported(DVLib::LcidType lcidtype) const;
+	virtual bool IsSupported(LCID oslcid) const;
 	virtual int GetExitCode() const = 0;
 };
 

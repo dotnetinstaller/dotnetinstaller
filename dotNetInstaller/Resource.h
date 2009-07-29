@@ -7,6 +7,7 @@
 #define IDD_DIALOGINSTALL               131
 #define IDD_DOWNLOAD_DIALOG             132
 #define IDC_CUSTOM_HAND                 147
+#define IDD_LANGUAGE_SELECTOR_DIALOG    148
 #define IDC_INSTALL                     1000
 #define IDC_COMPONENTS_LIST             1001
 #define IDC_MESSAGE                     1003
@@ -23,14 +24,15 @@
 #define IDC_DESCRIPTIONSELECTOR         1017
 #define IDC_BUSYCONTROL                 1018
 #define IDC_INFO_LINK                   1019
+#define IDC_LANGUAGES					1020
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        148
+#define _APS_NEXT_RESOURCE_VALUE        149
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1020
+#define _APS_NEXT_CONTROL_VALUE         1021
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

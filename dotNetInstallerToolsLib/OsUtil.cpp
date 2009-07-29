@@ -190,13 +190,17 @@ LCID DVLib::GetOperatingSystemLCID(LcidType lcidtype)
 	}
 }
 
-// \todo: this should probably move to dotNetInstallerLib since lcid is dotNetInstaller-format-specific
 bool DVLib::IsOperatingSystemLCID(LcidType lcidtype, const std::wstring& lcid)
+{
+	return IsOperatingSystemLCID(GetOperatingSystemLCID(lcidtype), lcid);
+}
+
+// \todo: this should probably move to dotNetInstallerLib since lcid is dotNetInstaller-format-specific
+bool DVLib::IsOperatingSystemLCID(LCID oslcid, const std::wstring& lcid)
 {
 	if (lcid.empty())
 		return true;
 
-	LCID pa = GetOperatingSystemLCID(lcidtype);
 	std::vector<std::wstring> lcids = DVLib::split(lcid, L",");
 
 	for (size_t i = 0; i < lcids.size(); i++)
@@ -216,9 +220,9 @@ bool DVLib::IsOperatingSystemLCID(LcidType lcidtype, const std::wstring& lcid)
 			lcid = DVLib::wstring2long(lcids[i]);
 		}
 
-		if (lcid == pa && ! not)
+		if (lcid == oslcid && ! not)
 			return true;
-		else if (lcid != pa && not)
+		else if (lcid != oslcid && not)
 			return true;
 	}
 

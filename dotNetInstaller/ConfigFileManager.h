@@ -1,6 +1,7 @@
 #pragma once
 
 #include "dotNetInstallerDlg.h"
+#include "LanguageSelectorDialog.h"
 
 class ConfigFileManager : private ConfigFiles
 {
@@ -11,6 +12,7 @@ protected:
 	bool OnDownload(const ConfigurationPtr& config);
 	bool OnRunConfiguration(const ConfigurationPtr& configuration);
 	bool OnLoad();
+	bool OnSelectLanguage();
 public:
 	ConfigFileManager();
 	void Load();

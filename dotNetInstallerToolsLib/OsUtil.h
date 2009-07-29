@@ -125,6 +125,8 @@ namespace DVLib
 	bool IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& l, const std::wstring& r);
 	// get the operating system LCID
 	LCID GetOperatingSystemLCID(LcidType lcidtype);
+	// does the filter match a system LCID
+	bool IsOperatingSystemLCID(LCID oslcid, const std::wstring& lcid);
 	// does the filter match the operating system LCID
 	bool IsOperatingSystemLCID(LcidType lcidtype, const std::wstring& lcid);
 

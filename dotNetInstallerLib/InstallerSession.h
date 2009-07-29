@@ -4,14 +4,16 @@ class InstallerSession
 {
 private:
 	std::wstring m_tempDirectory;
-	std::wstring m_GUID;
 public:
+	InstallerSession();
+	// unique session ID
+	std::wstring guid;
+	// session locale
+	DWORD languageid;
 	// CAB path
 	std::wstring SessionCABPath;
 	// additional cmdline arguments
 	std::map<std::wstring, std::wstring> AdditionalCmdLineArgs;
-	// get a unique id for this session
-	std::wstring GetSessionGUID();
     // get a unique temporary directory for this session
     std::wstring GetSessionTempPath(bool returnonly = false);
 	// expand variables

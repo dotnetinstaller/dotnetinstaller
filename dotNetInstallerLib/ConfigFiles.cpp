@@ -2,6 +2,7 @@
 #include "ConfigFiles.h"
 #include "ReferenceConfiguration.h"
 #include "InstallerLog.h"
+#include "InstallerSession.h"
 #include <Version/Version.h>
 
 ConfigFiles::ConfigFiles()
@@ -9,7 +10,7 @@ ConfigFiles::ConfigFiles()
 }
 
 std::vector<ConfigurationPtr> ConfigFiles::DownloadReferenceConfigurations(
-	const std::vector<ConfigurationPtr>& configurations, int level)
+	DWORD oslcid, const std::vector<ConfigurationPtr>& configurations, int level)
 {
 	if (level >= max_levels)
 	{
@@ -43,7 +44,7 @@ std::vector<ConfigurationPtr> ConfigFiles::DownloadReferenceConfigurations(
 			}
 
 			std::vector<ConfigurationPtr> refs = DownloadReferenceConfigurations(
-				downloadedconfig.GetSupportedConfigurations(), level + 1);
+				oslcid, downloadedconfig.GetSupportedConfigurations(oslcid), level + 1);
 			result.insert(result.end(), refs.begin(), refs.end());
 		}
 		else
@@ -74,12 +75,23 @@ void ConfigFiles::Load()
 		}
 	}
 
+	if (OnSelectLanguage())
+	{
+		// specific locale has been chosen
+		LOG(L"Locale chosen: " << InstallerSession::Instance->languageid);
+	}
+
 	// download reference configurations
-	std::vector<ConfigurationPtr> refs = DownloadReferenceConfigurations(config.GetSupportedConfigurations());
+	std::vector<ConfigurationPtr> refs = DownloadReferenceConfigurations(
+		InstallerSession::Instance->languageid, 
+		config.GetSupportedConfigurations(InstallerSession::Instance->languageid));
+
 	Configurations::insert(end(), refs.begin(), refs.end());
 
 	// select the set of configurations appropriate for this run
-	std::vector<ConfigurationPtr> supportedconfigurations = config.GetSupportedConfigurations();
+	std::vector<ConfigurationPtr> supportedconfigurations = config.GetSupportedConfigurations(
+		InstallerSession::Instance->languageid);
+
 	if (supportedconfigurations.size() == 0)
 	{
 		THROW_EX(L"No configuration matching locale and operating system found within " << size() << L" configuration(s)");
