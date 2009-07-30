@@ -12,46 +12,44 @@ MsiComponent::MsiComponent()
 
 }
 
-void MsiComponent::Exec()
+std::wstring MsiComponent::GetCommandLine() const
 {
-	std::wstring l_command = TEXT("msiexec /I ");
-	l_command.append(L"\"");
-	l_command += DVLib::isguid(package) 
-		? package
-		: DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), package);
-	l_command.append(L"\"");
+	std::wstring command = TEXT("msiexec /I ");
+	command.append(L"\"");
+	command += (DVLib::isguid(package) ? package : DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), package));
+	command.append(L"\"");
 
 	switch(InstallUILevelSetting::Instance->GetUILevel())
 	{
 	case InstallUILevelSilent:
 		if (! cmdparameters_silent.empty()) 
 		{
-			l_command.append(L" ");
-			l_command.append(cmdparameters_silent);
+			command.append(L" ");
+			command.append(cmdparameters_silent);
 		}
 		else if (! cmdparameters_basic.empty()) 
 		{
-			l_command.append(L" ");
-			l_command.append(cmdparameters_basic);
+			command.append(L" ");
+			command.append(cmdparameters_basic);
 		}
 		break;
 	case InstallUILevelBasic:
 		if (! cmdparameters_basic.empty()) 
 		{
-			l_command.append(L" ");
-			l_command.append(cmdparameters_basic);
+			command.append(L" ");
+			command.append(cmdparameters_basic);
 		}
 		else if (! cmdparameters_silent.empty()) 
 		{
-			l_command.append(L" ");
-			l_command.append(cmdparameters_silent);
+			command.append(L" ");
+			command.append(cmdparameters_silent);
 		}
 		break;
 	default:
 		if (! cmdparameters.empty())
 		{
-			l_command.append(L" ");
-			l_command.append(cmdparameters);
+			command.append(L" ");
+			command.append(cmdparameters);
 		}
 		break;
 	}
@@ -59,13 +57,19 @@ void MsiComponent::Exec()
 	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::Instance->AdditionalCmdLineArgs.find(description);
     if (cmdline != InstallerSession::Instance->AdditionalCmdLineArgs.end())
     {
-		l_command += TEXT(" ");
-		l_command += cmdline->second.c_str();
+		command += TEXT(" ");
+		command += cmdline->second.c_str();
 		LOG(L"-- Additional component arguments: " << cmdline->second);
     }
 
-    LOG(L"Executing: " << l_command);
-	DVLib::DetachCmd(l_command, &m_process_info);
+	return command;
+}
+
+void MsiComponent::Exec()
+{
+	std::wstring command = GetCommandLine();
+    LOG(L"Executing: " << command);
+	DVLib::DetachCmd(command, &m_process_info);
 }
 
 void MsiComponent::Load(TiXmlElement * node)

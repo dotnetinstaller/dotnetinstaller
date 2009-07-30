@@ -310,7 +310,7 @@ void CdotNetInstallerDlg::OnDestroy()
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
         std::wstring cabpath = (! p_configuration->cab_path.empty()) ? p_configuration->cab_path : InstallerSession::Instance->GetSessionTempPath(true);
 		cabpath = InstallerSession::Instance->ExpandVariables(cabpath);
-        if (p_configuration->cab_path_autodelete && ! cabpath.empty() && DVLib::FileExists(cabpath))
+		if (p_configuration->cab_path_autodelete && ! cabpath.empty() && DVLib::DirectoryExists(cabpath))
         {
 		    LOG(L"Deleting temporary folder: " << cabpath);
 			DVLib::DirectoryDelete(cabpath);
@@ -376,10 +376,12 @@ void CdotNetInstallerDlg::ExtractCab()
 	if (InstallUILevelSetting::Instance->IsAnyUI())
 		dlg.LoadComponent(m_configuration, p_extractcab);
 
-	p_extractcab->Exec();
+	p_extractcab->BeginExec();
 
 	if (InstallUILevelSetting::Instance->IsAnyUI())
 		dlg.DoModal();
+
+	p_extractcab->EndExec();
 }
 
 // the pos rectangle is the top left point, width and height, not l/r/t/b
