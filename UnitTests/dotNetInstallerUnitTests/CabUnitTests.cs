@@ -37,10 +37,10 @@ namespace dotNetInstallerUnitTests
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
             setupConfiguration.cab_path = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-            File.WriteAllText(Path.Combine(setupConfiguration.cab_path, Guid.NewGuid().ToString()), Guid.NewGuid().ToString());
             setupConfiguration.cab_path_autodelete = true;
             Console.WriteLine("Creating '{0}'", setupConfiguration.cab_path);
             Directory.CreateDirectory(setupConfiguration.cab_path);
+            File.WriteAllText(Path.Combine(setupConfiguration.cab_path, Guid.NewGuid().ToString()), Guid.NewGuid().ToString());
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
