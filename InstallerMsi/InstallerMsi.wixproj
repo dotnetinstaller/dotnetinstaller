@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <ProductVersion>3.0</ProductVersion>
@@ -6,6 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>dotNetInstaller</OutputName>
     <OutputType>Package</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.0\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets</WixTargetsPath>
     <WixToolPath>$(ProgramFiles)\Windows Installer XML v3\bin\</WixToolPath>
     <DefineSolutionProperties>False</DefineSolutionProperties>
@@ -13,30 +15,32 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
     <IntermediateOutputPath>obj\Debug\</IntermediateOutputPath>
-    <DefineConstants>Debug;Configuration=Debug</DefineConstants>
-    <IncludeSearchPaths>
-    </IncludeSearchPaths>
+    <DefineConstants>Debug</DefineConstants>
+    <IncludeSearchPaths />
     <Pedantic>False</Pedantic>
     <ShowSourceTrace>False</ShowSourceTrace>
     <SuppressSchemaValidation>False</SuppressSchemaValidation>
-    <SuppressSpecificWarnings>
-    </SuppressSpecificWarnings>
+    <SuppressSpecificWarnings />
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <VerboseOutput>False</VerboseOutput>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>
     <IntermediateOutputPath>obj\Release\</IntermediateOutputPath>
-    <DefineConstants>Configuration=Release</DefineConstants>
-    <IncludeSearchPaths>
-    </IncludeSearchPaths>
+    <IncludeSearchPaths />
     <Pedantic>False</Pedantic>
     <ShowSourceTrace>False</ShowSourceTrace>
     <SuppressSchemaValidation>False</SuppressSchemaValidation>
-    <SuppressSpecificWarnings>
-    </SuppressSpecificWarnings>
+    <SuppressSpecificWarnings />
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <VerboseOutput>False</VerboseOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DefineConstants>Debug;</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DefineConstants>
+    </DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="InstallerMsi.wxs" />
@@ -45,7 +49,9 @@
     <EmbeddedResource Include="InstallerMsi.wxl" />
   </ItemGroup>
   <ItemGroup>
-    <WixExtension Include="C:\Program Files\Windows Installer XML v3\bin\WixUIExtension.dll" />
+    <WixExtension Include="WixUIExtension">
+      <HintPath>C:\Program Files\Windows Installer XML v3\bin\WixUIExtension.dll</HintPath>
+    </WixExtension>
   </ItemGroup>
   <ItemGroup>
     <Content Include="InstallWelcomeDlg.wxi" />

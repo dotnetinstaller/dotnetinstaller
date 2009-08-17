@@ -2,8 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include ..\Version\Version.wxi ?>
   <?define UpgradeCode="0ca33dc6-cbf7-4576-802a-69334216231d"?>
-  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="$(var.ProductVersion)"
-    Manufacturer="$(var.CompanyName)" UpgradeCode="$(var.UpgradeCode)">
+  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="$(var.CompanyName)" UpgradeCode="$(var.UpgradeCode)">
     <Package Id="*" InstallerVersion="200" Compressed="yes" />
     <Media Id="1" Cabinet="InstallerMsi.cab" EmbedCab="yes" />
     <Icon Id="CodePlex.ico" SourceFile="..\Documentation\CodePlex.ico" />
@@ -87,7 +86,7 @@
     </Feature>
     <UIRef Id="dotNetInstallerUI_InstallDir" />
     <InstallExecuteSequence>
-      <FindRelatedProducts Before="AppSearch"/>
+      <FindRelatedProducts Before="AppSearch" />
       <RemoveExistingProducts After="InstallInitialize" />
     </InstallExecuteSequence>
   </Product>

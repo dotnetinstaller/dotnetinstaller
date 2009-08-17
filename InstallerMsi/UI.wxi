@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Include>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include UpgradeWelcomeDlg.wxi ?>
   <?include InstallWelcomeDlg.wxi ?>
   <Fragment>

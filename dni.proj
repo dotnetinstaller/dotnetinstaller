@@ -190,7 +190,7 @@
   </Target>
   <Target Name="installer" DependsOnTargets="version">
     <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Build" />
-    <Copy SourceFiles="InstallerMsi\bin\$(Configuration)\dotNetInstaller.msi" DestinationFiles="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor).msi" />
+    <Copy SourceFiles="InstallerMsi\bin\$(Configuration)\en-us\dotNetInstaller.msi" DestinationFiles="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor).msi" />
   </Target>
   <!-- rewrite configuration samples to the current configuration format -->
   <ItemGroup>

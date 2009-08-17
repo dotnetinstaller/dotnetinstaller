@@ -95,7 +95,7 @@
             <para>
               Install
               <externalLink>
-                <linkText>Windows Installer XML and ProjectAggregator 3.0</linkText>
+                <linkText>Windows Installer XML 3.0</linkText>
                 <linkUri>http://wix.sourceforge.net/</linkUri>
               </externalLink> to build the MSI installer.
             </para>
