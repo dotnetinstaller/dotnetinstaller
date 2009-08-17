@@ -41,6 +41,9 @@
               <File Id="SourceGrid2.dll" Source="..\InstallerEditor\References\SourceGrid2.dll" />
               <File Id="SourceLibrary.dll" Source="..\InstallerEditor\References\SourceLibrary.dll" />
             </Component>
+            <Component Id="InstallerLinker" Guid="{F06F3A32-DAB8-4e31-B35C-6F4FB9EBC36E}">
+              <File Id="InstallerLinker.exe" Source="..\InstallerLinker\bin\$(var.Configuration)\InstallerLinker.exe" />
+            </Component>
             <Component Id="dotNetInstaller" Guid="E28F4986-00F0-489f-99A3-99745FEC243D">
               <File Id="dotNetInstaller.exe" Source="..\dotNetInstaller\$(var.Configuration)\dotNetInstaller.exe" />
             </Component>
@@ -72,6 +75,7 @@
       <ComponentRef Id="InstallerRegistry" />
       <ComponentRef Id="InstallerLib" />
       <ComponentRef Id="InstallerEditor" />
+      <ComponentRef Id="InstallerLinker" />
       <ComponentRef Id="dotNetInstaller" />
       <ComponentRef Id="Documentation" />
       <ComponentRef Id="DotNetInstallerMenuShortcuts" />
