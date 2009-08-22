@@ -33,7 +33,6 @@ namespace InstallerLib
             configfile.Load(args.config);
 
             // \todo: check XML with XSD, warn if nodes are being dropped
-
             args.WriteLine(string.Format("Updating binary attributes in \"{0}\"", args.output));
             VersionResource rc = new VersionResource();
             rc.LoadFrom(args.output);
@@ -69,7 +68,6 @@ namespace InstallerLib
                 args.WriteLine(string.Format(" {0}", string.Join(", ", iconSizes.ToArray())));
                 GroupIconResource groupIconResource = iconFile.ConvertToGroupIconResource();
                 groupIconResource.Language = (ushort)ResourceUtil.NEUTRALLANGID;
-                groupIconResource.Name = "128";
                 groupIconResource.SaveTo(args.output);
             }
 
@@ -118,8 +116,15 @@ namespace InstallerLib
                 ResourceUpdate.UpdateResource(args.output, "RES_CAB_LIST", "CUSTOM", fileslist_b, 0);
 
                 args.WriteLine(string.Format("Embedding \"{0}\"", cabname));
-                ResourceUpdate.UpdateResourceWithFile(args.output, "RES_CAB", "BINARY", 0, cabname, 32 * 1024 * 1024, args);
+                ResourceUpdate.UpdateResourceWithFile(args.output, "RES_CAB", "RES_CAB", 0, cabname, 32 * 1024 * 1024, args);
+
                 File.Delete(cabname);
+            }
+
+            if (! string.IsNullOrEmpty(args.manifest))
+            {
+                args.WriteLine(string.Format("Embedding manifest \"{0}\"", args.manifest));
+                ResourceUpdate.UpdateResourceWithFile(args.output, new IntPtr(1), new IntPtr(24), 0, args.manifest);
             }
 
             args.WriteLine(string.Format("Successfully created \"{0}\"", args.output));

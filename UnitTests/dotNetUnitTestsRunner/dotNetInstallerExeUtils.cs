@@ -7,7 +7,7 @@ using System.Reflection;
 using NUnit.Framework;
 using System.Diagnostics;
 
-namespace dotNetInstallerUnitTests
+namespace dotNetUnitTestsRunner
 {
     public class dotNetInstallerExeUtils
     {

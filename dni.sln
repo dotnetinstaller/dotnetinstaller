@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PackagedSetup", "PackagedSe
 	ProjectSection(SolutionItems) = preProject
 		Samples\PackagedSetup\banner.bmp = Samples\PackagedSetup\banner.bmp
 		Samples\PackagedSetup\Configuration.xml = Samples\PackagedSetup\Configuration.xml
+		Samples\PackagedSetup\PackagedSetup.manifest = Samples\PackagedSetup\PackagedSetup.manifest
 		Samples\PackagedSetup\Readme.txt = Samples\PackagedSetup\Readme.txt
 	EndProjectSection
 EndProject
@@ -59,6 +60,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 		Documentation\Content\Multilingual.aml = Documentation\Content\Multilingual.aml
 		Documentation\Content\Samples.aml = Documentation\Content\Samples.aml
 		Documentation\Content\SinglePackageTutorial.aml = Documentation\Content\SinglePackageTutorial.aml
+		Documentation\Content\Uac.aml = Documentation\Content\Uac.aml
 		Documentation\Content\UIModes.aml = Documentation\Content\UIModes.aml
 		Documentation\Content\VariableSubstitution.aml = Documentation\Content\VariableSubstitution.aml
 	EndProjectSection
@@ -172,6 +174,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MultilingualSetup", "Multil
 		Samples\MultilingualSetup\Configuration.xml = Samples\MultilingualSetup\Configuration.xml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNetUnitTestsRunner", "UnitTests\dotNetUnitTestsRunner\dotNetUnitTestsRunner.csproj", "{6436DA79-B04A-4B9A-BEA9-46933ADBBB7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -242,6 +246,10 @@ Global
 		{23B25369-53E1-4819-ADA2-EEE0A772BD02}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{23B25369-53E1-4819-ADA2-EEE0A772BD02}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{23B25369-53E1-4819-ADA2-EEE0A772BD02}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6436DA79-B04A-4B9A-BEA9-46933ADBBB7D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6436DA79-B04A-4B9A-BEA9-46933ADBBB7D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6436DA79-B04A-4B9A-BEA9-46933ADBBB7D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6436DA79-B04A-4B9A-BEA9-46933ADBBB7D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -261,6 +269,7 @@ Global
 		{6542C25E-A71E-401E-A818-71910821444C} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{56390342-5DE6-4FE4-A7A6-3EC30CF4B34F} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{23B25369-53E1-4819-ADA2-EEE0A772BD02} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
+		{6436DA79-B04A-4B9A-BEA9-46933ADBBB7D} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{6A9AD5E1-624C-478F-9921-8400B3AD84A8} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 	EndGlobalSection

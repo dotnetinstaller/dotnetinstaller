@@ -39,7 +39,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
+    <Reference Include="Vestris.ResourceLib, Version=1.2.26529.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\ResourceLib\Bin\Release\Vestris.ResourceLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Version\GlobalAssemblyInfo.cs">
@@ -51,6 +56,7 @@
     <Compile Include="ComponentOpenFileTests.cs" />
     <Compile Include="DownloadTests.cs" />
     <Compile Include="ComponentEmbedFileTests.cs" />
+    <Compile Include="InstallerLinkerUnitTests.cs" />
     <Compile Include="SamplesUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,6 +64,10 @@
     <ProjectReference Include="..\..\InstallerLib\InstallerLib.csproj">
       <Project>{E19C2177-78F8-4C52-81FE-F49E157D647F}</Project>
       <Name>InstallerLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\dotNetUnitTestsRunner\dotNetUnitTestsRunner.csproj">
+      <Project>{6436DA79-B04A-4B9A-BEA9-46933ADBBB7D}</Project>
+      <Name>dotNetUnitTestsRunner</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +105,11 @@
     <EmbeddedResource Include="..\..\Samples\MultilingualSetup\Configuration.xml">
       <Link>Samples\MultilingualSetup\Configuration.xml</Link>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Manifests\asInvoker.manifest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

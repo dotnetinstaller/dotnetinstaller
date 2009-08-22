@@ -24,7 +24,7 @@ int ExtractComponent::GetCabCount() const
 	std::wstring resname = TEXT("RES_CAB");
 	resname.append(DVLib::towstring(currentIndex));
 	
-	HRSRC l_res = FindResource(m_h, resname.c_str(), TEXT("BINARY"));
+	HRSRC l_res = FindResource(m_h, resname.c_str(), TEXT("RES_CAB"));
 	if (l_res == NULL)
 		return 0;
 
@@ -33,7 +33,7 @@ int ExtractComponent::GetCabCount() const
 		currentIndex++;
 		resname = TEXT("RES_CAB");
 		resname.append(DVLib::towstring(currentIndex));
-		l_res = FindResource(m_h, resname.c_str(), TEXT("BINARY"));
+		l_res = FindResource(m_h, resname.c_str(), TEXT("RES_CAB"));
 	} while(l_res);
 
 	return currentIndex - 1;
@@ -79,7 +79,7 @@ void ExtractComponent::ExtractCab()
 			THROW_EX(resolved_cancelled_message);
         }
 
-		std::vector<char> data = DVLib::LoadResourceData<char>(m_h, resname, L"BINARY");
+		std::vector<char> data = DVLib::LoadResourceData<char>(m_h, resname, L"RES_CAB");
 
 		DWORD dwWritten = 0;
         CHECK_WIN32_BOOL(WriteFile(get(hfile), (LPCVOID) & * data.begin(), data.size(), & dwWritten, NULL),

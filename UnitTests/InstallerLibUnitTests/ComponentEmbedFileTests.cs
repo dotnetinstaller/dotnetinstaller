@@ -11,7 +11,7 @@ namespace InstallerLibUnitTests
     public class ComponentEmbedFileTests
     {
         [Test]
-        public void GetFilesNoTargetPathTests()
+        public void TestGetFilesNoTargetPath()
         {
             EmbedFile embedFile = new EmbedFile();
             embedFile.sourcefilepath = Path.Combine(Environment.CurrentDirectory, @"InstallerLibUnitTests.dll");
@@ -23,7 +23,7 @@ namespace InstallerLibUnitTests
         }
 
         [Test]
-        public void GetFilesTargetPathTests()
+        public void TestGetFilesTargetPath()
         {
             EmbedFile embedFile = new EmbedFile();
             embedFile.sourcefilepath = Path.Combine(Environment.CurrentDirectory, @"InstallerLibUnitTests.dll");
@@ -36,7 +36,7 @@ namespace InstallerLibUnitTests
         }
 
         [Test]
-        public void GetFilesAppPathTests()
+        public void TestGetFilesAppPath()
         {
             EmbedFile embedFile = new EmbedFile();
             embedFile.sourcefilepath = Path.Combine(Environment.CurrentDirectory, @"InstallerLibUnitTests.dll");
@@ -49,7 +49,7 @@ namespace InstallerLibUnitTests
         }
 
         [Test]
-        public void GetFilesSourceAppPathTests()
+        public void TestGetFilesSourceAppPath()
         {
             EmbedFile embedFile = new EmbedFile();
             embedFile.sourcefilepath = @"#APPPATH\InstallerLibUnitTests.dll";

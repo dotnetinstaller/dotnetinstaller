@@ -25,6 +25,7 @@
 #define IDC_BUSYCONTROL                 1018
 #define IDC_INFO_LINK                   1019
 #define IDC_LANGUAGES					1020
+#define MANIFEST_RESOURCE_ID			1
 
 // Next default values for new objects
 // 

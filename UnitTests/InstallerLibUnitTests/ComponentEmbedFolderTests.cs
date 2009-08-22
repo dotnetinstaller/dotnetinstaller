@@ -11,7 +11,7 @@ namespace InstallerLibUnitTests
     public class ComponentEmbedFolderTests
     {
         [Test]
-        public void GetFilesNoTargetPathTests()
+        public void TestGetFilesNoTargetPath()
         {
             EmbedFolder embedFolder = new EmbedFolder();
             embedFolder.sourcefolderpath = Path.Combine(Environment.GetFolderPath(
@@ -27,7 +27,7 @@ namespace InstallerLibUnitTests
         }
 
         [Test]
-        public void GetFilesTargetWithoutBackslashPathTests()
+        public void TestGetFilesTargetWithoutBackslashPath()
         {
             EmbedFolder embedFolder = new EmbedFolder();
             embedFolder.sourcefolderpath = Path.Combine(Environment.GetFolderPath(
@@ -45,7 +45,7 @@ namespace InstallerLibUnitTests
         }
 
         [Test]
-        public void GetFilesTargetWithBackslashPathTests()
+        public void TestGetFilesTargetWithBackslashPath()
         {
             EmbedFolder embedFolder = new EmbedFolder();
             embedFolder.sourcefolderpath = Path.Combine(Environment.GetFolderPath(
@@ -64,7 +64,7 @@ namespace InstallerLibUnitTests
         }
 
         [Test]
-        public void GetFilesTargetWithBackslashPathTests2()
+        public void TestGetFilesTargetWithBackslashPath2()
         {
             EmbedFolder embedFolder = new EmbedFolder();
             embedFolder.sourcefolderpath = Path.Combine(Environment.GetFolderPath(

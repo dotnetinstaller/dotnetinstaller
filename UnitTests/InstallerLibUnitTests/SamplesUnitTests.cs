@@ -13,7 +13,7 @@ namespace InstallerLibUnitTests
     public class SamplesUnitTests
     {
         [Test]
-        public void LoadSaveSamplesTest()
+        public void TestLoadSaveSamples()
         {
             // \todo: don't use an embedded stream, this is a chicken/egg problem with rewriting sample xmls when configuration changes
             // make sure that every sample configuration loads and saves

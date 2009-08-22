@@ -22,6 +22,7 @@
     <PackagedSetupSample Include="Samples/PackagedSetup/**/*.bmp" />
     <PackagedSetupSample Include="Samples/PackagedSetup/**/*.ico" />
     <PackagedSetupSample Include="Samples/PackagedSetup/**/*.msi" />
+    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.manifest" />
   </ItemGroup>
   <ItemGroup>
     <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.txt" />
@@ -143,11 +144,7 @@
     <Copy SourceFiles="@(SupportFiles)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\SupportFiles\%(RecursiveDir)" />
     <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup" />
     <!-- Sample: PackagedSetup -->
-    <MakeDir Directories="Samples\PackagedSetup\bin\$(Configuration)" />
-    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt"/>
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
-    <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
-    <Copy SourceFiles="@(PackagedSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Source\%(RecursiveDir)" />
+    <CallTarget Targets="packagedsetupsample" />
     <!-- Sample: InstallCheckOperators -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
     <Copy SourceFiles="@(InstallCheckOperatorsSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators\%(RecursiveDir)" />
@@ -210,5 +207,12 @@
     <Exec Command="InstallerConfig\bin\$(Configuration)\InstallerConfig.exe /ConfigFile:%(WizardXmls.Identity).config" />
     <XslTransform XmlFile="%(WizardXmls.Identity).config" XsltFiles="InstallerEditor\xsl\config2wizard.xsl" OutputFile="%(WizardXmls.Identity)" />
     <Delete Files="%(WizardXmls.Identity).config" />
+  </Target>
+  <Target Name="packagedsetupsample" DependsOnTargets="version">
+    <MakeDir Directories="Samples\PackagedSetup\bin\$(Configuration)" />
+    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Manifest:Samples\PackagedSetup\PackagedSetup.manifest"/>
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
+    <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
+    <Copy SourceFiles="@(PackagedSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Source\%(RecursiveDir)" />
   </Target>
 </Project>

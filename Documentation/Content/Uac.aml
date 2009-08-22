@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="51bb945c-fd5f-48c0-a1d8-ef469a3850b9" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        The setup bootstrapper has a default embedded manifest that specifies the <newTerm>requireAdministrator</newTerm>
+        execution level. The <newTerm>installer linker</newTerm> is capable of embedding a custom UAC manifest, enabling you
+        to generate a setup executable that either forces elevation or runs under the invoker's privileges.
+      </para>
+    </introduction>
+    <section address="commandlineusage">
+      <title>Command Line Usage</title>
+      <content>
+        <para>
+          You can specify a <system>/Manifest</system> command-line option to the installer linker.
+          <code language="cmd">
+            <![CDATA[InstallerLinker.exe /Output:Setup.exe /Template:dotNetInstaller.exe /Configuration:Configuration.xml /Manifest:PackagedSetup.manifest]]>
+          </code>          
+        </para>
+      </content>
+    </section>
+    <section address="defaultmanifest">
+      <content>
+        The following default manifest is embedded with the setup bootstrapper.
+        <code language="xml">
+          <![CDATA[
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
+    <security>
+      <requestedPrivileges>
+        <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+</assembly>
+          ]]>
+        </code>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

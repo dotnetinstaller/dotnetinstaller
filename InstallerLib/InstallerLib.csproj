@@ -50,9 +50,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\CabLib.dll</HintPath>
     </Reference>
-    <Reference Include="Vestris.ResourceLib, Version=1.0.1514.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Vestris.ResourceLib, Version=1.2.26529.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\Vestris.ResourceLib.dll</HintPath>
+      <HintPath>..\ThirdParty\ResourceLib\Bin\Release\Vestris.ResourceLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

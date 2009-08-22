@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Web;
 using NUnit.Framework;
 using InstallerLib;
+using dotNetUnitTestsRunner;
 
 namespace dotNetInstallerUnitTests
 {
@@ -13,7 +14,7 @@ namespace dotNetInstallerUnitTests
     public class DownloadComponentsUnitTests
     {
         [Test]
-        public void DownloadConfigurationTest()
+        public void TestDownloadConfiguration()
         {
             // a configuration with a single component that contains two download components
             ConfigFile configFile = new ConfigFile();

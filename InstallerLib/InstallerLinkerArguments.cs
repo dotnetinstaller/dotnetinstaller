@@ -31,31 +31,51 @@ namespace InstallerLib
         public string[] embedFolders;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Icon for the executable", LongName = "Icon", ShortName = "i")]
         public string icon;
+        [Argument(ArgumentType.AtMostOnce, HelpText = "Embed manifest", LongName = "Manifest", ShortName = "m")]
+        public string manifest;
 
         public void Validate()
         {
+            // template
+            if (string.IsNullOrEmpty(template))
+                throw new ArgumentNullException("template");
             template = Path.GetFullPath(template);
-            if (!string.IsNullOrEmpty(banner)) banner = Path.GetFullPath(banner);
-            if (!string.IsNullOrEmpty(icon)) icon = Path.GetFullPath(icon);
-            config = Path.GetFullPath(config);
-            output = Path.GetFullPath(output);
-
-            if (!string.IsNullOrEmpty(apppath))
-            {
-                apppath = Path.GetFullPath(apppath);
-            }
-
             if (!File.Exists(template))
                 throw new FileNotFoundException(template);
 
+            // banner
+            if (!string.IsNullOrEmpty(banner)) 
+                banner = Path.GetFullPath(banner);
             if (!String.IsNullOrEmpty(banner) && !File.Exists(banner))
                 throw new FileNotFoundException(banner);
 
+            // icon
+            if (!string.IsNullOrEmpty(icon))
+            {
+                icon = Path.GetFullPath(icon);
+                if (!File.Exists(icon))
+                    throw new FileNotFoundException(icon);
+            }
+
+            // config
+            if (string.IsNullOrEmpty(config))
+                throw new ArgumentNullException("config");
+            config = Path.GetFullPath(config);
             if (!File.Exists(config))
                 throw new FileNotFoundException(config);
 
-            if (!string.IsNullOrEmpty(apppath) && !Directory.Exists(apppath))
-                throw new DirectoryNotFoundException(apppath);
+            // output
+            if (string.IsNullOrEmpty(output))
+                throw new ArgumentNullException("output");
+            output = Path.GetFullPath(output);
+
+            // apppath
+            if (!string.IsNullOrEmpty(apppath))
+            {
+                apppath = Path.GetFullPath(apppath);
+                if (!Directory.Exists(apppath))
+                    throw new DirectoryNotFoundException(apppath);
+            }
 
             if (embedFiles != null)
             {
@@ -66,9 +86,6 @@ namespace InstallerLib
                         throw new FileNotFoundException(combinedFilename);
                 }
             }
-
-            if (!String.IsNullOrEmpty(icon) && !File.Exists(icon))
-                throw new FileNotFoundException(icon);
         }
 
         public void WriteLine(string s)

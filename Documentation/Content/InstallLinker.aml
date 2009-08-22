@@ -4,7 +4,9 @@
     <introduction>
       <para>
         The <newTerm>installer linker</newTerm> can be used as the bootstrapper compiler and linker in a build process.
-        It also supports some advanced options that are not available in the functions of the InstallEditor GUI.
+        It also supports some advanced options that are not available in the functions of the installer editor, including
+        external file packaging and embedding a UAC manifest that can define Windows Vista, Server 2008 and Windows 7 
+        elevation options.
       </para>
     </introduction>
     <section address="commandlineusage">
@@ -13,18 +15,19 @@
         <para>
           <code language="cmd">
             <![CDATA[
-InstallerLinker: dotNetInstaller Packager
+InstallerLinker: dotNetInstaller Packager (1.7)
 
 /Output:<string>         Generated installer file (short form /o)
 /Template:<string>       Template installer executable (short form /t)
 /Banner:<string>         Picture for the banner (short form /b)
 /Configuration:<string>  XML configuration file (short form /c)
-/Embed[+|-]              Embed support files (short form /e)
+/Embed[+|-]              Embed support files Default value:'+' (short form /e)
 /AppPath:<string>        Location of support files for embedding (short form /a)
 /Verbose[+|-]            Verbose output (short form /v)
 /EmbedFile:<string>      Additional files to embed (short form /f)
 /EmbedFolder:<string>    Additional folders, including subfolders to embed (short form /r)
 /Icon:<string>           Icon for the executable (short form /i)
+/Manifest:<string>       Embed manifest (short form /m)
 @<file>                  Read response file for more options
 ]]>
           </code>
