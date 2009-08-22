@@ -4,6 +4,7 @@ using System.Text;
 using NUnit.Framework;
 using InstallerLib;
 using System.IO;
+using dotNetUnitTestsRunner;
 
 namespace dotNetInstallerUnitTests
 {

@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="Vestris.ResourceLib, Version=1.2.26529.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ThirdParty\ResourceLib\Bin\Release\Vestris.ResourceLib.dll</HintPath>
+      <HintPath>..\..\ThirdParty\ResourceLib\Vestris.ResourceLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
