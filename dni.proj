@@ -55,7 +55,7 @@
     <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceLibrary.dll" />
     <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceGrid2.dll" />
     <Binaries Include="InstallerLinker\bin\$(Configuration)\CabLib.dll" />
-    <Binaries Include="InstallerLinker\bin\$(Configuration)\Vestris.ResourceLib.dll" />
+    <Binaries Include="ThirdParty\ResourceLib\Vestris.ResourceLib.dll" />
     <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
     <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
   </ItemGroup>
