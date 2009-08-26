@@ -106,6 +106,8 @@ void ConfigFiles::Run()
 
 	if (! InstallerLog::Instance->IsEnabled())
 	{
+		// if the log was not globally enabled, set enabled per configuration 
+		// and log the dotNetInstaller header
 		InstallerLog::Instance->SetEnabled(config.log_enabled);
 		LOG(L"-------------------------------------------------------------------");
 		LOG(L"dotNetInstaller (DNI), version " << TEXT(VERSION_VALUE));
@@ -113,6 +115,9 @@ void ConfigFiles::Run()
 		LOG(L"Operating system: " << DVLib::GetOperatingSystemVersionString());
 		LOG(L"-------------------------------------------------------------------");
 	}
+
+	// set configuration install ui level per configuration
+	InstallUILevelSetting::Instance->SetConfigLevel(config.uilevel);
 
 	for (size_t i = 0; i < size(); i++)
 	{
