@@ -25,21 +25,23 @@ namespace InstallerEditor
         public static TreeNodeImpl CreateNode(IXmlClass item)
         {
             if (item is ConfigFile)
-                return new TreeNodeConfigFile((ConfigFile)item);
+                return new TreeNodeConfigFile(item as ConfigFile);
             else if (item is Configuration)
-                return new TreeNodeConfiguration((Configuration)item);
+                return new TreeNodeConfiguration(item as Configuration);
             else if (item is DownloadDialog)
-                return new TreeNodeDownloadDialog((DownloadDialog)item);
+                return new TreeNodeDownloadDialog(item as DownloadDialog);
             else if (item is Download)
-                return new TreeNodeDownload((Download)item);
+                return new TreeNodeDownload(item as Download);
             else if (item is EmbedFile)
-                return new TreeNodeEmbedFile((EmbedFile)item);
+                return new TreeNodeEmbedFile(item as EmbedFile);
+            else if (item is EmbedFolder)
+                return new TreeNodeEmbedFolder(item as EmbedFolder);
             else if (item is Component)
-                return new TreeNodeComponent((Component)item);
+                return new TreeNodeComponent(item as Component);
             else if (item is InstalledCheck)
-                return new TreeNodeInstalledCheck((InstalledCheck)item);
+                return new TreeNodeInstalledCheck(item as InstalledCheck);
             else if (item is InstalledCheckOperator)
-                return new TreeNodeInstalledCheckOperator((InstalledCheckOperator)item);
+                return new TreeNodeInstalledCheckOperator(item as InstalledCheckOperator);
             else
                 throw new Exception(string.Format("Unsupported type: {0}", item.GetType().Name));
         }

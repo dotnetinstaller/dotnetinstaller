@@ -94,18 +94,29 @@ namespace InstallerLib
         /// </summary>
         /// <param name="folder">directory to add</param>
         /// <param name="targetfolderpath">a relative directory under which target is extracted</param>
-        public void AddDirectory(string folder, string targetfolderpath)
+        public void AddDirectory(string sourcefilepath, string targetfolderpath)
         {
-            if (string.IsNullOrEmpty(folder))
+            if (string.IsNullOrEmpty(sourcefilepath))
             {
                 throw new Exception("Missing folder");
             }
 
-            string directory = Path.GetDirectoryName(folder);
-            string flags = Path.GetFileName(folder);
+            string fullpath = sourcefilepath
+                .Replace(@"#APPPATH", _supportdir)
+                .Replace(@"#TEMPPATH", _supportdir)
+                .Replace(@"#CABPATH", _supportdir);
+            string relativepath = string.IsNullOrEmpty(targetfolderpath)
+                ? Path.GetFileName(sourcefilepath) : targetfolderpath;
+            relativepath = relativepath.Replace(@"#APPPATH", string.Empty)
+                .Replace(@"#TEMPPATH", string.Empty)
+                .Replace(@"#CABPATH", string.Empty)
+                .TrimStart(@"\/".ToCharArray());
+
+            string directory = Path.GetDirectoryName(fullpath);
+            string flags = Path.GetFileName(fullpath);
             if (!(flags.Contains("?") || flags.Contains("*")))
             {
-                directory = folder;
+                directory = fullpath;
                 flags = "*.*";
             }
 

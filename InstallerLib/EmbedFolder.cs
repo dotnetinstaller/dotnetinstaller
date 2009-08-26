@@ -70,7 +70,7 @@ namespace InstallerLib
 
         public override string XmlTag
         {
-            get { return "embedfile"; }
+            get { return "embedfolder"; }
         }
 
         #endregion

@@ -138,6 +138,8 @@ namespace InstallerLib
                     return DownloadDialog.CreateFromXml(node);
                 case "embedfile":
                     return EmbedFile.CreateFromXml(node);
+                case "embedfolder":
+                    return EmbedFolder.CreateFromXml(node);
                 default:
                     throw new Exception(string.Format("Unsupported node: {0}", node.LocalName));
             }
