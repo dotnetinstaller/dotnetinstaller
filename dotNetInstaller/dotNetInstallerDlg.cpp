@@ -376,6 +376,9 @@ void CdotNetInstallerDlg::ExtractCab()
 	if (InstallUILevelSetting::Instance->IsAnyUI())
 		dlg.LoadComponent(m_configuration, p_extractcab);
 
+	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
+	p_extractcab->cab_path = p_configuration->cab_path;
+	p_extractcab->cab_cancelled_message = p_configuration->cab_cancelled_message;
 	p_extractcab->BeginExec();
 
 	if (InstallUILevelSetting::Instance->IsAnyUI())

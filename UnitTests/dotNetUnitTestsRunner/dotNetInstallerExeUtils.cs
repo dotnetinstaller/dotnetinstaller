@@ -64,10 +64,18 @@ namespace dotNetUnitTestsRunner
             if (! string.IsNullOrEmpty(logfile))
                 Console.WriteLine("Log: {0}", (logfile));
             Process p = new Process();
-            p.StartInfo.FileName = Executable;
-            p.StartInfo.Arguments = string.Format("/ConfigFile \"{0}\" /q", configFile);
-            if (log) p.StartInfo.Arguments += " /Log";
-            if (!string.IsNullOrEmpty(logfile)) p.StartInfo.Arguments += string.Format(" /LogFile \"{0}\"", logfile);
+            string args = string.Format("/ConfigFile \"{0}\" /q", configFile);
+            if (log) args += " /Log";
+            if (!string.IsNullOrEmpty(logfile)) args += string.Format(" /LogFile \"{0}\"", logfile);
+            return Run(Executable, args);
+        }
+
+        public static int Run(string filename, string args)
+        {
+            Process p = new Process();
+            p.StartInfo.WorkingDirectory = Path.GetDirectoryName(filename);
+            p.StartInfo.FileName = filename;
+            p.StartInfo.Arguments = args;
             p.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
             p.Start();
             p.WaitForExit();

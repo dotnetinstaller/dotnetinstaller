@@ -9,6 +9,10 @@ public:
 	bool cancelled;
 	std::wstring cab_path;
 	std::wstring cab_cancelled_message;
+	// resolved location of the extracted CAB
+	std::wstring resolved_cab_path;
+	// full path to the CAB file
+	std::wstring resolved_cab_file;
     ExtractComponent(HMODULE h);
 	int GetCabCount() const;
 	std::vector<std::wstring> GetCabFiles() const;
@@ -20,5 +24,7 @@ protected:
 private:
 	HMODULE m_h;
 	ComponentPtr m_pComponent;
-    void ExtractCab();
+    void ResolvePaths();
+	void ExtractCab();
+	void WriteCab();
 };

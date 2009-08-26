@@ -76,6 +76,10 @@ namespace InstallerLib
                 if (!Directory.Exists(apppath))
                     throw new DirectoryNotFoundException(apppath);
             }
+            else
+            {
+                apppath = Environment.CurrentDirectory;
+            }
 
             if (embedFiles != null)
             {

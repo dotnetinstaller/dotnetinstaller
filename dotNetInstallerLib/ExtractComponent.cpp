@@ -13,6 +13,8 @@ ExtractComponent::ExtractComponent(HMODULE h)
 
 int ExtractComponent::ExecOnThread()
 {
+	ResolvePaths();
+	WriteCab();
     ExtractCab();
 	LOG(L"ExtractComponent: extracted Setup.cab");
 	return 0;
@@ -39,29 +41,33 @@ int ExtractComponent::GetCabCount() const
 	return currentIndex - 1;
 }
 
-void ExtractComponent::ExtractCab()
+void ExtractComponent::ResolvePaths()
 {
-	ULONG currentIndex = 1;
-
-	std::wstring resname = TEXT("RES_CAB");
-	resname.append(DVLib::towstring(currentIndex));
     LOG(L"Extracting Setup.cab");
 
-	std::wstring resolved_cab_path = cab_path.empty() ? InstallerSession::Instance->GetSessionTempPath() : cab_path; 
+	resolved_cab_path = cab_path.empty() ? InstallerSession::Instance->GetSessionTempPath() : cab_path; 
 	resolved_cab_path = InstallerSession::Instance->ExpandVariables(resolved_cab_path);
 	LOG(L"Cabpath: " << resolved_cab_path);
 	DVLib::DirectoryCreate(resolved_cab_path);
 
-    std::wstring tempFile = DVLib::DirectoryCombine(resolved_cab_path, TEXT("setup.cab") );
-	LOG(L"TempFile: " << tempFile);
+    resolved_cab_file = DVLib::DirectoryCombine(resolved_cab_path, TEXT("setup.cab"));
+	LOG(L"Cabfile: " << resolved_cab_file);
+}
 
-	auto_hfile hfile(CreateFile(tempFile.c_str(), GENERIC_WRITE, FILE_SHARE_READ, NULL, 
+void ExtractComponent::WriteCab()
+{
+	ULONG currentIndex = 1;
+	std::wstring resname = TEXT("RES_CAB");
+	resname.append(DVLib::towstring(currentIndex));
+
+	auto_hfile hfile(CreateFile(resolved_cab_file.c_str(), GENERIC_WRITE, FILE_SHARE_READ, NULL, 
 		OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL));
 
 	CHECK_WIN32_BOOL(get(hfile) != INVALID_HANDLE_VALUE,
-		L"Error creating '" << tempFile << L"'");
+		L"Error creating '" << resolved_cab_file << L"'");
 
 	int cabCount = GetCabCount();
+	DWORD dwWrittenTotal = 0;
 
 	for (int i = 1; i <= cabCount; i++)
 	{
@@ -85,18 +91,22 @@ void ExtractComponent::ExtractCab()
         CHECK_WIN32_BOOL(WriteFile(get(hfile), (LPCVOID) & * data.begin(), data.size(), & dwWritten, NULL),
 			L"Error writing setup.cab at '" << resname << L"' resource");
 
+		dwWrittenTotal += dwWritten;
 		LOG(L"Extracted: " << resname);
     }
 
-	LOG(L"Extracted all resource segments");
+	LOG(L"Extracted " << DVLib::FormatBytesW(dwWrittenTotal) << L" from " << cabCount << L" resource segment(s)");
+}
 
+void ExtractComponent::ExtractCab()
+{
 	CHECK_BOOL(CreateFDIContext(),
 		L"Error initializing CAB context");
 
-	CHECK_BOOL(ExtractFileW(const_cast<wchar_t *>(tempFile.c_str()), const_cast<wchar_t *>(resolved_cab_path.c_str())),
-		L"Error extracting '" << tempFile << L"'");
+	CHECK_BOOL(ExtractFileW(const_cast<wchar_t *>(resolved_cab_file.c_str()), 
+		const_cast<wchar_t *>(resolved_cab_path.c_str())), L"Error extracting '" << resolved_cab_file << L"'");
 
-	LOG(L"Extracted CAB: " << tempFile);
+	LOG(L"Extracted CAB: " << resolved_cab_file);
 }
 
 void ExtractComponent::OnAfterCopyFile(char* s8_File, WCHAR* u16_File, void* p_Param)
