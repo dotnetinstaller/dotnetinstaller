@@ -30,6 +30,20 @@
         <li>Bug: error deleting an English version resource which was loaded as language-neutral.</li>
         <li>Bug: custom resources with literal string names return an invalid value in <code>
             Resource.Name</code> and <code>Resource.Type</code>.</li>
+        <li>Added <code>GenericResource.Data</code> read-only data bytes for unsupported resource
+            types.</li>
+        <li>Added support for <code>RT_MANIFEST</code>, Windows SxS XML resources.</li>
+        <li>Interface change: added <code>ResourceId</code> that represents well-known and custom
+            resources alike and provides comparison and hashing that works for all resource
+            Id types. Both <code>Resource.Name</code> and <code>Resource.Type</code> now return
+            <code>ResourceId</code> and public interfaces that accepted an <code>IntPtr</code>
+            now require a <code>ResourceId</code>.</li>
+        <li>Interface change: <code>GroupIconResource</code> was renamed to <code>IconDirectoryResource</code>.</li>
+        <li>Added support for <code>RT_GROUP_CURSOR</code> and <code>RT_CURSOR</code> cursor
+            resources, including loading .cur files and manipulating hotspot information.</li>
+        <li>Added <code>Resource.TypeName</code> that provides a string representation of the
+            resource type.</li>
+        <li><code>Resource.Name</code> is no longer read-only.</li>
     </ul>
     <h3>
         1.1 (2009-02-19)</h3>

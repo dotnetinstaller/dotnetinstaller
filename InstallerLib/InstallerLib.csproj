@@ -40,16 +40,16 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CabLib, Version=10.3.0.0, Culture=neutral, PublicKeyToken=5c838b77b53f84a0, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\Cab\CabLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Xml" />
-    <Reference Include="CabLib, Version=8.1.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\CabLib.dll</HintPath>
-    </Reference>
     <Reference Include="Vestris.ResourceLib, Version=1.2.26529.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParty\ResourceLib\Vestris.ResourceLib.dll</HintPath>

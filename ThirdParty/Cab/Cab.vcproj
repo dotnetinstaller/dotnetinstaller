@@ -143,6 +143,26 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\Cabinet\Static.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -169,23 +189,47 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\Cabinet\Blowfish.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Cab.h"
 				>
 			</File>
 			<File
-				RelativePath=".\CompressT.hpp"
+				RelativePath=".\Cabinet\Cache.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ExtractMemoryT.hpp"
+				RelativePath=".\Cabinet\Compress.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ExtractResourceT.hpp"
+				RelativePath=".\Cabinet\Error.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ExtractT.hpp"
+				RelativePath=".\Cabinet\Extract.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Cabinet\ExtractMemory.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Cabinet\ExtractResource.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Cabinet\ExtractStream.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Cabinet\ExtractUrl.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Cabinet\File.hpp"
 				>
 			</File>
 			<File
@@ -193,7 +237,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Map.hpp"
+				RelativePath=".\Cabinet\Internet.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Cabinet\Map.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Cabinet\Static.hpp"
 				>
 			</File>
 			<File
@@ -201,7 +253,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\UTF7.hpp"
+				RelativePath=".\Cabinet\String.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Cabinet\Trace.hpp"
 				>
 			</File>
 		</Filter>

@@ -52,7 +52,7 @@
             <definition>Optional log file name and location.</definition>
             <definedTerm>/ExtractCab</definedTerm>
             <definition>
-              If this package contains an embedded CAB, extract Setup.cab and all its contents under a new folder called
+              If this package contains an embedded CABs, extract all contents under a new folder called
               SupportFiles in the current directory. When specified, all other options are ignored and no installations are run.
             </definition>
             <definedTerm>/DisplayCab</definedTerm>

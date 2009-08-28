@@ -3,7 +3,7 @@
 #include "Component.h"
 #include "ThreadComponent.h"
 
-struct ExtractComponent : public ThreadComponent, Cabinet::CExtractT<ExtractComponent> 
+struct ExtractComponent : public ThreadComponent
 {
 public:
 	bool cancelled;
@@ -11,13 +11,11 @@ public:
 	std::wstring cab_cancelled_message;
 	// resolved location of the extracted CAB
 	std::wstring resolved_cab_path;
-	// full path to the CAB file
-	std::wstring resolved_cab_file;
     ExtractComponent(HMODULE h);
 	int GetCabCount() const;
 	std::vector<std::wstring> GetCabFiles() const;
-	BOOL OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param);
-	void OnAfterCopyFile(char* s8_File, WCHAR* u16_File, void* p_Param);
+	static BOOL OnBeforeCopyFile(Cabinet::CExtract::kCabinetFileInfo * k_FI, void* p_Param);
+	static void OnAfterCopyFile(wchar_t * s8_File, Cabinet::CMemory *, void* p_Param);
 protected:
 	int ExecOnThread();
 	virtual void OnStatus(const std::wstring&) = 0;

@@ -37,16 +37,16 @@ namespace InstallerLibUnitTests
                 using (ResourceInfo ri = new ResourceInfo())
                 {
                     ri.Load(args.output);
-                    List<Resource> custom = ri.Resources["CUSTOM"];
+                    List<Resource> custom = ri.Resources[new ResourceId("CUSTOM")];
                     Assert.IsNotNull(custom);
                     Assert.AreEqual(3, custom.Count);
                     // default banner
-                    Assert.AreEqual(custom[0].Name, "RES_BANNER");
+                    Assert.AreEqual(custom[0].Name, new ResourceId("RES_BANNER"));
                     // embedded configuration
-                    Assert.AreEqual(custom[1].Name, "RES_CONFIGURATION");
+                    Assert.AreEqual(custom[1].Name, new ResourceId("RES_CONFIGURATION"));
                     Assert.AreEqual(custom[1].Size, new FileInfo(args.config).Length);
                     // unicows
-                    Assert.AreEqual(custom[2].Name, "RES_UNICOWS");
+                    Assert.AreEqual(custom[2].Name, new ResourceId("RES_UNICOWS"));
                 }
             }
             finally
@@ -80,17 +80,15 @@ namespace InstallerLibUnitTests
                 using (ResourceInfo ri = new ResourceInfo())
                 {
                     ri.Load(args.output);
-                    List<Resource> manifests = ri.Resources["24"]; // RT_MANIFEST
+                    List<Resource> manifests = ri.Resources[new ResourceId(Kernel32.ResourceTypes.RT_MANIFEST)]; // RT_MANIFEST
                     Assert.IsNotNull(manifests);
                     Assert.AreEqual(1, manifests.Count);
-                    UnknownResource manifest = (UnknownResource)manifests[0]; // RT_MANIFEST
-                    XmlDocument manifestXml = new XmlDocument();
-                    manifestXml.LoadXml(Encoding.UTF8.GetString(manifest.Data));
-                    Console.WriteLine(manifestXml.OuterXml);
-                    XmlNamespaceManager manifestNamespaceManager = new XmlNamespaceManager(manifestXml.NameTable);
+                    ManifestResource manifest = (ManifestResource) manifests[0]; // RT_MANIFEST
+                    Console.WriteLine(manifest.Manifest.OuterXml);
+                    XmlNamespaceManager manifestNamespaceManager = new XmlNamespaceManager(manifest.Manifest.NameTable);
                     manifestNamespaceManager.AddNamespace("v1", "urn:schemas-microsoft-com:asm.v1");
                     manifestNamespaceManager.AddNamespace("v3", "urn:schemas-microsoft-com:asm.v3");
-                    string level = manifestXml.SelectSingleNode("//v3:requestedExecutionLevel",
+                    string level = manifest.Manifest.SelectSingleNode("//v3:requestedExecutionLevel",
                         manifestNamespaceManager).Attributes["level"].Value;
                     Assert.AreEqual(level, "requireAdministrator");
                 }
@@ -130,19 +128,139 @@ namespace InstallerLibUnitTests
                 using (ResourceInfo ri = new ResourceInfo())
                 {
                     ri.Load(args.output);
-                    List<Resource> manifests = ri.Resources["24"]; // RT_MANIFEST
+                    List<Resource> manifests = ri.Resources[new ResourceId(Kernel32.ResourceTypes.RT_MANIFEST)]; // RT_MANIFEST
                     Assert.IsNotNull(manifests);
                     Assert.AreEqual(1, manifests.Count);
-                    UnknownResource manifest = (UnknownResource)manifests[0]; // RT_MANIFEST
-                    XmlDocument manifestXml = new XmlDocument();
-                    manifestXml.LoadXml(Encoding.UTF8.GetString(manifest.Data));
-                    Console.WriteLine(manifestXml.OuterXml);
-                    XmlNamespaceManager manifestNamespaceManager = new XmlNamespaceManager(manifestXml.NameTable);
+                    ManifestResource manifest = (ManifestResource) manifests[0]; // RT_MANIFEST
+                    Console.WriteLine(manifest.Manifest.OuterXml);
+                    XmlNamespaceManager manifestNamespaceManager = new XmlNamespaceManager(manifest.Manifest.NameTable);
                     manifestNamespaceManager.AddNamespace("v1", "urn:schemas-microsoft-com:asm.v1");
                     manifestNamespaceManager.AddNamespace("v3", "urn:schemas-microsoft-com:asm.v3");
-                    string level = manifestXml.SelectSingleNode("//v3:requestedExecutionLevel",
+                    string level = manifest.Manifest.SelectSingleNode("//v3:requestedExecutionLevel",
                         manifestNamespaceManager).Attributes["level"].Value;
                     Assert.AreEqual(level, "asInvoker");
+                }
+            }
+            finally
+            {
+                if (File.Exists(args.config))
+                    File.Delete(args.config);
+                if (File.Exists(args.output))
+                    File.Delete(args.output);
+            }
+        }
+
+        [Test]
+        public void TestLinkEmbedFilesAndFolders()
+        {
+            InstallerLinkerArguments args = new InstallerLinkerArguments();
+            try
+            {
+                Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
+                string binPath = Path.GetDirectoryName(HttpUtility.UrlDecode(uri.AbsolutePath));
+                ConfigFile configFile = new ConfigFile();
+                SetupConfiguration setupConfiguration = new SetupConfiguration();
+                configFile.Children.Add(setupConfiguration);
+                args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+                Console.WriteLine("Writing '{0}'", args.config);
+                configFile.SaveAs(args.config);
+                args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
+                Console.WriteLine("Linking '{0}'", args.output);
+                args.template = dotNetInstallerExeUtils.Executable;
+                args.embedFolders = new string[] { binPath };
+                args.embed = true;
+                args.embedResourceSize = 0;
+                InstallerLib.InstallerLinker.CreateInstaller(args);
+                // check that the linker generated output
+                Assert.IsTrue(File.Exists(args.output));
+                Assert.IsTrue(new FileInfo(args.output).Length > 0);
+                using (ResourceInfo ri = new ResourceInfo())
+                {
+                    ri.Load(args.output);
+                    List<Resource> custom = ri.Resources[new ResourceId("RES_CAB")];
+                    Assert.IsNotNull(custom);
+                    Assert.AreEqual(1, custom.Count);
+                }
+            }
+            finally
+            {
+                if (File.Exists(args.config))
+                    File.Delete(args.config);
+                if (File.Exists(args.output))
+                    File.Delete(args.output);
+            }
+        }
+
+        [Test]
+        public void TestLinkNoEmbedFilesAndFolders()
+        {
+            InstallerLinkerArguments args = new InstallerLinkerArguments();
+            try
+            {
+                Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
+                string binPath = Path.GetDirectoryName(HttpUtility.UrlDecode(uri.AbsolutePath));
+                ConfigFile configFile = new ConfigFile();
+                SetupConfiguration setupConfiguration = new SetupConfiguration();
+                configFile.Children.Add(setupConfiguration);
+                args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+                Console.WriteLine("Writing '{0}'", args.config);
+                configFile.SaveAs(args.config);
+                args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
+                Console.WriteLine("Linking '{0}'", args.output);
+                args.template = dotNetInstallerExeUtils.Executable;
+                args.embedFolders = new string[] { binPath };
+                args.embed = false;
+                args.embedResourceSize = 0;
+                InstallerLib.InstallerLinker.CreateInstaller(args);
+                // check that the linker generated output
+                Assert.IsTrue(File.Exists(args.output));
+                Assert.IsTrue(new FileInfo(args.output).Length > 0);
+                using (ResourceInfo ri = new ResourceInfo())
+                {
+                    ri.Load(args.output);                    
+                    Assert.IsFalse(ri.Resources.ContainsKey(new ResourceId("RES_CAB")));
+                }
+            }
+            finally
+            {
+                if (File.Exists(args.config))
+                    File.Delete(args.config);
+                if (File.Exists(args.output))
+                    File.Delete(args.output);
+            }
+        }
+
+        [Test]
+        public void TestLinkEmbedFilesAndFoldersSegments()
+        {
+            InstallerLinkerArguments args = new InstallerLinkerArguments();
+            try
+            {
+                Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
+                string binPath = Path.GetDirectoryName(HttpUtility.UrlDecode(uri.AbsolutePath));
+                ConfigFile configFile = new ConfigFile();
+                SetupConfiguration setupConfiguration = new SetupConfiguration();
+                configFile.Children.Add(setupConfiguration);
+                args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+                Console.WriteLine("Writing '{0}'", args.config);
+                configFile.SaveAs(args.config);
+                args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
+                Console.WriteLine("Linking '{0}'", args.output);
+                args.template = dotNetInstallerExeUtils.Executable;
+                args.embedFolders = new string[] { binPath };
+                args.embed = true;
+                args.embedResourceSize = 64 * 1024;
+                InstallerLib.InstallerLinker.CreateInstaller(args);
+                // check that the linker generated output
+                Assert.IsTrue(File.Exists(args.output));
+                Assert.IsTrue(new FileInfo(args.output).Length > 0);
+                using (ResourceInfo ri = new ResourceInfo())
+                {
+                    ri.Load(args.output);
+                    List<Resource> custom = ri.Resources[new ResourceId("RES_CAB")];
+                    Assert.IsNotNull(custom);
+                    Console.WriteLine("Segments: {0}", custom.Count);
+                    Assert.IsTrue(custom.Count > 1);
                 }
             }
             finally

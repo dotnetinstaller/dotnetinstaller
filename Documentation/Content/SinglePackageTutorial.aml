@@ -5,8 +5,8 @@
       <para>
         In most common deployment scenarios it is desirable to distribute an installation package as a single, self-extracting
         executable. dotNetInstaller supports embedding dependencies and producing a stand-alone packaged setup.exe. This is
-        accomplished by CAB-ing all dependencies into a single Setup.cab, embedding the result into your setup.exe and extracting
-        its contents at runtime. dotNetInstaller is also capable of deleting extracted temporary files upon completion. No third-party
+        accomplished by CAB-ing all dependencies into a series of CAB files, embedding them into your setup.exe and extracting
+        CAB contents at runtime. dotNetInstaller is also capable of deleting extracted temporary files upon completion. No third-party
         packaging/zipping technology is required.
       </para>
     </introduction>

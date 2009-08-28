@@ -1,5 +1,5 @@
 #include <Version/Version.rc>
 
 RES_CONFIGURATION CUSTOM "..\\..\\Samples\\PackagedSetup\\Configuration.xml"
-RES_CAB1 RES_CAB "test.cab"
+SETUP_1 RES_CAB "test.cab"
 

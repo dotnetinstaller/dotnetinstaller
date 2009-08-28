@@ -23,7 +23,7 @@ int ExtractComponent::ExecOnThread()
 int ExtractComponent::GetCabCount() const
 {
 	int currentIndex = 1;	
-	std::wstring resname = TEXT("RES_CAB");
+	std::wstring resname = TEXT("SETUP_");
 	resname.append(DVLib::towstring(currentIndex));
 	
 	HRSRC l_res = FindResource(m_h, resname.c_str(), TEXT("RES_CAB"));
@@ -33,7 +33,7 @@ int ExtractComponent::GetCabCount() const
 	do
 	{
 		currentIndex++;
-		resname = TEXT("RES_CAB");
+		resname = TEXT("SETUP_");
 		resname.append(DVLib::towstring(currentIndex));
 		l_res = FindResource(m_h, resname.c_str(), TEXT("RES_CAB"));
 	} while(l_res);
@@ -43,39 +43,23 @@ int ExtractComponent::GetCabCount() const
 
 void ExtractComponent::ResolvePaths()
 {
-    LOG(L"Extracting Setup.cab");
+    LOG(L"Extracting CABs");
 
 	resolved_cab_path = cab_path.empty() ? InstallerSession::Instance->GetSessionTempPath() : cab_path; 
 	resolved_cab_path = InstallerSession::Instance->ExpandVariables(resolved_cab_path);
 	LOG(L"Cabpath: " << resolved_cab_path);
 	DVLib::DirectoryCreate(resolved_cab_path);
-
-    resolved_cab_file = DVLib::DirectoryCombine(resolved_cab_path, TEXT("setup.cab"));
-	LOG(L"Cabfile: " << resolved_cab_file);
 }
 
 void ExtractComponent::WriteCab()
 {
-	ULONG currentIndex = 1;
-	std::wstring resname = TEXT("RES_CAB");
-	resname.append(DVLib::towstring(currentIndex));
-
-	auto_hfile hfile(CreateFile(resolved_cab_file.c_str(), GENERIC_WRITE, FILE_SHARE_READ, NULL, 
-		OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL));
-
-	CHECK_WIN32_BOOL(get(hfile) != INVALID_HANDLE_VALUE,
-		L"Error creating '" << resolved_cab_file << L"'");
-
 	int cabCount = GetCabCount();
 	DWORD dwWrittenTotal = 0;
 
 	for (int i = 1; i <= cabCount; i++)
 	{
-		OnStatus(L"Setup.cab - " + DVLib::FormatMessage(L"%d%%", (i * 100) / cabCount));
-
-		std::wstring resname = TEXT("RES_CAB");
+		std::wstring resname = TEXT("SETUP_");
 		resname.append(DVLib::towstring(i));
-		LOG(L"Extracting: " << resname);
 
         if (cancelled)
         {
@@ -85,11 +69,22 @@ void ExtractComponent::WriteCab()
 			THROW_EX(resolved_cancelled_message);
         }
 
+		std::wstring resolved_cab_file = DVLib::DirectoryCombine(resolved_cab_path, resname + L".CAB");
+		LOG(L"Extracting: " << resolved_cab_file);
+
+		auto_hfile hfile(CreateFile(resolved_cab_file.c_str(), GENERIC_WRITE, FILE_SHARE_READ, NULL, 
+			OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL));
+
+		CHECK_WIN32_BOOL(get(hfile) != INVALID_HANDLE_VALUE,
+			L"Error creating '" << resolved_cab_file << L"'");
+
+		OnStatus(L"Setup.cab - " + DVLib::FormatMessage(L"%d%%", (i * 100) / cabCount));
+
 		std::vector<char> data = DVLib::LoadResourceData<char>(m_h, resname, L"RES_CAB");
 
 		DWORD dwWritten = 0;
         CHECK_WIN32_BOOL(WriteFile(get(hfile), (LPCVOID) & * data.begin(), data.size(), & dwWritten, NULL),
-			L"Error writing setup.cab at '" << resname << L"' resource");
+			L"Error writing '" << resname << L".CAB'");
 
 		dwWrittenTotal += dwWritten;
 		LOG(L"Extracted: " << resname);
@@ -100,36 +95,46 @@ void ExtractComponent::WriteCab()
 
 void ExtractComponent::ExtractCab()
 {
-	CHECK_BOOL(CreateFDIContext(),
-		L"Error initializing CAB context");
+	Cabinet::CExtract extract;
+	Cabinet::CExtract::kCallbacks callbacks;
+	callbacks.f_OnBeforeCopyFile = (Cabinet::CExtract::kCallbacks::t_BeforeCopyFile) & ExtractComponent::OnBeforeCopyFile; 
+	callbacks.f_OnAfterCopyFile = & ExtractComponent::OnAfterCopyFile;
+	extract.SetCallbacks(& callbacks);
 
-	CHECK_BOOL(ExtractFileW(const_cast<wchar_t *>(resolved_cab_file.c_str()), 
-		const_cast<wchar_t *>(resolved_cab_path.c_str())), L"Error extracting '" << resolved_cab_file << L"'");
+	std::wstring resolved_cab_file = DVLib::DirectoryCombine(resolved_cab_path, TEXT("SETUP_1.CAB"));
+	LOG(L"Cabfile: " << resolved_cab_file);
+
+	CHECK_BOOL(extract.CreateFDIContext(),
+		L"Error initializing cabinet.dll");
+
+	CHECK_BOOL(extract.ExtractFileW(const_cast<wchar_t *>(resolved_cab_file.c_str()), const_cast<wchar_t *>(resolved_cab_path.c_str()), this), 
+		L"Error extracting '" << resolved_cab_file << L"'");
 
 	LOG(L"Extracted CAB: " << resolved_cab_file);
 }
 
-void ExtractComponent::OnAfterCopyFile(char* s8_File, WCHAR* u16_File, void* p_Param)
+void ExtractComponent::OnAfterCopyFile(wchar_t * s8_File, Cabinet::CMemory *, void* /*p_Param*/)
 {
-	LOG(L"Done: " << u16_File);
-    Cabinet::CExtractT<ExtractComponent>::OnAfterCopyFile(s8_File, u16_File, p_Param);
+	LOG(L"Done: " << s8_File);
 }
 
-BOOL ExtractComponent::OnBeforeCopyFile(kCabinetFileInfo &k_FI, void* p_Param)
+BOOL ExtractComponent::OnBeforeCopyFile(Cabinet::CExtract::kCabinetFileInfo * k_FI, void* p_Param)
 {
-	LOG(L"Extracting: " << k_FI.u16_FullPath);
+	LOG(L"Extracting: " << k_FI->u16_FullPath);
 
-	OnStatus(std::wstring(k_FI.u16_File) + L" - " + DVLib::FormatBytesW(k_FI.s32_Size));
+	ExtractComponent * extractComponent = (ExtractComponent *) p_Param;
+
+	extractComponent->OnStatus(std::wstring(k_FI->u16_File) + L" - " + DVLib::FormatBytesW(k_FI->s32_Size));
 
 	std::wstring cancelled_message;
-	if (cancelled)
+	if (extractComponent->cancelled)
     {
-        std::wstring resolved_cancelled_message = cab_cancelled_message;
+        std::wstring resolved_cancelled_message = extractComponent->cab_cancelled_message;
         if (resolved_cancelled_message.empty()) resolved_cancelled_message = L"Cancelled by user";
         THROW_EX(resolved_cancelled_message);
     }
 
-    return Cabinet::CExtractT<ExtractComponent>::OnBeforeCopyFile(k_FI, p_Param);
+	return TRUE;
 }
 
 std::vector<std::wstring> ExtractComponent::GetCabFiles() const
