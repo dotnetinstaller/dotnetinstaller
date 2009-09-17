@@ -22,7 +22,7 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(setupConfiguration);
             ComponentCmd component1 = new ComponentCmd("component1");
             setupConfiguration.Children.Add(component1);
-            component1.command = "cmd.exe /C dir";
+            component1.command = "cmd.exe /C exit /b 0";
             DownloadDialog component1downloaddialog = new DownloadDialog(
                 string.Format("{0} Download Dialog", component1.description));
             component1.Children.Add(component1downloaddialog);

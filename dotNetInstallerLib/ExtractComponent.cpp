@@ -97,7 +97,7 @@ void ExtractComponent::ExtractCab()
 {
 	Cabinet::CExtract extract;
 	Cabinet::CExtract::kCallbacks callbacks;
-	callbacks.f_OnBeforeCopyFile = (Cabinet::CExtract::kCallbacks::t_BeforeCopyFile) & ExtractComponent::OnBeforeCopyFile; 
+	callbacks.f_OnBeforeCopyFile = & ExtractComponent::OnBeforeCopyFile; 
 	callbacks.f_OnAfterCopyFile = & ExtractComponent::OnAfterCopyFile;
 	extract.SetCallbacks(& callbacks);
 
@@ -105,10 +105,10 @@ void ExtractComponent::ExtractCab()
 	LOG(L"Cabfile: " << resolved_cab_file);
 
 	CHECK_BOOL(extract.CreateFDIContext(),
-		L"Error initializing cabinet.dll");
+		L"Error initializing cabinet.dll: " << extract.LastErrorW());
 
-	CHECK_BOOL(extract.ExtractFileW(const_cast<wchar_t *>(resolved_cab_file.c_str()), const_cast<wchar_t *>(resolved_cab_path.c_str()), this), 
-		L"Error extracting '" << resolved_cab_file << L"'");
+	CHECK_BOOL(extract.ExtractFileW(Cabinet::CStrW(resolved_cab_file.c_str()), Cabinet::CStrW(resolved_cab_path.c_str()), this), 
+		L"Error extracting '" << resolved_cab_file << L"': " << extract.LastErrorW());
 
 	LOG(L"Extracted CAB: " << resolved_cab_file);
 }
