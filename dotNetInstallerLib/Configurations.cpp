@@ -38,6 +38,8 @@ void Configurations::Load(TiXmlElement * node)
 	language_selector_title = XML_ATTRIBUTE(node->Attribute("language_selector_title"));
 	language_selector_ok = XML_ATTRIBUTE(node->Attribute("language_selector_ok"));
 	language_selector_cancel = XML_ATTRIBUTE(node->Attribute("language_selector_cancel"));
+	// no matching configuration message
+	configuration_no_match_message = DVLib::UTF8string2wstring(node->Attribute("configuration_no_match_message"));
 
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )

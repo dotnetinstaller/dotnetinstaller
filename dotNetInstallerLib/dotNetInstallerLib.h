@@ -34,3 +34,4 @@
 #include "InstallConfiguration.h"
 #include "ExecuteCallback.h"
 #include "ConfigFiles.h"
+#include "InstallerLauncher.h"

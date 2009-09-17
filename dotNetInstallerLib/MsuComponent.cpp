@@ -14,52 +14,27 @@ MsuComponent::MsuComponent()
 
 void MsuComponent::Exec()
 {
-	std::wstring l_command = TEXT("wusa.exe ");
+	std::wstring l_command = L"wusa.exe ";
 	l_command.append(L"\"");
 	l_command += DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), package);
 	l_command.append(L"\"");
 
-	switch(InstallUILevelSetting::Instance->GetUILevel())
+	std::wstring l_cmdparameters = InstallUILevelSetting::Instance->GetCommand(
+		cmdparameters, cmdparameters_basic, cmdparameters_silent);
+	
+	if (! l_cmdparameters.empty())
 	{
-	case InstallUILevelSilent:
-		if (! cmdparameters_silent.empty()) 
-		{
-			l_command.append(L" ");
-			l_command.append(cmdparameters_silent);
-		}
-		else if (! cmdparameters_basic.empty()) 
-		{
-			l_command.append(L" ");
-			l_command.append(cmdparameters_basic);
-		}
-		break;
-	case InstallUILevelBasic:
-		if (! cmdparameters_basic.empty()) 
-		{
-			l_command.append(L" ");
-			l_command.append(cmdparameters_basic);
-		}
-		else if (! cmdparameters_silent.empty()) 
-		{
-			l_command.append(L" ");
-			l_command.append(cmdparameters_silent);
-		}
-		break;
-	default:
-		if (! cmdparameters.empty())
-		{
-			l_command.append(L" ");
-			l_command.append(cmdparameters);
-		}
-		break;
+		LOG(L"-- Additional command-line parameters: " << l_cmdparameters);
+		l_command.append(L" ");
+		l_command.append(l_cmdparameters);
 	}
 	
 	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::Instance->AdditionalCmdLineArgs.find(description);
     if (cmdline != InstallerSession::Instance->AdditionalCmdLineArgs.end())
     {
-		l_command += TEXT(" ");
-		l_command += cmdline->second.c_str();
 		LOG(L"-- Additional component arguments: " << cmdline->second);
+		l_command.append(L" ");
+		l_command.append(cmdline->second);
     }
 
     LOG(L"Executing: " << l_command);

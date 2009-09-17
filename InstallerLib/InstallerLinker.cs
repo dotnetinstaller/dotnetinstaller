@@ -51,8 +51,8 @@ namespace InstallerLib
 
             foreach (FileAttribute attr in configfile.fileattributes)
             {
-                args.WriteLine(string.Format(" {0}: {1}", attr.name, attr.data));
-                stringFileInfo[attr.name] = attr.data;
+                args.WriteLine(string.Format(" {0}: {1}", attr.name, attr.value));
+                stringFileInfo[attr.name] = attr.value;
             }
 
             rc.Language = ResourceUtil.NEUTRALLANGID;

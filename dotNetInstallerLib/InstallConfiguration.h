@@ -31,6 +31,8 @@ public:
 	std::wstring complete_command_silent;
 	// complete command on a basic UI install
 	std::wstring complete_command_basic;
+	// wait for the complete command to finish
+	bool wait_for_complete_command;
 	// if true auto close the dialog (display installation_completed or installation_none message 
 	// and execute the complete_command) if all the components are already installed
 	bool auto_close_if_installed;
@@ -48,6 +50,12 @@ public:
     std::wstring cab_cancelled_message;
     std::wstring cab_path;
     bool cab_path_autodelete;
+	// auto-start installation
+    bool auto_start;
+	// auto-start installation on a reboot
+	bool auto_continue_on_reboot;
+	// additional reboot command
+	std::wstring reboot_cmd;
     // dialog elements position
     WidgetPosition dialog_position;
     WidgetPosition dialog_components_list_position;

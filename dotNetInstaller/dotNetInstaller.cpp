@@ -4,7 +4,6 @@
 #include "InstallerCommandLineInfo.h"
 #include "DniMessageBox.h"
 #include "ConfigFileManager.h"
-#include "InstallerLauncher.h"
 #include <Version/Version.h>
 
 BEGIN_MESSAGE_MAP(CdotNetInstallerApp, CWinApp)

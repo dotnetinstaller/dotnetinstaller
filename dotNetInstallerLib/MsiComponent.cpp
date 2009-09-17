@@ -14,55 +14,30 @@ MsiComponent::MsiComponent()
 
 std::wstring MsiComponent::GetCommandLine() const
 {
-	std::wstring command = TEXT("msiexec /I ");
-	command.append(L"\"");
-	command += (DVLib::isguid(package) ? package : DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), package));
-	command.append(L"\"");
+	std::wstring l_command = L"msiexec /I ";
+	l_command.append(L"\"");
+	l_command += (DVLib::isguid(package) ? package : DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), package));
+	l_command.append(L"\"");
 
-	switch(InstallUILevelSetting::Instance->GetUILevel())
+	std::wstring l_cmdparameters = InstallUILevelSetting::Instance->GetCommand(
+		cmdparameters, cmdparameters_basic, cmdparameters_silent);
+	
+	if (! l_cmdparameters.empty())
 	{
-	case InstallUILevelSilent:
-		if (! cmdparameters_silent.empty()) 
-		{
-			command.append(L" ");
-			command.append(cmdparameters_silent);
-		}
-		else if (! cmdparameters_basic.empty()) 
-		{
-			command.append(L" ");
-			command.append(cmdparameters_basic);
-		}
-		break;
-	case InstallUILevelBasic:
-		if (! cmdparameters_basic.empty()) 
-		{
-			command.append(L" ");
-			command.append(cmdparameters_basic);
-		}
-		else if (! cmdparameters_silent.empty()) 
-		{
-			command.append(L" ");
-			command.append(cmdparameters_silent);
-		}
-		break;
-	default:
-		if (! cmdparameters.empty())
-		{
-			command.append(L" ");
-			command.append(cmdparameters);
-		}
-		break;
+		LOG(L"-- Additional command-line parameters: " << l_cmdparameters);
+		l_command.append(L" ");
+		l_command.append(l_cmdparameters);
 	}
 	
 	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::Instance->AdditionalCmdLineArgs.find(description);
     if (cmdline != InstallerSession::Instance->AdditionalCmdLineArgs.end())
     {
-		command += TEXT(" ");
-		command += cmdline->second.c_str();
 		LOG(L"-- Additional component arguments: " << cmdline->second);
+		l_command.append(L" ");
+		l_command.append(cmdline->second);
     }
 
-	return command;
+	return l_command;
 }
 
 void MsiComponent::Exec()

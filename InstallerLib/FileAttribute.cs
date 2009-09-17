@@ -33,16 +33,6 @@ namespace InstallerLib
             set { m_value = value; }
         }
 
-        public string data
-        {
-            get
-            {
-                return (m_value != null) 
-                    ? string.Format("{0}\0", m_value.Trim('\0')) 
-                    : null;
-            }
-        }
-
         #endregion
 
         #region IXmlClass Members

@@ -5,6 +5,7 @@ using NUnit.Framework;
 using InstallerLib;
 using System.IO;
 using dotNetUnitTestsRunner;
+using System.Threading;
 
 namespace dotNetInstallerUnitTests
 {
@@ -55,6 +56,46 @@ namespace dotNetInstallerUnitTests
             Assert.AreEqual(123, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
             Assert.IsFalse(File.Exists(markerFilename));
+        }
+        
+        [Test]
+        public void TestWaitForCompleteCommand()
+        {
+            ConfigFile configFile = new ConfigFile();
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            setupConfiguration.complete_command = TestTimerExeUtils.Executable;
+            setupConfiguration.wait_for_complete_command = true;
+            configFile.Children.Add(setupConfiguration);
+            // save config file
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // execute dotNetInstaller
+            DateTime ts = DateTime.UtcNow;
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
+            // test timer lives for 2 seconds before it closes
+            Assert.IsTrue(DateTime.UtcNow.Subtract(ts).TotalSeconds >= 2);
+            File.Delete(configFilename);
+        }
+
+        [Test]
+        public void TestDontWaitForCompleteCommand()
+        {
+            ConfigFile configFile = new ConfigFile();
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            setupConfiguration.complete_command = TestTimerExeUtils.Executable;
+            setupConfiguration.wait_for_complete_command = false;
+            configFile.Children.Add(setupConfiguration);
+            // save config file
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // execute dotNetInstaller
+            DateTime ts = DateTime.UtcNow;
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
+            // test timer lives for 2 seconds before it closes
+            Assert.IsTrue(DateTime.UtcNow.Subtract(ts).TotalSeconds < 2);
+            File.Delete(configFilename);
         }
     }
 }

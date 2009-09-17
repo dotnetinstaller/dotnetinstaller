@@ -125,3 +125,21 @@ void ConfigFilesUnitTests::testGetLanguages()
 	std::vector<std::wstring> supported_languages = cf.GetLanguages();
 	CPPUNIT_ASSERT(supported_languages.size() == 1);
 }
+
+void ConfigFilesUnitTests::testNoMatchingConfiguration()
+{
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+		L"..\\..\\..\\Samples\\Invalid\\NoMatchingOSFilter.xml");
+	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
+	ConfigFilesImpl cf(configxml);
+	try
+	{
+		cf.Load();
+		throw "expected std::exception";
+	}
+	catch(std::exception& ex)
+	{
+		std::cout << std::endl << "Expected exception: [" << ex.what() << "]";
+		CPPUNIT_ASSERT(0 == strcmp(ex.what(), "Expected error: no match in 1 setup configuration(s)."));
+	}
+}

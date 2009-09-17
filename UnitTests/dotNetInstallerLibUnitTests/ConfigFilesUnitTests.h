@@ -15,6 +15,7 @@ namespace DVLib
 			CPPUNIT_TEST( testSelectLanguage1040 );
 			CPPUNIT_TEST( testSelectLanguageNot1040 );
 			CPPUNIT_TEST( testGetLanguages );
+			CPPUNIT_TEST( testNoMatchingConfiguration );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testSaveRestoreAppState();
@@ -25,6 +26,7 @@ namespace DVLib
 			void testSelectLanguage1040();
 			void testSelectLanguageNot1040();
 			void testGetLanguages();
+			void testNoMatchingConfiguration();
 		};
 	}
 }

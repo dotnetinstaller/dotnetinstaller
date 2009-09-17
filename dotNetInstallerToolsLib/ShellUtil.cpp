@@ -58,7 +58,7 @@ void DVLib::DetachCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi)
 	PROCESS_INFORMATION pi = { 0 };
 
 	std::wstring cmd_expanded = DVLib::ExpandEnvironmentVariables(cmd);
-	CHECK_WIN32_BOOL(::CreateProcessW(NULL, & * cmd_expanded.begin(), NULL, NULL, FALSE, 0, NULL, NULL, & si, lpi == NULL ? & pi : lpi),
+	CHECK_WIN32_BOOL(::CreateProcessW(NULL, & * cmd_expanded.begin(), NULL, NULL, FALSE, DETACHED_PROCESS, NULL, NULL, & si, lpi == NULL ? & pi : lpi),
 		L"CreateProcessW: " << cmd_expanded);
 
 	if (lpi == NULL)

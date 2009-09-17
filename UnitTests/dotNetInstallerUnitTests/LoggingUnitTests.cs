@@ -14,24 +14,27 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestNoLogging()
         {
-            if (File.Exists(dotNetInstallerExeUtils.DefaultLogFile))
-                File.Delete(dotNetInstallerExeUtils.DefaultLogFile);
+            if (File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile))
+                File.Delete(dotNetInstallerExeUtils.RunOptions.DefaultLogFile);
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
-            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename, false, string.Empty));
+            dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
+            options.log = false;
+            options.logfile = string.Empty;
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(options));
             File.Delete(configFilename);
-            Assert.IsFalse(File.Exists(dotNetInstallerExeUtils.DefaultLogFile));
+            Assert.IsFalse(File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile));
         }
 
         [Test]
         public void TestLogConfigSpecified()
         {
-            if (File.Exists(dotNetInstallerExeUtils.DefaultLogFile))
-                File.Delete(dotNetInstallerExeUtils.DefaultLogFile);
+            if (File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile))
+                File.Delete(dotNetInstallerExeUtils.RunOptions.DefaultLogFile);
             ConfigFile configFile = new ConfigFile();
             configFile.log_enabled = true;
             configFile.log_file = Path.Combine(Path.GetTempPath(), "TestLogConfigSpecified.log");
@@ -42,17 +45,20 @@ namespace dotNetInstallerUnitTests
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
-            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename, false, string.Empty));
+            dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
+            options.log = false;
+            options.logfile = string.Empty;
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(options));
             File.Delete(configFilename);
-            Assert.IsFalse(File.Exists(dotNetInstallerExeUtils.DefaultLogFile));
+            Assert.IsFalse(File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile));
             Assert.IsTrue(File.Exists(configFile.log_file));
         }
 
         [Test]
         public void TestLogCommandLineOverwritesConfigFile()
         {
-            if (File.Exists(dotNetInstallerExeUtils.DefaultLogFile))
-                File.Delete(dotNetInstallerExeUtils.DefaultLogFile);
+            if (File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile))
+                File.Delete(dotNetInstallerExeUtils.RunOptions.DefaultLogFile);
             ConfigFile configFile = new ConfigFile();
             configFile.log_enabled = true;
             configFile.log_file = Path.Combine(Path.GetTempPath(), "TestLogConfigSpecified.log");
@@ -63,9 +69,12 @@ namespace dotNetInstallerUnitTests
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
-            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename, true, dotNetInstallerExeUtils.DefaultLogFile));
+            dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
+            options.log = true;
+            options.logfile = dotNetInstallerExeUtils.RunOptions.DefaultLogFile;
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(options));
             File.Delete(configFilename);
-            Assert.IsTrue(File.Exists(dotNetInstallerExeUtils.DefaultLogFile));
+            Assert.IsTrue(File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile));
             Assert.IsFalse(File.Exists(configFile.log_file));
         }
 
@@ -73,8 +82,8 @@ namespace dotNetInstallerUnitTests
         public void TestLogAcceptsPathVariables()
         {
             string resolved_logfile = Path.Combine(Path.GetTempPath(), "TestLogAcceptsPathVariables.log");
-            if (File.Exists(dotNetInstallerExeUtils.DefaultLogFile))
-                File.Delete(dotNetInstallerExeUtils.DefaultLogFile);
+            if (File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile))
+                File.Delete(dotNetInstallerExeUtils.RunOptions.DefaultLogFile);
             if (File.Exists(resolved_logfile)) 
                 File.Delete(resolved_logfile);
             ConfigFile configFile = new ConfigFile();
@@ -85,10 +94,13 @@ namespace dotNetInstallerUnitTests
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
-            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename, false, string.Empty));
+            dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
+            options.log = false;
+            options.logfile = string.Empty;
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(options));
             File.Delete(configFilename);
             Assert.IsTrue(File.Exists(resolved_logfile), string.Format("Missing {0}", resolved_logfile));
-            Assert.IsFalse(File.Exists(dotNetInstallerExeUtils.DefaultLogFile));
+            Assert.IsFalse(File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile));
         }
     }
 }

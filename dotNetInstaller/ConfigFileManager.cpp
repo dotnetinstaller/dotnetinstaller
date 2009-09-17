@@ -65,7 +65,7 @@ int ConfigFileManager::Run()
 bool ConfigFileManager::OnSelectLanguage()
 {
 	if (config.show_language_selector && ! InstallUILevelSetting::Instance->IsSilent())
-	{		
+	{
 		CLanguageSelectorDialog lsdlg(config);
 		switch(lsdlg.DoModal())
 		{

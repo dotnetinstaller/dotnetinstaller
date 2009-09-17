@@ -14,6 +14,9 @@
               <newTerm>msi</newTerm>: executes a Windows Installer package.
             </listItem>
             <listItem>
+              <newTerm>msu</newTerm>: executes a Windows Update package.
+            </listItem>
+            <listItem>
               <newTerm>cmd</newTerm>: executes a command line.
             </listItem>
             <listItem>
@@ -91,7 +94,7 @@
       <title>Requiring Reboot</title>
       <content>
         <para>
-          Reboot behaviour is supported by three component-based and install-based options: <literal>mustreboot</literal>,
+          Reboot behavior is supported by three component-based and install-based options: <literal>mustreboot</literal>,
           <literal>reboot_required</literal> and <literal>must_reboot_required</literal>.
           <definitionTable>
             <definedTerm>mustreboot</definedTerm>
@@ -126,6 +129,25 @@
         <para>
           In silent installations (basic and no UI) the choice to reboot is made automatically for the user when reboot
           is required.
+        </para>
+        <para>
+          Additional setup configuration options may be used in reboot scenarios to automatically continue installation
+          or to, for example, perform a silent operation to finalize installation after a reboot.
+          <definitionTable>
+            <definedTerm>auto_start</definedTerm>
+            <definition>
+              Auto-start installation, except when after a reboot.
+            </definition>
+            <definedTerm>auto_continue_on_reboot</definedTerm>
+            <definition>
+              Auto-start installation after a reboot.
+            </definition>
+            <definedTerm>reboot_cmd</definedTerm>
+            <definition>
+              Additional reboot command-line options. For example, you can specify <literal>/qb</literal> to perform
+              a basic UI install without user intervention to complete the process started before the reboot.
+            </definition>
+          </definitionTable>
         </para>
       </content>
     </section>

@@ -10,7 +10,6 @@
 #include "ExtractCabProcessor.h"
 #include "DownloadDialog.h"
 #include "InstallerCommandLineInfo.h"
-#include "InstallerLauncher.h"
 #include <Version/Version.h>
 
 // finestra di dialogo CdotNetInstallerDlg
@@ -161,8 +160,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	}
 	else
 	{
-		// initiate component install(s) silently, without end-user input
-		if(InstallUILevelSetting::Instance->IsSilent())
+		if (AutoStart(p_configuration))
 		{
 			m_btnInstall.EnableWindow(FALSE);
 			m_btnCancel.EnableWindow(FALSE);
@@ -172,6 +170,34 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	}
 
 	return TRUE;  // restituisce TRUE a meno che non venga impostato lo stato attivo su un controllo.
+}
+
+// initiate component install(s) without end-user input
+bool CdotNetInstallerDlg::AutoStart(InstallConfiguration * p_configuration)
+{
+	bool autostart = false;
+
+	if (InstallUILevelSetting::Instance->IsSilent())
+	{
+		autostart = true;
+		LOG(L"Silent mode: automatically starting install");
+	}
+
+	if (InstallerCommandLineInfo::Instance->Reboot())
+	{
+		if (p_configuration->auto_continue_on_reboot)
+		{
+			autostart = true;
+			LOG(L"Reboot defines auto-start: automatically starting install");
+		}
+	}
+	else if (p_configuration->auto_start)
+	{
+		autostart = true;
+		LOG(L"Configuration defines auto-start: automatically starting install");
+	}
+
+	return autostart;
 }
 
 // Se si aggiunge alla finestra di dialogo un pulsante di riduzione a icona, per trascinare l'icona sarà necessario
@@ -241,7 +267,9 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 
 		if (m_reboot)
 		{
-			InstallerSession::Instance->EnableRunOnReboot(InstallerLauncher::Instance->GetLauncherCmd());
+			InstallerSession::Instance->EnableRunOnReboot(
+				InstallerLauncher::Instance->GetLauncherCmd() + 
+				L" " + p_configuration->reboot_cmd);
 			DVLib::ExitWindowsSystem(EWX_REBOOT);
 			PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);
 			return;
@@ -455,18 +483,10 @@ void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
 		DniMessageBox::Show(message, MB_OK|MB_ICONINFORMATION);
     }
 
-	std::wstring l_complete_command = p_configuration->complete_command;
-	switch(InstallUILevelSetting::Instance->GetUILevel())
-	{
-	case InstallUILevelSilent:
-		if (! p_configuration->complete_command_silent.empty()) l_complete_command = p_configuration->complete_command_silent;
-		else if (! p_configuration->complete_command_basic.empty()) l_complete_command = p_configuration->complete_command_basic;
-		break;
-	case InstallUILevelBasic:
-		if (! p_configuration->complete_command_basic.empty()) l_complete_command = p_configuration->complete_command_basic;
-		else if (! p_configuration->complete_command_silent.empty()) l_complete_command = p_configuration->complete_command_silent;
-		break;
-	}
+	std::wstring l_complete_command = InstallUILevelSetting::Instance->GetCommand(
+		p_configuration->complete_command,
+		p_configuration->complete_command_basic,
+		p_configuration->complete_command_silent);
 
     if (! InstallerCommandLineInfo::Instance->GetCompleteCommandArgs().empty())
     {
@@ -476,9 +496,17 @@ void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
 
 	if (! l_complete_command.empty())
 	{
-		LOG(L"Executing complete command: " << l_complete_command);
-        DWORD dwExitCode = 0;
-        dwExitCode = DVLib::ExecCmd(l_complete_command);
+		DWORD dwExitCode = 0;
+		if (p_configuration->wait_for_complete_command)
+		{
+			LOG(L"Executing complete command: " << l_complete_command);
+			dwExitCode = DVLib::ExecCmd(l_complete_command);
+		}
+		else
+		{
+			LOG(L"Detaching complete command: " << l_complete_command);
+			DVLib::DetachCmd(l_complete_command);
+		}
 	}
 }
 

@@ -232,10 +232,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\InstallerLauncher.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\InstallStatus.cpp"
 				>
 			</File>
@@ -323,10 +319,6 @@
 			</File>
 			<File
 				RelativePath=".\InstallerCommandLineInfo.h"
-				>
-			</File>
-			<File
-				RelativePath=".\InstallerLauncher.h"
 				>
 			</File>
 			<File

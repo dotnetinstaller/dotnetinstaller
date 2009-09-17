@@ -58,4 +58,5 @@ public:
 	bool OnComponentExecWait(const ComponentPtr& component);
 	bool OnComponentExecSuccess(const ComponentPtr& component);
 	bool OnComponentExecError(const ComponentPtr& component, std::exception& ex);
+	bool AutoStart(InstallConfiguration * p_configuration);
 };

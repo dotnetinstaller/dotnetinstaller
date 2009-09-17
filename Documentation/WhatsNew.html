@@ -25,71 +25,92 @@
     <h3>
         1.7 (TBD)</h3>
     <ul>
-        <li>Refactored the dotNetInstaller bootstrapper into a dotNetInstallerLib C++ library
-            and a GUI driver.</li>
-        <li>Extended unit test coverage across C# and C++ installer and support tools libraries.</li>
-        <li>Bug: wrong error when missing configuration.xml (invalid schema version vs. missing
-            configuration.xml).</li>
-        <li>Added OS filter identifiers for Windows Vista SP2, Windows Server 2003 R2, Windows
-            Server 2008 R2 and Windows 7.</li>
-        <li>Extended registry search REG_MULTI_SZ semantics. You can now specify a comma-delimited
-            list of values to <code>match</code> exactly all values, <code>contains</code> to
-            match a subset of values and you can no longer specify a broken <code>version</code>
-            match.</li>
-        <li>Bug: reference (web) configurations broken in the editor.</li>
-        <li>Added support for nested reference configurations. Each downloaded configuration
-            file is checked for more reference configurations. There's a nested depth limit
-            of 10 to avoid circular references.</li>
-        <li>Added /DisplayCab command line option to dotNetInstaller.exe that displays the embedded
-            CAB file contents when available.</li>
-        <li>Added support for relative paths in MSI components by resolving paths before execution.</li>
-        <li>Added <code>version_lt</code>, <code>version_le</code>, <code>version_gt</code>,
-            <code>version_ge</code> and <code>version_eq</code> functions to installed check
-            file and registry operators.</li>
-        <li>Bug: wrong semantics of <code>auto_close_if_installed</code>. The bootstrapper will
-            now close after any successful installation session when this option is set.</li>
-        <li>Added support for <code>os_filter_smaller</code>, <code>os_filter_greater</code>
-            and <code>processor_architecture_filter</code> in web configurations.</li>
-        <li>Added a product installed check that queries the MSI system database for a product
-            by it's product id or upgrade code and is capable of comparing product properties,
-            such as VersionString.</li>
-        <li>Added an "msu" component type, similar to "msi" for Windows Update (.msu) packages.</li>
-        <li>InstallerEditor and InstallerLinker no longer require elevation on Windows Vista
-            and Windows Server 2008.</li>
-        <li>Unicows.dll is embedded and is no longer required for Windows 95 and 98 installers.
-            You can now distribute a single packaged setup for Windows 95 and 98 platforms.</li>
-        <li>Added /ConfigFile &lt;path\configuration.xml&gt; option to the bootstrapper to specify
-            an alternate configuration file.</li>
-        <li>dotNetInstaller process exit code is now 0 on success, process exit code is now
-            shell execute return code on an open file component failure, MSI return code on
-            an MSI component failure, process exit code on a non-zero cmd component return,
-            -2 on cancel from main dialog or download and -1 on any other error. Check <code>%ERRORLEVEL%</code>
-            in batch scripts.</li>
-        <li>Bug: silent install failures pop up error dialogs that don't auto-close.</li>
-        <li>Added a directory exists installed check.</li>
-        <li>Added <code>dialog_message_connecting</code> and <code>dialog_message_sendingrequest</code>
-            to download progress.</li>
-        <li>Added <code>/?</code> or <code>/help</code> to the bootstrapper that shows the command
-            line syntax and options.</li>
-        <li>Moved <code>log_enabled</code> and <code>log_file</code> options to the configuration
-            top level from individual install configurations.</li>
-        <li>Added expansion of registry variables to configuration nodes in the format of <code>
-            @[KEY:OPTION\PATH\VALUE]</code> (eg. @[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\CommonFilesDir]).</li>
-        <li>Added expansion of environment variables to configuration nodes (eg. %TEMP%).</li>
-        <li>All nodes in the configuration file, except boolean and strongly typed enumerations,
-            accept path (eg. #TEMPPATH), environment (eg. %TEMP%) and registry (eg. @[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\CommonFilesDir])
-            variables.</li>
-        <li>Added an optional user language selection dialog to the bootstrapper. Users can
-            pick amongst the languages available instead of choosing their locale or the one
-            of the operating system.</li>
-        <li>Msi packages can now be GUIDs of installed products, in the {GUID} format. These
-            will not be resolved as a path.</li>
-        <li>Added /Manifest &lt;manifest file&gt; to the installer linker to specify a replacement
-            manifest. This enables building bootstrappers that don't elevate on Windows Vista,
-            Server and Windows 7.</li>
-        <li>Bug: EmbedFolder components broken when configuration is (re)saved with InstallerEditor.</li>
-        <li>Added /EmbedResourceSize &lt;size in bytes&gt; to installer linker to specify the
-            max size of each embedded resource. Defaults to 32Mb.</li>
+        <li><strong>Features</strong>:
+            <ul>
+                <li>Added OS filter identifiers for Windows Vista SP2, Windows Server 2003 R2, Windows
+                    Server 2008 R2 and Windows 7.</li>
+                <li>Extended registry search REG_MULTI_SZ semantics. You can now specify a comma-delimited
+                    list of values to <code>match</code> exactly all values, <code>contains</code> to
+                    match a subset of values and you can no longer specify a broken <code>version</code>
+                    match.</li>
+                <li>Added support for nested reference configurations. Each downloaded configuration
+                    file is checked for more reference configurations. There's a nested depth limit
+                    of 10 to avoid circular references.</li>
+                <li>Added <code>/DisplayCab</code> command line option to dotNetInstaller.exe that displays
+                    the embedded CAB file contents when available.</li>
+                <li>Added support for relative paths in MSI components by resolving paths before execution.</li>
+                <li>Added <code>version_lt</code>, <code>version_le</code>, <code>version_gt</code>,
+                    <code>version_ge</code> and <code>version_eq</code> functions to installed check
+                    file and registry operators.</li>
+                <li>Added support for <code>os_filter_smaller</code>, <code>os_filter_greater</code>
+                    and <code>processor_architecture_filter</code> in web configurations.</li>
+                <li>Added a product installed check that queries the MSI system database for a product
+                    by it's product id or upgrade code and is capable of comparing product properties,
+                    such as VersionString.</li>
+                <li>Added an "msu" component type, similar to "msi" for Windows Update (.msu) packages.</li>
+                <li>InstallerEditor and InstallerLinker no longer require elevation on Windows Vista
+                    and Windows Server 2008.</li>
+                <li>Unicows.dll is embedded and is no longer required for Windows 95 and 98 installers.
+                    You can now distribute a single packaged setup for Windows 95 and 98 platforms.</li>
+                <li>Added <code>/ConfigFile &lt;path\configuration.xml&gt;</code> option to the bootstrapper
+                    to specify an alternate configuration file.</li>
+                <li>dotNetInstaller process exit code is now 0 on success, process exit code is now
+                    shell execute return code on an open file component failure, MSI return code on
+                    an MSI component failure, process exit code on a non-zero cmd component return,
+                    -2 on cancel from main dialog or download and -1 on any other error. Check <code>%ERRORLEVEL%</code>
+                    in batch scripts.</li>
+                <li>Added a directory exists installed check.</li>
+                <li>Added <code>dialog_message_connecting</code> and <code>dialog_message_sendingrequest</code>
+                    to download progress.</li>
+                <li>Added <code>/?</code> or <code>/help</code> to the bootstrapper that shows the command
+                    line syntax and options.</li>
+                <li>Moved <code>log_enabled</code> and <code>log_file</code> options to the configuration
+                    top level from individual install configurations.</li>
+                <li>Added expansion of registry variables to configuration nodes in the format of <code>
+                    @[KEY:OPTION\PATH\VALUE]</code> (eg. @[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\CommonFilesDir]).</li>
+                <li>Added expansion of environment variables to configuration nodes (eg. %TEMP%).</li>
+                <li>All nodes in the configuration file, except boolean and strongly typed enumerations,
+                    accept path (eg. #TEMPPATH), environment (eg. %TEMP%) and registry (eg. @[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\CommonFilesDir])
+                    variables.</li>
+                <li>Added an optional user language selection dialog to the bootstrapper. Users can
+                    pick amongst the languages available instead of choosing their locale or the one
+                    of the operating system.</li>
+                <li>Msi packages can now be GUIDs of installed products, in the {GUID} format. These
+                    will not be resolved as a path.</li>
+                <li>Added <code>/Manifest &lt;manifest file&gt;</code> to the installer linker to specify
+                    a replacement manifest. This enables building bootstrappers that don't elevate on
+                    Windows Vista, Server and Windows 7.</li>
+                <li>Added <code>/EmbedResourceSize &lt;size in bytes&gt;</code> to installer linker
+                    to specify the max size of each embedded resource. Defaults to 32Mb.</li>
+                <li>Added <code>auto_start</code> setup configuration parameter that defines whether
+                    to automatically start installation in full UI mode.</li>
+                <li>Added <code>auto_continue_on_reboot</code> setup configuration parameter that defines
+                    whether to auto-start installation after a reboot was forced during the installation.</li>
+                <li>Added <code>reboot_cmd</code> setup configuration parameter that defines additional
+                    command-line parameters to include in the reboot command-line.</li>
+                <li>Added <code>wait_for_complete_command</code> that defines whether to detach the
+                    complete command or to execute it synchronously and wait for the program to finish.
+                    Default is true.</li>
+            </ul>
+        </li>
+        <li><strong>Bugs</strong>:
+            <ul>
+                <li>Bug: wrong error when missing configuration.xml (invalid schema version vs. missing
+                    configuration.xml).</li>
+                <li>Bug: reference (web) configurations broken in the editor.</li>
+                <li>Bug: wrong semantics of <code>auto_close_if_installed</code>. The bootstrapper will
+                    now close after any successful installation session when this option is set.</li>
+                <li>Bug: silent install failures pop up error dialogs that don't auto-close.</li>
+                <li>Bug: EmbedFolder components broken when configuration is (re)saved with InstallerEditor.</li>
+            </ul>
+        </li>
+        <li><strong>Misc</strong>:
+            <ul>
+                <li>Refactored the dotNetInstaller bootstrapper into a dotNetInstallerLib C++ library
+                    and a GUI driver.</li>
+                <li>Extended unit test coverage across C# and C++ installer and support tools libraries.</li>
+            </ul>
+        </li>
     </ul>
     <h3>
         1.6 (29 June 2009)</h3>

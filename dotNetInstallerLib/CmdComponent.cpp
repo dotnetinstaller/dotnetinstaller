@@ -14,18 +14,8 @@ CmdComponent::CmdComponent()
 
 void CmdComponent::Exec()
 {
-	std::wstring l_command = command;
-	switch(InstallUILevelSetting::Instance->GetUILevel())
-	{
-	case InstallUILevelSilent:
-		if (! command_silent.empty()) l_command = command_silent;
-		else if (! command_basic.empty()) l_command = command_basic;
-		break;
-	case InstallUILevelBasic:
-		if (! command_basic.empty()) l_command = command_basic;
-		else if (! command_silent.empty()) l_command = command_silent;
-		break;
-	}
+	std::wstring l_command = InstallUILevelSetting::Instance->GetCommand(
+		command, command_basic, command_silent);
 
 	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::Instance->AdditionalCmdLineArgs.find(description);
     if (cmdline != InstallerSession::Instance->AdditionalCmdLineArgs.end())

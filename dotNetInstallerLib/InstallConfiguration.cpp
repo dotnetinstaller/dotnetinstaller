@@ -17,6 +17,9 @@ InstallConfiguration::InstallConfiguration()
     , dialog_show_installed(false)
     , dialog_show_required(false)
     , allow_continue_on_error(true)
+	, auto_start(false)
+	, auto_continue_on_reboot(false)
+	, wait_for_complete_command(true)
 {
 
 }
@@ -64,7 +67,9 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	dialog_otherinfo_link = XML_ATTRIBUTE(node->Attribute("dialog_otherinfo_link"));
 	// completion commands
 	complete_command = XML_ATTRIBUTE(node->Attribute("complete_command"));
+	complete_command_basic = XML_ATTRIBUTE(node->Attribute("complete_command_basic"));
 	complete_command_silent = XML_ATTRIBUTE(node->Attribute("complete_command_silent"));
+	wait_for_complete_command = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("wait_for_complete_command")), true);
 	auto_close_if_installed = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_close_if_installed")), true);
     auto_close_on_error = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_close_on_error")), false);
     allow_continue_on_error = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("allow_continue_on_error")), true);
@@ -74,6 +79,12 @@ void InstallConfiguration::Load(TiXmlElement * node)
     cab_dialog_caption = XML_ATTRIBUTE(node->Attribute("cab_dialog_caption"));
     cab_dialog_message = XML_ATTRIBUTE(node->Attribute("cab_dialog_message"));
     cab_cancelled_message = XML_ATTRIBUTE(node->Attribute("cab_cancelled_message"));
+	// auto start
+	auto_start = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_start")), false);
+	// auto start on reboot
+	auto_continue_on_reboot = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_continue_on_reboot")), false);
+	// additional reboot cmd
+    reboot_cmd = XML_ATTRIBUTE(node->Attribute("reboot_cmd"));
 	// components
 	TiXmlNode * child = NULL;
 	while ( (child = node->IterateChildren("component", child)) != NULL)

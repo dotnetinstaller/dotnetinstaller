@@ -29,8 +29,8 @@ namespace dotNetInstallerUnitTests
                 Console.WriteLine("Writing '{0}'", configFilename);
                 configFile.SaveAs(configFilename);
                 // execute dotNetInstaller
-                Assert.AreEqual(0, dotNetInstallerExeUtils.Run(dotNetInstallerExeUtils.Executable,
-                    string.Format("/ConfigFile \"{0}\"", configFilename)));
+                dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
+                Assert.AreEqual(0, dotNetInstallerExeUtils.Run(options));
                 File.Delete(configFilename);
             }
         }

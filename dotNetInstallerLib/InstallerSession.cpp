@@ -166,10 +166,16 @@ void InstallerSession::EnableRunOnReboot(const std::wstring& cmd)
         }
 	}
 
+	std::wstring reboot_cmd_s = reboot_cmd.str();
+	if (reboot_cmd_s.find(L"/Reboot") == reboot_cmd_s.npos)
+	{
+		reboot_cmd_s.append(L" /Reboot");
+	}
+
 	DVLib::RegistrySetStringValue(HKEY_LOCAL_MACHINE, 
 		REGISTRY_CURRENTVERSION_RUN, 
 		DVLib::GetFileNameW(DVLib::GetModuleFileNameW()),
-		reboot_cmd.str());
+		reboot_cmd_s);
 };
 
 void InstallerSession::DisableRunOnReboot()

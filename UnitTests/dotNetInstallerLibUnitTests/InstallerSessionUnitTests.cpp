@@ -51,3 +51,24 @@ void InstallerSessionUnitTests::testExpandRegistryVariables()
 	CPPUNIT_ASSERT(L"DefaultValue" == InstallerSession::Instance->ExpandRegistryVariables(
 		L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\" + DVLib::GenerateGUIDStringW() + L",DefaultValue]"));
 }
+
+void InstallerSessionUnitTests::testEnableRunOnReboot()
+{
+	InstallerSession::Instance->EnableRunOnReboot();
+
+	std::wstring registryRunCmd = DVLib::RegistryGetStringValue(
+		HKEY_LOCAL_MACHINE,
+		L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
+		DVLib::GetFileNameW(DVLib::GetModuleFileNameW()));
+
+	std::wcout << std::endl << "Reboot cmd: " << registryRunCmd;
+	CPPUNIT_ASSERT(! registryRunCmd.empty());
+	CPPUNIT_ASSERT(registryRunCmd.find(L"/Reboot") != registryRunCmd.npos);
+
+	InstallerSession::Instance->DisableRunOnReboot();
+
+	CPPUNIT_ASSERT(! DVLib::RegistryKeyExists(
+		HKEY_LOCAL_MACHINE,
+		L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
+		DVLib::GetFileNameW(DVLib::GetModuleFileNameW())));
+}

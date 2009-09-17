@@ -79,3 +79,23 @@ InstallUILevel InstallUILevelSetting::ToUILevel(const std::wstring& level, Insta
 	else
 		return defaultValue;
 }
+
+std::wstring InstallUILevelSetting::GetCommand(
+	const std::wstring& full, 
+	const std::wstring& basic, 
+	const std::wstring& silent) const
+{
+	std::wstring command = full;
+	switch(InstallUILevelSetting::Instance->GetUILevel())
+	{
+	case InstallUILevelSilent:
+		if (! silent.empty()) command = silent;
+		else if (! basic.empty()) command = basic;
+		break;
+	case InstallUILevelBasic:
+		if (! basic.empty()) command = basic;
+		else if (! silent.empty()) command = silent;
+		break;
+	}
+	return command;
+}

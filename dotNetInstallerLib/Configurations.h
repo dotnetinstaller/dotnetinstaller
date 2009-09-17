@@ -22,6 +22,8 @@ public:
 	std::wstring language_selector_title;
 	std::wstring language_selector_ok;
 	std::wstring language_selector_cancel;
+	// error message when no matching os/lcid configuration was found
+	std::wstring configuration_no_match_message;
 public:
 	Configurations();
 	virtual ~Configurations();

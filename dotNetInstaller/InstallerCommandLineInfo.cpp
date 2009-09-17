@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 #include "InstallerCommandLineInfo.h"
-#include "InstallerLauncher.h"
 
 shared_any<InstallerCommandLineInfo *, close_delete> InstallerCommandLineInfo::Instance;
 
@@ -9,6 +8,7 @@ InstallerCommandLineInfo::InstallerCommandLineInfo()
 	, m_extractCab(false)
 	, m_displayHelp(false)
 	, m_lastArgFlag(unknown)
+	, m_reboot(false)
 {
 
 }
@@ -78,6 +78,10 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
         {
             m_lastArgFlag = componentArgs;
         }
+		else if (_wcsicmp(pszParam, TEXT("reboot")) == 0 )
+		{
+            m_reboot = true;
+		}
 	}
 	else
 	{

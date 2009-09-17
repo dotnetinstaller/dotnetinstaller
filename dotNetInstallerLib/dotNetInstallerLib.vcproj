@@ -227,6 +227,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstallerLauncher.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\InstallerLog.cpp"
 				>
 			</File>
@@ -386,6 +390,10 @@
 			</File>
 			<File
 				RelativePath=".\InstalledCheckRegistry.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstallerLauncher.h"
 				>
 			</File>
 			<File

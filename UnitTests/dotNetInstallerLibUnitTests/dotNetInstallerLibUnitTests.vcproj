@@ -247,6 +247,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstallerLauncherUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\InstallerLogUnitTests.cpp"
 				>
 			</File>
@@ -362,6 +366,10 @@
 			</File>
 			<File
 				RelativePath=".\InstalledCheckRegistryUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstallerLauncherUnitTests.h"
 				>
 			</File>
 			<File

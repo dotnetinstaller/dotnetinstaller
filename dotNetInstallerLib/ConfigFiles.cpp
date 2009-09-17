@@ -94,7 +94,16 @@ void ConfigFiles::Load()
 
 	if (supportedconfigurations.size() == 0)
 	{
-		THROW_EX(L"No configuration matching locale and operating system found within " << size() << L" configuration(s)");
+		if (config.configuration_no_match_message.empty())
+		{
+			THROW_EX(L"No configuration matching locale and operating system found within " 
+				<< config.size() << L" configuration(s)");
+		}
+		else
+		{
+			THROW_EX(DVLib::FormatMessage(const_cast<wchar_t *>(
+				config.configuration_no_match_message.c_str()), DVLib::towstring(config.size()).c_str()));
+		}
 	}
 }
 

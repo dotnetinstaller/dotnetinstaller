@@ -265,8 +265,18 @@ namespace InstallerLib
             set { m_dialog_show_required = value; }
         }
 
+        private bool m_wait_for_complete_command = true;
+        [Description("Wait for the complete_command to finish. Set to false to detach the complete command.")]
+        [Category("Runtime")]
+        public bool wait_for_complete_command
+        {
+            get { return m_wait_for_complete_command; }
+            set { m_wait_for_complete_command = value; }
+        }
+
         private string m_complete_command;
         [Description("Complete command (executed when all components are installed correctly), can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed. (OPTIONAL)")]
+        [Category("Runtime")]
         public string complete_command
         {
             get { return m_complete_command; }
@@ -275,6 +285,7 @@ namespace InstallerLib
 
         private string m_complete_command_silent;
         [Description("Silent complete command (executed when all components are installed correctly on a silent install), can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed. (OPTIONAL)")]
+        [Category("Runtime")]
         public string complete_command_silent
         {
             get { return m_complete_command_silent; }
@@ -283,6 +294,7 @@ namespace InstallerLib
 
         private string m_complete_command_basic;
         [Description("Basic UI complete command (executed when all components are installed correctly on a basic UI install), can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed. (OPTIONAL)")]
+        [Category("Runtime")]
         public string complete_command_basic
         {
             get { return m_complete_command_basic; }
@@ -291,6 +303,7 @@ namespace InstallerLib
 
         private bool m_auto_close_if_installed = true;
         [Description("If true auto close the dialog (display installation_completed message and execute the complete_command) if all the components are already installed. (REQUIRED)")]
+        [Category("Runtime")]
         public bool auto_close_if_installed
         {
             get { return m_auto_close_if_installed; }
@@ -299,6 +312,7 @@ namespace InstallerLib
 
         private bool m_auto_close_on_error = false;
         [Description("If true auto close the dialog when a component fails to install and the user chooses not to continue. If false, the component conditions will be re-evaluated and the updated list of components will be shown. (REQUIRED)")]
+        [Category("Runtime")]
         public bool auto_close_on_error
         {
             get { return m_auto_close_on_error; }
@@ -307,6 +321,7 @@ namespace InstallerLib
 
         private bool m_allow_continue_on_error = true;
         [Description("If true prompt the user to continue on error, otherwise an error is simply reported. Make sure to adjust failed_exec_command_continue if set to false.")]
+        [Category("Runtime")]
         public bool allow_continue_on_error
         {
             get { return m_allow_continue_on_error; }
@@ -399,6 +414,33 @@ namespace InstallerLib
             set { m_dialog_skip_button_position = value; }
         }
 
+        private bool m_auto_start = false;
+        [Description("If true auto start the installation of this setup configuration.")]
+        [Category("Runtime")]
+        public bool auto_start
+        {
+            get { return m_auto_start; }
+            set { m_auto_start = value; }
+        }
+
+        private bool m_auto_continue_on_reboot = false;
+        [Description("If true auto start the installation of this setup configuration after a required reboot.")]
+        [Category("Runtime")]
+        public bool auto_continue_on_reboot
+        {
+            get { return m_auto_continue_on_reboot; }
+            set { m_auto_continue_on_reboot = value; }
+        }
+
+        private string m_reboot_cmd;
+        [Description("Additional command line options to include in the command line after a required reboot.")]
+        [Category("Runtime")]
+        public string reboot_cmd
+        {
+            get { return m_reboot_cmd; }
+            set { m_reboot_cmd = value; }
+        }
+
         #endregion
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
@@ -427,6 +469,8 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("complete_command", m_complete_command);
             e.XmlWriter.WriteAttributeString("complete_command_silent", m_complete_command_silent);
             e.XmlWriter.WriteAttributeString("complete_command_basic", m_complete_command_basic);
+            e.XmlWriter.WriteAttributeString("wait_for_complete_command", m_wait_for_complete_command.ToString());
+            
             e.XmlWriter.WriteAttributeString("auto_close_if_installed", m_auto_close_if_installed.ToString());
             e.XmlWriter.WriteAttributeString("auto_close_on_error", m_auto_close_on_error.ToString());
             e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
@@ -453,6 +497,13 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("dialog_cancel_button_position", XmlRectangle.ToString(m_dialog_cancel_button_position));
             e.XmlWriter.WriteAttributeString("dialog_skip_button_position", XmlRectangle.ToString(m_dialog_skip_button_position));
 
+            // auto start
+            e.XmlWriter.WriteAttributeString("auto_start", m_auto_start.ToString());
+            // auto start on reboot
+            e.XmlWriter.WriteAttributeString("auto_continue_on_reboot", m_auto_continue_on_reboot.ToString());
+            // additional reboot command
+            e.XmlWriter.WriteAttributeString("reboot_cmd", m_reboot_cmd);
+
             base.OnXmlWriteTag(e);
         }
 
@@ -477,6 +528,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "complete_command", ref m_complete_command);
             ReadAttributeValue(e, "complete_command_silent", ref m_complete_command_silent);
             ReadAttributeValue(e, "complete_command_basic", ref m_complete_command_basic);
+            ReadAttributeValue(e, "wait_for_complete_command", ref m_wait_for_complete_command);
             ReadAttributeValue(e, "auto_close_if_installed", ref m_auto_close_if_installed);
             ReadAttributeValue(e, "auto_close_on_error", ref m_auto_close_on_error);
             ReadAttributeValue(e, "allow_continue_on_error", ref m_allow_continue_on_error);
@@ -499,6 +551,12 @@ namespace InstallerLib
             ReadAttributeValue(e, "dialog_install_button_position", ref m_dialog_install_button_position);
             ReadAttributeValue(e, "dialog_cancel_button_position", ref m_dialog_cancel_button_position);
             ReadAttributeValue(e, "dialog_skip_button_position", ref m_dialog_skip_button_position);
+            // auto start
+            ReadAttributeValue(e, "auto_start", ref m_auto_start);
+            // auto start on reboot
+            ReadAttributeValue(e, "auto_continue_on_reboot", ref m_auto_continue_on_reboot);
+            // additional reboot command
+            ReadAttributeValue(e, "reboot_cmd", ref m_reboot_cmd);
             base.OnXmlReadTag(e);
         }
     }

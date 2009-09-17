@@ -11,6 +11,48 @@ namespace dotNetUnitTestsRunner
 {
     public class dotNetInstallerExeUtils
     {
+        public class RunOptions
+        {
+            public string configFile;
+            public bool log = true;
+            public string logfile = DefaultLogFile;
+            public bool quiet = true;
+            public bool reboot = false;
+
+            public RunOptions(string file)
+            {
+                configFile = file;
+            }
+
+            public static string DefaultLogFile
+            {
+                get
+                {
+                    return Path.Combine(Path.GetTempPath(), "dotNetInstallerUnitTests.log");
+                }
+            }
+
+            public string Args
+            {
+                get
+                {
+                    string args = string.Format("/ConfigFile \"{0}\"", configFile);
+                    if (quiet) args += " /q";
+                    if (reboot) args += " /reboot";
+                    if (log)
+                    {
+                        args += " /Log";
+                        if (!string.IsNullOrEmpty(logfile))
+                        {
+                            Console.WriteLine("Log: {0}", (logfile));
+                            args += string.Format(" /LogFile \"{0}\"", logfile);
+                        }
+                    }
+                    return args;
+                }
+            }
+        }
+
 #if DEBUG
         const string configuration = "Debug";
 #else
@@ -38,39 +80,40 @@ namespace dotNetUnitTestsRunner
                     // locate dotnetinstaller.exe
                     Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
                     _location = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(HttpUtility.UrlDecode(uri.AbsolutePath)),
-                        string.Format("..\\..\\..\\..\\dotNetInstaller\\{0}\\", configuration)));
+                        string.Format(@"..\..\..\..\dotNetInstaller\{0}\", configuration)));
                 }
 
                 return _location;
             }
         }
 
-        public static string DefaultLogFile
-        {
-            get
-            {
-                return Path.Combine(Path.GetTempPath(), "dotNetInstallerUnitTests.log");
-            }
-        }
-
         public static int Run(string configFile)
         {
-            return Run(configFile, true, DefaultLogFile);
+            RunOptions options = new RunOptions(configFile);
+            return Run(options);
         }
 
-        public static int Run(string configFile, bool log, string logfile)
+        public static int Run(RunOptions options)
+        {
+            Process p = Detach(options);
+            p.WaitForExit();
+            return p.ExitCode;
+        }
+
+        public static Process Detach(RunOptions options)
         {
             Console.WriteLine("dotNetInstaller: {0}", Executable);
-            if (! string.IsNullOrEmpty(logfile))
-                Console.WriteLine("Log: {0}", (logfile));
-            Process p = new Process();
-            string args = string.Format("/ConfigFile \"{0}\" /q", configFile);
-            if (log) args += " /Log";
-            if (!string.IsNullOrEmpty(logfile)) args += string.Format(" /LogFile \"{0}\"", logfile);
-            return Run(Executable, args);
+            return Detach(Executable, options.Args);
         }
 
         public static int Run(string filename, string args)
+        {
+            Process p = Detach(filename, args);
+            p.WaitForExit();
+            return p.ExitCode;
+        }
+
+        private static Process Detach(string filename, string args)
         {
             Process p = new Process();
             p.StartInfo.WorkingDirectory = Path.GetDirectoryName(filename);
@@ -78,8 +121,7 @@ namespace dotNetUnitTestsRunner
             p.StartInfo.Arguments = args;
             p.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
             p.Start();
-            p.WaitForExit();
-            return p.ExitCode;
+            return p;
         }
     }
 }
