@@ -92,7 +92,7 @@ namespace InstallerLib
         /// <summary>
         /// Add an entire directory.
         /// </summary>
-        /// <param name="folder">directory to add</param>
+        /// <param name="sourcefilepath">directory to add</param>
         /// <param name="targetfolderpath">a relative directory under which target is extracted</param>
         public void AddDirectory(string sourcefilepath, string targetfolderpath)
         {

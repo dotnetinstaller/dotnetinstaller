@@ -115,8 +115,12 @@ namespace InstallerLib
                 long totalSize = 0;
                 cab.evFilePlaced += delegate(string s_File, int s32_FileSize, bool bContinuation)
                 {
-                    totalSize += s32_FileSize;
-                    args.WriteLine(String.Format(" {0} - {1}", s_File, EmbedFileCollection.FormatBytes(s32_FileSize)));
+                    if (! bContinuation)
+                    {
+                        totalSize += s32_FileSize;
+                        args.WriteLine(String.Format(" {0} - {1}", s_File, EmbedFileCollection.FormatBytes(s32_FileSize)));
+                    }
+
                     return 0;
                 };
                 cab.CompressFileList(files, cabname, true, true, args.embedResourceSize);
