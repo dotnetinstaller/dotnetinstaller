@@ -64,6 +64,9 @@ int ConfigFileManager::Run()
 
 bool ConfigFileManager::OnSelectLanguage()
 {
+	if (InstallerCommandLineInfo::Instance->DisplayConfig())
+		return false;
+
 	if (config.show_language_selector && ! InstallUILevelSetting::Instance->IsSilent())
 	{
 		CLanguageSelectorDialog lsdlg(config);
@@ -77,4 +80,18 @@ bool ConfigFileManager::OnSelectLanguage()
 	}
 
 	return false;
+}
+
+std::wstring ConfigFileManager::GetString() const
+{
+	return ConfigFiles::GetString();
+}
+
+std::vector<ConfigurationPtr> ConfigFileManager::DownloadReferenceConfigurations(
+	DWORD oslcid, const std::vector<ConfigurationPtr>& configs, int level)
+{
+	if (InstallerCommandLineInfo::Instance->DisplayConfig())
+		return config; // return this configuration, all components
+
+	return ConfigFiles::DownloadReferenceConfigurations(oslcid, configs, level);
 }

@@ -14,9 +14,9 @@ ExtractComponent::ExtractComponent(HMODULE h)
 int ExtractComponent::ExecOnThread()
 {
 	ResolvePaths();
-	WriteCab();
-    ExtractCab();
-	LOG(L"ExtractComponent: extracted Setup.cab");
+	Write();
+    Extract();
+	Cleanup();
 	return 0;
 }
 
@@ -46,12 +46,30 @@ void ExtractComponent::ResolvePaths()
     LOG(L"Extracting CABs");
 
 	resolved_cab_path = cab_path.empty() ? InstallerSession::Instance->GetSessionTempPath() : cab_path; 
-	resolved_cab_path = InstallerSession::Instance->ExpandVariables(resolved_cab_path);
-	LOG(L"Cabpath: " << resolved_cab_path);
+	resolved_cab_path = InstallerSession::Instance->ExpandVariables(resolved_cab_path);	LOG(L"Cabpath: " << resolved_cab_path);
 	DVLib::DirectoryCreate(resolved_cab_path);
 }
 
-void ExtractComponent::WriteCab()
+void ExtractComponent::Cleanup()
+{
+	int cabCount = GetCabCount();
+	for (int i = 1; i <= cabCount; i++)
+	{
+		std::wstring resname = TEXT("SETUP_");
+		resname.append(DVLib::towstring(i));
+		std::wstring resolved_cab_file = DVLib::DirectoryCombine(resolved_cab_path, resname + L".CAB");
+
+		if (DVLib::FileExists(resolved_cab_file))
+		{
+			LOG(L"Deleting: " << resolved_cab_file);
+			DVLib::FileDelete(resolved_cab_file);
+		}
+    }
+
+	LOG(L"Deleted " << cabCount << L" CAB file(s)");
+}
+
+void ExtractComponent::Write()
 {
 	int cabCount = GetCabCount();
 	DWORD dwWrittenTotal = 0;
@@ -93,7 +111,7 @@ void ExtractComponent::WriteCab()
 	LOG(L"Extracted " << DVLib::FormatBytesW(dwWrittenTotal) << L" from " << cabCount << L" resource segment(s)");
 }
 
-void ExtractComponent::ExtractCab()
+void ExtractComponent::Extract()
 {
 	Cabinet::CExtract extract;
 	Cabinet::CExtract::kCallbacks callbacks;

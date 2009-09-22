@@ -13,5 +13,6 @@ public:
 	~ReferenceConfiguration();
 	virtual void Load(TiXmlElement * node);
 	void Exec();
+	std::wstring GetString(int indent = 0) const;
 };
 

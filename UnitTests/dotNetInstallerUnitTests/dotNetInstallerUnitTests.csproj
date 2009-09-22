@@ -48,6 +48,7 @@
     </Compile>
     <Compile Include="AutoStartUnitTests.cs" />
     <Compile Include="CabUnitTests.cs" />
+    <Compile Include="CommandLineParametersUnitTests.cs" />
     <Compile Include="CompleteCommandUnitTests.cs" />
     <Compile Include="DownloadComponentsUnitTests.cs" />
     <Compile Include="LoggingUnitTests.cs" />

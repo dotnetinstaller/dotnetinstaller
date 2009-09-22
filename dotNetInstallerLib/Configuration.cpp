@@ -46,3 +46,14 @@ std::wstring Configuration::GetLanguageString() const
 	if (result.empty()) result = DVLib::towstring(DVLib::GetOperatingSystemLCID(DVLib::LcidUser));
 	return result;
 }
+
+std::wstring Configuration::GetString(int indent) const
+{
+	std::wstringstream ss;
+	ss << L", lang=" << GetLanguageString();
+	if (! processor_architecture_filter.empty()) 
+		ss << L", pa=" << processor_architecture_filter;
+	if (! os_filter_greater.empty() || ! os_filter_smaller.empty())
+		ss << L", os=" << os_filter_greater << L"/" << os_filter_smaller;
+	return ss.str();
+}

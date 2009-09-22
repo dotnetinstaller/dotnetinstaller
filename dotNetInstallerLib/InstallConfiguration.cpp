@@ -121,3 +121,12 @@ Components InstallConfiguration::GetSupportedComponents(DWORD oslcid) const
 {
 	return components.GetSupportedComponents(oslcid);
 }
+
+std::wstring InstallConfiguration::GetString(int indent) const
+{
+	std::wstringstream ss;
+	for(int i = 0; i < indent; i++) ss << L" ";
+	ss << L"Install" << Configuration::GetString() << std::endl;
+	ss << components.GetString(indent + 1) << std::endl;
+	return ss.str();
+}

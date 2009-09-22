@@ -59,6 +59,10 @@
             <definition>
               If this package contains an embedded CAB, display its contents.
             </definition>
+            <definedTerm>/DisplayConfig</definedTerm>
+            <definition>
+              Display the complete list of configurations and components without checking processor architecture or lcid.
+            </definition>
             <definedTerm>/ComponentArgs "description":"value"</definedTerm>
             <definition>
               <para>

@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "InstallerSession.h"
+#include "InstallerLog.h"
 
 #define REGISTRY_CURRENTVERSION_RUN L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
 
@@ -172,9 +173,12 @@ void InstallerSession::EnableRunOnReboot(const std::wstring& cmd)
 		reboot_cmd_s.append(L" /Reboot");
 	}
 
+	std::wstring filename = DVLib::GetFileNameW(DVLib::GetModuleFileNameW());
+	LOG(L"Writing HKEY_LOCAL_MACHINE\\" << REGISTRY_CURRENTVERSION_RUN << L"\\" << filename << L": " << reboot_cmd_s);
+
 	DVLib::RegistrySetStringValue(HKEY_LOCAL_MACHINE, 
 		REGISTRY_CURRENTVERSION_RUN, 
-		DVLib::GetFileNameW(DVLib::GetModuleFileNameW()),
+		filename,
 		reboot_cmd_s);
 };
 

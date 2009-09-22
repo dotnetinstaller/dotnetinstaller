@@ -31,6 +31,7 @@ public:
 	DownloadDialog();
 	void Load(TiXmlElement * node);
 	int ExecOnThread();
+	std::wstring GetString(int indent = 0) const;
 };
 
 typedef shared_any<DownloadDialog *, close_delete> DownloadDialogPtr;

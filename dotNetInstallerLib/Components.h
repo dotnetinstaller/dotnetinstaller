@@ -23,4 +23,5 @@ public:
 	const_reference operator[](size_type pos) const { return std::vector<ComponentPtr>::operator[](pos); }
 	// execute components, returns true if all succeeded
 	int Exec(IExecuteCallback * callback);
+	virtual std::wstring GetString(int indent = 0) const;
 };

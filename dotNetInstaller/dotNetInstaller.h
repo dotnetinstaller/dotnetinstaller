@@ -1,15 +1,14 @@
 #pragma once
-
-#ifndef __AFXWIN_H__
-	#error: inclusione di "stdafx.h" prima dell'inclusione di questo file per PCH
-#endif
-
-#include "resource.h"		// simboli principali
+#include "Resource.h"
 
 class CdotNetInstallerApp : public CWinApp
 {
 private:
 	int m_rc;
+	void DisplayHelp();
+    void ExtractCab();
+	void DisplayCab();
+	void DisplayConfig();
 public:
 	CdotNetInstallerApp();
 	BOOL InitInstance();

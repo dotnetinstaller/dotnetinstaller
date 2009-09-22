@@ -5,6 +5,8 @@
 #include "DniMessageBox.h"
 #include "ConfigFileManager.h"
 #include <Version/Version.h>
+#include "ExtractCabProcessor.h"
+#include "ExtractCabDlg.h"
 
 BEGIN_MESSAGE_MAP(CdotNetInstallerApp, CWinApp)
 	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
@@ -13,6 +15,7 @@ END_MESSAGE_MAP()
 CdotNetInstallerApp::CdotNetInstallerApp()
 	: m_rc(0)
 {
+
 }
 
 CdotNetInstallerApp theApp;
@@ -48,9 +51,35 @@ BOOL CdotNetInstallerApp::InitInstance()
 		// propagate command line arguments during execution
 		InstallerSession::Instance->AdditionalCmdLineArgs = InstallerCommandLineInfo::Instance->componentCmdArgs;
 
-		ConfigFileManager config;
-		config.Load();
-		m_rc = config.Run();
+		if (InstallerCommandLineInfo::Instance->DisplayHelp())
+		{
+			DisplayHelp();
+			return FALSE;
+		}
+
+		ConfigFileManagerPtr config(new ConfigFileManager());
+		config->Load();
+
+		// just display CAB contents
+		if (InstallerCommandLineInfo::Instance->DisplayCab())
+		{
+			DisplayCab();
+			return FALSE;
+		}
+		// just extract the CABs
+		else if (InstallerCommandLineInfo::Instance->ExtractCab())
+		{
+			ExtractCab();
+			return FALSE;
+		}
+		// just display the configuration
+		else if (InstallerCommandLineInfo::Instance->DisplayConfig())
+		{
+			DisplayConfig();
+			return FALSE;
+		}
+		
+		m_rc = config->Run();
 	}
 	catch(std::exception& ex)
 	{
@@ -73,4 +102,69 @@ int CdotNetInstallerApp::ExitInstance()
 	// ignore the MFC return code, which is typically the last key pressed
 	CWinApp::ExitInstance();
 	return m_rc;
+}
+
+void CdotNetInstallerApp::DisplayHelp()
+{
+	std::wstringstream hs;
+	hs << L"Usage: " << DVLib::GetFileNameW(DVLib::GetModuleFileNameW()) << L" [args]" << std::endl;
+	hs << std::endl;
+	hs << L" /? or /help : this help screen" << std::endl;
+	hs << L" /q : force silent (no UI) mode" << std::endl;
+	hs << L" /qb : force basic UI mode" << std::endl;
+	hs << L" /nq : force full UI mode" << std::endl;
+	hs << L" /Log : enable logging" << std::endl;
+	hs << L" /LogFile [path] : specify log file" << std::endl;
+	hs << L" /ConfigFile [path] : specify configuration file" << std::endl;
+	hs << L" /ExtractCab: extract embedded components" << std::endl;
+	hs << L" /DisplayCab: display a list of embedded components" << std::endl;
+	hs << L" /DisplayConfig: display a list of configurations" << std::endl;
+	hs << L" /ComponentArgs [\"name\":\"value\" ...] : additional component args" << std::endl;
+	hs << L" /CompleteCommandArgs [args] : additional complete command" << std::endl;
+	hs << L" /Launcher [path] : alternate launcher on reboot" << std::endl;
+	hs << L" /LauncherArgs [args] : additional launcher args on reboot" << std::endl;
+	hs << std::endl;
+	hs << L"Built by dotNetInstaller (DNI), version " << TEXT(VERSION_VALUE);		
+	DniMessageBox::Show(hs.str(), MB_OK|MB_ICONINFORMATION);
+}
+
+void CdotNetInstallerApp::DisplayCab()
+{
+    InstallComponentDlg dlg;
+	ExtractCabProcessorPtr extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, & dlg));
+	DniMessageBox::Show(DVLib::join(extractcab->GetCabFiles(), L"\r\n"), MB_OK|MB_ICONINFORMATION);
+}
+
+void CdotNetInstallerApp::ExtractCab()
+{
+    ExtractCabDlg dlg;
+
+	ExtractCabProcessorPtr p_extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, & dlg));	
+	if (p_extractcab->GetCabCount() == 0)
+		return;
+
+	ConfigurationPtr configuration(new InstallConfiguration());
+	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(configuration));
+	p_configuration->cab_dialog_caption = L"ExtractCab";
+	p_configuration->cab_dialog_message = L"%s";
+
+	p_extractcab->cab_path = DVLib::GetCurrentDirectoryW();
+	p_extractcab->cab_path.append(L"\\SupportFiles");
+
+	if (InstallUILevelSetting::Instance->IsAnyUI())
+		dlg.LoadComponent(configuration, p_extractcab);
+
+	p_extractcab->BeginExec();
+
+	if (InstallUILevelSetting::Instance->IsAnyUI())
+		dlg.DoModal();
+
+	p_extractcab->EndExec();
+}
+
+void CdotNetInstallerApp::DisplayConfig()
+{
+	ConfigFileManagerPtr config(new ConfigFileManager());
+	config->Load();
+	DniMessageBox::Show(config->GetString(), MB_OK|MB_ICONINFORMATION);
 }

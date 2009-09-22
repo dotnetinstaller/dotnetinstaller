@@ -246,3 +246,11 @@ void DownloadFile::Exec(IDownloadCallback * cb)
 		DownloadFromSourceUrl();
 	}
 }
+
+std::wstring DownloadFile::GetString(int indent) const
+{
+	std::wstringstream ss;
+	for (int i = 0; i < indent; i++) ss << L" ";
+	ss << componentname;
+	return ss.str();
+}

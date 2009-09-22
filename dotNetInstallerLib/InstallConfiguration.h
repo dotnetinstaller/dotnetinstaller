@@ -72,6 +72,7 @@ public:
 	virtual void Load(TiXmlElement * node);
 	// returns components that match current platform and processor architecture
 	Components GetSupportedComponents(DWORD oslcid) const;
+	std::wstring GetString(int indent = 0) const;
 };
 
 typedef shared_any<InstallConfiguration *, close_delete> InstallConfigurationPtr;

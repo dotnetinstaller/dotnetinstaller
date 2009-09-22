@@ -6,7 +6,9 @@
     <Topic id="1aa2140c-f65d-4aac-83a4-b86a3a554525" visible="True" title="Multilingual Support" />
   </Topic>
   <Topic id="b88e8650-71df-4328-a720-72ea55cf60f5" visible="True" title="Install Editor &amp; Configuration">
-    <Topic id="db007eb2-ccc6-4657-843e-adad7da5db5b" visible="True" title="Installed Components" />
+    <Topic id="db007eb2-ccc6-4657-843e-adad7da5db5b" visible="True" title="Components">
+      <Topic id="edadc51b-8e65-47a0-9b94-91a6a86e78fd" visible="True" title="Requiring Reboot" />
+    </Topic>
     <Topic id="9cd31590-c899-40a7-897a-d5ca844c2324" visible="True" title="Checks, Operators and Filters" />
     <Topic id="6a0bb485-df81-413c-9bf3-714dc13b3661" visible="True" title="Download Components" />
     <Topic id="4d997108-25a8-4158-8072-c47bf49324bb" visible="True" title="Variable Substitution" />

@@ -95,3 +95,14 @@ int Components::Exec(IExecuteCallback * callback)
 
 	return rc;
 }
+
+std::wstring Components::GetString(int indent) const
+{
+	std::wstringstream ss;
+	for each(const ComponentPtr& component in * this)
+	{
+		ss << component->GetString(indent) << std::endl;
+	}
+
+	return ss.str();
+}

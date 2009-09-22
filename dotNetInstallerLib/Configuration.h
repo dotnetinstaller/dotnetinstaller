@@ -32,7 +32,8 @@ public:
 	virtual void Load(TiXmlElement * node);
 	// returns true if this configuration is supported on this operating system/lcid
 	virtual bool IsSupported(DWORD oslcid) const;
-	std::wstring GetLanguageString() const;
+	virtual std::wstring GetLanguageString() const;
+	virtual std::wstring GetString(int indent = 0) const;
 };
 
 typedef shared_any<Configuration *, close_delete> ConfigurationPtr;

@@ -109,3 +109,13 @@ std::vector<std::wstring> Configurations::GetLanguages() const
 	}
 	return languages;
 }
+
+std::wstring Configurations::GetString() const
+{
+	std::wstringstream ss;
+	for each(const ConfigurationPtr& configuration in (* this))
+	{
+		ss << configuration->GetString();
+	}
+	return ss.str();
+}

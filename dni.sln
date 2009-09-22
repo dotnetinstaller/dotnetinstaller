@@ -74,6 +74,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 		Documentation\Content\BuildingWebSetupForDotNet.aml = Documentation\Content\BuildingWebSetupForDotNet.aml
 		Documentation\Content\Checks.aml = Documentation\Content\Checks.aml
 		Documentation\Content\Components.aml = Documentation\Content\Components.aml
+		Documentation\Content\ComponentsReboot.aml = Documentation\Content\ComponentsReboot.aml
 		Documentation\Content\Contributing.aml = Documentation\Content\Contributing.aml
 		Documentation\Content\Contributors.aml = Documentation\Content\Contributors.aml
 		Documentation\Content\DeploymentStrategies.aml = Documentation\Content\DeploymentStrategies.aml

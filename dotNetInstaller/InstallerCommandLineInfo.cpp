@@ -9,6 +9,7 @@ InstallerCommandLineInfo::InstallerCommandLineInfo()
 	, m_displayHelp(false)
 	, m_lastArgFlag(unknown)
 	, m_reboot(false)
+	, m_displayConfig(false)
 {
 
 }
@@ -74,6 +75,10 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		{
             m_displayCab = true;
 		}
+		else if (_wcsicmp(pszParam, TEXT("displayConfig")) == 0 )
+		{
+            m_displayConfig = true;
+		}
         else if (_wcsicmp(pszParam, TEXT("componentArgs")) == 0)
         {
             m_lastArgFlag = componentArgs;
@@ -81,6 +86,10 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		else if (_wcsicmp(pszParam, TEXT("reboot")) == 0 )
 		{
             m_reboot = true;
+		}
+		else
+		{
+			THROW_EX(L"Invalid command-line parameter: /" << pszParam);
 		}
 	}
 	else
@@ -111,15 +120,20 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 				m_completeCommandArgs = pszParam;
                 break;
             case componentArgs:
-				std::vector<std::wstring> l_componentArgsArray = DVLib::split(pszParam, L":", 2);
-                if (l_componentArgsArray.size() != 2)
-                {
-                    std::string error = "Invalid component argument parameter: ";
-                    error.append(DVLib::wstring2string(pszParam));
-                    throw std::exception(error.c_str());
-                }
-                componentCmdArgs[l_componentArgsArray[0]] = l_componentArgsArray[1];
+				{
+					std::vector<std::wstring> l_componentArgsArray = DVLib::split(pszParam, L":", 2);
+					if (l_componentArgsArray.size() != 2)
+					{
+						std::string error = "Invalid component argument: ";
+						error.append(DVLib::wstring2string(pszParam));
+						throw std::exception(error.c_str());
+					}
+					componentCmdArgs[l_componentArgsArray[0]] = l_componentArgsArray[1];
+				}
                 break;
+			default:
+				THROW_EX(L"Unexpected command-line argument: " << pszParam);
+				break;
 		}
 
         m_lastArgFlag = unknown;

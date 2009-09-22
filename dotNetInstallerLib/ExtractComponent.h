@@ -23,6 +23,7 @@ private:
 	HMODULE m_h;
 	ComponentPtr m_pComponent;
     void ResolvePaths();
-	void ExtractCab();
-	void WriteCab();
+	void Extract();
+	void Write();
+	void Cleanup();
 };

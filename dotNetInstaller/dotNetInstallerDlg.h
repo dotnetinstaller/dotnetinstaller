@@ -27,8 +27,6 @@ private:
 	ConfigurationPtr m_configuration;
 	InstallComponentDlg m_component_dlg;
     void ExtractCab();
-	void DisplayCab();
-	void DisplayHelp();
     void SelectComponents();
     // move a window to the coordinates defined by a rectangle with defaults
     static bool MoveWindow(CWnd& dlg, const WidgetPosition& pos);

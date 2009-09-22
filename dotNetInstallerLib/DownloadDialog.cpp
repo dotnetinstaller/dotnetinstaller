@@ -118,3 +118,13 @@ bool DownloadDialog::IsDownloadRequired() const
 
 	return false;
 }
+
+std::wstring DownloadDialog::GetString(int indent) const
+{
+	std::wstringstream ss;
+	for (size_t i = 0; i < downloadfiles.size(); i++)
+	{
+		ss << downloadfiles[i]->GetString(indent + 1) << std::endl;
+	}
+	return ss.str();
+}

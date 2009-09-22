@@ -139,10 +139,10 @@
             </definition>
             <definedTerm>Vestris.ResourceLib</definedTerm>
             <definition>
-              File attribute patching is done with Vestris ResourceLib.
+              File attribute and version patching is done with Vestris ResourceLib.
               See <externalLink>
-                <linkText>http://www.codeplex.com/ResourceLib</linkText>
-                <linkUri>http://www.codeplex.com/ResourceLib</linkUri>
+                <linkText>http://resourcelib.codeplex.com/</linkText>
+                <linkUri>http://resourcelib.codeplex.com/</linkUri>
               </externalLink> for more information.
             </definition>
             <definedTerm>CommandLineArguments</definedTerm>

@@ -31,6 +31,7 @@ public:
 	// returns configurations that match current platform, lcid and processor architecture
 	std::vector<ConfigurationPtr> GetSupportedConfigurations(DWORD oslcid) const;
 	std::vector<std::wstring> GetLanguages() const;
+	virtual std::wstring GetString() const;
 };
 
 typedef shared_any<Configurations *, close_delete> ConfigurationsPtr;

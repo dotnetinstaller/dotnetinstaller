@@ -13,8 +13,16 @@ protected:
 	bool OnRunConfiguration(const ConfigurationPtr& configuration);
 	bool OnLoad();
 	bool OnSelectLanguage();
+	std::vector<ConfigurationPtr> DownloadReferenceConfigurations(
+		DWORD oslcid, const std::vector<ConfigurationPtr>&, int level);
 public:
 	ConfigFileManager();
+	// load configurations
 	void Load();
+	// run the configurations
 	int Run();
+	// string representation of this configuration
+	std::wstring GetString() const;
 };
+
+typedef shared_any<ConfigFileManager *, close_delete> ConfigFileManagerPtr;

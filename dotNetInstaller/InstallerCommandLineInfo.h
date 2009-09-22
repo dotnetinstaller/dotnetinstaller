@@ -12,6 +12,7 @@ public:
     bool ExtractCab() const { return m_extractCab; }
 	bool DisplayCab() const { return m_displayCab; }
 	bool DisplayHelp() const { return m_displayHelp; }
+	bool DisplayConfig() const { return m_displayConfig; }
 	bool Reboot() const { return m_reboot; }
 public:
 	std::wstring configFile;
@@ -42,5 +43,7 @@ private:
 	bool m_displayHelp;
 	// launched via registry Run after a reboot
 	bool m_reboot;
+	// display configuration
+	bool m_displayConfig;
 };
 

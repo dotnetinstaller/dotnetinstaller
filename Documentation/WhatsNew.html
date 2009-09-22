@@ -38,6 +38,8 @@
                     of 10 to avoid circular references.</li>
                 <li>Added <code>/DisplayCab</code> command line option to dotNetInstaller.exe that displays
                     the embedded CAB file contents when available.</li>
+                <li>Added <code>/DisplayConfig</code> command line option to dotNetInstaller.exe that
+                    displays configurations and components.</li>
                 <li>Added support for relative paths in MSI components by resolving paths before execution.</li>
                 <li>Added <code>version_lt</code>, <code>version_le</code>, <code>version_gt</code>,
                     <code>version_ge</code> and <code>version_eq</code> functions to installed check
@@ -213,7 +215,7 @@
         <li>Silent install support was extended to a full UI, basic UI and no UI mode, silent
             install no longer pops up progress dialogs, while basic UI install does without
             requiring user interaction. All UI modes are enabled via configuration and can be
-            overriden from command line with /q (silent), /qb (basic UI) and /qn (full UI).</li>
+            overriden from command line with /q (silent), /qb (basic UI) and /nq (full UI).</li>
         <li>Hidden folders and files are no longer embedded.</li>
         <li>Added <code>installation_none</code>, displayed instead of <code>installation_complete</code>
             when no components were required. </li>
@@ -222,6 +224,7 @@
         <li>Bug: command-line parameters are not preserved on reboot.</li>
         <li>Bug: /ComponentArgs cannot contain a colon.</li>
         <li>Bug: errors in command line arguments aren't reported.</li>
+        <li>Bug: dotNetInstaller doesn't report invalid command-line parameters.</li>
     </ul>
     <h3>
         1.5 (25 Oct 2008)</h3>

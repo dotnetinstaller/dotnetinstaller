@@ -33,7 +33,7 @@
       <content>
         <para>
           Command-line options can override the UI mode that was set in configuration. These include <command>/q</command>,
-          <command>/qb</command> and <command>/qn</command>. See <link xlink:href="59204cba-278b-4648-a149-35f864cae8cf" /> for
+          <command>/qb</command> and <command>/nq</command>. See <link xlink:href="59204cba-278b-4648-a149-35f864cae8cf" /> for
           details.
         </para>
       </content>

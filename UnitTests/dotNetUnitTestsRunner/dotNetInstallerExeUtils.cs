@@ -18,6 +18,12 @@ namespace dotNetUnitTestsRunner
             public string logfile = DefaultLogFile;
             public bool quiet = true;
             public bool reboot = false;
+            public string args;
+
+            public RunOptions()
+            {
+            
+            }
 
             public RunOptions(string file)
             {
@@ -36,19 +42,31 @@ namespace dotNetUnitTestsRunner
             {
                 get
                 {
-                    string args = string.Format("/ConfigFile \"{0}\"", configFile);
-                    if (quiet) args += " /q";
-                    if (reboot) args += " /reboot";
+                    string result = string.Empty;
+                    if (! string.IsNullOrEmpty(configFile))
+                    {
+                        result += string.Format("/ConfigFile \"{0}\"", configFile);
+                    }
+
+                    if (quiet) result += " /q";
+                    if (reboot) result += " /reboot";
                     if (log)
                     {
-                        args += " /Log";
+                        result += " /Log";
                         if (!string.IsNullOrEmpty(logfile))
                         {
                             Console.WriteLine("Log: {0}", (logfile));
-                            args += string.Format(" /LogFile \"{0}\"", logfile);
+                            result += string.Format(" /LogFile \"{0}\"", logfile);
                         }
                     }
-                    return args;
+
+                    if (!string.IsNullOrEmpty(args))
+                    {
+                        result += " ";
+                        result += args;
+                    }
+
+                    return result;
                 }
             }
         }

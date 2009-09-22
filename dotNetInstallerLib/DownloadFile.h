@@ -28,6 +28,7 @@ public:
 	virtual ~DownloadFile();
 	void Load(TiXmlElement * node);
 	void Exec(IDownloadCallback * callback);
+	std::wstring GetString(int indent = 0) const;
 public:
 	// IBindStatusCallback
 	STDMETHOD(OnStartBinding)(DWORD dwReserved, IBinding __RPC_FAR *pib);

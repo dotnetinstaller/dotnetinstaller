@@ -53,3 +53,17 @@ void ReferenceConfiguration::Exec()
 		downloaddialog->Exec();
 	}
 }
+
+std::wstring ReferenceConfiguration::GetString(int indent) const
+{
+	std::wstringstream ss;
+	for(int i = 0; i < indent; i++) ss << L" ";
+	ss << L"Reference " << Configuration::GetString();
+	
+	if (get(downloaddialog))
+	{
+		ss << std::endl << downloaddialog->GetString(indent + 1);
+	}
+
+	return ss.str();
+}

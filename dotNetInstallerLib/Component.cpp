@@ -112,3 +112,17 @@ bool Component::IsSupported(DWORD oslcid) const
 		DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), processor_architecture_filter) &&
 		DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter_greater, os_filter_smaller);
 }
+
+std::wstring Component::GetString(int indent) const
+{
+	std::wstringstream ss;
+	for (int i = 0; i < indent; i++) ss << L" ";
+	ss << description;
+	if (! os_filter_lcid.empty())
+		ss << L", lang=" << os_filter_lcid;
+	if (! processor_architecture_filter.empty()) 
+		ss << L", pa=" << processor_architecture_filter;
+	if (! os_filter_greater.empty() || ! os_filter_smaller.empty())
+		ss << L", os=" << os_filter_greater << L"/" << os_filter_smaller;
+	return ss.str();
+}
