@@ -23,7 +23,7 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		{
 			m_displayHelp = true;
 		}
-		if (_wcsicmp(pszParam, TEXT("log")) == 0 )
+		else if (_wcsicmp(pszParam, TEXT("log")) == 0 )
 		{
 			InstallerLog::Instance->EnableLog();
 		}

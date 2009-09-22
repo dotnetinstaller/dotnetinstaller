@@ -7,6 +7,5 @@ namespace DniMessageBox
 		const std::wstring& p_lpszText, 
 		UINT p_nType = MB_OK, 
 		UINT p_nDefaultResult = MB_OK, 
-		UINT p_nIDHelp = 0,
-		UINT p_nTimer = 3000);
+		UINT p_nIDHelp = 0);
 };

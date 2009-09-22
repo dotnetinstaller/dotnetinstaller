@@ -1,28 +1,49 @@
 #include "stdafx.h"
 #include "DniMessageBox.h"
 
-void CALLBACK CloseMessageBox(HWND /*p_hwnd*/, UINT /*p_uiMsg*/, UINT /*p_idEvent*/, DWORD /*p_dwTime*/)
+HWND g_hMessageBox = NULL;
+HHOOK g_hHook = NULL;
+
+UINT MessageBoxCloseThreadProc(LPVOID msTilAutoClose)
 {
-	HWND hwnd = FindWindow(NULL, AfxGetApp()->m_pszAppName);
-	if (hwnd != NULL)
+	Sleep((DWORD) msTilAutoClose);
+	if (IsWindow(g_hMessageBox))
 	{
-		EndDialog(hwnd, 0xFFFFFF);
+		EndDialog(g_hMessageBox, 0xFFFFFF);
+		g_hMessageBox = NULL;
 	}
+	return 0;
 }
 
-int DniMessageBox::Show(const std::wstring& p_lpszText, UINT p_nType /*=MB_OK*/, UINT p_nDefaultResult /*=MB_OK*/, UINT p_nIDHelp /*=0*/, UINT p_nTime)
+LRESULT CALLBACK CBTProc(int nCode, WPARAM wParam, LPARAM /* lParam */)
+{
+	if (HCBT_CREATEWND == nCode)
+	{
+		// the first window to be created is the message box itself.
+		g_hMessageBox = reinterpret_cast<HWND>(wParam);
+		CHECK_WIN32_BOOL(::UnhookWindowsHookEx(g_hHook),
+			L"Error in UnhookWindowsHookEx");
+		g_hHook = NULL;
+		ASSERT(IsWindow(g_hMessageBox));
+		CHECK_WIN32_BOOL(NULL != AfxBeginThread(MessageBoxCloseThreadProc, (LPVOID) 2500),
+			L"Error starting timeout thread");
+	}
+
+	return 0;
+}
+
+int DniMessageBox::Show(const std::wstring& p_lpszText, UINT p_nType /*=MB_OK*/, UINT p_nDefaultResult /*=MB_OK*/, UINT p_nIDHelp /*=0*/)
 {
 	int result = p_nDefaultResult;
 	switch(InstallUILevelSetting::Instance->GetUILevel())
 	{
-	// basic UI, dialogs appear and disappear
+	// basic UI, dialogs appear and disappea
 	case InstallUILevelBasic:
 		{
-			UINT_PTR timer = SetTimer(NULL, 0, p_nTime, (TIMERPROC) CloseMessageBox);
-			CHECK_BOOL(timer != NULL, L"Error setting message box timer");
+			g_hHook = SetWindowsHookEx(WH_CBT, CBTProc, NULL, GetCurrentThreadId());
+			CHECK_WIN32_BOOL(NULL != g_hHook, L"Error setting CBT hook");
 			result = AfxMessageBox(p_lpszText.c_str(), p_nType, p_nIDHelp);
 			if (result == 0xFFFFFF) result = p_nDefaultResult;
-			KillTimer(NULL, timer);
 		}
 		break;
 
