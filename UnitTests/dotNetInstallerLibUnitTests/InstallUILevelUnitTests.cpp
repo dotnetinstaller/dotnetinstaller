@@ -42,3 +42,49 @@ void InstallUILevelUnitTests::testGetCommand()
 		CPPUNIT_ASSERT(command == testdata[i].command);
 	}
 }
+
+void InstallUILevelUnitTests::testIsAnything()
+{
+	struct TestData
+	{
+		InstallUILevel configLevel;
+		InstallUILevel runtimeLevel;
+		InstallUILevel level;
+		bool isAnyUI;
+		bool isSilent;
+	};
+
+	TestData testdata[] = 
+	{
+		// not set
+		{ InstallUILevelNotSet, InstallUILevelNotSet, InstallUILevelFull, true, false },
+		{ InstallUILevelNotSet, InstallUILevelFull, InstallUILevelFull, true, false },
+		{ InstallUILevelNotSet, InstallUILevelBasic, InstallUILevelBasic, true, true },
+		{ InstallUILevelNotSet, InstallUILevelSilent, InstallUILevelSilent, false, true },
+		// full, runtime overwrites config
+		{ InstallUILevelFull, InstallUILevelNotSet, InstallUILevelFull, true, false },
+		{ InstallUILevelFull, InstallUILevelFull, InstallUILevelFull, true, false },
+		{ InstallUILevelFull, InstallUILevelBasic, InstallUILevelBasic, true, true },
+		{ InstallUILevelFull, InstallUILevelSilent, InstallUILevelSilent, false, true },
+		// basic
+		{ InstallUILevelBasic, InstallUILevelNotSet, InstallUILevelBasic, true, true },
+		{ InstallUILevelBasic, InstallUILevelFull, InstallUILevelFull, true, false },
+		{ InstallUILevelBasic, InstallUILevelBasic, InstallUILevelBasic, true, true },
+		{ InstallUILevelBasic, InstallUILevelSilent, InstallUILevelSilent, false, true },
+		// basic
+		{ InstallUILevelSilent, InstallUILevelNotSet, InstallUILevelSilent, false, true },
+		{ InstallUILevelSilent, InstallUILevelFull, InstallUILevelFull, true, false },
+		{ InstallUILevelSilent, InstallUILevelBasic, InstallUILevelBasic, true, true },
+		{ InstallUILevelSilent, InstallUILevelSilent, InstallUILevelSilent, false, true },
+	};
+
+	for (int i = 0; i < ARRAYSIZE(testdata); i++)
+	{
+		InstallUILevelSetting::Instance->SetConfigLevel(testdata[i].configLevel);
+		InstallUILevelSetting::Instance->SetRuntimeLevel(testdata[i].runtimeLevel);
+		std::wcout << std::endl << i << ": " << testdata[i].configLevel << L" + " << testdata[i].runtimeLevel;
+		CPPUNIT_ASSERT(testdata[i].level == InstallUILevelSetting::Instance->GetUILevel());
+		CPPUNIT_ASSERT(testdata[i].isAnyUI == InstallUILevelSetting::Instance->IsAnyUI());
+		CPPUNIT_ASSERT(testdata[i].isSilent == InstallUILevelSetting::Instance->IsSilent());
+	}
+}

@@ -24,6 +24,8 @@ bool InstallUILevelSetting::IsSilent() const
 {
 	switch(m_RuntimeLevel)
 	{
+	case InstallUILevelFull:
+		return false;
 	case InstallUILevelBasic:
 	case InstallUILevelSilent:
 		return true;
@@ -31,6 +33,8 @@ bool InstallUILevelSetting::IsSilent() const
 
 	switch(m_ConfigLevel)
 	{
+	case InstallUILevelFull:
+		return false;
 	case InstallUILevelBasic:
 	case InstallUILevelSilent:
 		return true;
@@ -43,12 +47,18 @@ bool InstallUILevelSetting::IsAnyUI() const
 {
 	switch(m_RuntimeLevel)
 	{
+	case InstallUILevelFull:
+	case InstallUILevelBasic:
+		return true;
 	case InstallUILevelSilent:
 		return false;
 	}
 
 	switch(m_ConfigLevel)
 	{
+	case InstallUILevelFull:
+	case InstallUILevelBasic:
+		return true;
 	case InstallUILevelSilent:
 		return false;
 	}
