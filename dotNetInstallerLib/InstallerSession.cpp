@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "InstallerSession.h"
 #include "InstallerLog.h"
+#include "InstallerLauncher.h"
 
 #define REGISTRY_CURRENTVERSION_RUN L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
 
@@ -150,36 +151,33 @@ std::wstring InstallerSession::ExpandRegistryVariables(const std::wstring& s_in)
 	return s;
 }
 
-void InstallerSession::EnableRunOnReboot(const std::wstring& cmd)
+std::wstring InstallerSession::GetRebootCmd(const std::wstring& add) const
 {
 	std::wstringstream reboot_cmd;
-	if (! cmd.empty())
+	// launcher command-line
+	reboot_cmd << InstallerLauncher::Instance->GetCmd();
+	// additional switches
+	if (! add.empty())
 	{
-		reboot_cmd << cmd;
+		reboot_cmd << L" " << add;
 	}
-	// if no launcher argument was specified, use the command line
-	else
+	// additional reboot switch
+	if (reboot_cmd.str().find(L"/Reboot") == std::wstring::npos)
 	{
-		reboot_cmd << L"\"" << DVLib::GetModuleFileNameW() << L"\"";
-        if (__argc > 1)
-        {
-            reboot_cmd << (::GetCommandLineW() + wcslen(__targv[0]) + (::GetCommandLineW()[0] == '\"' ? 2 : 0));
-        }
+		reboot_cmd << L" /Reboot";
 	}
+	return reboot_cmd.str();
+}
 
-	std::wstring reboot_cmd_s = reboot_cmd.str();
-	if (reboot_cmd_s.find(L"/Reboot") == reboot_cmd_s.npos)
-	{
-		reboot_cmd_s.append(L" /Reboot");
-	}
-
+void InstallerSession::EnableRunOnReboot(const std::wstring& add)
+{	
+	std::wstring reboot_cmd = GetRebootCmd(add);
 	std::wstring filename = DVLib::GetFileNameW(DVLib::GetModuleFileNameW());
-	LOG(L"Writing HKEY_LOCAL_MACHINE\\" << REGISTRY_CURRENTVERSION_RUN << L"\\" << filename << L": " << reboot_cmd_s);
-
+	LOG(L"Writing HKEY_LOCAL_MACHINE\\" << REGISTRY_CURRENTVERSION_RUN << L"\\" << filename << L": " << reboot_cmd);
 	DVLib::RegistrySetStringValue(HKEY_LOCAL_MACHINE, 
 		REGISTRY_CURRENTVERSION_RUN, 
 		filename,
-		reboot_cmd_s);
+		reboot_cmd);
 };
 
 void InstallerSession::DisableRunOnReboot()

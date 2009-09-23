@@ -72,3 +72,40 @@ void InstallerSessionUnitTests::testEnableRunOnReboot()
 		L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
 		DVLib::GetFileNameW(DVLib::GetModuleFileNameW())));
 }
+
+void InstallerSessionUnitTests::testGetRebootCmd()
+{
+	struct TestData
+	{
+		LPCWSTR path;
+		LPCWSTR args;
+		LPCWSTR add;
+		std::wstring cmd;
+	};
+
+	std::wstring module = L"\"" + DVLib::GetModuleFileNameW() + L"\"";
+	std::wstring args = DVLib::trim((::GetCommandLineW() + wcslen(__targv[0]) + 
+			(::GetCommandLineW()[0] == '\"' ? 2 : 0)));
+	if (! args.empty()) args = L" " + args;
+
+	TestData testdata[] = 
+	{
+		{ L"", L"", L"", module + args + L" /Reboot" },
+		{ L"path", L"", L"", L"\"path\"" + args + L" /Reboot" },
+		{ L"", L"args", L"", module + args + L" args /Reboot" },
+		{ L"path", L"args", L"", L"\"path\"" + args + L" args /Reboot" },
+		{ L"", L"", L"add", module + args + L" add /Reboot" },
+		{ L"path", L"", L"add", L"\"path\"" + args + L" add /Reboot" },
+		{ L"", L"args", L"add", module + args + L" args add /Reboot" },
+		{ L"path", L"args", L"add", L"\"path\"" + args + L" args add /Reboot" },
+	};
+
+	for (int i = 0; i < ARRAYSIZE(testdata); i++)
+	{
+		InstallerLauncher::Instance->SetLauncherPath(testdata[i].path);
+		InstallerLauncher::Instance->SetLauncherArgs(testdata[i].args);
+		std::wstring cmd = InstallerSession::Instance->GetRebootCmd(testdata[i].add);
+		std::wcout << std::endl << i << ": " << cmd;
+		CPPUNIT_ASSERT(cmd == testdata[i].cmd);
+	}
+}

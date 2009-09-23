@@ -26,6 +26,9 @@ public:
 	void EnableRunOnReboot(const std::wstring& cmd = L"");
 	// remove session from subsequent reboot
 	void DisableRunOnReboot();
+	// returns the reboot command
+	std::wstring GetRebootCmd(const std::wstring& additional) const;
+
 };
 
 

@@ -22,7 +22,7 @@
         .NET Framework. Such an application is known as a <newTerm>bootstrapper</newTerm>.
       </para>
       <para>
-        A bootstrapper is also enables additional scenarios not supported by one single installer.
+        A bootstrapper also enables additional scenarios not supported by one single installer.
         <list class="bullet">
           <listItem>
             Distribute a single, compressed, executable packaged setup with all pre-requisites.
@@ -41,7 +41,7 @@
           </listItem>
           <listItem>
             Support workflow that includes a reboot in the middle of an installation between
-            inter-dependent components.
+            interdependent components.
           </listItem>
           <listItem>
             Support web-based scenarios that include on-demand downloading the latest versions of the installed software
@@ -50,7 +50,7 @@
         </list>
       </para>
       <para>
-        This project consists of the following components:
+        This project consists of the following elements:
         <list class="bullet">
           <listItem>
             <application>dotNetInstaller</application>: main bootstrapper application, written in C++.
@@ -90,8 +90,8 @@
         </externalLink> by David Icardi.
         It's now fully open-sourced and maintained on CodePlex at
         <externalLink>
-          <linkUri>http://www.codeplex.com/dotnetinstaller/</linkUri>
-          <linkText>http://www.codeplex.com/dotnetinstaller/</linkText>
+          <linkUri>http://dotnetinstaller.codeplex.com/</linkUri>
+          <linkText>http://dotnetinstaller.codeplex.com/</linkText>
         </externalLink> by a community of developers that use dotNetInstaller in their own projects.
       </para>
     </introduction>

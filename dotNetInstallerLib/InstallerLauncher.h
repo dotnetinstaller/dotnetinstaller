@@ -9,7 +9,8 @@ public:
 	InstallerLauncher();
 	void SetLauncherPath(const std::wstring& path) { launcherPath = path; }
 	void SetLauncherArgs(const std::wstring args) { launcherArgs = args; }
-	std::wstring GetLauncherCmd() const;
+	// get launcher command, default is current process
+	std::wstring GetCmd() const;
 private:
 	std::wstring launcherPath;
 	std::wstring launcherArgs;

@@ -243,9 +243,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 
 		if (m_reboot)
 		{
-			InstallerSession::Instance->EnableRunOnReboot(
-				InstallerLauncher::Instance->GetLauncherCmd() + 
-				L" " + p_configuration->reboot_cmd);
+			InstallerSession::Instance->EnableRunOnReboot(p_configuration->reboot_cmd);
 			DVLib::ExitWindowsSystem(EWX_REBOOT);
 			PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);
 			return;
