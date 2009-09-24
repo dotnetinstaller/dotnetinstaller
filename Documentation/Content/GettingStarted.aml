@@ -14,7 +14,7 @@
             <definition>
               A complete package that consists of several <newTerm>setup packages</newTerm>,
               a <newTerm>bootstrapper</newTerm>, a <newTerm>configuration file</newTerm> with one
-              or many <newTerm>configurations</newTerm> and additional support files.
+              or more <newTerm>configurations</newTerm> and additional support files.
             </definition>
             <definedTerm>setup package</definedTerm>
             <definition>
@@ -23,7 +23,7 @@
             <definedTerm>bootstrapper</definedTerm>
             <definition>
               The dotNetInstaller executable that the users see when they run the <newTerm>installer</newTerm>.
-              This is a simple GUI, <newTerm>dotNetInstaller.exe</newTerm>, that
+              This is a simple GUI, <application>dotNetInstaller.exe</application>, that
               <newTerm>bootstraps</newTerm> an installation by deploying pre-requisites in the
               correct order.
             </definition>
@@ -35,16 +35,17 @@
             </definition>
             <definedTerm>configuration file</definedTerm>
             <definition>
-              An XML file that contains multiple configurations and that can be
-              edited with the <newTerm>installer editor</newTerm>.
+              An XML file file, typically <application>configuration.xml</application>, that contains multiple 
+              configurations and that can be edited with the <newTerm>installer editor</newTerm>.
             </definition>
             <definedTerm>installer editor</definedTerm>
             <definition>
-              A tool, <application>InstallerEditor.exe</application> that can edit a <newTerm>configuration file</newTerm>.
+              A tool, <application>InstallerEditor.exe</application> that can edit a 
+              <newTerm>configuration file</newTerm>.
             </definition>
             <definedTerm>installer linker</definedTerm>
             <definition>
-              A tool, <newTerm>InstallerLinker.exe</newTerm> that can create bootstrapped
+              A tool, <application>InstallerLinker.exe</application> that can create bootstrapped
               <newTerm>installers</newTerm>.
             </definition>
             <definedTerm>component</definedTerm>

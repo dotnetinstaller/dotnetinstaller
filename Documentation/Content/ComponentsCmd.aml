@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="69d68f5b-26f3-44fe-a4b9-34f7617cc300" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        A component of type <literal>cmd</literal> executes a user-defined command.
+      </para>
+    </introduction>
+    <section address="component_cmd_options">
+      <title>Component Options</title>
+      <content>
+        <para>
+          <tableDefinition>
+            <definedTerm>command</definedTerm>
+            <definition>
+              Command to execute in full UI mode. Use <application>cmd.exe</application> to run typical commands, eg. 
+              <literal>cmd.exe /C copy ...</literal>.
+            </definition>
+            <definedTerm>command_basic</definedTerm>
+            <definition>
+              Command to execute in basic UI mode. Defaults to <literal>command_silent</literal>, then to <literal>command</literal>
+              when not specified.
+            </definition>
+            <definedTerm>cmdparameters_silent</definedTerm>
+            <definition>
+              Command to execute in silent mode. Defaults to <literal>command_basic</literal>, then to <literal>command</literal> 
+              when not specified.
+            </definition>
+          </tableDefinition>
+        </para>
+      </content>
+    </section>
+    <relatedTopics>
+      <codeEntityReference qualifyHint="true">T:InstallerLib.ComponentCmd</codeEntityReference>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

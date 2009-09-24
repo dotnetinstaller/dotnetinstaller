@@ -16,17 +16,17 @@ namespace InstallerLib
     [XmlChild(typeof(DownloadDialog), Max = 1)]
     [XmlChild(typeof(EmbedFile))]
     [XmlChild(typeof(EmbedFolder))]
-    public abstract class Component : XmlClassImpl
+    public abstract class Component : XmlClass
     {
-        public Component(string p_type)
-            : this(p_type, "COMPONENT_NAME")
+        public Component(string type)
+            : this(type, "COMPONENT_NAME")
         {
 
         }
 
-        public Component(string p_type, string p_ComponentName)
+        public Component(string type, string name)
         {
-            m_type = p_type;
+            m_type = type;
 
             m_mustreboot = false;
             m_required = true;
@@ -34,14 +34,14 @@ namespace InstallerLib
             m_os_filter_lcid = "";
             m_os_filter_smaller = "";
 
-            Template.Template_component tpl = Template.CurrentTemplate.component(p_ComponentName);
+            Template.Template_component tpl = Template.CurrentTemplate.component(name);
 
             m_description = tpl.description;
             m_installcompletemessage = tpl.installcompletemessage;
         }
 
-        #region Attributi
-        private string m_type; //can be cmd or msi or openfile
+        #region Attributes
+        private string m_type;
         [Description("The type of the component; can be 'cmd' for executing generic command line installation or 'msi' for installing Windows Installer MSI package or 'openfile' to open a file. (REQUIRED)")]
         public string type
         {
@@ -139,14 +139,6 @@ namespace InstallerLib
             set { m_description = value; OnDescriptionChanged(); }
         }
 
-        //		private string m_installmessage;
-        //		[Description("The message used to confirm the installation of this component. (REQUIRED)")]
-        //		public string installmessage
-        //		{
-        //			get{return m_installmessage;}
-        //			set{m_installmessage = value;}
-        //		}
-
         private string m_note;
         [Description("Note, not used by the setup. (OPTIONAL)")]
         public string note
@@ -190,7 +182,7 @@ namespace InstallerLib
 
         public event EventHandler DescriptionChanged;
 
-        #region IXmlClass Members
+        #region XmlClass Members
 
         public override string XmlTag
         {

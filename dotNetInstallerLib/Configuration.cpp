@@ -47,7 +47,7 @@ std::wstring Configuration::GetLanguageString() const
 	return result;
 }
 
-std::wstring Configuration::GetString(int indent) const
+std::wstring Configuration::GetString(int /* indent */) const
 {
 	std::wstringstream ss;
 	ss << L", lang=" << GetLanguageString();

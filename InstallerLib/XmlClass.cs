@@ -9,45 +9,11 @@ namespace InstallerLib
     /// <summary>
     /// An xml entity that can be stored.
     /// </summary>
-    public interface IXmlClass
+    public abstract class XmlClass
     {
-        /// <summary>
-        /// Component comment
-        /// </summary>
-        string Comment { get; set; }
-        /// <summary>
-        /// Name of the xml tag
-        /// </summary>
-        string XmlTag { get; }
-        /// <summary>
-        /// Write xml
-        /// </summary>
-        /// <param name="p_Writer"></param>
-        void ToXml(XmlWriter p_Writer);
-        /// <summary>
-        /// Read xml
-        /// </summary>
-        /// <param name="p_Element"></param>
-        void FromXml(XmlElement p_Element);
-        /// <summary>
-        /// Get an array of physical files to embed
-        /// </summary>
-        /// <returns></returns>
-        EmbedFileCollection GetFiles(string supportdir);
-        /// <summary>
-        /// Children
-        /// </summary>
-        IXmlClassCollection<IXmlClass> Children { get; set; }
-    }
-
-    /// <summary>
-    /// An xml entity that can be stored.
-    /// </summary>
-    public abstract class XmlClassImpl : IXmlClass
-    {
-        public XmlClassImpl()
+        public XmlClass()
         {
-            m_children = new IXmlClassCollection<IXmlClass>(this);
+            m_children = new XmlClassCollection(this);
         }
 
         private string _comment = string.Empty;
@@ -62,7 +28,7 @@ namespace InstallerLib
             set { _comment = value; }
         }
 
-        public void ToXml(XmlWriter p_Writer)
+        internal void ToXml(XmlWriter p_Writer)
         {
             // write header
             if (!string.IsNullOrEmpty(Comment))
@@ -78,7 +44,7 @@ namespace InstallerLib
             p_Writer.WriteEndElement();
         }
 
-        public void FromXml(XmlElement p_Element)
+        internal void FromXml(XmlElement p_Element)
         {
             // read comment
             if (p_Element.PreviousSibling != null && p_Element.PreviousSibling.NodeType == XmlNodeType.Comment)
@@ -120,7 +86,7 @@ namespace InstallerLib
             return false;
         }
 
-        private IXmlClass CreateFromXml(XmlElement node)
+        private XmlClass CreateFromXml(XmlElement node)
         {
             switch (node.LocalName)
             {
@@ -145,9 +111,9 @@ namespace InstallerLib
             }
         }
 
-        private IXmlClassCollection<IXmlClass> m_children = null;
+        private XmlClassCollection m_children = null;
         [System.ComponentModel.Browsable(false)]
-        public IXmlClassCollection<IXmlClass> Children
+        public XmlClassCollection Children
         {
             get { return m_children; }
             set { m_children = value; }
@@ -156,7 +122,7 @@ namespace InstallerLib
         public virtual EmbedFileCollection GetFiles(string supportdir)
         {
             EmbedFileCollection c_files = new EmbedFileCollection(supportdir);
-            foreach (IXmlClass c in Children)
+            foreach (XmlClass c in Children)
             {
                 c_files.AddRange(c.GetFiles(supportdir));
             }
@@ -173,7 +139,7 @@ namespace InstallerLib
 
         #region Attribute Values
 
-        public bool ReadAttributeValue(XmlElementEventArgs e, string value, ref string propertyName)
+        protected bool ReadAttributeValue(XmlElementEventArgs e, string value, ref string propertyName)
         {
             XmlAttribute xmlattrib = e.XmlElement.Attributes[value];
             if (xmlattrib != null)
@@ -187,7 +153,7 @@ namespace InstallerLib
             }
         }
 
-        public bool ReadAttributeValue<T>(XmlElementEventArgs e, string value, ref T propertyName)            
+        protected bool ReadAttributeValue<T>(XmlElementEventArgs e, string value, ref T propertyName)            
         {
             XmlAttribute xmlattrib = e.XmlElement.Attributes[value];
             if (xmlattrib != null && !string.IsNullOrEmpty(xmlattrib.InnerText))
@@ -201,7 +167,7 @@ namespace InstallerLib
             }
         }
 
-        public bool ReadAttributeValue(XmlElementEventArgs e, string value, ref Rectangle propertyName)
+        protected bool ReadAttributeValue(XmlElementEventArgs e, string value, ref Rectangle propertyName)
         {
             XmlAttribute xmlattrib = e.XmlElement.Attributes[value];
             if (xmlattrib != null && ! string.IsNullOrEmpty(xmlattrib.InnerText))
@@ -215,7 +181,7 @@ namespace InstallerLib
             }
         }
 
-        public bool ReadAttributeValue(XmlElementEventArgs e, string value, ref Guid propertyName)
+        protected bool ReadAttributeValue(XmlElementEventArgs e, string value, ref Guid propertyName)
         {
             XmlAttribute xmlattrib = e.XmlElement.Attributes[value];
             if (xmlattrib != null && !string.IsNullOrEmpty(xmlattrib.InnerText))
@@ -229,7 +195,7 @@ namespace InstallerLib
             }
         }
 
-        public bool ReadAttributeValue(XmlElementEventArgs e, string value, ref bool propertyName)
+        protected bool ReadAttributeValue(XmlElementEventArgs e, string value, ref bool propertyName)
         {
             XmlAttribute xmlattrib = e.XmlElement.Attributes[value];
             if (xmlattrib != null && !string.IsNullOrEmpty(xmlattrib.InnerText))
@@ -246,17 +212,16 @@ namespace InstallerLib
     }
 
     /// <summary>
-    /// A collection of elements of type IXmlClass
+    /// A collection of elements of type XmlClass
     /// </summary>
-    public class IXmlClassCollection<T> : System.Collections.Generic.List<T>
-        where T : IXmlClass
+    public class XmlClassCollection : List<XmlClass>
     {
-        IXmlClass _parent = null;
+        XmlClass _parent = null;
 
         /// <summary>
-        /// Initializes a new empty instance of the IXmlClassCollection class.
+        /// Initializes a new empty instance of the XmlClassCollection class.
         /// </summary>
-        public IXmlClassCollection(IXmlClass parent)
+        public XmlClassCollection(XmlClass parent)
         {
             _parent = parent;
         }
@@ -267,7 +232,7 @@ namespace InstallerLib
             return CanAdd(value, out reason);
         }
 
-        public bool CanAdd(IXmlClass value)
+        public bool CanAdd(XmlClass value)
         {
             return CanAdd(value.GetType());
         }
@@ -314,12 +279,12 @@ namespace InstallerLib
         }
 
         /// <summary>
-        /// Adds an instance of type IXmlClass to the end of this IXmlClassCollection.
+        /// Adds an instance of type XmlClass to the end of this XmlClassCollection.
         /// </summary>
         /// <param name="value">
-        /// The IXmlClass to be added to the end of this IXmlClassCollection.
+        /// The XmlClass to be added to the end of this XmlClassCollection.
         /// </param>
-        public new void Add(T value)
+        public new void Add(XmlClass value)
         {
             Exception reason = null;
             if (!CanAdd(value.GetType(), out reason))
@@ -328,24 +293,24 @@ namespace InstallerLib
         }
 
         /// <summary>
-        /// Type-specific enumeration class, used by IXmlClassCollection.GetEnumerator.
+        /// Type-specific enumeration class, used by XmlClassCollection.GetEnumerator.
         /// </summary>
         public class TypeEnumerator : System.Collections.IEnumerator
         {
             private System.Collections.IEnumerator wrapped;
             private Type type;
 
-            public TypeEnumerator(Type t, IXmlClassCollection<T> collection)
+            public TypeEnumerator(Type t, XmlClassCollection collection)
             {
                 this.type = t;
                 this.wrapped = collection.GetEnumerator();
             }
 
-            public IXmlClass Current
+            internal XmlClass Current
             {
                 get
                 {
-                    return (IXmlClass)this.wrapped.Current;
+                    return (XmlClass) this.wrapped.Current;
                 }
             }
 
@@ -353,7 +318,7 @@ namespace InstallerLib
             {
                 get
                 {
-                    return (IXmlClass)this.wrapped.Current;
+                    return (XmlClass) this.wrapped.Current;
                 }
             }
 
@@ -377,14 +342,14 @@ namespace InstallerLib
         }
 
         /// <summary>
-        /// Returns an enumerator that can iterate through specific type of elements of this IXmlClassCollection.
+        /// Returns an enumerator that can iterate through specific type of elements of this XmlClassCollection.
         /// </summary>
         /// <returns>
         /// An object that implements System.Collections.IEnumerator.
         /// </returns>        
-        public virtual IXmlClassCollection<T>.TypeEnumerator GetEnumerator(Type t)
+        public virtual XmlClassCollection.TypeEnumerator GetEnumerator(Type t)
         {
-            return new IXmlClassCollection<T>.TypeEnumerator(t, this);
+            return new XmlClassCollection.TypeEnumerator(t, this);
         }
 
         public int GetCount(Type t)
@@ -398,7 +363,7 @@ namespace InstallerLib
 
         public virtual void ToXml(XmlWriter p_Writer)
         {
-            foreach (IXmlClass c in this)
+            foreach (XmlClass c in this)
             {
                 c.ToXml(p_Writer);
             }
@@ -406,7 +371,7 @@ namespace InstallerLib
     }
 
     /// <summary>
-    /// An attribute thast identifies child types that can be added to the IXmlClass object
+    /// An attribute thast identifies child types that can be added to the XmlClass object
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = true)]
     public class XmlChild : Attribute

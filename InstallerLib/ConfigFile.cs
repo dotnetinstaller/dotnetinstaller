@@ -32,7 +32,7 @@ namespace InstallerLib
     /// </summary>
     [XmlChild(typeof(WebConfiguration))]
     [XmlChild(typeof(SetupConfiguration))]
-    public class ConfigFile : XmlClassImpl
+    public class ConfigFile : XmlClass
     {
         public ConfigFile()
         {

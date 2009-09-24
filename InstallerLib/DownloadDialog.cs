@@ -12,7 +12,7 @@ namespace InstallerLib
     /// A download dialog that contains one or more download files.
     /// </summary>
     [XmlChild(typeof(Download))]
-    public class DownloadDialog : XmlClassImpl
+    public class DownloadDialog : XmlClass
     {
         public DownloadDialog()
             : this("COMPONENT_NAME")
@@ -103,7 +103,7 @@ namespace InstallerLib
         }
         #endregion
 
-        #region IXmlClass Members
+        #region XmlClass Members
 
         public override string XmlTag
         {

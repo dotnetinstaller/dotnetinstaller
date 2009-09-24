@@ -10,7 +10,7 @@ namespace InstallerLib
     /// A file attribute.
     /// </summary>
     [XmlNoChildren]
-    public class FileAttribute : XmlClassImpl
+    public class FileAttribute : XmlClass
     {
         public FileAttribute()
         {
@@ -35,7 +35,7 @@ namespace InstallerLib
 
         #endregion
 
-        #region IXmlClass Members
+        #region XmlClass Members
 
         public override string XmlTag
         {

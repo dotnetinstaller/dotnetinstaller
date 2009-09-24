@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="40140223-7489-4377-b980-6204d9d21982" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        dotNetInstaller supports various processor architecture filters. You can list those processors on which the
+        entire bootstrapper, configuration or component can be installed. Separate the processor architectures by 
+        commas and use the <literal>! (not)</literal> operator where appropriate.
+      </para>
+    </introduction>
+    <section address="processorarchitecturefilters">
+      <title>Processor Architecture Filters</title>
+      <content>
+        <alert class="note">
+          <para>
+            Note that dotNetInstaller always runs in 32-bit mode, specifically compatibility 32-bit mode on 64-bit operating
+            systems. This doesn't affect its general operating system filter behavior.
+          </para>
+        </alert>
+        <para>
+          The following processor architectures are supported.
+          <definitionTable>
+            <definedTerm>x86</definedTerm>
+            <definition>Windows 32-bit.</definition>
+            <definedTerm>x64</definedTerm>
+            <definition>Windows 64-bit.</definition>
+            <definedTerm>mips</definedTerm>
+            <definition></definition>
+            <definedTerm>alpha</definedTerm>
+            <definition></definition>
+            <definedTerm>ppc</definedTerm>
+            <definition></definition>
+            <definedTerm>shx</definedTerm>
+            <definition></definition>
+            <definedTerm>arm</definedTerm>
+            <definition></definition>
+            <definedTerm>ia64</definedTerm>
+            <definition></definition>
+            <definedTerm>alpha64</definedTerm>
+            <definition></definition>
+            <definedTerm>msil</definedTerm>
+            <definition></definition>
+            <definedTerm>ia32onwin64</definedTerm>
+            <definition></definition>
+          </definitionTable>
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

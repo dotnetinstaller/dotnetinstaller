@@ -13,8 +13,8 @@ namespace InstallerEditor
 
         public void CreateChildNodes()
         {
-            IXmlClass item = (IXmlClass) Tag;
-            foreach (IXmlClass child in item.Children)
+            XmlClass item = (XmlClass) Tag;
+            foreach (XmlClass child in item.Children)
             {
                 TreeNodeImpl childnode = CreateNode(child);
                 Nodes.Add(childnode);
@@ -22,7 +22,7 @@ namespace InstallerEditor
             }
         }
 
-        public static TreeNodeImpl CreateNode(IXmlClass item)
+        public static TreeNodeImpl CreateNode(XmlClass item)
         {
             if (item is ConfigFile)
                 return new TreeNodeConfigFile(item as ConfigFile);
@@ -53,12 +53,12 @@ namespace InstallerEditor
 
         public void MoveTo(TreeNodeImpl newParent, int index)
         {
-            if (newParent.Tag is IXmlClass && Tag is IXmlClass)
+            if (newParent.Tag is XmlClass && Tag is XmlClass)
             {
-                IXmlClass currentParentComponent = (IXmlClass)Parent.Tag;
-                IXmlClass newParentComponent = (IXmlClass) newParent.Tag;
+                XmlClass currentParentComponent = (XmlClass)Parent.Tag;
+                XmlClass newParentComponent = (XmlClass) newParent.Tag;
                 // if the two items are part of the same compoenent, indexes will be off
-                IXmlClass item = (IXmlClass)Tag;
+                XmlClass item = (XmlClass)Tag;
                 // remove self from current parent
                 currentParentComponent.Children.Remove(item);
                 // add self to new parent

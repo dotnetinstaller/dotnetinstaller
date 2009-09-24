@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="5af23faf-2976-41b6-87c2-2311ba275e77" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        A component of type <literal>msi</literal> executes a Windows Installer package using the
+        <command>msiexec.exe</command> command.
+      </para>
+    </introduction>
+    <section address="component_msi_options">
+      <title>Component Options</title>
+      <content>
+        <para>
+          <tableDefinition>
+            <definedTerm>package</definedTerm>
+            <definition>
+              A full or relative path to an MSI package or a package GUID. Package GUIDs enable scenarios of reinstalling
+              a previously cached MSI.
+            </definition>
+            <definedTerm>cmdparameters</definedTerm>
+            <definition>
+              Additional command-line parameters to pass to msiexec.exe in full UI mode.
+            </definition>
+            <definedTerm>cmdparameters_basic</definedTerm>
+            <definition>
+              Additional command-line parameters to pass to msiexec.exe in basic UI mode, typically <literal>/qb</literal>.
+            </definition>
+            <definedTerm>cmdparameters_silent</definedTerm>
+            <definition>
+              Additional command-line parameters to pass to msiexec.exe in silent mode, typically <literal>/qn</literal>.
+            </definition>
+          </tableDefinition>
+        </para>
+      </content>
+    </section>
+    <relatedTopics>
+      <codeEntityReference qualifyHint="true">T:InstallerLib.ComponentMsi</codeEntityReference>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

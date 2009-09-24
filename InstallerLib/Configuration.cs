@@ -8,7 +8,7 @@ namespace InstallerLib
     /// <summary>
     /// A configuration.
     /// </summary>
-    public abstract class Configuration : XmlClassImpl
+    public abstract class Configuration : XmlClass
     {
         public Configuration(string p_type)
         {
@@ -93,7 +93,7 @@ namespace InstallerLib
 
         public event EventHandler LCIDChanged;
 
-        #region IXmlClass Members
+        #region XmlClass Members
 
         public override string XmlTag
         {

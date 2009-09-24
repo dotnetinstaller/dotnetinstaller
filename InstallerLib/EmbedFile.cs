@@ -10,7 +10,7 @@ namespace InstallerLib
     /// An embedded file.
     /// </summary>
     [XmlNoChildren]
-    public class EmbedFile : XmlClassImpl
+    public class EmbedFile : XmlClass
     {
         public EmbedFile()
             : this("EmbedFile")
@@ -67,7 +67,7 @@ namespace InstallerLib
             }
         }
 
-        #region IXmlClass Members
+        #region XmlClass Members
 
         public override string XmlTag
         {

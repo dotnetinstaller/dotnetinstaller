@@ -11,54 +11,24 @@
           dotNetInstaller supports the following component types.
           <list class="bullet">
             <listItem>
-              <newTerm>msi</newTerm>: executes a Windows Installer package.
+              <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="5af23faf-2976-41b6-87c2-2311ba275e77" />
+              : executes a Windows Installer package.
             </listItem>
             <listItem>
-              <newTerm>msu</newTerm>: executes a Windows Update package.
+              <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="86590fb5-5d18-4d8e-8997-cdda405f8a0c" />
+              : executes a Windows Update package.
             </listItem>
             <listItem>
-              <newTerm>cmd</newTerm>: executes a command line.
+              <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="69d68f5b-26f3-44fe-a4b9-34f7617cc300" />
+              : executes a command line.
             </listItem>
             <listItem>
-              <newTerm>openfile</newTerm>: executes a file with a shell extension.
+              <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="cf68873b-8ccf-49e8-9241-b334fad069db" />
+              : executes a file with a shell extension.
             </listItem>
           </list>
         </para>
       </content>
-      <section address="msicomponents">
-        <title>Windows Installer MSI Components</title>
-        <content>
-          <para>
-            A component of type <literal>msi</literal> that executes a Windows Installer package using the
-            <command>msiexec.exe</command> command.
-          </para>
-        </content>
-      </section>
-      <section address="msucomponents">
-        <title>Windows Update MSU Components</title>
-        <content>
-          <para>
-            A component of type <literal>msu</literal> that executes a Windows Update package using the
-            <command>wusa.exe</command> command.
-          </para>
-        </content>
-      </section>
-      <section address="commandlinecomponents">
-        <title>Command Line Components</title>
-        <content>
-          <para>
-            A component of type <literal>cmd</literal> that executes an arbitrary command.
-          </para>
-        </content>
-      </section>
-      <section address="openfilecomponents">
-        <title>OpenFile Components</title>
-        <content>
-          <para>
-            A component of type <literal>openfile</literal> that launches a document via a shell extension.
-          </para>
-        </content>
-      </section>
     </section>
     <section address="componentoptions">
       <title>Component Options and Behaviors</title>
@@ -70,25 +40,9 @@
         </para>
       </content>
     </section>
-    <section address="componentoptionsrequired">
-      <title>Required Components</title>
-      <content>
-        <para>
-          Components may be <newTerm>required</newTerm> or <newTerm>optional</newTerm>. This is set by the
-          <literal>required</literal> option. When a component is required, it must be installed successfully in order
-          for the subsequent component to be installed. When a component is optional, the
-          <literal>allow_continue_on_failure</literal> option defines the behavior of the bootstrapper following the
-          failure. If <literal>allow_continue_on_failure</literal> is <literal>true</literal>, the user is informed
-          of the failure with the <literal>failed_exec_command_continue</literal> message and offered a choice whether
-          to continue. When <literal>allow_continue_on_failure</literal> is set to <literal>false</literal>, the user
-          is informed of the failure with the same <literal>failed_exec_command_continue</literal> message and is returned
-          to the bootstrapper where the component list is recalculated.
-        </para>
-        <para>
-          In silent (basic and no UI) installations the behavior is identical, but the choice to continue is made
-          automatically for the user when available with the <literal>allow_continue_on_failure</literal> option.
-        </para>
-      </content>
-    </section>
+    <relatedTopics>
+      <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="d028fe32-3599-48d5-a4d2-a78e23297d24" />
+      <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="edadc51b-8e65-47a0-9b94-91a6a86e78fd" />
+    </relatedTopics>
   </developerConceptualDocument>
 </topic>

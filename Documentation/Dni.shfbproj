@@ -19,7 +19,7 @@
     <ProjectSummary>
     </ProjectSummary>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter</MissingTags>
-    <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected</VisibleItems>
+    <VisibleItems>InheritedMembers</VisibleItems>
     <HtmlHelp1xCompilerPath>
     </HtmlHelp1xCompilerPath>
     <HtmlHelp2xCompilerPath>
@@ -55,6 +55,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
   </PropertyGroup>
   <ItemGroup>
+    <None Include="Content\ProcessorFilters.aml" />
+    <None Include="Content\OsFilters.aml" />
+    <None Include="Content\InstalledChecks.aml" />
+    <None Include="Content\ComponentsRequiredOptional.aml" />
+    <None Include="Content\ComponentsOpenFile.aml" />
+    <None Include="Content\ComponentsCmd.aml" />
+    <None Include="Content\ComponentsMsu.aml" />
+    <None Include="Content\ComponentsMsi.aml" />
     <None Include="Content\ComponentsReboot.aml" />
     <None Include="Content\DownloadComponents.aml" />
     <None Include="Content\UIModes.aml" />

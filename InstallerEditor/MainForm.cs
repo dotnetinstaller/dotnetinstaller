@@ -876,10 +876,10 @@ namespace InstallerEditor
 
         private void RefreshCommentPanel()
         {
-            if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is IXmlClass)
+            if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is XmlClass)
             {
                 txtComment.Visible = true;
-                txtComment.Text = ((IXmlClass)treeView.SelectedNode.Tag).Comment;
+                txtComment.Text = ((XmlClass)treeView.SelectedNode.Tag).Comment;
             }
             else
             {
@@ -945,9 +945,9 @@ namespace InstallerEditor
 
         private void RefreshNodeContextMenu()
         {
-            if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is IXmlClass)
+            if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is XmlClass)
             {
-                IXmlClass item = (IXmlClass)treeView.SelectedNode.Tag;
+                XmlClass item = (XmlClass) treeView.SelectedNode.Tag;
                 mnDelete.Enabled = true;
                 mnAddSetupConfiguration.Enabled = (item.Children.CanAdd(typeof(SetupConfiguration)));
                 mnAddWebConfiguration.Enabled = (item.Children.CanAdd(typeof(WebConfiguration)));
@@ -993,112 +993,112 @@ namespace InstallerEditor
             }
         }
 
-        private Configuration AddWebConfiguration(IXmlClass parent)
+        private Configuration AddWebConfiguration(XmlClass parent)
         {
             WebConfiguration l_Config = new WebConfiguration();
             parent.Children.Add(l_Config);
             return l_Config;
         }
 
-        private Configuration AddSetupConfiguration(IXmlClass parent)
+        private Configuration AddSetupConfiguration(XmlClass parent)
         {
             SetupConfiguration l_Config = new SetupConfiguration();
             parent.Children.Add(l_Config);
             return l_Config;
         }
 
-        private Download AddDownload(IXmlClass parent)
+        private Download AddDownload(XmlClass parent)
         {
             Download d = new Download();
             parent.Children.Add(d);
             return d;
         }
 
-        private DownloadDialog AddDownloadDialog(IXmlClass parent)
+        private DownloadDialog AddDownloadDialog(XmlClass parent)
         {
             DownloadDialog d = new DownloadDialog();
             parent.Children.Add(d);
             return d;
         }
 
-        private Component AddMsiComponent(IXmlClass parent)
+        private Component AddMsiComponent(XmlClass parent)
         {
             ComponentMsi l_Component = new ComponentMsi();
             parent.Children.Add(l_Component);
             return l_Component;
         }
 
-        private Component AddMsuComponent(IXmlClass parent)
+        private Component AddMsuComponent(XmlClass parent)
         {
             ComponentMsu l_Component = new ComponentMsu();
             parent.Children.Add(l_Component);
             return l_Component;
         }
 
-        private Component AddCmdComponent(IXmlClass parent)
+        private Component AddCmdComponent(XmlClass parent)
         {
             ComponentCmd l_Component = new ComponentCmd();
             parent.Children.Add(l_Component);
             return l_Component;
         }
 
-        private Component AddOpenFileComponent(IXmlClass parent)
+        private Component AddOpenFileComponent(XmlClass parent)
         {
             ComponentOpenFile l_Component = new ComponentOpenFile();
             parent.Children.Add(l_Component);
             return l_Component;
         }
 
-        private InstalledCheck AddInstalledCheckRegistry(IXmlClass parent)
+        private InstalledCheck AddInstalledCheckRegistry(XmlClass parent)
         {
             InstalledCheckRegistry l_Check = new InstalledCheckRegistry();
             parent.Children.Add(l_Check);
             return l_Check;
         }
         
-        private InstalledCheck AddInstalledCheckProduct(IXmlClass parent)
+        private InstalledCheck AddInstalledCheckProduct(XmlClass parent)
         {
             InstalledCheckProduct l_Check = new InstalledCheckProduct();
             parent.Children.Add(l_Check);
             return l_Check;
         }
 
-        private InstalledCheck AddInstalledCheckFile(IXmlClass parent)
+        private InstalledCheck AddInstalledCheckFile(XmlClass parent)
         {
             InstalledCheckFile l_Check = new InstalledCheckFile();
             parent.Children.Add(l_Check);
             return l_Check;
         }
 
-        private InstalledCheck AddInstalledCheckDirectory(IXmlClass parent)
+        private InstalledCheck AddInstalledCheckDirectory(XmlClass parent)
         {
             InstalledCheckDirectory l_Check = new InstalledCheckDirectory();
             parent.Children.Add(l_Check);
             return l_Check;
         }
 
-        private InstalledCheckOperator AddInstalledCheckOperator(IXmlClass parent)
+        private InstalledCheckOperator AddInstalledCheckOperator(XmlClass parent)
         {
             InstalledCheckOperator l_Operator = new InstalledCheckOperator();
             parent.Children.Add(l_Operator);
             return l_Operator;
         }
 
-        private DownloadDialog AddDownloadDIalog(IXmlClass parent)
+        private DownloadDialog AddDownloadDIalog(XmlClass parent)
         {
             DownloadDialog l_DownloadDialog = new DownloadDialog();
             parent.Children.Add(l_DownloadDialog);
             return l_DownloadDialog;
         }
 
-        private EmbedFile AddEmbedFile(IXmlClass parent)
+        private EmbedFile AddEmbedFile(XmlClass parent)
         {
             EmbedFile l_ComponentEmbedFile = new EmbedFile();
             parent.Children.Add(l_ComponentEmbedFile);
             return l_ComponentEmbedFile;
         }
 
-        private EmbedFolder AddEmbedFolder(IXmlClass parent)
+        private EmbedFolder AddEmbedFolder(XmlClass parent)
         {
             EmbedFolder l_ComponentEmbedFolder = new EmbedFolder();
             parent.Children.Add(l_ComponentEmbedFolder);
@@ -1110,7 +1110,7 @@ namespace InstallerEditor
             try
             {
                 TreeNodeConfiguration treeNode = new TreeNodeConfiguration(AddSetupConfiguration(
-                    (IXmlClass)m_TreeNodeConfigFile.Tag));
+                    (XmlClass)m_TreeNodeConfigFile.Tag));
                 AddTreeNode(m_TreeNodeConfigFile, treeNode);
             }
             catch (Exception err)
@@ -1124,7 +1124,7 @@ namespace InstallerEditor
             try
             {
                 TreeNodeConfiguration treeNode = new TreeNodeConfiguration(AddWebConfiguration(
-                    (IXmlClass)m_TreeNodeConfigFile.Tag));
+                    (XmlClass)m_TreeNodeConfigFile.Tag));
                 AddTreeNode(m_TreeNodeConfigFile, treeNode);
             }
             catch (Exception err)
@@ -1143,7 +1143,7 @@ namespace InstallerEditor
         {
             try
             {
-                AddTreeNode(new TreeNodeDownload(AddDownload((IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeDownload(AddDownload((XmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1157,10 +1157,10 @@ namespace InstallerEditor
             {
                 if (treeView.SelectedNode != null && treeView.SelectedNode.Parent != null)
                 {
-                    if (treeView.SelectedNode.Tag is IXmlClass && treeView.SelectedNode.Parent.Tag is IXmlClass)
+                    if (treeView.SelectedNode.Tag is XmlClass && treeView.SelectedNode.Parent.Tag is XmlClass)
                     {
-                        IXmlClass item = (IXmlClass)treeView.SelectedNode.Tag;
-                        IXmlClass parent = (IXmlClass)treeView.SelectedNode.Parent.Tag;
+                        XmlClass item = (XmlClass)treeView.SelectedNode.Tag;
+                        XmlClass parent = (XmlClass)treeView.SelectedNode.Parent.Tag;
                         parent.Children.Remove(item);
                         treeView.SelectedNode.Remove();
                         m_TreeNodeConfigFile.IsDirty = true;
@@ -1196,7 +1196,7 @@ namespace InstallerEditor
         {
             try
             {
-                AddTreeNode(new TreeNodeComponent(AddMsiComponent((IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeComponent(AddMsiComponent((XmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1208,7 +1208,7 @@ namespace InstallerEditor
         {
             try
             {
-                AddTreeNode(new TreeNodeComponent(AddCmdComponent((IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeComponent(AddCmdComponent((XmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1220,7 +1220,7 @@ namespace InstallerEditor
         {
             try
             {
-                AddTreeNode(new TreeNodeInstalledCheck(AddInstalledCheckRegistry((IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeInstalledCheck(AddInstalledCheckRegistry((XmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1232,7 +1232,7 @@ namespace InstallerEditor
         {
             try
             {
-                AddTreeNode(new TreeNodeInstalledCheck(AddInstalledCheckFile((IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeInstalledCheck(AddInstalledCheckFile((XmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1244,7 +1244,7 @@ namespace InstallerEditor
         {
             try
             {
-                AddTreeNode(new TreeNodeDownloadDialog(AddDownloadDialog((IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeDownloadDialog(AddDownloadDialog((XmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1389,7 +1389,7 @@ namespace InstallerEditor
         {
             try
             {
-                AddTreeNode(new TreeNodeComponent(AddOpenFileComponent((IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeComponent(AddOpenFileComponent((XmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1471,7 +1471,7 @@ namespace InstallerEditor
         {
             try
             {
-                AddTreeNode(new TreeNodeEmbedFile(AddEmbedFile((IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeEmbedFile(AddEmbedFile((XmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1483,7 +1483,7 @@ namespace InstallerEditor
         {
             try
             {
-                AddTreeNode(new TreeNodeInstalledCheckOperator(AddInstalledCheckOperator((IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeInstalledCheckOperator(AddInstalledCheckOperator((XmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1498,9 +1498,9 @@ namespace InstallerEditor
 
         private void treeView_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
-            if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is IXmlClass)
+            if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is XmlClass)
             {
-                ((IXmlClass)treeView.SelectedNode.Tag).Comment = txtComment.Text;
+                ((XmlClass)treeView.SelectedNode.Tag).Comment = txtComment.Text;
             }
         }
 
@@ -1615,7 +1615,7 @@ namespace InstallerEditor
                 TreeNodeImpl dropNode = ((TreeNodeImplContainer)e.Data.GetData(typeof(TreeNodeImplContainer))).NodeData;
 
                 // check that this node data type can be dropped here at all
-                IXmlClass dropItem = (IXmlClass)dropNode.Tag;
+                XmlClass dropItem = (XmlClass)dropNode.Tag;
 
                 dropNode.MoveTo(targetNode);
                 m_TreeNodeConfigFile.IsDirty = true;
@@ -1666,8 +1666,8 @@ namespace InstallerEditor
             }
 
             // check that this node data type can be dropped here at all
-            IXmlClass dropItem = (IXmlClass)dropNode.Tag;
-            IXmlClass targetItem = (IXmlClass)targetNode.Tag;
+            XmlClass dropItem = (XmlClass)dropNode.Tag;
+            XmlClass targetItem = (XmlClass)targetNode.Tag;
             if (!targetItem.Children.CanAdd(dropItem))
             {
                 e.Effect = DragDropEffects.None;
@@ -1734,7 +1734,7 @@ namespace InstallerEditor
         {
             try
             {
-                AddTreeNode(new TreeNodeEmbedFolder(AddEmbedFolder((IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeEmbedFolder(AddEmbedFolder((XmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1768,7 +1768,7 @@ namespace InstallerEditor
         {
             try
             {
-                AddTreeNode(new TreeNodeInstalledCheck(AddInstalledCheckProduct((IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeInstalledCheck(AddInstalledCheckProduct((XmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1780,7 +1780,7 @@ namespace InstallerEditor
         {
             try
             {
-                AddTreeNode(new TreeNodeComponent(AddMsuComponent((IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeComponent(AddMsuComponent((XmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {
@@ -1792,7 +1792,7 @@ namespace InstallerEditor
         {
             try
             {
-                AddTreeNode(new TreeNodeInstalledCheck(AddInstalledCheckDirectory((IXmlClass)treeView.SelectedNode.Tag)));
+                AddTreeNode(new TreeNodeInstalledCheck(AddInstalledCheckDirectory((XmlClass)treeView.SelectedNode.Tag)));
             }
             catch (Exception err)
             {

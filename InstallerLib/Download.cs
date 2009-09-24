@@ -9,7 +9,7 @@ namespace InstallerLib
     /// A single file download.
     /// </summary>
     [XmlNoChildren]
-    public class Download : XmlClassImpl
+    public class Download : XmlClass
     {
         public Download()
             : this("APP_TEMP_DOWNLOADPATH")
@@ -74,7 +74,7 @@ namespace InstallerLib
             set { m_alwaysdownload = value; }
         }
 
-        #region IXmlClass Members
+        #region XmlClass Members
 
         public override string XmlTag
         {

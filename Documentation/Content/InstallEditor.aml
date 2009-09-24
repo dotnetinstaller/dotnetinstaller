@@ -16,20 +16,20 @@
         <para>
           You must first create a configuration file. Choose <ui>File</ui>, <ui>New</ui> and select a new location
           for a configuration.xml. Then, right click on <ui>Config File</ui> and choose <ui>Add</ui>, followed
-          by either <newItem>Setup Configuration</newItem> or <newItem>Web Configuration</newItem>.
+          by either <newTerm>Setup Configuration</newTerm> or <newTerm>Web Configuration</newTerm>.
         </para>
         <para>
-          The following pre-defined types of configuration can be created with the editor.
+          The following types of configuration can be created with the editor.
           <list class="bullet">
             <listItem>
               <newTerm>Setup Configuration</newTerm>: a configuration that runs the components from a specified path,
-              usually relative of the bootstrapper setup file. Select this configuration if you want to distribute your application
-              primarily on media, such as CDROM or via a full package download from the web.
+              usually relative of the bootstrapper setup file. Select this configuration if you want to distribute
+              your application primarily on media, such as CDROM or via a full package download from the web.
             </listItem>
             <listItem>
-              <newTerm>Web Configuration</newTerm>: a configuration that downloads and executes the required components from a
-              specified website. Select this configuration if you want to distribute the configuration primarily over the web in a set
-              of packages downloaded on demand.
+              <newTerm>Web Configuration</newTerm>: a configuration that downloads another configuration file that
+              contains one or more nested configurations from a specified website. Select this configuration if you
+              want to distribute the configuration primarily over the web in a set of packages downloaded on demand.
             </listItem>
           </list>
         </para>

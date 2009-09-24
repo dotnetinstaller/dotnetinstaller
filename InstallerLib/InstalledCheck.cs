@@ -24,7 +24,7 @@ namespace InstallerLib
     /// An installed check.
     /// </summary>
     [XmlNoChildren]
-    public class InstalledCheck : XmlClassImpl
+    public class InstalledCheck : XmlClass
     {
         public InstalledCheck(string p_type)
         {
@@ -60,7 +60,7 @@ namespace InstallerLib
 
         public event EventHandler DescriptionChanged;
 
-        #region IXmlClass Members
+        #region XmlClass Members
 
         public override string XmlTag
         {

@@ -19,7 +19,7 @@ namespace InstallerLib
     /// </summary>
     [XmlChild(typeof(InstalledCheck))]
     [XmlChild(typeof(InstalledCheckOperator))]
-    public class InstalledCheckOperator : XmlClassImpl
+    public class InstalledCheckOperator : XmlClass
     {
         public InstalledCheckOperator()
         {
@@ -47,7 +47,7 @@ namespace InstallerLib
             set { m_description = value; OnDescriptionChanged(); }
         }
 
-        #region IXmlClass Members
+        #region XmlClass Members
 
         public override string XmlTag
         {

@@ -9,7 +9,7 @@ namespace InstallerLib
     /// <summary>
     /// An editor for a configuration file.
     /// </summary>
-    public class Editor : XmlClassImpl
+    public class Editor : XmlClass
     {
         public Editor()
         {
@@ -50,7 +50,7 @@ namespace InstallerLib
 
         #endregion
 
-        #region IXmlClass Members
+        #region XmlClass Members
 
         public override string XmlTag
         {

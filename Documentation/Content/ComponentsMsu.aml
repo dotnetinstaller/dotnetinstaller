@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="86590fb5-5d18-4d8e-8997-cdda405f8a0c" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        A component of type <literal>msu</literal> that executes a Windows Update package using the
+        <command>wusa.exe</command> command.
+      </para>
+    </introduction>
+    <section address="component_msu_options">
+      <title>Component Options</title>
+      <content>
+        <para>
+          <tableDefinition>
+            <definedTerm>package</definedTerm>
+            <definition>
+              A full or relative path to an MSU package.
+            </definition>
+            <definedTerm>cmdparameters</definedTerm>
+            <definition>
+              Additional command-line parameters to pass to wusa.exe in full UI mode, typically <literal>/norestart</literal>.
+            </definition>
+            <definedTerm>cmdparameters_basic</definedTerm>
+            <definition>
+              Additional command-line parameters to pass to wusa.exe in basic UI mode, typically <literal>/quiet /norestart</literal>.
+            </definition>
+            <definedTerm>cmdparameters_silent</definedTerm>
+            <definition>
+              Additional command-line parameters to pass to wusa.exe in silent mode, typically <literal>/quiet /norestart</literal>.
+            </definition>
+          </tableDefinition>
+        </para>
+      </content>
+    </section>
+    <relatedTopics>
+      <codeEntityReference qualifyHint="true">T:InstallerLib.ComponentMsu</codeEntityReference>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

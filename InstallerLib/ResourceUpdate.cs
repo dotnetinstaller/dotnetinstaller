@@ -10,7 +10,7 @@ namespace InstallerLib
     /// </summary>
     public abstract class ResourceUpdate
     {
-        public static void WriteFile(
+        internal static void WriteFile(
             string output,
             ResourceId resourceType,
             ResourceId resourceName,
@@ -28,7 +28,7 @@ namespace InstallerLib
             Write(output, resourceType, resourceName, resourceLanguage, buffer);
         }
 
-        public static void Write(
+        internal static void Write(
             string output,
             ResourceId resourceType,
             ResourceId resourceName,
