@@ -317,8 +317,6 @@ void CdotNetInstallerDlg::OnDestroy()
 		    LOG(L"Deleting temporary folder: " << cabpath);
 			DVLib::DirectoryDelete(cabpath);
         }
-
-		LOG(L"dotNetInstaller finished");
 	}
     catch(std::exception& ex)
     {

@@ -30,7 +30,7 @@ bool ConfigFilesImpl::OnLoad()
 bool ConfigFilesImpl::OnVersionError(const std::wstring& version, const std::wstring& filename)
 {
 	std::wcout << std::endl << L"ConfigFilesImpl::OnVersionError: version '" << version << L"' mismatch in '" << filename << L"'";
-	return true; // ignore mismatch
+	return false; // ignore mismatch
 }
 
 bool ConfigFilesImpl::OnDownload(const ConfigurationPtr& config)

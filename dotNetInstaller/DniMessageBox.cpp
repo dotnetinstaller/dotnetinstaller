@@ -43,6 +43,7 @@ int DniMessageBox::Show(const std::wstring& p_lpszText, UINT p_nType /*=MB_OK*/,
 			g_hHook = SetWindowsHookEx(WH_CBT, CBTProc, NULL, GetCurrentThreadId());
 			CHECK_WIN32_BOOL(NULL != g_hHook, L"Error setting CBT hook");
 			result = AfxMessageBox(p_lpszText.c_str(), p_nType, p_nIDHelp);
+			CHECK_BOOL(0 != result, L"Not enough memory to display the message box.");
 			if (result == 0xFFFFFF) result = p_nDefaultResult;
 		}
 		break;

@@ -35,7 +35,7 @@ std::vector<ConfigurationPtr> ConfigFiles::DownloadReferenceConfigurations(
 
 			if (downloadedconfig.schema.version != TEXT(VERSION_VALUE))
 			{
-				if (! OnVersionError(downloadedconfig.schema.version, p->filename))
+				if (OnVersionError(downloadedconfig.schema.version, p->filename))
 				{
 					THROW_EX(L"Downloaded configuration " << p->filename << L" version " 
 						<< downloadedconfig.schema.version.c_str() << L" does not match bootstrapper version " 
@@ -67,7 +67,7 @@ void ConfigFiles::Load()
 
 	if (config.schema.version != TEXT(VERSION_VALUE))
 	{
-		if (! OnVersionError(config.schema.version, config.GetFilename()))
+		if (OnVersionError(config.schema.version, config.GetFilename()))
 		{
 			THROW_EX(L"Configuration version in '" << config.GetFilename() << L"' " << 
 				config.schema.version << L" does not match bootstrapper version " 

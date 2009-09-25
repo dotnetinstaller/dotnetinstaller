@@ -3,7 +3,7 @@
 class InstallerLog
 {
 public:
-	InstallerLog(void);
+	InstallerLog();
 	void DisableLog() { m_enabled = false; }
 	bool IsEnabled() const { return m_enabled; }
     void EnableLog() { m_enabled = true; }

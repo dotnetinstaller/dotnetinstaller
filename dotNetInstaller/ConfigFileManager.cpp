@@ -16,7 +16,7 @@ bool ConfigFileManager::OnVersionError(const std::wstring& version, const std::w
 		L"Open and re-save configuration.xml with editor version %s.\r\n" \
 		L"Continue with installation?", filename.c_str(), version.c_str(), TEXT(VERSION_VALUE));
 
-	return (DniMessageBox::Show(version_message, MB_YESNO|MB_ICONQUESTION, IDYES) != IDYES);
+	return (IDYES != DniMessageBox::Show(version_message, MB_YESNO|MB_ICONQUESTION, IDYES));
 }
 
 bool ConfigFileManager::OnDownload(const ConfigurationPtr& config)

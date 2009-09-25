@@ -17,7 +17,7 @@ void InstallerLog::Write(const std::wstring& message)
 
     if (get(m_hFile) == INVALID_HANDLE_VALUE)
     {
-        if (m_logfile.empty()) 
+        if (m_logfile.empty())
         {
 			m_logfile = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), L"dotNetInstallerLog.txt").c_str();
         }
@@ -28,7 +28,7 @@ void InstallerLog::Write(const std::wstring& message)
 		m_hFile = auto_hfile(::CreateFile(m_logfile.c_str(), GENERIC_WRITE, FILE_SHARE_READ, 
 			NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL));
 
-		CHECK_WIN32_BOOL(get(m_hFile) != INVALID_HANDLE_VALUE,
+		CHECK_WIN32_BOOL(m_hFile,
 			L"Error creating or opening \"" << m_logfile << L"\"");
 
 	    SetFilePointer(get(m_hFile), 0, 0, FILE_END);

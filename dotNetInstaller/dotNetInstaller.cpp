@@ -25,14 +25,14 @@ BOOL CdotNetInstallerApp::InitInstance()
 	InitCommonControls();
 	CWinApp::InitInstance();
 
-	InstallerCommandLineInfo::Instance = shared_any<InstallerCommandLineInfo *, close_delete>(new InstallerCommandLineInfo());
-	InstallerLauncher::Instance = shared_any<InstallerLauncher *, close_delete>(new InstallerLauncher());
-	InstallerLog::Instance = shared_any<InstallerLog *, close_delete>(new InstallerLog());
-	InstallerSession::Instance = shared_any<InstallerSession *, close_delete>(new InstallerSession());
-	InstallUILevelSetting::Instance = shared_any<InstallUILevelSetting *, close_delete>(new InstallUILevelSetting());
-
 	try
 	{
+		InstallerCommandLineInfo::Instance = shared_any<InstallerCommandLineInfo *, close_delete>(new InstallerCommandLineInfo());
+		InstallerLauncher::Instance = shared_any<InstallerLauncher *, close_delete>(new InstallerLauncher());
+		InstallerLog::Instance = shared_any<InstallerLog *, close_delete>(new InstallerLog());
+		InstallerSession::Instance = shared_any<InstallerSession *, close_delete>(new InstallerSession());
+		InstallUILevelSetting::Instance = shared_any<InstallUILevelSetting *, close_delete>(new InstallUILevelSetting());
+
 		ParseCommandLine(* get(InstallerCommandLineInfo::Instance));
 
 		LOG(L"-------------------------------------------------------------------");
@@ -78,7 +78,7 @@ BOOL CdotNetInstallerApp::InitInstance()
 			DisplayConfig();
 			return FALSE;
 		}
-		
+	
 		m_rc = config->Run();
 	}
 	catch(std::exception& ex)
@@ -94,6 +94,7 @@ BOOL CdotNetInstallerApp::InitInstance()
 
 int CdotNetInstallerApp::ExitInstance() 
 {
+	LOG(L"dotNetInstaller finished, return code=" << m_rc);
 	reset(InstallerCommandLineInfo::Instance);
 	reset(InstallerLauncher::Instance);
 	reset(InstallerLog::Instance);
