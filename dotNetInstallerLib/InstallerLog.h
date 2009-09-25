@@ -4,7 +4,6 @@ class InstallerLog
 {
 public:
 	InstallerLog(void);
-	~InstallerLog(void);
 	void DisableLog() { m_enabled = false; }
 	bool IsEnabled() const { return m_enabled; }
     void EnableLog() { m_enabled = true; }
@@ -16,7 +15,7 @@ public:
 private:
 	bool m_enabled;
 	std::wstring m_logfile;
-    HANDLE m_hFile;
+    auto_hfile m_hFile;
 };
 
 #define LOG( message ) \

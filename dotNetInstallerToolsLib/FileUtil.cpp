@@ -116,7 +116,7 @@ std::vector<char> DVLib::FileReadToEnd(const std::wstring& filename)
     long size = GetFileSize(filename);
     if (size > 0)
     {
-        auto_handle hFile(::CreateFile(filename.c_str(), GENERIC_READ, 0,  
+        auto_hfile hFile(::CreateFile(filename.c_str(), GENERIC_READ, 0,  
             NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL));
 
 		CHECK_WIN32_BOOL(get(hFile) != NULL,
@@ -141,7 +141,7 @@ void DVLib::FileWrite(
     DWORD dwCreationDisposition, // CREATE_ALWAYS
     DWORD dwFlagsAndAttributes) // FILE_ATTRIBUTE_NORMAL)
 {
-    auto_handle hFile(::CreateFile(filename.c_str(), dwShareMode, 0, 
+    auto_hfile hFile(::CreateFile(filename.c_str(), dwShareMode, 0, 
         NULL, dwCreationDisposition, dwFlagsAndAttributes, NULL));
 
 	CHECK_WIN32_BOOL(get(hFile) != NULL,
@@ -165,7 +165,7 @@ void DVLib::FileCreate(
     DWORD dwCreationDisposition, // CREATE_ALWAYS
     DWORD dwFlagsAndAttributes) // FILE_ATTRIBUTE_NORMAL)
 {
-    auto_handle hFile(::CreateFile(filename.c_str(), dwDesiredAccess, dwShareMode, 
+    auto_hfile hFile(::CreateFile(filename.c_str(), dwDesiredAccess, dwShareMode, 
         NULL, dwCreationDisposition, dwFlagsAndAttributes, NULL));
 
     CHECK_WIN32_BOOL(get(hFile) != NULL,

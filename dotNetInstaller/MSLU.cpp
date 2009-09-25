@@ -25,18 +25,15 @@ static HMODULE SaveAndLoadMSLU()
 
 		LPVOID buffer = LockResource(hgl);
 		
-		HANDLE h = CreateFileA(tf, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL); 
-		if (h == INVALID_HANDLE_VALUE)
+		auto_hfile h(CreateFileA(tf, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, 
+			OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL));
+
+		if (get(h) == INVALID_HANDLE_VALUE)
 			return NULL;
 
 		DWORD written = 0;
-		if (! WriteFile(h, buffer, size, & written, NULL))
-		{
-			::CloseHandle(h);
+		if (! WriteFile(get(h), buffer, size, & written, NULL))
 			return NULL;
-		}
-
-		::CloseHandle(h);
 	}
 
 	return ::LoadLibraryA(tf);
