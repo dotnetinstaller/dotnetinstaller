@@ -38,7 +38,7 @@ void MsuComponent::Exec()
     }
 
     LOG(L"Executing: " << l_command);
-	DVLib::DetachCmd(l_command, &m_process_info);
+	DVLib::RunCmd(l_command, &m_process_info);
 }
 
 void MsuComponent::Load(TiXmlElement * node)

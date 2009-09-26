@@ -44,7 +44,7 @@ void MsiComponent::Exec()
 {
 	std::wstring command = GetCommandLine();
     LOG(L"Executing: " << command);
-	DVLib::DetachCmd(command, &m_process_info);
+	DVLib::RunCmd(command, &m_process_info);
 }
 
 void MsiComponent::Load(TiXmlElement * node)

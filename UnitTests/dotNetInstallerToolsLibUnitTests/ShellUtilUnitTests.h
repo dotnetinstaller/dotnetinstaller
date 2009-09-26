@@ -10,6 +10,7 @@ namespace DVLib
 			CPPUNIT_TEST( testGetEnvironmentVariable );
 			CPPUNIT_TEST( testExpandEnvironmentVariables );
 			CPPUNIT_TEST( testDetachCmd );
+			CPPUNIT_TEST( testRunCmd );
 			CPPUNIT_TEST( testExecCmd );
 			CPPUNIT_TEST( testShellCmd );
 			CPPUNIT_TEST_SUITE_END();
@@ -19,6 +20,7 @@ namespace DVLib
 			void testDetachCmd();
 			void testExecCmd();
 			void testShellCmd();
+			void testRunCmd();
 		};
 	}
 }

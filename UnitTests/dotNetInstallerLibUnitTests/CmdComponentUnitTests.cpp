@@ -47,3 +47,21 @@ void CmdComponentUnitTests::testExecUIBasic()
 	component.Wait();
 	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelNotSet);
 }
+
+
+void CmdComponentUnitTests::testExecXCopy()
+{
+	CmdComponent component;
+	std::wstring from = DVLib::GetModuleFileNameW();
+	std::wstring todir = DVLib::GetTemporaryDirectoryW() + L"\\" + DVLib::GenerateGUIDStringW();
+	std::wstring tofile = DVLib::DirectoryCombine(todir, DVLib::GetFileNameW(from));
+	std::wcout << std::endl << tofile;
+	DVLib::DirectoryCreate(todir);
+	CPPUNIT_ASSERT(! DVLib::FileExists(tofile));
+	component.command = L"xcopy \"" + ::DVLib::GetModuleFileNameW() + L"\" \"" + todir + L"\" /Y";
+	std::wcout << std::endl << component.command;
+	component.Exec();
+	component.Wait();
+	CPPUNIT_ASSERT(DVLib::FileExists(tofile));
+	DVLib::DirectoryDelete(todir);
+}

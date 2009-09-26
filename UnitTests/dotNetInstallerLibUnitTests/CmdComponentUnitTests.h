@@ -10,11 +10,13 @@ namespace DVLib
 			CPPUNIT_TEST( testExec );
 			CPPUNIT_TEST( testExecUISilent );
 			CPPUNIT_TEST( testExecUIBasic );
+			CPPUNIT_TEST( testExecXCopy );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testExec();
 			void testExecUISilent();
 			void testExecUIBasic();
+			void testExecXCopy();
 		};
 	}
 }

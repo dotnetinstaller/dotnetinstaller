@@ -32,11 +32,36 @@ void ShellUtilUnitTests::testExpandEnvironmentVariables()
 
 void ShellUtilUnitTests::testDetachCmd()
 {
+	// test timer runs for 2 seconds
+	std::wstring testTimerExe = DVLib::DirectoryCombine(
+#ifdef DEBUG
+		DVLib::GetModuleDirectoryW(), L"..\\..\\TestTimer\\bin\\Debug\\TestTimer.exe"
+#else
+		DVLib::GetModuleDirectoryW(), L"..\\..\\TestTimer\\bin\\Release\\TestTimer.exe"
+#endif
+		);
+	CPPUNIT_ASSERT(DVLib::FileExists(testTimerExe));
 	// detach without pi
-	DVLib::DetachCmd(L"cmd.exe /C");
+	DWORD c1 = ::GetTickCount();
+	DVLib::DetachCmd(testTimerExe);
+	CPPUNIT_ASSERT((::GetTickCount() - c1) < 2 * 1000);
+	// run with process information
+	PROCESS_INFORMATION pi = { 0 };
+	DWORD c2 = ::GetTickCount();
+	DVLib::DetachCmd(testTimerExe, & pi);
+	auto_handle pi_thread(pi.hThread);
+	auto_handle pi_process(pi.hProcess);
+	CPPUNIT_ASSERT(pi.dwProcessId > 0);
+	CPPUNIT_ASSERT((::GetTickCount() - c2) < 2 * 1000);
+}
+
+void ShellUtilUnitTests::testRunCmd()
+{
+	// run without pi
+	DVLib::RunCmd(L"cmd.exe /C exit /b 0");
 	// with process information
 	PROCESS_INFORMATION pi = { 0 };
-	DVLib::DetachCmd(L"cmd.exe /C", & pi);
+	DVLib::RunCmd(L"cmd.exe /C exit /b 0", & pi);
 	auto_handle pi_thread(pi.hThread);
 	auto_handle pi_process(pi.hProcess);
 	CPPUNIT_ASSERT(pi.dwProcessId > 0);

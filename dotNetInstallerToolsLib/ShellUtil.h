@@ -8,6 +8,8 @@ namespace DVLib
 	std::wstring ExpandEnvironmentVariables(const std::wstring& cmd);
 	// detach a command, return process information
 	void DetachCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi = NULL);
+	// run a command, return process information
+	void RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi = NULL, int flags = 0);
 	// execute a process, wait and return exit code
 	DWORD ExecCmd(const std::wstring& cmd);
 	// shell-execute a process

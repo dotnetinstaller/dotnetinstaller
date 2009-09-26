@@ -49,16 +49,22 @@ std::wstring DVLib::ExpandEnvironmentVariables(const std::wstring& s_in)
 
 void DVLib::DetachCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi)
 {
+	RunCmd(cmd, lpi, DETACHED_PROCESS);
+}
+
+void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags)
+{
 	// expand command line, using ShellExecuteEx API function with setting the flag 
 	// SEE_MASK_DOENVSUBST does not work because environment variables can also be 
 	// placed in the parameters for the new process
+
 	STARTUPINFO si = { 0 };
 	si.cb = sizeof(si);
 
 	PROCESS_INFORMATION pi = { 0 };
 
 	std::wstring cmd_expanded = DVLib::ExpandEnvironmentVariables(cmd);
-	CHECK_WIN32_BOOL(::CreateProcessW(NULL, & * cmd_expanded.begin(), NULL, NULL, FALSE, DETACHED_PROCESS, NULL, NULL, & si, lpi == NULL ? & pi : lpi),
+	CHECK_WIN32_BOOL(::CreateProcessW(NULL, & * cmd_expanded.begin(), NULL, NULL, FALSE, flags, NULL, NULL, & si, lpi == NULL ? & pi : lpi),
 		L"CreateProcessW: " << cmd_expanded);
 
 	if (lpi == NULL)
@@ -71,7 +77,7 @@ void DVLib::DetachCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi)
 DWORD DVLib::ExecCmd(const std::wstring& cmd)
 {
 	PROCESS_INFORMATION pi = { 0 };
-	DetachCmd(cmd, & pi);
+	RunCmd(cmd, & pi);
 	auto_handle pi_thread(pi.hThread);
 	auto_handle pi_process(pi.hProcess);
 	CHECK_WIN32_BOOL(WAIT_OBJECT_0 == WaitForSingleObject(pi.hProcess, INFINITE),
