@@ -175,3 +175,32 @@ void DirectoryUtilUnitTests::testDirectoryCreateMultipleSlashes()
 	CPPUNIT_ASSERT(path_0 == DVLib::DirectoryCreate(path_2));
 	CPPUNIT_ASSERT(DVLib::DirectoryDelete(path_2));
 }
+
+void DirectoryUtilUnitTests::testDirectoryNormalize()
+{
+	struct TestData
+	{
+		LPCWSTR path;
+		LPCWSTR expected;
+	};
+
+	TestData testdata[] = 
+	{
+		{ L"", L"" },
+		{ L"C:", L"C:" },
+		{ L"C:\\", L"C:\\" },
+		{ L"C:\\\\", L"C:\\" },
+		{ L"C:\\path", L"C:\\path" },
+		{ L"D:\\\\path", L"D:\\path" },
+		{ L"E:\\path\\", L"E:\\path\\" },
+		{ L"C:\\\\path\\\\", L"C:\\path\\" },
+		// { L"C:\\\\\\path\\\\", L"C:\\path\\" },
+	};
+
+	for (int i = 0; i < ARRAYSIZE(testdata); i++)
+	{
+		std::wstring normalized_path = DVLib::DirectoryNormalize(testdata[i].path);
+		std::wcout << std::endl << L" " << i << L": " << normalized_path;
+		CPPUNIT_ASSERT(normalized_path == testdata[i].expected);
+	}
+}

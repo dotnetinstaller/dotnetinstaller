@@ -7,6 +7,7 @@ namespace DVLib
 		class DirectoryUtilUnitTests :  public CPPUNIT_NS::TestFixture
 		{
 			CPPUNIT_TEST_SUITE( DirectoryUtilUnitTests );
+			CPPUNIT_TEST( testDirectoryNormalize );
 			CPPUNIT_TEST( testDirectoryExists );
 			CPPUNIT_TEST( testDirectoryCreate );
 			CPPUNIT_TEST( testDirectoryDelete );
@@ -17,6 +18,7 @@ namespace DVLib
 			CPPUNIT_TEST( testDirectoryCreateMultipleSlashes );
 			CPPUNIT_TEST_SUITE_END();
 		public:
+			void testDirectoryNormalize();
 			void testDirectoryExists();
 			void testDirectoryCreate();
 			void testDirectoryDelete();

@@ -2,6 +2,8 @@
 
 namespace DVLib
 {
+	// normalize a directory string
+	std::wstring DirectoryNormalize(const std::wstring& path);
 	// check whether a directory exists
 	bool DirectoryExists(const std::string& path);
 	bool DirectoryExists(const std::wstring& path);

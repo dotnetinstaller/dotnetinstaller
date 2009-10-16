@@ -68,6 +68,17 @@ std::wstring InstallerSession::ExpandPathVariables(const std::wstring& path)
 				THROW_EX(L"Invalid variable #" << name << L" in '" << path << L"'");
 			}
 
+			// don't introduce double-backslashes for paths, bug 4378
+			if (j != s.npos)
+			{
+				switch(s[j])
+				{
+				case L'\\':
+					value = DVLib::trimright(value, L"\\");
+					break;
+				}
+			}
+
 			s.replace(i, j - i, value);
 			i += value.length();
 		}

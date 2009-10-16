@@ -5,6 +5,12 @@
 #include "ErrorUtil.h"
 #include "PathUtil.h"
 
+
+std::wstring DVLib::DirectoryNormalize(const std::wstring& path)
+{
+	return DVLib::replace(path, L"\\\\", L"\\");
+}
+
 bool DVLib::DirectoryExists(const std::string& path)
 {
     return DirectoryExists(DVLib::string2wstring(path));
@@ -12,7 +18,11 @@ bool DVLib::DirectoryExists(const std::string& path)
 
 bool DVLib::DirectoryExists(const std::wstring& full_path)
 {
-	std::wstring path = DVLib::replace(full_path, L"\\\\", L"\\");
+	std::wstring path = DirectoryNormalize(full_path);
+	
+	if (path.empty()) 
+		return false;
+	
 	DWORD dwAttr = GetFileAttributesW(path.c_str());
 	
 	if (dwAttr == INVALID_FILE_ATTRIBUTES)
@@ -47,7 +57,7 @@ std::string DVLib::DirectoryCreate(const std::string& path)
 std::wstring DVLib::DirectoryCreate(const std::wstring& full_path)
 {
 	std::wstring result;
-	std::wstring path = DVLib::replace(full_path, L"\\\\", L"\\");
+	std::wstring path = DirectoryNormalize(full_path);
 	std::vector<std::wstring> parts = DVLib::split(path, L"\\");
 	
 	std::wstring current;
@@ -79,7 +89,7 @@ bool DVLib::DirectoryDelete(const std::string& path, int flags)
 
 bool DVLib::DirectoryDelete(const std::wstring& full_path, int flags)
 {
-	std::wstring path = DVLib::replace(full_path, L"\\\\", L"\\");
+	std::wstring path = DirectoryNormalize(full_path);
 
     CHECK_BOOL(flags > 0,
         L"Missing flags");
@@ -178,7 +188,7 @@ std::list<std::wstring> DVLib::GetFiles(const std::wstring& path_and_wildcard, i
 
 std::list<std::wstring> DVLib::GetDirectoryFiles(const std::wstring& full_path, const std::wstring& wildcard)
 {
-	std::wstring path = DVLib::replace(full_path, L"\\\\", L"\\");
+	std::wstring path = DirectoryNormalize(full_path);
     std::list<std::wstring> result;
 
     WIN32_FIND_DATA data = { 0 };
@@ -217,7 +227,7 @@ std::list<std::wstring> DVLib::GetDirectoryFiles(const std::wstring& full_path, 
 
 std::list<std::wstring> DVLib::GetFiles(const std::wstring& full_path, const std::wstring& wildcard, int flags)
 {
-	std::wstring path = DVLib::replace(full_path, L"\\\\", L"\\");
+	std::wstring path = DirectoryNormalize(full_path);
     std::list<std::wstring> result;
 
     WIN32_FIND_DATA data = { 0 };
