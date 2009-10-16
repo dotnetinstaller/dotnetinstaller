@@ -30,18 +30,7 @@
       <steps class="ordered">
         <step>
           <content>
-            <para>Install a Subversoin client, for example TortoiseSVN.</para>
-          </content>
-        </step>
-        <step>
-          <content>
-            <para>
-              Obtain the source code using a Subversion client at
-              <externalLink>
-                <linkText>https://dotnetinstaller.svn.codeplex.com/svn/trunk</linkText>
-                <linkUri>https://dotnetinstaller.svn.codeplex.com/svn/trunk</linkUri>
-              </externalLink>
-            </para>
+            <para>Install a Subversion (SVN) client, for example TortoiseSVN.</para>
           </content>
         </step>
         <step>
@@ -104,6 +93,17 @@
         <step>
           <content>
             <para>
+              Check out the source code using SVN from
+              <externalLink>
+                <linkText>https://dotnetinstaller.svn.codeplex.com/svn/trunk</linkText>
+                <linkUri>https://dotnetinstaller.svn.codeplex.com/svn/trunk</linkUri>
+              </externalLink>
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
               Open a command prompt and build the project.
               <code language="cmd">
                 <![CDATA[build all]]>
@@ -114,53 +114,5 @@
         </step>
       </steps>
     </procedure>
-    <section>
-      <title>Third Party Libraries</title>
-      <content>
-        <para>
-          The following third-party libraries are used in this project. 
-          <definitionTable>
-            <definedTerm>TinyXML</definedTerm>
-            <definition>
-              All the settings are stored in an XML file parsed with TinyXml. Older versions used XMLLite by
-              Kyung-min Cho. See <externalLink>
-                <linkText>http://sourceforge.net/projects/tinyxml</linkText>
-                <linkUri>http://sourceforge.net/projects/tinyxml</linkUri>
-              </externalLink> for more information.
-            </definition>
-            <definedTerm>CabLib</definedTerm>
-            <definition>
-              Packaging of embedded CABs is done with Elmü's CAB library.
-              See <externalLink>
-                <linkText>http://www.codeproject.com/KB/files/CABCompressExtract.aspx</linkText>
-                <linkUri>http://www.codeproject.com/KB/files/CABCompressExtract.aspx</linkUri>
-                for more information.
-              </externalLink>
-            </definition>
-            <definedTerm>Vestris.ResourceLib</definedTerm>
-            <definition>
-              File attribute and version patching is done with Vestris ResourceLib.
-              See <externalLink>
-                <linkText>http://resourcelib.codeplex.com/</linkText>
-                <linkUri>http://resourcelib.codeplex.com/</linkUri>
-              </externalLink> for more information.
-            </definition>
-            <definedTerm>CommandLineArguments</definedTerm>
-            <definition>
-              CommandLine processing in InstallerEditor is done with Peter Hall's CommandLineArguments.
-              See <externalLink>
-                <linkText>http://www.codeplex.com/CommandLineArguments</linkText>
-                <linkUri>http://www.codeplex.com/CommandLineArguments</linkUri>
-              </externalLink> for more information.
-            </definition>
-          </definitionTable>
-        </para>
-        <alert class="important">
-          <para>
-            No (L)GPL code has been used in this project.
-          </para>
-        </alert>
-      </content>
-    </section>
   </developerHowToDocument>
 </topic>

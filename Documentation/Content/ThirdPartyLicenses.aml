@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="020aa59b-97b6-4bc0-8c3a-bc53adeaae7e" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>dotNetInstaller ships with several 3rd party components under the following licenses.</para>
+      <alert class="note">
+        <para>
+          No (L)GPL code has been used in this project.
+        </para>
+      </alert>
+    </introduction>
+    <section address="tinyxmllicense">
+      <title>TinyXML</title>
+      <content>
+        <para>
+          All the settings are stored in an XML file parsed with TinyXml. 
+          See <externalLink>
+            <linkText>http://sourceforge.net/projects/tinyxml</linkText>
+            <linkUri>http://sourceforge.net/projects/tinyxml</linkUri>
+          </externalLink> for more information.
+          <code language="text" source="..\ThirdParty\TinyXml\license.txt" />
+        </para>
+      </content>
+    </section>
+    <section address="mslulicense">
+      <title>Microsoft Layer for Unicode</title>
+      <content>
+        <para>
+          Running dotNetInstaller on a Windows 95 or 98 system requires the Microsoft Layer for Unicode.
+          The redistributable is embedded within the application.
+          <code language="text" source="..\ThirdParty\MSLU\license.txt" />
+          <code language="text" source="..\ThirdParty\MSLU\redist.txt" />
+        </para>
+      </content>
+    </section>
+    <section address="cabliblicense">
+      <title>CABLib</title>
+      <content>
+        <para>
+          Packaging of embedded CABs is done with Elmü's CAB library.
+          See <externalLink>
+            <linkText>http://www.codeproject.com/KB/files/CABCompressExtract.aspx</linkText>
+            <linkUri>http://www.codeproject.com/KB/files/CABCompressExtract.aspx</linkUri>
+            for more information.
+          </externalLink>
+          <code language="text" source="..\ThirdParty\Cab\license.txt" />
+        </para>
+      </content>
+    </section>
+    <section address="resourceliblicense">
+      <title>Vestris.ResourceLib</title>
+      <content>
+        <para>
+          File attribute and version patching is done with Vestris ResourceLib.
+          See <externalLink>
+            <linkText>http://resourcelib.codeplex.com/</linkText>
+            <linkUri>http://resourcelib.codeplex.com/</linkUri>
+          </externalLink> for more information.
+          <code language="text" source="..\ThirdParty\ResourceLib\license.txt" />
+        </para>
+      </content>
+    </section>
+    <section address="smartptrlicense">
+      <title>SmartPtr</title>
+      <content>
+        <para>
+          C++ objects allocated on the heap are managed by Eric Niebler's resource management implementation.
+          See <externalLink>
+            <linkText>http://www.msdn.com/</linkText>
+            <linkUri>http://www.msdn.com/</linkUri>
+          </externalLink> for more information.
+          <code language="text" source="..\ThirdParty\SmartPtr\license.txt" />
+        </para>
+      </content>
+    </section>
+    <section address="commandlineparser">
+      <title>Command-Line Parser</title>
+      <para>
+        Command-line processing in InstallerEditor is done with Peter Hall's command-line parser.
+        See <externalLink>
+          <linkText>http://www.codeplex.com/CommandLineArguments</linkText>
+          <linkUri>http://www.codeplex.com/CommandLineArguments</linkUri>
+        </externalLink> for more information.
+        <code language="text" source="..\ThirdParty\CommandLineArguments\license.txt" />
+      </para>
+    </section>
+  </developerConceptualDocument>
+</topic>
