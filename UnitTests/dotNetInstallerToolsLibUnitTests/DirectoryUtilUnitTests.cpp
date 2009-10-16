@@ -154,3 +154,24 @@ void DirectoryUtilUnitTests::testGetFilesWithInvalidWildcard()
 		}
 	}
 }
+
+void DirectoryUtilUnitTests::testDirectoryCreateMultipleSlashes()
+{
+	std::wstring root = DVLib::GetTemporaryDirectoryW();
+	// check that we can create one level
+	std::wstring guid = DVLib::GenerateGUIDStringW();
+	// append various numbers of backslashes
+	std::wstring path_0 = root + guid;
+	std::wstring path_1 = root + L"\\" + guid;
+	std::wstring path_2 = root + L"\\\\" + guid;
+	std::wcout << std::endl << L"Creating: " << path_0;
+	CPPUNIT_ASSERT(! DVLib::DirectoryExists(path_0));
+	CPPUNIT_ASSERT(! DVLib::DirectoryExists(path_1));
+	CPPUNIT_ASSERT(! DVLib::DirectoryExists(path_2));
+	CPPUNIT_ASSERT(path_0 == DVLib::DirectoryCreate(path_0));
+	CPPUNIT_ASSERT(DVLib::DirectoryDelete(path_0));
+	CPPUNIT_ASSERT(path_0 == DVLib::DirectoryCreate(path_1));
+	CPPUNIT_ASSERT(DVLib::DirectoryDelete(path_1));
+	CPPUNIT_ASSERT(path_0 == DVLib::DirectoryCreate(path_2));
+	CPPUNIT_ASSERT(DVLib::DirectoryDelete(path_2));
+}

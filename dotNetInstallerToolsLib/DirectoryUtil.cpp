@@ -10,8 +10,9 @@ bool DVLib::DirectoryExists(const std::string& path)
     return DirectoryExists(DVLib::string2wstring(path));
 }
 
-bool DVLib::DirectoryExists(const std::wstring& path)
+bool DVLib::DirectoryExists(const std::wstring& full_path)
 {
+	std::wstring path = DVLib::replace(full_path, L"\\\\", L"\\");
 	DWORD dwAttr = GetFileAttributesW(path.c_str());
 	
 	if (dwAttr == INVALID_FILE_ATTRIBUTES)
@@ -43,14 +44,19 @@ std::string DVLib::DirectoryCreate(const std::string& path)
 		DirectoryCreate(DVLib::string2wstring(path)));
 }
 
-std::wstring DVLib::DirectoryCreate(const std::wstring& path)
+std::wstring DVLib::DirectoryCreate(const std::wstring& full_path)
 {
 	std::wstring result;
+	std::wstring path = DVLib::replace(full_path, L"\\\\", L"\\");
 	std::vector<std::wstring> parts = DVLib::split(path, L"\\");
 	
 	std::wstring current;
 	for each (std::wstring part in parts)
 	{
+		// avoid double-slashes, bug 4378
+		if (part.empty())
+			continue;
+
 		if (current.length() > 0) current.append(L"\\");
 		current.append(part);
 
@@ -71,8 +77,10 @@ bool DVLib::DirectoryDelete(const std::string& path, int flags)
 	return DirectoryDelete(DVLib::string2wstring(path), flags);
 }
 
-bool DVLib::DirectoryDelete(const std::wstring& path, int flags)
+bool DVLib::DirectoryDelete(const std::wstring& full_path, int flags)
 {
+	std::wstring path = DVLib::replace(full_path, L"\\\\", L"\\");
+
     CHECK_BOOL(flags > 0,
         L"Missing flags");
 
@@ -168,8 +176,9 @@ std::list<std::wstring> DVLib::GetFiles(const std::wstring& path_and_wildcard, i
 }
 
 
-std::list<std::wstring> DVLib::GetDirectoryFiles(const std::wstring& path, const std::wstring& wildcard)
+std::list<std::wstring> DVLib::GetDirectoryFiles(const std::wstring& full_path, const std::wstring& wildcard)
 {
+	std::wstring path = DVLib::replace(full_path, L"\\\\", L"\\");
     std::list<std::wstring> result;
 
     WIN32_FIND_DATA data = { 0 };
@@ -206,8 +215,9 @@ std::list<std::wstring> DVLib::GetDirectoryFiles(const std::wstring& path, const
     return result;
 }
 
-std::list<std::wstring> DVLib::GetFiles(const std::wstring& path, const std::wstring& wildcard, int flags)
+std::list<std::wstring> DVLib::GetFiles(const std::wstring& full_path, const std::wstring& wildcard, int flags)
 {
+	std::wstring path = DVLib::replace(full_path, L"\\\\", L"\\");
     std::list<std::wstring> result;
 
     WIN32_FIND_DATA data = { 0 };

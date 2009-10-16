@@ -14,6 +14,7 @@ namespace DVLib
 			CPPUNIT_TEST( testGetFilesWithWildcard );
 			CPPUNIT_TEST( testGetFilesWithNoWildcard );
 			CPPUNIT_TEST( testGetFilesWithInvalidWildcard );
+			CPPUNIT_TEST( testDirectoryCreateMultipleSlashes );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testDirectoryExists();
@@ -23,6 +24,7 @@ namespace DVLib
 			void testGetFilesWithWildcard();
 			void testGetFilesWithNoWildcard();
 			void testGetFilesWithInvalidWildcard();
+			void testDirectoryCreateMultipleSlashes();
 		};
 	}
 }
