@@ -88,7 +88,7 @@ std::wstring ConfigFileManager::GetString() const
 }
 
 std::vector<ConfigurationPtr> ConfigFileManager::DownloadReferenceConfigurations(
-	DWORD oslcid, const std::vector<ConfigurationPtr>& configs, int level)
+	LCID oslcid, const std::vector<ConfigurationPtr>& configs, int level)
 {
 	if (InstallerCommandLineInfo::Instance->DisplayConfig())
 		return config; // return this configuration, all components

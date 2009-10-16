@@ -12,6 +12,7 @@ namespace DVLib
 			CPPUNIT_TEST( testIsInOperatingSystemInRange );
 			CPPUNIT_TEST( testGetOperatingSystemLCID );
 			CPPUNIT_TEST( testIsOperatingSystemLCID );
+			CPPUNIT_TEST( testIsOperatingSystemLCIDValue );
 			CPPUNIT_TEST( testCompareVersion );
 			CPPUNIT_TEST( testGetProcessorArchitecture );
 			CPPUNIT_TEST( testProcessorArchitectureToFromString );
@@ -28,6 +29,7 @@ namespace DVLib
 			void testIsInOperatingSystemInRange();
 			void testGetOperatingSystemLCID();
 			void testIsOperatingSystemLCID();
+			void testIsOperatingSystemLCIDValue();
 			void testCompareVersion();
 			void testGetProcessorArchitecture();
 			void testProcessorArchitectureToFromString();

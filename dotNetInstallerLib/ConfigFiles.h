@@ -16,7 +16,7 @@ protected:
 	virtual bool OnRunConfiguration(const ConfigurationPtr& configuration) = 0;
 	virtual bool OnSelectLanguage() = 0;
 	virtual std::vector<ConfigurationPtr> DownloadReferenceConfigurations(
-		DWORD oslcid, const std::vector<ConfigurationPtr>&, int level = 0);
+		LCID oslcid, const std::vector<ConfigurationPtr>&, int level = 0);
 public:
 	ConfigFiles();
 	void SaveAppState();

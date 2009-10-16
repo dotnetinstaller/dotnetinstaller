@@ -214,4 +214,6 @@ void ConfigFileUnitTests::testLoadMultilingualSetup()
 	// there're two configurations this sample, but only 1 will show because the lcids don't overlap
 	CPPUNIT_ASSERT(config.size() == 2);
 	CPPUNIT_ASSERT(config.GetSupportedConfigurations(0).size() == 1);
+	CPPUNIT_ASSERT(config.GetSupportedConfigurations(1040).size() == 1);
+	CPPUNIT_ASSERT(config.GetSupportedConfigurations(1040)[0]->lcid_filter == L"1040");
 }

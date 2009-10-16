@@ -71,7 +71,7 @@ public:
 	InstallConfiguration();
 	virtual void Load(TiXmlElement * node);
 	// returns components that match current platform and processor architecture
-	Components GetSupportedComponents(DWORD oslcid) const;
+	Components GetSupportedComponents(DVLib::LcidType lcidtype) const;
 	std::wstring GetString(int indent = 0) const;
 };
 

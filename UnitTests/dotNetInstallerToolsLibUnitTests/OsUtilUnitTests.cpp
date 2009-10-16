@@ -51,6 +51,16 @@ void OsUtilUnitTests::testIsOperatingSystemLCID()
 	CPPUNIT_ASSERT(! DVLib::IsOperatingSystemLCID(LcidSystem, L"123,456"));
 }
 
+void OsUtilUnitTests::testIsOperatingSystemLCIDValue()
+{
+	CPPUNIT_ASSERT(DVLib::IsOperatingSystemLCIDValue(DVLib::GetOperatingSystemLCID(LcidSystem), 
+		DVLib::towstring(DVLib::GetOperatingSystemLCID(LcidSystem))));
+	CPPUNIT_ASSERT(DVLib::IsOperatingSystemLCIDValue(DVLib::GetOperatingSystemLCID(LcidUser), 
+		DVLib::towstring(DVLib::GetOperatingSystemLCID(LcidUser))));
+	CPPUNIT_ASSERT(! DVLib::IsOperatingSystemLCIDValue(DVLib::GetOperatingSystemLCID(LcidSystem), 
+		L"123,456"));
+}
+
 void OsUtilUnitTests::testCompareVersion()
 {
 	struct TestData

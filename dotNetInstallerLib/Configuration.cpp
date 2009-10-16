@@ -30,9 +30,9 @@ void Configuration::Load(TiXmlElement * node)
 	processor_architecture_filter = DVLib::UTF8string2wstring(node->Attribute("processor_architecture_filter"));
 }
 
-bool Configuration::IsSupported(DWORD oslcid) const
+bool Configuration::IsSupported(LCID lcid) const
 {
-	return DVLib::IsOperatingSystemLCID(oslcid, lcid_filter) &&
+	return DVLib::IsOperatingSystemLCIDValue(lcid, lcid_filter) &&
 		DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), processor_architecture_filter) &&
 		DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter_greater, os_filter_smaller);
 }

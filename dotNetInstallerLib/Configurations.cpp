@@ -80,17 +80,19 @@ void Configurations::Load(TiXmlElement * node)
 	LOG(L"--- Read " << size() << L" configuration(s)");
 }
 
-std::vector<ConfigurationPtr> Configurations::GetSupportedConfigurations(DWORD oslcid) const
+std::vector<ConfigurationPtr> Configurations::GetSupportedConfigurations(LCID lcid) const
 {
-	if (oslcid == 0) 
+	if (lcid == 0) 
 	{
-		oslcid = DVLib::GetOperatingSystemLCID(lcidtype);
+		lcid = DVLib::GetOperatingSystemLCID(lcidtype);
 	}
+
+	LOG(L"-- Loading supported configurations (lcid=" << lcid << L")");
 
 	std::vector<ConfigurationPtr> result;
 	for each(const ConfigurationPtr& configuration in (* this))
 	{
-		if (configuration->IsSupported(oslcid))
+		if (configuration->IsSupported(lcid))
 		{
 			result.push_back(configuration);
 		}

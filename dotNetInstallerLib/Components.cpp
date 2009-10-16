@@ -29,12 +29,14 @@ Components& Components::operator=(const Components& rhs)
 	return * this;
 }
 
-Components Components::GetSupportedComponents(DWORD oslcid) const
+Components Components::GetSupportedComponents(DVLib::LcidType lcidtype) const
 {
+	LCID lcid = DVLib::GetOperatingSystemLCID(lcidtype);
+	LOG(L"-- Loading supported components (lcid=" << lcid << L")");
 	Components result;
 	for each (const ComponentPtr& component in * this)
 	{
-		bool supported = component->IsSupported(oslcid);
+		bool supported = component->IsSupported(lcid);
 		if (supported)
 		{
 			result.push_back(component);

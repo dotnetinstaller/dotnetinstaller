@@ -117,9 +117,9 @@ void InstallConfiguration::Load(TiXmlElement * node)
 		<< L")");
 }
 
-Components InstallConfiguration::GetSupportedComponents(DWORD oslcid) const
+Components InstallConfiguration::GetSupportedComponents(DVLib::LcidType lcidtype) const
 {
-	return components.GetSupportedComponents(oslcid);
+	return components.GetSupportedComponents(lcidtype);
 }
 
 std::wstring InstallConfiguration::GetString(int indent) const

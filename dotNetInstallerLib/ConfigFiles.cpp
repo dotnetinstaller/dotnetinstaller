@@ -10,7 +10,7 @@ ConfigFiles::ConfigFiles()
 }
 
 std::vector<ConfigurationPtr> ConfigFiles::DownloadReferenceConfigurations(
-	DWORD oslcid, const std::vector<ConfigurationPtr>& configurations, int level)
+	LCID oslcid, const std::vector<ConfigurationPtr>& configurations, int level)
 {
 	if (level >= max_levels)
 	{

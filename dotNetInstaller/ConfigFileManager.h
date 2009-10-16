@@ -14,7 +14,7 @@ protected:
 	bool OnLoad();
 	bool OnSelectLanguage();
 	std::vector<ConfigurationPtr> DownloadReferenceConfigurations(
-		DWORD oslcid, const std::vector<ConfigurationPtr>&, int level);
+		LCID oslcid, const std::vector<ConfigurationPtr>&, int level);
 public:
 	ConfigFileManager();
 	// load configurations

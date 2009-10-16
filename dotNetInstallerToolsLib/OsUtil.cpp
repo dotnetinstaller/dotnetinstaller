@@ -192,11 +192,11 @@ LCID DVLib::GetOperatingSystemLCID(LcidType lcidtype)
 
 bool DVLib::IsOperatingSystemLCID(LcidType lcidtype, const std::wstring& lcid)
 {
-	return IsOperatingSystemLCID(GetOperatingSystemLCID(lcidtype), lcid);
+	return IsOperatingSystemLCIDValue(GetOperatingSystemLCID(lcidtype), lcid);
 }
 
 // \todo: this should probably move to dotNetInstallerLib since lcid is dotNetInstaller-format-specific
-bool DVLib::IsOperatingSystemLCID(LCID oslcid, const std::wstring& lcid)
+bool DVLib::IsOperatingSystemLCIDValue(LCID oslcid, const std::wstring& lcid)
 {
 	if (lcid.empty())
 		return true;
