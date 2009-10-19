@@ -99,6 +99,14 @@ namespace InstallerEditor
 
             return node;
         }
+
+        public static string Cut(string text)
+        {
+            const int textCutOff = 15;
+            return text.Length > textCutOff
+                ? string.Format("{0} ...", text.Substring(0, textCutOff))
+                : text;
+        }
     }
 
     public abstract class TreeNodeImpl<T> : XmlTreeNodeImpl
@@ -568,8 +576,8 @@ namespace InstallerEditor
         public TreeNodeControlLabel(ControlLabel value)
             : base(value)
         {
-            ImageIndex = 0;
-            SelectedImageIndex = 0;
+            ImageIndex = 18;
+            SelectedImageIndex = 18;
         }
 
         public override ControlLabel Instance
@@ -594,9 +602,7 @@ namespace InstallerEditor
         {
             get
             {
-                return Instance.Text.Length > 10 
-                    ? string.Format("{0} ...", Instance.Text.Substring(0, 10))
-                    : Instance.Text;
+                return Cut(Instance.Text);
             }
         }
     }
@@ -606,8 +612,8 @@ namespace InstallerEditor
         public TreeNodeControlEdit(ControlEdit value)
             : base(value)
         {
-            ImageIndex = 0;
-            SelectedImageIndex = 0;
+            ImageIndex = 19;
+            SelectedImageIndex = 19;
         }
 
         public override ControlEdit Instance
@@ -632,9 +638,7 @@ namespace InstallerEditor
         {
             get
             {
-                return Instance.Text.Length > 10
-                    ? string.Format("{0} ...", Instance.Text.Substring(0, 10))
-                    : Instance.Text;
+                return Cut(Instance.Text);
             }
         }
     }
@@ -644,8 +648,8 @@ namespace InstallerEditor
         public TreeNodeControlBrowse(ControlBrowse value)
             : base(value)
         {
-            ImageIndex = 0;
-            SelectedImageIndex = 0;
+            ImageIndex = 21;
+            SelectedImageIndex = 21;
         }
 
         public override ControlBrowse Instance
@@ -670,9 +674,7 @@ namespace InstallerEditor
         {
             get
             {
-                return Instance.Text.Length > 10
-                    ? string.Format("{0} ...", Instance.Text.Substring(0, 10))
-                    : Instance.Text;
+                return Cut(Instance.Text);
             }
         }
     }
@@ -682,8 +684,8 @@ namespace InstallerEditor
         public TreeNodeControlCheckbox(ControlCheckBox value)
             : base(value)
         {
-            ImageIndex = 0;
-            SelectedImageIndex = 0;
+            ImageIndex = 20;
+            SelectedImageIndex = 20;
         }
 
         public override ControlCheckBox Instance
@@ -708,9 +710,7 @@ namespace InstallerEditor
         {
             get
             {
-                return Instance.Text.Length > 10 
-                    ? string.Format("{0} ...", Instance.Text.Substring(0, 10))
-                    : Instance.Text;
+                return Cut(Instance.Text);
             }
         }
     }

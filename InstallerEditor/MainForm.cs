@@ -166,7 +166,9 @@ namespace InstallerEditor
             this.mnAddEmbedFolder = new System.Windows.Forms.MenuItem();
             this.menuControls = new System.Windows.Forms.MenuItem();
             this.mnAddLabelControl = new System.Windows.Forms.MenuItem();
+            this.mnAddEditControl = new System.Windows.Forms.MenuItem();
             this.mnAddCheckboxControl = new System.Windows.Forms.MenuItem();
+            this.mnAddBrowseControl = new System.Windows.Forms.MenuItem();
             this.mnMove = new System.Windows.Forms.MenuItem();
             this.mnMoveUp = new System.Windows.Forms.MenuItem();
             this.mnMoveDown = new System.Windows.Forms.MenuItem();
@@ -183,8 +185,6 @@ namespace InstallerEditor
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtComment = new System.Windows.Forms.TextBox();
-            this.mnAddEditControl = new System.Windows.Forms.MenuItem();
-            this.mnAddBrowseControl = new System.Windows.Forms.MenuItem();
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
@@ -543,11 +543,23 @@ namespace InstallerEditor
             this.mnAddLabelControl.Text = "Label Control";
             this.mnAddLabelControl.Click += new System.EventHandler(this.mnAddLabelControl_Click);
             // 
+            // mnAddEditControl
+            // 
+            this.mnAddEditControl.Index = 1;
+            this.mnAddEditControl.Text = "&Edit Control";
+            this.mnAddEditControl.Click += new System.EventHandler(this.mnAddEditControl_Click);
+            // 
             // mnAddCheckboxControl
             // 
             this.mnAddCheckboxControl.Index = 2;
             this.mnAddCheckboxControl.Text = "Checkbox Control";
             this.mnAddCheckboxControl.Click += new System.EventHandler(this.mnAddCheckboxControl_Click);
+            // 
+            // mnAddBrowseControl
+            // 
+            this.mnAddBrowseControl.Index = 3;
+            this.mnAddBrowseControl.Text = "&Browse Control";
+            this.mnAddBrowseControl.Click += new System.EventHandler(this.mnAddBrowseControl_Click);
             // 
             // mnMove
             // 
@@ -619,6 +631,10 @@ namespace InstallerEditor
             this.imageList.Images.SetKeyName(15, "");
             this.imageList.Images.SetKeyName(16, "");
             this.imageList.Images.SetKeyName(17, "");
+            this.imageList.Images.SetKeyName(18, "");
+            this.imageList.Images.SetKeyName(19, "");
+            this.imageList.Images.SetKeyName(20, "");
+            this.imageList.Images.SetKeyName(21, "");
             // 
             // mainSplitContainer
             // 
@@ -708,18 +724,6 @@ namespace InstallerEditor
             this.txtComment.Size = new System.Drawing.Size(620, 64);
             this.txtComment.TabIndex = 0;
             this.txtComment.Visible = false;
-            // 
-            // mnAddEditControl
-            // 
-            this.mnAddEditControl.Index = 1;
-            this.mnAddEditControl.Text = "&Edit Control";
-            this.mnAddEditControl.Click += new System.EventHandler(this.mnAddEditControl_Click);
-            // 
-            // mnAddBrowseControl
-            // 
-            this.mnAddBrowseControl.Index = 3;
-            this.mnAddBrowseControl.Text = "&Browse Control";
-            this.mnAddBrowseControl.Click += new System.EventHandler(this.mnAddBrowseControl_Click);
             // 
             // MainForm
             // 

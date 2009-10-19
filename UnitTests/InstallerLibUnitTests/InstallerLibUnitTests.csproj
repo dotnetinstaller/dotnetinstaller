@@ -107,6 +107,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\..\Samples\CustomInputSetup\Configuration.xml">
+      <Link>Samples\CustomInputSetup\Configuration.xml</Link>
+    </EmbeddedResource>
     <Content Include="Manifests\asInvoker.manifest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -83,6 +83,10 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
         {
             m_lastArgFlag = componentArgs;
         }
+        else if (_wcsicmp(pszParam, TEXT("controlArgs")) == 0)
+        {
+            m_lastArgFlag = controlArgs;
+        }
 		else if (_wcsicmp(pszParam, TEXT("reboot")) == 0 )
 		{
             m_reboot = true;
@@ -129,6 +133,18 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 						throw std::exception(error.c_str());
 					}
 					componentCmdArgs[l_componentArgsArray[0]] = l_componentArgsArray[1];
+				}
+                break;
+            case controlArgs:
+				{
+					std::vector<std::wstring> l_controlArgsArray = DVLib::split(pszParam, L":", 2);
+					if (l_controlArgsArray.size() != 2)
+					{
+						std::string error = "Invalid control argument: ";
+						error.append(DVLib::wstring2string(pszParam));
+						throw std::exception(error.c_str());
+					}
+					controlCmdArgs[l_controlArgsArray[0]] = l_controlArgsArray[1];
 				}
                 break;
 			default:

@@ -607,7 +607,22 @@ void CdotNetInstallerDlg::AddControl(const ControlCheckBox& checkbox)
 	p_checkbox->Create(checkbox.text.c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX, checkbox.position.ToRect(), this, 0);
 	p_checkbox->EnableWindow(checkbox.enabled);
 	p_checkbox->SetFont(CreateFont(checkbox));
-	p_checkbox->SetCheck(checkbox.checked);
+	std::map<std::wstring, std::wstring>::iterator value;
+	if ((value = InstallerSession::Instance->AdditionalControlArgs.find(checkbox.id)) != 
+		InstallerSession::Instance->AdditionalControlArgs.end())
+	{
+		if (value->second == checkbox.checked_value) p_checkbox->SetCheck(1);
+		else if (value->second == checkbox.unchecked_value) p_checkbox->SetCheck(0);
+		else 
+		{
+			THROW_EX(L"Invalid " << checkbox.id << L" value '" << value->second << L"', should be one of '"
+				<< checkbox.checked_value << L"' or '" << checkbox.unchecked_value << L"'");
+		}
+	}
+	else
+	{
+		p_checkbox->SetCheck(checkbox.checked);
+	}
 	m_custom_control_values.insert(std::pair<std::wstring, ControlValue *>(checkbox.id, p_checkbox));
 	m_custom_controls.push_back(p_checkbox);
 }
@@ -616,7 +631,16 @@ void CdotNetInstallerDlg::AddControl(const ControlEdit& edit)
 {
 	ControlValueEdit * p_edit = new ControlValueEdit();
 	p_edit->Create(WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_BORDER, edit.position.ToRect(), this, 0);
-	p_edit->SetWindowTextW(edit.text.c_str());
+	std::map<std::wstring, std::wstring>::iterator value;
+	if ((value = InstallerSession::Instance->AdditionalControlArgs.find(edit.id)) != 
+		InstallerSession::Instance->AdditionalControlArgs.end())
+	{
+		p_edit->SetWindowText(value->second.c_str());
+	}
+	else
+	{
+		p_edit->SetWindowText(edit.text.c_str());
+	}
 	p_edit->EnableWindow(edit.enabled);
 	p_edit->SetFont(CreateFont(edit));
 	m_custom_control_values.insert(std::pair<std::wstring, ControlValue *>(edit.id, p_edit));
@@ -656,7 +680,16 @@ void CdotNetInstallerDlg::AddControl(const ControlBrowse& browse)
 	p_browse->SetDefExt(NULL);
 	// default path
 	p_browse->SetWindowTextW(browse.text.c_str());
-	p_browse->SetPathName(browse.text.c_str());
+	std::map<std::wstring, std::wstring>::iterator value;
+	if ((value = InstallerSession::Instance->AdditionalControlArgs.find(browse.id)) != 
+		InstallerSession::Instance->AdditionalControlArgs.end())
+	{
+		p_browse->SetPathName(value->second.c_str());
+	}
+	else
+	{
+		p_browse->SetPathName(browse.text.c_str());
+	}
 	// font
 	p_browse->SetFont(CreateFont(browse));
 	// open, not save as
@@ -671,6 +704,6 @@ void CdotNetInstallerDlg::SetControlValues()
 	for(iter = m_custom_control_values.begin(); iter != m_custom_control_values.end(); ++iter)
 	{
 		LOG(L"--- Setting user-defined value " << iter->first << L"=" << iter->second->GetValue());
-		InstallerSession::Instance->AdditionalUserVariables[iter->first] = iter->second->GetValue();
+		InstallerSession::Instance->AdditionalControlArgs[iter->first] = iter->second->GetValue();
 	}
 }

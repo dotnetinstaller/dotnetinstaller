@@ -50,6 +50,7 @@ BOOL CdotNetInstallerApp::InitInstance()
 
 		// propagate command line arguments during execution
 		InstallerSession::Instance->AdditionalCmdLineArgs = InstallerCommandLineInfo::Instance->componentCmdArgs;
+		InstallerSession::Instance->AdditionalControlArgs = InstallerCommandLineInfo::Instance->controlCmdArgs;
 
 		if (InstallerCommandLineInfo::Instance->DisplayHelp())
 		{
@@ -121,6 +122,7 @@ void CdotNetInstallerApp::DisplayHelp()
 	hs << L" /DisplayCab: display a list of embedded components" << std::endl;
 	hs << L" /DisplayConfig: display a list of configurations" << std::endl;
 	hs << L" /ComponentArgs [\"name\":\"value\" ...] : additional component args" << std::endl;
+	hs << L" /ControlArgs [\"name\":\"value\" ...] : additional control values" << std::endl;
 	hs << L" /CompleteCommandArgs [args] : additional complete command" << std::endl;
 	hs << L" /Launcher [path] : alternate launcher on reboot" << std::endl;
 	hs << L" /LauncherArgs [args] : additional launcher args on reboot" << std::endl;

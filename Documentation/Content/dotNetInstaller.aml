@@ -77,6 +77,18 @@
                 </para>
               </alert>
             </definition>
+            <definedTerm>/ControlArgs "description":"value"</definedTerm>
+            <definition>
+              <para>
+                Additional user-defined control parameters. This enables overriding user control values.
+              </para>
+              <alert class="note">
+                <para>
+                  Note that if multiple user controls are declared with the same id the parameter applies to all.
+                  Control arguments applied to user controls that don't exist are ignored.
+                </para>
+              </alert>
+            </definition>
             <definedTerm>/Launcher [Program Path]</definedTerm>
             <definition>
               <para>

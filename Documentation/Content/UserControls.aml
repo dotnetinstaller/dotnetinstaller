@@ -33,10 +33,20 @@
           You can use user-defined control values in <literal>command</literal>, <literal>msi</literal>, <literal>msu</literal>
           and <literal>openfile</literal> component commands and command line parameters. Each control that accepts user input
           (<literal>edit</literal>, <literal>checkbox</literal> and <literal>browse</literal>) requires a unique <literal>id</literal>
-          set in the editor that must be referenced in square brackets. For example, the value of the <literal>browse</literal> 
+          set in the editor that must be referenced in square brackets. For example, the value of the <literal>browse</literal>
           control with id <literal>MYDIR</literal> can be used by entering <literal>[MYDIR]</literal>.
         </para>
       </content>
-    </section>    
+    </section>
+    <section address="overridingcontrolvalues">
+      <title>Overriding User-Defined Control Values</title>
+      <content>
+        You can override the user-defined control values from the command line with the <literal>/controlArgs</literal>
+        command-line option.
+        <code language="cmd">
+          <![CDATA[dotNetInstaller.exe /configFile Samples\CustomInputSetup\Configuration.xml /controlArgs EXITCODE:5]]>
+        </code>
+      </content>
+    </section>
   </developerConceptualDocument>
 </topic>

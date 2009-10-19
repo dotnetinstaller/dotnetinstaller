@@ -42,7 +42,7 @@ std::wstring InstallerSession::ExpandUserVariables(const std::wstring& s_in)
 		if (i + 1 != j)
 		{
 			std::wstring name = s.substr(i + 1, j - i - 1);
-			std::wstring value = AdditionalUserVariables[name];			
+			std::wstring value = AdditionalControlArgs[name];			
 			s.replace(i, j - i + 1, value);
 			i += value.length();
 		}

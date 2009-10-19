@@ -18,6 +18,7 @@ public:
 	std::wstring configFile;
 	std::wstring logFile;
     std::map<std::wstring, std::wstring> componentCmdArgs;
+	std::map<std::wstring, std::wstring> controlCmdArgs;
 private:
 	
 	enum argFlags 
@@ -28,7 +29,8 @@ private:
 		launcher, 
 		launcherArgs, 
 		completeCommandArgs,		
-		componentArgs
+		componentArgs,
+		controlArgs,
 	};
 	
 	// last arg flag

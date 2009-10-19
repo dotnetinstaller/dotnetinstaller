@@ -15,7 +15,7 @@ public:
 	// additional cmdline arguments
 	std::map<std::wstring, std::wstring> AdditionalCmdLineArgs;
 	// additional user-defined variables
-	std::map<std::wstring, std::wstring> AdditionalUserVariables;
+	std::map<std::wstring, std::wstring> AdditionalControlArgs;
     // get a unique temporary directory for this session
     std::wstring GetSessionTempPath(bool returnonly = false);
 	// expand variables

@@ -17,6 +17,7 @@ namespace DVLib
 			CPPUNIT_TEST( testLoadResource );
 			CPPUNIT_TEST( testLoadMultilingualSetup );
 			CPPUNIT_TEST( testGetSupportedConfigurations );
+			CPPUNIT_TEST( testLoadCustomInputSetup );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testLoadPackagedSetup();
@@ -29,6 +30,7 @@ namespace DVLib
 			void testLoadResource();
 			void testGetSupportedConfigurations();
 			void testLoadMultilingualSetup();
+			void testLoadCustomInputSetup();
 		};
 	}
 }
