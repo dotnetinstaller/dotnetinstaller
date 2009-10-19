@@ -106,6 +106,8 @@ namespace InstallerLib
                     return EmbedFile.CreateFromXml(node);
                 case "embedfolder":
                     return EmbedFolder.CreateFromXml(node);
+                case "control":
+                    return Control.CreateFromXml(node);
                 default:
                     throw new Exception(string.Format("Unsupported node: {0}", node.LocalName));
             }
@@ -201,6 +203,19 @@ namespace InstallerLib
             if (xmlattrib != null && !string.IsNullOrEmpty(xmlattrib.InnerText))
             {
                 return bool.TryParse(xmlattrib.InnerText, out propertyName);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        protected bool ReadAttributeValue(XmlElementEventArgs e, string value, ref int propertyName)
+        {
+            XmlAttribute xmlattrib = e.XmlElement.Attributes[value];
+            if (xmlattrib != null && !string.IsNullOrEmpty(xmlattrib.InnerText))
+            {
+                return int.TryParse(xmlattrib.InnerText, out propertyName);
             }
             else
             {

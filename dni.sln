@@ -100,6 +100,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 		Documentation\Content\ThirdPartyLicenses.aml = Documentation\Content\ThirdPartyLicenses.aml
 		Documentation\Content\Uac.aml = Documentation\Content\Uac.aml
 		Documentation\Content\UIModes.aml = Documentation\Content\UIModes.aml
+		Documentation\Content\UserControls.aml = Documentation\Content\UserControls.aml
 		Documentation\Content\VariableSubstitution.aml = Documentation\Content\VariableSubstitution.aml
 	EndProjectSection
 EndProject
@@ -329,6 +330,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTimer", "UnitTests\Test
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CustomInputSetup", "CustomInputSetup", "{72F4AC32-5C06-4ABA-9453-DA10AF36647D}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		Samples\CustomInputSetup\Configuration.xml = Samples\CustomInputSetup\Configuration.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -481,6 +491,7 @@ Global
 		{F691A44A-8753-4E95-AA4C-7C58A271A214} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{57C3C23E-F287-4E9B-9A18-FF5E7430DD8E} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{1C3980EC-E9FD-4DD1-BB0B-1CF4AC9601B4} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
+		{72F4AC32-5C06-4ABA-9453-DA10AF36647D} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{5DDA5610-5927-404B-9B03-76071159F8BE} = {AA6599BC-B3BA-4EC0-980D-5B66336A1350}
 		{49A3BD48-D506-4108-8F47-7CD7081C046C} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{48FFB2FD-215B-4DEE-8C38-EC1DB518477F} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}

@@ -88,5 +88,14 @@
         </para>
       </content>
     </section>
+    <section address="custominputsetupsample">
+      <title>Custom Input Setup Sample</title>
+      <content>
+        <para>
+          A demo configuration with user-defined controls. It prompts for an additional directory used in a <literal>command</literal>
+          component and has a checkbox that can make setup succeed or fail.
+        </para>
+      </content>
+    </section>
   </developerConceptualDocument>
 </topic>

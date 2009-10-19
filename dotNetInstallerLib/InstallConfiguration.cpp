@@ -8,6 +8,10 @@
 #include "MsuComponent.h"
 #include "CmdComponent.h"
 #include "OpenFileComponent.h"
+#include "ControlLabel.h"
+#include "ControlCheckBox.h"
+#include "ControlEdit.h"
+#include "ControlBrowse.h"
 
 InstallConfiguration::InstallConfiguration()
 	: Configuration(configuration_install)
@@ -107,6 +111,29 @@ void InstallConfiguration::Load(TiXmlElement * node)
 
 		component->Load(node_component);
 		components.add(component);
+	}
+
+	// controls
+	while ( (child = node->IterateChildren("control", child)) != NULL)
+	{
+		TiXmlElement * node_control = child->ToElement();
+		if (node_control == NULL)
+			continue;
+
+		std::wstring control_type = DVLib::UTF8string2wstring(node_control->Attribute("type"));
+
+		shared_any<Control *, close_delete> control;
+		if (control_type == L"label") control = shared_any<Control *, close_delete>(new ControlLabel());
+		else if (control_type == L"checkbox") control = shared_any<Control *, close_delete>(new ControlCheckBox());
+		else if (control_type == L"edit") control = shared_any<Control *, close_delete>(new ControlEdit());
+		else if (control_type == L"browse") control = shared_any<Control *, close_delete>(new ControlBrowse());
+		else 
+		{
+			THROW_EX(L"Unsupported control type: " << control_type);
+		}
+
+		control->Load(node_control);
+		controls.push_back(control);
 	}
 
 	LOG(L"Loaded " << components.size() << L" component(s) from configuration type=" << type 

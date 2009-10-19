@@ -3,6 +3,11 @@
   <Fragment>
     <DirectoryRef Id="INSTALLLOCATION">
       <Directory Id="Samples" Name="samples">
+        <Directory Id="CustomInputSetupFolder" Name="CustomInputSetup">
+          <Component Id="CustomInputSetupSample" Guid="EB6B862A-F9AB-4a1d-A2D9-3F63C2A54AB7">
+            <File Id="CustomInputSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\CustomInputSetup\Configuration.xml" />
+          </Component>
+        </Directory>
         <Directory Id="InstallCheckProductFolder" Name="InstallCheckProduct">
           <Component Id="InstallCheckProductSample" Guid="1722EA85-8D73-45ca-A38C-F5BCF1E5518F">
             <File Id="InstallCheckProduct.Configuration.xml" Name="Configuration.xml" Source="..\Samples\InstallCheckProduct\Configuration.xml" />

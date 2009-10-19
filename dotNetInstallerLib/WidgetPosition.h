@@ -21,4 +21,6 @@ public:
 	WidgetPosition(const WidgetPosition&);
 	WidgetPosition& operator=(const WidgetPosition&);
 	bool FromString(const std::wstring& p_RectString);
+	std::wstring ToString() const;
+	CRect ToRect() const;
 };

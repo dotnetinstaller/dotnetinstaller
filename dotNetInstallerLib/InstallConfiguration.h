@@ -3,6 +3,7 @@
 #include "WidgetPosition.h"
 #include "Configuration.h"
 #include "Components.h"
+#include "Control.h"
 
 class InstallConfiguration : public Configuration
 {
@@ -67,6 +68,7 @@ public:
     WidgetPosition dialog_cancel_button_position;
     WidgetPosition dialog_skip_button_position;
 	Components components;
+	std::vector<ControlPtr> controls;
 public:
 	InstallConfiguration();
 	virtual void Load(TiXmlElement * node);

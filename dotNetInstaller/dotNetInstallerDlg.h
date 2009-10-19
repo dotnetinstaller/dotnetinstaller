@@ -3,6 +3,7 @@
 #include "HyperlinkStatic.h"
 #include "ComponentsList.h"
 #include "InstallComponentDlg.h"
+#include "ControlValue.h"
 #include "resource.h"
 
 // finestra di dialogo CdotNetInstallerDlg
@@ -57,4 +58,13 @@ public:
 	bool OnComponentExecSuccess(const ComponentPtr& component);
 	bool OnComponentExecError(const ComponentPtr& component, std::exception& ex);
 	bool AutoStart(InstallConfiguration * p_configuration);
+private:
+	std::map<std::wstring, ControlValue *> m_custom_control_values; 
+	std::list<CObject *> m_custom_controls;
+	CFont * CreateFont(const ControlText&);
+	void AddControl(const ControlLabel&);
+	void AddControl(const ControlCheckBox&);
+	void AddControl(const ControlEdit&);
+	void AddControl(const ControlBrowse&);
+	void SetControlValues();
 };

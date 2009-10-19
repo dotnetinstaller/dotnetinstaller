@@ -7,7 +7,7 @@
 #include "InstallerSession.h"
 
 MsiComponent::MsiComponent()
-	: ProcessComponent(msi)
+	: ProcessComponent(component_type_msi)
 {
 
 }
@@ -36,6 +36,8 @@ std::wstring MsiComponent::GetCommandLine() const
 		l_command.append(L" ");
 		l_command.append(cmdline->second);
     }
+
+	l_command = InstallerSession::Instance->ExpandUserVariables(l_command);
 
 	return l_command;
 }

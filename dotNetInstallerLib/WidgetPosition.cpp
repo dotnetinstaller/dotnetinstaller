@@ -47,3 +47,17 @@ bool WidgetPosition::FromString(const std::wstring& p_RectString)
 	_height = _wtoi(l_RectCoordinates[3].c_str());
     return true;
 }
+
+std::wstring WidgetPosition::ToString() const
+{
+	std::wstringstream ss;
+	ss << L"left=" << _left << L", top=" << _top << L", width=" << _width << L", height=" << _height;
+	return ss.str();
+}
+
+CRect WidgetPosition::ToRect() const 
+{ 
+	POINT p = { Left(), Top() };
+	SIZE s = { Width(), Height() };
+	return CRect(p, s);
+}

@@ -6,11 +6,11 @@
 
 enum component_type
 {
-	undefined = 0, 
-	cmd, // shell command
-	msi, // windows installer setup
-	msu, // windows update
-	openfile // ShellExecute call to open a file
+	component_type_undefined = 0, 
+	component_type_cmd, // shell command
+	component_type_msi, // windows installer setup
+	component_type_msu, // windows update
+	component_type_openfile // ShellExecute call to open a file
 };
 
 class Component

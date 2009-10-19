@@ -84,6 +84,7 @@
         <ComponentGroupRef Id="StandaloneSetupSample" />
         <ComponentGroupRef Id="PackagedSetupSample" />
         <ComponentRef Id="InstallCheckProductSample" />
+        <ComponentRef Id="CustomInputSetupSample" />
         <ComponentRef Id="ReferenceSetupSample" />
         <ComponentRef Id="OsFiltersSample" />
       </Feature>

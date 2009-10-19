@@ -7,7 +7,7 @@
 #include "InstallerSession.h"
 
 MsuComponent::MsuComponent()
-	: ProcessComponent(msu)
+	: ProcessComponent(component_type_msu)
 {
 
 }
@@ -36,6 +36,8 @@ void MsuComponent::Exec()
 		l_command.append(L" ");
 		l_command.append(cmdline->second);
     }
+
+	l_command = InstallerSession::Instance->ExpandUserVariables(l_command);
 
     LOG(L"Executing: " << l_command);
 	DVLib::RunCmd(l_command, &m_process_info);

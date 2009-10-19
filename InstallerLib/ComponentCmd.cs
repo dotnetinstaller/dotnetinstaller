@@ -16,7 +16,7 @@ namespace InstallerLib
         public ComponentCmd(string p_ComponentName)
             : base("cmd", p_ComponentName)
         {
-            m_command = "\"#APPPATH\\mysetup.exe\" -q\"";
+            m_command = "cmd.exe /C \"#APPPATH\\mysetup.exe\"";
         }
 
         private string m_command;

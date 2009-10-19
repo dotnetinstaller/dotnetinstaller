@@ -6,14 +6,17 @@
 #include "InstallerSession.h"
 
 OpenFileComponent::OpenFileComponent()
-	: Component(openfile)
+	: Component(component_type_openfile)
 	, m_rc(0)
 {
 }
 
 void OpenFileComponent::Exec()
 {
-	DVLib::ShellCmd(file, & m_rc);
+	std::wstring l_file = file;
+	l_file = InstallerSession::Instance->ExpandUserVariables(l_file);
+	LOG(L"Opening: " << l_file);
+	DVLib::ShellCmd(l_file, & m_rc);
 }
 
 bool OpenFileComponent::IsExecuting() const

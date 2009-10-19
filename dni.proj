@@ -25,10 +25,16 @@
     <PackagedSetupSample Include="Samples/PackagedSetup/**/*.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <CustomInputSetupSample Include="Samples/PackagedSetup/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.txt" />
     <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.xml" />
     <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.bmp" />
     <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <MultilingualSetupSample Include="Samples/MultilingualSetup/**/*.xml" />
   </ItemGroup>
   <ItemGroup>
     <DownloadSetupSample Include="Samples/DownloadSetup/**/*.xml" />
@@ -152,6 +158,12 @@
     <!-- Sample: DownloadSetup -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\DownloadSetup" />
     <Copy SourceFiles="@(DownloadSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\DownloadSetup\%(RecursiveDir)" />
+    <!-- Sample: MultilingualSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\MultilingualSetup" />
+    <Copy SourceFiles="@(MultilingualSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\MultilingualSetup\%(RecursiveDir)" />
+    <!-- Sample: CustomInputSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\CustomInputSetup" />
+    <Copy SourceFiles="@(CustomInputSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\CustomInputSetup\%(RecursiveDir)" />
     <!-- Sample: InstallCheckProduct -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckProduct" />
     <Copy SourceFiles="@(InstallCheckProductSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckProduct\%(RecursiveDir)" />

@@ -175,6 +175,30 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Control.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ControlBrowse.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ControlCheckBox.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ControlEdit.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ControlLabel.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ControlText.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DownloadDialog.cpp"
 				>
 			</File>
@@ -326,6 +350,30 @@
 			</File>
 			<File
 				RelativePath=".\Configurations.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Control.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ControlBrowse.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ControlCheckBox.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ControlEdit.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ControlLabel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ControlText.h"
 				>
 			</File>
 			<File

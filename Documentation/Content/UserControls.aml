@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="3c0e993b-cfec-4f08-a55d-314226c51d38" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        It's possible to add user-defined controls that can generate values to the
+        setup bootstrapper.
+      </para>
+    </introduction>
+    <section address="dotnetinstallerlayoutusercontrols">
+      <title>User-Defined Controls</title>
+      <content>
+        <para>
+          The following example from the <fictitiousUri>CustomInputSample</fictitiousUri> adds a browse and a checkbox control.
+          <mediaLink>
+            <image xlink:href="DotNetInstallerUserControls.jpg" />
+          </mediaLink>
+        </para>
+        <para>
+          The following controls are available in the editor.
+          <definitionTable>
+            <definedTerm>label</definedTerm>
+            <definition>A static text label.</definition>
+            <definedTerm>edit</definedTerm>
+            <definition>A text box.</definition>
+            <definedTerm>checkbox</definedTerm>
+            <definition>A checkbox with a user-defined checked and unchecked value.</definition>
+            <definedTerm>browse</definedTerm>
+            <definition>A file or directory locator.</definition>
+          </definitionTable>
+        </para>
+        <para>
+          You can use user-defined control values in <literal>command</literal>, <literal>msi</literal>, <literal>msu</literal>
+          and <literal>openfile</literal> component commands and command line parameters. Each control that accepts user input
+          (<literal>edit</literal>, <literal>checkbox</literal> and <literal>browse</literal>) requires a unique <literal>id</literal>
+          set in the editor that must be referenced in square brackets. For example, the value of the <literal>browse</literal> 
+          control with id <literal>MYDIR</literal> can be used by entering <literal>[MYDIR]</literal>.
+        </para>
+      </content>
+    </section>    
+  </developerConceptualDocument>
+</topic>

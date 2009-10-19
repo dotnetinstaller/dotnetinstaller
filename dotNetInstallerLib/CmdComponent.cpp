@@ -7,7 +7,7 @@
 #include "InstallerSession.h"
 
 CmdComponent::CmdComponent()
-	: ProcessComponent(cmd)
+	: ProcessComponent(component_type_cmd)
 {
 
 }
@@ -24,6 +24,8 @@ void CmdComponent::Exec()
 		l_command += cmdline->second.c_str();
 		LOG(L"-- Additional component arguments: " << cmdline->second);
     }
+
+	l_command = InstallerSession::Instance->ExpandUserVariables(l_command);
 
 	LOG(L"Executing: " << l_command);
 	DVLib::RunCmd(l_command, & m_process_info);

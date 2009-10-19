@@ -65,6 +65,12 @@
     </Compile>
     <Compile Include="ComponentCollection.cs" />
     <Compile Include="ComponentMsu.cs" />
+    <Compile Include="Control.cs" />
+    <Compile Include="ControlBrowse.cs" />
+    <Compile Include="ControlCheckBox.cs" />
+    <Compile Include="ControlEdit.cs" />
+    <Compile Include="ControlLabel.cs" />
+    <Compile Include="ControlText.cs" />
     <Compile Include="Editor.cs" />
     <Compile Include="EmbedFile.cs" />
     <Compile Include="ComponentMsi.cs">

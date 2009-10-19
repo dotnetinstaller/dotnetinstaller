@@ -84,5 +84,29 @@
         <code language="text" source="..\ThirdParty\CommandLineArguments\license.txt" />
       </para>
     </section>
+    <section address="browsectrl">
+      <title>BrowseCtrl</title>
+      <content>
+        <para>
+          The user-defined browse control uses CBrowseCtrl.
+          See <externalLink>
+            <linkText>http://www.codeproject.com/KB/buttons/CBrowseCtrl.aspx</linkText>
+            <linkUri>http://www.codeproject.com/KB/buttons/CBrowseCtrl.aspx</linkUri>
+          </externalLink> for more information.
+        </para>
+      </content>
+    </section>
+    <section address="ckcbusyprogresscontrol">
+      <title>CKCBusyProgressCtrl</title>
+      <content>
+        <para>
+          The K-2000 progress control was written by Peter Mares.
+          See <externalLink>
+            <linkText>http://www.kinkycode.com</linkText>
+            <linkUri>http://www.kinkycode.com</linkUri>
+          </externalLink> for more information.
+        </para>
+      </content>
+    </section>
   </developerConceptualDocument>
 </topic>

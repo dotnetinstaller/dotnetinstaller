@@ -10,6 +10,8 @@
 #include "ExtractCabProcessor.h"
 #include "DownloadDialog.h"
 #include "InstallerCommandLineInfo.h"
+#include "BrowseCtrl.h"
+#include "ControlValue.h"
 #include <Version/Version.h>
 
 // finestra di dialogo CdotNetInstallerDlg
@@ -116,6 +118,28 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	else if (DVLib::ResourceExists(AfxGetApp()->m_hInstance, L"RES_BANNER", L"CUSTOM"))
 	{
 		m_PictureBox.SetBitmap(DVLib::LoadBitmapFromResource(AfxGetApp()->m_hInstance, L"RES_BANNER", L"CUSTOM"));
+	}
+
+	for each(const ControlPtr& control in p_configuration->controls)
+	{
+		LOG(L"-- Adding " << control->GetString());
+		switch(control->type)
+		{
+		case control_type_label:
+			AddControl(* (ControlLabel *) get(control));
+			break;
+		case control_type_checkbox:
+			AddControl(* (ControlCheckBox *) get(control));
+			break;
+		case control_type_edit:
+			AddControl(* (ControlEdit *) get(control));
+			break;
+		case control_type_browse:
+			AddControl(* (ControlBrowse *) get(control));
+			break;
+		default:
+			THROW_EX(L"Invalid control type: " << control->type);
+		}
 	}
 
 	bool all_components_installed = LoadComponentsList();
@@ -228,6 +252,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 	{
 		ClearError();
         SelectComponents();
+		SetControlValues();
         ExtractCab();
 		
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
@@ -303,6 +328,12 @@ void CdotNetInstallerDlg::OnBnClickedSkip()
 void CdotNetInstallerDlg::OnDestroy()
 {
 	CDialog::OnDestroy();
+
+	// destroy custom dialog controls
+	for each(CObject * control in m_custom_controls)
+	{
+		delete control;
+	}
 
 	try
 	{
@@ -551,3 +582,95 @@ bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, st
 	return true;
 }
 
+void CdotNetInstallerDlg::AddControl(const ControlLabel& label)
+{
+	CStatic * p_static = new CStatic();
+	p_static->Create(label.text.c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP, label.position.ToRect(), this);
+	p_static->EnableWindow(label.enabled);
+	p_static->SetFont(CreateFont(label));
+	m_custom_controls.push_back(p_static);
+}
+
+CFont * CdotNetInstallerDlg::CreateFont(const ControlText& text)
+{
+	CFont * p_font = new CFont;	
+	int nFontHeight = MulDiv(text.font_size, GetDeviceCaps(GetDC()->GetSafeHdc(), LOGPIXELSY), 72);
+	p_font->CreateFont(nFontHeight, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS,
+		CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, text.font_name.c_str());
+	m_custom_controls.push_back(p_font);
+	return p_font;
+}
+
+void CdotNetInstallerDlg::AddControl(const ControlCheckBox& checkbox)
+{
+	ControlValueCheckBox * p_checkbox = new ControlValueCheckBox(checkbox.checked_value, checkbox.unchecked_value);
+	p_checkbox->Create(checkbox.text.c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX, checkbox.position.ToRect(), this, 0);
+	p_checkbox->EnableWindow(checkbox.enabled);
+	p_checkbox->SetFont(CreateFont(checkbox));
+	p_checkbox->SetCheck(checkbox.checked);
+	m_custom_control_values.insert(std::pair<std::wstring, ControlValue *>(checkbox.id, p_checkbox));
+	m_custom_controls.push_back(p_checkbox);
+}
+
+void CdotNetInstallerDlg::AddControl(const ControlEdit& edit)
+{
+	ControlValueEdit * p_edit = new ControlValueEdit();
+	p_edit->Create(WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_BORDER, edit.position.ToRect(), this, 0);
+	p_edit->SetWindowTextW(edit.text.c_str());
+	p_edit->EnableWindow(edit.enabled);
+	p_edit->SetFont(CreateFont(edit));
+	m_custom_control_values.insert(std::pair<std::wstring, ControlValue *>(edit.id, p_edit));
+	m_custom_controls.push_back(p_edit);
+}
+
+void CdotNetInstallerDlg::AddControl(const ControlBrowse& browse)
+{
+	ControlValueBrowse * p_browse = new ControlValueBrowse();
+	p_browse->Create(browse.position.ToRect(), this, 0);
+	// style and options
+	DWORD dwStyle = p_browse->GetButtonStyle();
+	if (browse.button_text.empty()) 
+	{
+		dwStyle |= BC_BTN_ICON; 
+		// if (browse.flat) dwStyle |= BC_BTN_FLAT; 
+		dwStyle &= ~BC_ICO_ARROWFOLDER;
+		dwStyle &= ~BC_ICO_FOLDER;
+		dwStyle |= BC_ICO_EXPLORER;
+	}
+	else
+	{
+		dwStyle &= ~BC_BTN_ICON;
+		p_browse->SetButtonText(browse.button_text.c_str());
+	}
+	if (browse.allow_edit) dwStyle |= BC_CTL_ALLOWEDIT;
+	if (browse.folders_only) dwStyle |= BC_CTL_FOLDERSONLY; 
+	p_browse->SetButtonStyle(dwStyle);
+	// filter
+	if (! browse.filter.empty()) p_browse->SetFilter(browse.filter.c_str());
+	// file flags
+	DWORD dwFileFlags = 0;
+	if (browse.must_exist) dwFileFlags |= OFN_FILEMUSTEXIST;
+	if (browse.hide_readonly) dwFileFlags |= OFN_HIDEREADONLY;
+	p_browse->SetFileFlags(dwFileFlags);
+	// default extension
+	p_browse->SetDefExt(NULL);
+	// default path
+	p_browse->SetWindowTextW(browse.text.c_str());
+	p_browse->SetPathName(browse.text.c_str());
+	// font
+	p_browse->SetFont(CreateFont(browse));
+	// open, not save as
+	p_browse->SetOpenSave(TRUE); 
+	m_custom_control_values.insert(std::pair<std::wstring, ControlValue *>(browse.id, p_browse));
+	m_custom_controls.push_back(p_browse);
+}
+
+void CdotNetInstallerDlg::SetControlValues()
+{
+	std::map<std::wstring, ControlValue *>::const_iterator iter;
+	for(iter = m_custom_control_values.begin(); iter != m_custom_control_values.end(); ++iter)
+	{
+		LOG(L"--- Setting user-defined value " << iter->first << L"=" << iter->second->GetValue());
+		InstallerSession::Instance->AdditionalUserVariables[iter->first] = iter->second->GetValue();
+	}
+}

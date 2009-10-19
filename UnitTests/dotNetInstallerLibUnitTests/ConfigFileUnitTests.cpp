@@ -27,7 +27,7 @@ void ConfigFileUnitTests::testLoadPackagedSetup()
 	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
 	CPPUNIT_ASSERT(configuration->components.size() == 1);
 	ComponentPtr component = configuration->components[0];
-	CPPUNIT_ASSERT(component->type == msi);
+	CPPUNIT_ASSERT(component->type == component_type_msi);
 }
 
 void ConfigFileUnitTests::testLoadInstallCheckProductSetup()
@@ -77,10 +77,10 @@ void ConfigFileUnitTests::testLoadInstallCheckOperators()
 	CPPUNIT_ASSERT(config.size() == 1);
 	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
 	CPPUNIT_ASSERT(configuration->components.size() == 4);
-	CPPUNIT_ASSERT(configuration->components[0]->type == cmd);
-	CPPUNIT_ASSERT(configuration->components[1]->type == cmd);
-	CPPUNIT_ASSERT(configuration->components[2]->type == cmd);
-	CPPUNIT_ASSERT(configuration->components[3]->type == cmd);
+	CPPUNIT_ASSERT(configuration->components[0]->type == component_type_cmd);
+	CPPUNIT_ASSERT(configuration->components[1]->type == component_type_cmd);
+	CPPUNIT_ASSERT(configuration->components[2]->type == component_type_cmd);
+	CPPUNIT_ASSERT(configuration->components[3]->type == component_type_cmd);
 	// \todo: verify that operators tree is correct
 }
 
@@ -126,7 +126,7 @@ void ConfigFileUnitTests::testLoadDownloadSetup()
 	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
 	CPPUNIT_ASSERT(configuration->components.size() == 1);
 	ComponentPtr component = configuration->components[0];
-	CPPUNIT_ASSERT(component->type == cmd);
+	CPPUNIT_ASSERT(component->type == component_type_cmd);
 	// the component has a download dialog with one file
 	CPPUNIT_ASSERT(get(component->downloaddialog) != NULL);
 	CPPUNIT_ASSERT(component->downloaddialog->downloadfiles.size() == 1);
@@ -176,7 +176,7 @@ void ConfigFileUnitTests::testLoadResource()
 	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
 	CPPUNIT_ASSERT(configuration->components.size() == 1);
 	ComponentPtr component = configuration->components[0];
-	CPPUNIT_ASSERT(component->type == msi);
+	CPPUNIT_ASSERT(component->type == component_type_msi);
 }
 
 void ConfigFileUnitTests::testGetSupportedConfigurations()

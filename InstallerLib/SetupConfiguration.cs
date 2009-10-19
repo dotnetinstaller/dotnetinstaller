@@ -14,6 +14,7 @@ namespace InstallerLib
     [XmlChild(typeof(EmbedFile))]
     [XmlChild(typeof(EmbedFolder))]
     [XmlChild(typeof(Component))]
+    [XmlChild(typeof(Control))]
     public class SetupConfiguration : Configuration
     {
         public SetupConfiguration()
