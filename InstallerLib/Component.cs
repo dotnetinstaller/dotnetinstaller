@@ -173,7 +173,7 @@ namespace InstallerLib
         }
 
         #endregion
-
+        
         protected void OnDescriptionChanged()
         {
             if (DescriptionChanged != null)

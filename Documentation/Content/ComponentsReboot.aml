@@ -9,7 +9,8 @@
       <content>
         <para>
           Reboot behavior is supported by three component-based and install-based options: <literal>mustreboot</literal>,
-          <literal>reboot_required</literal> and <literal>must_reboot_required</literal>.
+          <literal>reboot_required</literal> and <literal>must_reboot_required</literal> as well as by special handling
+          in <literal>msi</literal>, <literal>msu</literal> and <literal>cmd</literal> components.
           <definitionTable>
             <definedTerm>mustreboot</definedTerm>
             <definition>
@@ -34,11 +35,16 @@
           </definitionTable>
         </para>
         <para>
-          Reboot options are most effective with <literal>msi</literal> components. A Windows Installer may signal the
-          bootstrapper that a reboot is required via a special return code. This happens when, for example, a locked file
+          Reboot options are most effective with <literal>msi</literal> components and with <literal>cmd</literal> components
+          wth a bit more work. A Windows Installer may signal the bootstrapper that a reboot is required via a special
+          return code (<literal>ERROR_SUCCESS_REBOOT_REQUIRED=3010</literal>). This happens when, for example, a locked file
           couldn't be replaced. Windows schedules the replacement after the reboot. dotNetInstaller is capable to force a
           reboot and return to the previous location in the installation sequence. The options define how the bootstrapper
           behaves in this situation and whether to offer users the possibility to postpone the reboot.
+        </para>
+        <para>
+          The same behavior can be simulated in <literal>cmd</literal> components with the <literal>returncodes_reboot</literal>
+          option. Use this optoin to specify a comma-separated return codes that signal a required reboot.
         </para>
         <para>
           In silent installations (basic and no UI) the choice to reboot is made automatically for the user when reboot

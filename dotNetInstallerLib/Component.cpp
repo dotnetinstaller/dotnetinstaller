@@ -126,3 +126,8 @@ std::wstring Component::GetString(int indent) const
 		ss << L", os=" << os_filter_greater << L"/" << os_filter_smaller;
 	return ss.str();
 }
+
+bool Component::IsRebootRequired() const
+{
+	return mustreboot;
+}

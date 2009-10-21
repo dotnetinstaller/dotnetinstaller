@@ -13,7 +13,7 @@
           <tableDefinition>
             <definedTerm>command</definedTerm>
             <definition>
-              Command to execute in full UI mode. Use <application>cmd.exe</application> to run typical commands, eg. 
+              Command to execute in full UI mode. Use <application>cmd.exe</application> to run typical commands, eg.
               <literal>cmd.exe /C copy ...</literal>.
             </definition>
             <definedTerm>command_basic</definedTerm>
@@ -23,8 +23,18 @@
             </definition>
             <definedTerm>cmdparameters_silent</definedTerm>
             <definition>
-              Command to execute in silent mode. Defaults to <literal>command_basic</literal>, then to <literal>command</literal> 
+              Command to execute in silent mode. Defaults to <literal>command_basic</literal>, then to <literal>command</literal>
               when not specified.
+            </definition>
+            <definedTerm>returncodes_failure</definedTerm>
+            <definition>
+              A comma-separated list of return codes that should be treated as a component failure. Specify
+              <literal>none</literal> to ignore component return codes and specify <literal>!value</literal> 
+              to treat all return codes except a single specified value as failure.
+            </definition>
+            <definedTerm>returncodes_reboot</definedTerm>
+            <definition>
+              A comma-separated list of return codes that indicate that a reboot is required.
             </definition>
           </tableDefinition>
         </para>

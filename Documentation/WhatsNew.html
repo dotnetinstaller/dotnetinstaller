@@ -31,6 +31,12 @@
                     file/directory browse controls.</li>
                 <li>dotNetInstaller: Added <code>/controlArgs "control id":"value"</code> to dotNetInstaller.exe
                     command line to override initial control values.</li>
+                <li>Added <code>returncodes_reboot</code> to <code>cmd</code> components that specify
+                    which return code(s) should be treated as a required reboot.</li>
+                <li>Added <code>returncodes_failure</code> to <code>cmd</code> components that specify
+                    a list of comma-separated return code(s) that should be treated as a failure. Specify
+                    "none" to create a component that doesn't fail based on its return code and specify
+                    <code>!value</code> to treat all return codes except a single value as failure.</li>
             </ul>
         </li>
         <li><strong>Bugs</strong>:

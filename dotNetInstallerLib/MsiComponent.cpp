@@ -72,6 +72,5 @@ void MsiComponent::Wait(DWORD tt)
 
 bool MsiComponent::IsRebootRequired() const
 {
-	return ProcessComponent::IsRebootRequired() 
-		|| (GetProcessExitCode() == ERROR_SUCCESS_REBOOT_REQUIRED);
+	return GetProcessExitCode() == ERROR_SUCCESS_REBOOT_REQUIRED;
 }

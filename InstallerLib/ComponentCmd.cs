@@ -43,11 +43,35 @@ namespace InstallerLib
             set { m_command_basic = value; }
         }
 
+        #region Return Codes
+
+        private string m_returncodes_reboot;
+        [Description("Comma-separated error codes that indicate that a reboot is requred.")]
+        [Category("Return Codes")]
+        public string returncodes_reboot
+        {
+            get { return m_returncodes_reboot; }
+            set { m_returncodes_reboot = value; }
+        }
+
+        private string m_returncodes_failure;
+        [Description("Comma-separated error codes that indicate that the component failed (default is not zero, specify 'none' for a component that never returns a failure error code).")]
+        [Category("Return Codes")]
+        public string returncodes_failure
+        {
+            get { return m_returncodes_failure; }
+            set { m_returncodes_failure = value; }
+        }
+
+        #endregion
+
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
             e.XmlWriter.WriteAttributeString("command", m_command);
             e.XmlWriter.WriteAttributeString("command_silent", m_command_silent);
             e.XmlWriter.WriteAttributeString("command_basic", m_command_basic);
+            e.XmlWriter.WriteAttributeString("returncodes_reboot", m_returncodes_reboot);
+            e.XmlWriter.WriteAttributeString("returncodes_failure", m_returncodes_failure);
             base.OnXmlWriteTag(e);
         }
 
@@ -56,6 +80,8 @@ namespace InstallerLib
             ReadAttributeValue(e, "command", ref m_command);
             ReadAttributeValue(e, "command_silent", ref m_command_silent);
             ReadAttributeValue(e, "command_basic", ref m_command_silent);
+            ReadAttributeValue(e, "returncodes_reboot", ref m_returncodes_reboot);
+            ReadAttributeValue(e, "returncodes_failure", ref m_returncodes_failure);
             base.OnXmlReadTag(e);
         }
     }
