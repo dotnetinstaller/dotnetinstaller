@@ -9,6 +9,9 @@ public:
 	std::wstring command;
     std::wstring command_silent;
 	std::wstring command_basic;
+	std::wstring uninstall_command;
+    std::wstring uninstall_command_silent;
+	std::wstring uninstall_command_basic;
 	// return codes
 	std::wstring returncodes_reboot;
 	std::wstring returncodes_failure;

@@ -78,6 +78,24 @@ namespace InstallerLib
             get { return m_type; }
         }
 
+        private bool m_supports_install = true;
+        [Description("If true configuration supports install mode.")]
+        [Category("Runtime")]
+        public bool supports_install
+        {
+            get { return m_supports_install; }
+            set { m_supports_install = value; }
+        }
+
+        private bool m_supports_uninstall = true;
+        [Description("If true configuration supports uninstall mode.")]
+        [Category("Runtime")]
+        public bool supports_uninstall
+        {
+            get { return m_supports_uninstall; }
+            set { m_supports_uninstall = value; }
+        }
+
         #endregion
 
         public override string ToString()
@@ -109,6 +127,8 @@ namespace InstallerLib
             ReadAttributeValue(e, "os_filter_greater", ref m_os_filter_greater);
             ReadAttributeValue(e, "os_filter_smaller", ref m_os_filter_smaller);
             ReadAttributeValue(e, "processor_architecture_filter", ref m_processor_architecture_filter);
+            ReadAttributeValue(e, "supports_install", ref m_supports_install);
+            ReadAttributeValue(e, "supports_uninstall", ref m_supports_uninstall);
         }
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
@@ -120,6 +140,8 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
             e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
+            e.XmlWriter.WriteAttributeString("supports_install", m_supports_install.ToString());
+            e.XmlWriter.WriteAttributeString("supports_uninstall", m_supports_uninstall.ToString());
             base.OnXmlWriteTag(e);
         }
 

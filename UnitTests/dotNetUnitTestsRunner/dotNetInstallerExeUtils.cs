@@ -18,6 +18,7 @@ namespace dotNetUnitTestsRunner
             public string logfile = DefaultLogFile;
             public bool quiet = true;
             public bool reboot = false;
+            public bool uninstall = false;
             public string args;
 
             public RunOptions()
@@ -59,6 +60,8 @@ namespace dotNetUnitTestsRunner
                             result += string.Format(" /LogFile \"{0}\"", logfile);
                         }
                     }
+
+                    if (uninstall) result += " /x";
 
                     if (!string.IsNullOrEmpty(args))
                     {

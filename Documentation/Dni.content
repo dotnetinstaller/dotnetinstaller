@@ -3,6 +3,7 @@
   <Topic id="C73DDB0A-3EC4-4fa4-A341-6A054FDA07DC" visible="True" title="Setup Bootstrapper">
     <Topic id="a6f46303-b703-4ff3-9572-55d8131eb883" visible="True" title="Getting Started" />
     <Topic id="42440e25-c724-48f7-b3a4-e270f60bad78" visible="True" title="Deployment Strategies" />
+    <Topic id="4f90f945-9892-46df-a937-149fb32c8ec5" visible="True" title="Install and Uninstall Sequences" />
     <Topic id="1aa2140c-f65d-4aac-83a4-b86a3a554525" visible="True" title="Multilingual Support" />
   </Topic>
   <Topic id="b88e8650-71df-4328-a720-72ea55cf60f5" visible="True" title="Install Editor &amp; Configuration">

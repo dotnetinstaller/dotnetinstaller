@@ -10,6 +10,7 @@ shared_any<InstallerSession *, close_delete> InstallerSession::Instance;
 InstallerSession::InstallerSession()
 	: languageid(0)
 	, guid(DVLib::GenerateGUIDStringW())
+	, sequence(SequenceInstall)
 {
 
 }

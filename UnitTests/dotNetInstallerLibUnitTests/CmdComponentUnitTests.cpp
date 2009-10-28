@@ -5,15 +5,41 @@ CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::CmdComponentUnitTests);
 
 using namespace DVLib::UnitTests;
 
-void CmdComponentUnitTests::testExec()
+void CmdComponentUnitTests::testExecInstall()
 {
 	CmdComponent component;
 	component.command = L"cmd.exe /C exit /b 0";
+	component.uninstall_command = L"cmd.exe /C exit /b 1";
 	component.Exec();
 	component.Wait();
 	try
 	{
 		component.command = L"cmd.exe /C exit /b 1";
+		component.uninstall_command = L"cmd.exe /C exit /b 0";
+		component.Exec();
+		component.Wait();
+		throw "expected std::exception";
+	}
+	catch(std::exception& ex)
+	{
+		std::cout << std::endl << ex.what();
+	}
+}
+
+void CmdComponentUnitTests::testExecUninstall()
+{
+	InstallSequenceState state;
+	InstallerSession::Instance->sequence = SequenceUninstall;
+	
+	CmdComponent component;
+	component.command = L"cmd.exe /C exit /b 1";
+	component.uninstall_command = L"cmd.exe /C exit /b 0";
+	component.Exec();
+	component.Wait();
+	try
+	{
+		component.command = L"cmd.exe /C exit /b 0";
+		component.uninstall_command = L"cmd.exe /C exit /b 1";
 		component.Exec();
 		component.Wait();
 		throw "expected std::exception";
@@ -26,6 +52,7 @@ void CmdComponentUnitTests::testExec()
 
 void CmdComponentUnitTests::testExecUISilent()
 {
+	InstallUILevelState state;
 	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelSilent);
 	CmdComponent component;
 	component.command = L"cmd.exe /C exit /b 1";
@@ -33,11 +60,11 @@ void CmdComponentUnitTests::testExecUISilent()
 	component.command_basic = L"cmd.exe /C exit /b 3";
 	component.Exec();
 	component.Wait();
-	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelNotSet);
 }
 
 void CmdComponentUnitTests::testExecUIBasic()
 {
+	InstallUILevelState state;
 	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelBasic);
 	CmdComponent component;
 	component.command = L"cmd.exe /C exit /b 1";
@@ -45,7 +72,6 @@ void CmdComponentUnitTests::testExecUIBasic()
 	component.command_basic = L"cmd.exe /C exit /b 0";
 	component.Exec();
 	component.Wait();
-	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelNotSet);
 }
 
 

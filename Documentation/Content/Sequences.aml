@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="4f90f945-9892-46df-a937-149fb32c8ec5" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        dotNetInstaller supports both install and uninstall sequences. By default, it behaves like all installers
+        choosing the install sequence unless all components have been installed. It is also possible to force the uninstall sequence
+        with the <literal>/x</literal> command-line switch.
+      </para>
+    </introduction>
+    <section address="sequence_install">
+      <title>Supporting &amp; Uninstall</title>
+      <content>
+        <para>
+          In order to enable uninstall you will need to copy the bootstrapper itself with your application to the target machine.
+          It is recommended that you package a version of your dotNetInstaller without embedded CABs alongside the application being 
+          installed and that you create a shortcut to the bootstrapper with the <literal>/x</literal> command line option in cases 
+          you need to manually indicate that an uninstall must be performed.
+        </para>
+        <para>
+          Uninstall is the opposite of install. Components that have the <literal>supports_uninstall</literal> option set to 
+          <literal>true</literal> are presented and uninstalled in reverse order from installation. Ensure that all components 
+          have a proper installed check, that <literal>cmd</literal> components define uninstall commands and <literal>msi</literal>
+          components define proper uninstall switches to the MSI engine.
+        </para>
+        <alert class="important">
+          <para>
+            Do not try to uninstall shared pre-requisites that may be used by other applications by setting 
+            <literal>supports_uninstall</literal> to <literal>false</literal> where appropriate.
+          </para>          
+        </alert>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

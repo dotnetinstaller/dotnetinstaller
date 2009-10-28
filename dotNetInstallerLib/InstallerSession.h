@@ -1,5 +1,7 @@
 #pragma once
 
+#include "InstallSequence.h"
+
 class InstallerSession
 {
 private:
@@ -23,6 +25,8 @@ public:
 	std::wstring ExpandRegistryVariables(const std::wstring& value);
 	std::wstring ExpandPathVariables(const std::wstring& path);
 	std::wstring ExpandUserVariables(const std::wstring& value);
+	// sequence
+	InstallSequence sequence;
 	// global instance
 	static shared_any<InstallerSession *, close_delete> Instance;
 	// save session for subsequent reboot
@@ -31,7 +35,6 @@ public:
 	void DisableRunOnReboot();
 	// returns the reboot command
 	std::wstring GetRebootCmd(const std::wstring& additional) const;
-
 };
 
 

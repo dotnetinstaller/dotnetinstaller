@@ -128,6 +128,10 @@ namespace InstallerLib
             {
                 get { return m_tpl.GetAttribute("setupconfiguration/@install_caption").Replace(c_APPLICATION_NAME, m_ApplicationName); }
             }
+            public string uninstall_caption
+            {
+                get { return m_tpl.GetAttribute("setupconfiguration/@uninstall_caption").Replace(c_APPLICATION_NAME, m_ApplicationName); }
+            }
             public string installation_completed
             {
                 get { return m_tpl.GetAttribute("setupconfiguration/@installation_completed").Replace(c_APPLICATION_NAME, m_ApplicationName); }

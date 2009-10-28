@@ -10,6 +10,9 @@ public:
 	std::wstring cmdparameters; // es. "/qn REBOOT=ReallySuppress"
     std::wstring cmdparameters_silent;
 	std::wstring cmdparameters_basic;
+	std::wstring uninstall_cmdparameters;
+    std::wstring uninstall_cmdparameters_silent;
+	std::wstring uninstall_cmdparameters_basic;
 	std::wstring GetCommandLine() const;
 	void Exec();
 	void Wait(DWORD tt = 1000);

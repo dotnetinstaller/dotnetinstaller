@@ -109,3 +109,16 @@ std::wstring InstallUILevelSetting::GetCommand(
 	}
 	return command;
 }
+
+InstallUILevelState::InstallUILevelState()
+	: m_ConfigLevel(InstallUILevelSetting::Instance->GetConfigLevel())
+	, m_RuntimeLevel(InstallUILevelSetting::Instance->GetRuntimeLevel())
+{
+
+}
+
+InstallUILevelState::~InstallUILevelState()
+{
+	InstallUILevelSetting::Instance->SetConfigLevel(m_ConfigLevel);
+	InstallUILevelSetting::Instance->SetRuntimeLevel(m_RuntimeLevel);
+}

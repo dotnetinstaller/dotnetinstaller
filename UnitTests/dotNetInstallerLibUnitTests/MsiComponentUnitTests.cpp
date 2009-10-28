@@ -27,24 +27,34 @@ void MsiComponentUnitTests::testGetCommandLine()
 {
 	struct TestData
 	{
+		InstallSequence sequence;
 		std::wstring package;
 		std::wstring cmdparameters;
+		std::wstring uninstall_cmdparameters;
 		std::wstring command;
 	};
 
 	TestData testdata[] =
 	{
-		{ L"test.msi", L"", L"msiexec /I \"" + DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), L"test.msi") + L"\"" },
-		{ L"{3DE50841-856E-4640-ABF4-0FF31560AA81}", L"", L"msiexec /I \"{3DE50841-856E-4640-ABF4-0FF31560AA81}\"" },
-		{ L"3DE50841-856E-4640-ABF4-0FF31560AA81", L"", L"msiexec /I \"" + DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), L"3DE50841-856E-4640-ABF4-0FF31560AA81") + L"\"" },
-		{ L"C:\\test.msi", L"X=Y", L"msiexec /I \"C:\\test.msi\" X=Y" },
+		{ SequenceInstall, L"test.msi", L"", L"", L"msiexec /i \"" + DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), L"test.msi") + L"\"" },
+		{ SequenceInstall, L"{3DE50841-856E-4640-ABF4-0FF31560AA81}", L"", L"", L"msiexec /i \"{3DE50841-856E-4640-ABF4-0FF31560AA81}\"" },
+		{ SequenceInstall, L"3DE50841-856E-4640-ABF4-0FF31560AA81", L"", L"", L"msiexec /i \"" + DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), L"3DE50841-856E-4640-ABF4-0FF31560AA81") + L"\"" },
+		{ SequenceInstall, L"C:\\test.msi", L"X=Y", L"", L"msiexec /i \"C:\\test.msi\" X=Y" },
+		{ SequenceUninstall, L"test.msi", L"", L"", L"msiexec /x \"" + DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), L"test.msi") + L"\"" },
+		{ SequenceUninstall, L"{3DE50841-856E-4640-ABF4-0FF31560AA81}", L"", L"", L"msiexec /x \"{3DE50841-856E-4640-ABF4-0FF31560AA81}\"" },
+		{ SequenceUninstall, L"3DE50841-856E-4640-ABF4-0FF31560AA81", L"", L"", L"msiexec /x \"" + DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), L"3DE50841-856E-4640-ABF4-0FF31560AA81") + L"\"" },
+		{ SequenceUninstall, L"C:\\test.msi", L"X=Y", L"", L"msiexec /x \"C:\\test.msi\"" },
+		{ SequenceUninstall, L"C:\\test.msi", L"", L"X=Y", L"msiexec /x \"C:\\test.msi\" X=Y" },
 	};
 
 	for (int i = 0; i < ARRAYSIZE(testdata); i++)
 	{
+		InstallSequenceState state;
+		InstallerSession::Instance->sequence = testdata[i].sequence;
 		MsiComponent component;
 		component.package = testdata[i].package;
 		component.cmdparameters = testdata[i].cmdparameters;
+		component.uninstall_cmdparameters = testdata[i].uninstall_cmdparameters;
 		std::wstring command = component.GetCommandLine();
 		std::wcout << std::endl << L" " << command;
 		CPPUNIT_ASSERT(testdata[i].command == command);

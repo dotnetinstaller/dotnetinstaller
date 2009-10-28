@@ -35,6 +35,8 @@ public:
 	std::wstring os_filter_lcid;
 	// testo da visualizzare a fine installazione (se vuoto non visualizza niente)
 	std::wstring installcompletemessage;
+	// successful uninstall message
+	std::wstring uninstallcompletemessage;
 	// true per forzare il reboot al termine dell'installazione altrimenti false
 	bool mustreboot;
     // message for a reboot after this component
@@ -57,6 +59,10 @@ public:
 	DownloadDialogPtr downloaddialog;
 	// embedded files
 	std::vector< EmbedFilePtr > embedfiles;
+	// supports install
+	bool supports_install;
+	// supports uninstall
+	bool supports_uninstall;
 	// funzione virtuale specifica per il tipo di componente
 	virtual void Exec() = 0;
 	virtual void Wait(DWORD tt = 1000);

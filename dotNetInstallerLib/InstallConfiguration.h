@@ -11,9 +11,11 @@ public:
 	// dialog options
 	std::wstring dialog_caption;
 	std::wstring dialog_message;
+	std::wstring dialog_message_uninstall;
 	std::wstring dialog_bitmap;
 	std::wstring skip_caption;
 	std::wstring install_caption;
+	std::wstring uninstall_caption;
 	std::wstring cancel_caption;
 	std::wstring status_installed;
 	std::wstring status_notinstalled;
@@ -39,8 +41,10 @@ public:
 	bool auto_close_if_installed;
     // if true, auto-close on error when the user chooses not to continue
     bool auto_close_on_error;
-    // if false, don't display installed components
+    // if false, don't display installed components during install
     bool dialog_show_installed;
+    // if false, don't display uninstalled components during uninstall
+    bool dialog_show_uninstalled;
     // ff false, don't display required components
     bool dialog_show_required;
 	// allow user to continue on error

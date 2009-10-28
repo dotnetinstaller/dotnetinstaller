@@ -23,6 +23,14 @@
               Optional configuration file name and location, defaults to configuration.xml in the
               same location as the dotNetInstaller executable.
             </definition>
+            <definedTerm>/i</definedTerm>
+            <definition>
+              Install components (default).
+            </definition>
+            <definedTerm>/x</definedTerm>
+            <definition>
+              Uninstall components.
+            </definition>
             <definedTerm>/q</definedTerm>
             <definition>
               Forces silent UI mode, overriding the configuration's <literal>ui_mode</literal> attribute.

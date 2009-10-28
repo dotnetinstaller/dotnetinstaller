@@ -7,7 +7,8 @@ namespace DVLib
 		class CmdComponentUnitTests : public dotNetInstallerLibUnitTestFixture
 		{
 			CPPUNIT_TEST_SUITE( CmdComponentUnitTests );
-			CPPUNIT_TEST( testExec );
+			CPPUNIT_TEST( testExecInstall );
+			CPPUNIT_TEST( testExecUninstall );
 			CPPUNIT_TEST( testExecUISilent );
 			CPPUNIT_TEST( testExecUIBasic );
 			CPPUNIT_TEST( testExecXCopy );
@@ -18,7 +19,8 @@ namespace DVLib
 			CPPUNIT_TEST( testReturnCodeRebootRequired );
 			CPPUNIT_TEST_SUITE_END();
 		public:
-			void testExec();
+			void testExecInstall();
+			void testExecUninstall();
 			void testExecUISilent();
 			void testExecUIBasic();
 			void testExecXCopy();

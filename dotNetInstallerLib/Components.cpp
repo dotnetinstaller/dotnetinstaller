@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "Components.h"
 #include "InstallerLog.h"
+#include "InstallerSession.h"
 
 Components::Components()
 {
@@ -37,6 +38,14 @@ Components Components::GetSupportedComponents(DVLib::LcidType lcidtype) const
 	for each (const ComponentPtr& component in * this)
 	{
 		bool supported = component->IsSupported(lcid);
+
+		// component install/uninstall support
+		if (! component->supports_install && InstallerSession::Instance->sequence == SequenceInstall)
+			supported = false;
+
+		if (! component->supports_uninstall && InstallerSession::Instance->sequence == SequenceUninstall)
+			supported = false;
+
 		if (supported)
 		{
 			result.push_back(component);

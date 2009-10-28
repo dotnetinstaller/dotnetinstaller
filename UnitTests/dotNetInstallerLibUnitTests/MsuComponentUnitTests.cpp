@@ -5,7 +5,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::MsuComponentUnitTests);
 
 using namespace DVLib::UnitTests;
 
-void MsuComponentUnitTests::testExec()
+void MsuComponentUnitTests::testExecInstall()
 {
 	MsuComponent component;
 	component.package = L"msidoesntexist.msu"; 
@@ -20,5 +20,22 @@ void MsuComponentUnitTests::testExec()
 	{
 		// msu file cannot be opened
 		CPPUNIT_ASSERT(ERROR_FILE_NOT_FOUND == component.GetProcessExitCode());
+	}
+}
+
+void MsuComponentUnitTests::testExecUninstall()
+{
+	InstallSequenceState state;
+	InstallerSession::Instance->sequence = SequenceUninstall;
+	MsuComponent component;
+	try
+	{
+		component.Exec();
+		component.Wait();
+		throw "expected std::exception";
+	}
+	catch(std::exception&)
+	{
+		// sequence is not supported
 	}
 }

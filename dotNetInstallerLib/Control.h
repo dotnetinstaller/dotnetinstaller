@@ -16,6 +16,9 @@ public:
     Control(control_type t);
     virtual ~Control();
 public:
+	// display
+	bool display_install;
+	bool display_uninstall;
 	// control type
 	control_type type;
 	// control position

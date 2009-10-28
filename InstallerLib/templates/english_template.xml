@@ -25,6 +25,7 @@ There are three types of variables:
 		failed_exec_command_continue = "Failed to install %s. Continue with others components?"
 		skip_caption = "Skip" 
 		install_caption = "Install"
+		uninstall_caption = "Uninstall"
 		installation_completed = "##APPLICATION_NAME installed successfully!"
 		installation_none = "##APPLICATION_NAME is already installed!"
 		installing_component_wait = "Installing %s. Wait, this operation could take some time ..."

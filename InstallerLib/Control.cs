@@ -73,6 +73,24 @@ namespace InstallerLib
             set { m_enabled = value; }
         }
 
+        private bool m_display_install = true;
+        [Description("Display control on install.")]
+        [Category("Layout")]
+        public bool DisplayInstall
+        {
+            get { return m_display_install; }
+            set { m_display_install = value; }
+        }
+
+        private bool m_display_uninstall = true;
+        [Description("Display control on uninstall.")]
+        [Category("Layout")]
+        public bool DisplayUninstall
+        {
+            get { return m_display_uninstall; }
+            set { m_display_uninstall = value; }
+        }
+
         #region XmlClass Members
 
         public override string XmlTag
@@ -87,6 +105,8 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("type", m_type.ToString());
             e.XmlWriter.WriteAttributeString("position", XmlRectangle.ToString(m_position));
             e.XmlWriter.WriteAttributeString("enabled", m_enabled.ToString());
+            e.XmlWriter.WriteAttributeString("display_install", m_display_install.ToString());
+            e.XmlWriter.WriteAttributeString("display_uninstall", m_display_uninstall.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -102,6 +122,8 @@ namespace InstallerLib
             // other
             ReadAttributeValue(e, "position", ref m_position);
             ReadAttributeValue(e, "enabled", ref m_enabled);
+            ReadAttributeValue(e, "display_install", ref m_display_install);
+            ReadAttributeValue(e, "display_uninstall", ref m_display_uninstall);
             base.OnXmlReadTag(e);
         }
 

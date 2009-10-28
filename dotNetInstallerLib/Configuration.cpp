@@ -28,6 +28,9 @@ void Configuration::Load(TiXmlElement * node)
 	os_filter_smaller = DVLib::UTF8string2wstring(node->Attribute("os_filter_smaller"));
 	// processor architecture filter
 	processor_architecture_filter = DVLib::UTF8string2wstring(node->Attribute("processor_architecture_filter"));
+	// install modes
+	supports_install = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("supports_install")), true);
+	supports_uninstall = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("supports_uninstall")), true);
 }
 
 bool Configuration::IsSupported(LCID lcid) const

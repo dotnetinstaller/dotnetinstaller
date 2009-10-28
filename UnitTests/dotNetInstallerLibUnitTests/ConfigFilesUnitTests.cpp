@@ -8,6 +8,7 @@ using namespace DVLib::UnitTests;
 
 void ConfigFilesUnitTests::testSaveRestoreAppState()
 {
+	InstallUILevelState state;
 	ConfigFilesImpl cf;
 	InstallUILevelSetting::Instance->SetConfigLevel(InstallUILevelNotSet);
 	// from not set to set

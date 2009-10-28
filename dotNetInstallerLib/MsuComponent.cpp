@@ -15,6 +15,15 @@ MsuComponent::MsuComponent()
 void MsuComponent::Exec()
 {
 	std::wstring l_command = L"wusa.exe ";
+
+	switch(InstallerSession::Instance->sequence)
+	{
+	case SequenceInstall:
+		break;
+	default:
+		THROW_EX(L"Unsupported install sequence: " << InstallerSession::Instance->sequence << L".");
+	}
+
 	l_command.append(L"\"");
 	l_command += DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), package);
 	l_command.append(L"\"");

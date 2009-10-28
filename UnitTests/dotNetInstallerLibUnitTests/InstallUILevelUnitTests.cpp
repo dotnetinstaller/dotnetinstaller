@@ -7,6 +7,8 @@ using namespace DVLib::UnitTests;
 
 void InstallUILevelUnitTests::testGetCommand()
 {
+	InstallUILevelState state;
+
 	struct TestData
 	{
 		InstallUILevel configLevel;
@@ -45,6 +47,8 @@ void InstallUILevelUnitTests::testGetCommand()
 
 void InstallUILevelUnitTests::testIsAnything()
 {
+	InstallUILevelState state;
+
 	struct TestData
 	{
 		InstallUILevel configLevel;

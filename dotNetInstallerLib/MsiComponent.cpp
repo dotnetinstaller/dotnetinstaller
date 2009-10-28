@@ -14,14 +14,29 @@ MsiComponent::MsiComponent()
 
 std::wstring MsiComponent::GetCommandLine() const
 {
-	std::wstring l_command = L"msiexec /I ";
-	l_command.append(L"\"");
+	std::wstring l_command = L"msiexec";
+	std::wstring l_cmdparameters;	
+
+	switch(InstallerSession::Instance->sequence)
+	{
+	case SequenceInstall:
+		l_cmdparameters = InstallUILevelSetting::Instance->GetCommand(
+			cmdparameters, cmdparameters_basic, cmdparameters_silent);
+		l_command += L" /i"; 
+		break;
+	case SequenceUninstall:
+		l_cmdparameters = InstallUILevelSetting::Instance->GetCommand(
+			uninstall_cmdparameters, uninstall_cmdparameters_basic, uninstall_cmdparameters_silent);
+		l_command += L" /x"; 
+		break;
+	default:
+		THROW_EX(L"Unsupported install sequence: " << InstallerSession::Instance->sequence << L".");
+	}
+
+	l_command.append(L" \"");
 	l_command += (DVLib::isguid(package) ? package : DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), package));
 	l_command.append(L"\"");
 
-	std::wstring l_cmdparameters = InstallUILevelSetting::Instance->GetCommand(
-		cmdparameters, cmdparameters_basic, cmdparameters_silent);
-	
 	if (! l_cmdparameters.empty())
 	{
 		LOG(L"-- Additional command-line parameters: " << l_cmdparameters);

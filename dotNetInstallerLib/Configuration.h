@@ -27,6 +27,9 @@ public:
 	std::wstring processor_architecture_filter;
 	// configuration type
 	configuration_type type;
+	// install mode
+	bool supports_install;
+	bool supports_uninstall;
 public:
 	Configuration(configuration_type t);
 	virtual void Load(TiXmlElement * node);

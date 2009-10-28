@@ -52,6 +52,16 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		{
 			InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelBasic);
 		}
+		// install (default)
+		else if (_wcsicmp(pszParam, TEXT("i")) == 0)
+		{
+			InstallerSession::Instance->sequence = SequenceInstall;
+		}
+		// uninstall
+		else if (_wcsicmp(pszParam, TEXT("x")) == 0)
+		{
+			InstallerSession::Instance->sequence = SequenceUninstall;
+		}
 		// accept another command to use in RegistryRun
 		else if (_wcsicmp(pszParam, TEXT("launcher")) == 0)
 		{

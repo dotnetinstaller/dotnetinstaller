@@ -16,6 +16,8 @@ public:
 	InstallUILevelSetting();
 	void SetConfigLevel(InstallUILevel value);
 	void SetRuntimeLevel(InstallUILevel value);
+	InstallUILevel GetConfigLevel() const { return m_ConfigLevel; }
+	InstallUILevel GetRuntimeLevel() const { return m_RuntimeLevel; }
 	bool IsSilent() const; // true if running in any of the silent modes (basic or silent)
 	bool IsAnyUI() const; // true if any UI level
 	InstallUILevel GetUILevel(InstallUILevel defaultValue = InstallUILevelFull) const; // current combined UI level
@@ -27,3 +29,14 @@ private:
 	InstallUILevel m_ConfigLevel;
 	InstallUILevel m_RuntimeLevel;
 };
+
+class InstallUILevelState
+{
+private:
+	InstallUILevel m_ConfigLevel;
+	InstallUILevel m_RuntimeLevel;
+public:
+	InstallUILevelState();
+	virtual ~InstallUILevelState();
+};
+

@@ -36,6 +36,7 @@ namespace InstallerLib
             m_failed_exec_command_continue = tpl.failed_exec_command_continue;
             m_skip_caption = tpl.skip_caption;
             m_install_caption = tpl.install_caption;
+            m_uninstall_caption = tpl.uninstall_caption;
             m_installation_completed = tpl.installation_completed;
             m_installation_none = tpl.installation_none;
             m_installing_component_wait = tpl.installing_component_wait;
@@ -81,13 +82,23 @@ namespace InstallerLib
         }
 
         private string m_dialog_message;
-        [Description("Main message of the main dialog. (REQUIRED)")]
+        [Description("Main message of the main dialog during install. (REQUIRED)")]
         [Category("Main Dialog")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string dialog_message
         {
             get { return m_dialog_message; }
             set { m_dialog_message = value; }
+        }
+
+        private string m_dialog_message_uninstall;
+        [Description("Main message of the main dialog during uninstall. (REQUIRED)")]
+        [Category("Main Dialog")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        public string dialog_message_uninstall
+        {
+            get { return m_dialog_message_uninstall; }
+            set { m_dialog_message_uninstall = value; }
         }
 
         private Rectangle m_dialog_message_position;
@@ -133,6 +144,15 @@ namespace InstallerLib
         {
             get { return m_install_caption; }
             set { m_install_caption = value; }
+        }
+
+        private string m_uninstall_caption;
+        [Description("Caption of the Uninstall button. (REQUIRED)")]
+        [Category("Main Dialog")]
+        public string uninstall_caption
+        {
+            get { return m_uninstall_caption; }
+            set { m_uninstall_caption = value; }
         }
 
         private string m_cancel_caption;
@@ -249,12 +269,21 @@ namespace InstallerLib
         }
 
         private bool m_dialog_show_installed = true;
-        [Description("If true, show installed components. Installed components are greyed out and automatically de-selected.")]
+        [Description("If true, show installed components during install. Installed components are greyed out and automatically de-selected.")]
         [Category("Main Dialog")]
         public bool dialog_show_installed
         {
             get { return m_dialog_show_installed; }
             set { m_dialog_show_installed = value; }
+        }
+
+        private bool m_dialog_show_uninstalled = true;
+        [Description("If true, show uninstalled components during uninstall. Uninstalled components are greyed out and automatically de-selected.")]
+        [Category("Main Dialog")]
+        public bool dialog_show_uninstalled
+        {
+            get { return m_dialog_show_uninstalled; }
+            set { m_dialog_show_uninstalled = value; }
         }
 
         private bool m_dialog_show_required = true;
@@ -448,9 +477,11 @@ namespace InstallerLib
         {
             e.XmlWriter.WriteAttributeString("dialog_caption", m_dialog_caption);
             e.XmlWriter.WriteAttributeString("dialog_message", m_dialog_message);
+            e.XmlWriter.WriteAttributeString("dialog_message_uninstall", m_dialog_message_uninstall);
             e.XmlWriter.WriteAttributeString("dialog_bitmap", m_dialog_bitmap);
             e.XmlWriter.WriteAttributeString("skip_caption", m_skip_caption);
             e.XmlWriter.WriteAttributeString("install_caption", m_install_caption);
+            e.XmlWriter.WriteAttributeString("uninstall_caption", m_uninstall_caption);
             e.XmlWriter.WriteAttributeString("cancel_caption", m_cancel_caption);
             //e.XmlWriter.WriteAttributeString("reinstallflag_caption",m_reinstallflag_caption);
             e.XmlWriter.WriteAttributeString("status_installed", m_status_installed);
@@ -476,6 +507,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("auto_close_on_error", m_auto_close_on_error.ToString());
             e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
             e.XmlWriter.WriteAttributeString("dialog_show_installed", m_dialog_show_installed.ToString());
+            e.XmlWriter.WriteAttributeString("dialog_show_uninstalled", m_dialog_show_uninstalled.ToString());
             e.XmlWriter.WriteAttributeString("dialog_show_required", m_dialog_show_required.ToString());
 
             // message and caption to show during CAB extraction
@@ -514,9 +546,11 @@ namespace InstallerLib
             ReadAttributeValue(e, "dialog_bitmap", ref m_dialog_bitmap);
             ReadAttributeValue(e, "dialog_caption", ref m_dialog_caption);
             ReadAttributeValue(e, "dialog_message", ref m_dialog_message);
+            ReadAttributeValue(e, "dialog_message_uninstall", ref m_dialog_message_uninstall);
             ReadAttributeValue(e, "failed_exec_command_continue", ref m_failed_exec_command_continue);
             ReadAttributeValue(e, "skip_caption", ref m_skip_caption);
             ReadAttributeValue(e, "install_caption", ref m_install_caption);
+            ReadAttributeValue(e, "uninstall_caption", ref m_uninstall_caption);
             ReadAttributeValue(e, "installation_completed", ref m_installation_completed);
             ReadAttributeValue(e, "installation_none", ref m_installation_none);
             ReadAttributeValue(e, "installing_component_wait", ref m_installing_component_wait);
@@ -534,6 +568,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "auto_close_on_error", ref m_auto_close_on_error);
             ReadAttributeValue(e, "allow_continue_on_error", ref m_allow_continue_on_error);
             ReadAttributeValue(e, "dialog_show_installed", ref m_dialog_show_installed);
+            ReadAttributeValue(e, "dialog_show_uninstalled", ref m_dialog_show_uninstalled);
             ReadAttributeValue(e, "dialog_show_required", ref m_dialog_show_required);
             // message and caption to show during CAB extraction
             ReadAttributeValue(e, "cab_dialog_message", ref m_cab_dialog_message);

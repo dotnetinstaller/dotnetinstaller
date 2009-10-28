@@ -47,6 +47,9 @@
             Support web-based scenarios that include on-demand downloading the latest versions of the installed software
             and prerequisites.
           </listItem>
+          <listItem>
+            Uninstall applications composed of several packages in a single sequence.
+          </listItem>
         </list>
       </para>
       <para>

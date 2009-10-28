@@ -76,7 +76,7 @@ void CComponentsList::PreDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration)
 {
-	bool all_components_installed = true;
+	bool all = true;
 
 	ResetContent();
 
@@ -91,16 +91,21 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 	for (size_t i = 0; i < components.size(); i++)
 	{
 		ComponentPtr component(components[i]);
+		component->selected = true;
         bool component_installed = component->IsInstalled();
         
-        LOG(L"-- " << component->description << L": " << (component_installed ? L"INSTALLED" : L"NOT INSTALLED"));
+        LOG(L"-- " << component->description << L": " << (component_installed ? L"INSTALLED" : L"NOT INSTALLED"));		
 
-		if (component_installed)
-		{
+		// component selection
+		if (component_installed && InstallerSession::Instance->sequence == SequenceInstall)
 			component->selected = false;
-		}
+		if (! component_installed && InstallerSession::Instance->sequence == SequenceUninstall)
+			component->selected = false;
 
-		all_components_installed &= component_installed;
+		if (InstallerSession::Instance->sequence == SequenceInstall)
+			all &= component_installed;
+		else if (InstallerSession::Instance->sequence == SequenceUninstall)
+			all &= (! component_installed);
 
 		std::wstring l_descr = component->description;
 	    l_descr += L" ";
@@ -108,13 +113,34 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 			? (component->status_installed.empty() ? p_configuration->status_installed : component->status_installed)
 			: (component->status_notinstalled.empty() ? p_configuration->status_notinstalled : component->status_notinstalled);
 
-        if (! p_configuration->dialog_show_installed && component_installed)
+		// show installed
+        if (InstallerSession::Instance->sequence == SequenceInstall 
+			&& ! p_configuration->dialog_show_installed 
+			&& component_installed)
+            continue;
+
+		// show uninstalled
+        if (InstallerSession::Instance->sequence == SequenceUninstall 
+			&& ! p_configuration->dialog_show_uninstalled
+			&& ! component_installed)
             continue;
 
         if (! p_configuration->dialog_show_required && component->required)
             continue;
 
-		int id = AddString(l_descr.c_str());
+		int id;
+		switch(InstallerSession::Instance->sequence)
+		{
+		case SequenceInstall:
+			id = AddString(l_descr.c_str());
+			break;
+		case SequenceUninstall:
+			id = InsertString(0, l_descr.c_str());
+			break;
+		default:
+			THROW_EX(L"Unsupported install sequence: " << InstallerSession::Instance->sequence << L".");
+		}
+
 		SetItemDataPtr(id, get(component));
 
         if (component->selected)
@@ -125,10 +151,12 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
         // a component is considered installed when it has an install check which results
         // in a clear positive; if a component doesn't have any install checks, it cannot
         // be required (there's no way to check whether the component was installed)
-        if (component->required || component_installed)
-        {
+        if (InstallerSession::Instance->sequence == SequenceInstall 
+			&& (component->required || component_installed))
             Enable(id, 0);
-        }
+        else if (InstallerSession::Instance->sequence == SequenceUninstall 
+			&& (component->required || ! component_installed))
+            Enable(id, 0);
 
 		CSize size = pDC->GetTextExtent(component->description.c_str());
 		if ((size.cx > 0) && (hScrollWidth < size.cx))
@@ -141,5 +169,5 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 	}
 
 	ReleaseDC(pDC); 
-	return all_components_installed;
+	return all;
 }

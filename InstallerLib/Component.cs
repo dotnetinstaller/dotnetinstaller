@@ -41,6 +41,7 @@ namespace InstallerLib
         }
 
         #region Attributes
+
         private string m_type;
         [Description("The type of the component; can be 'cmd' for executing generic command line installation or 'msi' for installing Windows Installer MSI package or 'openfile' to open a file. (REQUIRED)")]
         public string type
@@ -50,6 +51,7 @@ namespace InstallerLib
 
         private string m_os_filter_greater;
         [Description("A filter to install this component only on all operating system id greater than the id specified (see Help->Operating System Table). For example to install a component only in Windows 2000 or later write '44'. (OPTIONAL)")]
+        [Category("Filters")]
         public string os_filter_greater
         {
             get { return m_os_filter_greater; }
@@ -58,6 +60,7 @@ namespace InstallerLib
 
         private string m_os_filter_smaller;
         [Description("A filter to install this component only on all operating system id smaller than the id specified (see operating system table). For example to install a component preceding Windows 2000 write '45'. (OPTIONAL)")]
+        [Category("Filters")]
         public string os_filter_smaller
         {
             get { return m_os_filter_smaller; }
@@ -66,6 +69,7 @@ namespace InstallerLib
 
         private string m_os_filter_lcid;
         [Description("A filter to install this component only on all operating system language equals or not equals than the LCID specified (see Help->LCID table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter all the configuration element. (OPTIONAL)")]
+        [Category("Filters")]
         public string os_filter_lcid
         {
             get { return m_os_filter_lcid; }
@@ -75,14 +79,25 @@ namespace InstallerLib
         private string m_installcompletemessage; //se vuoto non viene visualizzato nessun messagio al termine del download
         [Description("The message used when a component is successfully installed. To disable this message leave this property empty. (OPTIONAL)")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        [Category("Install")]
         public string installcompletemessage
         {
             get { return m_installcompletemessage; }
             set { m_installcompletemessage = value; }
         }
 
+        private string m_uninstallcompletemessage;
+        [Description("The message used when a component is successfully uninstalled. (OPTIONAL)")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        [Category("Uninstall")]
+        public string uninstallcompletemessage
+        {
+            get { return m_uninstallcompletemessage; }
+            set { m_uninstallcompletemessage = value; }
+        }
+
         private bool m_mustreboot = false;
-        [Description("Indicates whether to reboot automatically after this component is installed successfully. Normally if the system must be restarted, the component tells this setup (with special return code) to stop and restart the system. This forces a reboot without prompting. (REQUIRED)")]
+        [Description("Indicates whether to reboot automatically after this component is installed or uninstalled successfully. Normally if the system must be restarted, the component tells this setup (with special return code) to stop and restart the system. This forces a reboot without prompting. (REQUIRED)")]
         public bool mustreboot
         {
             get { return m_mustreboot; }
@@ -124,7 +139,7 @@ namespace InstallerLib
         }
 
         private bool m_required = false;
-        [Description("Indicates whether the component is required for a successful installation. (REQUIRED)")]
+        [Description("Indicates whether the component is required for a successful installation or uninstallation. (REQUIRED)")]
         public bool required
         {
             get { return m_required; }
@@ -150,6 +165,7 @@ namespace InstallerLib
         // message for not matching the processor architecture filter
         private string m_processor_architecture_filter;
         [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Seperate by commas, can use the NOT sign ('!') to exclude. (es. 'x86,x64' or '!x86'). (OPTIONAL)")]
+        [Category("Filters")]
         public string processor_architecture_filter
         {
             get { return m_processor_architecture_filter; }
@@ -170,6 +186,24 @@ namespace InstallerLib
         {
             get { return m_status_notinstalled; }
             set { m_status_notinstalled = value; }
+        }
+
+        private bool m_supports_install = true;
+        [Description("Indicates whether the component supports the install sequence. (REQUIRED)")]
+        [Category("Install")]
+        public bool supports_install
+        {
+            get { return m_supports_install; }
+            set { m_supports_install = value; }
+        }
+
+        private bool m_supports_uninstall = false;
+        [Description("Indicates whether the component supports the uninstall sequence. (REQUIRED)")]
+        [Category("Uninstall")]
+        public bool supports_uninstall
+        {
+            get { return m_supports_uninstall; }
+            set { m_supports_uninstall = value; }
         }
 
         #endregion
@@ -198,6 +232,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("os_filter_lcid", m_os_filter_lcid);
             e.XmlWriter.WriteAttributeString("type", m_type);
             e.XmlWriter.WriteAttributeString("installcompletemessage", m_installcompletemessage);
+            e.XmlWriter.WriteAttributeString("uninstallcompletemessage", m_uninstallcompletemessage);
             e.XmlWriter.WriteAttributeString("mustreboot", m_mustreboot.ToString());
             e.XmlWriter.WriteAttributeString("reboot_required", m_reboot_required);
             e.XmlWriter.WriteAttributeString("must_reboot_required", m_must_reboot_required.ToString());
@@ -209,6 +244,8 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
             e.XmlWriter.WriteAttributeString("status_installed", m_status_installed);
             e.XmlWriter.WriteAttributeString("status_notinstalled", m_status_installed);
+            e.XmlWriter.WriteAttributeString("supports_install", m_supports_install.ToString());
+            e.XmlWriter.WriteAttributeString("supports_uninstall", m_supports_uninstall.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -216,6 +253,7 @@ namespace InstallerLib
         {
             ReadAttributeValue(e, "description", ref m_description);
             ReadAttributeValue(e, "installcompletemessage", ref m_installcompletemessage);
+            ReadAttributeValue(e, "uninstallcompletemessage", ref m_uninstallcompletemessage);
             ReadAttributeValue(e, "mustreboot", ref m_mustreboot);
             ReadAttributeValue(e, "reboot_required", ref m_reboot_required);
             ReadAttributeValue(e, "must_reboot_required", ref m_must_reboot_required);
@@ -229,6 +267,8 @@ namespace InstallerLib
             ReadAttributeValue(e, "processor_architecture_filter", ref m_processor_architecture_filter);
             ReadAttributeValue(e, "status_installed", ref m_status_installed);
             ReadAttributeValue(e, "status_notinstalled", ref m_status_notinstalled);
+            ReadAttributeValue(e, "supports_install", ref m_supports_install);
+            ReadAttributeValue(e, "supports_uninstall", ref m_supports_uninstall);
             base.OnXmlReadTag(e);
         }
 

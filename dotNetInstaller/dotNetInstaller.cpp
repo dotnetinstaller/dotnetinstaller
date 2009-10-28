@@ -39,6 +39,7 @@ BOOL CdotNetInstallerApp::InitInstance()
 		LOG(L"dotNetInstaller (DNI) started, version " << TEXT(VERSION_VALUE));
 		LOG(VERSION_LEGALCOPYRIGHT_VALUE);
 		LOG(L"Operating system: " << DVLib::GetOperatingSystemVersionString());
+		LOG(L"Sequence: " << InstallSequenceUtil::towstring(InstallerSession::Instance->sequence));
 		LOG(L"-------------------------------------------------------------------");
 
 		std::map<std::wstring, std::wstring>::iterator arg = InstallerCommandLineInfo::Instance->componentCmdArgs.begin();
@@ -84,6 +85,7 @@ BOOL CdotNetInstallerApp::InitInstance()
 	}
 	catch(std::exception& ex)
 	{
+		LOG(L"Error: " << DVLib::string2wstring(ex.what()));
         DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
 		m_rc = -1;
 	}
@@ -112,6 +114,8 @@ void CdotNetInstallerApp::DisplayHelp()
 	hs << L"Usage: " << DVLib::GetFileNameW(DVLib::GetModuleFileNameW()) << L" [args]" << std::endl;
 	hs << std::endl;
 	hs << L" /? or /help : this help screen" << std::endl;
+	hs << L" /i : install (default)" << std::endl;
+	hs << L" /x : uninstall" << std::endl;
 	hs << L" /q : force silent (no UI) mode" << std::endl;
 	hs << L" /qb : force basic UI mode" << std::endl;
 	hs << L" /nq : force full UI mode" << std::endl;

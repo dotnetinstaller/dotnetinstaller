@@ -12,15 +12,21 @@ namespace InstallerLib
         public ComponentOpenFile()
             : base("openfile")
         {
+            supports_uninstall = false;
         }
 
+        #region File
+
         private string m_file;
-        [Description("Specifies the file to open when installing this component. Can contain \" char and path constant (see Help->Path Constant). Can be for example a internet link. (REQUIRED)")]
+        [Description("Specifies the file to open when installing or uninstalling this component. Can contain \" char and path constant (see Help->Path Constant). Can be for example a internet link. (REQUIRED)")]
+        [Category("Open File")]
         public string file
         {
             get { return m_file; }
             set { m_file = value; }
         }
+
+        #endregion
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {

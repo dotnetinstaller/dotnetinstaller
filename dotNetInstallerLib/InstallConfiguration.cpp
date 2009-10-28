@@ -19,6 +19,7 @@ InstallConfiguration::InstallConfiguration()
     , auto_close_if_installed(false)
     , auto_close_on_error(false)
     , dialog_show_installed(false)
+    , dialog_show_uninstalled(false)
     , dialog_show_required(false)
     , allow_continue_on_error(true)
 	, auto_start(false)
@@ -57,8 +58,10 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	dialog_bitmap = XML_ATTRIBUTE(node->Attribute("dialog_bitmap"));
 	dialog_caption = XML_ATTRIBUTE(node->Attribute("dialog_caption"));
 	dialog_message = XML_ATTRIBUTE(node->Attribute("dialog_message"));
+	dialog_message_uninstall = XML_ATTRIBUTE(node->Attribute("dialog_message_uninstall"));
 	skip_caption = XML_ATTRIBUTE(node->Attribute("skip_caption"));
 	install_caption = XML_ATTRIBUTE(node->Attribute("install_caption"));
+	uninstall_caption = XML_ATTRIBUTE(node->Attribute("uninstall_caption"));
 	status_installed = XML_ATTRIBUTE(node->Attribute("status_installed"));
 	status_notinstalled = XML_ATTRIBUTE(node->Attribute("status_notinstalled"));
 	failed_exec_command_continue = XML_ATTRIBUTE(node->Attribute("failed_exec_command_continue"));
@@ -78,6 +81,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
     auto_close_on_error = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_close_on_error")), false);
     allow_continue_on_error = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("allow_continue_on_error")), true);
     dialog_show_installed = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("dialog_show_installed")), true);
+	dialog_show_uninstalled = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("dialog_show_uninstalled")), true);
     dialog_show_required = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("dialog_show_required")), true);
     // message and caption to show during CAB extraction
     cab_dialog_caption = XML_ATTRIBUTE(node->Attribute("cab_dialog_caption"));

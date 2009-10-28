@@ -18,6 +18,8 @@ Component::Component(component_type t)
     , cancelled(false)
     , required(true)
     , selected(true)
+	, supports_install(true)
+	, supports_uninstall(false)
 {
 
 }
@@ -49,13 +51,16 @@ void Component::Load(TiXmlElement * node)
 	os_filter_smaller = XML_ATTRIBUTE(node->Attribute("os_filter_smaller"));
 	os_filter_lcid = XML_ATTRIBUTE(node->Attribute("os_filter_lcid"));
 	installcompletemessage = XML_ATTRIBUTE(node->Attribute("installcompletemessage"));
+	uninstallcompletemessage = XML_ATTRIBUTE(node->Attribute("uninstallcompletemessage"));
 	mustreboot = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("mustreboot")), false);
     reboot_required = XML_ATTRIBUTE(node->Attribute("reboot_required"));
 	must_reboot_required = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("must_reboot_required")), false);
     allow_continue_on_error = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("allow_continue_on_error")), true);
     failed_exec_command_continue = XML_ATTRIBUTE(node->Attribute("failed_exec_command_continue"));
 	required = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("required")), true);
-	processor_architecture_filter = XML_ATTRIBUTE(node->Attribute("processor_architecture_filter"));	
+	processor_architecture_filter = XML_ATTRIBUTE(node->Attribute("processor_architecture_filter"));		
+	supports_install = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("supports_install")), true);
+	supports_uninstall = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("supports_uninstall")), false);
 	// install checks, embed files, etc.
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )

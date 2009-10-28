@@ -88,13 +88,40 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	// load xml file
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-	this->SetWindowText(p_configuration->dialog_caption.c_str());
+
+	// load components
+
+	bool all = LoadComponentsList();
+
+	if (InstallerSession::Instance->sequence == SequenceInstall && all && p_configuration->supports_uninstall)
+	{
+		LOG("All components installed, switching to uninstall.");
+		InstallerSession::Instance->sequence = SequenceUninstall;
+		all = LoadComponentsList();
+		if (all)
+		{
+			LOG("All components uninstalled, nothing to do.");
+			InstallerSession::Instance->sequence = SequenceInstall;
+		}
+	}
+
+	SetWindowText(p_configuration->dialog_caption.c_str());
     AfxGetApp()->m_pszAppName = _tcsdup(p_configuration->dialog_caption.c_str());
 
 	m_btnCancel.SetWindowText(p_configuration->cancel_caption.c_str());
 	m_btnSkip.SetWindowText(p_configuration->skip_caption.c_str());
-	m_btnInstall.SetWindowText(p_configuration->install_caption.c_str());
-	m_lblMessage.SetWindowText(p_configuration->dialog_message.c_str());
+
+	switch(InstallerSession::Instance->sequence)
+	{
+	case SequenceInstall:
+		m_btnInstall.SetWindowText(p_configuration->install_caption.c_str());
+		m_lblMessage.SetWindowText(p_configuration->dialog_message.c_str());
+		break;
+	case SequenceUninstall:
+		m_btnInstall.SetWindowText(p_configuration->uninstall_caption.c_str());
+		m_lblMessage.SetWindowText(p_configuration->dialog_message_uninstall.c_str());
+		break;
+	}
 
     MoveWindow(* this, p_configuration->dialog_position);
     MoveWindow(m_ListBoxComponents, p_configuration->dialog_components_list_position);
@@ -120,8 +147,22 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 		m_PictureBox.SetBitmap(DVLib::LoadBitmapFromResource(AfxGetApp()->m_hInstance, L"RES_BANNER", L"CUSTOM"));
 	}
 
+	// controls
+
 	for each(const ControlPtr& control in p_configuration->controls)
 	{
+		if (InstallerSession::Instance->sequence == SequenceInstall && ! control->display_install)
+		{
+			LOG(L"-- Skipping " << control->GetString() << L" on install");
+			continue;
+		}
+
+		if (InstallerSession::Instance->sequence == SequenceUninstall && ! control->display_uninstall)
+		{
+			LOG(L"-- Skipping " << control->GetString() << L" on uninstall");
+			continue;
+		}
+
 		LOG(L"-- Adding " << control->GetString());
 		switch(control->type)
 		{
@@ -141,9 +182,23 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 			THROW_EX(L"Invalid control type: " << control->type);
 		}
 	}
+	
+	// check sequences
 
-	bool all_components_installed = LoadComponentsList();
-	if (all_components_installed)
+	if (! p_configuration->supports_uninstall && ! p_configuration->supports_install)
+	{
+		THROW_EX("Configuration supports neither install nor uninstall.");
+	}
+	else if (InstallerSession::Instance->sequence == SequenceUninstall && ! p_configuration->supports_uninstall)
+	{
+		THROW_EX("Configuration doesn't support uninstall.");
+	}
+	else if (InstallerSession::Instance->sequence == SequenceInstall && ! p_configuration->supports_install)
+	{
+		THROW_EX("Configuration doesn't support install.");
+	}
+
+	if (InstallerSession::Instance->sequence == SequenceInstall && all && p_configuration->supports_install)
 	{
 		if (p_configuration->auto_close_if_installed || InstallUILevelSetting::Instance->IsSilent())
 		{
@@ -157,6 +212,10 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 			ExecuteCompleteCode(false);
 			OnOK();
 		}
+	}
+	else if (InstallerSession::Instance->sequence == SequenceUninstall && all && p_configuration->supports_uninstall)
+	{
+		OnOK();
 	}
 	else
 	{
@@ -180,7 +239,8 @@ bool CdotNetInstallerDlg::AutoStart(InstallConfiguration * p_configuration)
 	if (InstallUILevelSetting::Instance->IsSilent())
 	{
 		autostart = true;
-		LOG(L"Silent mode: automatically starting install");
+		LOG(L"Silent mode: automatically starting " 
+			<< InstallSequenceUtil::towstring(InstallerSession::Instance->sequence));
 	}
 
 	if (InstallerCommandLineInfo::Instance->Reboot())
@@ -188,13 +248,15 @@ bool CdotNetInstallerDlg::AutoStart(InstallConfiguration * p_configuration)
 		if (p_configuration->auto_continue_on_reboot)
 		{
 			autostart = true;
-			LOG(L"Reboot defines auto-start: automatically starting install");
+			LOG(L"Reboot defines auto-start: automatically starting "
+				 << InstallSequenceUtil::towstring(InstallerSession::Instance->sequence));
 		}
 	}
 	else if (p_configuration->auto_start)
 	{
 		autostart = true;
-		LOG(L"Configuration defines auto-start: automatically starting install");
+		LOG(L"Configuration defines auto-start: automatically starting "
+			 << InstallSequenceUtil::towstring(InstallerSession::Instance->sequence));
 	}
 
 	return autostart;
@@ -291,8 +353,8 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		// success and possibly auto-close with a complete code if all components have been installed
 		if (rc == 0)
 		{
-			bool all_components_installed = LoadComponentsList();
-			if (all_components_installed || p_configuration->auto_close_if_installed) 
+			bool all = LoadComponentsList();
+			if (all || p_configuration->auto_close_if_installed) 
 			{
 				ExecuteCompleteCode(true);
 				OnOK();
