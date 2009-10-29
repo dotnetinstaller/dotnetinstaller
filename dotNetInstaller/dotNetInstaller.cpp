@@ -7,6 +7,7 @@
 #include <Version/Version.h>
 #include "ExtractCabProcessor.h"
 #include "ExtractCabDlg.h"
+#include "SplashWnd.h"
 
 BEGIN_MESSAGE_MAP(CdotNetInstallerApp, CWinApp)
 	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
@@ -34,6 +35,8 @@ BOOL CdotNetInstallerApp::InitInstance()
 		InstallUILevelSetting::Instance = shared_any<InstallUILevelSetting *, close_delete>(new InstallUILevelSetting());
 
 		ParseCommandLine(* get(InstallerCommandLineInfo::Instance));
+		
+		CSplashWnd::EnableSplashScreen(InstallerCommandLineInfo::Instance->DisplaySplash());
 
 		LOG(L"-------------------------------------------------------------------");
 		LOG(L"dotNetInstaller (DNI) started, version " << TEXT(VERSION_VALUE));
@@ -174,4 +177,15 @@ void CdotNetInstallerApp::DisplayConfig()
 	ConfigFileManagerPtr config(new ConfigFileManager());
 	config->Load();
 	DniMessageBox::Show(config->GetString(), MB_OK|MB_ICONINFORMATION);
+}
+
+BOOL CdotNetInstallerApp::PreTranslateMessage(MSG * pMsg)
+{
+	// route messages to the splash screen while it is visible
+	if (CSplashWnd::PreTranslateAppMessage(pMsg)) 
+	{
+		return TRUE;
+	}
+
+	return CWinApp::PreTranslateMessage(pMsg);
 }

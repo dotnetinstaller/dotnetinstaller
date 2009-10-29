@@ -10,6 +10,7 @@ InstallerCommandLineInfo::InstallerCommandLineInfo()
 	, m_lastArgFlag(unknown)
 	, m_reboot(false)
 	, m_displayConfig(false)
+	, m_displaySplash(true)
 {
 
 }
@@ -23,7 +24,7 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		{
 			m_displayHelp = true;
 		}
-		else if (_wcsicmp(pszParam, TEXT("log")) == 0 )
+		else if (_wcsicmp(pszParam, TEXT("log")) == 0)
 		{
 			InstallerLog::Instance->EnableLog();
 		}
@@ -77,15 +78,15 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		{
 			m_lastArgFlag = completeCommandArgs;
 		}
-		else if (_wcsicmp(pszParam, TEXT("extractCab")) == 0 )
+		else if (_wcsicmp(pszParam, TEXT("extractCab")) == 0)
 		{
             m_extractCab = true;
 		}
-		else if (_wcsicmp(pszParam, TEXT("displayCab")) == 0 )
+		else if (_wcsicmp(pszParam, TEXT("displayCab")) == 0)
 		{
             m_displayCab = true;
 		}
-		else if (_wcsicmp(pszParam, TEXT("displayConfig")) == 0 )
+		else if (_wcsicmp(pszParam, TEXT("displayConfig")) == 0)
 		{
             m_displayConfig = true;
 		}
@@ -97,9 +98,13 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
         {
             m_lastArgFlag = controlArgs;
         }
-		else if (_wcsicmp(pszParam, TEXT("reboot")) == 0 )
+		else if (_wcsicmp(pszParam, TEXT("reboot")) == 0)
 		{
             m_reboot = true;
+		}
+		else if (_wcsicmp(pszParam, TEXT("nosplash")) == 0)
+		{
+			m_displaySplash = false;
 		}
 		else
 		{

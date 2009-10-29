@@ -271,5 +271,52 @@ namespace InstallerLibUnitTests
                     File.Delete(args.output);
             }
         }
+
+        [Test]
+        public void TestEmbedSplashScreen()
+        {
+            InstallerLinkerArguments args = new InstallerLinkerArguments();
+            try
+            {
+                Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
+                string binPath = Path.GetDirectoryName(HttpUtility.UrlDecode(uri.AbsolutePath));
+                ConfigFile configFile = new ConfigFile();
+                SetupConfiguration setupConfiguration = new SetupConfiguration();
+                configFile.Children.Add(setupConfiguration);
+                ComponentCmd cmd = new ComponentCmd();
+                cmd.command = "cmd.exe /C exit /b 0";
+                setupConfiguration.Children.Add(cmd);
+                args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+                Console.WriteLine("Writing '{0}'", args.config);
+                configFile.SaveAs(args.config);
+                args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
+                Console.WriteLine("Linking '{0}'", args.output);
+                args.template = dotNetInstallerExeUtils.Executable;
+                args.splash = Path.Combine(dotNetInstallerExeUtils.Location, @"..\res\banner.bmp");
+                InstallerLib.InstallerLinker.CreateInstaller(args);
+                // check that the linker generated output
+                Assert.IsTrue(File.Exists(args.output));
+                Assert.IsTrue(new FileInfo(args.output).Length > 0);
+                using (ResourceInfo ri = new ResourceInfo())
+                {
+                    ri.Load(args.output);
+                    Assert.IsTrue(ri.Resources.ContainsKey(new ResourceId("CUSTOM")));
+                    List<Resource> custom = ri.Resources[new ResourceId("CUSTOM")];
+                    Assert.AreEqual("RES_BANNER", custom[0].Name.Name);
+                    Assert.AreEqual("RES_CONFIGURATION", custom[1].Name.ToString());
+                    Assert.AreEqual("RES_SPLASH", custom[2].Name.ToString());
+                }
+                // execute with and without splash
+                dotNetInstallerExeUtils.Run(args.output, "/qb");
+                dotNetInstallerExeUtils.Run(args.output, "/qb /nosplash");
+            }
+            finally
+            {
+                if (File.Exists(args.config))
+                    File.Delete(args.config);
+                if (File.Exists(args.output))
+                    File.Delete(args.output);
+            }
+        }
     }
 }

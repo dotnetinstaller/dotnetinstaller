@@ -14,6 +14,7 @@ public:
 	bool DisplayHelp() const { return m_displayHelp; }
 	bool DisplayConfig() const { return m_displayConfig; }
 	bool Reboot() const { return m_reboot; }
+	bool DisplaySplash() const { return m_displaySplash; }
 public:
 	std::wstring configFile;
 	std::wstring logFile;
@@ -47,5 +48,7 @@ private:
 	bool m_reboot;
 	// display configuration
 	bool m_displayConfig;
+	// show splash screen
+	bool m_displaySplash;
 };
 

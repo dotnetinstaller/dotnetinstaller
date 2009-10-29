@@ -33,6 +33,8 @@
                     parameters in <code>cmd</code> and <code>msi</code> components.</li>
                 <li>Added user-defined form controls and input for labels, checkboxes, edit boxes and
                     file/directory browse controls.</li>
+                <li>Added user-defined splash screen embedded with the InstallerLinker <code>/Splash</code>
+                    option and an optional <code>/nosplash</code> switch to dotNetInstaller.</li>
                 <li>dotNetInstaller: Added <code>/controlArgs "control id":"value"</code> to dotNetInstaller.exe
                     command line to override initial control values.</li>
                 <li>Added <code>returncodes_reboot</code> to <code>cmd</code> components that specify
@@ -41,6 +43,7 @@
                     a list of comma-separated return code(s) that should be treated as a failure. Specify
                     "none" to create a component that doesn't fail based on its return code and specify
                     <code>!value</code> to treat all return codes except a single value as failure.</li>
+                <li>Added splash and manifest input to InstallerEditor's Make Exe dialog.</li>
             </ul>
         </li>
         <li><strong>Bugs</strong>:

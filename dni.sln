@@ -100,6 +100,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 		Documentation\Content\SinglePackageTutorial.aml = Documentation\Content\SinglePackageTutorial.aml
 		Documentation\Content\ThirdPartyLicenses.aml = Documentation\Content\ThirdPartyLicenses.aml
 		Documentation\Content\Uac.aml = Documentation\Content\Uac.aml
+		Documentation\Content\UIMisc.aml = Documentation\Content\UIMisc.aml
 		Documentation\Content\UIModes.aml = Documentation\Content\UIModes.aml
 		Documentation\Content\UserControls.aml = Documentation\Content\UserControls.aml
 		Documentation\Content\VariableSubstitution.aml = Documentation\Content\VariableSubstitution.aml

@@ -225,7 +225,7 @@
   </Target>
   <Target Name="packagedsetupsample" DependsOnTargets="version">
     <MakeDir Directories="Samples\PackagedSetup\bin\$(Configuration)" />
-    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Manifest:Samples\PackagedSetup\PackagedSetup.manifest"/>
+    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Splash:Samples\PackagedSetup\splash.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Manifest:Samples\PackagedSetup\PackagedSetup.manifest"/>
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
     <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
     <Copy SourceFiles="@(PackagedSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Source\%(RecursiveDir)" />

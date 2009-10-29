@@ -33,6 +33,7 @@ namespace InstallerEditor
 			get{return m_OutputMakeFile;}
 			set{m_OutputMakeFile = value;}
 		}
+
 		private string m_TemplateInstallerFile;
 		public string TemplateInstallerFile
 		{
@@ -41,9 +42,6 @@ namespace InstallerEditor
 		}
 
 		private string m_TemplateConfigFile;
-		/// <summary>
-		/// Name of the file template. If null the default template is used.
-		/// </summary>
 		public string TemplateConfigFile
 		{
 			get{return m_TemplateConfigFile;}

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="ba02878f-b7ba-4d41-a33a-07d35be5b74e" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para />
+    </introduction>
+    <section address="uimiscsplashscreen">
+      <title>Splash Screen</title>
+      <content>
+        <para>
+          You can embed a splash screen bitmap <application>InstallerLinker</application>. A splash screen appears for 3
+          seconds on top of the installer dialog before configuration is loaded.
+          <code language="cmd">
+            <![CDATA[InstallerLinker.exe ... /Splash:splash.bmp]]>
+          </code>
+          You can suppress the splash screen at runtime with the <system>/nosplash</system> command-lne option.
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

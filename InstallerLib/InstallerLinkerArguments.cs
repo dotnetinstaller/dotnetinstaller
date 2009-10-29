@@ -17,6 +17,8 @@ namespace InstallerLib
         public string template;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Picture for the banner", LongName = "Banner", ShortName = "b")]
         public string banner;
+        [Argument(ArgumentType.AtMostOnce, HelpText = "Picture for the splash screen", LongName = "Splash", ShortName = "s")]
+        public string splash;
         [Argument(ArgumentType.Required, HelpText = "XML configuration file", LongName = "Configuration", ShortName = "c")]
         public string config;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Embed support files", LongName = "Embed", ShortName = "e", DefaultValue = true)]
@@ -50,6 +52,12 @@ namespace InstallerLib
                 banner = Path.GetFullPath(banner);
             if (!String.IsNullOrEmpty(banner) && !File.Exists(banner))
                 throw new FileNotFoundException(banner);
+
+            // splash screen
+            if (!string.IsNullOrEmpty(splash))
+                splash = Path.GetFullPath(splash);
+            if (!String.IsNullOrEmpty(splash) && !File.Exists(splash))
+                throw new FileNotFoundException(splash);
 
             // icon
             if (!string.IsNullOrEmpty(icon))

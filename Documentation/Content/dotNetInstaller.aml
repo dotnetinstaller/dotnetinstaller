@@ -44,6 +44,10 @@
             <definition>
               Forces full UI mode, overriding the configuration's <literal>ui_mode</literal> attribute.
             </definition>
+            <definedTerm>/nosplash</definedTerm>
+            <definition>
+              Do not display splash screen.
+            </definition>
             <definedTerm>/CompleteCommandArgs</definedTerm>
             <definition>
               Specify additional arguments for the <literal>complete_command</literal>.

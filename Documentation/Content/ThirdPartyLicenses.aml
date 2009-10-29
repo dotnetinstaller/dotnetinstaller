@@ -108,5 +108,17 @@
         </para>
       </content>
     </section>
+    <section address="splashwnd">
+      <title>SplashWnd</title>
+      <content>
+        <para>
+          The splash screen class is (c) Codejock Software 1998-2001.
+          See <externalLink>
+            <linkText>http://www.codejock.com</linkText>
+            <linkUri>http://www.codejock.com</linkUri>
+          </externalLink> for more information.
+        </para>
+      </content>
+    </section>
   </developerConceptualDocument>
 </topic>

@@ -12,6 +12,7 @@
 #include "InstallerCommandLineInfo.h"
 #include "BrowseCtrl.h"
 #include "ControlValue.h"
+#include "SplashWnd.h"
 #include <Version/Version.h>
 
 // finestra di dialogo CdotNetInstallerDlg
@@ -62,8 +63,28 @@ bool CdotNetInstallerDlg::RunInstallConfiguration(
 	return(IDOK == this->DoModal());
 }
 
+void CdotNetInstallerDlg::DisplaySplash()
+{
+	// splash screen
+	if (! InstallerCommandLineInfo::Instance->DisplaySplash())
+		return;
+	
+	if (! InstallUILevelSetting::Instance->IsAnyUI())
+		return;
+
+	HRSRC hsplash = ::FindResourceA(NULL, "RES_SPLASH", "CUSTOM");
+	if (NULL == hsplash)
+		return;
+
+	HBITMAP hsplash_bitmap = DVLib::LoadBitmapFromResource(AfxGetApp()->m_hInstance, L"RES_SPLASH", L"CUSTOM");
+	CHECK_BOOL(CSplashWnd::ShowSplashScreen(3000, hsplash_bitmap, this),
+		L"Error loading splash screen.");
+}
+
 BOOL CdotNetInstallerDlg::OnInitDialog()
 {
+	DisplaySplash();
+
 	CDialog::OnInitDialog();
 
 	// Impostare l'icona per questa finestra di dialogo. Il framework non esegue questa operazione automaticamente

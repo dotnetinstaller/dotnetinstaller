@@ -13,6 +13,7 @@ public:
 	CdotNetInstallerApp();
 	BOOL InitInstance();
 	int ExitInstance();
+	BOOL PreTranslateMessage(MSG *);
 	DECLARE_MESSAGE_MAP()
 };
 

@@ -27,6 +27,12 @@ namespace InstallerLib
                 ResourceUpdate.WriteFile(args.output, new ResourceId("CUSTOM"), new ResourceId("RES_BANNER"), 0, args.banner);
             }
 
+            if (!string.IsNullOrEmpty(args.splash))
+            {
+                args.WriteLine(string.Format("Embedding splash screen \"{0}\"", args.splash));
+                ResourceUpdate.WriteFile(args.output, new ResourceId("CUSTOM"), new ResourceId("RES_SPLASH"), 0, args.splash);
+            }
+
             args.WriteLine(string.Format("Embedding configuration \"{0}\"", args.config));
             ResourceUpdate.WriteFile(args.output, new ResourceId("CUSTOM"), new ResourceId("RES_CONFIGURATION"), 0, args.config);
 
