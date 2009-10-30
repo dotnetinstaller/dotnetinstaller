@@ -54,6 +54,7 @@
     <Compile Include="ComponentMsiTests.cs" />
     <Compile Include="ComponentMsuTests.cs" />
     <Compile Include="ComponentOpenFileTests.cs" />
+    <Compile Include="ControlLicenseUnitTests.cs" />
     <Compile Include="DownloadTests.cs" />
     <Compile Include="ComponentEmbedFileTests.cs" />
     <Compile Include="InstallerLinkerUnitTests.cs" />

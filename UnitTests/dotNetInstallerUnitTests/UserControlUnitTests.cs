@@ -93,6 +93,39 @@ namespace dotNetInstallerUnitTests
         }
 
         [Test]
+        public void TestUserControlLicense()
+        {
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            // a configuration with a license agreement control
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ControlLicense license = new ControlLicense();
+            license.Accepted = true;
+            license.ResourceId = "MY_RES_LICENSE";
+            license.LicenseFile = configFilename;
+            setupConfiguration.Children.Add(license);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C exit /b [MY_RES_LICENSE]";
+            setupConfiguration.Children.Add(cmd);
+            // save config file
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // create a setup with the license file
+            InstallerLinkerArguments args = new InstallerLinkerArguments();
+            args.config = configFilename;
+            args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
+            args.template = dotNetInstallerExeUtils.Executable;
+            Console.WriteLine("Linking '{0}'", args.output);
+            InstallerLinker.CreateInstaller(args);
+            Assert.IsTrue(File.Exists(args.output));
+            // execute dotNetInstaller
+            Assert.AreEqual(1, dotNetInstallerExeUtils.Run(args.output, "/q"));
+            File.Delete(args.config);
+            File.Delete(args.output);
+        }
+
+        [Test]
         public void TestNoUserControl()
         {
             // a configuration wthout a user control, value is blank

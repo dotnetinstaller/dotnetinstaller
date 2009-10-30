@@ -31,7 +31,11 @@ namespace InstallerLib
         /// <summary>
         /// Browse for file or folder button.
         /// </summary>
-        browse
+        browse,
+        /// <summary>
+        /// License checkbox and link.
+        /// </summary>
+        license
     }
 
     /// <summary>
@@ -145,6 +149,9 @@ namespace InstallerLib
                     break;
                 case ControlType.browse:
                     control = new ControlBrowse();
+                    break;
+                case ControlType.license:
+                    control = new ControlLicense();
                     break;
                 default:
                     throw new Exception(string.Format("Invalid type: {0}", xmltype));

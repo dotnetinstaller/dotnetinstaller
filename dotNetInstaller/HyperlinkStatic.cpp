@@ -9,12 +9,14 @@
 
 #include "stdafx.h"
 #include "HyperlinkStatic.h"
+#include "DniMessageBox.h"
 #include "resource.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CHyperlinkStatic
 
 CHyperlinkStatic::CHyperlinkStatic()
+	: _rect(0, 0, 0, 0)
 {
 	_strCaption = _strHyperlink = _T("");	 
 	_bMouseInControl = _bCreateFont = _bGetCaptionSize = false;
@@ -49,7 +51,7 @@ void CHyperlinkStatic::SetHyperlink(std::wstring strHyperlink)
 void CHyperlinkStatic::SetCaption(std::wstring strCaption)
 {
 	_strCaption = strCaption.c_str();
-	_bGetCaptionSize = false;	
+	_bGetCaptionSize == false;
 }
 
 void CHyperlinkStatic::OnLButtonDown(UINT nFlags, CPoint point) 
@@ -62,10 +64,17 @@ void CHyperlinkStatic::OnLButtonDown(UINT nFlags, CPoint point)
 			DVLib::ShellCmd(_strHyperlink.GetBuffer());
 		CStatic::OnLButtonDown(nFlags, point);
 	}
-	catch(...)
+	catch(std::exception& ex)
 	{
-		AfxMessageBox(TEXT("Failed to execute link"));
+		DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
 	}
+}
+
+BOOL CHyperlinkStatic::Create(LPCTSTR lpszText, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID)
+{
+	_rect.SetRect(rect.left, rect.top, rect.right, rect.bottom);
+	SetCaption(lpszText);
+	return CStatic::Create(lpszText, dwStyle, rect, pParentWnd, nID);
 }
 
 void CHyperlinkStatic::OnPaint() 
@@ -73,10 +82,11 @@ void CHyperlinkStatic::OnPaint()
 	if ( _bCreateFont == false )
 		CreateFont();
 	CPaintDC dc(this);
-	CFont *pOldFont = (CFont*)dc.SelectObject(&_fontCaption);
+	CFont *pOldFont = (CFont*) dc.SelectObject(&_fontCaption);
 	dc.SetBkMode(TRANSPARENT);
-	dc.SetTextColor(RGB(0,0,255));
-	dc.TextOut(0, 0, _strCaption);
+	dc.SetTextColor(RGB(0, 0, 255));
+	GetCaptionSize();
+	dc.TextOut(_captionRect.left, _captionRect.top, _strCaption);
 	dc.SelectObject(pOldFont);
 }
 
@@ -139,14 +149,19 @@ void CHyperlinkStatic::GetCaptionSize()
 		CFont *pOldFont = dc.SelectObject(&_fontCaption);
 		_sizeCaption = dc.GetTextExtent(_strCaption);
 		dc.SelectObject(pOldFont);
+
+		GetWindowRect(& _rect);
+
+		_captionRect.SetRect(0, 
+			(_rect.bottom - _rect.top - _sizeCaption.cy - 1) / 2,
+			_rect.right - _rect.left,
+			(_rect.bottom - _rect.top - _sizeCaption.cy - 1) / 2 + _sizeCaption.cy);
+
 		_bGetCaptionSize = true;
 	}
 }
 
 bool CHyperlinkStatic::InCaptionRange(CPoint &point)
 {
-	if ( _bGetCaptionSize == false )
-		return false;
-	return (( point.x >= 0 )&&( point.x < _sizeCaption.cx ) &&
-			( point.y >= 0 )&&( point.y < _sizeCaption.cy ));
+	return _captionRect.PtInRect(point);
 }

@@ -94,6 +94,7 @@ namespace InstallerEditor
             else if (item is ControlLabel) node = new TreeNodeControlLabel(item as ControlLabel);
             else if (item is ControlEdit) node = new TreeNodeControlEdit(item as ControlEdit);
             else if (item is ControlBrowse) node = new TreeNodeControlBrowse(item as ControlBrowse);
+            else if (item is ControlLicense) node = new TreeNodeControlLicense(item as ControlLicense);
             else
                 throw new Exception(string.Format("Unsupported type: {0}", item.GetType().Name));
 
@@ -689,6 +690,42 @@ namespace InstallerEditor
         }
 
         public override ControlCheckBox Instance
+        {
+            get
+            {
+                return base.Instance;
+            }
+            set
+            {
+                base.Instance = value;
+                value.OnTextChanged += new EventHandler(OnTextChanged);
+            }
+        }
+
+        private void OnTextChanged(object sender, EventArgs e)
+        {
+            Text = XmlNodeText;
+        }
+
+        protected override string XmlNodeText
+        {
+            get
+            {
+                return Cut(Instance.Text);
+            }
+        }
+    }
+
+    public class TreeNodeControlLicense : TreeNodeControl<ControlLicense>
+    {
+        public TreeNodeControlLicense(ControlLicense value)
+            : base(value)
+        {
+            ImageIndex = 22;
+            SelectedImageIndex = 22;
+        }
+
+        public override ControlLicense Instance
         {
             get
             {

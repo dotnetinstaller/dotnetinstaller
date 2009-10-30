@@ -41,3 +41,4 @@
 #include "ControlCheckBox.h"
 #include "ControlEdit.h"
 #include "ControlBrowse.h"
+#include "ControlLicense.h"

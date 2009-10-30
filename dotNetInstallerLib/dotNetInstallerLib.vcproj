@@ -195,6 +195,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ControlLicense.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ControlText.cpp"
 				>
 			</File>
@@ -374,6 +378,10 @@
 			</File>
 			<File
 				RelativePath=".\ControlLabel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ControlLicense.h"
 				>
 			</File>
 			<File

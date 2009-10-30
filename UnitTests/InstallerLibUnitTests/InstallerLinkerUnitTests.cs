@@ -318,5 +318,53 @@ namespace InstallerLibUnitTests
                     File.Delete(args.output);
             }
         }
+
+        [Test]
+        public void TestControlLicenseResources()
+        {
+            InstallerLinkerArguments args = new InstallerLinkerArguments();
+            string licenseFile = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".txt");
+            try
+            {
+                Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
+                string binPath = Path.GetDirectoryName(HttpUtility.UrlDecode(uri.AbsolutePath));
+                ConfigFile configFile = new ConfigFile();
+                SetupConfiguration setupConfiguration = new SetupConfiguration();
+                configFile.Children.Add(setupConfiguration);
+                ControlLicense license = new ControlLicense();
+                license.LicenseFile = licenseFile;
+                Console.WriteLine("Writing '{0}'", license.LicenseFile);
+                File.WriteAllText(license.LicenseFile, "Lorem ipsum");
+                setupConfiguration.Children.Add(license);
+                args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+                Console.WriteLine("Writing '{0}'", args.config);
+                configFile.SaveAs(args.config);
+                args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
+                Console.WriteLine("Linking '{0}'", args.output);
+                args.template = dotNetInstallerExeUtils.Executable;
+                InstallerLib.InstallerLinker.CreateInstaller(args);
+                // check that the linker generated output
+                Assert.IsTrue(File.Exists(args.output));
+                Assert.IsTrue(new FileInfo(args.output).Length > 0);
+                using (ResourceInfo ri = new ResourceInfo())
+                {
+                    ri.Load(args.output);
+                    Assert.IsTrue(ri.Resources.ContainsKey(new ResourceId("CUSTOM")));
+                    List<Resource> custom = ri.Resources[new ResourceId("CUSTOM")];
+                    Assert.AreEqual("RES_BANNER", custom[0].Name.Name);
+                    Assert.AreEqual("RES_CONFIGURATION", custom[1].Name.ToString());
+                    Assert.AreEqual("RES_LICENSE", custom[2].Name.ToString());
+                }
+            }
+            finally
+            {
+                if (File.Exists(licenseFile))
+                    File.Delete(licenseFile);
+                if (File.Exists(args.config))
+                    File.Delete(args.config);
+                if (File.Exists(args.output))
+                    File.Delete(args.output);
+            }
+        }
     }
 }

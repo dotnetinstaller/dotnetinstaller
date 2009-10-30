@@ -27,6 +27,8 @@ public:
 // Operations
 public:
 
+	BOOL Create(LPCTSTR lpszText, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID = 0xffff);
+
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CHyperlinkStatic)
@@ -55,6 +57,8 @@ private:
 	CString _strCaption, _strHyperlink;
 	CFont _fontCaption;
 	CSize _sizeCaption;
+	CRect _rect;
+	CRect _captionRect;
 	bool _bCreateFont, _bMouseInControl, _bGetCaptionSize;
 	HCURSOR	_hHandCursor, _hArrowCursor;
 

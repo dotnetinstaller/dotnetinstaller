@@ -34,6 +34,9 @@
     <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.ico" />
   </ItemGroup>
   <ItemGroup>
+    <LicenseAgreementSample Include="Samples/LicenseAgreement/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <MultilingualSetupSample Include="Samples/MultilingualSetup/**/*.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +167,8 @@
     <!-- Sample: MultilingualSetup -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\MultilingualSetup" />
     <Copy SourceFiles="@(MultilingualSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\MultilingualSetup\%(RecursiveDir)" />
+    <!-- Sample: LicenseAgreement -->
+    <CallTarget Targets="licenseagreementsetupsample" />
     <!-- Sample: CustomInputSetup -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\CustomInputSetup" />
     <Copy SourceFiles="@(CustomInputSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\CustomInputSetup\%(RecursiveDir)" />
@@ -229,5 +234,12 @@
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
     <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
     <Copy SourceFiles="@(PackagedSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Source\%(RecursiveDir)" />
+  </Target>
+  <Target Name="licenseagreementsetupsample" DependsOnTargets="version">
+    <MakeDir Directories="Samples\LicenseAgreement\bin\$(Configuration)" />
+    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\LicenseAgreement\bin\$(Configuration)\Setup.exe&quot; /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\LicenseAgreement\Configuration.xml /AppPath:Samples\LicenseAgreement"/>
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
+    <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
+    <Copy SourceFiles="@(LicenseAgreementSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement\%(RecursiveDir)" />
   </Target>
 </Project>

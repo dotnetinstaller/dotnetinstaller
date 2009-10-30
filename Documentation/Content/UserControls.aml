@@ -27,14 +27,49 @@
             <definition>A checkbox with a user-defined checked and unchecked value.</definition>
             <definedTerm>browse</definedTerm>
             <definition>A file or directory locator.</definition>
+            <definedTerm>license</definedTerm>
+            <definition>A license agremeent.</definition>
           </definitionTable>
         </para>
+      </content>
+    </section>
+    <section address="usercontrollicenseagreement">
+      <title>License Agreement</title>
+      <content>
         <para>
-          You can use user-defined control values in <literal>command</literal>, <literal>msi</literal>, <literal>msu</literal>
-          and <literal>openfile</literal> component commands and command line parameters. Each control that accepts user input
-          (<literal>edit</literal>, <literal>checkbox</literal> and <literal>browse</literal>) requires a unique <literal>id</literal>
-          set in the editor that must be referenced in square brackets. For example, the value of the <literal>browse</literal>
-          control with id <literal>MYDIR</literal> can be used by entering <literal>[MYDIR]</literal>.
+          You can specify a custom license agreement that must be accepted for an installation to proceed.
+          <mediaLink>
+            <image xlink:href="DotNetInstallerLicenseAgreement.jpg" />
+          </mediaLink>
+          License agreement is implemented as a user control with the following additional parameters.
+          <tableDefinition>
+            <definedTerm>Text</definedTerm>
+            <definition>Text of the license link to display.</definition>
+            <definedTerm>Accepted</definedTerm>
+            <definition>Default state of license agreement checkbox.</definition>
+            <definedTerm>AcceptMessage</definedTerm>
+            <definition>Message to display when a user attempts to install without accepting a license agreement.</definition>
+            <definedTerm>LicenseFile</definedTerm>
+            <definition>
+              A license file to display when the user clicks the license agreement text. This file
+              is extracted at runtime into the session's temporary directory.
+            </definition>
+            <definedTerm>ResourceId</definedTerm>
+            <definition>Resource id for embedding the contents of the license file.</definition>
+          </tableDefinition>
+          Accepting a license agreement in basic and silent UI modes is not required.
+        </para>
+      </content>
+    </section>
+    <section address="referencingusercontrolvalues">
+      <title>Referencing User-Defined Control Values</title>
+      <content>
+        <para>
+          You can reference user-defined control values in <literal>command</literal>, <literal>msi</literal>, <literal>msu</literal>
+          and <literal>openfile</literal> component commands and command line parameters. Controls that accept user input
+          (<literal>edit</literal>, <literal>checkbox</literal>, <literal>browse</literal> and <literal>license</literal>) require
+          a unique <literal>id</literal> set in the editor that must be referenced in square brackets. For example, the value of
+          the <literal>browse</literal> control with id <literal>MYDIR</literal> can be used by entering <literal>[MYDIR]</literal>.
         </para>
       </content>
     </section>

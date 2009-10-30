@@ -45,3 +45,20 @@ std::wstring ControlValueCheckBox::GetValue() const
 	return CButton::GetCheck() ? checked_value : unchecked_value;
 }
 
+ControlValueLicense::ControlValueLicense(const std::wstring& msg)
+	: accept_message(msg)
+{
+
+}
+
+std::wstring ControlValueLicense::GetValue() const
+{
+	if (! InstallUILevelSetting::Instance->IsSilent())
+	{
+		if (! CButton::GetCheck())
+		{
+			THROW_EX(accept_message);
+		}
+	}
+	return CButton::GetCheck() ? L"1" : L"0";
+}

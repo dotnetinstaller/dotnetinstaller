@@ -8,6 +8,7 @@ enum control_type
 	control_type_edit, // edit
 	control_type_checkbox, // checkbox
 	control_type_browse, // browse
+	control_type_license, // license
 };
 
 class Control

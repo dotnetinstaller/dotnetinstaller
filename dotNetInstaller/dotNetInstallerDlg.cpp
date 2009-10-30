@@ -199,6 +199,9 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 		case control_type_browse:
 			AddControl(* (ControlBrowse *) get(control));
 			break;
+		case control_type_license:
+			AddControl(* (ControlLicense *) get(control));
+			break;
 		default:
 			THROW_EX(L"Invalid control type: " << control->type);
 		}
@@ -779,6 +782,33 @@ void CdotNetInstallerDlg::AddControl(const ControlBrowse& browse)
 	p_browse->SetOpenSave(TRUE); 
 	m_custom_control_values.insert(std::pair<std::wstring, ControlValue *>(browse.id, p_browse));
 	m_custom_controls.push_back(p_browse);
+}
+
+void CdotNetInstallerDlg::AddControl(const ControlLicense& license)
+{
+	// extract license to temporary location
+	std::vector<char> license_buffer = DVLib::LoadResourceData<char>(NULL, license.resource_id, L"CUSTOM");
+	std::wstring license_file = DVLib::DirectoryCombine(InstallerSession::Instance->GetSessionTempPath(), DVLib::GetFileNameW(license.license_file));
+	LOG(L"Extracting license '" << license.resource_id << L"' to " << license_file);
+	DVLib::FileWrite(license_file, license_buffer);
+	// checkbox
+	ControlValueLicense * p_checkbox = new ControlValueLicense(license.accept_message);
+	CRect checkbox_rect = license.position.ToRect();
+	checkbox_rect.right = checkbox_rect.left + 20;
+	p_checkbox->Create(L"", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX, checkbox_rect, this, 0);
+	p_checkbox->SetFont(CreateFont(license));
+	p_checkbox->SetCheck(license.accepted);
+	m_custom_control_values.insert(std::pair<std::wstring, ControlValue *>(license.resource_id, p_checkbox));
+	m_custom_controls.push_back(p_checkbox);
+	// hyperlink
+	CHyperlinkStatic * p_link = new CHyperlinkStatic();
+	CRect link_rect = license.position.ToRect();
+	link_rect.left += 20;
+	p_link->Create(license.text.c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP, link_rect, this, 0);
+	p_link->SetCaption(license.text.c_str());
+	p_link->SetHyperlink(license_file);
+	p_link->SetFont(CreateFont(license));
+	m_custom_controls.push_back(p_link);
 }
 
 void CdotNetInstallerDlg::SetControlValues()

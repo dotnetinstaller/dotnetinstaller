@@ -87,6 +87,8 @@
         <ComponentRef Id="CustomInputSetupSample" />
         <ComponentRef Id="ReferenceSetupSample" />
         <ComponentRef Id="OsFiltersSample" />
+        <ComponentRef Id="MultilingualSetupSample" />
+        <ComponentRef Id="LicenseAgreementSetupSample" />
       </Feature>
     </Feature>
     <UIRef Id="dotNetInstallerUI_InstallDir" />

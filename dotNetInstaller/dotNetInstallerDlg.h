@@ -67,5 +67,6 @@ private:
 	void AddControl(const ControlCheckBox&);
 	void AddControl(const ControlEdit&);
 	void AddControl(const ControlBrowse&);
+	void AddControl(const ControlLicense&);
 	void SetControlValues();
 };

@@ -32,3 +32,12 @@ public:
 	ControlValueCheckBox(const std::wstring& checked, const std::wstring& unchecked);
 	std::wstring GetValue() const;
 };
+
+class ControlValueLicense : public CButton, public ControlValue
+{
+private:
+	std::wstring accept_message;
+public:
+	ControlValueLicense(const std::wstring& msg);
+	std::wstring GetValue() const;
+};

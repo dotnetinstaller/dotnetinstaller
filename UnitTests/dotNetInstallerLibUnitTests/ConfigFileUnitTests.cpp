@@ -218,6 +218,21 @@ void ConfigFileUnitTests::testLoadMultilingualSetup()
 	CPPUNIT_ASSERT(config.GetSupportedConfigurations(1040)[0]->lcid_filter == L"1040");
 }
 
+void ConfigFileUnitTests::testLoadLicenseAgreement()
+{
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+		L"..\\..\\..\\Samples\\LicenseAgreement\\Configuration.xml");
+	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
+	ConfigFile config;
+	config.LoadFile(configxml);
+	// there's one configuration in this sample
+	CPPUNIT_ASSERT(config.size() == 1);
+	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
+	CPPUNIT_ASSERT(configuration->components.size() == 1);
+	CPPUNIT_ASSERT(configuration->controls.size() == 1);
+	CPPUNIT_ASSERT(configuration->controls[0]->type == control_type_license);
+}
+
 void ConfigFileUnitTests::testLoadCustomInputSetup()
 {
 	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 

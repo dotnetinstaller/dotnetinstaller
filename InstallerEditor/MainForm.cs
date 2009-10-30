@@ -82,6 +82,8 @@ namespace InstallerEditor
         private MenuItem menuControls;
         private MenuItem mnAddEditControl;
         private MenuItem mnAddBrowseControl;
+        private MenuItem menuItem5;
+        private MenuItem mnAddLicenseAgreement;
         private System.ComponentModel.IContainer components;
 
         public MainForm()
@@ -185,6 +187,8 @@ namespace InstallerEditor
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtComment = new System.Windows.Forms.TextBox();
+            this.mnAddLicenseAgreement = new System.Windows.Forms.MenuItem();
+            this.menuItem5 = new System.Windows.Forms.MenuItem();
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
@@ -534,7 +538,9 @@ namespace InstallerEditor
             this.mnAddLabelControl,
             this.mnAddEditControl,
             this.mnAddCheckboxControl,
-            this.mnAddBrowseControl});
+            this.mnAddBrowseControl,
+            this.menuItem5,
+            this.mnAddLicenseAgreement});
             this.menuControls.Text = "Contro&ls";
             // 
             // mnAddLabelControl
@@ -635,6 +641,7 @@ namespace InstallerEditor
             this.imageList.Images.SetKeyName(19, "");
             this.imageList.Images.SetKeyName(20, "");
             this.imageList.Images.SetKeyName(21, "");
+            this.imageList.Images.SetKeyName(22, "");
             // 
             // mainSplitContainer
             // 
@@ -724,6 +731,17 @@ namespace InstallerEditor
             this.txtComment.Size = new System.Drawing.Size(620, 64);
             this.txtComment.TabIndex = 0;
             this.txtComment.Visible = false;
+            // 
+            // mnAddLicenseAgreement
+            // 
+            this.mnAddLicenseAgreement.Index = 5;
+            this.mnAddLicenseAgreement.Text = "&License Agreement";
+            this.mnAddLicenseAgreement.Click += new System.EventHandler(this.mnAddLicenseAgreement_Click);
+            // 
+            // menuItem5
+            // 
+            this.menuItem5.Index = 4;
+            this.menuItem5.Text = "-";
             // 
             // MainForm
             // 
@@ -1044,6 +1062,7 @@ namespace InstallerEditor
                 mnAddCheckboxControl.Enabled = (item.Children.CanAdd(typeof(ControlCheckBox)));
                 mnAddEditControl.Enabled = (item.Children.CanAdd(typeof(ControlEdit)));
                 mnAddBrowseControl.Enabled = (item.Children.CanAdd(typeof(ControlBrowse)));
+                mnAddLicenseAgreement.Enabled = (item.Children.CanAdd(typeof(ControlLicense)));
             }
             else
             {                
@@ -1070,6 +1089,7 @@ namespace InstallerEditor
                 mnAddCheckboxControl.Enabled = false;
                 mnAddEditControl.Enabled = false;
                 mnAddBrowseControl.Enabled = false;
+                mnAddLicenseAgreement.Enabled = false;
             }
         }
 
@@ -1157,6 +1177,12 @@ namespace InstallerEditor
         private void mnAddOpenFileComponent_Click(object sender, System.EventArgs e)
         {
             AddTreeNode_Click<ComponentOpenFile>();
+        }
+
+
+        private void mnAddLicenseAgreement_Click(object sender, EventArgs e)
+        {
+            AddTreeNode_Click<ControlLicense>();
         }
 
         private void mnAddSetupConfiguration_Click(object sender, System.EventArgs e)

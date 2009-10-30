@@ -79,12 +79,21 @@ namespace InstallerLib
                 iconDirectory.SaveTo(args.output);
             }
 
+            string supportdir = string.IsNullOrEmpty(args.apppath)
+                ? Environment.CurrentDirectory
+                : args.apppath;
+
+            // resource files
+            ResourceFileCollection r_files = configfile.GetResources(supportdir);
+            foreach (ResourceFilePair r_pair in r_files)
+            {
+                args.WriteLine(string.Format("Embedding resource \"{0}\": {1}", r_pair.id, r_pair.path));
+                ResourceUpdate.WriteFile(args.output, new ResourceId("CUSTOM"), new ResourceId(r_pair.id), 0, r_pair.path);
+            }
+
+            // embedded files
             if (args.embed)
             {
-                string supportdir = string.IsNullOrEmpty(args.apppath)
-                    ? Environment.CurrentDirectory
-                    : args.apppath;
-
                 args.WriteLine(string.Format("Compressing files from \"{0}\"", supportdir));
 
                 EmbedFileCollection c_files = configfile.GetFiles(supportdir);

@@ -131,6 +131,16 @@ namespace InstallerLib
             return c_files;
         }
 
+        public virtual ResourceFileCollection GetResources(string supportdir)
+        {
+            ResourceFileCollection c_files = new ResourceFileCollection(supportdir);
+            foreach (XmlClass c in Children)
+            {
+                c_files.AddRange(c.GetResources(supportdir));
+            }
+            return c_files;
+        }
+
         protected virtual void OnXmlWriteTag(XmlWriterEventArgs e)
         {
         }

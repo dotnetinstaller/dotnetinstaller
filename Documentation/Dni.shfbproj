@@ -122,6 +122,9 @@
     <Image Include="Images\dotNetInstallerUserControls.jpg">
       <ImageId>dotNetInstallerUserControls.jpg</ImageId>
     </Image>
+    <Image Include="Images\dotNetInstallerLicenseAgreement.jpg">
+      <ImageId>dotNetInstallerLicenseAgreement.jpg</ImageId>
+    </Image>
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />
