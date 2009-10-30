@@ -8,10 +8,10 @@
             <File Id="MultilingualSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\MultilingualSetup\Configuration.xml" />
           </Component>
         </Directory>
-        <Directory Id="LicenseAgreementSetupFolder" Name="LicenseAgreementSetup">
-          <Component Id="LicenseAgreementSetupSample" Guid="35CF3A16-6311-4c0f-8A86-D58470376293">
-            <File Id="LicenseAgreementSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\LicenseAgreementSetup\Configuration.xml" />
-            <File Id="LicenseAgreementSetup.license.txt" Name="license.txt" Source="..\Samples\LicenseAgreementSetup\license.txt" />
+        <Directory Id="LicenseAgreementFolder" Name="LicenseAgreement">
+          <Component Id="LicenseAgreementSample" Guid="35CF3A16-6311-4c0f-8A86-D58470376293">
+            <File Id="LicenseAgreement.Configuration.xml" Name="Configuration.xml" Source="..\Samples\LicenseAgreement\Configuration.xml" />
+            <File Id="LicenseAgreement.license.txt" Name="license.txt" Source="..\Samples\LicenseAgreement\license.txt" />
           </Component>
         </Directory>
         <Directory Id="CustomInputSetupFolder" Name="CustomInputSetup">

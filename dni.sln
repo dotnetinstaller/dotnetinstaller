@@ -114,6 +114,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{02C1E6
 	ProjectSection(SolutionItems) = preProject
 		Documentation\Images\dotNetInstaller.jpg = Documentation\Images\dotNetInstaller.jpg
 		Documentation\Images\dotNetInstallerLayout.jpg = Documentation\Images\dotNetInstallerLayout.jpg
+		Documentation\Images\dotNetInstallerLicenseAgreement.jpg = Documentation\Images\dotNetInstallerLicenseAgreement.jpg
 		Documentation\Images\dotNetInstallerSample.jpg = Documentation\Images\dotNetInstallerSample.jpg
 		Documentation\Images\InstallerEditor.jpg = Documentation\Images\InstallerEditor.jpg
 		Documentation\Images\StandaloneSetup.jpg = Documentation\Images\StandaloneSetup.jpg
