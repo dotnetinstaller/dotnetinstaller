@@ -84,6 +84,7 @@ namespace InstallerEditor
         private MenuItem mnAddBrowseControl;
         private MenuItem menuItem5;
         private MenuItem mnAddLicenseAgreement;
+        private MenuItem mnAddHyperlinkControl;
         private System.ComponentModel.IContainer components;
 
         public MainForm()
@@ -171,6 +172,8 @@ namespace InstallerEditor
             this.mnAddEditControl = new System.Windows.Forms.MenuItem();
             this.mnAddCheckboxControl = new System.Windows.Forms.MenuItem();
             this.mnAddBrowseControl = new System.Windows.Forms.MenuItem();
+            this.menuItem5 = new System.Windows.Forms.MenuItem();
+            this.mnAddLicenseAgreement = new System.Windows.Forms.MenuItem();
             this.mnMove = new System.Windows.Forms.MenuItem();
             this.mnMoveUp = new System.Windows.Forms.MenuItem();
             this.mnMoveDown = new System.Windows.Forms.MenuItem();
@@ -187,8 +190,7 @@ namespace InstallerEditor
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtComment = new System.Windows.Forms.TextBox();
-            this.mnAddLicenseAgreement = new System.Windows.Forms.MenuItem();
-            this.menuItem5 = new System.Windows.Forms.MenuItem();
+            this.mnAddHyperlinkControl = new System.Windows.Forms.MenuItem();
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
@@ -539,6 +541,7 @@ namespace InstallerEditor
             this.mnAddEditControl,
             this.mnAddCheckboxControl,
             this.mnAddBrowseControl,
+            this.mnAddHyperlinkControl,
             this.menuItem5,
             this.mnAddLicenseAgreement});
             this.menuControls.Text = "Contro&ls";
@@ -546,26 +549,37 @@ namespace InstallerEditor
             // mnAddLabelControl
             // 
             this.mnAddLabelControl.Index = 0;
-            this.mnAddLabelControl.Text = "Label Control";
+            this.mnAddLabelControl.Text = "&Label";
             this.mnAddLabelControl.Click += new System.EventHandler(this.mnAddLabelControl_Click);
             // 
             // mnAddEditControl
             // 
             this.mnAddEditControl.Index = 1;
-            this.mnAddEditControl.Text = "&Edit Control";
+            this.mnAddEditControl.Text = "&Edit";
             this.mnAddEditControl.Click += new System.EventHandler(this.mnAddEditControl_Click);
             // 
             // mnAddCheckboxControl
             // 
             this.mnAddCheckboxControl.Index = 2;
-            this.mnAddCheckboxControl.Text = "Checkbox Control";
+            this.mnAddCheckboxControl.Text = "&Checkbox";
             this.mnAddCheckboxControl.Click += new System.EventHandler(this.mnAddCheckboxControl_Click);
             // 
             // mnAddBrowseControl
             // 
             this.mnAddBrowseControl.Index = 3;
-            this.mnAddBrowseControl.Text = "&Browse Control";
+            this.mnAddBrowseControl.Text = "&Browse";
             this.mnAddBrowseControl.Click += new System.EventHandler(this.mnAddBrowseControl_Click);
+            // 
+            // menuItem5
+            // 
+            this.menuItem5.Index = 5;
+            this.menuItem5.Text = "-";
+            // 
+            // mnAddLicenseAgreement
+            // 
+            this.mnAddLicenseAgreement.Index = 6;
+            this.mnAddLicenseAgreement.Text = "License &Agreement";
+            this.mnAddLicenseAgreement.Click += new System.EventHandler(this.mnAddLicenseAgreement_Click);
             // 
             // mnMove
             // 
@@ -642,6 +656,7 @@ namespace InstallerEditor
             this.imageList.Images.SetKeyName(20, "");
             this.imageList.Images.SetKeyName(21, "");
             this.imageList.Images.SetKeyName(22, "");
+            this.imageList.Images.SetKeyName(23, "");
             // 
             // mainSplitContainer
             // 
@@ -732,16 +747,11 @@ namespace InstallerEditor
             this.txtComment.TabIndex = 0;
             this.txtComment.Visible = false;
             // 
-            // mnAddLicenseAgreement
+            // mnAddHyperlinkControl
             // 
-            this.mnAddLicenseAgreement.Index = 5;
-            this.mnAddLicenseAgreement.Text = "&License Agreement";
-            this.mnAddLicenseAgreement.Click += new System.EventHandler(this.mnAddLicenseAgreement_Click);
-            // 
-            // menuItem5
-            // 
-            this.menuItem5.Index = 4;
-            this.menuItem5.Text = "-";
+            this.mnAddHyperlinkControl.Index = 4;
+            this.mnAddHyperlinkControl.Text = "&Hyperlink";
+            this.mnAddHyperlinkControl.Click += new System.EventHandler(this.mnAddHyperlinkControl_Click);
             // 
             // MainForm
             // 
@@ -1063,6 +1073,7 @@ namespace InstallerEditor
                 mnAddEditControl.Enabled = (item.Children.CanAdd(typeof(ControlEdit)));
                 mnAddBrowseControl.Enabled = (item.Children.CanAdd(typeof(ControlBrowse)));
                 mnAddLicenseAgreement.Enabled = (item.Children.CanAdd(typeof(ControlLicense)));
+                mnAddHyperlinkControl.Enabled = (item.Children.CanAdd(typeof(ControlHyperlink)));
             }
             else
             {                
@@ -1090,6 +1101,7 @@ namespace InstallerEditor
                 mnAddEditControl.Enabled = false;
                 mnAddBrowseControl.Enabled = false;
                 mnAddLicenseAgreement.Enabled = false;
+                mnAddHyperlinkControl.Enabled = false;
             }
         }
 
@@ -1179,7 +1191,6 @@ namespace InstallerEditor
             AddTreeNode_Click<ComponentOpenFile>();
         }
 
-
         private void mnAddLicenseAgreement_Click(object sender, EventArgs e)
         {
             AddTreeNode_Click<ControlLicense>();
@@ -1201,7 +1212,6 @@ namespace InstallerEditor
         {
             AddTreeNode_Click<DownloadDialog>();
         }
-
 
         private void mnAddMsiComponent_Click(object sender, System.EventArgs e)
         {
@@ -1236,6 +1246,11 @@ namespace InstallerEditor
         private void mnAddInstalledCheckOperator_Click(object sender, EventArgs e)
         {
             AddTreeNode_Click<InstalledCheckOperator>();
+        }
+
+        private void mnAddHyperlinkControl_Click(object sender, EventArgs e)
+        {
+            AddTreeNode_Click<ControlHyperlink>();
         }
 
         #endregion

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--Packaged setup demo that adds custom input GUI.-->
 <configurations lcid_type="UserExe" show_language_selector="False" language_selector_title="" language_selector_ok="OK" language_selector_cancel="Cancel" configuration_no_match_message="" ui_level="full" fileversion="1.0.0.1" productversion="1.0.0.0" log_enabled="True" log_file="#TEMPPATH\#GUID.log ">
-  <schema version="1.8.3080.0" generator="dotNetInstaller InstallerEditor" />
+  <schema version="1.8.3947.0" generator="dotNetInstaller InstallerEditor" />
   <fileattributes>
     <fileattribute name="FileDescription" value="Custom input setup sample" />
   </fileattributes>
@@ -11,5 +11,6 @@
     <control type="label" position="130,200,100,25" enabled="True" display_install="True" display_uninstall="True" text="Destination path:" font_name="MS Shell Dlg" font_size="9" />
     <control type="checkbox" position="130,215,200,25" enabled="True" display_install="True" display_uninstall="True" text="Check to succeed" font_name="MS Shell Dlg" font_size="9" checked="True" checked_value="0" unchecked_value="10" id="EXITCODE" />
     <control type="browse" position="215,197,225,20" enabled="True" display_install="True" display_uninstall="True" text="%WINDIR%" font_name="MS Shell Dlg" font_size="9" id="USERDIR" hide_readonly="False" must_exist="False" folders_only="True" button_text="" allow_edit="True" filter="All Files (*.*)|*.*" />
+    <control type="hyperlink" position="130,235,225,20" enabled="True" display_install="True" display_uninstall="True" text="dotNetInstaller Website" font_name="MS Shell Dlg" font_size="9" uri="http://dotnetinstaller.codeplex.com" />
   </configuration>
 </configurations>

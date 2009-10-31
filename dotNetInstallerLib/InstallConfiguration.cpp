@@ -13,6 +13,7 @@
 #include "ControlEdit.h"
 #include "ControlBrowse.h"
 #include "ControlLicense.h"
+#include "ControlHyperlink.h"
 
 InstallConfiguration::InstallConfiguration()
 	: Configuration(configuration_install)
@@ -133,6 +134,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
 		else if (control_type == L"edit") control = shared_any<Control *, close_delete>(new ControlEdit());
 		else if (control_type == L"browse") control = shared_any<Control *, close_delete>(new ControlBrowse());
 		else if (control_type == L"license") control = shared_any<Control *, close_delete>(new ControlLicense());
+		else if (control_type == L"hyperlink") control = shared_any<Control *, close_delete>(new ControlHyperlink());
 		else 
 		{
 			THROW_EX(L"Unsupported control type: " << control_type);

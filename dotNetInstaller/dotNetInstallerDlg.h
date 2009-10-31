@@ -68,5 +68,6 @@ private:
 	void AddControl(const ControlEdit&);
 	void AddControl(const ControlBrowse&);
 	void AddControl(const ControlLicense&);
+	void AddControl(const ControlHyperlink&);
 	void SetControlValues();
 };

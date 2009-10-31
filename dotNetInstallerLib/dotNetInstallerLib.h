@@ -42,3 +42,4 @@
 #include "ControlEdit.h"
 #include "ControlBrowse.h"
 #include "ControlLicense.h"
+#include "ControlHyperlink.h"

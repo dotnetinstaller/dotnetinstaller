@@ -73,8 +73,9 @@ void CHyperlinkStatic::OnLButtonDown(UINT nFlags, CPoint point)
 BOOL CHyperlinkStatic::Create(LPCTSTR lpszText, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID)
 {
 	_rect.SetRect(rect.left, rect.top, rect.right, rect.bottom);
+	BOOL rc = CStatic::Create(lpszText, dwStyle, rect, pParentWnd, nID);
 	SetCaption(lpszText);
-	return CStatic::Create(lpszText, dwStyle, rect, pParentWnd, nID);
+	return rc;
 }
 
 void CHyperlinkStatic::OnPaint() 

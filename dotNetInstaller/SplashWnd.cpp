@@ -212,7 +212,7 @@ void CSplashWnd::OnPaint()
 	}
 }
 
-void CSplashWnd::OnTimer(UINT nIDEvent)
+void CSplashWnd::OnTimer(UINT /*nIDEvent*/)
 {
 	// Destroy the splash screen window.
 	HideSplashScreen();

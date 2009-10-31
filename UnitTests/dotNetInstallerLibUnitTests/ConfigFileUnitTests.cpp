@@ -244,8 +244,9 @@ void ConfigFileUnitTests::testLoadCustomInputSetup()
 	CPPUNIT_ASSERT(config.size() == 1);
 	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
 	CPPUNIT_ASSERT(configuration->components.size() == 1);
-	CPPUNIT_ASSERT(configuration->controls.size() == 3);
+	CPPUNIT_ASSERT(configuration->controls.size() == 4);
 	CPPUNIT_ASSERT(configuration->controls[0]->type == control_type_label);
 	CPPUNIT_ASSERT(configuration->controls[1]->type == control_type_checkbox);
 	CPPUNIT_ASSERT(configuration->controls[2]->type == control_type_browse);
+	CPPUNIT_ASSERT(configuration->controls[3]->type == control_type_hyperlink);
 }

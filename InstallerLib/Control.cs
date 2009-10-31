@@ -35,7 +35,11 @@ namespace InstallerLib
         /// <summary>
         /// License checkbox and link.
         /// </summary>
-        license
+        license,
+        /// <summary>
+        /// Hyperlink.
+        /// </summary>
+        hyperlink
     }
 
     /// <summary>
@@ -152,6 +156,9 @@ namespace InstallerLib
                     break;
                 case ControlType.license:
                     control = new ControlLicense();
+                    break;
+                case ControlType.hyperlink:
+                    control = new ControlHyperlink();
                     break;
                 default:
                     throw new Exception(string.Format("Invalid type: {0}", xmltype));

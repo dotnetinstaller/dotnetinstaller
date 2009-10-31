@@ -70,6 +70,28 @@ namespace dotNetInstallerUnitTests
         }
 
         [Test]
+        public void TestUserControlHyperlink()
+        {
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ControlHyperlink hyperlink = new ControlHyperlink();
+            hyperlink.Text = "url";
+            hyperlink.Uri = "http://dotnetinstaller.codeplex.com";
+            setupConfiguration.Children.Add(hyperlink);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C exit /b 0";
+            setupConfiguration.Children.Add(cmd);
+            // save config file
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // execute dotNetInstaller
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+        }
+
+        [Test]
         public void TestUserControlBrowse()
         {
             // a configuration with a checkbox control

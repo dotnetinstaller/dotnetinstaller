@@ -202,6 +202,9 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 		case control_type_license:
 			AddControl(* (ControlLicense *) get(control));
 			break;
+		case control_type_hyperlink:
+			AddControl(* (ControlHyperlink *) get(control));
+			break;
 		default:
 			THROW_EX(L"Invalid control type: " << control->type);
 		}
@@ -805,9 +808,17 @@ void CdotNetInstallerDlg::AddControl(const ControlLicense& license)
 	CRect link_rect = license.position.ToRect();
 	link_rect.left += 20;
 	p_link->Create(license.text.c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP, link_rect, this, 0);
-	p_link->SetCaption(license.text.c_str());
 	p_link->SetHyperlink(license_file);
 	p_link->SetFont(CreateFont(license));
+	m_custom_controls.push_back(p_link);
+}
+
+void CdotNetInstallerDlg::AddControl(const ControlHyperlink& hyperlink)
+{
+	CHyperlinkStatic * p_link = new CHyperlinkStatic();
+	p_link->Create(hyperlink.text.c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP, hyperlink.position.ToRect(), this, 0);
+	p_link->SetHyperlink(hyperlink.uri);
+	p_link->SetFont(CreateFont(hyperlink));
 	m_custom_controls.push_back(p_link);
 }
 

@@ -21,6 +21,8 @@
           <definitionTable>
             <definedTerm>label</definedTerm>
             <definition>A static text label.</definition>
+            <definedTerm>hyperlink</definedTerm>
+            <definition>A static link to an internet address or a file.</definition>
             <definedTerm>edit</definedTerm>
             <definition>A text box.</definition>
             <definedTerm>checkbox</definedTerm>

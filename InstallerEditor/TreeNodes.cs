@@ -95,6 +95,7 @@ namespace InstallerEditor
             else if (item is ControlEdit) node = new TreeNodeControlEdit(item as ControlEdit);
             else if (item is ControlBrowse) node = new TreeNodeControlBrowse(item as ControlBrowse);
             else if (item is ControlLicense) node = new TreeNodeControlLicense(item as ControlLicense);
+            else if (item is ControlHyperlink) node = new TreeNodeControlHyperlink(item as ControlHyperlink);
             else
                 throw new Exception(string.Format("Unsupported type: {0}", item.GetType().Name));
 
@@ -726,6 +727,42 @@ namespace InstallerEditor
         }
 
         public override ControlLicense Instance
+        {
+            get
+            {
+                return base.Instance;
+            }
+            set
+            {
+                base.Instance = value;
+                value.OnTextChanged += new EventHandler(OnTextChanged);
+            }
+        }
+
+        private void OnTextChanged(object sender, EventArgs e)
+        {
+            Text = XmlNodeText;
+        }
+
+        protected override string XmlNodeText
+        {
+            get
+            {
+                return Cut(Instance.Text);
+            }
+        }
+    }
+
+    public class TreeNodeControlHyperlink : TreeNodeControl<ControlHyperlink>
+    {
+        public TreeNodeControlHyperlink(ControlHyperlink value)
+            : base(value)
+        {
+            ImageIndex = 23;
+            SelectedImageIndex = 23;
+        }
+
+        public override ControlHyperlink Instance
         {
             get
             {
