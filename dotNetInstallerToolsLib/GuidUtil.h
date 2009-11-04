@@ -14,4 +14,7 @@ namespace DVLib
 	// generate and converts a globally unique identifier (GUID) into a string of printable characters
     std::string GenerateGUIDStringA();
     std::wstring GenerateGUIDStringW();
+	// add { } to a GUID where necessary
+	std::wstring makeguid(const std::wstring& guid);
+	std::string makeguid(const std::string& guid);
 }

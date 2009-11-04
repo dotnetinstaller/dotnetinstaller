@@ -120,5 +120,17 @@
         </para>
       </content>
     </section>
+    <section address="hyperlinkstatic">
+      <title>CHyperlinkStatic</title>
+      <content>
+        <para>
+          The hyperlinks are implemented with CHyperlinkStatic by Franz Wong.
+          See <externalLink>
+            <linkText>http://www.codeguru.com/Cpp/controls/staticctrl/article.php/c5801/</linkText>
+            <linkUri>http://www.codeguru.com/Cpp/controls/staticctrl/article.php/c5801/</linkUri>
+          </externalLink> for more information.
+        </para>
+      </content>
+    </section>
   </developerConceptualDocument>
 </topic>

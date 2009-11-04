@@ -35,7 +35,7 @@ IID DVLib::string2guid(const std::wstring& guid)
 {
 	IID iid = { 0 };
 
-	CHECK_HR(::IIDFromString(const_cast<LPOLESTR>(guid.c_str()), & iid),
+	CHECK_HR(::IIDFromString(const_cast<LPOLESTR>(makeguid(guid).c_str()), & iid),
         _T("Error in ::IIDFromString"));
 
     return iid;
@@ -46,7 +46,7 @@ bool DVLib::isguid(const std::wstring& guid)
 	IID iid = { 0 };
 	HRESULT hr;
 
-	switch(hr = ::IIDFromString(const_cast<LPOLESTR>(guid.c_str()), & iid))
+	switch(hr = ::IIDFromString(const_cast<LPOLESTR>(makeguid(guid).c_str()), & iid))
 	{
 	case E_INVALIDARG:
 		return false;
@@ -72,4 +72,20 @@ IID DVLib::string2guid(const std::string& guid)
 std::string DVLib::guid2string(REFGUID rguid)
 {
     return wstring2string(guid2wstring(rguid));
+}
+
+std::wstring DVLib::makeguid(const std::wstring& guid)
+{
+	std::wstring result;
+	if (! guid.empty() && guid[0] != L'{')
+		result += L"{";
+	result += guid;
+	if (! guid.empty() && guid[guid.length() - 1] != L'}') 
+		result += L"}";
+	return result;
+}
+
+std::string DVLib::makeguid(const std::string& guid)
+{
+	return wstring2string(makeguid(string2wstring(guid)));
 }

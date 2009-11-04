@@ -971,11 +971,10 @@ protected:
 	// Sets the date and attributes for the specified file.
 	void SetAttribsAndDateW(WCHAR* u16_File, USHORT uDate, USHORT uTime, USHORT uAttribs)
 	{
-		BOOL b_Utf = (uAttribs & _A_NAME_IS_UTF)     > 0;
-		BOOL b_Utc = (uAttribs & FILE_ATTR_UTC_TIME) > 0;
-
 		#if _TraceExtract
 			CStrW sw_FileName;
+			BOOL b_Utf = (uAttribs & _A_NAME_IS_UTF)     > 0;
+			BOOL b_Utc = (uAttribs & FILE_ATTR_UTC_TIME) > 0;
 			CFile::SplitPathW(u16_File, 0, &sw_FileName);
 			CTrace::TraceW(L"SetAttribsAndDateW('%s'), UTC=%d, UTF=%d", (WCHAR*)sw_FileName, b_Utc, b_Utf);
 		#endif
@@ -997,6 +996,7 @@ protected:
 			// The Windows filesystem stores UTC times
 			::FILETIME k_FileTime = k_CabTime;
 			
+			BOOL b_Utc = (uAttribs & FILE_ATTR_UTC_TIME) > 0;
 			if (!b_Utc) LocalFileTimeToFileTime(&k_CabTime, &k_FileTime); // Local time --> UTC
 
 			SetFileTime(h_File, &k_FileTime, 0, &k_FileTime);

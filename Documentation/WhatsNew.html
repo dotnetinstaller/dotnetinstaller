@@ -31,8 +31,8 @@
                     <code>/x</code> switches, <code>supports_install</code>, <code>supports_uninstall</code>
                     global options in configurations, components and controls. Added extended uninstall
                     parameters in <code>cmd</code> and <code>msi</code> components.</li>
-                <li>Added user-defined form controls and input for labels, checkboxes, edit boxes, hyperlinks and
-                    file/directory browse controls.</li>
+                <li>Added user-defined form controls and input for labels, checkboxes, edit boxes, hyperlinks
+                    and file/directory browse controls.</li>
                 <li>Added user-defined splash screen embedded with the InstallerLinker <code>/Splash</code>
                     option and an optional <code>/nosplash</code> switch to dotNetInstaller.</li>
                 <li>dotNetInstaller: Added <code>/controlArgs "control id":"value"</code> to dotNetInstaller.exe
@@ -53,6 +53,8 @@
                 <li>Bug: combining #PATH variables produces inconsistent backslash count for different
                     path types, which causes component execution failure on Windows 95/98/ME.</li>
                 <li>Bug: component lcid filters broken.</li>
+                <li>Bug: product installed checks may produce Error in ::IIDFromString: The parameter
+                    is incorrect.</li>
             </ul>
         </li>
         <li><strong>Misc</strong>:

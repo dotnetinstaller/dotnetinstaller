@@ -679,9 +679,9 @@ private:
 
 		// Open for writing: The final CAB file(s)      and the temp files
 		// Open for reading: The files to be compressed and the temp files
-		BOOL b_Write = (pmode & _S_IWRITE);
 
 		#if _TraceCompress
+			BOOL b_Write = (pmode & _S_IWRITE);
 			CTrace::TraceW(L"> > > > FCIOpen (%s, %s) --> Handle= 0x%08X", (b_Write ? L"Write" : L"Read"), (WCHAR*)sw_File, fd);
 		#endif
 

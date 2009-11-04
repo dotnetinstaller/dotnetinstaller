@@ -17,6 +17,8 @@ void GuidUtilUnitTests::testguid2wstring()
 	{
 		L"{13709620-C279-11CE-A49E-444553540000}", { 0x13709620, 0xC279, 0x11CE, { 0xA4, 0x9E, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00 } }, // "Shell.Application.1"
 		L"{EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B}", { 0xEAB22AC3, 0x30C1, 0x11CF, { 0xA7, 0xEB, 0x00, 0x00, 0xC0, 0x5B, 0xAE, 0x0B } }, // "Shell.Explorer.1"
+		L"13709620-C279-11CE-A49E-444553540000", { 0x13709620, 0xC279, 0x11CE, { 0xA4, 0x9E, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00 } }, // "Shell.Application.1"
+		L"EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B", { 0xEAB22AC3, 0x30C1, 0x11CF, { 0xA7, 0xEB, 0x00, 0x00, 0xC0, 0x5B, 0xAE, 0x0B } }, // "Shell.Explorer.1"
 	};
 
 	for (int i = 0; i < ARRAYSIZE(data); i++)
@@ -25,7 +27,7 @@ void GuidUtilUnitTests::testguid2wstring()
 		
 		std::wstring wstring_fromguid2 = DVLib::guid2wstring(data[i].clsid);
 		std::string string_fromguid2 = DVLib::guid2string(data[i].clsid);
-		CPPUNIT_ASSERT(wstring_fromguid2 == data[i].pszGuid);
+		CPPUNIT_ASSERT(wstring_fromguid2 == DVLib::makeguid(data[i].pszGuid));
 		CPPUNIT_ASSERT(wstring_fromguid2 == DVLib::string2wstring(string_fromguid2));
 		CPPUNIT_ASSERT(DVLib::string2guid(data[i].pszGuid) == data[i].clsid);
 	}
@@ -44,7 +46,7 @@ void GuidUtilUnitTests::testisguid()
 		{ L"", false },
 		{ L"00000000", false },
 		{ L"abracadabra", false },
-		{ L"EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B", false },
+		{ L"EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B", true },
 		{ L"{13709620-C279-11CE-A49E-444553540000}", true },		
 	};
 
@@ -84,5 +86,35 @@ void GuidUtilUnitTests::testGenerateGUIDString()
 			CPPUNIT_ASSERT(::isalnum(wstring_guid[i]));
 			break;
 		}
+	}
+}
+
+void GuidUtilUnitTests::testmakeguid()
+{
+	typedef struct
+	{
+		LPCWSTR input;
+		LPCWSTR expected_output;
+	} TestData;
+
+	TestData data[] = 
+	{
+		{ L"", L"" },
+		{ L"a", L"{a}" },
+		{ L"{a", L"{a}" },
+		{ L"a}", L"{a}" },
+		{ L"{a}", L"{a}" },
+		{ L"{{a}}", L"{{a}}" },
+		{ L"abracadabra", L"{abracadabra}" },
+		{ L"EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B", L"{EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B}" },
+		{ L"{EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B", L"{EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B}" },
+		{ L"EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B}", L"{EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B}" },
+		{ L"{EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B}", L"{EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B}" },
+	};
+
+	for (int i = 0; i < ARRAYSIZE(data); i++)
+	{
+		std::wcout << std::endl << L"MakeGuid: " << data[i].input;
+		CPPUNIT_ASSERT(DVLib::makeguid(data[i].input) == data[i].expected_output);
 	}
 }
