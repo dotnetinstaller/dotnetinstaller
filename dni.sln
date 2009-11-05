@@ -80,6 +80,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 		Documentation\Content\ComponentsOpenFile.aml = Documentation\Content\ComponentsOpenFile.aml
 		Documentation\Content\ComponentsReboot.aml = Documentation\Content\ComponentsReboot.aml
 		Documentation\Content\ComponentsRequiredOptional.aml = Documentation\Content\ComponentsRequiredOptional.aml
+		Documentation\Content\ConfigurationAttributes.aml = Documentation\Content\ConfigurationAttributes.aml
 		Documentation\Content\Contributing.aml = Documentation\Content\Contributing.aml
 		Documentation\Content\Contributors.aml = Documentation\Content\Contributors.aml
 		Documentation\Content\DeploymentStrategies.aml = Documentation\Content\DeploymentStrategies.aml
@@ -113,10 +114,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{02C1E6
 	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Documentation\Images\dotNetInstaller.jpg = Documentation\Images\dotNetInstaller.jpg
+		Documentation\Images\dotNetInstallerConfigurationAttributes.jpg = Documentation\Images\dotNetInstallerConfigurationAttributes.jpg
 		Documentation\Images\dotNetInstallerLayout.jpg = Documentation\Images\dotNetInstallerLayout.jpg
 		Documentation\Images\dotNetInstallerLicenseAgreement.jpg = Documentation\Images\dotNetInstallerLicenseAgreement.jpg
 		Documentation\Images\dotNetInstallerSample.jpg = Documentation\Images\dotNetInstallerSample.jpg
+		Documentation\Images\dotNetInstallerUserControls.jpg = Documentation\Images\dotNetInstallerUserControls.jpg
 		Documentation\Images\InstallerEditor.jpg = Documentation\Images\InstallerEditor.jpg
+		Documentation\Images\InstallerEditorConfigurationAttributes.jpg = Documentation\Images\InstallerEditorConfigurationAttributes.jpg
+		Documentation\Images\LanguageSelector.jpg = Documentation\Images\LanguageSelector.jpg
 		Documentation\Images\StandaloneSetup.jpg = Documentation\Images\StandaloneSetup.jpg
 		Documentation\Images\WebSetup.jpg = Documentation\Images\WebSetup.jpg
 	EndProjectSection

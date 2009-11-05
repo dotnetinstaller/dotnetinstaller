@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="69e971da-2a98-4ec2-a8f2-4f1156a02875" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        dotNetInstaller supports rewriting file attributes such as binary versions, company name and copyright. These
+        attributes can be seen by hovering over a setup binary or by right-clicking on it and choosing the <ui>Details</ui> tab
+        under <ui>Properties</ui>.
+        <mediaLink>
+          <image xlink:href="dotNetInstallerConfigurationAttributes.jpg" />
+        </mediaLink>
+      </para>
+      <para>
+        Configuration attributes are editable under the <newTerm>File Attributes</newTerm> section of the
+        <newTerm>Config File</newTerm> in <newTerm>Installer Editor</newTerm>.
+        <mediaLink>
+          <image xlink:href="InstallerEditorConfigurationAttributes.jpg" />
+        </mediaLink>
+      </para>
+    </introduction>
+    <section address="osversioninfo">
+      <title>Operating System Attributes</title>
+      <content>
+        <para>
+          The configurable operating system attributes include the following language and code page independent fields.
+          <tableDefinition>
+            <definedTerm>fileversion</definedTerm>
+            <definition>File's binary version number.</definition>
+            <definedTerm>productversion</definedTerm>
+            <definition>Binary version number of the product with which this file was distributed.</definition>
+          </tableDefinition>
+        </para>
+      </content>
+    </section>
+    <section address="stringfilenfo">
+      <title>String Attributes</title>
+      <content>
+        <para>
+          The following attributes are reserved by the Windows shell. Their names are translated and presented in the language
+          of the operating system.
+          <tableDefinition>
+            <definedTerm>ProductName</definedTerm>
+            <definition>Product name.</definition>
+            <definedTerm>FileDescription</definedTerm>
+            <definition>File description.</definition>
+            <definedTerm>CompanyName</definedTerm>
+            <definition>Name of the manufacturer.</definition>
+            <definedTerm>LegalCopyright</definedTerm>
+            <definition>Copyright notice.</definition>
+          </tableDefinition>
+          You can also define additional attributes with the name of your choosing. These have no special meaning 
+          for the operating system and don't appear along the reserved attributes in the properties screens. They
+          are embedded with the executable and may be used by proprietary software.
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>
