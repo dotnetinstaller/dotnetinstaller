@@ -38,11 +38,11 @@ void MsiComponentUnitTests::testGetCommandLine()
 	{
 		{ SequenceInstall, L"test.msi", L"", L"", L"msiexec /i \"" + DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), L"test.msi") + L"\"" },
 		{ SequenceInstall, L"{3DE50841-856E-4640-ABF4-0FF31560AA81}", L"", L"", L"msiexec /i \"{3DE50841-856E-4640-ABF4-0FF31560AA81}\"" },
-		{ SequenceInstall, L"3DE50841-856E-4640-ABF4-0FF31560AA81", L"", L"", L"msiexec /i \"" + DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), L"3DE50841-856E-4640-ABF4-0FF31560AA81") + L"\"" },
+		{ SequenceInstall, L"3DE50841-856E-4640-ABF4-0FF31560AA81", L"", L"", L"msiexec /i \"3DE50841-856E-4640-ABF4-0FF31560AA81\"" },
 		{ SequenceInstall, L"C:\\test.msi", L"X=Y", L"", L"msiexec /i \"C:\\test.msi\" X=Y" },
 		{ SequenceUninstall, L"test.msi", L"", L"", L"msiexec /x \"" + DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), L"test.msi") + L"\"" },
 		{ SequenceUninstall, L"{3DE50841-856E-4640-ABF4-0FF31560AA81}", L"", L"", L"msiexec /x \"{3DE50841-856E-4640-ABF4-0FF31560AA81}\"" },
-		{ SequenceUninstall, L"3DE50841-856E-4640-ABF4-0FF31560AA81", L"", L"", L"msiexec /x \"" + DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), L"3DE50841-856E-4640-ABF4-0FF31560AA81") + L"\"" },
+		{ SequenceUninstall, L"3DE50841-856E-4640-ABF4-0FF31560AA81", L"", L"", L"msiexec /x \"3DE50841-856E-4640-ABF4-0FF31560AA81\"" },
 		{ SequenceUninstall, L"C:\\test.msi", L"X=Y", L"", L"msiexec /x \"C:\\test.msi\"" },
 		{ SequenceUninstall, L"C:\\test.msi", L"", L"X=Y", L"msiexec /x \"C:\\test.msi\" X=Y" },
 	};

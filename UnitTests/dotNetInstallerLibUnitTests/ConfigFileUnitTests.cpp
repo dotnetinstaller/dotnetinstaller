@@ -19,7 +19,7 @@ void ConfigFileUnitTests::testLoadPackagedSetup()
 	CPPUNIT_ASSERT(config.fileversion == L"1.0.0.1");
 	CPPUNIT_ASSERT(config.productversion == L"1.0.0.0");
 	// file attributes
-	CPPUNIT_ASSERT(config.fileattributes.size() == 1);
+	CPPUNIT_ASSERT(config.fileattributes.size() == 4);
 	CPPUNIT_ASSERT(config.fileattributes[L"FileDescription"]->name == L"FileDescription");
 	CPPUNIT_ASSERT(config.fileattributes[L"FileDescription"]->value == L"Standalone setup sample");
 	// configurations with components
@@ -168,7 +168,7 @@ void ConfigFileUnitTests::testLoadResource()
 	CPPUNIT_ASSERT(config.fileversion == L"1.0.0.1");
 	CPPUNIT_ASSERT(config.productversion == L"1.0.0.0");
 	// file attributes
-	CPPUNIT_ASSERT(config.fileattributes.size() == 1);
+	CPPUNIT_ASSERT(config.fileattributes.size() == 4);
 	CPPUNIT_ASSERT(config.fileattributes[L"FileDescription"]->name == L"FileDescription");
 	CPPUNIT_ASSERT(config.fileattributes[L"FileDescription"]->value == L"Standalone setup sample");
 	// configurations with components
