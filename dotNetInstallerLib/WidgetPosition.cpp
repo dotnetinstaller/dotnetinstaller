@@ -61,3 +61,12 @@ CRect WidgetPosition::ToRect() const
 	SIZE s = { Width(), Height() };
 	return CRect(p, s);
 }
+
+void WidgetPosition::FromRect(const RECT& rect)
+{
+	CRect cr(rect);
+	_left = cr.left;
+	_top = cr.top;
+	_height = cr.Height();
+	_width = cr.Width();
+}

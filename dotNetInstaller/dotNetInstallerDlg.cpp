@@ -1,6 +1,3 @@
-// dotNetInstallerDlg.cpp : file di implementazione
-//
-
 #include "stdafx.h"
 #include "dotNetInstaller.h"
 #include "dotNetInstallerDlg.h"
@@ -14,8 +11,6 @@
 #include "ControlValue.h"
 #include "SplashWnd.h"
 #include <Version/Version.h>
-
-// finestra di dialogo CdotNetInstallerDlg
 
 CdotNetInstallerDlg::CdotNetInstallerDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CdotNetInstallerDlg::IDD, pParent)
@@ -487,12 +482,15 @@ bool CdotNetInstallerDlg::MoveWindow(CWnd& dlg, const WidgetPosition& pos)
     WINDOWPLACEMENT wpc;
     dlg.GetWindowPlacement(& wpc);
 
-    if (pos.Left() != 0) wpc.rcNormalPosition.left = pos.Left();
-    if (pos.Width() != 0) wpc.rcNormalPosition.right = wpc.rcNormalPosition.left + pos.Width();
-    if (pos.Top() != 0) wpc.rcNormalPosition.top = pos.Top();
-    if (pos.Height() != 0) wpc.rcNormalPosition.bottom = wpc.rcNormalPosition.top + pos.Height();
+	WidgetPosition current;
+	current.FromRect(wpc.rcNormalPosition);
+    if (pos.Left() != 0) current.Left(pos.Left());
+    if (pos.Width() != 0) current.Width(pos.Width());
+    if (pos.Top() != 0) current.Top(pos.Top());
+    if (pos.Height() != 0) current.Height(pos.Height());
 
-    // move the window to a combination of old and new coordinates
+	// move the window to a combination of old and new coordinates
+ 	wpc.rcNormalPosition = current.ToRect();
     dlg.SetWindowPlacement(& wpc);
     return true;
 }

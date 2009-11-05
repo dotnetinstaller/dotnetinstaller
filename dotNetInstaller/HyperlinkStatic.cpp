@@ -51,7 +51,7 @@ void CHyperlinkStatic::SetHyperlink(std::wstring strHyperlink)
 void CHyperlinkStatic::SetCaption(std::wstring strCaption)
 {
 	_strCaption = strCaption.c_str();
-	_bGetCaptionSize == false;
+	_bGetCaptionSize = false;
 }
 
 void CHyperlinkStatic::OnLButtonDown(UINT nFlags, CPoint point) 
@@ -164,5 +164,5 @@ void CHyperlinkStatic::GetCaptionSize()
 
 bool CHyperlinkStatic::InCaptionRange(CPoint &point)
 {
-	return _captionRect.PtInRect(point);
+	return _captionRect.PtInRect(point) ? true : false;
 }
