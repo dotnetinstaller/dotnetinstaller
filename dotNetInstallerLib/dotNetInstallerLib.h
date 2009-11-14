@@ -27,6 +27,7 @@
 #include "FileAttribute.h"
 #include "Schema.h"
 #include "EmbedFile.h"
+#include "EmbedFolder.h"
 #include "FileAttributes.h"
 #include "ReferenceConfiguration.h"
 #include "InstallerSession.h"

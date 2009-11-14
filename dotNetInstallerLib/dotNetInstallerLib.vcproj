@@ -219,6 +219,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\EmbedFolder.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ExtractComponent.cpp"
 				>
 			</File>
@@ -414,6 +418,10 @@
 			</File>
 			<File
 				RelativePath=".\EmbedFile.h"
+				>
+			</File>
+			<File
+				RelativePath=".\EmbedFolder.h"
 				>
 			</File>
 			<File

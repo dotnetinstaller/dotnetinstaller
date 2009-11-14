@@ -2,6 +2,7 @@
 
 #include "DownloadDialog.h"
 #include "EmbedFile.h"
+#include "EmbedFolder.h"
 #include "InstalledCheck.h"
 
 enum component_type
@@ -59,6 +60,8 @@ public:
 	DownloadDialogPtr downloaddialog;
 	// embedded files
 	std::vector< EmbedFilePtr > embedfiles;
+	// embedded folders
+	std::vector< EmbedFolderPtr > embedfolders;
 	// supports install
 	bool supports_install;
 	// supports uninstall

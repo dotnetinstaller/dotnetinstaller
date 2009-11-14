@@ -89,6 +89,12 @@ void Component::Load(TiXmlElement * node)
 			embedfile->Load(child_element);
 			embedfiles.push_back(embedfile);			
 		}
+		else if (strcmp(child_element->Value(), "embedfolder") == 0)
+		{
+			EmbedFolderPtr embedfolder(new EmbedFolder());
+			embedfolder->Load(child_element);
+			embedfolders.push_back(embedfolder);			
+		}
 		else if (strcmp(child_element->Value(), "downloaddialog") == 0)
 		{
 			auto_any<DownloadDialog *, close_delete> newdownloaddialog(new DownloadDialog());

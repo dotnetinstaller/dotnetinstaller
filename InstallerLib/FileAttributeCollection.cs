@@ -34,7 +34,7 @@ namespace InstallerLib
                         Add(l_FileAttribute);
                         break;
                     default:
-                        throw new Exception(string.Format("Invalid node: {0}", child.LocalName));
+                        throw new Exception(string.Format("Unexpected node: {0}", child.LocalName));
                 }
             }
         }

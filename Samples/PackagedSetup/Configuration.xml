@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--Packaged setup demo that embeds an MSI component.-->
 <configurations lcid_type="UserExe" show_language_selector="False" language_selector_title="" language_selector_ok="OK" language_selector_cancel="Cancel" configuration_no_match_message="" ui_level="full" fileversion="1.0.0.1" productversion="1.0.0.0" log_enabled="True" log_file="#TEMPPATH\#GUID.log ">
-  <schema version="1.8.4333.0" generator="dotNetInstaller InstallerEditor" />
+  <schema version="1.8.4346.0" generator="dotNetInstaller InstallerEditor" />
   <fileattributes>
     <fileattribute name="FileDescription" value="Standalone setup sample" />
     <fileattribute name="CompanyName" value="DevAge, Vestris Inc. &amp; Contrbutors (Thank You)" />
@@ -14,6 +14,7 @@
     <component package="#CABPATH\Simple\Simple.msi" cmdparameters="" cmdparameters_silent="/qn" cmdparameters_basic="/qb-" uninstall_cmdparameters="/qb-" uninstall_cmdparameters_silent="/qn" uninstall_cmdparameters_basic="/qb-" os_filter_greater="" os_filter_smaller="" os_filter_lcid="" type="msi" installcompletemessage="" uninstallcompletemessage="" mustreboot="False" reboot_required="" must_reboot_required="False" failed_exec_command_continue="" allow_continue_on_error="False" required="True" description="Simple.msi" note="" processor_architecture_filter="" status_installed="" status_notinstalled="" supports_install="True" supports_uninstall="True">
       <installedcheck path="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{89DD6045-A45B-4ED4-9C06-E93316D52A1D}" fieldname="Version" fieldvalue="1" fieldtype="REG_DWORD" comparison="exists" rootkey="HKEY_LOCAL_MACHINE" wowoption="NONE" type="check_registry_value" description="Installed Check" />
       <embedfile sourcefilepath="#APPPATH\Simple\Simple.msi" targetfilepath="Simple\Simple.msi" />
+      <embedfolder sourcefolderpath="#APPPATH\Simple" targetfolderpath="SimpleComponentPackagedFolder" />
     </component>
     <!--An automatically embedded Readme.txt file.-->
     <embedfile sourcefilepath="#APPPATH\Readme.txt" targetfilepath="" />
