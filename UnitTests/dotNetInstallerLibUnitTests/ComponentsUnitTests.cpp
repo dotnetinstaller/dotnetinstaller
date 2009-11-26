@@ -10,14 +10,14 @@ void ComponentsUnitTests::testAdd()
 {
 	Components components;
 	ComponentPtr component1(new CmdComponent());
-	component1->description = DVLib::GenerateGUIDStringW();
+	component1->id = DVLib::GenerateGUIDStringW();
 	ComponentPtr component2(new CmdComponent());
-	component2->description = DVLib::GenerateGUIDStringW();
+	component2->id = DVLib::GenerateGUIDStringW();
 	components.add(component1);
 	components.add(component2);
 	CPPUNIT_ASSERT(components.size() == 2);
-	CPPUNIT_ASSERT(components.contains(component1->description));
-	CPPUNIT_ASSERT(components.contains(component2->description));
+	CPPUNIT_ASSERT(components.contains(component1->id));
+	CPPUNIT_ASSERT(components.contains(component2->id));
 	CPPUNIT_ASSERT(! components.contains(DVLib::GenerateGUIDStringW()));
 }
 
@@ -71,8 +71,8 @@ void ComponentsUnitTests::testExecNoCallback()
 {
 	Components components;
 	CmdComponent * component1 = new CmdComponent();
-	component1->description = DVLib::GenerateGUIDStringW();
-	std::wstring check_file = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), component1->description);
+	component1->id = DVLib::GenerateGUIDStringW();
+	std::wstring check_file = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), component1->id);
 	CPPUNIT_ASSERT(! DVLib::FileExists(check_file));
 	component1->command = L"cmd.exe /C dir > \"" + check_file + L"\"";
 	components.add(ComponentPtr(component1));
@@ -85,8 +85,8 @@ void ComponentsUnitTests::testExecWithCallback()
 {
 	Components components;
 	CmdComponent * component1 = new CmdComponent();
-	component1->description = DVLib::GenerateGUIDStringW();
-	std::wstring check_file = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), component1->description);
+	component1->id = DVLib::GenerateGUIDStringW();
+	std::wstring check_file = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), component1->id);
 	CPPUNIT_ASSERT(! DVLib::FileExists(check_file));
 	component1->command = L"cmd.exe /C dir > \"" + check_file + L"\"";
 	components.add(ComponentPtr(component1));
@@ -104,7 +104,7 @@ void ComponentsUnitTests::testExecWithError()
 {
 	Components components;
 	CmdComponent * component1 = new CmdComponent();
-	component1->description = DVLib::GenerateGUIDStringW();
+	component1->id = DVLib::GenerateGUIDStringW();
 	component1->command = L"foobar.exe";
 	components.add(ComponentPtr(component1));
 	ExecuteComponentCallbackImpl callback;

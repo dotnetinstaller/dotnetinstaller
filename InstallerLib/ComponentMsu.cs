@@ -11,7 +11,7 @@ namespace InstallerLib
     public class ComponentMsu : Component
     {
         public ComponentMsu()
-            : base("msu")
+            : base("msu", "mysetup.msu")
         {
             m_package = "#APPPATH\\mysetup.msu";
             os_filter_greater = "99";

@@ -9,12 +9,7 @@ namespace InstallerLib
     public class ComponentCmd : Component
     {
         public ComponentCmd()
-            : this("COMPONENT_NAME")
-        {
-        }
-
-        public ComponentCmd(string p_ComponentName)
-            : base("cmd", p_ComponentName)
+            : base("cmd", "command1")
         {
             m_command = "cmd.exe /C \"#APPPATH\\mysetup.exe\"";
         }

@@ -38,12 +38,11 @@ void MsuComponent::Exec()
 		l_command.append(l_cmdparameters);
 	}
 	
-	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::Instance->AdditionalCmdLineArgs.find(description);
-    if (cmdline != InstallerSession::Instance->AdditionalCmdLineArgs.end())
+	std::wstring additional_cmd = GetAdditionalCmd();
+	if (! additional_cmd.empty())
     {
-		LOG(L"-- Additional component arguments: " << cmdline->second);
 		l_command.append(L" ");
-		l_command.append(cmdline->second);
+		l_command.append(additional_cmd);
     }
 
 	l_command = InstallerSession::Instance->ExpandUserVariables(l_command);
@@ -59,7 +58,6 @@ void MsuComponent::Load(TiXmlElement * node)
 	cmdparameters_silent = XML_ATTRIBUTE(node->Attribute("cmdparameters_silent"));
 	cmdparameters_basic = XML_ATTRIBUTE(node->Attribute("cmdparameters_basic"));
 	Component::Load(node);
-	LOG(L"Loaded 'msu' component '" << package << L"'");
 }
 
 void MsuComponent::Wait(DWORD tt)
@@ -67,5 +65,5 @@ void MsuComponent::Wait(DWORD tt)
 	ProcessComponent::Wait(tt);
 
 	CHECK_WIN32_DWORD(ProcessComponent::GetProcessExitCode(),
-		L"Error executing '" << description << "'");
+		L"Error executing '" << id << L" (" << display_name << ")'");
 }

@@ -14,7 +14,6 @@ void ControlHyperlink::Load(TiXmlElement * node)
 {
 	uri = XML_ATTRIBUTE(node->Attribute("uri"));
 	ControlText::Load(node);
-	LOG(L"Loaded " << GetString());
 }
 
 std::wstring ControlHyperlink::GetString() const

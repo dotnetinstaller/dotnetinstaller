@@ -5,10 +5,10 @@
 #include "DownloadDialog.h"
 #include "InstallerLog.h"
 
-DownloadDialog::DownloadDialog(const std::wstring& name)
+DownloadDialog::DownloadDialog(const std::wstring& id)
 	: auto_start(true)
 	, callback(NULL)
-	, component_name(name)
+	, component_id(id)
 {
 
 }

@@ -28,7 +28,6 @@ void OpenFileComponent::Load(TiXmlElement * node)
 {
 	file = XML_ATTRIBUTE(node->Attribute("file"));
 	Component::Load(node);
-	LOG(L"Loaded 'openfile' component '" << file << L"'");
 }
 
 int OpenFileComponent::GetExitCode() const

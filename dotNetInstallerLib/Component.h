@@ -22,8 +22,10 @@ public:
 public:
 	// component type: cmd, msi, openfile
 	component_type type;
-	// component description
-	std::wstring description;
+	// component id
+	std::wstring id;
+	// component display name
+	std::wstring display_name;
 	// component status when installed
 	std::wstring status_installed;
 	// component status when not installed
@@ -80,6 +82,7 @@ public:
 	virtual bool IsSupported(LCID lcid) const;
 	virtual int GetExitCode() const = 0;
 	virtual std::wstring GetString(int indent = 0) const;
+	std::wstring GetAdditionalCmd() const;
 };
 
 typedef shared_any<Component *, close_delete> ComponentPtr;

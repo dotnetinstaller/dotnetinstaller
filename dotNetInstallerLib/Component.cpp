@@ -9,6 +9,7 @@
 #include "InstalledCheckOperator.h"
 #include "InstalledCheckProduct.h"
 #include "EmbedFile.h"
+#include "InstallerLog.h"
 
 Component::Component(component_type t)
 	: type(t)
@@ -45,7 +46,8 @@ bool Component::IsInstalled() const
 
 void Component::Load(TiXmlElement * node)
 {
-	description = XML_ATTRIBUTE(node->Attribute("description"));
+	id = XML_ATTRIBUTE(node->Attribute("id"));
+	display_name = XML_ATTRIBUTE(node->Attribute("display_name"));
 	status_installed = XML_ATTRIBUTE(node->Attribute("status_installed"));
 	os_filter_greater = XML_ATTRIBUTE(node->Attribute("os_filter_greater"));
 	os_filter_smaller = XML_ATTRIBUTE(node->Attribute("os_filter_smaller"));
@@ -97,7 +99,7 @@ void Component::Load(TiXmlElement * node)
 		}
 		else if (strcmp(child_element->Value(), "downloaddialog") == 0)
 		{
-			auto_any<DownloadDialog *, close_delete> newdownloaddialog(new DownloadDialog(description));
+			auto_any<DownloadDialog *, close_delete> newdownloaddialog(new DownloadDialog(id));
 			newdownloaddialog->Load(child_element);
 			downloaddialog = newdownloaddialog;
 		}
@@ -106,6 +108,8 @@ void Component::Load(TiXmlElement * node)
 			THROW_EX(L"Unexpected node '" << child_element->Value() << L"'");
 		}
 	}
+
+	LOG(L"Loaded " << GetString());
 }
 
 void Component::Wait(DWORD tt)
@@ -128,7 +132,7 @@ std::wstring Component::GetString(int indent) const
 {
 	std::wstringstream ss;
 	for (int i = 0; i < indent; i++) ss << L" ";
-	ss << description;
+	ss << id << L", display_name='" << display_name << L"'";
 	if (! os_filter_lcid.empty())
 		ss << L", lang=" << os_filter_lcid;
 	if (! processor_architecture_filter.empty()) 
@@ -141,4 +145,21 @@ std::wstring Component::GetString(int indent) const
 bool Component::IsRebootRequired() const
 {
 	return mustreboot;
+}
+
+std::wstring Component::GetAdditionalCmd() const
+{
+	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::Instance->AdditionalCmdLineArgs.find(id);
+    if (cmdline == InstallerSession::Instance->AdditionalCmdLineArgs.end())
+	{
+		cmdline = InstallerSession::Instance->AdditionalCmdLineArgs.find(display_name);
+	}
+
+    if (cmdline != InstallerSession::Instance->AdditionalCmdLineArgs.end())
+    {
+		LOG(L"-- Additional component '" << id << L"' arguments: " << cmdline->second);
+		return cmdline->second;
+    }
+
+	return L"";
 }

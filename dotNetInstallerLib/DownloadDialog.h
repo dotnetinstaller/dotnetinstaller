@@ -12,7 +12,7 @@ public:
 	// download window caption
 	std::wstring caption;
 	// component name
-	std::wstring component_name;
+	std::wstring component_id;
 	// help message
 	std::wstring help_message;
 	// progress messages

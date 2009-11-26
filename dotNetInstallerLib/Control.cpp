@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "XmlAttribute.h"
 #include "Control.h"
+#include "InstallerLog.h"
 
 Control::Control(control_type t)
 	: type(t)
@@ -18,6 +19,7 @@ void Control::Load(TiXmlElement * node)
 	enabled = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("enabled")));
 	display_install = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("display_install")));
 	display_uninstall = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("display_uninstall")));
+	LOG(L"Loaded " << GetString());
 }
 
 std::wstring Control::GetString() const

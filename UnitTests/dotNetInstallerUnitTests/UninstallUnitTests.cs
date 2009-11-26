@@ -106,7 +106,7 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(setupConfiguration);
             ComponentCmd cmd = new ComponentCmd();
             setupConfiguration.Children.Add(cmd);
-            cmd.description = "cmd1";
+            cmd.id = "cmd1";
             cmd.command = "cmd.exe /C exit /b 1"; // would fail if ran
             cmd.uninstall_command = "cmd.exe /C exit /b 0";
             cmd.supports_install = true;
@@ -118,7 +118,7 @@ namespace dotNetInstallerUnitTests
             // a second component that doesn't support uninstall
             ComponentCmd cmd2 = new ComponentCmd();
             setupConfiguration.Children.Add(cmd2);
-            cmd2.description = "cmd2";
+            cmd2.id = "cmd2";
             cmd2.command = "cmd.exe /C exit /b 1"; // would fail if ran
             cmd2.uninstall_command = "cmd.exe /C exit /b 1"; // would fail if ran
             cmd2.supports_install = true;

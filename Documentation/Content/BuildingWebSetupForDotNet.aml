@@ -104,9 +104,10 @@
         <step>
           <content>
             <para>
-              Select the newly created node and customize the <ui>description</ui> and <ui>package</ui> properties
-              with the name of your setup and msi package name. Replace the <localUri>#APPPATH\mysetup.msi</localUri>
-              with <localUri>#TEMPPATH\MyApplicationName\mysetup.msi</localUri>, this is download destination of the package.
+              Select the newly created node and customize the <literal>id</literal>, <literal>display_name</literal> and 
+              <literal>package</literal> properties with the name of your setup and msi package name. Replace the 
+              <localUri>#APPPATH\mysetup.msi</localUri> with <localUri>#TEMPPATH\MyApplicationName\mysetup.msi</localUri>,
+              this is download destination of the package.
             </para>
           </content>
         </step>

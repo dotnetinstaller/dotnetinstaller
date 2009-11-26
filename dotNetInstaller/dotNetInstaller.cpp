@@ -128,8 +128,8 @@ void CdotNetInstallerApp::DisplayHelp()
 	hs << L" /ExtractCab: extract embedded components" << std::endl;
 	hs << L" /DisplayCab: display a list of embedded components" << std::endl;
 	hs << L" /DisplayConfig: display a list of configurations" << std::endl;
-	hs << L" /ComponentArgs [\"name\":\"value\" ...] : additional component args" << std::endl;
-	hs << L" /ControlArgs [\"name\":\"value\" ...] : additional control values" << std::endl;
+	hs << L" /ComponentArgs [\"id|display_name\":\"value\" ...] : additional component args" << std::endl;
+	hs << L" /ControlArgs [\"id\":\"value\" ...] : additional control values" << std::endl;
 	hs << L" /CompleteCommandArgs [args] : additional complete command" << std::endl;
 	hs << L" /Launcher [path] : alternate launcher on reboot" << std::endl;
 	hs << L" /LauncherArgs [args] : additional launcher args on reboot" << std::endl;

@@ -44,12 +44,11 @@ std::wstring MsiComponent::GetCommandLine() const
 		l_command.append(l_cmdparameters);
 	}
 	
-	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::Instance->AdditionalCmdLineArgs.find(description);
-    if (cmdline != InstallerSession::Instance->AdditionalCmdLineArgs.end())
+	std::wstring additional_cmd = GetAdditionalCmd();
+	if (! additional_cmd.empty())
     {
-		LOG(L"-- Additional component arguments: " << cmdline->second);
 		l_command.append(L" ");
-		l_command.append(cmdline->second);
+		l_command.append(additional_cmd);
     }
 
 	l_command = InstallerSession::Instance->ExpandUserVariables(l_command);
@@ -71,7 +70,6 @@ void MsiComponent::Load(TiXmlElement * node)
 	cmdparameters_silent = XML_ATTRIBUTE(node->Attribute("cmdparameters_silent"));
 	cmdparameters_basic = XML_ATTRIBUTE(node->Attribute("cmdparameters_basic"));
 	Component::Load(node);
-	LOG(L"Loaded 'msi' component '" << package << L"'");
 }
 
 void MsiComponent::Wait(DWORD tt)
@@ -82,7 +80,7 @@ void MsiComponent::Wait(DWORD tt)
 
 	// a non-zero error code represents failure
 	CHECK_BOOL(exitcode == ERROR_SUCCESS || exitcode == ERROR_SUCCESS_REBOOT_REQUIRED,
-		L"Error executing '" << description << "': " << DVLib::FormatMessage(L"0x%x", exitcode));
+		L"Error executing '" << id << "' (" << display_name << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
 }
 
 bool MsiComponent::IsRebootRequired() const

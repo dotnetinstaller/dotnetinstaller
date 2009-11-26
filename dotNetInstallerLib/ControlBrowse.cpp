@@ -20,7 +20,6 @@ void ControlBrowse::Load(TiXmlElement * node)
 	hide_readonly = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("hide_readonly")));
 	allow_edit = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("allow_edit")));
 	ControlText::Load(node);
-	LOG(L"Loaded " << GetString());
 }
 
 std::wstring ControlBrowse::GetString() const

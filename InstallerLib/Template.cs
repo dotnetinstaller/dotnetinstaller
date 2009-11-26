@@ -190,19 +190,17 @@ namespace InstallerLib
             private const string c_COMPONENT_NAME = "##COMPONENT_NAME";
 
             private Template m_tpl;
-            private string m_ComponentName;
+            private string m_component_name;
+
             public Template_component(Template template, string componentName)
             {
                 m_tpl = template;
-                m_ComponentName = componentName;
+                m_component_name = componentName;
             }
-            public string description
+
+            public string display_name
             {
-                get { return m_tpl.GetAttribute("component/@description").Replace(c_COMPONENT_NAME, m_ComponentName); }
-            }
-            public string installcompletemessage
-            {
-                get { return m_tpl.GetAttribute("component/@installcompletemessage").Replace(c_COMPONENT_NAME, m_ComponentName); }
+                get { return m_tpl.GetAttribute("component/@display_name").Replace(c_COMPONENT_NAME, m_component_name); }
             }
         }
 

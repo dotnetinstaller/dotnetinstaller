@@ -50,6 +50,7 @@
     <Compile Include="CabUnitTests.cs" />
     <Compile Include="CommandLineParametersUnitTests.cs" />
     <Compile Include="CompleteCommandUnitTests.cs" />
+    <Compile Include="ComponentArgsUnitTests.cs" />
     <Compile Include="ConfigurationUnitTests.cs" />
     <Compile Include="DownloadComponentsUnitTests.cs" />
     <Compile Include="LanguageUnitTests.cs" />

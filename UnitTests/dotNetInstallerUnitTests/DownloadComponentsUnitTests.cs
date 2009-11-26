@@ -20,11 +20,11 @@ namespace dotNetInstallerUnitTests
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
-            ComponentCmd component1 = new ComponentCmd("component1");
+            ComponentCmd component1 = new ComponentCmd();
             setupConfiguration.Children.Add(component1);
             component1.command = "cmd.exe /C exit /b 0";
             DownloadDialog component1downloaddialog = new DownloadDialog(
-                string.Format("{0} Download Dialog", component1.description));
+                string.Format("{0} Download Dialog", component1.id));
             component1.Children.Add(component1downloaddialog);
             Download component1download1 = new Download();
             component1download1.componentname = "download 1";
@@ -58,11 +58,11 @@ namespace dotNetInstallerUnitTests
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
-            ComponentCmd cmd = new ComponentCmd("cmd");
+            ComponentCmd cmd = new ComponentCmd();
             setupConfiguration.Children.Add(cmd);
             cmd.command = "cmd.exe /C exit /b 0";
             DownloadDialog cmddownloaddialog = new DownloadDialog(
-                string.Format("{0} Download Dialog", cmd.description));
+                string.Format("{0} Download Dialog", cmd.id));
             cmd.Children.Add(cmddownloaddialog);
             cmddownloaddialog.autostartdownload = false;
             Download download = new Download();

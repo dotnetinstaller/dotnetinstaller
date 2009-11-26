@@ -75,21 +75,22 @@
             <definition>
               Display the complete list of configurations and components without checking processor architecture or lcid.
             </definition>
-            <definedTerm>/ComponentArgs "description":"value"</definedTerm>
+            <definedTerm>/ComponentArgs "id|display_name":"value"</definedTerm>
             <definition>
               <para>
                 Additional component parameters. This enables passing additional command-line arguments to specific components.
                 The value is appended to both non-silent and silent command lines of <literal>msi</literal> and <literal>cmd</literal>
-                type components. The component description must match exactly the one in the configuration.xml.
+                type components. The component <literal>id</literal> or <literal>display_name</literal> must match exactly the one
+                in the configuration.xml. Component <literal>id</literal> is matched first.
               </para>
               <alert class="note">
                 <para>
-                  Note that if multiple components are declared with the same description the command applies to all.
+                  Note that if multiple components are declared with the same id the command applies to all.
                   Component arguments applied to components that don't exist are ignored.
                 </para>
               </alert>
             </definition>
-            <definedTerm>/ControlArgs "description":"value"</definedTerm>
+            <definedTerm>/ControlArgs "id":"value"</definedTerm>
             <definition>
               <para>
                 Additional user-defined control parameters. This enables overriding user control values.

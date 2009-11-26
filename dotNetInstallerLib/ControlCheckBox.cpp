@@ -17,7 +17,6 @@ void ControlCheckBox::Load(TiXmlElement * node)
 	checked_value = XML_ATTRIBUTE(node->Attribute("checked_value"));
 	unchecked_value = XML_ATTRIBUTE(node->Attribute("unchecked_value"));
 	ControlText::Load(node);
-	LOG(L"Loaded " << GetString());
 }
 
 std::wstring ControlCheckBox::GetString() const

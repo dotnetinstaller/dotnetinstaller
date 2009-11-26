@@ -42,8 +42,7 @@ There are three types of variables:
 	
 	<!-- Available variables: ##COMPONENT_NAME -->	
 	<component
-		description = "##COMPONENT_NAME"
-		installcompletemessage = ""
+		display_name = "##COMPONENT_NAME"
 		>
 	</component>
 

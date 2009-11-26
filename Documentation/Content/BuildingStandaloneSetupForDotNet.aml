@@ -106,7 +106,7 @@
           <content>
             <para>
               Right click on the <literal>install:</literal> node and select <ui>Add</ui>, <ui>Msi Component</ui>.
-              Select the just created node and customize the properties <literal>description</literal> and
+              Select the just created node and customize the properties <literal>id</literal>, <literal>display_name</literal> and
               <literal>package</literal> with the name of your setup and msi package name. In the package path use
               #APPPATH variable that represents the dotNetInstaller.exe path.
             </para>

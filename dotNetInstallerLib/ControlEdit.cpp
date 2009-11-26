@@ -14,7 +14,6 @@ void ControlEdit::Load(TiXmlElement * node)
 {
 	id = DVLib::UTF8string2wstring(node->Attribute("id"));
 	ControlText::Load(node);
-	LOG(L"Loaded " << GetString());
 }
 
 std::wstring ControlEdit::GetString() const

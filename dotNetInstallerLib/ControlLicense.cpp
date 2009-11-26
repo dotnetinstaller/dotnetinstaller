@@ -17,7 +17,6 @@ void ControlLicense::Load(TiXmlElement * node)
 	accept_message = XML_ATTRIBUTE(node->Attribute("accept_message"));
 	accepted = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("accepted")));
 	ControlText::Load(node);
-	LOG(L"Loaded " << GetString());
 }
 
 std::wstring ControlLicense::GetString() const

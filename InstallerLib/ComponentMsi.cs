@@ -11,7 +11,7 @@ namespace InstallerLib
     public class ComponentMsi : Component
     {
         public ComponentMsi()
-            : base("msi")
+            : base("msi", "mysetup.msi")
         {
             m_package = "#APPPATH\\mysetup.msi";
             supports_uninstall = true;

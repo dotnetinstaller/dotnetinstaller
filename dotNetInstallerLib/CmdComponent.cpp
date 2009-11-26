@@ -28,12 +28,11 @@ void CmdComponent::Exec()
 		THROW_EX(L"Unsupported install sequence: " << InstallerSession::Instance->sequence << L".");
 	}
 	
-	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::Instance->AdditionalCmdLineArgs.find(description);
-    if (cmdline != InstallerSession::Instance->AdditionalCmdLineArgs.end())
+	std::wstring additional_cmd = GetAdditionalCmd();
+	if (! additional_cmd.empty())
     {
 		l_command += TEXT(" ");
-		l_command += cmdline->second.c_str();
-		LOG(L"-- Additional component arguments: " << cmdline->second);
+		l_command += additional_cmd;
     }
 
 	l_command = InstallerSession::Instance->ExpandUserVariables(l_command);
@@ -53,7 +52,6 @@ void CmdComponent::Load(TiXmlElement * node)
 	returncodes_reboot = XML_ATTRIBUTE(node->Attribute("returncodes_reboot"));
 	returncodes_failure = XML_ATTRIBUTE(node->Attribute("returncodes_failure"));
 	Component::Load(node);
-	LOG(L"Loaded 'cmd' component '" << description << L"'");
 }
 
 void CmdComponent::Wait(DWORD tt)
@@ -63,7 +61,7 @@ void CmdComponent::Wait(DWORD tt)
 	DWORD exitcode = ProcessComponent::GetProcessExitCode();
 
 	CHECK_BOOL(! IsReturnCodeFailure(exitcode) || IsReturnCodeReboot(exitcode),
-		L"Error executing '" << description << "': " << DVLib::FormatMessage(L"0x%x", exitcode));
+		L"Error executing '" << id << "' (" << display_name << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
 }
 
 

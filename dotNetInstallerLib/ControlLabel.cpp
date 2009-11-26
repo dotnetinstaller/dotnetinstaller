@@ -13,7 +13,6 @@ ControlLabel::ControlLabel()
 void ControlLabel::Load(TiXmlElement * node)
 {
 	ControlText::Load(node);
-	LOG(L"Loaded " << GetString());
 }
 
 std::wstring ControlLabel::GetString() const

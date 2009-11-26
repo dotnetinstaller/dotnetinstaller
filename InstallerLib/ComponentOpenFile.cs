@@ -10,7 +10,7 @@ namespace InstallerLib
     public class ComponentOpenFile : Component
     {
         public ComponentOpenFile()
-            : base("openfile")
+            : base("openfile", "file1")
         {
             supports_uninstall = false;
         }

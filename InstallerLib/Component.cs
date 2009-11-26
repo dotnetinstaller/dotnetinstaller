@@ -18,26 +18,11 @@ namespace InstallerLib
     [XmlChild(typeof(EmbedFolder))]
     public abstract class Component : XmlClass
     {
-        public Component(string type)
-            : this(type, "COMPONENT_NAME")
-        {
-
-        }
-
         public Component(string type, string name)
         {
             m_type = type;
-
-            m_mustreboot = false;
-            m_required = true;
-            m_os_filter_greater = "";
-            m_os_filter_lcid = "";
-            m_os_filter_smaller = "";
-
             Template.Template_component tpl = Template.CurrentTemplate.component(name);
-
-            m_description = tpl.description;
-            m_installcompletemessage = tpl.installcompletemessage;
+            m_display_name = tpl.display_name;
         }
 
         #region Attributes
@@ -138,20 +123,31 @@ namespace InstallerLib
             set { m_allow_continue_on_error = value; }
         }
 
+        private string m_id;
+        [Description("Component identity. This value should be unique. (REQUIRED)")]
+        [Category("Component")]
+        public string id
+        {
+            get { return m_id; }
+            set { m_id = value; OnIdChanged(); }
+        }
+
+        private string m_display_name;
+        [Description("Display name of this component. This value is used also in some message to replace the %s string. (REQUIRED)")]
+        [Category("Component")]
+        public string display_name
+        {
+            get { return m_display_name; }
+            set { m_display_name = value; OnDisplayNameChanged(); }
+        }
+
         private bool m_required = false;
         [Description("Indicates whether the component is required for a successful installation or uninstallation. (REQUIRED)")]
+        [Category("Component")]
         public bool required
         {
             get { return m_required; }
             set { m_required = value; }
-        }
-
-        private string m_description;
-        [Description("Description of this component. This value is used also in some message to replace the %s string. (REQUIRED)")]
-        public string description
-        {
-            get { return m_description; }
-            set { m_description = value; OnDescriptionChanged(); }
         }
 
         private string m_note;
@@ -207,14 +203,30 @@ namespace InstallerLib
         }
 
         #endregion
-        
-        protected void OnDescriptionChanged()
+
+        #region Events
+
+        protected void OnDisplayNameChanged()
         {
-            if (DescriptionChanged != null)
-                DescriptionChanged(this, EventArgs.Empty);
+            if (DisplayNameChanged != null)
+            {
+                DisplayNameChanged(this, EventArgs.Empty);
+            }
         }
 
-        public event EventHandler DescriptionChanged;
+        public event EventHandler DisplayNameChanged;
+
+        protected void OnIdChanged()
+        {
+            if (IdChanged != null)
+            {
+                IdChanged(this, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler IdChanged;
+
+        #endregion
 
         #region XmlClass Members
 
@@ -227,6 +239,8 @@ namespace InstallerLib
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
+            e.XmlWriter.WriteAttributeString("id", m_id);
+            e.XmlWriter.WriteAttributeString("display_name", m_display_name);
             e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
             e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
             e.XmlWriter.WriteAttributeString("os_filter_lcid", m_os_filter_lcid);
@@ -239,7 +253,6 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("failed_exec_command_continue", m_failed_exec_command_continue);            
             e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
             e.XmlWriter.WriteAttributeString("required", m_required.ToString());
-            e.XmlWriter.WriteAttributeString("description", m_description);
             e.XmlWriter.WriteAttributeString("note", m_note);
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
             e.XmlWriter.WriteAttributeString("status_installed", m_status_installed);
@@ -251,7 +264,11 @@ namespace InstallerLib
 
         protected override void OnXmlReadTag(XmlElementEventArgs e)
         {
-            ReadAttributeValue(e, "description", ref m_description);
+            // backwards compatible description < 1.8
+            ReadAttributeValue(e, "description", ref m_display_name);
+            ReadAttributeValue(e, "display_name", ref m_display_name);
+            ReadAttributeValue(e, "id", ref m_id);
+            if (string.IsNullOrEmpty(m_id)) m_id = m_display_name;
             ReadAttributeValue(e, "installcompletemessage", ref m_installcompletemessage);
             ReadAttributeValue(e, "uninstallcompletemessage", ref m_uninstallcompletemessage);
             ReadAttributeValue(e, "mustreboot", ref m_mustreboot);
