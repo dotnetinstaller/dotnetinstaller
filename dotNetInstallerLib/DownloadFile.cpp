@@ -239,10 +239,22 @@ void DownloadFile::Exec(IDownloadCallback * cb)
 
 	if (IsCopyRequired())
 	{
+		if (cb != NULL)
+		{
+			// notify callback of file copy
+			cb->CopyingFile();
+		}
+
 		CopyFromSourcePath();
 	}
 	else if (IsDownloadRequired())
 	{
+		if (cb != NULL)
+		{
+			// notify callback of download
+			cb->DownloadingFile();
+		}
+
 		DownloadFromSourceUrl();
 	}
 }

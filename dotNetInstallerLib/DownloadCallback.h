@@ -3,6 +3,8 @@
 class IDownloadCallback
 {
 public:
+	virtual void DownloadingFile() = 0;
+	virtual void CopyingFile() = 0;
 	virtual void Connecting() = 0;
 	virtual void SendingRequest() = 0;
 	virtual void Status(ULONG progress_current, ULONG progress_max, const std::wstring& description) = 0;

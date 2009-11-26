@@ -45,6 +45,8 @@
                     <code>!value</code> to treat all return codes except a single value as failure.</li>
                 <li>Added splash and manifest input to InstallerEditor's Make Exe dialog.</li>
                 <li>Added support for a license agreement checkbox user-defined control.</li>
+                <li>Added <code>dialog_message_copying</code> that displays instead of <code>dialog_message_downloading</code>
+                    when the file is copied from <code>sourcepath</code>.</li>
             </ul>
         </li>
         <li><strong>Bugs</strong>:
@@ -58,6 +60,8 @@
                 <li>Bug: adjusting X or Y coordinates of UI widgets doesn't preserve widget's width
                     or height.</li>
                 <li>Bug: embedfolder nested within a component broken.</li>
+                <li>Bug: download dialog will no longer appear when neither download nor copy is not
+                    required.</li>
             </ul>
         </li>
         <li><strong>Misc</strong>:

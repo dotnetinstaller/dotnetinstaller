@@ -510,6 +510,11 @@ void CdotNetInstallerDlg::ClearError()
 
 bool CdotNetInstallerDlg::RunDownloadConfiguration(const DownloadDialogPtr& p_Configuration)
 {
+	if (! p_Configuration->IsRequired())
+	{
+		LOG(L"*** Component '" << p_Configuration->component_name << L"': SKIPPING DOWNLOAD/COPY");
+	}
+
 	CDownloadDialog downloaddlg(p_Configuration, this);
 	downloaddlg.DoModal();
 	return downloaddlg.IsDownloadCompleted();

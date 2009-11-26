@@ -7,6 +7,8 @@ DownloadCallbackImpl::DownloadCallbackImpl()
 	: m_cancelled(false)
 	, m_complete(0)
 	, m_error(0)
+	, m_downloading(false)
+	, m_copying(false)
 {
 }
 
@@ -35,4 +37,16 @@ void DownloadCallbackImpl::DownloadError(const std::wstring& message)
 {
 	InterlockedIncrement(& m_error);
 	std::wcout << std::endl << message;	
+}
+
+void DownloadCallbackImpl::CopyingFile()
+{
+	std::wcout << std::endl << "Copying ...";
+	m_copying = true;
+}
+
+void DownloadCallbackImpl::DownloadingFile()
+{
+	std::wcout << std::endl << "Downloading ...";
+	m_downloading = true;
 }

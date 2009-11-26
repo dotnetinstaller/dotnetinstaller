@@ -13,6 +13,9 @@ namespace DVLib
 			CPPUNIT_TEST( testDownloadMultiple );
 			CPPUNIT_TEST( testDownloadMultipleError );
 			CPPUNIT_TEST( testCopyFromSource );
+			CPPUNIT_TEST( testShowDialogOnDownloadFile );
+			CPPUNIT_TEST( testShowDialogOnCopyFile );
+			CPPUNIT_TEST( testNoDialogOnNoDownloadOrCopy );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testIsCopyDownloadRequiredEmpty();
@@ -21,6 +24,9 @@ namespace DVLib
 			void testDownloadMultiple();
 			void testDownloadMultipleError();
 			void testCopyFromSource();
+			void testShowDialogOnDownloadFile();
+			void testShowDialogOnCopyFile();
+			void testNoDialogOnNoDownloadOrCopy();
 		};
 	}
 }

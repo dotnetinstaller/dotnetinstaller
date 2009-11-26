@@ -54,6 +54,7 @@ There are three types of variables:
 		dialog_caption = "##COMPONENT_NAME - Download Componenti"
 		dialog_message = "Premi 'Avanti' per scaricare i componenti necessari all'installazione di ##COMPONENT_NAME."
 		dialog_message_downloading = "Download in corso. Attendere ..."
+		dialog_message_copying = "In corso. Attendere ..."
 		dialog_message_connecting="Collegamento ..."
 		dialog_message_sendingrequest="Invio di richiesta ..."
 		>

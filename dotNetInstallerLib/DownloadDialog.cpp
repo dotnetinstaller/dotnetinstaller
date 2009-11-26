@@ -5,9 +5,10 @@
 #include "DownloadDialog.h"
 #include "InstallerLog.h"
 
-DownloadDialog::DownloadDialog()
+DownloadDialog::DownloadDialog(const std::wstring& name)
 	: auto_start(true)
 	, callback(NULL)
+	, component_name(name)
 {
 
 }
@@ -23,6 +24,7 @@ void DownloadDialog::Load(TiXmlElement * node)
 	caption = XML_ATTRIBUTE(node->Attribute("dialog_caption"));
 	help_message = XML_ATTRIBUTE(node->Attribute("dialog_message"));
 	downloading_message = XML_ATTRIBUTE(node->Attribute("dialog_message_downloading"));
+	copying_message = XML_ATTRIBUTE(node->Attribute("dialog_message_copying"));
 	connecting_message = XML_ATTRIBUTE(node->Attribute("dialog_message_connecting"));
 	sendingrequest_message = XML_ATTRIBUTE(node->Attribute("dialog_message_sendingrequest"));
 	start_caption = XML_ATTRIBUTE(node->Attribute("buttonstart_caption"));
@@ -51,30 +53,33 @@ void DownloadDialog::Load(TiXmlElement * node)
 
 int DownloadDialog::ExecOnThread()
 {
-	try
+	if (IsRequired())
 	{
-		for (size_t i = 0; i < downloadfiles.size(); i++)
+		try
 		{
-			if (callback && callback->IsDownloadCancelled())
-				return -2;
+			for (size_t i = 0; i < downloadfiles.size(); i++)
+			{
+				if (callback && callback->IsDownloadCancelled())
+					return -2;
 
-			downloadfiles[i]->Exec(callback);
+				downloadfiles[i]->Exec(callback);
+			}
+
+			if (callback)
+			{
+				callback->DownloadComplete();
+			}
 		}
-
-		if (callback)
+		catch(std::exception& ex)
 		{
-			callback->DownloadComplete();
+			if (callback)
+			{
+				callback->DownloadError(DVLib::string2wstring(ex.what()).c_str());
+			}
+
+			throw ex;
 		}
 	}
-	catch(std::exception& ex)
-	{
-	    if (callback)
-		{
-			callback->DownloadError(DVLib::string2wstring(ex.what()).c_str());
-		}
-
-		throw ex;
-	}	
 
 	return 0;
 }
@@ -127,4 +132,9 @@ std::wstring DownloadDialog::GetString(int indent) const
 		ss << downloadfiles[i]->GetString(indent + 1) << std::endl;
 	}
 	return ss.str();
+}
+
+bool DownloadDialog::IsRequired() const
+{
+	return IsCopyRequired() || IsDownloadRequired();
 }

@@ -17,7 +17,8 @@ CDownloadDialog::CDownloadDialog(const DownloadDialogPtr& p_Configuration, CWnd*
 	, m_Caption(p_Configuration->caption)
 	, m_HelpMessage(p_Configuration->help_message)
 	, m_hIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME))
-	, m_HelpMessageDownloading(p_Configuration->downloading_message)
+	, m_HelpMessageDownloadingFile(p_Configuration->downloading_message)
+	, m_HelpMessageCopyingFile(p_Configuration->copying_message)
 	, m_HelpMessageConnecting(p_Configuration->connecting_message)
 	, m_HelpMessageSendingRequest(p_Configuration->sendingrequest_message)
 	, m_ButtonStartCaption(p_Configuration->start_caption)
@@ -111,7 +112,7 @@ void CDownloadDialog::OnBnClickedCancel() //Cancel Button
 
 void CDownloadDialog::OnBnClickedStart()
 {
-	m_LabelHelpDownload.SetWindowText(m_HelpMessageDownloading.c_str());
+	m_LabelHelpDownload.SetWindowText(m_HelpMessageDownloadingFile.c_str());
 	m_DownloadDialog->callback = this;
 	m_DownloadDialog->BeginExec();
 	m_bDownloadStarted = true;
@@ -252,4 +253,16 @@ bool CDownloadDialog::IsDownloadCompleted() const
 bool CDownloadDialog::IsDownloadStarted() const
 {
 	return m_bDownloadStarted;
+}
+
+void CDownloadDialog::DownloadingFile()
+{
+	DownloadStatusPtr status(DownloadStatus::CreateProgress(m_HelpMessageDownloadingFile, 0, 0));
+	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(status)), 0L );
+}
+
+void CDownloadDialog::CopyingFile()
+{
+	DownloadStatusPtr status(DownloadStatus::CreateProgress(m_HelpMessageCopyingFile, 0, 0));
+	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(status)), 0L );
 }

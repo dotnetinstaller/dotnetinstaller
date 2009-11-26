@@ -32,7 +32,8 @@ void ReferenceConfiguration::Load(TiXmlElement * node)
 		}
 		else if (strcmp(child_element->Value(), "downloaddialog") == 0)
 		{
-			auto_any<DownloadDialog *, close_delete> newdownloaddialog(new DownloadDialog());
+			auto_any<DownloadDialog *, close_delete> newdownloaddialog(
+				new DownloadDialog(filename));
 			newdownloaddialog->Load(child_element);
 			downloaddialog = newdownloaddialog;
 		}

@@ -136,7 +136,7 @@
     <MSBuild Projects="Dni.sln" Targets="Clean" />
     <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Clean" />
     <DeleteTree Directories="$(ReleaseDir)" />
-    <DeleteTree Directories=".\**\bin;.\**\obj;.\**\$(Configuration)" Recursive="true" />
+    <DeleteTree Directories=".\**\bin;.\**\obj;.\**\$(Configuration)" Recursive="true" ContinueOnError="true" />
     <Delete Files="Version\Version.h;Version\Version.wxi;Version\GlobalAssemblyInfo.cs" />
   </Target>
   <Target Name="build" DependsOnTargets="version">

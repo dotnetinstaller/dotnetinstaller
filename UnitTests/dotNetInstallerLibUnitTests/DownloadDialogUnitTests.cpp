@@ -148,3 +148,70 @@ void DownloadDialogUnitTests::testDownloadMultipleError()
 
 	CPPUNIT_ASSERT(1 == callback.GetErrorCount());
 }
+
+void DownloadDialogUnitTests::testShowDialogOnDownloadFile()
+{
+	// download via URL
+	DownloadFilePtr info(new DownloadFile());
+	info->alwaysdownload = false;
+	info->componentname = L"test download";
+	info->sourcepath = L"";
+	info->sourceurl = L"file://" + DVLib::GetModuleFileNameW();
+	info->destinationpath = DVLib::GetTemporaryDirectoryW();
+	info->destinationfilename = DVLib::GenerateGUIDStringW();
+	DownloadCallbackImpl callback;
+	DownloadDialog dd;
+	dd.callback = & callback;
+	dd.downloadfiles.push_back(info);
+	dd.Exec();
+	std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
+	CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
+	DVLib::FileDelete(fullpath);
+	CPPUNIT_ASSERT(callback.IsDownloading());
+	CPPUNIT_ASSERT(! callback.IsCopying());
+}
+
+void DownloadDialogUnitTests::testShowDialogOnCopyFile()
+{
+	// download via URL
+	DownloadFilePtr info(new DownloadFile());
+	info->alwaysdownload = false;
+	info->componentname = L"test download";
+	info->sourcepath = DVLib::GetModuleFileNameW();
+	info->sourceurl = L"file://" + DVLib::GetModuleFileNameW();
+	info->destinationpath = DVLib::GetTemporaryDirectoryW();
+	info->destinationfilename = DVLib::GenerateGUIDStringW();
+	DownloadCallbackImpl callback;
+	DownloadDialog dd;
+	dd.callback = & callback;
+	dd.downloadfiles.push_back(info);
+	dd.Exec();
+	std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
+	CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
+	DVLib::FileDelete(fullpath);
+	CPPUNIT_ASSERT(! callback.IsDownloading());
+	CPPUNIT_ASSERT(callback.IsCopying());
+}
+
+void DownloadDialogUnitTests::testNoDialogOnNoDownloadOrCopy()
+{
+	// download via URL
+	DownloadFilePtr info(new DownloadFile());
+	info->alwaysdownload = false;
+	info->componentname = L"test download";
+	info->sourcepath = DVLib::GetModuleFileNameW();
+	info->sourceurl = L"file://" + DVLib::GetModuleFileNameW();
+	info->destinationpath = DVLib::GetModuleDirectoryW();
+	info->destinationfilename = DVLib::GetFileNameW(DVLib::GetModuleFileNameW());
+	CPPUNIT_ASSERT(! info->IsDownloadRequired());
+	CPPUNIT_ASSERT(! info->IsCopyRequired());
+	DownloadCallbackImpl callback;
+	DownloadDialog dd;
+	dd.callback = & callback;
+	dd.downloadfiles.push_back(info);
+	dd.Exec();
+	std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
+	CPPUNIT_ASSERT(! callback.IsDownloading());
+	CPPUNIT_ASSERT(! callback.IsCopying());
+}
+

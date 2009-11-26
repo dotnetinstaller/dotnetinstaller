@@ -12,7 +12,8 @@ private:
 	std::wstring m_LastStatusMessage;
 	std::wstring m_Caption;
 	std::wstring m_HelpMessage;
-	std::wstring m_HelpMessageDownloading;
+	std::wstring m_HelpMessageDownloadingFile;
+	std::wstring m_HelpMessageCopyingFile;
 	std::wstring m_HelpMessageConnecting;
 	std::wstring m_HelpMessageSendingRequest;
 	std::wstring m_ButtonStartCaption;
@@ -55,4 +56,6 @@ public:
 	void DownloadCancel();
 	bool IsDownloadCompleted() const;
 	bool IsDownloadStarted() const;
+	void DownloadingFile();
+	void CopyingFile();
 };

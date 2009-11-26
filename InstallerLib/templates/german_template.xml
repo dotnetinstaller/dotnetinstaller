@@ -54,6 +54,7 @@ There are three types of variables:
 		dialog_caption = "##COMPONENT_NAME - Herunterladen der Komponenten"
 		dialog_message = "Drücken Sie 'Start' um die benötigten Komponenten herunterzuladen für ##COMPONENT_NAME herunterzuladen."
 		dialog_message_downloading = "Dateien werden heruntergeladen. Bitte warten ..."
+		dialog_message_copying = "Dateien werden heruntergeladen. Bitte warten ..."
 		dialog_message_connecting="Herstellen einer Verbindung ..."
 		dialog_message_sendingrequest="Senden Anfrage ..."
 		>

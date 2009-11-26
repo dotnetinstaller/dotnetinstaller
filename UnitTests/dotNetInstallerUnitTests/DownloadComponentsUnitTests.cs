@@ -50,5 +50,42 @@ namespace dotNetInstallerUnitTests
             Assert.IsTrue(File.Exists(Path.Combine(component1download2.destinationpath, component1download2.destinationfilename)));
             File.Delete(Path.Combine(component1download2.destinationpath, component1download2.destinationfilename));
         }
+
+        [Test]
+        public void TestNoDownloadWhenSourceFileExsts()
+        {
+            // a configuration where the source file exists, no download dialog should show
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ComponentCmd cmd = new ComponentCmd("cmd");
+            setupConfiguration.Children.Add(cmd);
+            cmd.command = "cmd.exe /C exit /b 0";
+            DownloadDialog cmddownloaddialog = new DownloadDialog(
+                string.Format("{0} Download Dialog", cmd.description));
+            cmd.Children.Add(cmddownloaddialog);
+            cmddownloaddialog.autostartdownload = false;
+            Download download = new Download();
+            download.componentname = "download 1";
+            download.sourceurl = string.Format("http://{0}/dummy.exe", Guid.NewGuid());
+            download.sourcepath = Assembly.GetExecutingAssembly().Location;
+            download.destinationpath = Path.GetTempPath();
+            download.destinationfilename = Guid.NewGuid().ToString();
+            download.alwaysdownload = false;
+            cmddownloaddialog.Children.Add(download);
+            // save config file
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // execute dotNetInstaller
+            dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions();
+            options.configFile = configFilename;
+            options.args = "/qb";
+            options.quiet = false;
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(options));
+            File.Delete(configFilename);
+            Assert.IsTrue(File.Exists(Path.Combine(download.destinationpath, download.destinationfilename)));
+            File.Delete(Path.Combine(download.destinationpath, download.destinationfilename));
+        }
     }
 }

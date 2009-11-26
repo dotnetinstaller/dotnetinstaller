@@ -54,6 +54,7 @@ There are three types of variables:
 		dialog_caption = "##COMPONENT_NAME - Download Components"
 		dialog_message = "Press 'Start' to download the required components for installing ##COMPONENT_NAME."
 		dialog_message_downloading = "Downloading ..."
+		dialog_message_copying = "Copying ..."
 		dialog_message_connecting="Connecting ..."
 		dialog_message_sendingrequest="Sending request ..."
 		>

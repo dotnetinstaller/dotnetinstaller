@@ -237,6 +237,10 @@ namespace InstallerLib
             {
                 get { return m_tpl.GetAttribute("downloaddialog/@dialog_message_downloading").Replace(c_COMPONENT_NAME, m_ComponentName); }
             }
+            public string dialog_message_copying
+            {
+                get { return m_tpl.GetAttribute("downloaddialog/@dialog_message_copying").Replace(c_COMPONENT_NAME, m_ComponentName); }
+            }
             public string dialog_message_connecting
             {
                 get { return m_tpl.GetAttribute("downloaddialog/@dialog_message_connecting").Replace(c_COMPONENT_NAME, m_ComponentName); }

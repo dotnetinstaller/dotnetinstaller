@@ -11,10 +11,13 @@ public:
 	IDownloadCallback * callback;
 	// download window caption
 	std::wstring caption;
+	// component name
+	std::wstring component_name;
 	// help message
 	std::wstring help_message;
 	// progress messages
 	std::wstring downloading_message;
+	std::wstring copying_message;
 	std::wstring connecting_message;
 	std::wstring sendingrequest_message;
 	// start button caption
@@ -28,7 +31,8 @@ public:
 public:
 	bool IsCopyRequired() const;
 	bool IsDownloadRequired() const;
-	DownloadDialog();
+	bool IsRequired() const;
+	DownloadDialog(const std::wstring& name = L"");
 	void Load(TiXmlElement * node);
 	int ExecOnThread();
 	std::wstring GetString(int indent = 0) const;

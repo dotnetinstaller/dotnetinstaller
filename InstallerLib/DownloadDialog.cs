@@ -29,6 +29,7 @@ namespace InstallerLib
             m_dialog_caption = tpl.dialog_caption;
             m_dialog_message = tpl.dialog_message;
             m_dialog_message_downloading = tpl.dialog_message_downloading;
+            m_dialog_message_copying = tpl.dialog_message_copying;
             m_dialog_message_connecting = tpl.dialog_message_connecting;
             m_dialog_message_sendingrequest = tpl.dialog_message_sendingrequest;
         }
@@ -86,6 +87,15 @@ namespace InstallerLib
             set { m_dialog_message_downloading = value; }
         }
 
+        private string m_dialog_message_copying;
+        [Description("Message that appears in the download dialog when a local copy process starts.")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        public string dialog_message_copying
+        {
+            get { return m_dialog_message_copying; }
+            set { m_dialog_message_copying = value; }
+        }
+
         private string m_buttonstart_caption;
         [Description("Caption of the 'Start' button.")]
         public string buttonstart_caption
@@ -115,6 +125,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("dialog_caption", m_dialog_caption);
             e.XmlWriter.WriteAttributeString("dialog_message", m_dialog_message);
             e.XmlWriter.WriteAttributeString("dialog_message_downloading", m_dialog_message_downloading);
+            e.XmlWriter.WriteAttributeString("dialog_message_copying", m_dialog_message_copying);
             e.XmlWriter.WriteAttributeString("dialog_message_connecting", m_dialog_message_connecting);
             e.XmlWriter.WriteAttributeString("dialog_message_sendingrequest", m_dialog_message_sendingrequest);
             e.XmlWriter.WriteAttributeString("autostartdownload", m_autostartdownload.ToString());
@@ -131,6 +142,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "dialog_caption", ref m_dialog_caption);
             ReadAttributeValue(e, "dialog_message", ref m_dialog_message);
             ReadAttributeValue(e, "dialog_message_downloading", ref m_dialog_message_downloading);
+            ReadAttributeValue(e, "dialog_message_copying", ref m_dialog_message_copying);
             ReadAttributeValue(e, "dialog_message_connecting", ref m_dialog_message_connecting);
             ReadAttributeValue(e, "dialog_message_sendingrequest", ref m_dialog_message_sendingrequest);
             base.OnXmlReadTag(e);
