@@ -149,17 +149,24 @@ bool Component::IsRebootRequired() const
 
 std::wstring Component::GetAdditionalCmd() const
 {
-	std::map<std::wstring, std::wstring>::iterator cmdline = InstallerSession::Instance->AdditionalCmdLineArgs.find(id);
-    if (cmdline == InstallerSession::Instance->AdditionalCmdLineArgs.end())
+	std::wstring cmd;
+	std::wstring cmds[] = { L"*", id, display_name };
+
+	for (int i = 0; i < ARRAYSIZE(cmds); i++)
 	{
-		cmdline = InstallerSession::Instance->AdditionalCmdLineArgs.find(display_name);
+		std::map<std::wstring, std::wstring>::iterator cmd_iter = InstallerSession::Instance->AdditionalCmdLineArgs.find(cmds[i]);
+		if (cmd_iter != InstallerSession::Instance->AdditionalCmdLineArgs.end())
+		{
+			cmd.append(L" ");
+			cmd.append(cmd_iter->second);
+			LOG(L"-- Additional component '" << id << L"' argument (" << cmds[i] << L"): " << cmd_iter->second);
+		}
 	}
 
-    if (cmdline != InstallerSession::Instance->AdditionalCmdLineArgs.end())
-    {
-		LOG(L"-- Additional component '" << id << L"' arguments: " << cmdline->second);
-		return cmdline->second;
-    }
+	if (! cmd.empty())
+	{
+		LOG(L"-- Additional component '" << id << L"' arguments: " << cmd);
+	}
 
-	return L"";
+	return cmd;
 }

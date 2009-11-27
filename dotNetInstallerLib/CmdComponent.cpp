@@ -31,8 +31,8 @@ void CmdComponent::Exec()
 	std::wstring additional_cmd = GetAdditionalCmd();
 	if (! additional_cmd.empty())
     {
-		l_command += TEXT(" ");
-		l_command += additional_cmd;
+		l_command.append(L" ");
+		l_command.append(additional_cmd);
     }
 
 	l_command = InstallerSession::Instance->ExpandUserVariables(l_command);

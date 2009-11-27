@@ -55,6 +55,32 @@ namespace dotNetInstallerUnitTests
         }
 
         [Test]
+        public void TestAllArgCmd()
+        {
+            ConfigFile configFile = new ConfigFile();
+            // setup configuration
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ComponentCmd component1 = new ComponentCmd();
+            setupConfiguration.Children.Add(component1);
+            component1.id = "cmd1";
+            component1.display_name = "command 1";
+            component1.command = "cmd.exe /C exit /b ";
+            ComponentCmd component2 = new ComponentCmd();
+            setupConfiguration.Children.Add(component2);
+            component2.id = "cmd2";
+            component2.display_name = "command 2";
+            component2.command = "cmd.exe /C exit /b ";
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
+            options.args = "/ComponentArgs *:\"23\"";
+            Assert.AreEqual(23, dotNetInstallerExeUtils.Run(options));
+            File.Delete(configFilename);
+        }
+
+        [Test]
         public void TestComponentIdAndNameArgCmd()
         {
             ConfigFile configFile = new ConfigFile();
