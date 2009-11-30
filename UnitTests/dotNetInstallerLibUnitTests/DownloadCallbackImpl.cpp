@@ -12,14 +12,14 @@ DownloadCallbackImpl::DownloadCallbackImpl()
 {
 }
 
-void DownloadCallbackImpl::Connecting()
+void DownloadCallbackImpl::Connecting(const std::wstring& host)
 {
-	std::wcout << std::endl << "Connecting ...";
+	std::wcout << std::endl << "Connecting to " << host << L"...";
 }
 
-void DownloadCallbackImpl::SendingRequest()
+void DownloadCallbackImpl::SendingRequest(const std::wstring& host)
 {
-	std::wcout << std::endl << "Sending request ...";
+	std::wcout << std::endl << "Sending request to " << host << L"...";
 }
 
 void DownloadCallbackImpl::Status(ULONG progress_current, ULONG progress_max, const std::wstring& description)
@@ -39,14 +39,14 @@ void DownloadCallbackImpl::DownloadError(const std::wstring& message)
 	std::wcout << std::endl << message;	
 }
 
-void DownloadCallbackImpl::CopyingFile()
+void DownloadCallbackImpl::CopyingFile(const std::wstring& filename)
 {
-	std::wcout << std::endl << "Copying ...";
+	std::wcout << std::endl << "Copying " << filename << L"...";
 	m_copying = true;
 }
 
-void DownloadCallbackImpl::DownloadingFile()
+void DownloadCallbackImpl::DownloadingFile(const std::wstring& url)
 {
-	std::wcout << std::endl << "Downloading ...";
+	std::wcout << std::endl << "Downloading " << url << L"...";
 	m_downloading = true;
 }

@@ -513,6 +513,7 @@ bool CdotNetInstallerDlg::RunDownloadConfiguration(const DownloadDialogPtr& p_Co
 	if (! p_Configuration->IsRequired())
 	{
 		LOG(L"*** Component '" << p_Configuration->component_id << L"': SKIPPING DOWNLOAD/COPY");
+		return true;
 	}
 
 	CDownloadDialog downloaddlg(p_Configuration, this);

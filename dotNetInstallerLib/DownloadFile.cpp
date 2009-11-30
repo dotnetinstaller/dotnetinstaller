@@ -7,6 +7,8 @@
 
 DownloadFile::DownloadFile()
 	: callback(NULL)
+	, alwaysdownload(false)
+	, clear_cache(false)
 {
 
 }
@@ -30,6 +32,7 @@ void DownloadFile::Load(TiXmlElement * node)
 	destinationpath = XML_ATTRIBUTE(node->Attribute("destinationpath"));
 	destinationfilename = XML_ATTRIBUTE(node->Attribute("destinationfilename"));
 	alwaysdownload = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("alwaysdownload")), true);		
+	clear_cache = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("clear_cache")), false);		
 
 	LOG(L"Loaded 'download' dialog component '" << componentname 
 		<< L"', source=" << (sourceurl.length() ? sourceurl : sourcepath));
@@ -144,8 +147,16 @@ void DownloadFile::DownloadFromSourceUrl()
 		return;
 	}
 
-	// download to a .tmp file, then rename to avoid partially donwloaded installers
+	// download to a .tmp file, then rename to avoid partially downloaded installers
 	std::wstring destination_full_filename_tmp = destination_full_filename + L".tmp";
+	if (DVLib::FileExists(destination_full_filename_tmp))
+	{
+		LOG(L"Deleting '" << destination_full_filename_tmp << L"'.");
+		DVLib::FileDelete(destination_full_filename_tmp);
+	}
+
+	ClearCache();
+
 	CHECK_HR_DLL(URLDownloadToFile(NULL, sourceurl.c_str(), destination_full_filename_tmp.c_str(), 0, this),
 		L"Error downloading \"" << sourceurl << L"\" to \"" << destination_full_filename_tmp << L"\"", L"urlmon.dll");
 
@@ -153,6 +164,30 @@ void DownloadFile::DownloadFromSourceUrl()
 
 	LOG(L"Download '" << componentname << L"', size=" 
 		<< DVLib::FormatBytesW(DVLib::GetFileSize(destination_full_filename)) << L": OK");
+}
+
+bool DownloadFile::ClearCache()
+{
+	if (! clear_cache)
+		return false;
+
+	// DeleteUrlCacheEntryW supported on Windows 2000 and later
+	typedef BOOL (WINAPI * pDeleteUrlCacheEntry) (LPCTSTR lpszUrlName);
+	DllFunction<pDeleteUrlCacheEntry> deleteUrlCacheEntry(L"wininet.dll", "DeleteUrlCacheEntryW");
+	if (NULL == deleteUrlCacheEntry)
+	{
+		LOG(L"Skipping deleting cache entry for '" << sourceurl << L"', function not available.");
+		return false;
+	}
+
+	LOG(L"Deleting cache entry for '" << sourceurl << L"'.");
+	if (! deleteUrlCacheEntry(sourceurl.c_str()))
+	{
+		LOG(DVLib::GetLastErrorStringW(L"Ignoring error clearing cache"));
+		return false;
+	}
+
+	return true;
 }
 
 HRESULT DownloadFile::OnProgress(ULONG ulProgress, ULONG ulProgressMax, ULONG ulStatusCode, LPCWSTR /* wszStatusText */)
@@ -167,10 +202,11 @@ HRESULT DownloadFile::OnProgress(ULONG ulProgress, ULONG ulProgressMax, ULONG ul
 	switch(ulStatusCode)
 	{
 	case BINDSTATUS_CONNECTING:
-		callback->Connecting();
+		// \todo: extract host from sourceurl
+		callback->Connecting(sourceurl);
 		break;
 	case BINDSTATUS_SENDINGREQUEST:
-		callback->SendingRequest();
+		callback->SendingRequest(sourceurl);
 		break;
 	case BINDSTATUS_DOWNLOADINGDATA:
 		std::wstring tmp = DVLib::FormatMessage(L"%s (%s of %s)", 
@@ -242,7 +278,7 @@ void DownloadFile::Exec(IDownloadCallback * cb)
 		if (cb != NULL)
 		{
 			// notify callback of file copy
-			cb->CopyingFile();
+			cb->CopyingFile(sourcepath);
 		}
 
 		CopyFromSourcePath();
@@ -252,7 +288,7 @@ void DownloadFile::Exec(IDownloadCallback * cb)
 		if (cb != NULL)
 		{
 			// notify callback of download
-			cb->DownloadingFile();
+			cb->DownloadingFile(sourceurl);
 		}
 
 		DownloadFromSourceUrl();

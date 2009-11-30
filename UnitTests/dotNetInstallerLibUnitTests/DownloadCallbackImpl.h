@@ -19,10 +19,10 @@ namespace DVLib
 			void DownloadError(const std::wstring& message);
 			bool IsDownloadCancelled() const { return m_cancelled; }
 			void DownloadCancel() { m_cancelled = true; }
-			void Connecting();
-			void SendingRequest();
-			void CopyingFile();
-			void DownloadingFile();
+			void Connecting(const std::wstring& url);
+			void SendingRequest(const std::wstring& url);
+			void CopyingFile(const std::wstring& filename);
+			void DownloadingFile(const std::wstring& url);
 			long GetCompleteCount() const { return m_complete; }
 			long GetErrorCount() const { return m_error; }
 			bool IsDownloading() const { return m_downloading; }

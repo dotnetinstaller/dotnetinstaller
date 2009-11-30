@@ -22,7 +22,6 @@ namespace InstallerLib
             m_sourceurl = "http://www.yourwebsite.com/SetupX/Setup.exe";
             m_destinationpath = "#TEMPPATH\\" + p_DownloadPath;
             m_destinationfilename = "";
-            m_alwaysdownload = true;
         }
 
         private string m_componentname;
@@ -66,12 +65,21 @@ namespace InstallerLib
         }
 
         // bypass download if the file already exists locally
-        private bool m_alwaysdownload;
+        private bool m_alwaysdownload = true;
         [Description("If true, always download the file; if false, only download if the file does not exist locally.")]
         public bool alwaysdownload
         {
             get { return m_alwaysdownload; }
             set { m_alwaysdownload = value; }
+        }
+
+        // clear cache
+        private bool m_clear_cache = false;
+        [Description("If true, attempt to clear the download cache before downloading the file.")]
+        public bool clear_cache
+        {
+            get { return m_clear_cache; }
+            set { m_clear_cache = value; }
         }
 
         #region XmlClass Members
@@ -89,6 +97,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("destinationpath", m_destinationpath);
             e.XmlWriter.WriteAttributeString("destinationfilename", m_destinationfilename);
             e.XmlWriter.WriteAttributeString("alwaysdownload", m_alwaysdownload.ToString());
+            e.XmlWriter.WriteAttributeString("clear_cache", m_clear_cache.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -100,6 +109,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "sourceurl", ref m_sourceurl);
             ReadAttributeValue(e, "sourcepath", ref m_sourcepath);
             ReadAttributeValue(e, "alwaysdownload", ref m_alwaysdownload);
+            ReadAttributeValue(e, "clear_cache", ref m_clear_cache);
             base.OnXmlReadTag(e);
         }
 

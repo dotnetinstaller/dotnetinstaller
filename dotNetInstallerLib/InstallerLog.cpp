@@ -25,7 +25,7 @@ void InstallerLog::Write(const std::wstring& message)
 		std::wstring path = DVLib::GetFileDirectoryW(m_logfile);
 		if (path.length()) DVLib::DirectoryCreate(path);
 
-		m_hFile = auto_hfile(::CreateFile(m_logfile.c_str(), GENERIC_WRITE, FILE_SHARE_READ, 
+		reset(m_hFile, ::CreateFile(m_logfile.c_str(), GENERIC_WRITE, FILE_SHARE_READ, 
 			NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL));
 
 		CHECK_WIN32_BOOL(m_hFile,

@@ -14,3 +14,4 @@
 #include "RegistryUtil.h"
 #include "FileUtilImpl.h"
 #include "MsiUtil.h"
+#include "FunctionUtil.h"

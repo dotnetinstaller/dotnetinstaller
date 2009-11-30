@@ -387,7 +387,9 @@ namespace InstallerEditor
         {
             get
             {
-                return Instance.id;
+                return Instance.id != Instance.display_name
+                    ? string.Format("{0} ({1})", Instance.display_name, Instance.id)
+                    : Instance.id;
             }
         }
 

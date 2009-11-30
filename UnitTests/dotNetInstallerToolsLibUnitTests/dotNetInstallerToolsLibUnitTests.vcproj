@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FunctionUtilUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GuidUtilUnitTests.cpp"
 				>
 			</File>
@@ -276,6 +280,10 @@
 			</File>
 			<File
 				RelativePath=".\FormatUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FunctionUtilUnitTests.h"
 				>
 			</File>
 			<File

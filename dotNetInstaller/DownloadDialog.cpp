@@ -15,12 +15,12 @@ CDownloadDialog::CDownloadDialog(const DownloadDialogPtr& p_Configuration, CWnd*
 	, m_bDownloadCompleted(false)
 	, m_bAutoStartDownload(p_Configuration->auto_start)
 	, m_Caption(p_Configuration->caption)
-	, m_HelpMessage(p_Configuration->help_message)
+	, m_Message(p_Configuration->help_message)
 	, m_hIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME))
-	, m_HelpMessageDownloadingFile(p_Configuration->downloading_message)
-	, m_HelpMessageCopyingFile(p_Configuration->copying_message)
-	, m_HelpMessageConnecting(p_Configuration->connecting_message)
-	, m_HelpMessageSendingRequest(p_Configuration->sendingrequest_message)
+	, m_MessageDownloadingFile(p_Configuration->downloading_message)
+	, m_MessageCopyingFile(p_Configuration->copying_message)
+	, m_MessageConnecting(p_Configuration->connecting_message)
+	, m_MessageSendingRequest(p_Configuration->sendingrequest_message)
 	, m_ButtonStartCaption(p_Configuration->start_caption)
 	, m_ButtonCancelCaption(p_Configuration->cancel_caption)
 	, m_bDownloadStarted(false)
@@ -32,7 +32,7 @@ CDownloadDialog::CDownloadDialog(const DownloadDialogPtr& p_Configuration, CWnd*
 void CDownloadDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_HELP_DOWNLOAD, m_LabelHelpDownload);
+	DDX_Control(pDX, IDC_HELP_DOWNLOAD, m_LabelHelp);
 	DDX_Control(pDX, IDC_STATUS, m_LabelStatus);
 	DDX_Control(pDX, IDC_START, m_btStart);
 	DDX_Control(pDX, IDC_CANCEL, m_btnCancel);
@@ -78,7 +78,7 @@ BOOL CDownloadDialog::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Impostare icona grande.
 	SetIcon(m_hIcon, FALSE);		// Impostare icona piccola.
 
-	m_LabelHelpDownload.SetWindowText(m_HelpMessage.c_str());
+	m_LabelHelp.SetWindowText(m_Message.c_str());
 	SetWindowText(m_Caption.c_str());
 	m_btnCancel.SetWindowText(m_ButtonCancelCaption.c_str());
 	m_btStart.SetWindowText(m_ButtonStartCaption.c_str());
@@ -111,8 +111,7 @@ void CDownloadDialog::OnBnClickedCancel() //Cancel Button
 }
 
 void CDownloadDialog::OnBnClickedStart()
-{
-	m_LabelHelpDownload.SetWindowText(m_HelpMessageDownloadingFile.c_str());
+{	
 	m_DownloadDialog->callback = this;
 	m_DownloadDialog->BeginExec();
 	m_bDownloadStarted = true;
@@ -130,7 +129,7 @@ afx_msg LRESULT CDownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM /* lP
 {
 	DownloadStatusPtr downloadstatus(reinterpret_cast<DownloadStatus *>(wParam));
 
-	if (downloadstatus->type == StatusType_Downloading)
+	if (downloadstatus->type == StatusType_Progress)
 	{
 		if (downloadstatus->progress_max != 0)
 		{
@@ -142,6 +141,10 @@ afx_msg LRESULT CDownloadDialog::OnSetStatusDownload(WPARAM wParam, LPARAM /* lP
 		}
 
 		m_LabelStatus.SetWindowText(downloadstatus->status.c_str());
+	}
+	else if (downloadstatus->type == StatusType_Help)
+	{
+		m_LabelHelp.SetWindowText(downloadstatus->status.c_str());
 	}
 	else if (downloadstatus->type == StatusType_Error) //ERROR
 	{
@@ -197,15 +200,17 @@ void CDownloadDialog::DownloadError(const std::wstring& p_Message)
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(status)), 0L );
 }
 
-void CDownloadDialog::Connecting()
+void CDownloadDialog::Connecting(const std::wstring& host)
 {
-	DownloadStatusPtr status(DownloadStatus::CreateProgress(m_HelpMessageConnecting, 0, 0));
+	std::wstring message = DVLib::FormatMessage(const_cast<wchar_t *>(m_MessageConnecting.c_str()), host.c_str());
+	DownloadStatusPtr status(DownloadStatus::CreateProgress(message, 0, 0));
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(status)), 0L );
 }
 
-void CDownloadDialog::SendingRequest()
+void CDownloadDialog::SendingRequest(const std::wstring& host)
 {
-	DownloadStatusPtr status(DownloadStatus::CreateProgress(m_HelpMessageSendingRequest, 0, 0));
+	std::wstring message = DVLib::FormatMessage(const_cast<wchar_t *>(m_MessageConnecting.c_str()), host.c_str());
+	DownloadStatusPtr status(DownloadStatus::CreateProgress(m_MessageSendingRequest, 0, 0));
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(status)), 0L );
 }
 
@@ -255,14 +260,16 @@ bool CDownloadDialog::IsDownloadStarted() const
 	return m_bDownloadStarted;
 }
 
-void CDownloadDialog::DownloadingFile()
+void CDownloadDialog::DownloadingFile(const std::wstring& filename)
 {
-	DownloadStatusPtr status(DownloadStatus::CreateProgress(m_HelpMessageDownloadingFile, 0, 0));
+	std::wstring message = DVLib::FormatMessage(const_cast<wchar_t *>(m_MessageDownloadingFile.c_str()), filename.c_str());
+	DownloadStatusPtr status(DownloadStatus::CreateHelp(message));
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(status)), 0L );
 }
 
-void CDownloadDialog::CopyingFile()
+void CDownloadDialog::CopyingFile(const std::wstring& filename)
 {
-	DownloadStatusPtr status(DownloadStatus::CreateProgress(m_HelpMessageCopyingFile, 0, 0));
+	std::wstring message = DVLib::FormatMessage(const_cast<wchar_t *>(m_MessageCopyingFile.c_str()), filename.c_str());
+	DownloadStatusPtr status(DownloadStatus::CreateHelp(message));
 	::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(status)), 0L );
 }

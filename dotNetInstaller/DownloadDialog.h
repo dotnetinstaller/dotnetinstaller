@@ -11,11 +11,11 @@ public:
 private:
 	std::wstring m_LastStatusMessage;
 	std::wstring m_Caption;
-	std::wstring m_HelpMessage;
-	std::wstring m_HelpMessageDownloadingFile;
-	std::wstring m_HelpMessageCopyingFile;
-	std::wstring m_HelpMessageConnecting;
-	std::wstring m_HelpMessageSendingRequest;
+	std::wstring m_Message;
+	std::wstring m_MessageDownloadingFile;
+	std::wstring m_MessageCopyingFile;
+	std::wstring m_MessageConnecting;
+	std::wstring m_MessageSendingRequest;
 	std::wstring m_ButtonStartCaption;
 	std::wstring m_ButtonCancelCaption;
 	HICON m_hIcon;
@@ -36,7 +36,7 @@ protected:
 	static UINT ThreadProc(LPVOID pParam);
 	DECLARE_MESSAGE_MAP()
 public:
-	CStatic m_LabelHelpDownload;
+	CStatic m_LabelHelp;
 	CStatic m_LabelStatus;
 	CButton m_btStart;
 	CButton m_btnCancel;
@@ -46,8 +46,8 @@ public:
 	afx_msg void OnOK();
 	afx_msg LRESULT OnSetStatusDownload(WPARAM wParam, LPARAM lParam);
 	// IDownloadCallback
-	void Connecting();
-	void SendingRequest();
+	void Connecting(const std::wstring& host);
+	void SendingRequest(const std::wstring& host);
 	void Status(ULONG progress_current, ULONG progress_max, const std::wstring& description);
 	void DownloadComplete();
 	void DownloadError(const std::wstring& error);
@@ -56,6 +56,6 @@ public:
 	void DownloadCancel();
 	bool IsDownloadCompleted() const;
 	bool IsDownloadStarted() const;
-	void DownloadingFile();
-	void CopyingFile();
+	void DownloadingFile(const std::wstring& filename);
+	void CopyingFile(const std::wstring& filename);
 };

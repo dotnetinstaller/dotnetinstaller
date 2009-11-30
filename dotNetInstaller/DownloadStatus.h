@@ -3,7 +3,8 @@
 enum StatusType
 {
 	StatusType_Error,
-	StatusType_Downloading,
+	StatusType_Help,
+	StatusType_Progress,
 	StatusType_Completed,
 	StatusType_Canceled
 };
@@ -24,5 +25,6 @@ struct DownloadStatus
 	static DownloadStatusPtr CreateComplete();
 	static DownloadStatusPtr CreateError(const std::wstring&);
 	static DownloadStatusPtr CreateCanceled();
+	static DownloadStatusPtr CreateHelp(const std::wstring&);
 };
 

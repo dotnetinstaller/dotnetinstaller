@@ -47,9 +47,14 @@
                 <li>Added support for a license agreement checkbox user-defined control.</li>
                 <li>Added <code>dialog_message_copying</code> that displays instead of <code>dialog_message_downloading</code>
                     when the file is copied from <code>sourcepath</code>.</li>
+                <li>The <code>dialog_message_downloading</code> and <code>dialog_message_copying</code>
+                    replace <code>dialog_message</code> in download dialogs depending on whether a download
+                    or a local copy is required.</li>
                 <li>Added component <code>id</code> and renamed <code>description</code> to <code>display_name</code>.</li>
                 <li>ComponentArgs now accepts <code>*</code>, <code>id</code> or <code>display_name</code>,
                     cumulative in this order.</li>
+                <li>Added <code>clear_cache</code> to download components. When true, attempts to clear
+                    the local internet cache entry for the url to download.</li>
             </ul>
         </li>
         <li><strong>Bugs</strong>:

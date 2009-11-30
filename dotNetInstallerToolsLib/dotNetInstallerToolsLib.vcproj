@@ -245,6 +245,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FunctionUtil.h"
+				>
+			</File>
+			<File
 				RelativePath=".\GuidUtil.h"
 				>
 			</File>

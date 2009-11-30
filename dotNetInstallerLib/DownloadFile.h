@@ -18,6 +18,8 @@ public:
 	std::wstring componentname;
     // enable bypassing download if the file already exists locally
 	bool alwaysdownload;
+	// clear cache
+	bool clear_cache;
 public:
 	// returns true if a download is required (local file doesn't exist, etc.)
 	bool IsDownloadRequired() const;
@@ -29,6 +31,8 @@ public:
 	void Load(TiXmlElement * node);
 	void Exec(IDownloadCallback * callback);
 	std::wstring GetString(int indent = 0) const;
+	// delete downloaded file cache
+	bool ClearCache();
 public:
 	// IBindStatusCallback
 	STDMETHOD(OnStartBinding)(DWORD dwReserved, IBinding __RPC_FAR *pib);

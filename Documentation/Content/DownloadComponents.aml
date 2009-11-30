@@ -50,6 +50,11 @@
               packages containing frequently required files only. The missing files are downloaded only when the component
               is not present on the system and has not been packaged with the bootstrapper.
             </definition>
+            <definedTerm>clear_cache</definedTerm>
+            <definition>
+              When <literal>true</literal>, attempt to clear the internet cache before downloading. When <literal>false</literal>, 
+              the file may be served from the local cache.
+            </definition>
           </tableDefinition>
         </para>
         <alert class="important">

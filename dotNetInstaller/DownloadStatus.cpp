@@ -4,10 +4,18 @@
 DownloadStatusPtr DownloadStatus::CreateProgress(const std::wstring& status, ULONG progress_current, ULONG progress_max)
 {
 	DownloadStatusPtr param(new DownloadStatus());
-	param->type = StatusType_Downloading;
+	param->type = StatusType_Progress;
 	param->progress_current = progress_current;
 	param->progress_max = progress_max;
 	param->status = status;
+	return param;
+}
+
+DownloadStatusPtr DownloadStatus::CreateHelp(const std::wstring& message)
+{
+	DownloadStatusPtr param(new DownloadStatus());
+	param->type = StatusType_Help;
+	param->status = message;
 	return param;
 }
 
