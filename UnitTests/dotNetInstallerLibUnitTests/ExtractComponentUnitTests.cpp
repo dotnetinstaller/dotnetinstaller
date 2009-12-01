@@ -8,8 +8,8 @@ using namespace DVLib::UnitTests;
 class ExtractComponentStdOut : public ExtractComponent
 {
 public:
-	ExtractComponentStdOut(HMODULE h)
-		: ExtractComponent(h)
+	ExtractComponentStdOut(HMODULE h, const std::wstring& id)
+		: ExtractComponent(h, id)
 	{
 
 	}
@@ -21,9 +21,20 @@ public:
 };
 
 
-void ExtractComponentUnitTests::testExtract()
+void ExtractComponentUnitTests::testExtractWithoutComponentId()
 {
-	ExtractComponentStdOut extract(::GetModuleHandle(NULL));
+	ExtractComponentStdOut extract(::GetModuleHandle(NULL), L"");
+	extract.Exec();
+	std::wstring readmetxt = DVLib::DirectoryCombine(InstallerSession::Instance->GetSessionTempPath(), L"readme.txt");
+	CPPUNIT_ASSERT(DVLib::FileExists(readmetxt));
+	CPPUNIT_ASSERT(DVLib::GetFileSize(readmetxt) == 18);
+	std::wcout << std::endl << readmetxt << L" - " << DVLib::FormatBytesW(DVLib::GetFileSize(readmetxt));
+	DVLib::DirectoryDelete(InstallerSession::Instance->GetSessionTempPath());
+}
+
+void ExtractComponentUnitTests::testExtractWithComponentId()
+{
+	ExtractComponentStdOut extract(::GetModuleHandle(NULL), L"TEST");
 	extract.Exec();
 	std::wstring readmetxt = DVLib::DirectoryCombine(InstallerSession::Instance->GetSessionTempPath(), L"readme.txt");
 	CPPUNIT_ASSERT(DVLib::FileExists(readmetxt));

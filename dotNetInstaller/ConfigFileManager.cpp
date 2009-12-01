@@ -95,3 +95,4 @@ std::vector<ConfigurationPtr> ConfigFileManager::DownloadReferenceConfigurations
 
 	return ConfigFiles::DownloadReferenceConfigurations(oslcid, configs, level);
 }
+

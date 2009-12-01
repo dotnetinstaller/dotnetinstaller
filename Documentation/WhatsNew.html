@@ -55,6 +55,9 @@
                     cumulative in this order.</li>
                 <li>Added <code>clear_cache</code> to download components. When true, attempts to clear
                     the local internet cache entry for the url to download.</li>
+                <li>Cabbing now embeds files that belong in components in separate resource streams,
+                    extracting only those files that are necessary for installation of a particular
+                    component. Embedded files outside of components continue to be always extracted.</li>
             </ul>
         </li>
         <li><strong>Bugs</strong>:

@@ -17,8 +17,8 @@ namespace InstallerLibUnitTests
             embedFolder.sourcefolderpath = Path.Combine(Environment.GetFolderPath(
                 Environment.SpecialFolder.System), @"spool\tools");
             string supportdir = @"C:\SupportFiles\SupportFolder";
-            EmbedFileCollection embedFileCollection = embedFolder.GetFiles(supportdir);
-            foreach (EmbedFilePair pair in embedFileCollection)
+            Dictionary<string, EmbedFileCollection> embedFileCollection = embedFolder.GetFiles(string.Empty, supportdir);
+            foreach (EmbedFilePair pair in embedFileCollection[string.Empty])
             {
                 Console.WriteLine("{0} -> {1}", pair.fullpath, pair.relativepath);
                 Assert.IsFalse(pair.relativepath.StartsWith(@"\"));
@@ -34,8 +34,8 @@ namespace InstallerLibUnitTests
                 Environment.SpecialFolder.System), @"spool\tools");
             embedFolder.targetfolderpath = @"parent\child";
             string supportdir = @"C:\SupportFiles\SupportFolder";
-            EmbedFileCollection embedFileCollection = embedFolder.GetFiles(supportdir);
-            foreach (EmbedFilePair pair in embedFileCollection)
+            Dictionary<string, EmbedFileCollection> embedFileCollection = embedFolder.GetFiles(string.Empty, supportdir);
+            foreach (EmbedFilePair pair in embedFileCollection[string.Empty])
             {
                 Console.WriteLine("{0} -> {1}", pair.fullpath, pair.relativepath);
                 Assert.IsFalse(pair.relativepath.StartsWith(@"\"));
@@ -52,8 +52,8 @@ namespace InstallerLibUnitTests
                 Environment.SpecialFolder.System), @"spool\tools");
             embedFolder.targetfolderpath = @"parent\child\";
             string supportdir = @"C:\SupportFiles\SupportFolder";
-            EmbedFileCollection embedFileCollection = embedFolder.GetFiles(supportdir);
-            foreach (EmbedFilePair pair in embedFileCollection)
+            Dictionary<string, EmbedFileCollection> embedFileCollection = embedFolder.GetFiles(string.Empty, supportdir);
+            foreach (EmbedFilePair pair in embedFileCollection[string.Empty])
             {
                 Console.WriteLine("{0} -> {1}", pair.fullpath, pair.relativepath);
                 Assert.IsFalse(pair.relativepath.StartsWith(@"\"));
@@ -71,8 +71,8 @@ namespace InstallerLibUnitTests
                 Environment.SpecialFolder.System), @"spool\tools");
             embedFolder.targetfolderpath = @"\parent\child\";
             string supportdir = @"C:\SupportFiles\SupportFolder";
-            EmbedFileCollection embedFileCollection = embedFolder.GetFiles(supportdir);
-            foreach (EmbedFilePair pair in embedFileCollection)
+            Dictionary<string, EmbedFileCollection> embedFileCollection = embedFolder.GetFiles(string.Empty, supportdir);
+            foreach (EmbedFilePair pair in embedFileCollection[string.Empty])
             {
                 Console.WriteLine("{0} -> {1}", pair.fullpath, pair.relativepath);
                 Assert.IsFalse(pair.relativepath.StartsWith(@"\"));

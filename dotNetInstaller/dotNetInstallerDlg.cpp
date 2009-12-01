@@ -228,7 +228,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 				|| ! p_configuration->complete_command_silent.empty()
 				|| ! p_configuration->complete_command_basic.empty())
             {
-                ExtractCab(); // the command may need to execute a file
+                ExtractCab(L""); // the command may need to execute a file
             }
 
 			ExecuteCompleteCode(false);
@@ -337,7 +337,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		ClearError();
         SelectComponents();
 		SetControlValues();
-        ExtractCab();
+        ExtractCab(L"");
 		
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
@@ -450,13 +450,18 @@ void CdotNetInstallerDlg::OnBnClickedCancel()
 	OnCancel();
 }
 
-void CdotNetInstallerDlg::ExtractCab()
+void CdotNetInstallerDlg::ExtractCab(const std::wstring& id)
 {
     ExtractCabDlg dlg;
-
-	ExtractCabProcessorPtr p_extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, & dlg));	
-	if (p_extractcab->GetCabCount() == 0)
+	ExtractCabProcessorPtr p_extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, id, & dlg));	
+	int cab_count = p_extractcab->GetCabCount();
+	if (cab_count == 0)
+	{
+		LOG(L"Extracting embedded files for component '" << (id.empty() ? L"*" : id) << L"': NO FILES EMBEDDED");
 		return;
+	}
+
+	LOG(L"Extracting embedded files for component '" << (id.empty() ? L"*" : id) << L"': " << cab_count << L" CAB(s)");
 
 	if (InstallUILevelSetting::Instance->IsAnyUI())
 		dlg.LoadComponent(m_configuration, p_extractcab);
@@ -580,6 +585,10 @@ void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
 // IExecuteCallback
 bool CdotNetInstallerDlg::OnComponentExecBegin(const ComponentPtr& component)
 {
+	// embedded cab?
+	ExtractCab(component->id);
+
+	// download?
 	if (get(component->downloaddialog))
 	{
 		if (! RunDownloadConfiguration(component->downloaddialog))

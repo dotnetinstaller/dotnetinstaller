@@ -3,9 +3,10 @@
 #include "InstallerLog.h"
 #include "InstallerSession.h"
 
-ExtractComponent::ExtractComponent(HMODULE h)
+ExtractComponent::ExtractComponent(HMODULE h, const std::wstring& id)
 	: m_h(h)
 	, cancelled(false)
+	, component_id(GetNormalizedId(id))
 {
 
 }
@@ -22,9 +23,8 @@ int ExtractComponent::ExecOnThread()
 
 int ExtractComponent::GetCabCount() const
 {
-	int currentIndex = 1;	
-	std::wstring resname = TEXT("SETUP_");
-	resname.append(DVLib::towstring(currentIndex));
+	int currentIndex = 1;
+	std::wstring resname = GetResName(currentIndex);
 	
 	HRSRC l_res = FindResource(m_h, resname.c_str(), TEXT("RES_CAB"));
 	if (l_res == NULL)
@@ -33,8 +33,7 @@ int ExtractComponent::GetCabCount() const
 	do
 	{
 		currentIndex++;
-		resname = TEXT("SETUP_");
-		resname.append(DVLib::towstring(currentIndex));
+		resname = GetResName(currentIndex);
 		l_res = FindResource(m_h, resname.c_str(), TEXT("RES_CAB"));
 	} while(l_res);
 
@@ -43,10 +42,9 @@ int ExtractComponent::GetCabCount() const
 
 void ExtractComponent::ResolvePaths()
 {
-    LOG(L"Extracting CABs");
-
 	resolved_cab_path = cab_path.empty() ? InstallerSession::Instance->GetSessionTempPath() : cab_path; 
-	resolved_cab_path = InstallerSession::Instance->ExpandVariables(resolved_cab_path);	LOG(L"Cabpath: " << resolved_cab_path);
+	resolved_cab_path = InstallerSession::Instance->ExpandVariables(resolved_cab_path);	
+	LOG(L"Resolved CAB path '" << resolved_cab_path << L"' for component '" << (component_id.empty() ? L"*" : component_id) << L"'");
 	DVLib::DirectoryCreate(resolved_cab_path);
 }
 
@@ -55,8 +53,7 @@ void ExtractComponent::Cleanup()
 	int cabCount = GetCabCount();
 	for (int i = 1; i <= cabCount; i++)
 	{
-		std::wstring resname = TEXT("SETUP_");
-		resname.append(DVLib::towstring(i));
+		std::wstring resname = GetResName(i);
 		std::wstring resolved_cab_file = DVLib::DirectoryCombine(resolved_cab_path, resname + L".CAB");
 
 		if (DVLib::FileExists(resolved_cab_file))
@@ -76,8 +73,7 @@ void ExtractComponent::Write()
 
 	for (int i = 1; i <= cabCount; i++)
 	{
-		std::wstring resname = TEXT("SETUP_");
-		resname.append(DVLib::towstring(i));
+		std::wstring resname = GetResName(i);
 
         if (cancelled)
         {
@@ -119,7 +115,7 @@ void ExtractComponent::Extract()
 	callbacks.f_OnAfterCopyFile = & ExtractComponent::OnAfterCopyFile;
 	extract.SetCallbacks(& callbacks);
 
-	std::wstring resolved_cab_file = DVLib::DirectoryCombine(resolved_cab_path, TEXT("SETUP_1.CAB"));
+	std::wstring resolved_cab_file = DVLib::DirectoryCombine(resolved_cab_path, GetResName(1) + L".CAB");
 	LOG(L"Cabfile: " << resolved_cab_file);
 
 	CHECK_BOOL(extract.CreateFDIContext(),
@@ -160,4 +156,28 @@ std::vector<std::wstring> ExtractComponent::GetCabFiles() const
 	std::vector<wchar_t> v_buffer = DVLib::LoadResourceData<wchar_t>(m_h, L"RES_CAB_LIST", L"CUSTOM");
 	std::wstring s_buffer(& * v_buffer.begin(), v_buffer.size());
 	return DVLib::split(s_buffer, L"\r\n");
+}
+
+std::wstring ExtractComponent::GetNormalizedId(const std::wstring& id)
+{
+	std::wstring result(id);
+	for (unsigned int i = 0; i < result.length(); i++)
+	{
+		result[i] = isalnum(result[i]) 
+			? (wchar_t) toupper(result[i])
+			: L'_';
+	}
+	return result;
+}
+
+std::wstring ExtractComponent::GetResName(int currentIndex) const
+{
+	std::wstring resname = TEXT("SETUP_");
+	if (! component_id.empty())
+	{
+		resname += component_id;
+		resname += L'_';
+	}
+	resname.append(DVLib::towstring(currentIndex));
+	return resname;
 }

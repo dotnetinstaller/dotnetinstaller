@@ -1,6 +1,7 @@
 using System;
 using System.Xml;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.IO;
 
 namespace InstallerLib
@@ -106,11 +107,20 @@ namespace InstallerLib
 
         public event EventHandler SourceFilePathChanged;
 
-        public override EmbedFileCollection GetFiles(string supportfiles)
+        public override Dictionary<string, EmbedFileCollection> GetFiles(string id, string supportdir)
         {
-            EmbedFileCollection fileCollection = base.GetFiles(supportfiles);
-            fileCollection.AddDirectory(sourcefolderpath, targetfolderpath);
-            return fileCollection;
+            Dictionary<string, EmbedFileCollection> files = base.GetFiles(id, supportdir);
+
+            string normalizedId = EmbedFileCollection.GetNormalizedId(id);
+            EmbedFileCollection coll = null;
+            if (!files.TryGetValue(normalizedId, out coll))
+            {
+                coll = new EmbedFileCollection(supportdir);
+                files.Add(normalizedId, coll);
+            }
+
+            coll.AddDirectory(sourcefolderpath, targetfolderpath);
+            return files;
         }
     }
 }

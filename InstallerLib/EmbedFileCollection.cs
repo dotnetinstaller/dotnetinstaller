@@ -241,6 +241,23 @@ namespace InstallerLib
             return files;
         }
 
+        /// <summary>
+        /// Returns a normalized id acceptable for resources.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static string GetNormalizedId(string id)
+        {
+            string result = string.Empty;
+            for (int i = 0; i < id.Length; i++)
+            {
+                result += Char.IsLetterOrDigit(id[i])
+                    ? Char.ToUpper(id[i])
+                    : '_';
+            }
+            return result;
+        }
+
         #region IEnumerable<EmbedFilePair> Members
 
         public IEnumerator<EmbedFilePair> GetEnumerator()

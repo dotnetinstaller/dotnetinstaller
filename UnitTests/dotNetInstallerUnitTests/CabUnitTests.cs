@@ -82,6 +82,41 @@ namespace dotNetInstallerUnitTests
         }
 
         [Test]
+        public void TestExtractCabPerComponent()
+        {
+            InstallerLinkerArguments args = new InstallerLinkerArguments();
+            args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", args.config);
+            args.embed = true;
+            args.apppath = Path.GetTempPath();
+            args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
+            args.template = dotNetInstallerExeUtils.Executable;
+            // create a self-extracting bootstrapper
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ComponentCmd component = new ComponentCmd();
+            setupConfiguration.Children.Add(component);
+            EmbedFile embedfile = new EmbedFile();
+            embedfile.sourcefilepath = args.config;
+            embedfile.targetfilepath = Path.GetFileName(args.config);
+            component.Children.Add(embedfile);
+            configFile.SaveAs(args.config);
+            Console.WriteLine("Linking '{0}'", args.output);
+            InstallerLinker.CreateInstaller(args);
+            Assert.IsTrue(File.Exists(args.output));
+            // execute dotNetInstaller
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, "/ExtractCab"));
+            // this should have created a directory called SupportFiles in the current directory
+            string supportFilesPath = Path.Combine(Path.GetDirectoryName(args.output), "SupportFiles");
+            Console.WriteLine("Checking {0}", supportFilesPath);
+            Assert.IsTrue(Directory.Exists(supportFilesPath), string.Format("Missing {0}", supportFilesPath));
+            File.Delete(args.config);
+            File.Delete(args.output);
+            Directory.Delete(supportFilesPath, true);
+        }
+
+        [Test]
         public void TestDisplayCab()
         {
             // create a self-extracting bootstrapper

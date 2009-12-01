@@ -16,10 +16,11 @@ namespace InstallerLibUnitTests
             EmbedFile embedFile = new EmbedFile();
             embedFile.sourcefilepath = Path.Combine(Environment.CurrentDirectory, @"InstallerLibUnitTests.dll");
             string supportdir = @"C:\SupportFiles\SupportFile";
-            EmbedFileCollection embedFileCollection = embedFile.GetFiles(supportdir);
+            Dictionary<string, EmbedFileCollection> embedFileCollection = embedFile.GetFiles(string.Empty, supportdir);
             Assert.AreEqual(1, embedFileCollection.Count);
-            Assert.AreEqual(embedFile.sourcefilepath, embedFileCollection[0].fullpath);
-            Assert.AreEqual(@"InstallerLibUnitTests.dll", embedFileCollection[0].relativepath);
+            Assert.AreEqual(1, embedFileCollection[string.Empty].Count);
+            Assert.AreEqual(embedFile.sourcefilepath, embedFileCollection[string.Empty][0].fullpath);
+            Assert.AreEqual(@"InstallerLibUnitTests.dll", embedFileCollection[string.Empty][0].relativepath);
         }
 
         [Test]
@@ -29,10 +30,11 @@ namespace InstallerLibUnitTests
             embedFile.sourcefilepath = Path.Combine(Environment.CurrentDirectory, @"InstallerLibUnitTests.dll");
             embedFile.targetfilepath = @"parent\child\InstallerLibUnitTests.dll";
             string supportdir = @"C:\SupportFiles\SupportFile";
-            EmbedFileCollection embedFileCollection = embedFile.GetFiles(supportdir);
+            Dictionary<string, EmbedFileCollection> embedFileCollection = embedFile.GetFiles(string.Empty, supportdir);
             Assert.AreEqual(1, embedFileCollection.Count);
-            Assert.AreEqual(embedFile.sourcefilepath, embedFileCollection[0].fullpath);
-            Assert.AreEqual(@"parent\child\InstallerLibUnitTests.dll", embedFileCollection[0].relativepath);
+            Assert.AreEqual(1, embedFileCollection[string.Empty].Count);
+            Assert.AreEqual(embedFile.sourcefilepath, embedFileCollection[string.Empty][0].fullpath);
+            Assert.AreEqual(@"parent\child\InstallerLibUnitTests.dll", embedFileCollection[string.Empty][0].relativepath);
         }
 
         [Test]
@@ -42,10 +44,11 @@ namespace InstallerLibUnitTests
             embedFile.sourcefilepath = Path.Combine(Environment.CurrentDirectory, @"InstallerLibUnitTests.dll");
             embedFile.targetfilepath = @"#APPPATH\InstallerLibUnitTests.dll";
             string supportdir = @"C:\SupportFiles\SupportFile";
-            EmbedFileCollection embedFileCollection = embedFile.GetFiles(supportdir);
+            Dictionary<string, EmbedFileCollection> embedFileCollection = embedFile.GetFiles(string.Empty, supportdir);
             Assert.AreEqual(1, embedFileCollection.Count);
-            Assert.AreEqual(embedFile.sourcefilepath, embedFileCollection[0].fullpath);
-            Assert.AreEqual("InstallerLibUnitTests.dll", embedFileCollection[0].relativepath);
+            Assert.AreEqual(1, embedFileCollection[string.Empty].Count);
+            Assert.AreEqual(embedFile.sourcefilepath, embedFileCollection[string.Empty][0].fullpath);
+            Assert.AreEqual("InstallerLibUnitTests.dll", embedFileCollection[string.Empty][0].relativepath);
         }
 
         [Test]
@@ -55,10 +58,10 @@ namespace InstallerLibUnitTests
             embedFile.sourcefilepath = @"#APPPATH\InstallerLibUnitTests.dll";
             embedFile.targetfilepath = @"#APPPATH\InstallerLibUnitTests.dll";
             string supportdir = Environment.CurrentDirectory;
-            EmbedFileCollection embedFileCollection = embedFile.GetFiles(supportdir);
+            Dictionary<string, EmbedFileCollection> embedFileCollection = embedFile.GetFiles(string.Empty, supportdir);
             Assert.AreEqual(1, embedFileCollection.Count);
-            Assert.AreEqual(Path.Combine(Environment.CurrentDirectory, "InstallerLibUnitTests.dll"), embedFileCollection[0].fullpath);
-            Assert.AreEqual("InstallerLibUnitTests.dll", embedFileCollection[0].relativepath);
+            Assert.AreEqual(Path.Combine(Environment.CurrentDirectory, "InstallerLibUnitTests.dll"), embedFileCollection[string.Empty][0].fullpath);
+            Assert.AreEqual("InstallerLibUnitTests.dll", embedFileCollection[string.Empty][0].relativepath);
         }
     }
 }

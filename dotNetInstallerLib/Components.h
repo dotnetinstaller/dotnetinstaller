@@ -24,4 +24,12 @@ public:
 	// execute components, returns true if all succeeded
 	int Exec(IExecuteCallback * callback);
 	virtual std::wstring GetString(int indent = 0) const;
+	// return iterator for beginning of mutable sequence
+	iterator begin() { return std::vector<ComponentPtr>::begin(); }
+	// return iterator for beginning of nonmutable sequence
+	const_iterator begin() const { return std::vector<ComponentPtr>::begin(); }
+	// return iterator for end of mutable sequence
+	iterator end() { return std::vector<ComponentPtr>::end(); }
+	// return iterator for end of nonmutable sequence
+	const_iterator end() const { return std::vector<ComponentPtr>::end(); }
 };

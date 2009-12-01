@@ -23,6 +23,9 @@ public:
 	int Run();
 	// string representation of this configuration
 	std::wstring GetString() const;
+	// configuration iterators
+	std::vector<ConfigurationPtr>::const_iterator begin() const { return Configurations::begin(); }
+	std::vector<ConfigurationPtr>::const_iterator end() const { return Configurations::end(); }
 };
 
 typedef shared_any<ConfigFileManager *, close_delete> ConfigFileManagerPtr;

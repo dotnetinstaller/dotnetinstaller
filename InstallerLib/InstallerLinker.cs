@@ -94,75 +94,101 @@ namespace InstallerLib
             // embedded files
             if (args.embed)
             {
-                args.WriteLine(string.Format("Compressing files from \"{0}\"", supportdir));
-
-                EmbedFileCollection c_files = configfile.GetFiles(supportdir);
-                if (args.embedFiles != null)
-                {
-                    foreach (string filename in args.embedFiles)
-                    {
-                        string fullpath = Path.Combine(args.apppath, filename);
-                        c_files.Add(new EmbedFilePair(fullpath, filename));
-                    }
-                }
-
-                if (args.embedFolders != null)
-                {
-                    foreach (string folder in args.embedFolders)
-                    {
-                        c_files.AddDirectory(folder);
-                    }
-                }
-
-                c_files.CheckFilesExist(args);
-                c_files.CheckFileAttributes(args);
-
-                ArrayList files = c_files.GetFilePairs();
-
-                // create a temporary directory for CABs
-                string cabtemp = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-                Directory.CreateDirectory(cabtemp);
-                args.WriteLine(string.Format("Writing CABs to \"{0}\"", cabtemp));
-
-                // compress new CABs
-                string cabname = Path.Combine(cabtemp, "SETUP_%d.CAB");
-                Compress cab = new Compress();
                 long totalSize = 0;
-                cab.evFilePlaced += delegate(string s_File, int s32_FileSize, bool bContinuation)
+                List<String> allFilesList = new List<string>();
+
+                args.WriteLine(string.Format("Compressing files in \"{0}\"", supportdir));
+                Dictionary<string, EmbedFileCollection> all_files = configfile.GetFiles(string.Empty, supportdir);
+                // ensure at least one for additional command-line parameters
+                if (all_files.Count == 0) all_files.Add(string.Empty, new EmbedFileCollection(supportdir));
+                Dictionary<string, EmbedFileCollection>.Enumerator enumerator = all_files.GetEnumerator();
+                while(enumerator.MoveNext())
                 {
-                    if (! bContinuation)
+                    EmbedFileCollection c_files = enumerator.Current.Value;
+
+                    // add additional command-line files to the root CAB
+                    if (string.IsNullOrEmpty(enumerator.Current.Key))
                     {
-                        totalSize += s32_FileSize;
-                        args.WriteLine(String.Format(" {0} - {1}", s_File, EmbedFileCollection.FormatBytes(s32_FileSize)));
+                        if (args.embedFiles != null)
+                        {
+                            foreach (string filename in args.embedFiles)
+                            {
+                                string fullpath = Path.Combine(args.apppath, filename);
+                                c_files.Add(new EmbedFilePair(fullpath, filename));
+                            }
+                        }
+
+                        if (args.embedFolders != null)
+                        {
+                            foreach (string folder in args.embedFolders)
+                            {
+                                c_files.AddDirectory(folder);
+                            }
+                        }
                     }
 
-                    return 0;
-                };
-                cab.CompressFileList(files, cabname, true, true, args.embedResourceSize);
-                
-                // embed new CABs
-                args.WriteLine("Embedding CABs");
-                foreach (string cabfile in Directory.GetFiles(cabtemp))
-                {
-                    args.WriteLine(string.Format(" {0} - {1}", Path.GetFileName(cabfile),
-                        Path.GetFileNameWithoutExtension(cabfile)));
-                    ResourceUpdate.WriteFile(args.output, new ResourceId("RES_CAB"),
-                        new ResourceId(Path.GetFileNameWithoutExtension(cabfile).ToUpper()),
-                        ResourceUtil.NEUTRALLANGID, cabfile);
+                    if (c_files.Count == 0)
+                        continue;
+
+                    c_files.CheckFilesExist(args);
+                    c_files.CheckFileAttributes(args);
+
+                    ArrayList files = c_files.GetFilePairs();
+
+                    // create a temporary directory for CABs
+                    string cabtemp = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+                    Directory.CreateDirectory(cabtemp);
+                    args.WriteLine(string.Format("Writing CABs to \"{0}\"", cabtemp));
+
+                    // compress new CABs
+                    string cabname = string.IsNullOrEmpty(enumerator.Current.Key)
+                        ? Path.Combine(cabtemp, "SETUP_%d.CAB")
+                        : Path.Combine(cabtemp, string.Format("SETUP_{0}_%d.CAB", enumerator.Current.Key));
+
+                    Compress cab = new Compress();
+                    long currentSize = 0;
+                    cab.evFilePlaced += delegate(string s_File, int s32_FileSize, bool bContinuation)
+                    {
+                        if (!bContinuation)
+                        {
+                            totalSize += s32_FileSize;
+                            currentSize += s32_FileSize;
+                            args.WriteLine(String.Format(" {0} - {1}", s_File, EmbedFileCollection.FormatBytes(s32_FileSize)));
+                        }
+
+                        return 0;
+                    };
+                    cab.CompressFileList(files, cabname, true, true, args.embedResourceSize);
+
+                    // embed new CABs
+                    args.WriteLine("Embedding CABs");
+                    foreach (string cabfile in Directory.GetFiles(cabtemp))
+                    {
+                        args.WriteLine(string.Format(" {0} - {1}", Path.GetFileName(cabfile),
+                            Path.GetFileNameWithoutExtension(cabfile)));
+                        ResourceUpdate.WriteFile(args.output, new ResourceId("RES_CAB"),
+                            new ResourceId(Path.GetFileNameWithoutExtension(cabfile)),
+                            ResourceUtil.NEUTRALLANGID, cabfile);
+                    }
+
+                    StringBuilder fileslist = new StringBuilder();
+                    fileslist.AppendLine(string.Format("{0} CAB size: {1}", 
+                        string.IsNullOrEmpty(enumerator.Current.Key) ? "*" : enumerator.Current.Key,
+                        EmbedFileCollection.FormatBytes(currentSize)));
+                    fileslist.Append(" " + String.Join("\r\n ", c_files.GetFileValuesWithSize()));
+                    allFilesList.Add(fileslist.ToString());
+
+                    args.WriteLine(string.Format("Cleaning up \"{0}\"", cabtemp));
+                    Directory.Delete(cabtemp, true);
                 }
 
                 args.WriteLine("Embedding CAB directory");
-                StringBuilder fileslist = new StringBuilder();
-                fileslist.AppendLine(string.Format("Total embedded CAB size: {0}",
-                    EmbedFileCollection.FormatBytes(totalSize)));
-                fileslist.AppendLine();
-                fileslist.Append(String.Join("\r\n", c_files.GetFileValuesWithSize()));
-                byte[] fileslist_b = Encoding.Unicode.GetBytes(fileslist.ToString());
+                StringBuilder filesDirectory = new StringBuilder();
+                filesDirectory.AppendLine(string.Format("Total CAB size: {0}\r\n", EmbedFileCollection.FormatBytes(totalSize)));
+                filesDirectory.AppendLine(string.Join("\r\n\r\n", allFilesList.ToArray()));
+                byte[] filesDirectory_b = Encoding.Unicode.GetBytes(filesDirectory.ToString());
                 ResourceUpdate.Write(args.output, new ResourceId("CUSTOM"), new ResourceId("RES_CAB_LIST"),
-                    ResourceUtil.NEUTRALLANGID, fileslist_b);
-
-                args.WriteLine(string.Format("Cleaning up \"{0}\"", cabtemp));
-                Directory.Delete(cabtemp, true);
+                    ResourceUtil.NEUTRALLANGID, filesDirectory_b);
             }
 
             if (! string.IsNullOrEmpty(args.manifest))

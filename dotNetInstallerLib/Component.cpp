@@ -48,6 +48,7 @@ void Component::Load(TiXmlElement * node)
 {
 	id = XML_ATTRIBUTE(node->Attribute("id"));
 	display_name = XML_ATTRIBUTE(node->Attribute("display_name"));
+	if (id.empty()) id = display_name;
 	status_installed = XML_ATTRIBUTE(node->Attribute("status_installed"));
 	os_filter_greater = XML_ATTRIBUTE(node->Attribute("os_filter_greater"));
 	os_filter_smaller = XML_ATTRIBUTE(node->Attribute("os_filter_smaller"));

@@ -239,7 +239,7 @@ namespace InstallerLib
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
-            e.XmlWriter.WriteAttributeString("id", m_id);
+            e.XmlWriter.WriteAttributeString("id", string.IsNullOrEmpty(m_id) ? m_display_name : m_id);
             e.XmlWriter.WriteAttributeString("display_name", m_display_name);
             e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
             e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
@@ -307,6 +307,17 @@ namespace InstallerLib
             l_Comp.FromXml(element);
 
             return l_Comp;
+        }
+
+        /// <summary>
+        /// Return files to embed for this component.
+        /// </summary>
+        /// <param name="parentid"></param>
+        /// <param name="supportdir"></param>
+        /// <returns></returns>
+        public override Dictionary<string, EmbedFileCollection> GetFiles(string parentid, string supportdir)
+        {
+            return base.GetFiles(id, supportdir);
         }
     }
 }

@@ -107,10 +107,19 @@ namespace InstallerLib
 
         public event EventHandler SourceFilePathChanged;
 
-        public override EmbedFileCollection GetFiles(string supportdir)
+        public override Dictionary<string, EmbedFileCollection> GetFiles(string id, string supportdir)
         {
-            EmbedFileCollection files = base.GetFiles(supportdir);
-            files.Add(sourcefilepath, targetfilepath);
+            Dictionary<string, EmbedFileCollection> files = base.GetFiles(id, supportdir);
+
+            string normalizedId = EmbedFileCollection.GetNormalizedId(id);
+            EmbedFileCollection coll = null;
+            if (! files.TryGetValue(normalizedId, out coll))
+            {
+                coll = new EmbedFileCollection(supportdir);
+                files.Add(normalizedId, coll);
+            }
+
+            coll.Add(sourcefilepath, targetfilepath);
             return files;
         }
     }

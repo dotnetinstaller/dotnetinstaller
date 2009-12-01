@@ -5,7 +5,7 @@ class ExtractCabProcessor : public ExtractComponent
 private:
 	CDialog * m_pDialog;
 public:
-    ExtractCabProcessor(HMODULE h, CDialog * pDialog);
+	ExtractCabProcessor(HMODULE h, const std::wstring& id, CDialog * pDialog);
 	void OnStatus(const std::wstring& status);
 };
 

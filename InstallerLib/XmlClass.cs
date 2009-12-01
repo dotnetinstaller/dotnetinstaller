@@ -121,12 +121,23 @@ namespace InstallerLib
             set { m_children = value; }
         }
 
-        public virtual EmbedFileCollection GetFiles(string supportdir)
+        public virtual Dictionary<String, EmbedFileCollection> GetFiles(string parentid, string supportdir)
         {
-            EmbedFileCollection c_files = new EmbedFileCollection(supportdir);
+            Dictionary<String, EmbedFileCollection> c_files = new Dictionary<String, EmbedFileCollection>();
             foreach (XmlClass c in Children)
             {
-                c_files.AddRange(c.GetFiles(supportdir));
+                Dictionary<String, EmbedFileCollection>.Enumerator enumerator = c.GetFiles(parentid, supportdir).GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    EmbedFileCollection coll = null;
+                    if (! c_files.TryGetValue(enumerator.Current.Key, out coll))
+                    {
+                        coll = new EmbedFileCollection(supportdir);
+                        c_files.Add(enumerator.Current.Key, coll);
+                    }
+
+                    coll.AddRange(enumerator.Current.Value);
+                }
             }
             return c_files;
         }
@@ -165,12 +176,12 @@ namespace InstallerLib
             }
         }
 
-        protected bool ReadAttributeValue<T>(XmlElementEventArgs e, string value, ref T propertyName)            
+        protected bool ReadAttributeValue<T>(XmlElementEventArgs e, string value, ref T propertyName)
         {
             XmlAttribute xmlattrib = e.XmlElement.Attributes[value];
             if (xmlattrib != null && !string.IsNullOrEmpty(xmlattrib.InnerText))
             {
-                propertyName = (T) Enum.Parse(typeof(T), xmlattrib.InnerText);
+                propertyName = (T)Enum.Parse(typeof(T), xmlattrib.InnerText);
                 return true;
             }
             else
@@ -182,7 +193,7 @@ namespace InstallerLib
         protected bool ReadAttributeValue(XmlElementEventArgs e, string value, ref Rectangle propertyName)
         {
             XmlAttribute xmlattrib = e.XmlElement.Attributes[value];
-            if (xmlattrib != null && ! string.IsNullOrEmpty(xmlattrib.InnerText))
+            if (xmlattrib != null && !string.IsNullOrEmpty(xmlattrib.InnerText))
             {
                 propertyName = XmlRectangle.FromString(xmlattrib.InnerText);
                 return true;
@@ -335,7 +346,7 @@ namespace InstallerLib
             {
                 get
                 {
-                    return (XmlClass) this.wrapped.Current;
+                    return (XmlClass)this.wrapped.Current;
                 }
             }
 
@@ -343,7 +354,7 @@ namespace InstallerLib
             {
                 get
                 {
-                    return (XmlClass) this.wrapped.Current;
+                    return (XmlClass)this.wrapped.Current;
                 }
             }
 

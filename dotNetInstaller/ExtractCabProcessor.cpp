@@ -4,8 +4,8 @@
 #include "InstallStatus.h"
 #include "Resource.h"
 
-ExtractCabProcessor::ExtractCabProcessor(HMODULE h, CDialog * pDialog)
-    : ExtractComponent(h)
+ExtractCabProcessor::ExtractCabProcessor(HMODULE h, const std::wstring& id, CDialog * pDialog)
+    : ExtractComponent(h, id)
 	, m_pDialog(pDialog)
 {
 

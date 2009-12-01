@@ -6,7 +6,8 @@ class CdotNetInstallerApp : public CWinApp
 private:
 	int m_rc;
 	void DisplayHelp();
-    void ExtractCab();
+    void ExtractAllCabs();
+	void ExtractCab(const std::wstring& id);
 	void DisplayCab();
 	void DisplayConfig();
 public:

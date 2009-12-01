@@ -27,7 +27,7 @@ private:
 	DVLib::LcidType m_lcidtype;
 	ConfigurationPtr m_configuration;
 	InstallComponentDlg m_component_dlg;
-    void ExtractCab();
+	void ExtractCab(const std::wstring& id);
     void SelectComponents();
 	void DisplaySplash();
     // move a window to the coordinates defined by a rectangle with defaults

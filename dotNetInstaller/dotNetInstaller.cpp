@@ -74,7 +74,7 @@ BOOL CdotNetInstallerApp::InitInstance()
 		// just extract the CABs
 		else if (InstallerCommandLineInfo::Instance->ExtractCab())
 		{
-			ExtractCab();
+			ExtractAllCabs();
 			return FALSE;
 		}
 		// just display the configuration
@@ -141,15 +141,33 @@ void CdotNetInstallerApp::DisplayHelp()
 void CdotNetInstallerApp::DisplayCab()
 {
     InstallComponentDlg dlg;
-	ExtractCabProcessorPtr extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, & dlg));
+	ExtractCabProcessorPtr extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, L"", & dlg));
 	DniMessageBox::Show(DVLib::join(extractcab->GetCabFiles(), L"\r\n"), MB_OK|MB_ICONINFORMATION);
 }
 
-void CdotNetInstallerApp::ExtractCab()
+void CdotNetInstallerApp::ExtractAllCabs()
 {
-    ExtractCabDlg dlg;
+	ExtractCab(L"");
+	ConfigFileManagerPtr config(new ConfigFileManager());
+	config->Load();
+	for each(const ConfigurationPtr& configuration in * config)
+	{
+		if (configuration->type != configuration_install)
+			continue;
 
-	ExtractCabProcessorPtr p_extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, & dlg));	
+		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(configuration));
+		for each (const ComponentPtr& component in p_configuration->components)
+		{
+			ExtractCab(component->id);
+		}
+	}
+}
+
+void CdotNetInstallerApp::ExtractCab(const std::wstring& id)
+{
+	ExtractCabDlg dlg;
+
+	ExtractCabProcessorPtr p_extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, id, & dlg));	
 	if (p_extractcab->GetCabCount() == 0)
 		return;
 
