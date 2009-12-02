@@ -168,7 +168,7 @@ void CdotNetInstallerApp::ExtractCab(const std::wstring& id)
 	ExtractCabDlg dlg;
 
 	ExtractCabProcessorPtr p_extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, id, & dlg));	
-	if (p_extractcab->GetCabCount() == 0)
+	if (! p_extractcab->HasResource())
 		return;
 
 	ConfigurationPtr configuration(new InstallConfiguration());

@@ -169,7 +169,6 @@ namespace InstallerLibUnitTests
                 args.template = dotNetInstallerExeUtils.Executable;
                 args.embedFolders = new string[] { binPath };
                 args.embed = true;
-                args.embedResourceSize = 0;
                 InstallerLib.InstallerLinker.CreateInstaller(args);
                 // check that the linker generated output
                 Assert.IsTrue(File.Exists(args.output));
@@ -210,7 +209,6 @@ namespace InstallerLibUnitTests
                 args.template = dotNetInstallerExeUtils.Executable;
                 args.embedFolders = new string[] { binPath };
                 args.embed = false;
-                args.embedResourceSize = 0;
                 InstallerLib.InstallerLinker.CreateInstaller(args);
                 // check that the linker generated output
                 Assert.IsTrue(File.Exists(args.output));
@@ -219,48 +217,6 @@ namespace InstallerLibUnitTests
                 {
                     ri.Load(args.output);                    
                     Assert.IsFalse(ri.Resources.ContainsKey(new ResourceId("RES_CAB")));
-                }
-            }
-            finally
-            {
-                if (File.Exists(args.config))
-                    File.Delete(args.config);
-                if (File.Exists(args.output))
-                    File.Delete(args.output);
-            }
-        }
-
-        [Test]
-        public void TestLinkEmbedFilesAndFoldersSegments()
-        {
-            InstallerLinkerArguments args = new InstallerLinkerArguments();
-            try
-            {
-                Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
-                string binPath = Path.GetDirectoryName(HttpUtility.UrlDecode(uri.AbsolutePath));
-                ConfigFile configFile = new ConfigFile();
-                SetupConfiguration setupConfiguration = new SetupConfiguration();
-                configFile.Children.Add(setupConfiguration);
-                args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
-                Console.WriteLine("Writing '{0}'", args.config);
-                configFile.SaveAs(args.config);
-                args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
-                Console.WriteLine("Linking '{0}'", args.output);
-                args.template = dotNetInstallerExeUtils.Executable;
-                args.embedFolders = new string[] { binPath };
-                args.embed = true;
-                args.embedResourceSize = 64 * 1024;
-                InstallerLib.InstallerLinker.CreateInstaller(args);
-                // check that the linker generated output
-                Assert.IsTrue(File.Exists(args.output));
-                Assert.IsTrue(new FileInfo(args.output).Length > 0);
-                using (ResourceInfo ri = new ResourceInfo())
-                {
-                    ri.Load(args.output);
-                    List<Resource> custom = ri.Resources[new ResourceId("RES_CAB")];
-                    Assert.IsNotNull(custom);
-                    Console.WriteLine("Segments: {0}", custom.Count);
-                    Assert.IsTrue(custom.Count > 1);
                 }
             }
             finally

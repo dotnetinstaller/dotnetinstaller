@@ -57,7 +57,13 @@
                     the local internet cache entry for the url to download.</li>
                 <li>Cabbing now embeds files that belong in components in separate resource streams,
                     extracting only those files that are necessary for installation of a particular
-                    component. Embedded files outside of components continue to be always extracted.</li>
+                    component. Embedded files outside of components continue to always be extracted.</li>
+                <li>CAB extraction uses the memory-mapped resource streams and no longer writes temporary
+                    files to extract embedded components. This reduces disk space requirements for temporary
+                    space by half.</li>
+                <li>Removed <code>/EmbedResourceSize &lt;size in bytes&gt;</code> from installer linker.
+                    CAB extraction no longer writes temporary files, so the size of the CAB no longer
+                    matters.</li>
             </ul>
         </li>
         <li><strong>Bugs</strong>:

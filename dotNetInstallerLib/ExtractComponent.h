@@ -13,12 +13,13 @@ public:
 	// resolved location of the extracted CAB
 	std::wstring resolved_cab_path;
 	ExtractComponent(HMODULE h, const std::wstring& id);
-	int GetCabCount() const;
 	std::vector<std::wstring> GetCabFiles() const;
+	// callbacks
 	static BOOL OnBeforeCopyFile(Cabinet::CExtract::kCabinetFileInfo * k_FI, void* p_Param);
 	static void OnAfterCopyFile(wchar_t * s8_File, Cabinet::CMemory *, void* p_Param);
 	// return a normalized component id
 	static std::wstring GetNormalizedId(const std::wstring& id);
+	bool HasResource() const;
 protected:
 	int ExecOnThread();
 	virtual void OnStatus(const std::wstring&) = 0;
@@ -27,8 +28,6 @@ private:
 	ComponentPtr m_pComponent;
     void ResolvePaths();
 	void Extract();
-	void Write();
-	void Cleanup();
 	// returns a setup resource name at a given index
-	std::wstring GetResName(int currentIndex) const;
+	std::wstring GetResName() const;
 };
