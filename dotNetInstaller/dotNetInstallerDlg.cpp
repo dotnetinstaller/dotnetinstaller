@@ -454,13 +454,14 @@ void CdotNetInstallerDlg::ExtractCab(const std::wstring& id)
 {
     ExtractCabDlg dlg;
 	ExtractCabProcessorPtr p_extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, id, & dlg));	
-	if (! p_extractcab->HasResource())
+	int cab_count = p_extractcab->GetCabCount();
+	if (cab_count == 0)
 	{
 		LOG(L"Extracting embedded files for component '" << (id.empty() ? L"*" : id) << L"': NO FILES EMBEDDED");
 		return;
 	}
 
-	LOG(L"Extracting embedded files for component '" << (id.empty() ? L"*" : id) << L"'");
+	LOG(L"Extracting embedded files for component '" << (id.empty() ? L"*" : id) << L"': " << cab_count << L" CAB(s)");
 
 	if (InstallUILevelSetting::Instance->IsAnyUI())
 		dlg.LoadComponent(m_configuration, p_extractcab);

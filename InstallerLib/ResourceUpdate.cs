@@ -17,15 +17,14 @@ namespace InstallerLib
             UInt16 resourceLanguage, 
             string input)
         {
-            byte[] buffer;
             using (FileStream binaryStream = new FileStream(input, FileMode.Open, FileAccess.Read))
             {
-                buffer = new byte[binaryStream.Length];
-                binaryStream.Read(buffer, 0, (int)binaryStream.Length);
+                GenericResource resource = new GenericResource(resourceType, resourceName, resourceLanguage);
+                resource.Data = new byte[binaryStream.Length];
+                binaryStream.Read(resource.Data, 0, (int) binaryStream.Length);
                 binaryStream.Close();
+                resource.SaveTo(output);
             }
-
-            Write(output, resourceType, resourceName, resourceLanguage, buffer);
         }
 
         internal static void Write(

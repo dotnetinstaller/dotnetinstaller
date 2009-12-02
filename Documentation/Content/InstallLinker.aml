@@ -27,6 +27,7 @@ InstallerLinker: dotNetInstaller Packager (1.7)
 /Verbose[+|-]            Verbose output (short form /v)
 /EmbedFile:<string>      Additional files to embed (short form /f)
 /EmbedFolder:<string>    Additional folders, including subfolders to embed (short form /r)
+/EmbedResourceSize:<int> Max size, in bytes, of each embedded resource Default value:'172032000' (short form /z)
 /Icon:<string>           Icon for the executable (short form /i)
 /Manifest:<string>       Embed manifest (short form /m)
 @<file>                  Read response file for more options
@@ -50,6 +51,12 @@ InstallerLinker: dotNetInstaller Packager (1.7)
             </definition>
             <definedTerm>Verbose</definedTerm>
             <definition>Defaults to -, no verbose output.</definition>
+            <definedTerm>EmbedResourceSize</definedTerm>
+            <definition>
+              Defaults to 168MB. Set to 0 to embed a single large CAB and to a different value depending on your target
+              execution environment. Larger values require more RAM at execution time, but perform the CAB extraction
+              faster.
+            </definition>
           </definitionTable>
         </para>
       </content>

@@ -142,8 +142,8 @@ namespace InstallerLib
 
                     // compress new CABs
                     string cabname = string.IsNullOrEmpty(enumerator.Current.Key)
-                        ? Path.Combine(cabtemp, "SETUP.CAB")
-                        : Path.Combine(cabtemp, string.Format("SETUP_{0}.CAB", enumerator.Current.Key));
+                        ? Path.Combine(cabtemp, "SETUP_%d.CAB")
+                        : Path.Combine(cabtemp, string.Format("SETUP_{0}_%d.CAB", enumerator.Current.Key));
 
                     Compress cab = new Compress();
                     long currentSize = 0;
@@ -158,8 +158,7 @@ namespace InstallerLib
 
                         return 0;
                     };
-
-                    cab.CompressFileList(files, cabname, true, true, 0);
+                    cab.CompressFileList(files, cabname, true, true, args.embedResourceSize);
 
                     // embed new CABs
                     args.WriteLine("Embedding CABs");
