@@ -117,6 +117,47 @@ namespace dotNetInstallerUnitTests
         }
 
         [Test]
+        public void TestExtractAndRunCabPerComponent()
+        {
+            InstallerLinkerArguments args = new InstallerLinkerArguments();
+            args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", args.config);
+            args.embed = true;
+            args.apppath = Path.GetTempPath();
+            args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
+            args.template = dotNetInstallerExeUtils.Executable;
+            // create a self-extracting bootstrapper
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            setupConfiguration.cab_path = Path.Combine(Path.GetTempPath(), "testExtractAndRunCabPerComponent");
+            setupConfiguration.cab_path_autodelete = false;
+            configFile.Children.Add(setupConfiguration);
+            ComponentCmd component = new ComponentCmd();
+            component.command = "cmd.exe /C copy \"#CABPATH\\component\\before.xml\" \"#CABPATH\\component\\after.xml\"";
+            setupConfiguration.Children.Add(component);
+            EmbedFile embedfile = new EmbedFile();
+            embedfile.sourcefilepath = args.config;
+            embedfile.targetfilepath = @"component\before.xml";
+            component.Children.Add(embedfile);
+            configFile.SaveAs(args.config);
+            Console.WriteLine("Linking '{0}'", args.output);
+            InstallerLinker.CreateInstaller(args);
+            Assert.IsTrue(File.Exists(args.output));
+            // execute dotNetInstaller
+            string logfile = Path.Combine(Path.GetTempPath(), "testExtractAndRunCabPerComponent.log");
+            Console.WriteLine("Log: {0}", logfile);
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, string.Format("/qb /log /logfile \"{0}\"", logfile)));
+            string extractedComponentPath = Path.Combine(setupConfiguration.cab_path, "component");
+            Console.WriteLine("Checking {0}", extractedComponentPath);
+            Assert.IsTrue(Directory.Exists(extractedComponentPath), string.Format("Missing {0}", extractedComponentPath));
+            Assert.IsTrue(File.Exists(Path.Combine(Path.GetTempPath(), @"testExtractAndRunCabPerComponent\component\before.xml")));
+            Assert.IsTrue(File.Exists(Path.Combine(Path.GetTempPath(), @"testExtractAndRunCabPerComponent\component\after.xml")));
+            File.Delete(args.config);
+            File.Delete(args.output);
+            Directory.Delete(extractedComponentPath, true);
+        }
+
+        [Test]
         public void TestDisplayCab()
         {
             // create a self-extracting bootstrapper
@@ -139,6 +180,51 @@ namespace dotNetInstallerUnitTests
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, "/DisplayCab /qb"));
             File.Delete(args.config);
             File.Delete(args.output);
+        }
+
+        [Test]
+        public void TestExtractCabTwoComponentsSameName()
+        {
+            InstallerLinkerArguments args = new InstallerLinkerArguments();
+            args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", args.config);
+            args.embed = true;
+            args.apppath = Path.GetTempPath();
+            args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
+            args.template = dotNetInstallerExeUtils.Executable;
+            // create a self-extracting bootstrapper
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+
+            for (int i = 0; i < 2; i++)
+            {
+                ComponentCmd component = new ComponentCmd();
+                component.id = "component";
+                setupConfiguration.Children.Add(component);
+                EmbedFile embedfile = new EmbedFile();
+                embedfile.sourcefilepath = args.config;
+                embedfile.targetfilepath = string.Format("component{0}\\file.xml", i);
+                component.Children.Add(embedfile);
+            }
+
+            configFile.SaveAs(args.config);
+            Console.WriteLine("Linking '{0}'", args.output);
+            InstallerLinker.CreateInstaller(args);
+            Assert.IsTrue(File.Exists(args.output));
+            // execute dotNetInstaller
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, "/ExtractCab"));
+            // this should have created a directory called SupportFiles in the current directory
+            string supportFilesPath = Path.Combine(Path.GetDirectoryName(args.output), "SupportFiles");
+            Console.WriteLine("Checking {0}", supportFilesPath);
+            Assert.IsTrue(Directory.Exists(supportFilesPath), string.Format("Missing {0}", supportFilesPath));
+            Assert.IsTrue(Directory.Exists(supportFilesPath + @"\component0"));
+            Assert.IsTrue(File.Exists(supportFilesPath + @"\component0\file.xml"));
+            Assert.IsTrue(Directory.Exists(supportFilesPath + @"\component1"));
+            Assert.IsTrue(File.Exists(supportFilesPath + @"\component1\file.xml"));
+            File.Delete(args.config);
+            File.Delete(args.output);
+            Directory.Delete(supportFilesPath, true);
         }
     }
 }
