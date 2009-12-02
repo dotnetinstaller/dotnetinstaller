@@ -165,7 +165,7 @@ namespace InstallerLib
                     foreach (string cabfile in Directory.GetFiles(cabtemp))
                     {
                         args.WriteLine(string.Format(" {0} - {1}", Path.GetFileName(cabfile),
-                            Path.GetFileNameWithoutExtension(cabfile)));
+                            EmbedFileCollection.FormatBytes(new FileInfo(cabfile).Length)));
                         ResourceUpdate.WriteFile(args.output, new ResourceId("RES_CAB"),
                             new ResourceId(Path.GetFileNameWithoutExtension(cabfile)),
                             ResourceUtil.NEUTRALLANGID, cabfile);

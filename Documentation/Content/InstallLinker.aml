@@ -53,7 +53,7 @@ InstallerLinker: dotNetInstaller Packager (1.7)
             <definition>Defaults to -, no verbose output.</definition>
             <definedTerm>EmbedResourceSize</definedTerm>
             <definition>
-              Defaults to 168MB. Set to 0 to embed a single large CAB and to a different value depending on your target
+              Defaults to 128MB. Set to 0 to embed a single large CAB and to a different value depending on your target
               execution environment. Larger values require more RAM at execution time, but perform the CAB extraction
               faster.
             </definition>

@@ -17,14 +17,13 @@ namespace InstallerLib
             UInt16 resourceLanguage, 
             string input)
         {
+            GenericResource resource = new GenericResource(resourceType, resourceName, resourceLanguage);
             using (FileStream binaryStream = new FileStream(input, FileMode.Open, FileAccess.Read))
             {
-                GenericResource resource = new GenericResource(resourceType, resourceName, resourceLanguage);
                 resource.Data = new byte[binaryStream.Length];
-                binaryStream.Read(resource.Data, 0, (int) binaryStream.Length);
-                binaryStream.Close();
-                resource.SaveTo(output);
+                binaryStream.Read(resource.Data, 0, (int)binaryStream.Length);
             }
+            resource.SaveTo(output);            
         }
 
         internal static void Write(
