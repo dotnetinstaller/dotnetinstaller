@@ -6,6 +6,7 @@ using System.Data;
 using InstallerLib;
 using System.ComponentModel.Design;
 using System.IO;
+using SourceLibrary.Windows.Forms;
 
 namespace InstallerEditor
 {
@@ -89,11 +90,7 @@ namespace InstallerEditor
 
         public MainForm()
         {
-            //
-            // Required for Windows Form Designer support
-            //
             InitializeComponent();
-
         }
 
         /// <summary>
@@ -805,7 +802,14 @@ namespace InstallerEditor
 
         private void mnExit_Click(object sender, System.EventArgs e)
         {
-            Close();
+            try
+            {
+                Close();
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
         }
 
         private TreeNodeConfigFile m_TreeNodeConfigFile = null;
@@ -832,122 +836,101 @@ namespace InstallerEditor
 
         private bool OpenConfiguration()
         {
-            try
+            OpenFileDialog l_dg = new OpenFileDialog();
+            l_dg.Filter = "Xml Files(*.xml)|*.xml|All Files(*.*)|*.*";
+            l_dg.DefaultExt = "xml";
+            if (l_dg.ShowDialog(this) == DialogResult.OK)
             {
-                OpenFileDialog l_dg = new OpenFileDialog();
-                l_dg.Filter = "Xml Files(*.xml)|*.xml|All Files(*.*)|*.*";
-                l_dg.DefaultExt = "xml";
-                if (l_dg.ShowDialog(this) == DialogResult.OK)
-                {
-                    if (!CloseConfiguration())
-                        return false;
+                return OpenConfiguration(l_dg.FileName);
+            }
 
-                    ConfigFile l_File = new ConfigFile();
-                    l_File.Load(l_dg.FileName);
-                    
-                    if (! l_File.editor.IsCurrent())
-                    {
-                        DialogResult convertResult = MessageBox.Show(this, string.Format("Do you want to convert configuration file version {0} to {1}?", 
-                            l_File.editor.loaded_version, l_File.editor.current_version), "Convert config file?", 
-                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            return false;
+        }
 
-                        if (convertResult == DialogResult.No)
-                        {
-                            return false;
-                        }
-                    }
+        private bool OpenConfiguration(string filename)
+        {
+            if (!CloseConfiguration())
+                return false;
 
-                    m_TreeNodeConfigFile = new TreeNodeConfigFile(l_File);
-                    m_TreeNodeConfigFile.IsDirty = ! l_File.editor.IsCurrent();
-                    m_TreeNodeConfigFile.CreateChildNodes();
-                }
-                else
+            ConfigFile l_File = new ConfigFile();
+            l_File.Load(filename);
+
+            if (!l_File.editor.IsCurrent())
+            {
+                DialogResult convertResult = MessageBox.Show(this, string.Format("Do you want to convert configuration file version {0} to {1}?",
+                    l_File.editor.loaded_version, l_File.editor.current_version), "Convert config file?",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (convertResult == DialogResult.No)
                 {
                     return false;
                 }
+            }
 
-                RefreshMenu();
-                LoadTreeView(m_TreeNodeConfigFile);
-                statusLabel.Text = string.Format("Loaded {0}", m_TreeNodeConfigFile.Instance.filename);
-                return true;
-            }
-            catch (Exception err)
-            {
-                AppUtility.ShowError(this, err);
-                return false;
-            }
+            m_TreeNodeConfigFile = new TreeNodeConfigFile(l_File);
+            m_TreeNodeConfigFile.IsDirty = !l_File.editor.IsCurrent();
+            m_TreeNodeConfigFile.CreateChildNodes();
+
+            RefreshMenu();
+            LoadTreeView(m_TreeNodeConfigFile);
+            statusLabel.Text = string.Format("Loaded {0}", m_TreeNodeConfigFile.Instance.filename);
+            return true;
         }
 
         private bool CloseConfiguration()
         {
-            try
+            if (m_TreeNodeConfigFile != null)
             {
-                if (m_TreeNodeConfigFile != null)
+                if (m_TreeNodeConfigFile.IsDirty)
                 {
-                    if (m_TreeNodeConfigFile.IsDirty)
+                    DialogResult l_ret = MessageBox.Show(this, "Do you want to save your changes?", "Setup Installer", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    if (l_ret == DialogResult.Yes)
                     {
-                        DialogResult l_ret = MessageBox.Show(this, "Do you want to save your changes?", "Setup Installer", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                        if (l_ret == DialogResult.Yes)
-                        {
-                            if (SaveConfiguration() == false)
-                                return false;
-                        }
-                        else if (l_ret == DialogResult.Cancel)
-                        {
+                        if (SaveConfiguration() == false)
                             return false;
-                        }
+                    }
+                    else if (l_ret == DialogResult.Cancel)
+                    {
+                        return false;
                     }
                 }
+            }
 
-                m_TreeNodeConfigFile = null;
-                CloseTreeView();
-                propertyGrid.SelectedObject = null;
-                RefreshMenu();
-                statusLabel.Text = "Ready";
-                return true;
-            }
-            catch (Exception err)
-            {
-                AppUtility.ShowError(this, err);
-                return false;
-            }
+            m_TreeNodeConfigFile = null;
+            CloseTreeView();
+            propertyGrid.SelectedObject = null;
+            RefreshMenu();
+            statusLabel.Text = "Ready";
+            return true;
         }
 
         private bool SaveConfiguration()
         {
-            try
+            if (m_TreeNodeConfigFile != null)
             {
-                if (m_TreeNodeConfigFile != null)
+                if (m_TreeNodeConfigFile.Instance.filename == null)
                 {
-                    if (m_TreeNodeConfigFile.Instance.filename == null)
+                    SaveFileDialog l_dg = new SaveFileDialog();
+                    l_dg.Filter = "Xml Files(*.xml)|*.xml|All Files(*.*)|*.*";
+                    l_dg.DefaultExt = "xml";
+                    if (l_dg.ShowDialog(this) == DialogResult.OK)
                     {
-                        SaveFileDialog l_dg = new SaveFileDialog();
-                        l_dg.Filter = "Xml Files(*.xml)|*.xml|All Files(*.*)|*.*";
-                        l_dg.DefaultExt = "xml";
-                        if (l_dg.ShowDialog(this) == DialogResult.OK)
-                        {
-                            m_TreeNodeConfigFile.Instance.SaveAs(l_dg.FileName);
-                        }
-                        else
-                        {
-                            return false;
-                        }
+                        m_TreeNodeConfigFile.Instance.SaveAs(l_dg.FileName);
                     }
                     else
                     {
-                        m_TreeNodeConfigFile.Instance.Save();
+                        return false;
                     }
                 }
+                else
+                {
+                    m_TreeNodeConfigFile.Instance.Save();
+                }
+            }
 
-                m_TreeNodeConfigFile.IsDirty = false;
-                statusLabel.Text = string.Format("Written {0}", m_TreeNodeConfigFile.Instance.filename);
-                return true;
-            }
-            catch (Exception err)
-            {
-                AppUtility.ShowError(this, err);
-                return false;
-            }
+            m_TreeNodeConfigFile.IsDirty = false;
+            statusLabel.Text = string.Format("Written {0}", m_TreeNodeConfigFile.Instance.filename);
+            return true;
         }
 
         private void RefreshMenu()
@@ -988,13 +971,27 @@ namespace InstallerEditor
 
         private void mnSave_Click(object sender, System.EventArgs e)
         {
-            treeView.Select();
-            SaveConfiguration();
+            try
+            {
+                treeView.Select();
+                SaveConfiguration();
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
         }
 
         private void mnClose_Click(object sender, System.EventArgs e)
         {
-            CloseConfiguration();
+            try
+            {
+                CloseConfiguration();
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
         }
 
         public ConfigFile ConfigFile
@@ -1018,12 +1015,26 @@ namespace InstallerEditor
 
         private void mnNew_Click(object sender, System.EventArgs e)
         {
-            NewConfiguration();
+            try
+            {
+                NewConfiguration();
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
         }
 
         private void mnOpen_Click(object sender, System.EventArgs e)
         {
-            OpenConfiguration();
+            try
+            {
+                OpenConfiguration();
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
         }
 
         private void treeView_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
@@ -1033,7 +1044,7 @@ namespace InstallerEditor
                 propertyGrid.SelectedObject = e.Node.Tag;
                 RefreshNodeContextMenu();
                 RefreshCommentPanel();
-                statusLabel.Text = m_TreeNodeConfigFile != null 
+                statusLabel.Text = m_TreeNodeConfigFile != null
                     ? m_TreeNodeConfigFile.Instance.filename
                     : string.Empty;
             }
@@ -1047,7 +1058,7 @@ namespace InstallerEditor
         {
             if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is XmlClass)
             {
-                XmlClass item = (XmlClass) treeView.SelectedNode.Tag;
+                XmlClass item = (XmlClass)treeView.SelectedNode.Tag;
                 mnDelete.Enabled = true;
                 mnAddSetupConfiguration.Enabled = (item.Children.CanAdd(typeof(SetupConfiguration)));
                 mnAddWebConfiguration.Enabled = (item.Children.CanAdd(typeof(WebConfiguration)));
@@ -1076,7 +1087,7 @@ namespace InstallerEditor
                 mnAddHyperlinkControl.Enabled = (item.Children.CanAdd(typeof(ControlHyperlink)));
             }
             else
-            {                
+            {
                 mnDelete.Enabled = false;
                 mnAddSetupConfiguration.Enabled = false;
                 mnAddWebConfiguration.Enabled = false;
@@ -1320,10 +1331,17 @@ namespace InstallerEditor
 
         private void mnSaveAs_Click(object sender, System.EventArgs e)
         {
-            if (m_TreeNodeConfigFile != null && m_TreeNodeConfigFile.Instance != null)
+            try
             {
-                m_TreeNodeConfigFile.Instance.filename = null;
-                SaveConfiguration();
+                if (m_TreeNodeConfigFile != null && m_TreeNodeConfigFile.Instance != null)
+                {
+                    m_TreeNodeConfigFile.Instance.filename = null;
+                    SaveConfiguration();
+                }
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
             }
         }
 
@@ -1372,19 +1390,31 @@ namespace InstallerEditor
         //			LanguageUI.Language = SupportedLanguage.Italian;
         //		}
 
-        private AppSetting m_AppSetting;
+        private AppSetting m_AppSetting = new AppSetting();
+
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-            m_AppSetting = new AppSetting();
-            m_AppSetting.Load();
-
             try
             {
+                m_AppSetting.Load();
                 RefreshTemplateFilesMenu();
+
+                if (!string.IsNullOrEmpty(InstallerEditor.CmdArgs.configfile))
+                {
+                    OpenConfiguration(InstallerEditor.CmdArgs.configfile);
+                }
+            }
+            catch (FileNotFoundException err)
+            {
+                Environment.ExitCode = -2;
+                ErrorDialog.Show(err, "Error");
+                Close();
             }
             catch (Exception err)
             {
-                SourceLibrary.Windows.Forms.ErrorDialog.Show(err, "Error");
+                Environment.ExitCode = -3;
+                ErrorDialog.Show(err, "Error");
+                Close();
             }
         }
 
@@ -1471,7 +1501,7 @@ namespace InstallerEditor
                 }
                 catch (Exception err)
                 {
-                    SourceLibrary.Windows.Forms.ErrorDialog.Show(this, err, "Error");
+                    ErrorDialog.Show(this, err, "Error");
                 }
             }
 
@@ -1527,7 +1557,7 @@ namespace InstallerEditor
                 if (treeView.Parent == null)
                     throw new ApplicationException("Missing parent node");
 
-                XmlTreeNodeImpl nodeMoved = (XmlTreeNodeImpl) treeView.SelectedNode;
+                XmlTreeNodeImpl nodeMoved = (XmlTreeNodeImpl)treeView.SelectedNode;
                 nodeMoved.MoveTo(nodeMoved.Index - 1);
                 m_TreeNodeConfigFile.IsDirty = true;
             }
@@ -1556,7 +1586,7 @@ namespace InstallerEditor
                 if (treeView.Parent == null)
                     throw new ApplicationException("Missing parent node");
 
-                XmlTreeNodeImpl nodeMoved = (XmlTreeNodeImpl) treeView.SelectedNode;
+                XmlTreeNodeImpl nodeMoved = (XmlTreeNodeImpl)treeView.SelectedNode;
                 nodeMoved.MoveTo(nodeMoved.Index + 1);
                 m_TreeNodeConfigFile.IsDirty = true;
             }
@@ -1613,7 +1643,7 @@ namespace InstallerEditor
 
         private void treeView_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            TreeNodeImplContainer container = new TreeNodeImplContainer((XmlTreeNodeImpl) e.Item);
+            TreeNodeImplContainer container = new TreeNodeImplContainer((XmlTreeNodeImpl)e.Item);
             DoDragDrop(container, DragDropEffects.Move);
         }
 
@@ -1628,13 +1658,13 @@ namespace InstallerEditor
 
                 // target node
                 Point pos = treeView.PointToClient(new Point(e.X, e.Y));
-                XmlTreeNodeImpl targetNode = (XmlTreeNodeImpl) treeView.GetNodeAt(pos);
+                XmlTreeNodeImpl targetNode = (XmlTreeNodeImpl)treeView.GetNodeAt(pos);
 
                 // node being dragged
-                XmlTreeNodeImpl dropNode = ((TreeNodeImplContainer) e.Data.GetData(typeof(TreeNodeImplContainer))).NodeData;
+                XmlTreeNodeImpl dropNode = ((TreeNodeImplContainer)e.Data.GetData(typeof(TreeNodeImplContainer))).NodeData;
 
                 // check that this node data type can be dropped here at all
-                XmlClass dropItem = (XmlClass) dropNode.Tag;
+                XmlClass dropItem = (XmlClass)dropNode.Tag;
 
                 dropNode.MoveTo(targetNode);
                 m_TreeNodeConfigFile.IsDirty = true;
@@ -1677,7 +1707,7 @@ namespace InstallerEditor
             treeView.SelectedNode = targetNode;
 
             // node being dragged
-            XmlTreeNodeImpl dropNode = ((TreeNodeImplContainer) e.Data.GetData(typeof(TreeNodeImplContainer))).NodeData;
+            XmlTreeNodeImpl dropNode = ((TreeNodeImplContainer)e.Data.GetData(typeof(TreeNodeImplContainer))).NodeData;
             if (dropNode.Parent == targetNode)
             {
                 e.Effect = DragDropEffects.None;

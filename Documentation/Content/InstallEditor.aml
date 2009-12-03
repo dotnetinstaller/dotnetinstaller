@@ -68,6 +68,38 @@
         </para>
       </content>
     </section>
+    <section address="commandlineusage">
+      <title>Command-Line Usage</title>
+      <content>
+        <para>
+          <code language="cmd">
+            <![CDATA[
+InstallerEditor: dotNetInstaller Configuration Editor
+
+<configfile> Configuration file to open
+@<file>      Read response file for more options
+]]>
+          </code>
+        </para>
+      </content>
+    </section>
+    <section address="returncodes">
+      <title>Return Codes</title>
+      <content>
+        <para>
+          <definitionTable>
+            <definedTerm>0</definedTerm>
+            <definition>Success</definition>
+            <definedTerm>-1</definedTerm>
+            <definition>Any error before the main window could be opened.</definition>
+            <definedTerm>-2</definedTerm>
+            <definition>The configuration file passed on the command-line could not be found.</definition>
+            <definedTerm>-3</definedTerm>
+            <definition>Any other error while opening the configuration file passed on the command-line.</definition>
+          </definitionTable>
+        </para>
+      </content>
+    </section>
     <relatedTopics>
       <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="db007eb2-ccc6-4657-843e-adad7da5db5b" />
       <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="9cd31590-c899-40a7-897a-d5ca844c2324" />

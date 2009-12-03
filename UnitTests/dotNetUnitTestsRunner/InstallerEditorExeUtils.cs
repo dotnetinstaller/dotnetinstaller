@@ -6,37 +6,25 @@ using System.IO;
 using System.Reflection;
 using NUnit.Framework;
 using System.Diagnostics;
+using System.Threading;
 
 namespace dotNetUnitTestsRunner
 {
-    public class dotNetInstallerExeUtils
+    public class InstallerEditorExeUtils
     {
+        public class RunResult
+        {
+            public int ExitCode = -1;
+            public string WindowTitle = string.Empty;
+        }
+
         public class RunOptions
         {
-            public string configFile;
-            public bool log = true;
-            public string logfile = DefaultLogFile;
-            public bool quiet = true;
-            public bool reboot = false;
-            public bool uninstall = false;
             public string args;
 
             public RunOptions()
             {
-            
-            }
 
-            public RunOptions(string file)
-            {
-                configFile = file;
-            }
-
-            public static string DefaultLogFile
-            {
-                get
-                {
-                    return Path.Combine(Path.GetTempPath(), "dotNetInstallerUnitTests.log");
-                }
             }
 
             public string CommandLineArgs
@@ -44,24 +32,6 @@ namespace dotNetUnitTestsRunner
                 get
                 {
                     string result = string.Empty;
-                    if (! string.IsNullOrEmpty(configFile))
-                    {
-                        result += string.Format("/ConfigFile \"{0}\"", configFile);
-                    }
-
-                    if (quiet) result += " /q";
-                    if (reboot) result += " /reboot";
-                    if (log)
-                    {
-                        result += " /Log";
-                        if (!string.IsNullOrEmpty(logfile))
-                        {
-                            Console.WriteLine("Log: {0}", (logfile));
-                            result += string.Format(" /LogFile \"{0}\"", logfile);
-                        }
-                    }
-
-                    if (uninstall) result += " /x";
 
                     if (!string.IsNullOrEmpty(args))
                     {
@@ -86,7 +56,7 @@ namespace dotNetUnitTestsRunner
         {
             get
             {
-                string result = Path.Combine(Location, "dotNetInstaller.exe");
+                string result = Path.Combine(Location, "InstallerEditor.exe");
                 Assert.IsTrue(File.Exists(result));
                 return result;
             }
@@ -101,37 +71,30 @@ namespace dotNetUnitTestsRunner
                     // locate dotnetinstaller.exe
                     Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
                     _location = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(HttpUtility.UrlDecode(uri.AbsolutePath)),
-                        string.Format(@"..\..\..\..\dotNetInstaller\{0}\", configuration)));
+                        string.Format(@"..\..\..\..\InstallerEditor\bin\{0}\", configuration)));
                 }
 
                 return _location;
             }
         }
 
-        public static int Run(string configFile)
+        public static RunResult Run(RunOptions options)
         {
-            RunOptions options = new RunOptions(configFile);
-            return Run(options);
-        }
-
-        public static int Run(RunOptions options)
-        {
+            RunResult result = new RunResult();
             Process p = Detach(options);
+            Thread.Sleep(2000);
+            p.WaitForInputIdle();
+            result.WindowTitle = p.MainWindowTitle;
+            p.CloseMainWindow();
             p.WaitForExit();
-            return p.ExitCode;
+            result.ExitCode = p.ExitCode;
+            return result;
         }
 
         public static Process Detach(RunOptions options)
         {
-            Console.WriteLine("dotNetInstaller: {0}", Executable);
+            Console.WriteLine("InstallerEditor: {0}", Executable);
             return Detach(Executable, options.CommandLineArgs);
-        }
-
-        public static int Run(string filename, string args)
-        {
-            Process p = Detach(filename, args);
-            p.WaitForExit();
-            return p.ExitCode;
         }
 
         private static Process Detach(string filename, string args)

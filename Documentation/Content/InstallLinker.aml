@@ -10,12 +10,12 @@
       </para>
     </introduction>
     <section address="commandlineusage">
-      <title>Command Line Usage</title>
+      <title>Command-Line Usage</title>
       <content>
         <para>
           <code language="cmd">
             <![CDATA[
-InstallerLinker: dotNetInstaller Packager (1.7)
+InstallerLinker: dotNetInstaller Packager
 
 /Output:<string>         Generated installer file (short form /o)
 /Template:<string>       Template installer executable (short form /t)
@@ -61,7 +61,7 @@ InstallerLinker: dotNetInstaller Packager (1.7)
         </para>
       </content>
     </section>
-    <section>
+    <section address="returncodes">
       <title>Return Codes</title>
       <content>
         <para>
