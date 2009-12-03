@@ -26,11 +26,11 @@
               Command to execute in silent mode. Defaults to <literal>command_basic</literal>, then to <literal>command</literal>
               when not specified.
             </definition>
-            <definedTerm>returncodes_failure</definedTerm>
+            <definedTerm>returncodes_success</definedTerm>
             <definition>
-              A comma-separated list of return codes that should be treated as a component failure. Specify
-              <literal>none</literal> to ignore component return codes and specify <literal>!value</literal> 
-              to treat all return codes except a single specified value as failure.
+              When specified, a comma-separated list of return codes that should be treated as a component success.
+              Specify <literal>all</literal> for a component that never fails. All other codes, unless specified
+              in <literal>returncodes_reboot</literal> are considered failures.
             </definition>
             <definedTerm>returncodes_reboot</definedTerm>
             <definition>

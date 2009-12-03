@@ -74,6 +74,15 @@ namespace InstallerLib
 
         #region Return Codes
 
+        private string m_returncodes_success;
+        [Description("Comma-separated return codes that indicate success. By default a return value of 0 indicates success.")]
+        [Category("Return Codes")]
+        public string returncodes_success
+        {
+            get { return m_returncodes_success; }
+            set { m_returncodes_success = value; }
+        }
+
         private string m_returncodes_reboot;
         [Description("Comma-separated error codes that indicate that a reboot is requred.")]
         [Category("Return Codes")]
@@ -81,15 +90,6 @@ namespace InstallerLib
         {
             get { return m_returncodes_reboot; }
             set { m_returncodes_reboot = value; }
-        }
-
-        private string m_returncodes_failure;
-        [Description("Comma-separated error codes that indicate that the component failed (default is not zero, specify 'none' for a component that never returns a failure error code).")]
-        [Category("Return Codes")]
-        public string returncodes_failure
-        {
-            get { return m_returncodes_failure; }
-            set { m_returncodes_failure = value; }
         }
 
         #endregion
@@ -102,8 +102,8 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("uninstall_command", m_uninstall_command);
             e.XmlWriter.WriteAttributeString("uninstall_command_silent", m_uninstall_command_silent);
             e.XmlWriter.WriteAttributeString("uninstall_command_basic", m_uninstall_command_basic);
+            e.XmlWriter.WriteAttributeString("returncodes_success", m_returncodes_success);
             e.XmlWriter.WriteAttributeString("returncodes_reboot", m_returncodes_reboot);
-            e.XmlWriter.WriteAttributeString("returncodes_failure", m_returncodes_failure);
             base.OnXmlWriteTag(e);
         }
 
@@ -115,8 +115,8 @@ namespace InstallerLib
             ReadAttributeValue(e, "uninstall_command", ref m_uninstall_command);
             ReadAttributeValue(e, "uninstall_command_silent", ref m_uninstall_command_silent);
             ReadAttributeValue(e, "uninstall_command_basic", ref m_uninstall_command_silent);
+            ReadAttributeValue(e, "returncodes_success", ref m_returncodes_success);
             ReadAttributeValue(e, "returncodes_reboot", ref m_returncodes_reboot);
-            ReadAttributeValue(e, "returncodes_failure", ref m_returncodes_failure);
             base.OnXmlReadTag(e);
         }
     }

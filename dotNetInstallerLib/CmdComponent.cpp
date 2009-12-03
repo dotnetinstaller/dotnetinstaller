@@ -49,8 +49,8 @@ void CmdComponent::Load(TiXmlElement * node)
 	uninstall_command = XML_ATTRIBUTE(node->Attribute("uninstall_command"));
     uninstall_command_silent = XML_ATTRIBUTE(node->Attribute("uninstall_command_silent"));
 	uninstall_command_basic = XML_ATTRIBUTE(node->Attribute("uninstall_command_basic"));	
+	returncodes_success = XML_ATTRIBUTE(node->Attribute("returncodes_success"));
 	returncodes_reboot = XML_ATTRIBUTE(node->Attribute("returncodes_reboot"));
-	returncodes_failure = XML_ATTRIBUTE(node->Attribute("returncodes_failure"));
 	Component::Load(node);
 }
 
@@ -59,11 +59,27 @@ void CmdComponent::Wait(DWORD tt)
 	ProcessComponent::Wait(tt);
 
 	DWORD exitcode = ProcessComponent::GetProcessExitCode();
+	
+	// check for reboot
+	if (! returncodes_reboot.empty() && IsReturnCode(exitcode, returncodes_reboot))
+	{
+		LOG(L"Component '" << id << "' return code '" << exitcode 
+			<< L", defined as reboot required in '" << returncodes_reboot << L".");
+		return;
+	}
 
-	CHECK_BOOL(! IsReturnCodeFailure(exitcode) || IsReturnCodeReboot(exitcode),
-		L"Error executing '" << id << "' (" << display_name << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
+	// check for explicit success, where defined
+	if (returncodes_success.empty())
+	{
+		CHECK_BOOL(ERROR_SUCCESS == exitcode,
+			L"Error executing '" << id << "' (" << display_name << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
+	}
+	else
+	{
+		CHECK_BOOL(IsReturnCode(exitcode, returncodes_success),
+			L"Error executing '" << id << "' (" << display_name << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
+	}
 }
-
 
 bool CmdComponent::IsReturnCode(DWORD return_code, const std::wstring& possible_values)
 {
@@ -83,6 +99,10 @@ bool CmdComponent::IsReturnCode(DWORD return_code, const std::wstring& possible_
 		{
 			return false;
 		}
+		else if (return_code == L"all")
+		{
+			return true;
+		}
 		else if (return_code == return_code_s)
 		{
 			return true;
@@ -90,18 +110,6 @@ bool CmdComponent::IsReturnCode(DWORD return_code, const std::wstring& possible_
 	}
 
 	return false;
-}
-
-bool CmdComponent::IsReturnCodeFailure(DWORD return_code) const
-{
-	if (! returncodes_failure.empty())
-	{
-		return IsReturnCode(return_code, returncodes_failure);
-	}
-	else
-	{
-		return (ERROR_SUCCESS != return_code);
-	}
 }
 
 bool CmdComponent::IsReturnCodeReboot(DWORD return_code) const

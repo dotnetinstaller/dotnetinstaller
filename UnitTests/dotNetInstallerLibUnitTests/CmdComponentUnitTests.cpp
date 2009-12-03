@@ -120,12 +120,12 @@ void CmdComponentUnitTests::testReturnCodeNonValue()
 {
 	CmdComponent component;
 	// a success value
-	component.returncodes_failure = L"!4";
-	component.command = L"cmd.exe /C exit /b 4";
+	component.returncodes_success = L"!4";
+	component.command = L"cmd.exe /C exit /b 5";
 	component.Exec();
 	component.Wait();
 	// a failure value
-	component.command = L"cmd.exe /C exit /b 5";
+	component.command = L"cmd.exe /C exit /b 4";
 	try
 	{
 		component.Exec();
@@ -138,14 +138,32 @@ void CmdComponentUnitTests::testReturnCodeNonValue()
 	}
 }
 
-void CmdComponentUnitTests::testReturnCodeNone()
+void CmdComponentUnitTests::testReturnCodeAll()
 {
-	// a 'none' failure code says that the component cannot return any failure
+	// a 'all' failure code says that the component cannot return any failure
 	CmdComponent component;
 	component.command = L"cmd.exe /C exit /b 1";
-	component.returncodes_failure = L"none";
+	component.returncodes_success = L"all";
 	component.Exec();
 	component.Wait();
+}
+
+void CmdComponentUnitTests::testReturnCodeNone()
+{
+	// a 'none' failure code says that the component will always fail
+	CmdComponent component;
+	component.command = L"cmd.exe /C exit /b 1";
+	component.returncodes_success = L"none";
+	try
+	{
+		component.Exec();
+		component.Wait();
+		throw "expected std::exception";
+	}
+	catch(std::exception&)
+	{
+		// expected
+	}
 }
 
 void CmdComponentUnitTests::testReturnCodeRebootRequired()
@@ -168,6 +186,34 @@ void CmdComponentUnitTests::testReturnCodeRebootRequired()
 	CPPUNIT_ASSERT(component.IsRebootRequired());
 	// component will fail since the return code is neither a default success (0) nor a reboot error code
 	component.command = L"cmd.exe /C exit /b 1055";
+	try
+	{
+		component.Exec();
+		component.Wait();
+		throw "expected std::exception";
+	}
+	catch(std::exception&)
+	{
+		// expected
+	}
+	CPPUNIT_ASSERT(! component.IsRebootRequired());
+}
+
+void CmdComponentUnitTests::testReturnCodeSuccess()
+{
+	CmdComponent component;
+	// a success value
+	component.returncodes_success = L"1,3010";
+	component.command = L"cmd.exe /C exit /b 1";
+	component.Exec();
+	component.Wait();
+	CPPUNIT_ASSERT(! component.IsRebootRequired());
+	component.command = L"cmd.exe /C exit /b 3010";
+	component.Exec();
+	component.Wait();
+	CPPUNIT_ASSERT(! component.IsRebootRequired());
+	// component will fail since the return code is not in the success list
+	component.command = L"cmd.exe /C exit /b 0";
 	try
 	{
 		component.Exec();
