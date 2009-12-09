@@ -93,7 +93,7 @@ public:
 	// If u16_LocalFile = ""  -> a temporary file will be created
 	// A Cabfile will be written to disk ONLY if u32_Blocksize = 0 !!
 	// u16_TargetDir = L"" AND Blocksize = 0 --> only download any file from internet to disk
-	BOOL ExtractUrlW(CStrW sw_URL, DWORD u32_Blocksize, CStrW sw_LocalFile, CStrW sw_TargetDir, void* pParam = NULL)
+	BOOL ExtractUrlW(const CStrW& sw_URL, DWORD u32_Blocksize, const CStrW& sw_LocalFile, const CStrW& sw_TargetDir, void* pParam = NULL)
 	{
 		if (!Initialize(sw_URL, sw_LocalFile, u32_Blocksize))
 			return FALSE;
@@ -111,7 +111,7 @@ public:
 	}
 
 	// Extract additional files from the CAB file which has been used in a previous call to ExtractUrlW()
-	BOOL ExtractMoreUrlW(CStrW sw_TargetDir, void* pParam = NULL)
+	BOOL ExtractMoreUrlW(const CStrW& sw_TargetDir, void* pParam = NULL)
 	{
 		mu32_Cache = 0;
 		// re-open the same connection, re-using the cache's contents or the already downloaded file
@@ -129,7 +129,7 @@ public:
 	// Check if the file at the given URL is a valid CAB file
 	// If u16_LocalFile = ""  -> a temporary file will be created
 	// A Cabfile will be written to disk ONLY if u32_Blocksize = 0 !!
-	BOOL IsUrlCabinetW(CStrW sw_URL, DWORD u32_Blocksize, CStrW sw_LocalFile, PFDICABINETINFO pfdici = NULL)
+	BOOL IsUrlCabinetW(const CStrW& sw_URL, DWORD u32_Blocksize, const CStrW& sw_LocalFile, PFDICABINETINFO pfdici = NULL)
 	{
 		if (!Initialize(sw_URL, sw_LocalFile, u32_Blocksize))
 			return FALSE;
@@ -142,7 +142,7 @@ public:
 	// String Format= "http=http://Proxy1.com:8000 https=https://Proxy2.com:443"
 	// You can specify separate proxies for HTTP, HTTPS, FTP
 	// u16_Proxy = "" --> Use Internet Explorer default settings
-	void SetProxyW(CStrW sw_Proxy)
+	void SetProxyW(const CStrW& sw_Proxy)
 	{
 		mi_Internet.SetProxy(sw_Proxy);
 	}
@@ -150,7 +150,7 @@ public:
 	// Modifies the HTTP headers which are sent to the server. (separated by pipe)
 	// e.g. "Referer: http://www.test.com|Accept-Language:en"  (no space before or after pipe!!)
 	// If the value of a header is empty, the header is removed.
-	void SetHttpHeadersW(CStrW sw_Headers)
+	void SetHttpHeadersW(const CStrW& sw_Headers)
 	{
 		mi_Internet.HttpSetHeaders(sw_Headers);
 	}
@@ -245,7 +245,7 @@ protected:
 	}
 
 	// return a memory pointer
-	kMemory* OpenMem(WCHAR* u16_File, int oflag, int pmode)
+	kMemory* OpenMem(const WCHAR* u16_File, int oflag, int pmode)
 	{
 		// The correct value for s32_Size (size of the CAB file) does not matter.
 		// !IF! Cabinet.dll !SHOULD! try to read behind the end of the file, the server will return only the existing data

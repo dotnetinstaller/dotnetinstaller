@@ -127,9 +127,9 @@ public:
 		mh_FCIContext = 0;
 		mh_CabinetDll = 0;
 
-		SetTempDirectoryW(L""); // Set Windows default Temp directory
+		mu32_ThreadID = GetCurrentThreadId(); // FIRST !!
 
-		mu32_ThreadID = GetCurrentThreadId();
+		SetTempDirectoryW(L""); // Set Windows default Temp directory
 
 		// The following two variables are used to generate the filename of the temp files
 		// TempCounter is incremented with every new temp file
@@ -163,7 +163,7 @@ public:
 
 	// You can specify where to store the temp files which can become very huge if you compress huge files
 	// If this function is never called or called with "" or 0, the default Windows Temp directory will be used
-	BOOL SetTempDirectoryW(CStrW sw_TempDir)
+	BOOL SetTempDirectoryW(const CStrW& sw_TempDir)
 	{
 		// Every class must only be accessed by one and the same thread. See "Microsoft Cabinet.dll Doku.doc"
 		if (mu32_ThreadID != GetCurrentThreadId())
@@ -227,12 +227,12 @@ public:
 	// a discrepancy of one hour or more after daylight saving or timezone changes
 	// b_EncodeUTF=TRUE  -> If a filename has characters > 0x7F, encode it using UTF8
 	// b_EncodeUTF=FALSE -> Store ANSI filenames unchanged, read documentation!
-	BOOL CreateFCIContextW(CStrW   sw_CabFile,                   // "C:\Temp\Packed.cab"
-	                       BOOL     b_UtcTime   = TRUE,          // Store files with UTC time (recommended)
-	                       BOOL     b_EncodeUtf = TRUE,          // Store filenames UTF8 encoded (recommended)
-	                       ULONG  u32_CabSplitSize = 0x7FFFFFFF, // The split filesize where to start a new CAB file
-	                       USHORT u16_CabID = 0,                 // an ID to be stored in the CAB file
-	                       void*   pParam=NULL)                  // optional user parameter passed to all callbacks
+	BOOL CreateFCIContextW(const CStrW& sw_CabFile,                   // "C:\Temp\Packed.cab"
+	                       BOOL          b_UtcTime   = TRUE,          // Store files with UTC time (recommended)
+	                       BOOL          b_EncodeUtf = TRUE,          // Store filenames UTF8 encoded (recommended)
+	                       ULONG       u32_CabSplitSize = 0x7FFFFFFF, // The split filesize where to start a new CAB file
+	                       USHORT      u16_CabID = 0,                 // an ID to be stored in the CAB file
+	                       void*       pParam=NULL)                  // optional user parameter passed to all callbacks
 	{
 		// Every class must only be accessed by one and the same thread. See "Microsoft Cabinet.dll Doku.doc"
 		if (mu32_ThreadID != GetCurrentThreadId())
@@ -366,7 +366,7 @@ public:
 	// sw_NameInCab = path and filename under which to store the file in the cabinet
 	//                "Install\Setup.exe" will create a subfolder "Install" inside the cabinet
 	// b_Compress   = FALSE --> store in CAB file without compression
-	BOOL AddFileW(CStrW sw_FileToAdd, CStrW sw_NameInCab, BOOL b_Compress=TRUE)
+	BOOL AddFileW(const CStrW& sw_FileToAdd, const CStrW& sw_NameInCab, BOOL b_Compress=TRUE)
 	{
 		// Every class must only be accessed by one and the same thread. See "Microsoft Cabinet.dll Doku.doc"
 		if (mu32_ThreadID != GetCurrentThreadId())
@@ -383,6 +383,20 @@ public:
 		#if _TraceCompress
 			CTrace::TraceW(L"*** FCIAddFile('%s') ***", (WCHAR*)sw_FileToAdd);
 		#endif
+
+		ULONGLONG u64_Size;
+		DWORD u32_Error = CFile::GetFileSizeW(sw_FileToAdd, &u64_Size);
+		if (u32_Error)
+		{
+			mi_Error.Set(FCIERR_OPEN_SRC, u32_Error,0);
+			return FALSE;
+		}
+
+		if (u64_Size > 0x7FFF0000) // Cabinet.dll supports max 2 GB
+		{
+			mi_Error.Set(FCIERR_FILE_TOO_BIG,0,0);
+			return FALSE;
+		}
 
 		CStrA s_File, s_Name;
 		if (mb_EncodeUtf) 
@@ -403,6 +417,9 @@ public:
 			s_Name = sw_NameInCab;
 		}
 
+		// When mf_FciAddFile returns FALSE the error code has already been written into mi_Error in one of the 3 callbacks.
+		// If you want to debug with a Debugger to trap an error you MUST set a breakpoint in FCIGetNextCabinet, FCIUpdateStatus, FCIGetAttribsAndDate!
+		// But it is much easier to enable _TraceCompress and observe in DebugView what's happening.
 		return mf_FciAddFile(mh_FCIContext, 
 		                     s_File.EncodeUtf8(sw_FileToAdd),
 		                     s_Name,
@@ -418,7 +435,7 @@ public:
 	// sw_Filter  = "*.*  or  "*.dll"
 	// b_Compress = FALSE --> store in CAB file without compression
 	// Do never set or modify s32_BaseLen !!
-	BOOL AddFolderW(CStrW sw_Path, CStrW sw_Filter=L"*.*", BOOL b_Compress=TRUE, int s32_BaseLen=-1)
+	BOOL AddFolderW(/*NO const*/ CStrW sw_Path, const CStrW& sw_Filter=L"*.*", BOOL b_Compress=TRUE, int s32_BaseLen=-1)
 	{
 		CFile::TerminatePathW(sw_Path);
 
@@ -493,6 +510,9 @@ public:
 			CTrace::TraceW(L"*** FCIFlushCabinet() ***");
 		#endif
 
+		// When mf_FciFlushCabinet returns FALSE the error code has already been written into mi_Error in one of the 2 callbacks.
+		// If you want to debug with a Debugger to trap an error you MUST set a breakpoint in FCIGetNextCabinet and FCIUpdateStatus!
+		// But it is much easier to enable _TraceCompress and observe in DebugView what's happening.
 		return mf_FciFlushCabinet(mh_FCIContext, 
 		                           b_CreateNewCabinetFile,
 					  	          (PFNFCIGETNEXTCABINET) FCIGetNextCabinet,
@@ -673,15 +693,15 @@ private:
 		CStrW sw_File;
 		return FciOpenW(sw_File.DecodeUtf8(s8_File), oflag, pmode, err);
 	}
-	INT_PTR FciOpenW(CStrW sw_File, int oflag, int pmode, int *err)
+	INT_PTR FciOpenW(const CStrW& sw_File, int oflag, int pmode, int *err)
 	{ 
 		INT_PTR fd = Open(sw_File, oflag, pmode, err);
 
 		// Open for writing: The final CAB file(s)      and the temp files
 		// Open for reading: The files to be compressed and the temp files
+		// BOOL b_Write = (pmode & _S_IWRITE);
 
 		#if _TraceCompress
-			BOOL b_Write = (pmode & _S_IWRITE);
 			CTrace::TraceW(L"> > > > FCIOpen (%s, %s) --> Handle= 0x%08X", (b_Write ? L"Write" : L"Read"), (WCHAR*)sw_File, fd);
 		#endif
 

@@ -38,7 +38,7 @@ public:
 
 private:
 	// Reset the stream pointer to the beginning of the stream
-	kMemory* OpenMem(WCHAR* u16_File, int oflag, int pmode)
+	kMemory* OpenMem(const WCHAR* u16_File, int oflag, int pmode)
 	{
 		if (!mk_Callbacks.f_StreamGetLen)
 			return 0;

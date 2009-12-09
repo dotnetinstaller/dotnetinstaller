@@ -62,7 +62,7 @@ protected:
 
 	// This function overrides file access in CExtract
 	// For the CAB file it calls OpenMem(), for all other files it calls Open()
-	INT_PTR Open(WCHAR* u16_File, int oflag, int pmode)
+	INT_PTR Open(const WCHAR* u16_File, int oflag, int pmode)
 	{
 		// This function opens the CAB   file for reading
 		// This function opens any other file for writing
@@ -114,7 +114,7 @@ protected:
 
 	// Must always be overridden (opening the CAB memory)
 	// Must always return new kMemory();
-	virtual kMemory* OpenMem(WCHAR* u16_File, int oflag, int pmode)
+	virtual kMemory* OpenMem(const WCHAR* u16_File, int oflag, int pmode)
 	{ 
 		errno = ENOSPC; 
 		return (kMemory*) -1;

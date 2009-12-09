@@ -113,10 +113,20 @@ public:
 		USHORT u16_Attribs;   // Attributes of the file
 	};
 
+	struct kProgressInfo
+	{
+		WCHAR* u16_RelPath;   // The relative path in the CAB file
+		WCHAR* u16_FullPath;  // The full path to the file on disk
+		ULONG  u32_TotSize;   // Uncompressed file size
+		ULONG  u32_Written;   // Bytes written to disk
+		float   fl_Percent;   // Percent written
+	};
+
 	struct kCallbacks
 	{
 		typedef BOOL (*t_BeforeCopyFile)(kCabinetFileInfo* pk_Info, void* p_Param);
 		typedef void (*t_AfterCopyFile) (WCHAR* u16_File, CMemory* pi_ExtractMem, void* p_Param);
+		typedef void (*t_ProgressInfo)  (kProgressInfo* pk_Progress, void* p_Param);
 		typedef void (*t_CabinetInfo)   (kCabinetInfo* pk_Info, void* p_Param);
 		typedef void (*t_NextCabinet)   (kCabinetInfo* pk_Info, int s32_Error, void* p_Param);
 		// only used in .NET project:
@@ -125,6 +135,7 @@ public:
 		
 		t_BeforeCopyFile f_OnBeforeCopyFile;
 		t_AfterCopyFile  f_OnAfterCopyFile;
+		t_ProgressInfo   f_OnProgressInfo;
 		t_CabinetInfo    f_OnCabinetInfo;
 		t_NextCabinet    f_OnNextCabinet;
 		t_StreamGetLen   f_StreamGetLen;
@@ -134,6 +145,7 @@ public:
 		{
 			f_OnBeforeCopyFile = 0;
 			f_OnAfterCopyFile  = 0;
+			f_OnProgressInfo   = 0;
 			f_OnCabinetInfo    = 0;
 			f_OnNextCabinet    = 0;
 			f_StreamGetLen     = 0;
@@ -325,7 +337,7 @@ public:
 	// sw_TargetDir = Target directory.
 	// sw_TargetDir = "MEMORY" --> extract to memory
 	// pParam        = User defined value which will be passed to the callback function.
-	BOOL ExtractFileW(CStrW sw_CabPath, CStrW sw_TargetDir, void* pParam = NULL)
+	BOOL ExtractFileW(const CStrW& sw_CabPath, const CStrW& sw_TargetDir, void* pParam = NULL)
 	{
 		// Every class must only be accessed by one and the same thread. See "Microsoft Cabinet.dll Doku.doc"
 		if (mu32_ThreadID != GetCurrentThreadId())
@@ -339,8 +351,7 @@ public:
 
 		mp_Param = pParam;
 		mb_Abort = FALSE;
-		mh_CurrentFile = 0;
-		ms_CurrentFile = L"";
+		mk_CurrentFile.Reset();
 		mi_Error.Reset();
 		mi_Files.Clear();
 
@@ -368,8 +379,8 @@ public:
 		// We have to extract every CAB file of a splitted archive which starts a new file 
 		// (in this example we must call FdiCopy(Part_1.cab) and FdiCopy(Part_3.cab))
 		// otherwise not all compressed files will be extracted.
-		msw_NextCab = sw_CabFile;
-
+		// See comments in FDI.h
+		msw_NextCab.Clean();
 		while (TRUE)
 		{
 			#if _TraceExtract
@@ -378,29 +389,32 @@ public:
 			#endif
 
 			// Extract all files which start in the splitted CAB
+			// When mf_FdiCopy returns FALSE the error code has already been written into mi_Error in FdiCallback.
+			// If you want to debug with a Debugger to trap an error you MUST set a breakpoint in FdiCallback!
+			// But it is much easier to enable _TraceExtract and observe in DebugView what's happening.
 			CStrA sa_File, sa_Folder;
 			if (!mf_FdiCopy(mh_FDIContext, sa_File.EncodeUtf8(sw_CabFile), sa_Folder.EncodeUtf8(sw_CabFolder), 
 			                0, (PFNFDINOTIFY)(FDICallback), 0, pParam))
 				break;
 
-			// Check if msw_NextCab has been modified in callback fdintNEXT_CABINET
-			if (sw_CabFile == msw_NextCab)
+			// Check if there are more splitted CAB parts to be extracted
+			if (!msw_NextCab.Len())
 				break; 
 			
 			// extract the next splitted CAB file
 			sw_CabFile = msw_NextCab;
 		}
 
-		// Close the extraction file (sometimes Cabinet.dll closes it, sometimes not)
-		FdiClose(mh_CurrentFile); // FIRST!
+		// Close the extraction file (sometimes Cabinet.dll closes it on aborting, sometimes not)
+		FdiClose(mk_CurrentFile.h_File); // FIRST!
 
-		if (mb_Abort && ms_CurrentFile.Len())
+		if (mb_Abort && mk_CurrentFile.h_File)
 		{
 			#if _TraceExtract
-				CTrace::TraceW(L"*** Extraction of '%s' has been aborted. Now deleting incomplete file.", (WCHAR*)ms_CurrentFile);
+				CTrace::TraceW(L"*** Extraction of '%s' has been aborted. Now deleting incomplete file.", (WCHAR*)mk_CurrentFile.sw_FullPath);
 			#endif
 
-			DeleteFileW(ms_CurrentFile); // AFTER!
+			DeleteFileW(mk_CurrentFile.sw_FullPath); // AFTER!
 		}
 		return (!mi_Error.HasError());
 	}
@@ -409,7 +423,7 @@ public:
 	// Determines whether the cabinet with the specified handle is a valid cabinet. If it is, the structure
 	// which is pointed to by pfdici will be filled with information about the cabinet file. 
 	// pfdici can be NULL in which case no information about the cabinet file will be returned.
-	BOOL IsCabinetW(CStrW sw_CabPath, PFDICABINETINFO pfdici = NULL)
+	BOOL IsCabinetW(const CStrW& sw_CabPath, PFDICABINETINFO pfdici = NULL)
 	{
 		// Every class must only be accessed by one and the same thread. See "Microsoft Cabinet.dll Doku.doc"
 		if (mu32_ThreadID != GetCurrentThreadId())
@@ -451,13 +465,34 @@ public:
 
 protected:
 
-	kCallbacks mk_Callbacks;
-	CFilePtr   mi_Files;
-	CStrW     msw_TargetDir; // extract into this directory
-	CStrW     msw_NextCab;   // Stores the next (current) CAB file of a spanned cabinet
-	CBlowfish  mi_Blowfish;
-	CMemory    mi_ExtractMem;
-	CError     mi_Error;
+	struct kCurrentFile
+	{
+		INT_PTR h_File;      // The handle to the file
+		CStrW  sw_RelPath;   // The relative path in the CAB file
+		CStrW  sw_FullPath;  // The full path to the file on disk
+		ULONG u32_TotSize;   // Uncompressed file size
+		ULONG u32_Written;   // Bytes written to disk
+		int   s32_LastTick;  // The tickcount time of the last callback
+
+		void Reset()
+		{
+			h_File = 0;
+			sw_RelPath. Clean();
+			sw_FullPath.Clean();
+			u32_TotSize  = 0;
+			u32_Written  = 0;
+			s32_LastTick = 0;
+		}
+	};
+
+	kCurrentFile mk_CurrentFile; // the file that is currently written to disk
+	kCallbacks   mk_Callbacks;
+	CFilePtr     mi_Files;
+	CStrW       msw_TargetDir; // extract into this directory
+	CStrW       msw_NextCab;   // Stores the next CAB file of a spanned cabinet
+	CBlowfish    mi_Blowfish;
+	CMemory      mi_ExtractMem;
+	CError       mi_Error;
 
 	// Handle to the FDI context.
 	HFDI mh_FDIContext;
@@ -465,8 +500,6 @@ protected:
 	// Flag that can be set to abort the current operation.
 	BOOL    mb_Abort;
 	BOOL    mb_ExtractToMemory;
-	INT_PTR mh_CurrentFile; // the file which is written to disk
-	CStrW   ms_CurrentFile;
 	BYTE*  mu8_CryptBuf;
 
 	// User defined value which will be passed to the callback functions.
@@ -533,24 +566,19 @@ private:
 
 	// #################### MEMBER FDI CALLBACKS ########################
 
-	INT_PTR FdiOpenA(char* s8_File, int oflag, int pmode)
+	INT_PTR FdiOpenA(const char* s8_File, int oflag, int pmode)
 	{ 
 		CStrW sw_File;
 		return FdiOpenW(sw_File.DecodeUtf8(s8_File), oflag, pmode);
 	}
-	INT_PTR FdiOpenW(WCHAR* u16_File, int oflag, int pmode)
+	INT_PTR FdiOpenW(const WCHAR* u16_File, int oflag, int pmode)
 	{
 		INT_PTR fd = Open(u16_File, oflag, pmode);
 
 		// This function opens only the CAB file for reading
 		// This function opens any other file for writing
 		BOOL b_Write = (pmode & _S_IWRITE);
-		if (b_Write) 
-		{
-			mh_CurrentFile = fd; // the file to written to disk
-			ms_CurrentFile = u16_File;
-		}
-		else
+		if (!b_Write) 
 		{
 			mi_Files.SetPtr(fd, 0); // It is a CAB file
 		}
@@ -677,7 +705,28 @@ private:
 				s32_Written = -1;
 			}
 		}
-		else s32_Written = Write(fd, memory, count); 
+		else s32_Written = Write(fd, memory, count);
+
+		// Call the ProgressInfo callback every 200 ms
+		if (s32_Written > 0 && mk_CurrentFile.h_File == fd && mk_Callbacks.f_OnProgressInfo)
+		{
+			mk_CurrentFile.u32_Written += s32_Written;
+
+			int s32_Now = GetTickCount();
+			if (abs(s32_Now - mk_CurrentFile.s32_LastTick) > PROGRESS_CALLBACK_INTERVAL)
+			{
+				mk_CurrentFile.s32_LastTick = s32_Now;
+
+				kProgressInfo k_Progress;
+				k_Progress.u16_FullPath = mk_CurrentFile.sw_FullPath;
+				k_Progress.u16_RelPath  = mk_CurrentFile.sw_RelPath;
+				k_Progress.u32_TotSize  = mk_CurrentFile.u32_TotSize;
+				k_Progress.u32_Written  = mk_CurrentFile.u32_Written;
+				k_Progress.fl_Percent   = (float)100 * mk_CurrentFile.u32_Written / mk_CurrentFile.u32_TotSize;
+
+				mk_Callbacks.f_OnProgressInfo(&k_Progress, mp_Param);
+			}
+		}
 
 		#if _TraceExtract
 			CTrace::TraceW(L"FDIWrite --> %05d Bytes written", s32_Written);
@@ -699,8 +748,8 @@ private:
 
 		int Err = Close(fd); // FIRST !!! (Close may be overridden)
 
-		if (fd == mh_CurrentFile)
-			mh_CurrentFile = 0;
+		if (fd == mk_CurrentFile.h_File)
+			mk_CurrentFile.Reset();
 
 		mi_Files.Delete(fd); // AFTERWARDS !!!
 		return Err;
@@ -748,6 +797,9 @@ private:
 					CTrace::TraceW(L"FDICallback(CABINET_INFO)");
 				#endif
 
+				// Store the next CAB file name (required to unpack all files from a spanned archive)
+				msw_NextCab.DecodeUtf8(pfdin->psz1);
+
 				if (mk_Callbacks.f_OnCabinetInfo)
 				{
 					CStrW sw_Path;
@@ -772,14 +824,11 @@ private:
 
 				if (pfdin->fdie) // error occurred
 				{
-					// avoid error "User Aborted" if next cabinet file could not be found
+					// avoid error message "User Aborted"
 					mi_Error.Set(pfdin->fdie,0,0);
 					nRet = -1;
 					break;
 				}
-
-				// Store CAB file name (required to unpack all files from a spanned archive)
-				msw_NextCab.DecodeUtf8(pfdin->psz1);
 
 				if (mk_Callbacks.f_OnNextCabinet)
 				{
@@ -878,9 +927,16 @@ private:
 					// if the file to be written already exists and is bigger than the one in the CAB
 					nRet = FdiOpenW(sw_FullPath, _O_TRUNC | _O_BINARY | _O_CREAT | _O_WRONLY | _O_SEQUENTIAL, _S_IREAD | _S_IWRITE);
 
-					// avoid error "User Aborted" if output file could not be written
-					if (nRet <= 0) 
-						mi_Error.Set(FDIERROR_TARGET_FILE,0,0);
+					mk_CurrentFile.Reset();
+					if (nRet > 0) 
+					{
+						mk_CurrentFile.h_File       = nRet;
+						mk_CurrentFile.u32_TotSize  = pfdin->cb;
+						mk_CurrentFile.sw_FullPath  = sw_FullPath;
+						mk_CurrentFile.sw_RelPath   = sw_RelPath;
+						mk_CurrentFile.s32_LastTick = GetTickCount();
+					}
+					else mi_Error.Set(FDIERROR_TARGET_FILE,0,0); // avoid error "User Aborted" if output file could not be written
 				}
 			}
 			break;
@@ -959,7 +1015,7 @@ protected:
 
 	// Opens a file. (CAB file and extracted files)
 	// This function is overridden in ExtractMemory
-	virtual INT_PTR Open(WCHAR* u16_File, int oflag, int pmode)
+	virtual INT_PTR Open(const WCHAR* u16_File, int oflag, int pmode)
 	{ 
 		// remove write protection (if file already exists)
 		if (oflag & _O_CREAT) SetFileAttributesW(u16_File, FILE_ATTRIBUTE_NORMAL);

@@ -34,6 +34,8 @@
 // convert FILETIME to 64 bit integer
 #define _FileTimeTo64(FileTime) *(__int64*)&FileTime
 
+// The interval in milliseconds in which the Extraction Progress callback is called
+#define PROGRESS_CALLBACK_INTERVAL  200
 
 // for Visual Studio 6:
 #if _MSC_VER <= 1200 

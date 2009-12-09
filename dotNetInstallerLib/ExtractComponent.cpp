@@ -19,13 +19,8 @@ int ExtractComponent::ExecOnThread()
 	{
 	case 0:
 		break;
-	case 1:
-		ExtractFromResource();
-		break;
 	default:
-		Write();
-		ExtractFromFile();
-		Cleanup();
+		ExtractFromResource();
 		break;
 	}
 	return 0;
@@ -58,85 +53,6 @@ void ExtractComponent::ResolvePaths()
 	DVLib::DirectoryCreate(resolved_cab_path);
 }
 
-void ExtractComponent::Cleanup()
-{
-	int cabCount = GetCabCount();
-	for (int i = 1; i <= cabCount; i++)
-	{
-		std::wstring resname = GetResName(i);
-		std::wstring resolved_cab_file = DVLib::DirectoryCombine(resolved_cab_path, resname + L".CAB");
-
-		if (DVLib::FileExists(resolved_cab_file))
-		{
-			LOG(L"Deleting: " << resolved_cab_file);
-			DVLib::FileDelete(resolved_cab_file);
-		}
-    }
-
-	LOG(L"Deleted " << cabCount << L" CAB file(s)");
-}
-
-void ExtractComponent::Write()
-{
-	int cabCount = GetCabCount();
-	DWORD dwWrittenTotal = 0;
-
-	for (int i = 1; i <= cabCount; i++)
-	{
-		std::wstring resname = GetResName(i);
-
-        if (cancelled)
-        {
-			LOG(L"Cancelled: " << resname);
-            std::wstring resolved_cancelled_message = cab_cancelled_message;
-            if (resolved_cancelled_message.empty()) resolved_cancelled_message = L"Cancelled by user";
-			THROW_EX(resolved_cancelled_message);
-        }
-
-		std::wstring resolved_cab_file = DVLib::DirectoryCombine(resolved_cab_path, resname + L".CAB");
-		LOG(L"Extracting: " << resolved_cab_file);
-
-		auto_hfile hfile(CreateFile(resolved_cab_file.c_str(), GENERIC_WRITE, FILE_SHARE_READ, NULL, 
-			OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL));
-
-		CHECK_WIN32_BOOL(get(hfile) != INVALID_HANDLE_VALUE,
-			L"Error creating '" << resolved_cab_file << L"'");
-
-		OnStatus(L"Setup.cab - " + DVLib::FormatMessage(L"%d%%", (i * 100) / cabCount));
-
-		std::vector<char> data = DVLib::LoadResourceData<char>(m_h, resname, L"RES_CAB");
-
-		DWORD dwWritten = 0;
-        CHECK_WIN32_BOOL(WriteFile(get(hfile), (LPCVOID) & * data.begin(), data.size(), & dwWritten, NULL),
-			L"Error writing '" << resname << L".CAB'");
-
-		dwWrittenTotal += dwWritten;
-		LOG(L"Extracted: " << resname);
-    }
-
-	LOG(L"Extracted " << DVLib::FormatBytesW(dwWrittenTotal) << L" from " << cabCount << L" resource segment(s)");
-}
-
-void ExtractComponent::ExtractFromFile()
-{
-	Cabinet::CExtract extract;
-	Cabinet::CExtract::kCallbacks callbacks;
-	callbacks.f_OnBeforeCopyFile = & ExtractComponent::OnBeforeCopyFile; 
-	callbacks.f_OnAfterCopyFile = & ExtractComponent::OnAfterCopyFile;
-	extract.SetCallbacks(& callbacks);
-
-	std::wstring resolved_cab_file = DVLib::DirectoryCombine(resolved_cab_path, GetResName(1) + L".CAB");
-	LOG(L"Cabfile: " << resolved_cab_file);
-
-	CHECK_BOOL(extract.CreateFDIContext(),
-		L"Error initializing cabinet.dll: " << extract.LastErrorW());
-
-	CHECK_BOOL(extract.ExtractFileW(Cabinet::CStrW(resolved_cab_file.c_str()), Cabinet::CStrW(resolved_cab_path.c_str()), this), 
-		L"Error extracting '" << resolved_cab_file << L"': " << extract.LastErrorW());
-
-	LOG(L"Extracted CAB: " << resolved_cab_file);
-}
-
 void ExtractComponent::ExtractFromResource()
 {
 	std::wstring resname = GetResName(1);
@@ -146,6 +62,7 @@ void ExtractComponent::ExtractFromResource()
 	Cabinet::CExtract::kCallbacks callbacks;
 	callbacks.f_OnBeforeCopyFile = & ExtractComponent::OnBeforeCopyFile; 
 	callbacks.f_OnAfterCopyFile = & ExtractComponent::OnAfterCopyFile;
+	callbacks.f_OnProgressInfo = & ExtractComponent::OnProgressInfo;
 	extract.SetCallbacks(& callbacks);
 
 	CHECK_BOOL(extract.CreateFDIContext(),
@@ -168,7 +85,6 @@ BOOL ExtractComponent::OnBeforeCopyFile(Cabinet::CExtract::kCabinetFileInfo * k_
 
 	extractComponent->OnStatus(std::wstring(k_FI->u16_File) + L" - " + DVLib::FormatBytesW(k_FI->s32_Size));
 
-	std::wstring cancelled_message;
 	if (extractComponent->cancelled)
     {
         std::wstring resolved_cancelled_message = extractComponent->cab_cancelled_message;
@@ -207,5 +123,20 @@ std::wstring ExtractComponent::GetResName(int currentIndex) const
 		resname += L'_';
 	}
 	resname.append(DVLib::towstring(currentIndex));
+	resname.append(L".CAB");
 	return resname;
+}
+
+void ExtractComponent::OnProgressInfo(Cabinet::CExtract::kProgressInfo* pk_Progress, void* p_Param)
+{
+	ExtractComponent * extractComponent = (ExtractComponent *) p_Param;
+
+	extractComponent->OnStatus(std::wstring(pk_Progress->u16_RelPath) + L" - " + DVLib::FormatMessage(L"%d%%", pk_Progress->fl_Percent));
+
+	if (extractComponent->cancelled)
+    {
+        std::wstring resolved_cancelled_message = extractComponent->cab_cancelled_message;
+        if (resolved_cancelled_message.empty()) resolved_cancelled_message = L"Cancelled by user";
+        THROW_EX(resolved_cancelled_message);
+    }
 }

@@ -42,35 +42,26 @@ public:
 	// set sw_Module = "" and u32_ResID = ID_CAB_TEST and sw_ResType = "CABFILE"
 	// because the file Cabinet.rc contains:
 	// ID_CAB_TEST        CABFILE         "Res\\Test.cab"
-	BOOL ExtractResourceW(CStrW sw_Module, UINT u32_ResID, UINT u32_ResType, CStrW sw_TargetDir, void * pParam = NULL)
+	BOOL ExtractResourceW(const CStrW& sw_Module, UINT u32_ResID, UINT u32_ResType, const CStrW& sw_TargetDir, void * pParam = NULL)
 	{ 
-		if (!GetMemoryW(sw_Module, ms_Name.FormatResource(u32_ResID), ms_Type.FormatResource(u32_ResType)))
-			return FALSE;
-
+		mk_Resource.Set(sw_Module, L"", u32_ResID, L"", u32_ResType);
 		return ExtractFileW(L"*CABINET\\*RESOURCE", sw_TargetDir, pParam);
 	}
-	BOOL ExtractResourceW(CStrW sw_Module, UINT u32_ResID, CStrW sw_ResType, CStrW sw_TargetDir, void * pParam = NULL)
+	BOOL ExtractResourceW(const CStrW& sw_Module, UINT u32_ResID, const CStrW& sw_ResType, const CStrW& sw_TargetDir, void * pParam = NULL)
 	{
-		if (!GetMemoryW(sw_Module, ms_Name.FormatResource(u32_ResID), sw_ResType))
-			return FALSE;
-
+		mk_Resource.Set(sw_Module, L"", u32_ResID, sw_ResType, 0);
 		return ExtractFileW(L"*CABINET\\*RESOURCE", sw_TargetDir, pParam);
 	}
-	BOOL ExtractResourceW(CStrW sw_Module, CStrW sw_ResName, UINT u32_ResType, CStrW sw_TargetDir, void * pParam = NULL)
+	BOOL ExtractResourceW(const CStrW& sw_Module, const CStrW& sw_ResName, UINT u32_ResType, const CStrW& sw_TargetDir, void * pParam = NULL)
 	{ 
-		if (!GetMemoryW(sw_Module, sw_ResName, ms_Type.FormatResource(u32_ResType)))
-			return FALSE;
-
+		mk_Resource.Set(sw_Module, sw_ResName, 0, L"", u32_ResType);
 		return ExtractFileW(L"*CABINET\\*RESOURCE", sw_TargetDir, pParam);
 	}
-	BOOL ExtractResourceW(CStrW sw_Module, CStrW sw_ResName, CStrW sw_ResType, CStrW sw_TargetDir, void * pParam = NULL)
+	BOOL ExtractResourceW(const CStrW& sw_Module, const CStrW& sw_ResName, const CStrW& sw_ResType, const CStrW& sw_TargetDir, void * pParam = NULL)
 	{
-		if (!GetMemoryW(sw_Module, sw_ResName, sw_ResType))
-			return FALSE;
-
+		mk_Resource.Set(sw_Module, sw_ResName, 0, sw_ResType, 0);
 		return ExtractFileW(L"*CABINET\\*RESOURCE", sw_TargetDir, pParam);
 	}
-
 
 
 	// Check if the cabinet in the resources is valid
@@ -80,52 +71,66 @@ public:
 	// set sw_Module = "" and u32_ResID = ID_CAB_TEST and sw_ResType = "CABFILE"
 	// because the file Cabinet.rc contains:
 	// ID_CAB_TEST        CABFILE         "Res\\Test.cab"
-	BOOL IsResourceCabinetW(CStrW sw_Module, UINT u32_ResID, UINT u32_ResType, PFDICABINETINFO pfdici = NULL)
+	BOOL IsResourceCabinetW(const CStrW& sw_Module, UINT u32_ResID, UINT u32_ResType, PFDICABINETINFO pfdici = NULL)
 	{
-		if (!GetMemoryW(sw_Module, ms_Name.FormatResource(u32_ResID), ms_Type.FormatResource(u32_ResType)))
-			return FALSE;
-
+		mk_Resource.Set(sw_Module, L"", u32_ResID, L"", u32_ResType);
 		return IsCabinetW(L"*CABINET\\*RESOURCE", pfdici);
 	}
-	BOOL IsResourceCabinetW(CStrW sw_Module, UINT u32_ResID, CStrW sw_ResType, PFDICABINETINFO pfdici = NULL)
+	BOOL IsResourceCabinetW(const CStrW& sw_Module, UINT u32_ResID, const CStrW& sw_ResType, PFDICABINETINFO pfdici = NULL)
 	{
-		if (!GetMemoryW(sw_Module, ms_Name.FormatResource(u32_ResID), sw_ResType))
-			return FALSE;
-
+		mk_Resource.Set(sw_Module, L"", u32_ResID, sw_ResType, 0);
 		return IsCabinetW(L"*CABINET\\*RESOURCE", pfdici);
 	}
-	BOOL IsResourceCabinetW(CStrW sw_Module, CStrW sw_ResName, UINT u32_ResType, PFDICABINETINFO pfdici = NULL)
+	BOOL IsResourceCabinetW(const CStrW& sw_Module, const CStrW& sw_ResName, UINT u32_ResType, PFDICABINETINFO pfdici = NULL)
 	{
-		if (!GetMemoryW(sw_Module, sw_ResName, ms_Type.FormatResource(u32_ResType)))
-			return FALSE;
-
+		mk_Resource.Set(sw_Module, sw_ResName, 0, L"", u32_ResType);
 		return IsCabinetW(L"*CABINET\\*RESOURCE", pfdici);
 	}
-	BOOL IsResourceCabinetW(CStrW sw_Module, CStrW sw_ResName, CStrW sw_ResType, PFDICABINETINFO pfdici = NULL)
+	BOOL IsResourceCabinetW(const CStrW& sw_Module, const CStrW& sw_ResName, const CStrW& sw_ResType, PFDICABINETINFO pfdici = NULL)
 	{
-		if (!GetMemoryW(sw_Module, sw_ResName, sw_ResType))
-			return FALSE;
-		
+		mk_Resource.Set(sw_Module, sw_ResName, 0, sw_ResType, 0);
 		return IsCabinetW(L"*CABINET\\*RESOURCE", pfdici);
 	}
 
 
 protected:
 
-	kMemory mk_Memory;
-	CStrW   ms_Name;
-	CStrW   ms_Type;
+	struct kResource
+	{
+		CStrW sw_CurFile;
+		CStrW sw_Module;
+		UINT u32_ID;   // Usage of either ID or Name
+		CStrW sw_Name; // Usage of either ID or Name
+		CStrW sw_Type;
+
+		void Set(const CStrW& swModule, const CStrW& swName, UINT u32ID, const CStrW& swType, UINT u32Type)
+		{
+			sw_CurFile.Clean();
+			sw_Module = swModule;
+			u32_ID    = u32ID;
+			sw_Name   = swName;
+			sw_Type   = swType;
+			if (u32Type) sw_Type.FormatResource(u32Type);
+		}
+	};
+
+	kResource mk_Resource;
+	kMemory   mk_Memory;
 
 	// Fills the structure in mk_Memory with a pointer to the resource in memory
-	// u16_Module may be = "" if the cabinet is in the file which created the process!!
-	BOOL GetMemoryW(WCHAR* u16_Module, WCHAR* u16_ResName, WCHAR* u16_ResType)
+	// mk_Resource.sw_Module may be = "" if the cabinet is in the EXE which created the process.
+	BOOL GetMemory()
 	{
-		if (wcslen(u16_Module) == 0)
-			u16_Module = 0; // GetModuleHandle returns a handle of the file used to create the calling process.
+		CStrW sw_ResName = mk_Resource.sw_Name;
+		if (mk_Resource.u32_ID) sw_ResName.FormatResource(mk_Resource.u32_ID);
 
-		// Load the resource
+		WCHAR* u16_Module = 0; // Resource is in the calling process
+		if (mk_Resource.sw_Module.Len())
+			u16_Module = mk_Resource.sw_Module;
+
+		// Load the resource (via Filemapping, there is no memory consumption here)
 		HMODULE h_DLL      = GetModuleHandleW(u16_Module);
-		HRSRC   h_Resource = FindResourceW(h_DLL, u16_ResName, u16_ResType);
+		HRSRC   h_Resource = FindResourceW(h_DLL, sw_ResName, mk_Resource.sw_Type);
 		HGLOBAL h_Global   = LoadResource (h_DLL, h_Resource);
 
 		mk_Memory.p_Addr   = LockResource  (h_Global);
@@ -141,8 +146,27 @@ protected:
 	}
 
 	// This function returns a new structure with the pointer to the resource data in memory
-	kMemory* OpenMem(WCHAR* u16_File, int oflag, int pmode)
+	// This function is called TWICE for each CAB file!!
+	kMemory* OpenMem(const WCHAR* u16_File, int oflag, int pmode)
 	{
+		// the first or the next CAB file is to be opened
+		if (mk_Resource.sw_CurFile != u16_File)
+		{
+			// The second, third,.. part of a splitted Cabinet is to be opened
+			if (mk_Resource.sw_CurFile.Len())
+			{
+				// If the resource was specified as integer ID -> increment to the next value
+				if (mk_Resource.u32_ID) 
+					mk_Resource.u32_ID++;
+				else // If the resource was specified by name -> use the name stored in the previous CAB part
+					CFile::SplitPathW(u16_File, 0, &mk_Resource.sw_Name);
+			}
+
+			mk_Resource.sw_CurFile = u16_File;
+			if (!GetMemory())
+				return (kMemory*)-1;
+		}
+
 		// IMPORTANT: The structure MUST be COPIED into a new instance !!!!
 		// Cabinet.DLL will call OpenMem() TWO times and each time it requires 
 		// an individual structure which has its own read position in kMemory.s32_Pos!

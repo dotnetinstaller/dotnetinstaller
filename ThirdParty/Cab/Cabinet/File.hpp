@@ -34,20 +34,18 @@ public:
 		if (CheckDirectoryExistsW(u16_Folder))
 			return 0;
 
-		WCHAR  u16_Parent[1000];
-		wcscpy(u16_Parent, u16_Folder);
-
-		RemovePathTerminationW(u16_Parent);
+		CStrW sw_Parent = u16_Folder;
+		RemovePathTerminationW(sw_Parent);
 
 		// Cut the last Folder from the tree
-		WCHAR* u16_Pos = wcsrchr(u16_Parent, '\\');
+		WCHAR* u16_Pos = wcsrchr(sw_Parent, '\\');
 		if (!u16_Pos) // when "E:" does not exist the drive is invalid
 			return ERROR_INVALID_DRIVE;
 		
 		u16_Pos[0] = 0;
 
 		// recursively create all the parent folders (if necessary)
-		UINT u32_Error = CreateFolderTreeW(u16_Parent);
+		UINT u32_Error = CreateFolderTreeW(sw_Parent);
 		if  (u32_Error)
 			return u32_Error;
 
@@ -71,7 +69,7 @@ public:
 		return (u32_Attr & FILE_ATTRIBUTE_DIRECTORY) > 0;
 	}
 
-	static void TerminatePathW(CStrW& s_Path)
+	static void TerminatePathW(CStrW& s_Path) // NO const here!
 	{
 		int s32_Len = s_Path.Len();
 		if (s32_Len > 1 && s_Path[s32_Len-1] != '\\')
@@ -80,7 +78,7 @@ public:
 		}
 	}
 
-	static void RemovePathTerminationW(WCHAR* u16_Path)
+	static void RemovePathTerminationW(WCHAR* u16_Path) // NO const here!
 	{
 		int s32_Len = (int)wcslen(u16_Path);
 
@@ -94,7 +92,7 @@ public:
 	// the folder "C:\Test\" and
 	// the file   "File.cab"
 	// optionally both returned strings may be null
-	static void SplitPathW(CStrW s_Path, CStrW* ps_Folder, CStrW* ps_File)
+	static void SplitPathW(const CStrW& s_Path, CStrW* ps_Folder, CStrW* ps_File)
 	{
 		WCHAR* u16_Slash = wcsrchr(s_Path, '\\');
 		if (u16_Slash == 0)
@@ -106,9 +104,9 @@ public:
 		{
 			u16_Slash ++;
 			if (ps_File) *ps_File = u16_Slash;
-			
-			u16_Slash[0] = 0;
-			if (ps_Folder) *ps_Folder = s_Path;
+
+			DWORD u32_Len = (DWORD)(u16_Slash - (WCHAR*)s_Path);
+			if (ps_Folder) ps_Folder->Assign(s_Path, u32_Len);
 		}
 	}
 
@@ -157,6 +155,27 @@ public:
 			return ERROR_BUFFER_OVERFLOW;
 
 		return 0;
+	}
+
+	// returns API error or 0 if OK	
+	static DWORD GetFileSizeW(const WCHAR* u16_File, ULONGLONG* pu64_Size)
+	{
+		*pu64_Size = 0;
+
+		HANDLE h_File = CreateFileW(u16_File, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+		if (h_File == INVALID_HANDLE_VALUE)
+			return GetLastError();
+
+		DWORD u32_High;
+		DWORD u32_Low   = GetFileSize(h_File, &u32_High);
+		DWORD u32_Error = GetLastError();
+
+		CloseHandle(h_File);
+
+		if (!u32_Error)
+			*pu64_Size = ((ULONGLONG)u32_High << 32) + u32_Low;
+
+		return u32_Error;
 	}
 };
 

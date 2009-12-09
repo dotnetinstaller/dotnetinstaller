@@ -42,6 +42,7 @@ namespace Cabinet
 #define FCIERR_PATH_TOO_LONG      1003
 #define FCIERR_UNICODE_NEEDS_UTF8 1004
 #define FCIERR_INVAL_THREAD       1005
+#define FCIERR_FILE_TOO_BIG       1006
 
 class CError
 {
@@ -90,17 +91,18 @@ public:
 		if (!k_ERF.erfType)
 			return u16_CabErr;
 
-		const DWORD BUF_SIZE = 2000;
-		WCHAR u16_WinErr[BUF_SIZE];
-		if (!CInternet::ExplainInetErrorW(k_ERF.erfType, u16_WinErr, BUF_SIZE, mu32_LastHttpError))
+		DWORD u32_BufLen = 2000;
+		CStrW  sw_WinErr;
+		sw_WinErr.Allocate(u32_BufLen);
+
+		if (!CInternet::ExplainInetErrorW(k_ERF.erfType, &sw_WinErr, mu32_LastHttpError))
 		{
-			if (!FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM, 0, k_ERF.erfType, 0, u16_WinErr, BUF_SIZE, 0))
+			if (!FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM, 0, k_ERF.erfType, 0, sw_WinErr, u32_BufLen, 0))
 			{
-				wcscpy(u16_WinErr, L"Microsoft has no explanation for this error code.");
+				sw_WinErr = L"Microsoft has no explanation for this error code.";
 			}
 		}
-
-		ms_Error.Format(L"%s\nError %d: %s", u16_CabErr, k_ERF.erfType, u16_WinErr);
+		ms_Error.Format(L"%s\nError %d: %s", u16_CabErr, k_ERF.erfType, (WCHAR*)sw_WinErr);
 		return ms_Error;
 	}
 
@@ -157,6 +159,7 @@ public:
 			case FCIERR_PATH_TOO_LONG:      return L"The path is too long. (Max 250 Ansii characters or approx 100 Unicode characters).";
 			case FCIERR_UNICODE_NEEDS_UTF8: return L"To store files with names containing Unicode characters into the CAB file you must enable UTF8 encoding!";
 			case FCIERR_INVAL_THREAD:       return L"Cabinet.dll does not support calling the same CAB context from two different threads.";
+			case FCIERR_FILE_TOO_BIG:       return L"Cabinet.dll does not support compressing files bigger than 2 GB.";
 			default:                        return L"Unknown error";
 			}
 		}

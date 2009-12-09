@@ -54,14 +54,14 @@ public:
 	{
 		ms8_Buf   = 0;
 		mu32_Size = 0;
-		Allocate(max(DEFAULT_BUFSIZE, (UINT)strlen(s8_String)));
+		Allocate(max(DEFAULT_BUFSIZE, (UINT)strlen(s8_String))); // throws
 		strcpy(ms8_Buf, s8_String);
 	}
-	CStrA(CStrA& s_String)
+	CStrA(const CStrA& s_String)
 	{
 		ms8_Buf   = 0;
 		mu32_Size = 0;
-		Allocate(max(DEFAULT_BUFSIZE, s_String.Len()));
+		Allocate(max(DEFAULT_BUFSIZE, s_String.Len())); // throws
 		strcpy(ms8_Buf, s_String);
 	}
 	~CStrA()
@@ -75,8 +75,13 @@ public:
 		return ms8_Buf;
 	}
 
+	void Clean()
+	{
+		ms8_Buf[0] = 0;
+	}
+
 	// !ALWAYS! recalculate the length!!! The buffer may have been modified exernally
-	UINT Len()
+	UINT Len() const
 	{
 		UINT u32_Len = (UINT)strlen(ms8_Buf);
 		if (u32_Len >= mu32_Size) throw "The string has no terminating null character!";
@@ -105,17 +110,19 @@ public:
 		mu32_Size = u32_Size;
 	}
 
+	void Assign(const char* s8_String, UINT u32_Len)
+	{
+		Allocate(u32_Len); // throws
+		strncpy(ms8_Buf, s8_String, u32_Len);
+		ms8_Buf[u32_Len] = 0;
+	}
 	void operator=(const char* s8_String)
 	{
-		ms8_Buf[0] = 0;
-		Allocate((UINT)strlen(s8_String));
-		strcpy(ms8_Buf, s8_String);
+		Assign(s8_String, (UINT)strlen(s8_String));
 	}
-	void operator=(CStrA& s_String)
+	void operator=(const CStrA& s_String)
 	{
-		ms8_Buf[0] = 0;
-		Allocate(s_String.Len());
-		strcpy(ms8_Buf, s_String);
+		Assign(s_String, s_String.Len());
 	}
 	// copies an Unicode string into an Ansi string without any encoding
 	// Throws exception if invalid characters > 0xFF are found
@@ -138,7 +145,7 @@ public:
 		Allocate(Len() + (UINT)strlen(s8_String));
 		strcat(ms8_Buf, s8_String);
 	}
-	void operator+=(CStrA& s_String)
+	void operator+=(const CStrA& s_String)
 	{
 		Allocate(Len() + s_String.Len());
 		strcat(ms8_Buf, s_String);
@@ -148,9 +155,18 @@ public:
 	{
 		return (stricmp(ms8_Buf, s8_String) == 0);
 	}
-	BOOL operator==(CStrA& s_String)
+	BOOL operator==(const CStrA& s_String)
 	{
 		return (stricmp(ms8_Buf, s_String) == 0);
+	}
+
+	BOOL operator!=(const char* s8_String)
+	{
+		return (stricmp(ms8_Buf, s8_String) != 0);
+	}
+	BOOL operator!=(const CStrA& s_String)
+	{
+		return (stricmp(ms8_Buf, s_String) != 0);
 	}
 
 	void Format(const char* s8_Format, ...)
@@ -216,14 +232,14 @@ public:
 	{
 		mu16_Buf  = 0;
 		mu32_Size = 0;
-		Allocate(max(DEFAULT_BUFSIZE, (UINT)wcslen(u16_String)));
+		Allocate(max(DEFAULT_BUFSIZE, (UINT)wcslen(u16_String))); // throws
 		wcscpy(mu16_Buf, u16_String);
 	}
-	CStrW(CStrW& s_String)
+	CStrW(const CStrW& s_String)
 	{
 		mu16_Buf  = 0;
 		mu32_Size = 0;
-		Allocate(max(DEFAULT_BUFSIZE, s_String.Len()));
+		Allocate(max(DEFAULT_BUFSIZE, s_String.Len())); // throws
 		wcscpy(mu16_Buf, s_String);
 	}
 	~CStrW()
@@ -237,8 +253,13 @@ public:
 		return mu16_Buf;
 	}
 
+	void Clean()
+	{
+		mu16_Buf[0] = 0;
+	}
+
 	// !ALWAYS! recalculate the length!!! The buffer may have been modified exernally
-	UINT Len()
+	UINT Len() const
 	{
 		UINT u32_Len = (UINT)wcslen(mu16_Buf);
 		if (u32_Len >= mu32_Size) throw "The string has no terminating null character!";
@@ -267,17 +288,19 @@ public:
 		mu32_Size = u32_Size;
 	}
 
+	void Assign(const WCHAR* u16_String, UINT u32_Len)
+	{
+		Allocate(u32_Len); // throws
+		wcsncpy(mu16_Buf, u16_String, u32_Len);
+		mu16_Buf[u32_Len] = 0;
+	}
 	void operator=(const WCHAR* u16_String)
 	{
-		mu16_Buf[0] = 0;
-		Allocate((UINT)wcslen(u16_String));
-		wcscpy(mu16_Buf, u16_String);
+		Assign(u16_String, (UINT)wcslen(u16_String));
 	}
-	void operator=(CStrW& s_String)
+	void operator=(const CStrW& s_String)
 	{
-		mu16_Buf[0] = 0;
-		Allocate(s_String.Len());
-		wcscpy(mu16_Buf, s_String);
+		Assign(s_String, s_String.Len());
 	}
 	// copies an ASCII or ANSI string into a Unicode string without any encoding
 	void operator=(const char* s8_Ansi)
@@ -298,7 +321,7 @@ public:
 		Allocate(Len() + (UINT)wcslen(u16_String));
 		wcscat(mu16_Buf, u16_String);
 	}
-	void operator+=(CStrW& s_String)
+	void operator+=(const CStrW& s_String)
 	{
 		Allocate(Len() + s_String.Len());
 		wcscat(mu16_Buf, s_String);
@@ -308,9 +331,18 @@ public:
 	{
 		return (wcsicmp(mu16_Buf, u16_String) == 0);
 	}
-	BOOL operator==(CStrW& s_String)
+	BOOL operator==(const CStrW& s_String)
 	{
 		return (wcsicmp(mu16_Buf, s_String) == 0);
+	}
+
+	BOOL operator!=(const WCHAR* u16_String)
+	{
+		return (wcsicmp(mu16_Buf, u16_String) != 0);
+	}
+	BOOL operator!=(const CStrW& s_String)
+	{
+		return (wcsicmp(mu16_Buf, s_String) != 0);
 	}
 
 // Visual Studio 6.0 will not compile this because VARIANT does not define llVal and ullVal
@@ -420,7 +452,7 @@ public:
 	// Characters 0100 until FFFF --> Unicode
 
 	// return TRUE if the string has NO characters above 0x7F
-	BOOL IsAscii()
+	BOOL IsAscii() const
 	{
 		for (int P=0; mu16_Buf[P]; P++)
 		{
@@ -431,7 +463,7 @@ public:
 	}
 
 	// return TRUE if the string has characters above 0xFF
-	BOOL IsUnicode()
+	BOOL IsUnicode() const
 	{
 		for (int P=0; mu16_Buf[P]; P++)
 		{

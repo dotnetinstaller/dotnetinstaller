@@ -167,7 +167,7 @@ namespace InstallerLib
                         args.WriteLine(string.Format(" {0} - {1}", Path.GetFileName(cabfile),
                             EmbedFileCollection.FormatBytes(new FileInfo(cabfile).Length)));
                         ResourceUpdate.WriteFile(args.output, new ResourceId("RES_CAB"),
-                            new ResourceId(Path.GetFileNameWithoutExtension(cabfile)),
+                            new ResourceId(Path.GetFileName(cabfile)),
                             ResourceUtil.NEUTRALLANGID, cabfile);
                     }
 

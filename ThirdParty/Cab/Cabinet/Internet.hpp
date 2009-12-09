@@ -573,11 +573,14 @@ public:
 
 	// Explains the API error from WinInet.dll or the HTTP Status code
 	// returns TRUE if the error could be explained
-	static BOOL ExplainInetErrorW(DWORD u32_Error, WCHAR* u16_Msg, DWORD u32_BufLen, DWORD u32_Status)
+	static BOOL ExplainInetErrorW(DWORD u32_Error, CStrW* psw_Msg, DWORD u32_Status)
 	{
+		DWORD u32_BufLen = 2000;
+		psw_Msg->Allocate(u32_BufLen);
+
 		if (u32_Status > 0 && u32_Status != HTTP_STATUS_OK)
 		{
-			swprintf(u16_Msg, L"The server returned HTTP status error %d: %s", u32_Status, GetHttpStatusW(u32_Status));
+			psw_Msg->Format(L"The server returned HTTP status error %d: %s", u32_Status, GetHttpStatusW(u32_Status));
 			return TRUE;
 		}
 
@@ -587,15 +590,15 @@ public:
 		if (u32_Error == ERROR_INTERNET_EXTENDED_ERROR)
 		{
 			DWORD u32_ExtError;
-			WI().mf_GetLastResponseW(&u32_ExtError, u16_Msg, &u32_BufLen);
+			WI().mf_GetLastResponseW(&u32_ExtError, *psw_Msg, &u32_BufLen);
 
 			if (!u32_BufLen)
-				wcscpy(u16_Msg, L"Could not retrieve the server error message for the failed operation.");
+				*psw_Msg = L"Could not retrieve the server error message for the failed operation.";
 
 			return TRUE;
 		}
 
-		if (FormatMessageW(FORMAT_MESSAGE_FROM_HMODULE, WI().mh_WininetDll, u32_Error, 0, u16_Msg, u32_BufLen, 0))
+		if (FormatMessageW(FORMAT_MESSAGE_FROM_HMODULE, WI().mh_WininetDll, u32_Error, 0, *psw_Msg, u32_BufLen, 0))
 			return TRUE;
 
 		return FALSE;
