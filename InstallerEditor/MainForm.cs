@@ -15,7 +15,7 @@ namespace InstallerEditor
     /// </summary>
     public class MainForm : System.Windows.Forms.Form
     {
-        private System.Windows.Forms.MainMenu mainMenu1;
+        private System.Windows.Forms.MainMenu mainMenu;
         private MenuItem mnFile;
         private MenuItem mnNew;
         private MenuItem mnClose;
@@ -26,7 +26,7 @@ namespace InstallerEditor
         private MenuItem menuItem2;
         private MenuItem mnCreateExe;
         private MenuItem menuItem4;
-        private System.Windows.Forms.TreeView treeView;
+        private System.Windows.Forms.TreeView configurationTree;
         private System.Windows.Forms.PropertyGrid propertyGrid;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.ContextMenu contextMenuTreeView;
@@ -34,7 +34,7 @@ namespace InstallerEditor
         private MenuItem mnAdd;
         private MenuItem mnAddSetupConfiguration;
         private MenuItem mnAddWebConfiguration;
-        private MenuItem menuItem7;
+        private MenuItem menuSep2;
         private MenuItem mnDelete;
         private MenuItem mnAddDownloadFile;
         private MenuItem mnView;
@@ -62,7 +62,7 @@ namespace InstallerEditor
         private MenuItem mnMove;
         private MenuItem mnMoveUp;
         private MenuItem mnMoveDown;
-        private MenuItem menuItem11;
+        private MenuItem menuSep1;
         private MenuItem mnExpandAll;
         private MenuItem mnCollapseAll;
         private StatusStrip statusStrip;
@@ -74,7 +74,7 @@ namespace InstallerEditor
         private MenuItem mnAddInstalledCheckDirectory;
         private MenuItem menuConfigurations;
         private MenuItem menuComponents;
-        private MenuItem menuItem14;
+        private MenuItem menuSep3;
         private MenuItem menuChecks;
         private MenuItem menuDownload;
         private MenuItem menuEmbed;
@@ -83,9 +83,10 @@ namespace InstallerEditor
         private MenuItem menuControls;
         private MenuItem mnAddEditControl;
         private MenuItem mnAddBrowseControl;
-        private MenuItem menuItem5;
+        private MenuItem menuSep4;
         private MenuItem mnAddLicenseAgreement;
         private MenuItem mnAddHyperlinkControl;
+        private MenuItem mnEdit;
         private System.ComponentModel.IContainer components;
 
         public MainForm()
@@ -117,7 +118,7 @@ namespace InstallerEditor
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
+            this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.mnFile = new System.Windows.Forms.MenuItem();
             this.mnNew = new System.Windows.Forms.MenuItem();
             this.mnOpen = new System.Windows.Forms.MenuItem();
@@ -130,24 +131,14 @@ namespace InstallerEditor
             this.mnCreateExe = new System.Windows.Forms.MenuItem();
             this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.mnExit = new System.Windows.Forms.MenuItem();
-            this.mnView = new System.Windows.Forms.MenuItem();
-            this.mnRefresh = new System.Windows.Forms.MenuItem();
-            this.mnTools = new System.Windows.Forms.MenuItem();
-            this.mnLanguageForNewItem = new System.Windows.Forms.MenuItem();
-            this.mnCustomizeTemplates = new System.Windows.Forms.MenuItem();
-            this.mnHelp = new System.Windows.Forms.MenuItem();
-            this.mnUsersGuide = new System.Windows.Forms.MenuItem();
-            this.menuItem10 = new System.Windows.Forms.MenuItem();
-            this.mnHomePage = new System.Windows.Forms.MenuItem();
-            this.mnHelpAbout = new System.Windows.Forms.MenuItem();
-            this.contextMenuTreeView = new System.Windows.Forms.ContextMenu();
+            this.mnEdit = new System.Windows.Forms.MenuItem();
             this.mnAdd = new System.Windows.Forms.MenuItem();
             this.menuConfigurations = new System.Windows.Forms.MenuItem();
             this.mnAddSetupConfiguration = new System.Windows.Forms.MenuItem();
             this.mnAddWebConfiguration = new System.Windows.Forms.MenuItem();
             this.menuComponents = new System.Windows.Forms.MenuItem();
             this.mnAddComponentWizard2 = new System.Windows.Forms.MenuItem();
-            this.menuItem14 = new System.Windows.Forms.MenuItem();
+            this.menuSep3 = new System.Windows.Forms.MenuItem();
             this.mnAddMsiComponent = new System.Windows.Forms.MenuItem();
             this.mnAddMsuComponent = new System.Windows.Forms.MenuItem();
             this.mnAddCommandComponent = new System.Windows.Forms.MenuItem();
@@ -169,35 +160,47 @@ namespace InstallerEditor
             this.mnAddEditControl = new System.Windows.Forms.MenuItem();
             this.mnAddCheckboxControl = new System.Windows.Forms.MenuItem();
             this.mnAddBrowseControl = new System.Windows.Forms.MenuItem();
-            this.menuItem5 = new System.Windows.Forms.MenuItem();
+            this.mnAddHyperlinkControl = new System.Windows.Forms.MenuItem();
+            this.menuSep4 = new System.Windows.Forms.MenuItem();
             this.mnAddLicenseAgreement = new System.Windows.Forms.MenuItem();
             this.mnMove = new System.Windows.Forms.MenuItem();
             this.mnMoveUp = new System.Windows.Forms.MenuItem();
             this.mnMoveDown = new System.Windows.Forms.MenuItem();
-            this.menuItem11 = new System.Windows.Forms.MenuItem();
+            this.menuSep1 = new System.Windows.Forms.MenuItem();
             this.mnExpandAll = new System.Windows.Forms.MenuItem();
             this.mnCollapseAll = new System.Windows.Forms.MenuItem();
-            this.menuItem7 = new System.Windows.Forms.MenuItem();
+            this.menuSep2 = new System.Windows.Forms.MenuItem();
             this.mnDelete = new System.Windows.Forms.MenuItem();
+            this.mnView = new System.Windows.Forms.MenuItem();
+            this.mnRefresh = new System.Windows.Forms.MenuItem();
+            this.mnTools = new System.Windows.Forms.MenuItem();
+            this.mnLanguageForNewItem = new System.Windows.Forms.MenuItem();
+            this.mnCustomizeTemplates = new System.Windows.Forms.MenuItem();
+            this.mnHelp = new System.Windows.Forms.MenuItem();
+            this.mnUsersGuide = new System.Windows.Forms.MenuItem();
+            this.menuItem10 = new System.Windows.Forms.MenuItem();
+            this.mnHomePage = new System.Windows.Forms.MenuItem();
+            this.mnHelpAbout = new System.Windows.Forms.MenuItem();
+            this.contextMenuTreeView = new System.Windows.Forms.ContextMenu();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
-            this.treeView = new System.Windows.Forms.TreeView();
+            this.configurationTree = new System.Windows.Forms.TreeView();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtComment = new System.Windows.Forms.TextBox();
-            this.mnAddHyperlinkControl = new System.Windows.Forms.MenuItem();
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // mainMenu1
+            // mainMenu
             // 
-            this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnFile,
+            this.mnEdit,
             this.mnView,
             this.mnTools,
             this.mnHelp});
@@ -292,83 +295,19 @@ namespace InstallerEditor
             this.mnExit.Text = "E&xit";
             this.mnExit.Click += new System.EventHandler(this.mnExit_Click);
             // 
-            // mnView
+            // mnEdit
             // 
-            this.mnView.Index = 1;
-            this.mnView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mnRefresh});
-            this.mnView.Text = "&View";
-            // 
-            // mnRefresh
-            // 
-            this.mnRefresh.Index = 0;
-            this.mnRefresh.Shortcut = System.Windows.Forms.Shortcut.F5;
-            this.mnRefresh.Text = "&Refresh";
-            this.mnRefresh.Click += new System.EventHandler(this.mnRefresh_Click);
-            // 
-            // mnTools
-            // 
-            this.mnTools.Index = 2;
-            this.mnTools.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mnLanguageForNewItem,
-            this.mnCustomizeTemplates});
-            this.mnTools.Text = "&Tools";
-            // 
-            // mnLanguageForNewItem
-            // 
-            this.mnLanguageForNewItem.Index = 0;
-            this.mnLanguageForNewItem.Text = "Template For New &Item";
-            // 
-            // mnCustomizeTemplates
-            // 
-            this.mnCustomizeTemplates.Index = 1;
-            this.mnCustomizeTemplates.Text = "&Customize Templates";
-            this.mnCustomizeTemplates.Click += new System.EventHandler(this.mnCustomizeTemplates_Click);
-            // 
-            // mnHelp
-            // 
-            this.mnHelp.Index = 3;
-            this.mnHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mnUsersGuide,
-            this.menuItem10,
-            this.mnHomePage,
-            this.mnHelpAbout});
-            this.mnHelp.Text = "Help";
-            // 
-            // mnUsersGuide
-            // 
-            this.mnUsersGuide.Index = 0;
-            this.mnUsersGuide.Text = "&Users Guide";
-            this.mnUsersGuide.Click += new System.EventHandler(this.mnUsersGuide_Click);
-            // 
-            // menuItem10
-            // 
-            this.menuItem10.Index = 1;
-            this.menuItem10.Text = "-";
-            // 
-            // mnHomePage
-            // 
-            this.mnHomePage.Index = 2;
-            this.mnHomePage.Text = "&Home Page";
-            this.mnHomePage.Click += new System.EventHandler(this.mnHomePage_Click);
-            // 
-            // mnHelpAbout
-            // 
-            this.mnHelpAbout.Index = 3;
-            this.mnHelpAbout.Text = "&About";
-            this.mnHelpAbout.Click += new System.EventHandler(this.mnHelpAbout_Click);
-            // 
-            // contextMenuTreeView
-            // 
-            this.contextMenuTreeView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnEdit.Index = 1;
+            this.mnEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnAdd,
             this.mnMove,
-            this.menuItem11,
+            this.menuSep1,
             this.mnExpandAll,
             this.mnCollapseAll,
-            this.menuItem7,
+            this.menuSep2,
             this.mnDelete});
-            this.contextMenuTreeView.Popup += new System.EventHandler(this.contextMenuTreeView_Popup);
+            this.mnEdit.Text = "&Edit";
+            this.mnEdit.Popup += new System.EventHandler(this.mnEdit_Popup);
             // 
             // mnAdd
             // 
@@ -407,7 +346,7 @@ namespace InstallerEditor
             this.menuComponents.Index = 1;
             this.menuComponents.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnAddComponentWizard2,
-            this.menuItem14,
+            this.menuSep3,
             this.mnAddMsiComponent,
             this.mnAddMsuComponent,
             this.mnAddCommandComponent,
@@ -420,10 +359,10 @@ namespace InstallerEditor
             this.mnAddComponentWizard2.Text = "Component Wizard ...";
             this.mnAddComponentWizard2.Click += new System.EventHandler(this.mnAddComponentWizard2_Click);
             // 
-            // menuItem14
+            // menuSep3
             // 
-            this.menuItem14.Index = 1;
-            this.menuItem14.Text = "-";
+            this.menuSep3.Index = 1;
+            this.menuSep3.Text = "-";
             // 
             // mnAddMsiComponent
             // 
@@ -539,7 +478,7 @@ namespace InstallerEditor
             this.mnAddCheckboxControl,
             this.mnAddBrowseControl,
             this.mnAddHyperlinkControl,
-            this.menuItem5,
+            this.menuSep4,
             this.mnAddLicenseAgreement});
             this.menuControls.Text = "Contro&ls";
             // 
@@ -567,10 +506,16 @@ namespace InstallerEditor
             this.mnAddBrowseControl.Text = "&Browse";
             this.mnAddBrowseControl.Click += new System.EventHandler(this.mnAddBrowseControl_Click);
             // 
-            // menuItem5
+            // mnAddHyperlinkControl
             // 
-            this.menuItem5.Index = 5;
-            this.menuItem5.Text = "-";
+            this.mnAddHyperlinkControl.Index = 4;
+            this.mnAddHyperlinkControl.Text = "&Hyperlink";
+            this.mnAddHyperlinkControl.Click += new System.EventHandler(this.mnAddHyperlinkControl_Click);
+            // 
+            // menuSep4
+            // 
+            this.menuSep4.Index = 5;
+            this.menuSep4.Text = "-";
             // 
             // mnAddLicenseAgreement
             // 
@@ -598,10 +543,10 @@ namespace InstallerEditor
             this.mnMoveDown.Text = "&Down";
             this.mnMoveDown.Click += new System.EventHandler(this.mnMoveDown_Click);
             // 
-            // menuItem11
+            // menuSep1
             // 
-            this.menuItem11.Index = 2;
-            this.menuItem11.Text = "-";
+            this.menuSep1.Index = 2;
+            this.menuSep1.Text = "-";
             // 
             // mnExpandAll
             // 
@@ -615,16 +560,86 @@ namespace InstallerEditor
             this.mnCollapseAll.Text = "&Collapse All";
             this.mnCollapseAll.Click += new System.EventHandler(this.mnCollapseAll_Click);
             // 
-            // menuItem7
+            // menuSep2
             // 
-            this.menuItem7.Index = 5;
-            this.menuItem7.Text = "-";
+            this.menuSep2.Index = 5;
+            this.menuSep2.Text = "-";
             // 
             // mnDelete
             // 
             this.mnDelete.Index = 6;
             this.mnDelete.Text = "&Delete";
             this.mnDelete.Click += new System.EventHandler(this.mnDelete_Click);
+            // 
+            // mnView
+            // 
+            this.mnView.Index = 2;
+            this.mnView.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnRefresh});
+            this.mnView.Text = "&View";
+            // 
+            // mnRefresh
+            // 
+            this.mnRefresh.Index = 0;
+            this.mnRefresh.Shortcut = System.Windows.Forms.Shortcut.F5;
+            this.mnRefresh.Text = "&Refresh";
+            this.mnRefresh.Click += new System.EventHandler(this.mnRefresh_Click);
+            // 
+            // mnTools
+            // 
+            this.mnTools.Index = 3;
+            this.mnTools.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnLanguageForNewItem,
+            this.mnCustomizeTemplates});
+            this.mnTools.Text = "&Tools";
+            // 
+            // mnLanguageForNewItem
+            // 
+            this.mnLanguageForNewItem.Index = 0;
+            this.mnLanguageForNewItem.Text = "Template For New &Item";
+            // 
+            // mnCustomizeTemplates
+            // 
+            this.mnCustomizeTemplates.Index = 1;
+            this.mnCustomizeTemplates.Text = "&Customize Templates";
+            this.mnCustomizeTemplates.Click += new System.EventHandler(this.mnCustomizeTemplates_Click);
+            // 
+            // mnHelp
+            // 
+            this.mnHelp.Index = 4;
+            this.mnHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.mnUsersGuide,
+            this.menuItem10,
+            this.mnHomePage,
+            this.mnHelpAbout});
+            this.mnHelp.Text = "Help";
+            // 
+            // mnUsersGuide
+            // 
+            this.mnUsersGuide.Index = 0;
+            this.mnUsersGuide.Text = "&Users Guide";
+            this.mnUsersGuide.Click += new System.EventHandler(this.mnUsersGuide_Click);
+            // 
+            // menuItem10
+            // 
+            this.menuItem10.Index = 1;
+            this.menuItem10.Text = "-";
+            // 
+            // mnHomePage
+            // 
+            this.mnHomePage.Index = 2;
+            this.mnHomePage.Text = "&Home Page";
+            this.mnHomePage.Click += new System.EventHandler(this.mnHomePage_Click);
+            // 
+            // mnHelpAbout
+            // 
+            this.mnHelpAbout.Index = 3;
+            this.mnHelpAbout.Text = "&About";
+            this.mnHelpAbout.Click += new System.EventHandler(this.mnHelpAbout_Click);
+            // 
+            // contextMenuTreeView
+            // 
+            this.contextMenuTreeView.Popup += new System.EventHandler(this.contextMenuTreeView_Popup);
             // 
             // imageList
             // 
@@ -666,7 +681,7 @@ namespace InstallerEditor
             // 
             this.mainSplitContainer.Panel1.Controls.Add(this.splitter1);
             this.mainSplitContainer.Panel1.Controls.Add(this.propertyGrid);
-            this.mainSplitContainer.Panel1.Controls.Add(this.treeView);
+            this.mainSplitContainer.Panel1.Controls.Add(this.configurationTree);
             // 
             // mainSplitContainer.Panel2
             // 
@@ -694,28 +709,28 @@ namespace InstallerEditor
             this.propertyGrid.TabIndex = 3;
             this.propertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid_PropertyValueChanged);
             // 
-            // treeView
+            // configurationTree
             // 
-            this.treeView.AllowDrop = true;
-            this.treeView.ContextMenu = this.contextMenuTreeView;
-            this.treeView.Dock = System.Windows.Forms.DockStyle.Left;
-            this.treeView.HideSelection = false;
-            this.treeView.ImageIndex = 0;
-            this.treeView.ImageList = this.imageList;
-            this.treeView.Location = new System.Drawing.Point(0, 0);
-            this.treeView.Name = "treeView";
-            this.treeView.SelectedImageIndex = 0;
-            this.treeView.Size = new System.Drawing.Size(176, 278);
-            this.treeView.TabIndex = 1;
-            this.treeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView_DragDrop);
-            this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
-            this.treeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseDown);
-            this.treeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView_DragEnter);
-            this.treeView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyUp);
-            this.treeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView_BeforeSelect);
-            this.treeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyDown);
-            this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
-            this.treeView.DragOver += new System.Windows.Forms.DragEventHandler(this.treeView_DragOver);
+            this.configurationTree.AllowDrop = true;
+            this.configurationTree.ContextMenu = this.contextMenuTreeView;
+            this.configurationTree.Dock = System.Windows.Forms.DockStyle.Left;
+            this.configurationTree.HideSelection = false;
+            this.configurationTree.ImageIndex = 0;
+            this.configurationTree.ImageList = this.imageList;
+            this.configurationTree.Location = new System.Drawing.Point(0, 0);
+            this.configurationTree.Name = "configurationTree";
+            this.configurationTree.SelectedImageIndex = 0;
+            this.configurationTree.Size = new System.Drawing.Size(176, 278);
+            this.configurationTree.TabIndex = 1;
+            this.configurationTree.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView_DragDrop);
+            this.configurationTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
+            this.configurationTree.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseDown);
+            this.configurationTree.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView_DragEnter);
+            this.configurationTree.KeyUp += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyUp);
+            this.configurationTree.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView_BeforeSelect);
+            this.configurationTree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyDown);
+            this.configurationTree.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
+            this.configurationTree.DragOver += new System.Windows.Forms.DragEventHandler(this.treeView_DragOver);
             // 
             // statusStrip
             // 
@@ -744,19 +759,13 @@ namespace InstallerEditor
             this.txtComment.TabIndex = 0;
             this.txtComment.Visible = false;
             // 
-            // mnAddHyperlinkControl
-            // 
-            this.mnAddHyperlinkControl.Index = 4;
-            this.mnAddHyperlinkControl.Text = "&Hyperlink";
-            this.mnAddHyperlinkControl.Click += new System.EventHandler(this.mnAddHyperlinkControl_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(620, 346);
             this.Controls.Add(this.mainSplitContainer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Menu = this.mainMenu1;
+            this.Menu = this.mainMenu;
             this.Name = "MainForm";
             this.Text = "Installer Editor";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -772,15 +781,6 @@ namespace InstallerEditor
 
         }
 
-        void contextMenuTreeView_Popup(object sender, EventArgs e)
-        {
-            mnAdd.Enabled = (m_TreeNodeConfigFile != null);
-            mnDelete.Enabled = (treeView.SelectedNode != null);
-            mnExpandAll.Enabled = (treeView.SelectedNode != null && treeView.SelectedNode.Nodes.Count > 0);
-            mnCollapseAll.Enabled = (treeView.SelectedNode != null && treeView.SelectedNode.IsExpanded);
-            mnMove.Enabled = (m_TreeNodeConfigFile != null);
-        }
-
         void treeView_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -791,8 +791,8 @@ namespace InstallerEditor
                     break;
                 // insert
                 case Keys.Insert:
-                    contextMenuTreeView.Show(treeView, treeView.SelectedNode != null
-                        ? new Point(treeView.SelectedNode.Bounds.Location.X + 5, treeView.SelectedNode.Bounds.Location.Y + 5)
+                    contextMenuTreeView.Show(configurationTree, configurationTree.SelectedNode != null
+                        ? new Point(configurationTree.SelectedNode.Bounds.Location.X + 5, configurationTree.SelectedNode.Bounds.Location.Y + 5)
                         : new Point(0, 0));
                     break;
             }
@@ -957,10 +957,10 @@ namespace InstallerEditor
 
         private void RefreshCommentPanel()
         {
-            if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is XmlClass)
+            if (configurationTree.SelectedNode != null && configurationTree.SelectedNode.Tag is XmlClass)
             {
                 txtComment.Visible = true;
-                txtComment.Text = ((XmlClass)treeView.SelectedNode.Tag).Comment;
+                txtComment.Text = ((XmlClass)configurationTree.SelectedNode.Tag).Comment;
             }
             else
             {
@@ -973,7 +973,7 @@ namespace InstallerEditor
         {
             try
             {
-                treeView.Select();
+                configurationTree.Select();
                 SaveConfiguration();
             }
             catch (Exception err)
@@ -1002,15 +1002,15 @@ namespace InstallerEditor
 
         private void CloseTreeView()
         {
-            treeView.Nodes.Clear();
+            configurationTree.Nodes.Clear();
         }
 
         private void LoadTreeView(TreeNodeConfigFile p_Configuration)
         {
             CloseTreeView();
-            treeView.Nodes.Add(p_Configuration);
-            treeView.ExpandAll();
-            treeView.SelectedNode = p_Configuration;
+            configurationTree.Nodes.Add(p_Configuration);
+            configurationTree.ExpandAll();
+            configurationTree.SelectedNode = p_Configuration;
         }
 
         private void mnNew_Click(object sender, System.EventArgs e)
@@ -1056,9 +1056,9 @@ namespace InstallerEditor
 
         private void RefreshNodeContextMenu()
         {
-            if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is XmlClass)
+            if (configurationTree.SelectedNode != null && configurationTree.SelectedNode.Tag is XmlClass)
             {
-                XmlClass item = (XmlClass)treeView.SelectedNode.Tag;
+                XmlClass item = (XmlClass)configurationTree.SelectedNode.Tag;
                 mnDelete.Enabled = true;
                 mnAddSetupConfiguration.Enabled = (item.Children.CanAdd(typeof(SetupConfiguration)));
                 mnAddWebConfiguration.Enabled = (item.Children.CanAdd(typeof(WebConfiguration)));
@@ -1076,8 +1076,8 @@ namespace InstallerEditor
                 mnAddInstalledCheckProduct.Enabled = (item.Children.CanAdd(typeof(InstalledCheckProduct)));
                 mnAddInstalledCheckOperator.Enabled = (item.Children.CanAdd(typeof(InstalledCheckOperator)));
                 mnAddComponentWizard2.Enabled = (item is SetupConfiguration);
-                mnMoveUp.Enabled = (treeView.SelectedNode.PrevNode != null);
-                mnMoveDown.Enabled = (treeView.SelectedNode.NextNode != null);
+                mnMoveUp.Enabled = (configurationTree.SelectedNode.PrevNode != null);
+                mnMoveDown.Enabled = (configurationTree.SelectedNode.NextNode != null);
                 mnMove.Enabled = mnMoveUp.Enabled || mnMoveDown.Enabled;
                 mnAddLabelControl.Enabled = (item.Children.CanAdd(typeof(ControlLabel)));
                 mnAddCheckboxControl.Enabled = (item.Children.CanAdd(typeof(ControlCheckBox)));
@@ -1131,7 +1131,7 @@ namespace InstallerEditor
             node.Nodes.Add(treeNode);
             m_TreeNodeConfigFile.IsDirty = true;
             node.Expand();
-            treeView.SelectedNode = treeNode;
+            configurationTree.SelectedNode = treeNode;
             treeNode.ExpandAll();
         }
 
@@ -1139,9 +1139,9 @@ namespace InstallerEditor
             where T : XmlClass, new()
         {
             T xmlitem = new T();
-            ((XmlClass)treeView.SelectedNode.Tag).Children.Add(xmlitem);
+            ((XmlClass)configurationTree.SelectedNode.Tag).Children.Add(xmlitem);
             XmlTreeNodeImpl xmlitemnode = XmlTreeNodeImpl.CreateNode(xmlitem);
-            AddTreeNode(treeView.SelectedNode, xmlitemnode);
+            AddTreeNode(configurationTree.SelectedNode, xmlitemnode);
         }
 
         private void AddTreeNode_Click<T>()
@@ -1209,13 +1209,13 @@ namespace InstallerEditor
 
         private void mnAddSetupConfiguration_Click(object sender, System.EventArgs e)
         {
-            treeView.SelectedNode = m_TreeNodeConfigFile;
+            configurationTree.SelectedNode = m_TreeNodeConfigFile;
             AddTreeNode_Click<SetupConfiguration>();
         }
 
         private void mnAddWebConfiguration_Click(object sender, System.EventArgs e)
         {
-            treeView.SelectedNode = m_TreeNodeConfigFile;
+            configurationTree.SelectedNode = m_TreeNodeConfigFile;
             AddTreeNode_Click<WebConfiguration>();
         }
 
@@ -1276,14 +1276,14 @@ namespace InstallerEditor
         {
             try
             {
-                if (treeView.SelectedNode != null && treeView.SelectedNode.Parent != null)
+                if (configurationTree.SelectedNode != null && configurationTree.SelectedNode.Parent != null)
                 {
-                    if (treeView.SelectedNode.Tag is XmlClass && treeView.SelectedNode.Parent.Tag is XmlClass)
+                    if (configurationTree.SelectedNode.Tag is XmlClass && configurationTree.SelectedNode.Parent.Tag is XmlClass)
                     {
-                        XmlClass item = (XmlClass)treeView.SelectedNode.Tag;
-                        XmlClass parent = (XmlClass)treeView.SelectedNode.Parent.Tag;
+                        XmlClass item = (XmlClass)configurationTree.SelectedNode.Tag;
+                        XmlClass parent = (XmlClass)configurationTree.SelectedNode.Parent.Tag;
                         parent.Children.Remove(item);
-                        treeView.SelectedNode.Remove();
+                        configurationTree.SelectedNode.Remove();
                         m_TreeNodeConfigFile.IsDirty = true;
                     }
                 }
@@ -1317,10 +1317,10 @@ namespace InstallerEditor
         {
             try
             {
-                TreeNode l_Node = treeView.GetNodeAt(e.X, e.Y);
+                TreeNode l_Node = configurationTree.GetNodeAt(e.X, e.Y);
                 if (l_Node != null)
                 {
-                    treeView.SelectedNode = l_Node;
+                    configurationTree.SelectedNode = l_Node;
                 }
             }
             catch (Exception err)
@@ -1512,9 +1512,9 @@ namespace InstallerEditor
         {
             try
             {
-                if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is SetupConfiguration)
+                if (configurationTree.SelectedNode != null && configurationTree.SelectedNode.Tag is SetupConfiguration)
                 {
-                    SetupConfiguration l_Setup = (SetupConfiguration)treeView.SelectedNode.Tag;
+                    SetupConfiguration l_Setup = (SetupConfiguration)configurationTree.SelectedNode.Tag;
                     ComponentWizard2 l_frmWizard = new ComponentWizard2();
 
                     if (l_frmWizard.ShowDialog(this) == DialogResult.OK)
@@ -1524,7 +1524,7 @@ namespace InstallerEditor
                             l_Setup.Children.Add(c);
                             TreeNodeComponent<Component> componentNode = new TreeNodeComponent<Component>(c);
                             componentNode.CreateChildNodes();
-                            AddTreeNode(treeView.SelectedNode, componentNode);
+                            AddTreeNode(configurationTree.SelectedNode, componentNode);
                         }
                     }
                 }
@@ -1537,27 +1537,27 @@ namespace InstallerEditor
 
         private void treeView_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
-            if (treeView.SelectedNode != null && treeView.SelectedNode.Tag is XmlClass)
+            if (configurationTree.SelectedNode != null && configurationTree.SelectedNode.Tag is XmlClass)
             {
-                ((XmlClass)treeView.SelectedNode.Tag).Comment = txtComment.Text;
+                ((XmlClass)configurationTree.SelectedNode.Tag).Comment = txtComment.Text;
             }
         }
 
         private void mnMoveUp_Click(object sender, EventArgs e)
         {
-            treeView.BeginUpdate();
+            configurationTree.BeginUpdate();
             try
             {
-                if (treeView.SelectedNode == null)
+                if (configurationTree.SelectedNode == null)
                     throw new ApplicationException("Missing node");
 
-                if (treeView.SelectedNode.PrevNode == null)
+                if (configurationTree.SelectedNode.PrevNode == null)
                     throw new ApplicationException("Missing previous node");
 
-                if (treeView.Parent == null)
+                if (configurationTree.Parent == null)
                     throw new ApplicationException("Missing parent node");
 
-                XmlTreeNodeImpl nodeMoved = (XmlTreeNodeImpl)treeView.SelectedNode;
+                XmlTreeNodeImpl nodeMoved = (XmlTreeNodeImpl)configurationTree.SelectedNode;
                 nodeMoved.MoveTo(nodeMoved.Index - 1);
                 m_TreeNodeConfigFile.IsDirty = true;
             }
@@ -1567,26 +1567,26 @@ namespace InstallerEditor
             }
             finally
             {
-                treeView.EndUpdate();
+                configurationTree.EndUpdate();
             }
         }
 
         private void mnMoveDown_Click(object sender, EventArgs e)
         {
-            treeView.BeginUpdate();
+            configurationTree.BeginUpdate();
 
             try
             {
-                if (treeView.SelectedNode == null)
+                if (configurationTree.SelectedNode == null)
                     throw new ApplicationException("Missing node");
 
-                if (treeView.SelectedNode.NextNode == null)
+                if (configurationTree.SelectedNode.NextNode == null)
                     throw new ApplicationException("Missing next node");
 
-                if (treeView.Parent == null)
+                if (configurationTree.Parent == null)
                     throw new ApplicationException("Missing parent node");
 
-                XmlTreeNodeImpl nodeMoved = (XmlTreeNodeImpl)treeView.SelectedNode;
+                XmlTreeNodeImpl nodeMoved = (XmlTreeNodeImpl)configurationTree.SelectedNode;
                 nodeMoved.MoveTo(nodeMoved.Index + 1);
                 m_TreeNodeConfigFile.IsDirty = true;
             }
@@ -1596,7 +1596,7 @@ namespace InstallerEditor
             }
             finally
             {
-                treeView.EndUpdate();
+                configurationTree.EndUpdate();
             }
         }
 
@@ -1649,7 +1649,7 @@ namespace InstallerEditor
 
         private void treeView_DragDrop(object sender, DragEventArgs e)
         {
-            treeView.BeginUpdate();
+            configurationTree.BeginUpdate();
 
             try
             {
@@ -1657,8 +1657,8 @@ namespace InstallerEditor
                     return;
 
                 // target node
-                Point pos = treeView.PointToClient(new Point(e.X, e.Y));
-                XmlTreeNodeImpl targetNode = (XmlTreeNodeImpl)treeView.GetNodeAt(pos);
+                Point pos = configurationTree.PointToClient(new Point(e.X, e.Y));
+                XmlTreeNodeImpl targetNode = (XmlTreeNodeImpl)configurationTree.GetNodeAt(pos);
 
                 // node being dragged
                 XmlTreeNodeImpl dropNode = ((TreeNodeImplContainer)e.Data.GetData(typeof(TreeNodeImplContainer))).NodeData;
@@ -1671,7 +1671,7 @@ namespace InstallerEditor
             }
             finally
             {
-                treeView.EndUpdate();
+                configurationTree.EndUpdate();
             }
         }
 
@@ -1691,8 +1691,8 @@ namespace InstallerEditor
             }
 
             // target node
-            Point pos = treeView.PointToClient(new Point(e.X, e.Y));
-            TreeNode targetNode = treeView.GetNodeAt(pos);
+            Point pos = configurationTree.PointToClient(new Point(e.X, e.Y));
+            TreeNode targetNode = configurationTree.GetNodeAt(pos);
 
             if (targetNode == null)
             {
@@ -1701,10 +1701,10 @@ namespace InstallerEditor
             }
 
             // if the target node is selected, don't validate again
-            if (treeView.SelectedNode == targetNode)
+            if (configurationTree.SelectedNode == targetNode)
                 return;
 
-            treeView.SelectedNode = targetNode;
+            configurationTree.SelectedNode = targetNode;
 
             // node being dragged
             XmlTreeNodeImpl dropNode = ((TreeNodeImplContainer)e.Data.GetData(typeof(TreeNodeImplContainer))).NodeData;
@@ -1744,7 +1744,7 @@ namespace InstallerEditor
         {
             try
             {
-                treeView.SelectedNode.ExpandAll();
+                configurationTree.SelectedNode.ExpandAll();
             }
             catch (Exception err)
             {
@@ -1756,7 +1756,7 @@ namespace InstallerEditor
         {
             try
             {
-                treeView.SelectedNode.Collapse(false);
+                configurationTree.SelectedNode.Collapse(false);
             }
             catch (Exception err)
             {
@@ -1787,6 +1787,22 @@ namespace InstallerEditor
             {
                 m_TreeNodeConfigFile.IsDirty = true;
             }
+        }
+
+        private void mnEdit_Popup(object sender, EventArgs e)
+        {
+            mnAdd.Enabled = (m_TreeNodeConfigFile != null);
+            mnDelete.Enabled = (configurationTree.SelectedNode != null);
+            mnExpandAll.Enabled = (configurationTree.SelectedNode != null && configurationTree.SelectedNode.Nodes.Count > 0);
+            mnCollapseAll.Enabled = (configurationTree.SelectedNode != null && configurationTree.SelectedNode.IsExpanded);
+            mnMove.Enabled = (m_TreeNodeConfigFile != null);
+        }
+
+        private void contextMenuTreeView_Popup(object sender, EventArgs e)
+        {
+            mnEdit_Popup(sender, e);
+            contextMenuTreeView.MenuItems.Clear();
+            contextMenuTreeView.MergeMenu(mnEdit);
         }
     }
 }

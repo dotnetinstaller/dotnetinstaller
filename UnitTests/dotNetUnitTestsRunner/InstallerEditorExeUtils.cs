@@ -78,23 +78,25 @@ namespace dotNetUnitTestsRunner
             }
         }
 
-        public static RunResult Run(RunOptions options)
-        {
-            RunResult result = new RunResult();
-            Process p = Detach(options);
-            Thread.Sleep(2000);
-            p.WaitForInputIdle();
-            result.WindowTitle = p.MainWindowTitle;
-            p.CloseMainWindow();
-            p.WaitForExit();
-            result.ExitCode = p.ExitCode;
-            return result;
-        }
-
         public static Process Detach(RunOptions options)
         {
             Console.WriteLine("InstallerEditor: {0}", Executable);
             return Detach(Executable, options.CommandLineArgs);
+        }
+
+        public static RunResult Run(RunOptions options)
+        {
+            RunResult result = new RunResult();
+            using (Process p = Detach(options))
+            {
+                Thread.Sleep(2000);
+                p.WaitForInputIdle();
+                result.WindowTitle = p.MainWindowTitle;
+                p.CloseMainWindow();
+                p.WaitForExit();
+                result.ExitCode = p.ExitCode;
+            }
+            return result;
         }
 
         private static Process Detach(string filename, string args)
