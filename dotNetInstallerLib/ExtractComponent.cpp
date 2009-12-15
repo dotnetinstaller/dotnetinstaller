@@ -7,6 +7,7 @@ ExtractComponent::ExtractComponent(HMODULE h, const std::wstring& id)
 	: m_h(h)
 	, cancelled(false)
 	, component_id(GetNormalizedId(id))
+	, status_interval(1000)
 {
 
 }
@@ -63,6 +64,7 @@ void ExtractComponent::ExtractFromResource()
 	callbacks.f_OnBeforeCopyFile = & ExtractComponent::OnBeforeCopyFile; 
 	callbacks.f_OnAfterCopyFile = & ExtractComponent::OnAfterCopyFile;
 	callbacks.f_OnProgressInfo = & ExtractComponent::OnProgressInfo;
+	callbacks.n_ProgressInfoInterval = status_interval;
 	extract.SetCallbacks(& callbacks);
 
 	CHECK_BOOL(extract.CreateFDIContext(),
@@ -131,7 +133,8 @@ void ExtractComponent::OnProgressInfo(Cabinet::CExtract::kProgressInfo* pk_Progr
 {
 	ExtractComponent * extractComponent = (ExtractComponent *) p_Param;
 
-	extractComponent->OnStatus(std::wstring(pk_Progress->u16_RelPath) + L" - " + DVLib::FormatMessage(L"%d%%", pk_Progress->fl_Percent));
+	extractComponent->OnStatus(std::wstring(pk_Progress->u16_RelPath) + L" - " + 
+		DVLib::FormatMessage(L"%.f%%", pk_Progress->fl_Percent));
 
 	if (extractComponent->cancelled)
     {

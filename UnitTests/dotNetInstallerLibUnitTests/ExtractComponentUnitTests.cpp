@@ -8,6 +8,8 @@ using namespace DVLib::UnitTests;
 class ExtractComponentStdOut : public ExtractComponent
 {
 public:
+	std::wstring last_status;
+public:
 	ExtractComponentStdOut(HMODULE h, const std::wstring& id)
 		: ExtractComponent(h, id)
 	{
@@ -17,6 +19,7 @@ public:
 	void OnStatus(const std::wstring& status)
 	{
 		std::wcout << std::endl << status;
+		last_status = status;
 	}
 };
 
@@ -41,4 +44,14 @@ void ExtractComponentUnitTests::testExtractWithComponentId()
 	CPPUNIT_ASSERT(DVLib::GetFileSize(readmetxt) == 18);
 	std::wcout << std::endl << readmetxt << L" - " << DVLib::FormatBytesW(DVLib::GetFileSize(readmetxt));
 	DVLib::DirectoryDelete(InstallerSession::Instance->GetSessionTempPath());
+}
+
+
+void ExtractComponentUnitTests::testExtractWithStatus()
+{
+	ExtractComponentStdOut extract(::GetModuleHandle(NULL), L"");
+	extract.status_interval = 0;
+	extract.Exec();
+	DVLib::DirectoryDelete(InstallerSession::Instance->GetSessionTempPath());
+	CPPUNIT_ASSERT(extract.last_status == L"readme.txt - 100%");
 }

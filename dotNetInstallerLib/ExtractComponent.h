@@ -6,6 +6,7 @@
 struct ExtractComponent : public ThreadComponent
 {
 public:
+	int status_interval;
 	bool cancelled;
 	std::wstring component_id;
 	std::wstring cab_path;

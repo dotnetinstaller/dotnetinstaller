@@ -136,6 +136,7 @@ public:
 		t_BeforeCopyFile f_OnBeforeCopyFile;
 		t_AfterCopyFile  f_OnAfterCopyFile;
 		t_ProgressInfo   f_OnProgressInfo;
+		int			     n_ProgressInfoInterval;
 		t_CabinetInfo    f_OnCabinetInfo;
 		t_NextCabinet    f_OnNextCabinet;
 		t_StreamGetLen   f_StreamGetLen;
@@ -143,13 +144,14 @@ public:
 
 		kCallbacks()
 		{
-			f_OnBeforeCopyFile = 0;
-			f_OnAfterCopyFile  = 0;
-			f_OnProgressInfo   = 0;
-			f_OnCabinetInfo    = 0;
-			f_OnNextCabinet    = 0;
-			f_StreamGetLen     = 0;
-			f_StreamRead       = 0;
+			f_OnBeforeCopyFile  = 0;
+			f_OnAfterCopyFile = 0;
+			f_OnProgressInfo = 0;
+			f_OnCabinetInfo = 0;
+			f_OnNextCabinet = 0;
+			f_StreamGetLen = 0;
+			f_StreamRead = 0;
+			n_ProgressInfoInterval = DEFAULT_PROGRESS_CALLBACK_INTERVAL;
 		}
 	};
 
@@ -707,13 +709,13 @@ private:
 		}
 		else s32_Written = Write(fd, memory, count);
 
-		// Call the ProgressInfo callback every 200 ms
+		// Call the ProgressInfo callback every n_ProgressInfoInterval ms
 		if (s32_Written > 0 && mk_CurrentFile.h_File == fd && mk_Callbacks.f_OnProgressInfo)
 		{
 			mk_CurrentFile.u32_Written += s32_Written;
 
 			int s32_Now = GetTickCount();
-			if (abs(s32_Now - mk_CurrentFile.s32_LastTick) > PROGRESS_CALLBACK_INTERVAL)
+			if (abs(s32_Now - mk_CurrentFile.s32_LastTick) >= mk_Callbacks.n_ProgressInfoInterval)
 			{
 				mk_CurrentFile.s32_LastTick = s32_Now;
 

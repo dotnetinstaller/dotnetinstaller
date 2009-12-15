@@ -9,10 +9,12 @@ namespace DVLib
 			CPPUNIT_TEST_SUITE( ExtractComponentUnitTests );
 			CPPUNIT_TEST( testExtractWithoutComponentId );
 			CPPUNIT_TEST( testExtractWithComponentId );
+			CPPUNIT_TEST( testExtractWithStatus );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testExtractWithoutComponentId();
 			void testExtractWithComponentId();
+			void testExtractWithStatus();
 		};
 	}
 }
