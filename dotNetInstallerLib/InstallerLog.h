@@ -23,3 +23,15 @@ private:
 	std::wstringstream ss_message; ss_message << message; \
 	InstallerLog::Instance->Write(ss_message.str()); \
 }
+
+#define TRYLOG( message ) \
+{ \
+	try \
+	{ \
+		std::wstringstream ss_message; ss_message << message; \
+		InstallerLog::Instance->Write(ss_message.str()); \
+	} \
+	catch(std::exception&) \
+	{ \
+	} \
+}

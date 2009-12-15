@@ -88,8 +88,8 @@ BOOL CdotNetInstallerApp::InitInstance()
 	}
 	catch(std::exception& ex)
 	{
-		LOG(L"Error: " << DVLib::string2wstring(ex.what()));
         DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
+		TRYLOG(L"Error: " << DVLib::string2wstring(ex.what()));
 		m_rc = -1;
 	}
 
@@ -100,7 +100,7 @@ BOOL CdotNetInstallerApp::InitInstance()
 
 int CdotNetInstallerApp::ExitInstance() 
 {
-	LOG(L"dotNetInstaller finished, return code=" << m_rc);
+	TRYLOG(L"dotNetInstaller finished, return code=" << m_rc);
 	reset(InstallerCommandLineInfo::Instance);
 	reset(InstallerLauncher::Instance);
 	reset(InstallerLog::Instance);
