@@ -52,6 +52,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIAutomation.cs" />
+    <Compile Include="UIMoveUpDownUnitTests.cs" />
     <Compile Include="UIUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +60,9 @@
       <Project>{6436DA79-B04A-4B9A-BEA9-46933ADBBB7D}</Project>
       <Name>dotNetUnitTestsRunner</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

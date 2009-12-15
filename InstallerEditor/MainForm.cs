@@ -1221,7 +1221,7 @@ namespace InstallerEditor
 
         private void mnAddDownloadFile_Click(object sender, System.EventArgs e)
         {
-            AddTreeNode_Click<DownloadDialog>();
+            AddTreeNode_Click<Download>();
         }
 
         private void mnAddMsiComponent_Click(object sender, System.EventArgs e)

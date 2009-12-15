@@ -32,31 +32,5 @@ namespace InstallerEditorUnitTests
                 }
             }
         }
-
-        public static Menu ClickThroughMenu(Menus m, string[] items)
-        {
-            List<string> itemsArray = new List<string>(items);
-            if (itemsArray.Count == 0) throw new ArgumentOutOfRangeException();
-            Menu rootMenu = m.Find(itemsArray[0]);
-            if (rootMenu == null) throw new Exception(string.Format("Missing menu: ", itemsArray[0]));
-            itemsArray.RemoveAt(0);
-            return ClickThroughMenu(rootMenu, itemsArray.ToArray());
-        }
-
-        public static Menu ClickThroughMenu(Menu m, string[] items)
-        {
-            m.Click();
-            foreach (string item in items)
-            {
-                Menu itemMenu = m.ChildMenus.Find(item);
-                if (itemMenu == null)
-                {
-                    throw new Exception(string.Format("Missing menu: {0}", item));
-                }
-                itemMenu.Click();
-                m = itemMenu;
-            }
-            return m;
-        }
     }
 }

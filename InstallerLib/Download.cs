@@ -18,7 +18,7 @@ namespace InstallerLib
 
         public Download(string p_DownloadPath)
         {
-            m_componentname = "DOWNLOAD_FILE";
+            m_componentname = "Download File";
             m_sourceurl = "http://www.yourwebsite.com/SetupX/Setup.exe";
             m_destinationpath = "#TEMPPATH\\" + p_DownloadPath;
             m_destinationfilename = "";

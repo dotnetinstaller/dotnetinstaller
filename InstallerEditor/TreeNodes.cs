@@ -69,7 +69,7 @@ namespace InstallerEditor
             if (Parent == null)
                 throw new ApplicationException("Missing parent node");
 
-            MoveTo((TreeNodeImpl<XmlClass>)Parent, index);
+            MoveTo((XmlTreeNodeImpl)Parent, index);
         }
 
         public static XmlTreeNodeImpl CreateNode(XmlClass item)

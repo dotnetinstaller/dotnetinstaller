@@ -77,10 +77,7 @@ namespace InstallerEditorUnitTests
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
                 Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
-                Menu fileMenu = mainWindow.MenuBar.TopLevelMenu.Find("File");
-                fileMenu.Click();
-                Menu fileNewConfigurationMenu = fileMenu.ChildMenus.Find("New");
-                fileNewConfigurationMenu.Click();
+                mainWindow.MenuBar.MenuItem("File", "New").Click();
 
                 Tree configurationTree = mainWindow.Get<Tree>("configurationTree");
                 Assert.AreEqual(1, configurationTree.Nodes.Count);
@@ -89,27 +86,39 @@ namespace InstallerEditorUnitTests
                 string[] checksMenuItems = { "Installed Check Registry", "Installed Check File", "Installed Check Directory", 
                     "Installed Check Operator", "Installed Check ProductCode" };
 
-                UIAutomation.ClickThroughMenu(mainWindow.MenuBar.TopLevelMenu,
-                    new string[] { "Edit", "Add", "Configurations", "Setup Configuration" });
+                mainWindow.MenuBar.MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
                 TreeNode configurationNode = configurationTree.SelectedNode;
                 foreach (string componentMenuItem in componentsMenuItems)
                 {
                     configurationNode.Select();
-                    UIAutomation.ClickThroughMenu(mainWindow.MenuBar.TopLevelMenu,
-                        new string[] { "Edit", "Add", "Components", componentMenuItem });
+                    mainWindow.MenuBar.MenuItem("Edit", "Add", "Components", componentMenuItem).Click();
 
                     TreeNode componentNode = configurationTree.SelectedNode;
                     foreach (string checksMenuItem in checksMenuItems)
                     {
                         componentNode.Select();
-                        UIAutomation.ClickThroughMenu(mainWindow.MenuBar.TopLevelMenu,
-                            new string[] { "Edit", "Add", "Checks", checksMenuItem });
+                        mainWindow.MenuBar.MenuItem("Edit", "Add", "Checks", checksMenuItem).Click();
                     }
 
                     componentNode.Select();
-                    UIAutomation.ClickThroughMenu(mainWindow.MenuBar.TopLevelMenu,
-                        new string[] { "Edit", "Delete" });
+                    mainWindow.MenuBar.MenuItem("Edit", "Delete").Click();
                 }
+            }
+        }
+
+        [Test]
+        public void TestAddDownloadDialog()
+        {
+            using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
+            {
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
+                mainWindow.MenuBar.MenuItem("File", "New").Click();
+                mainWindow.MenuBar.MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
+                mainWindow.MenuBar.MenuItem("Edit", "Add", "Components", "Msi Component").Click();
+                mainWindow.MenuBar.MenuItem("Edit", "Add", "Download", "Download Dialog").Click();
+                mainWindow.MenuBar.MenuItem("Edit", "Add", "Download", "Download File").Click();
+                Tree configurationTree = mainWindow.Get<Tree>("configurationTree");
+                Assert.AreEqual("Download File", configurationTree.SelectedNode.Name);
             }
         }
 
