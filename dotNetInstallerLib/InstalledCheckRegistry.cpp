@@ -70,21 +70,21 @@ bool InstalledCheckRegistry::IsInstalled() const
         LOG(L"Check value: " << checkvalue);
 
 		if (comparison == L"match")
-			return (checkvalue == regfieldvalue);
+			return (regfieldvalue == checkvalue);
 		else if (comparison == L"version")
-			return (checkvalue <= regfieldvalue);
+			return (regfieldvalue >= checkvalue);
 		else if (comparison == L"version_eq")
-			return (checkvalue == regfieldvalue);
+			return (regfieldvalue == checkvalue);
 		else if (comparison == L"version_lt")
-			return (checkvalue < regfieldvalue);
+			return (regfieldvalue < checkvalue);
 		else if (comparison == L"version_le")
-			return (checkvalue <= regfieldvalue);
+			return (regfieldvalue <= checkvalue);
 		else if (comparison == L"version_gt")
-			return (checkvalue > regfieldvalue);
+			return (regfieldvalue > checkvalue);
 		else if (comparison == L"version_ge")
-			return (checkvalue >= regfieldvalue);
+			return (regfieldvalue >= checkvalue);
 		else if (comparison == L"exists")
-			return true;  
+			return true;
 		else
 		{
 			THROW_EX("Invalid comparison type: " << comparison);
@@ -98,17 +98,17 @@ bool InstalledCheckRegistry::IsInstalled() const
 		if (comparison == TEXT("match"))
 			return (fieldvalue == regfieldvalue);
 		else if (comparison == TEXT("version"))
-			return (DVLib::CompareVersion(fieldvalue, regfieldvalue) <= 0);
+			return (DVLib::CompareVersion(regfieldvalue, fieldvalue) >= 0);
 		else if (comparison == TEXT("version_eq"))
-			return (DVLib::CompareVersion(fieldvalue, regfieldvalue) == 0);
+			return (DVLib::CompareVersion(regfieldvalue, fieldvalue) == 0);
 		else if (comparison == TEXT("version_lt"))
-			return (DVLib::CompareVersion(fieldvalue, regfieldvalue) < 0);
+			return (DVLib::CompareVersion(regfieldvalue, fieldvalue) < 0);
 		else if (comparison == TEXT("version_le"))
-			return (DVLib::CompareVersion(fieldvalue, regfieldvalue) <= 0);
+			return (DVLib::CompareVersion(regfieldvalue, fieldvalue) <= 0);
 		else if (comparison == TEXT("version_gt"))
-			return (DVLib::CompareVersion(fieldvalue, regfieldvalue) > 0);
+			return (DVLib::CompareVersion(regfieldvalue, fieldvalue) > 0);
 		else if (comparison == TEXT("version_ge"))
-			return (DVLib::CompareVersion(fieldvalue, regfieldvalue) >= 0);
+			return (DVLib::CompareVersion(regfieldvalue, fieldvalue) >= 0);
 		else if (comparison == TEXT("exists"))
 			return true;
 		else if (comparison == TEXT("contains"))

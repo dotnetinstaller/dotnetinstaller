@@ -83,6 +83,10 @@
                 <li>Bug: embedfolder nested within a component broken.</li>
                 <li>Bug: download dialog will no longer appear when neither download nor copy is not
                     required.</li>
+                <li>Bug: file and registry (DWORD and REG_SZ) version checks <code>version_lt</code>,
+                    <code>version_gt</code>, <code>version_le</code> and <code>version_ge</code> are
+                    broken: their results are inverted; if you have been using these checks, review
+                    the documentation and invert the check results.</li>
             </ul>
         </li>
         <li><strong>Misc</strong>:

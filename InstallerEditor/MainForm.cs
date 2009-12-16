@@ -701,6 +701,7 @@ namespace InstallerEditor
             // 
             // propertyGrid
             // 
+            this.propertyGrid.AccessibleName = "propertyGrid";
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid.LineColor = System.Drawing.SystemColors.ScrollBar;
             this.propertyGrid.Location = new System.Drawing.Point(176, 0);
@@ -711,6 +712,7 @@ namespace InstallerEditor
             // 
             // configurationTree
             // 
+            this.configurationTree.AccessibleName = "configurationTree";
             this.configurationTree.AllowDrop = true;
             this.configurationTree.ContextMenu = this.contextMenuTreeView;
             this.configurationTree.Dock = System.Windows.Forms.DockStyle.Left;
