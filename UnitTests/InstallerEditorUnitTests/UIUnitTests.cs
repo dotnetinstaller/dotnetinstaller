@@ -27,7 +27,8 @@ namespace InstallerEditorUnitTests
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
                 Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
-                Menus mainMenu = mainWindow.MenuBar.TopLevelMenu;
+                MenuBar mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application"); 
+                Menus mainMenu = mainWindowMenuBar.TopLevelMenu;
                 Assert.AreEqual(5, mainMenu.Count);
                 Assert.AreEqual("File", mainMenu[0].Name);
                 Assert.AreEqual("Edit", mainMenu[1].Name);
@@ -43,7 +44,7 @@ namespace InstallerEditorUnitTests
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
                 Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
-                StatusStrip statusStrip = mainWindow.Get<StatusStrip>("statusStrip");
+                StatusStrip statusStrip = UIAutomation.Find<StatusStrip>(mainWindow, "statusStrip");
                 WinFormTextBox statusLabel = (WinFormTextBox)statusStrip.Items[0];
                 Assert.AreEqual("Ready", statusLabel.Text);
             }
@@ -55,16 +56,17 @@ namespace InstallerEditorUnitTests
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
                 Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
-                Menu fileMenu = mainWindow.MenuBar.TopLevelMenu.Find("File");
+                MenuBar mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application"); 
+                Menu fileMenu = mainWindowMenuBar.TopLevelMenu.Find("File");
                 fileMenu.Click();
                 Menu fileNewConfigurationMenu = fileMenu.ChildMenus.Find("New");
                 fileNewConfigurationMenu.Click();
                 // status says "Ready"
-                StatusStrip statusStrip = mainWindow.Get<StatusStrip>("statusStrip");
+                StatusStrip statusStrip = UIAutomation.Find<StatusStrip>(mainWindow, "statusStrip");
                 WinFormTextBox statusLabel = (WinFormTextBox)statusStrip.Items[0];
                 Assert.AreEqual("Ready", statusLabel.Text);
                 // configuration tree has one node
-                Tree configurationTree = mainWindow.Get<Tree>("configurationTree");
+                Tree configurationTree = UIAutomation.Find<Tree>(mainWindow, "configurationTree");
                 Assert.AreEqual(1, configurationTree.Nodes.Count);
                 Assert.AreEqual(0, configurationTree.SelectedNode.Nodes.Count);
                 Assert.AreEqual("Config File", configurationTree.SelectedNode.Text);
@@ -72,36 +74,91 @@ namespace InstallerEditorUnitTests
         }
 
         [Test]
-        public void TestAddSetupConfiguration()
+        public void TestAddSetupConfigurationControls()
         {
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
                 Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
-                mainWindow.MenuBar.MenuItem("File", "New").Click();
+                MenuBar mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application");
+                mainWindowMenuBar.MenuItem("File", "New").Click();
 
-                Tree configurationTree = mainWindow.Get<Tree>("configurationTree");
+                Tree configurationTree = UIAutomation.Find<Tree>(mainWindow, "configurationTree");
+                Assert.AreEqual(1, configurationTree.Nodes.Count);
+
+                string[] controlMenuItems = { "Label", "Edit", "Checkbox", "Browse", "Hyperlink" };
+
+                mainWindowMenuBar.MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
+                TreeNode configurationNode = configurationTree.SelectedNode;
+
+                foreach (string controlMenuItem in controlMenuItems)
+                {
+                    configurationNode.Select();
+                    mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application");
+                    mainWindowMenuBar.MenuItem("Edit", "Add", "Controls", controlMenuItem).Click();
+                    Assert.AreEqual("Lorem ipsum", configurationTree.SelectedNode.Name);
+                }
+            }
+        }
+
+        [Test]
+        public void TestAddSetupConfigurationLicenseAgreement()
+        {
+            using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
+            {
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
+
+                MenuBar mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application");
+                mainWindowMenuBar.MenuItem("File", "New").Click();
+
+                Tree configurationTree = UIAutomation.Find<Tree>(mainWindow, "configurationTree");
+                Assert.AreEqual(1, configurationTree.Nodes.Count);
+
+                mainWindowMenuBar.MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
+                TreeNode configurationNode = configurationTree.SelectedNode;
+
+                mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application");
+                mainWindowMenuBar.MenuItem("Edit", "Add", "Controls", "License Agreement").Click();
+                Assert.AreEqual("I have read and ...", configurationTree.SelectedNode.Name);
+            }
+        }
+
+        [Test]
+        public void TestAddSetupConfigurationComponents()
+        {
+            using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
+            {
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
+                MenuBar mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application"); 
+                mainWindowMenuBar.MenuItem("File", "New").Click();
+
+                Tree configurationTree = UIAutomation.Find<Tree>(mainWindow, "configurationTree");
                 Assert.AreEqual(1, configurationTree.Nodes.Count);
 
                 string[] componentsMenuItems = { "Msi Component", "Command Component", "Msu Component", "OpenFile Component" };
                 string[] checksMenuItems = { "Installed Check Registry", "Installed Check File", "Installed Check Directory", 
                     "Installed Check Operator", "Installed Check ProductCode" };
 
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
+                mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application"); 
+                mainWindowMenuBar.MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
                 TreeNode configurationNode = configurationTree.SelectedNode;
+
                 foreach (string componentMenuItem in componentsMenuItems)
                 {
                     configurationNode.Select();
-                    mainWindow.MenuBar.MenuItem("Edit", "Add", "Components", componentMenuItem).Click();
+                    mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application"); 
+                    mainWindowMenuBar.MenuItem("Edit", "Add", "Components", componentMenuItem).Click();
 
                     TreeNode componentNode = configurationTree.SelectedNode;
                     foreach (string checksMenuItem in checksMenuItems)
                     {
                         componentNode.Select();
-                        mainWindow.MenuBar.MenuItem("Edit", "Add", "Checks", checksMenuItem).Click();
+                        mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application"); 
+                        mainWindowMenuBar.MenuItem("Edit", "Add", "Checks", checksMenuItem).Click();
                     }
 
                     componentNode.Select();
-                    mainWindow.MenuBar.MenuItem("Edit", "Delete").Click();
+                    mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application");
+                    mainWindowMenuBar.MenuItem("Edit", "Delete").Click();
                 }
             }
         }
@@ -112,12 +169,16 @@ namespace InstallerEditorUnitTests
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
                 Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
-                mainWindow.MenuBar.MenuItem("File", "New").Click();
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Components", "Msi Component").Click();
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Download", "Download Dialog").Click();
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Download", "Download File").Click();
-                Tree configurationTree = mainWindow.Get<Tree>("configurationTree");
+                MenuBar mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application"); 
+                mainWindowMenuBar.MenuItem("File", "New").Click();
+                mainWindowMenuBar.MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
+                mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application");
+                mainWindowMenuBar.MenuItem("Edit", "Add", "Components", "Msi Component").Click();
+                mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application");
+                mainWindowMenuBar.MenuItem("Edit", "Add", "Download", "Download Dialog").Click();
+                mainWindowMenuBar = UIAutomation.Find<MenuBar>(mainWindow, "Application");
+                mainWindowMenuBar.MenuItem("Edit", "Add", "Download", "Download File").Click();
+                Tree configurationTree = UIAutomation.Find<Tree>(mainWindow, "configurationTree");
                 Assert.AreEqual("Download File", configurationTree.SelectedNode.Name);
             }
         }
