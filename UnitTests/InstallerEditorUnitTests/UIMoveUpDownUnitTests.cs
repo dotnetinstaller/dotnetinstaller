@@ -27,14 +27,14 @@ namespace InstallerEditorUnitTests
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
                 Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
-                mainWindow.MenuBar.MenuItem("File", "New").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
                 Tree configurationTree = mainWindow.Get<Tree>("configurationTree");
                 TreeNode configFileNode = configurationTree.SelectedNode;
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
                 configFileNode.Select();
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Configurations", "Web Configuration").Click();
-                mainWindow.MenuBar.MenuItem("Edit", "Move", "Up").Click();
-                mainWindow.MenuBar.MenuItem("Edit", "Move", "Down").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Web Configuration").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Move", "Up").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Move", "Down").Click();
             }
         }
 
@@ -43,16 +43,16 @@ namespace InstallerEditorUnitTests
         {
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
-                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
-                mainWindow.MenuBar.MenuItem("File", "New").Click();
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);                
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
                 Tree configurationTree = mainWindow.Get<Tree>("configurationTree");
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
                 TreeNode configurationNode = configurationTree.SelectedNode;
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Components", "Msi Component").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Components", "Msi Component").Click();
                 configurationNode.Select();
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Components", "Msu Component").Click();
-                mainWindow.MenuBar.MenuItem("Edit", "Move", "Up").Click();
-                mainWindow.MenuBar.MenuItem("Edit", "Move", "Down").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Components", "Msu Component").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Move", "Up").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Move", "Down").Click();
             }
         }
 
@@ -61,17 +61,17 @@ namespace InstallerEditorUnitTests
         {
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
-                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
-                mainWindow.MenuBar.MenuItem("File", "New").Click();
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);                
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
                 Tree configurationTree = mainWindow.Get<Tree>("configurationTree");
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Components", "Msi Component").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Components", "Msi Component").Click();
                 TreeNode componentNode = configurationTree.SelectedNode;
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Checks", "Installed Check Registry").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Checks", "Installed Check Registry").Click();
                 componentNode.Select();
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Checks", "Installed Check File").Click();
-                mainWindow.MenuBar.MenuItem("Edit", "Move", "Up").Click();
-                mainWindow.MenuBar.MenuItem("Edit", "Move", "Down").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Checks", "Installed Check File").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Move", "Up").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Move", "Down").Click();
             }
         }
 
@@ -80,16 +80,16 @@ namespace InstallerEditorUnitTests
         {
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
-                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
-                mainWindow.MenuBar.MenuItem("File", "New").Click();
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);                
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
                 Tree configurationTree = mainWindow.Get<Tree>("configurationTree");
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
                 TreeNode configurationNode = configurationTree.SelectedNode;
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Embed", "Embed File").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Embed", "Embed File").Click();
                 configurationNode.Select();
-                mainWindow.MenuBar.MenuItem("Edit", "Add", "Embed", "Embed Folder").Click();
-                mainWindow.MenuBar.MenuItem("Edit", "Move", "Up").Click();
-                mainWindow.MenuBar.MenuItem("Edit", "Move", "Down").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Embed", "Embed Folder").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Move", "Up").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Move", "Down").Click();
             }
         }
     }
