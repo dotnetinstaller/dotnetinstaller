@@ -939,19 +939,21 @@ namespace InstallerEditor
         {
             mnClose.Enabled = (m_TreeNodeConfigFile != null);
             mnCreateExe.Enabled = (m_TreeNodeConfigFile != null);
-            mnSave.Enabled = (m_TreeNodeConfigFile != null);
             mnSaveAs.Enabled = (m_TreeNodeConfigFile != null);
-            mnEditWithNotepad.Enabled = (m_TreeNodeConfigFile != null);
 
             if (m_TreeNodeConfigFile != null &&
                 m_TreeNodeConfigFile.Instance != null &&
                 m_TreeNodeConfigFile.Instance.filename != null)
             {
                 Text = "Installer Editor - " + m_TreeNodeConfigFile.Instance.filename;
+                mnEditWithNotepad.Enabled = true;
+                mnSave.Enabled = true;
             }
             else
             {
                 Text = "Installer Editor";
+                mnEditWithNotepad.Enabled = false;
+                mnSave.Enabled = false;
             }
 
             RefreshCommentPanel();

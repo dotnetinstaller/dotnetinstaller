@@ -228,5 +228,44 @@ namespace InstallerEditorUnitTests
                     File.Delete(configFileName);
             }
         }
+
+        [Test]
+        public void TestEditWithNotepad()
+        {
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            string configFileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFileName);
+            configFile.SaveAs(configFileName);
+            try
+            {
+                ProcessStartInfo pi = new ProcessStartInfo(InstallerEditorExeUtils.Executable, configFileName);
+                using (Application installerEditor = Application.Launch(pi))
+                {
+                    Window mainWindow = installerEditor.GetWindow(
+                        string.Format("Installer Editor - {0}", configFileName), InitializeOption.NoCache);
+                    UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Edit With Notepad").Click();
+                    string windowText = string.Format("{0} - Notepad", Path.GetFileName(configFileName));
+                    Console.WriteLine(windowText);
+                    bool foundNotepad = false;
+                    foreach (Process p in Process.GetProcesses())
+                    {
+                        if (p.MainWindowTitle == windowText)
+                        {
+                            Application notepad = Application.Attach(p);
+                            notepad.GetWindow(windowText, InitializeOption.NoCache).Close();
+                            foundNotepad = true;
+                            break;
+                        }
+                    }
+                    Assert.IsTrue(foundNotepad);
+                }
+            }
+            finally
+            {
+                File.Delete(configFileName);
+            }
+        }
     }
 }

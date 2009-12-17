@@ -1,12 +1,15 @@
 using System;
 using System.IO;
+using System.Collections.Specialized;
+using SourceLibrary.IO.IsolatedStorage;
+using System.IO.IsolatedStorage;
 
 namespace InstallerEditor
 {
 	/// <summary>
 	/// Summary description for AppSetting.
 	/// </summary>
-	public class AppSetting : SourceLibrary.IO.IsolatedStorage.IsolatedStorageSettingVersionBase
+	public class AppSetting : IsolatedStorageSettingVersionBase
 	{
 		public AppSetting() : base(3)
 		{
@@ -30,31 +33,29 @@ namespace InstallerEditor
 		private string m_OutputMakeFile;
 		public string OutputMakeFile
 		{
-			get{return m_OutputMakeFile;}
-			set{m_OutputMakeFile = value;}
+			get{ return m_OutputMakeFile; }
+			set{ m_OutputMakeFile = value; }
 		}
 
 		private string m_TemplateInstallerFile;
 		public string TemplateInstallerFile
 		{
-			get{return m_TemplateInstallerFile;}
-			set{m_TemplateInstallerFile = value;}
+			get{ return m_TemplateInstallerFile; }
+			set{ m_TemplateInstallerFile = value; }
 		}
 
 		private string m_TemplateConfigFile;
 		public string TemplateConfigFile
 		{
-			get{return m_TemplateConfigFile;}
-			set{m_TemplateConfigFile = value;}
+			get{ return m_TemplateConfigFile; }
+			set{ m_TemplateConfigFile = value; }
 		}
 
-		private System.Collections.Specialized.StringCollection m_AvailableTemplates = new System.Collections.Specialized.StringCollection();
-		/// <summary>
-		/// The list of available config files.
-		/// </summary>
-		public System.Collections.Specialized.StringCollection AvailableTemplates
+		private StringCollection m_AvailableTemplates = new StringCollection();
+
+		public StringCollection AvailableTemplates
 		{
-			get{return m_AvailableTemplates;}
+			get { return m_AvailableTemplates; }
 		}
 
 		protected override void OnCreate()
@@ -64,8 +65,7 @@ namespace InstallerEditor
 			m_AvailableTemplates.Clear();
 		}
 
-
-		protected override void OnLoad(System.IO.IsolatedStorage.IsolatedStorageFileStream p_File, int p_CurrentVersion)
+		protected override void OnLoad(IsolatedStorageFileStream p_File, int p_CurrentVersion)
 		{            
 			Read(p_File, out m_OutputMakeFile);
 			Read(p_File, out m_BannerBitmapFile);
@@ -93,7 +93,7 @@ namespace InstallerEditor
             }
 		}
 
-		protected override void OnSave(System.IO.IsolatedStorage.IsolatedStorageFileStream p_File)
+		protected override void OnSave(IsolatedStorageFileStream p_File)
 		{
 			base.OnSave(p_File);
 

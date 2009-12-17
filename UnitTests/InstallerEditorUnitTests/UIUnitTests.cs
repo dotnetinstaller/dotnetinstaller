@@ -26,7 +26,7 @@ namespace InstallerEditorUnitTests
         {
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
-                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);                 
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
                 Menus mainMenu = UIAutomation.Find<MenuBar>(mainWindow, "Application").TopLevelMenu;
                 Assert.AreEqual(5, mainMenu.Count);
                 Assert.AreEqual("File", mainMenu[0].Name);
@@ -34,6 +34,81 @@ namespace InstallerEditorUnitTests
                 Assert.AreEqual("View", mainMenu[2].Name);
                 Assert.AreEqual("Tools", mainMenu[3].Name);
                 Assert.AreEqual("Help", mainMenu[4].Name);
+            }
+        }
+
+        [Test]
+        public void TestMainMenuFile()
+        {
+            using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
+            {
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
+                Menu mainMenuFile = UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File");
+                mainMenuFile.Click();
+                Assert.IsTrue(mainMenuFile.ChildMenus.Find("New").Enabled);
+                Assert.IsTrue(mainMenuFile.ChildMenus.Find("Open...").Enabled);
+                Assert.IsFalse(mainMenuFile.ChildMenus.Find("Close").Enabled);
+                Assert.IsFalse(mainMenuFile.ChildMenus.Find("Save").Enabled);
+                Assert.IsFalse(mainMenuFile.ChildMenus.Find("Save As...").Enabled);
+                Assert.IsFalse(mainMenuFile.ChildMenus.Find("Close").Enabled);
+                Assert.IsFalse(mainMenuFile.ChildMenus.Find("Edit With Notepad").Enabled);
+                Assert.IsFalse(mainMenuFile.ChildMenus.Find("Create Exe...").Enabled);
+                Assert.IsTrue(mainMenuFile.ChildMenus.Find("Exit").Enabled);
+            }
+        }
+
+        [Test]
+        public void TestMainMenuEdit()
+        {
+            using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
+            {
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
+                Menu mainMenuEdit = UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit");
+                mainMenuEdit.Click();
+                Assert.IsFalse(mainMenuEdit.ChildMenus.Find("Add").Enabled);
+                Assert.IsFalse(mainMenuEdit.ChildMenus.Find("Move").Enabled);
+                Assert.IsFalse(mainMenuEdit.ChildMenus.Find("Expand All").Enabled);
+                Assert.IsFalse(mainMenuEdit.ChildMenus.Find("Collapse All").Enabled);
+                Assert.IsFalse(mainMenuEdit.ChildMenus.Find("Delete").Enabled);
+            }
+        }
+
+        [Test]
+        public void TestMainMenuView()
+        {
+            using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
+            {
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
+                Menu mainMenuView = UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("View");
+                mainMenuView.Click();
+                Assert.IsTrue(mainMenuView.ChildMenus.Find("Refresh").Enabled);
+            }
+        }
+
+        [Test]
+        public void TestMainMenuHelp()
+        {
+            using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
+            {
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
+                Menu mainMenuHelp = UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Help");
+                mainMenuHelp.Click();
+                Assert.IsTrue(mainMenuHelp.ChildMenus.Find("Users Guide").Enabled);
+                Assert.IsTrue(mainMenuHelp.ChildMenus.Find("Home Page").Enabled);
+                Assert.IsTrue(mainMenuHelp.ChildMenus.Find("About").Enabled);
+            }
+        }
+
+        [Test]
+        public void TestMainMenuTools()
+        {
+            using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
+            {
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
+                Menu mainMenuTools = UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Tools");
+                mainMenuTools.Click();
+                Assert.IsTrue(mainMenuTools.ChildMenus.Find("Template For New Item").Enabled);
+                Assert.IsTrue(mainMenuTools.ChildMenus.Find("Customize Templates").Enabled);
             }
         }
 
