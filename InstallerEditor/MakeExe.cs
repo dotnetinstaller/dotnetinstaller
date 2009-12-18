@@ -98,6 +98,7 @@ namespace InstallerEditor
             // 
             // btCancel
             // 
+            this.btCancel.AccessibleName = "btCancel";
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btCancel.Location = new System.Drawing.Point(308, 245);
             this.btCancel.Name = "btCancel";
@@ -107,6 +108,7 @@ namespace InstallerEditor
             // 
             // btMake
             // 
+            this.btMake.AccessibleName = "btMake";
             this.btMake.Location = new System.Drawing.Point(220, 245);
             this.btMake.Name = "btMake";
             this.btMake.Size = new System.Drawing.Size(75, 23);
@@ -116,6 +118,7 @@ namespace InstallerEditor
             // 
             // txtBannerBitmap
             // 
+            this.txtBannerBitmap.AccessibleName = "txtBannerBitmap";
             this.txtBannerBitmap.Location = new System.Drawing.Point(10, 101);
             this.txtBannerBitmap.Name = "txtBannerBitmap";
             this.txtBannerBitmap.Size = new System.Drawing.Size(344, 20);
@@ -157,6 +160,7 @@ namespace InstallerEditor
             // 
             // txtConfiguration
             // 
+            this.txtConfiguration.AccessibleName = "txtConfiguration";
             this.txtConfiguration.Location = new System.Drawing.Point(10, 64);
             this.txtConfiguration.Name = "txtConfiguration";
             this.txtConfiguration.Size = new System.Drawing.Size(344, 20);
@@ -181,6 +185,8 @@ namespace InstallerEditor
             // 
             // txtTemplateFile
             // 
+            this.txtTemplateFile.AccessibleDescription = "";
+            this.txtTemplateFile.AccessibleName = "txtTemplateFile";
             this.txtTemplateFile.Location = new System.Drawing.Point(10, 27);
             this.txtTemplateFile.Name = "txtTemplateFile";
             this.txtTemplateFile.Size = new System.Drawing.Size(344, 20);
@@ -188,6 +194,7 @@ namespace InstallerEditor
             // 
             // chkEmbed
             // 
+            this.chkEmbed.AccessibleName = "chkEmbed";
             this.chkEmbed.AutoSize = true;
             this.chkEmbed.Checked = true;
             this.chkEmbed.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -200,6 +207,7 @@ namespace InstallerEditor
             // 
             // txtIcon
             // 
+            this.txtIcon.AccessibleName = "txtIcon";
             this.txtIcon.Location = new System.Drawing.Point(10, 175);
             this.txtIcon.Name = "txtIcon";
             this.txtIcon.Size = new System.Drawing.Size(344, 20);
@@ -224,6 +232,7 @@ namespace InstallerEditor
             // 
             // txtSplashBitmap
             // 
+            this.txtSplashBitmap.AccessibleName = "txtSplashBitmap";
             this.txtSplashBitmap.Location = new System.Drawing.Point(10, 138);
             this.txtSplashBitmap.Name = "txtSplashBitmap";
             this.txtSplashBitmap.Size = new System.Drawing.Size(344, 20);
@@ -248,6 +257,7 @@ namespace InstallerEditor
             // 
             // txtManifest
             // 
+            this.txtManifest.AccessibleName = "txtManifest";
             this.txtManifest.Location = new System.Drawing.Point(10, 212);
             this.txtManifest.Name = "txtManifest";
             this.txtManifest.Size = new System.Drawing.Size(344, 20);
@@ -272,6 +282,7 @@ namespace InstallerEditor
             // 
             // MakeExe
             // 
+            this.AccessibleName = "createExe";
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(393, 281);
@@ -301,7 +312,7 @@ namespace InstallerEditor
             this.MinimizeBox = false;
             this.Name = "MakeExe";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MakeExe";
+            this.Text = "Create Executable";
             this.Load += new System.EventHandler(this.MakeExe_Load);
             this.Closed += new System.EventHandler(this.MakeExe_Closed);
             this.ResumeLayout(false);
@@ -343,9 +354,9 @@ namespace InstallerEditor
                     args.splash = txtSplashBitmap.Text;
                     InstallerLinker.CreateInstaller(args);
                     m_OutputFileName = l_dg.FileName;
+                    DialogResult = DialogResult.OK;
+                    Close();
                 }
-
-                DialogResult = DialogResult.OK;
             }
             catch (Exception err)
             {

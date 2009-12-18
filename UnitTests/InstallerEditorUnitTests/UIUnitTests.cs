@@ -188,5 +188,17 @@ namespace InstallerEditorUnitTests
                 Assert.IsTrue(configFileNode.IsExpanded());
             }
         }
+
+        [Test]
+        public void TestHelpAbout()
+        {
+            using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
+            {
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Help", "About").Click();
+                Window aboutWindow = mainWindow.ModalWindow("About");
+                aboutWindow.Close();
+            }
+        }
     }
 }

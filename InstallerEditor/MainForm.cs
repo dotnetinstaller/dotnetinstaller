@@ -938,7 +938,6 @@ namespace InstallerEditor
         private void RefreshMenu()
         {
             mnClose.Enabled = (m_TreeNodeConfigFile != null);
-            mnCreateExe.Enabled = (m_TreeNodeConfigFile != null);
             mnSaveAs.Enabled = (m_TreeNodeConfigFile != null);
 
             if (m_TreeNodeConfigFile != null &&
@@ -948,12 +947,14 @@ namespace InstallerEditor
                 Text = "Installer Editor - " + m_TreeNodeConfigFile.Instance.filename;
                 mnEditWithNotepad.Enabled = true;
                 mnSave.Enabled = true;
+                mnCreateExe.Enabled = true;
             }
             else
             {
                 Text = "Installer Editor";
                 mnEditWithNotepad.Enabled = false;
                 mnSave.Enabled = false;
+                mnCreateExe.Enabled = false;
             }
 
             RefreshCommentPanel();
