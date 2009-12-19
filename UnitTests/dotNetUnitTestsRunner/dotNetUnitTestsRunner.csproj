@@ -42,6 +42,7 @@
     </Compile>
     <Compile Include="dotNetInstallerExeUtils.cs" />
     <Compile Include="InstallerEditorExeUtils.cs" />
+    <Compile Include="InstallerLibUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestTimerExeUtils.cs" />
   </ItemGroup>

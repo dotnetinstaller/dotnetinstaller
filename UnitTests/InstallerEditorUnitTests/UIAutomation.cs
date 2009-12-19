@@ -11,6 +11,11 @@ namespace InstallerEditorUnitTests
 {
     public abstract class UIAutomation
     {
+        public static void DumpControl(UIItem el)
+        {
+            DumpControl(el.AutomationElement, true);
+        }
+
         public static void DumpControl(AutomationElement el)
         {
             DumpControl(el, true);
