@@ -40,6 +40,7 @@
 #include <time.h>
 #include <tchar.h>
 
+#include <ostream>
 #include <string>
 #include <vector>
 #include <map>

@@ -21,14 +21,14 @@ void DownloadDialog::Load(TiXmlElement * node)
 	CHECK_BOOL(0 == strcmp(node->Value(), "downloaddialog"),
 		L"Expected 'downloaddialog' node, got '" << DVLib::string2wstring(node->Value()) << L"'");
 
-	caption = XML_ATTRIBUTE(node->Attribute("dialog_caption"));
-	help_message = XML_ATTRIBUTE(node->Attribute("dialog_message"));
-	downloading_message = XML_ATTRIBUTE(node->Attribute("dialog_message_downloading"));
-	copying_message = XML_ATTRIBUTE(node->Attribute("dialog_message_copying"));
-	connecting_message = XML_ATTRIBUTE(node->Attribute("dialog_message_connecting"));
-	sendingrequest_message = XML_ATTRIBUTE(node->Attribute("dialog_message_sendingrequest"));
-	start_caption = XML_ATTRIBUTE(node->Attribute("buttonstart_caption"));
-	cancel_caption = XML_ATTRIBUTE(node->Attribute("buttoncancel_caption"));
+	caption = node->Attribute("dialog_caption");
+	help_message = node->Attribute("dialog_message");
+	downloading_message = node->Attribute("dialog_message_downloading");
+	copying_message = node->Attribute("dialog_message_copying");
+	connecting_message = node->Attribute("dialog_message_connecting");
+	sendingrequest_message = node->Attribute("dialog_message_sendingrequest");
+	start_caption = node->Attribute("buttonstart_caption");
+	cancel_caption = node->Attribute("buttoncancel_caption");
 	auto_start = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("autostartdownload")), false);
 
 	TiXmlNode * child = NULL;

@@ -60,6 +60,7 @@ void CLanguageSelectorDialog::OnOK()
 
 	LOG(L"User-chosen language id: " << p->language_id);
 	InstallerSession::Instance->languageid = DVLib::wstring2long(p->language_id);
+	InstallerSession::Instance->language = p->GetLanguageString();
 
 	CDialog::OnOK();
 }

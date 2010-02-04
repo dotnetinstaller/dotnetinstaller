@@ -3,8 +3,8 @@
 class EmbedFolder
 {
 public:
-	std::wstring sourcefolderpath;
-	std::wstring targetfolderpath;
+	XmlAttribute sourcefolderpath;
+	XmlAttribute targetfolderpath;
 public:
 	EmbedFolder();
 	virtual void Load(TiXmlElement * node);

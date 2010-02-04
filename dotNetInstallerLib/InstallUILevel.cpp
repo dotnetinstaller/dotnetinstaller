@@ -80,14 +80,31 @@ InstallUILevel InstallUILevelSetting::GetUILevel(InstallUILevel defaultValue) co
 
 InstallUILevel InstallUILevelSetting::ToUILevel(const std::wstring& level, InstallUILevel defaultValue)
 {
-	if (level == TEXT("full"))
+	if (level == L"full")
 		return InstallUILevelFull;
-	if (level == TEXT("basic"))
+	if (level == L"basic")
 		return InstallUILevelBasic;
-	if (level == TEXT("silent"))
+	if (level == L"silent")
 		return InstallUILevelSilent;
 	else
 		return defaultValue;
+}
+
+std::wstring InstallUILevelSetting::ToString(InstallUILevel value)
+{
+	switch(value)
+	{
+	case InstallUILevelNotSet:
+		return L"";
+	case InstallUILevelFull:
+		return L"full";
+	case InstallUILevelBasic:
+		return L"basic";
+	case InstallUILevelSilent:
+		return L"silent";
+	default:
+		THROW_EX(L"Unsupported UI level: " << value);
+	}
 }
 
 std::wstring InstallUILevelSetting::GetCommand(

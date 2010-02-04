@@ -28,7 +28,7 @@ void ReferenceConfiguration::Load(TiXmlElement * node)
 		
 		if (strcmp(child_element->Value(), "configfile") == 0)
 		{
-			filename = XML_ATTRIBUTE(child_element->Attribute("filename"));
+			filename = child_element->Attribute("filename");
 		}
 		else if (strcmp(child_element->Value(), "downloaddialog") == 0)
 		{

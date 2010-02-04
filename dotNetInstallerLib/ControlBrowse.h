@@ -6,9 +6,9 @@ class ControlBrowse : public ControlText
 public:
     ControlBrowse();
 public:
-	std::wstring id;
-	std::wstring filter;
-	std::wstring button_text;
+	XmlAttribute id;
+	XmlAttribute filter;
+	XmlAttribute button_text;
 	bool folders_only;
 	bool must_exist;
 	bool hide_readonly;

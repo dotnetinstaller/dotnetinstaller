@@ -121,21 +121,21 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 		}
 	}
 
-	SetWindowText(p_configuration->dialog_caption.c_str());
-    AfxGetApp()->m_pszAppName = _tcsdup(p_configuration->dialog_caption.c_str());
+	SetWindowText(p_configuration->dialog_caption.GetValue().c_str());
+    AfxGetApp()->m_pszAppName = _tcsdup(p_configuration->dialog_caption.GetValue().c_str());
 
-	m_btnCancel.SetWindowText(p_configuration->cancel_caption.c_str());
-	m_btnSkip.SetWindowText(p_configuration->skip_caption.c_str());
+	m_btnCancel.SetWindowText(p_configuration->cancel_caption.GetValue().c_str());
+	m_btnSkip.SetWindowText(p_configuration->skip_caption.GetValue().c_str());
 
 	switch(InstallerSession::Instance->sequence)
 	{
 	case SequenceInstall:
-		m_btnInstall.SetWindowText(p_configuration->install_caption.c_str());
-		m_lblMessage.SetWindowText(p_configuration->dialog_message.c_str());
+		m_btnInstall.SetWindowText(p_configuration->install_caption.GetValue().c_str());
+		m_lblMessage.SetWindowText(p_configuration->dialog_message.GetValue().c_str());
 		break;
 	case SequenceUninstall:
-		m_btnInstall.SetWindowText(p_configuration->uninstall_caption.c_str());
-		m_lblMessage.SetWindowText(p_configuration->dialog_message_uninstall.c_str());
+		m_btnInstall.SetWindowText(p_configuration->uninstall_caption.GetValue().c_str());
+		m_lblMessage.SetWindowText(p_configuration->dialog_message_uninstall.GetValue().c_str());
 		break;
 	}
 
@@ -663,7 +663,7 @@ bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, st
 	std::wstring failed_exec_command_continue = component->failed_exec_command_continue;
 	if (failed_exec_command_continue.empty()) failed_exec_command_continue = p_configuration->failed_exec_command_continue;
 	std::wstring error_message = DVLib::FormatMessage(const_cast<wchar_t *>(failed_exec_command_continue.c_str()), 
-		component->display_name.c_str());
+		component->display_name.GetValue().c_str());
 
     bool break_sequence = false;
     if (p_configuration->allow_continue_on_error && component->allow_continue_on_error)
@@ -688,7 +688,7 @@ bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, st
 void CdotNetInstallerDlg::AddControl(const ControlLabel& label)
 {
 	CStatic * p_static = new CStatic();
-	p_static->Create(label.text.c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP, label.position.ToRect(), this);
+	p_static->Create(label.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP, label.position.ToRect(), this);
 	p_static->EnableWindow(label.enabled);
 	p_static->SetFont(CreateFont(label));
 	m_custom_controls.push_back(p_static);
@@ -699,7 +699,7 @@ CFont * CdotNetInstallerDlg::CreateFont(const ControlText& text)
 	CFont * p_font = new CFont;	
 	int nFontHeight = MulDiv(text.font_size, GetDeviceCaps(GetDC()->GetSafeHdc(), LOGPIXELSY), 72);
 	p_font->CreateFont(nFontHeight, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS,
-		CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, text.font_name.c_str());
+		CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, text.font_name.GetValue().c_str());
 	m_custom_controls.push_back(p_font);
 	return p_font;
 }
@@ -707,15 +707,15 @@ CFont * CdotNetInstallerDlg::CreateFont(const ControlText& text)
 void CdotNetInstallerDlg::AddControl(const ControlCheckBox& checkbox)
 {
 	ControlValueCheckBox * p_checkbox = new ControlValueCheckBox(checkbox.checked_value, checkbox.unchecked_value);
-	p_checkbox->Create(checkbox.text.c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX, checkbox.position.ToRect(), this, 0);
+	p_checkbox->Create(checkbox.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX, checkbox.position.ToRect(), this, 0);
 	p_checkbox->EnableWindow(checkbox.enabled);
 	p_checkbox->SetFont(CreateFont(checkbox));
 	std::map<std::wstring, std::wstring>::iterator value;
 	if ((value = InstallerSession::Instance->AdditionalControlArgs.find(checkbox.id)) != 
 		InstallerSession::Instance->AdditionalControlArgs.end())
 	{
-		if (value->second == checkbox.checked_value) p_checkbox->SetCheck(1);
-		else if (value->second == checkbox.unchecked_value) p_checkbox->SetCheck(0);
+		if (checkbox.checked_value == value->second) p_checkbox->SetCheck(1);
+		else if (checkbox.unchecked_value == value->second) p_checkbox->SetCheck(0);
 		else 
 		{
 			THROW_EX(L"Invalid " << checkbox.id << L" value '" << value->second << L"', should be one of '"
@@ -742,7 +742,7 @@ void CdotNetInstallerDlg::AddControl(const ControlEdit& edit)
 	}
 	else
 	{
-		p_edit->SetWindowText(edit.text.c_str());
+		p_edit->SetWindowText(edit.text.GetValue().c_str());
 	}
 	p_edit->EnableWindow(edit.enabled);
 	p_edit->SetFont(CreateFont(edit));
@@ -767,13 +767,13 @@ void CdotNetInstallerDlg::AddControl(const ControlBrowse& browse)
 	else
 	{
 		dwStyle &= ~BC_BTN_ICON;
-		p_browse->SetButtonText(browse.button_text.c_str());
+		p_browse->SetButtonText(browse.button_text.GetValue().c_str());
 	}
 	if (browse.allow_edit) dwStyle |= BC_CTL_ALLOWEDIT;
 	if (browse.folders_only) dwStyle |= BC_CTL_FOLDERSONLY; 
 	p_browse->SetButtonStyle(dwStyle);
 	// filter
-	if (! browse.filter.empty()) p_browse->SetFilter(browse.filter.c_str());
+	if (! browse.filter.empty()) p_browse->SetFilter(browse.filter.GetValue().c_str());
 	// file flags
 	DWORD dwFileFlags = 0;
 	if (browse.must_exist) dwFileFlags |= OFN_FILEMUSTEXIST;
@@ -782,7 +782,7 @@ void CdotNetInstallerDlg::AddControl(const ControlBrowse& browse)
 	// default extension
 	p_browse->SetDefExt(NULL);
 	// default path
-	p_browse->SetWindowTextW(browse.text.c_str());
+	p_browse->SetWindowTextW(browse.text.GetValue().c_str());
 	std::map<std::wstring, std::wstring>::iterator value;
 	if ((value = InstallerSession::Instance->AdditionalControlArgs.find(browse.id)) != 
 		InstallerSession::Instance->AdditionalControlArgs.end())
@@ -791,7 +791,7 @@ void CdotNetInstallerDlg::AddControl(const ControlBrowse& browse)
 	}
 	else
 	{
-		p_browse->SetPathName(browse.text.c_str());
+		p_browse->SetPathName(browse.text.GetValue().c_str());
 	}
 	// font
 	p_browse->SetFont(CreateFont(browse));
@@ -821,7 +821,7 @@ void CdotNetInstallerDlg::AddControl(const ControlLicense& license)
 	CHyperlinkStatic * p_link = new CHyperlinkStatic();
 	CRect link_rect = license.position.ToRect();
 	link_rect.left += 20;
-	p_link->Create(license.text.c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP, link_rect, this, 0);
+	p_link->Create(license.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP, link_rect, this, 0);
 	p_link->SetHyperlink(license_file);
 	p_link->SetFont(CreateFont(license));
 	m_custom_controls.push_back(p_link);
@@ -830,7 +830,7 @@ void CdotNetInstallerDlg::AddControl(const ControlLicense& license)
 void CdotNetInstallerDlg::AddControl(const ControlHyperlink& hyperlink)
 {
 	CHyperlinkStatic * p_link = new CHyperlinkStatic();
-	p_link->Create(hyperlink.text.c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP, hyperlink.position.ToRect(), this, 0);
+	p_link->Create(hyperlink.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP, hyperlink.position.ToRect(), this, 0);
 	p_link->SetHyperlink(hyperlink.uri);
 	p_link->SetFont(CreateFont(hyperlink));
 	m_custom_controls.push_back(p_link);

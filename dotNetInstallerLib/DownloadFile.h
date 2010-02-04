@@ -1,21 +1,22 @@
 #pragma once
 
 #include "DownloadCallback.h"
+#include "XmlAttribute.h"
 
 class DownloadFile : public IBindStatusCallback
 {
 public:
 	IDownloadCallback * callback;
 	// download url
-	std::wstring sourceurl;
+	XmlAttribute sourceurl;
 	// optional local location for the file
-	std::wstring sourcepath;
+	XmlAttribute sourcepath;
 	// destination path
-	std::wstring destinationpath;
+	XmlAttribute destinationpath;
 	// destination filename
-	std::wstring destinationfilename;
+	XmlAttribute destinationfilename;
 	// component name
-	std::wstring componentname;
+	XmlAttribute componentname;
     // enable bypassing download if the file already exists locally
 	bool alwaysdownload;
 	// clear cache

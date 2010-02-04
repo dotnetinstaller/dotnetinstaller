@@ -18,6 +18,11 @@ void InstallerSessionUnitTests::testExpandPathVariables()
 		InstallerSession::Instance->ExpandPathVariables(L"#TEMPPATH#TEMPPATH"));
 	CPPUNIT_ASSERT(L"{" + DVLib::GetTemporaryDirectoryW() + L"|" + DVLib::GetTemporaryDirectoryW() + L"}" == 
 		InstallerSession::Instance->ExpandPathVariables(L"{#TEMPPATH|#TEMPPATH}"));
+	CPPUNIT_ASSERT(InstallUILevelSetting::ToString(InstallUILevelSetting::Instance->GetUILevel()) == 
+		InstallerSession::Instance->ExpandPathVariables(L"#UILEVEL"));
+	CPPUNIT_ASSERT(DVLib::towstring(InstallerSession::Instance->languageid) == 
+		InstallerSession::Instance->ExpandPathVariables(L"#LANGID"));
+	CPPUNIT_ASSERT(L"" == InstallerSession::Instance->ExpandPathVariables(L"#LANGUAGE"));
 }
 
 void InstallerSessionUnitTests::testExpandPathVariablesBackslashes()

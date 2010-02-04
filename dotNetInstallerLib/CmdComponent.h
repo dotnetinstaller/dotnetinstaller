@@ -6,15 +6,15 @@ class CmdComponent : public ProcessComponent
 public:
     CmdComponent();
 public:
-	std::wstring command;
-    std::wstring command_silent;
-	std::wstring command_basic;
-	std::wstring uninstall_command;
-    std::wstring uninstall_command_silent;
-	std::wstring uninstall_command_basic;
+	XmlAttribute command;
+    XmlAttribute command_silent;
+	XmlAttribute command_basic;
+	XmlAttribute uninstall_command;
+    XmlAttribute uninstall_command_silent;
+	XmlAttribute uninstall_command_basic;
 	// return codes
-	std::wstring returncodes_success;
-	std::wstring returncodes_reboot;
+	XmlAttribute returncodes_success;
+	XmlAttribute returncodes_reboot;
 	void Exec();
 	void Load(TiXmlElement * node);
 	void Wait(DWORD tt = 1000);

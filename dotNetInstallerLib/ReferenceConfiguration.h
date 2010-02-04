@@ -6,7 +6,7 @@
 class ReferenceConfiguration : public Configuration
 {
 public:
-	std::wstring filename;
+	XmlAttribute filename;
 	DownloadDialogPtr downloaddialog;
 public:
 	ReferenceConfiguration();

@@ -12,9 +12,9 @@ ControlText::ControlText(control_type type)
 
 void ControlText::Load(TiXmlElement * node)
 {
-	text = XML_ATTRIBUTE(node->Attribute("text"));
-	font_name = XML_ATTRIBUTE(node->Attribute("font_name"));
-	font_size = DVLib::wstring2long(XML_ATTRIBUTE(node->Attribute("font_size")));
+	text = node->Attribute("text");
+	font_name = node->Attribute("font_name");
+	font_size = XmlAttribute(node->Attribute("font_size")).GetLongValue();
 	Control::Load(node);
 }
 

@@ -54,6 +54,20 @@
             <definition>
               Current process ID. Provides a shorter alternative to #GUID for file locations.
             </definition>
+            <definedTerm>#UILEVEL</definedTerm>
+            <definition>
+              Current installer UI level, one of "full", "silent" or "basic".
+            </definition>
+            <definedTerm>#LANGID</definedTerm>
+            <definition>
+              Selected configuration language ID. This may be blank if the configuration doesn't have a language
+              defined.
+            </definition>
+            <definedTerm>#LANGUAGE</definedTerm>
+            <definition>
+              Selected configuration language string. This may be blank if the configuration doesn't have a language
+              defined.
+            </definition>
           </definitionTable>
         </para>
       </content>
@@ -73,7 +87,7 @@
         <para>
           You can substitute registry values with the <literal>@[key(:options)\path(\value)(,default)]</literal> syntax.
           For example <literal>@[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CommonFilesDir,DefaultValue]</literal>.
-          The key must exist or you must specify a default value, otherwise loading of the configuration file will fail. 
+          The key must exist or you must specify a default value, otherwise loading of the configuration file will fail.
           The value is optional, make sure to terminate a path without a value with a backslash.
         </para>
         <para>

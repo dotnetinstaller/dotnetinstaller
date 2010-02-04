@@ -12,7 +12,7 @@ InstalledCheckOperator::InstalledCheckOperator()
 void InstalledCheckOperator::Load(TiXmlElement * node)
 {
     type = DVLib::UTF8string2wstring(node->Attribute("type"));
-    description = XML_ATTRIBUTE(node->Attribute("description"));
+    description = node->Attribute("description");
 	// child install checks
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )

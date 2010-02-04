@@ -19,10 +19,12 @@ void CmdComponent::Exec()
 	switch(InstallerSession::Instance->sequence)
 	{
 	case SequenceInstall:
-		l_command = InstallUILevelSetting::Instance->GetCommand(command, command_basic, command_silent);
+		l_command = InstallUILevelSetting::Instance->GetCommand(
+			command, command_basic, command_silent);
 		break;
 	case SequenceUninstall:
-		l_command = InstallUILevelSetting::Instance->GetCommand(uninstall_command, uninstall_command_basic, uninstall_command_silent);
+		l_command = InstallUILevelSetting::Instance->GetCommand(
+			uninstall_command, uninstall_command_basic, uninstall_command_silent);
 		break;
 	default:
 		THROW_EX(L"Unsupported install sequence: " << InstallerSession::Instance->sequence << L".");
@@ -43,14 +45,14 @@ void CmdComponent::Exec()
 
 void CmdComponent::Load(TiXmlElement * node)
 {
-	command = XML_ATTRIBUTE(node->Attribute("command"));
-    command_silent = XML_ATTRIBUTE(node->Attribute("command_silent"));
-	command_basic = XML_ATTRIBUTE(node->Attribute("command_basic"));	
-	uninstall_command = XML_ATTRIBUTE(node->Attribute("uninstall_command"));
-    uninstall_command_silent = XML_ATTRIBUTE(node->Attribute("uninstall_command_silent"));
-	uninstall_command_basic = XML_ATTRIBUTE(node->Attribute("uninstall_command_basic"));	
-	returncodes_success = XML_ATTRIBUTE(node->Attribute("returncodes_success"));
-	returncodes_reboot = XML_ATTRIBUTE(node->Attribute("returncodes_reboot"));
+	command = node->Attribute("command");
+    command_silent = node->Attribute("command_silent");
+	command_basic = node->Attribute("command_basic");	
+	uninstall_command = node->Attribute("uninstall_command");
+    uninstall_command_silent = node->Attribute("uninstall_command_silent");
+	uninstall_command_basic = node->Attribute("uninstall_command_basic");	
+	returncodes_success = node->Attribute("returncodes_success");
+	returncodes_reboot = node->Attribute("returncodes_reboot");
 	Component::Load(node);
 }
 

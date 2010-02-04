@@ -16,14 +16,14 @@ public:
 	FileAttributes fileattributes;
     // auto-enabled log
     bool log_enabled;
-    std::wstring log_file;
+    XmlAttribute log_file;
 	// language selection
 	bool show_language_selector;
-	std::wstring language_selector_title;
-	std::wstring language_selector_ok;
-	std::wstring language_selector_cancel;
+	XmlAttribute language_selector_title;
+	XmlAttribute language_selector_ok;
+	XmlAttribute language_selector_cancel;
 	// error message when no matching os/lcid configuration was found
-	std::wstring configuration_no_match_message;
+	XmlAttribute configuration_no_match_message;
 public:
 	Configurations();
 	virtual ~Configurations();

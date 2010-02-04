@@ -11,10 +11,10 @@ InstalledCheckRegistry::InstalledCheckRegistry()
 
 void InstalledCheckRegistry::Load(TiXmlElement * node)
 {
-    fieldname = XML_ATTRIBUTE(node->Attribute("fieldname"));
+    fieldname = node->Attribute("fieldname");
     fieldtype = DVLib::UTF8string2wstring(node->Attribute("fieldtype"));
-    fieldvalue = XML_ATTRIBUTE(node->Attribute("fieldvalue"));
-    path = XML_ATTRIBUTE(node->Attribute("path"));
+    fieldvalue = node->Attribute("fieldvalue");
+    path = node->Attribute("path");
     comparison = DVLib::UTF8string2wstring(node->Attribute("comparison"));
     rootkey = DVLib::UTF8string2wstring(node->Attribute("rootkey"));
     wowoption = DVLib::UTF8string2wstring(node->Attribute("wowoption"));
@@ -23,7 +23,7 @@ void InstalledCheckRegistry::Load(TiXmlElement * node)
 
 bool InstalledCheckRegistry::IsInstalled() const
 {
-	std::wstring keypath(path + L"\\" + fieldname);
+	std::wstring keypath(path.GetValue() + L"\\" + fieldname.GetValue());
     LOG(L"Reading Registry: " << keypath);
 
 	DVLib::OperatingSystem type = DVLib::GetOperatingSystemVersion();
@@ -33,18 +33,18 @@ bool InstalledCheckRegistry::IsInstalled() const
 	if (type >= DVLib::winXP && ! wowoption.empty())
 	{
 		// indicates that an application on 64-bit Windows should operate on the 64-bit registry view
-		if (_wcsicmp(wowoption.c_str(), L"WOW64_64") == 0)
+		if (_wcsicmp(wowoption.GetValue().c_str(), L"WOW64_64") == 0)
 		{	
 			LOG(L"Opening 64-bit registry view (KEY_WOW64_64KEY)");
 			dwKeyOption |= KEY_WOW64_64KEY;
 		}
 		//Indicates that an application on 64-bit Windows should operate on the 32-bit registry view.
-		else if (_wcsicmp(wowoption.c_str(), L"WOW64_32") == 0)
+		else if (_wcsicmp(wowoption.GetValue().c_str(), L"WOW64_32") == 0)
 		{
 			LOG(L"Opening 32-bit registry view (KEY_WOW64_32KEY)");
 			dwKeyOption |= KEY_WOW64_32KEY;
 		}
-		else if (_wcsicmp(wowoption.c_str(), L"NONE") == 0)
+		else if (_wcsicmp(wowoption.GetValue().c_str(), L"NONE") == 0)
 		{
 			// ignore
 		}
@@ -63,7 +63,8 @@ bool InstalledCheckRegistry::IsInstalled() const
 	LOG(L"Registry key found: " << keypath);
 	if (fieldtype == L"REG_DWORD")
 	{
-		DWORD regfieldvalue = DVLib::RegistryGetDWORDValue(DVLib::wstring2HKEY(rootkey), path, fieldname, dwKeyOption);
+		DWORD regfieldvalue = DVLib::RegistryGetDWORDValue(
+			DVLib::wstring2HKEY(rootkey), path, fieldname, dwKeyOption);
         LOG(L"Registry value: " << regfieldvalue);
 
 		DWORD checkvalue = static_cast<DWORD>(DVLib::wstring2long(fieldvalue));
@@ -92,7 +93,8 @@ bool InstalledCheckRegistry::IsInstalled() const
 	}
 	else if (fieldtype == TEXT("REG_SZ"))
 	{
-		std::wstring regfieldvalue = DVLib::RegistryGetStringValue(DVLib::wstring2HKEY(rootkey), path, fieldname, dwKeyOption);
+		std::wstring regfieldvalue = DVLib::RegistryGetStringValue(
+			DVLib::wstring2HKEY(rootkey), path, fieldname, dwKeyOption);
         LOG(L"Registry value: " << regfieldvalue);
 
 		if (comparison == TEXT("match"))
@@ -112,7 +114,7 @@ bool InstalledCheckRegistry::IsInstalled() const
 		else if (comparison == TEXT("exists"))
 			return true;
 		else if (comparison == TEXT("contains"))
-			return (regfieldvalue.find(fieldvalue) != regfieldvalue.npos);
+			return (regfieldvalue.find(fieldvalue.GetValue()) != regfieldvalue.npos);
 		else
 		{
 			THROW_EX("Invalid comparison type: " << comparison);
@@ -120,7 +122,8 @@ bool InstalledCheckRegistry::IsInstalled() const
 	}
 	else if (fieldtype == TEXT("REG_MULTI_SZ"))
 	{
-		std::vector<std::wstring> regfieldvalues = DVLib::RegistryGetMultiStringValue(DVLib::wstring2HKEY(rootkey), path, fieldname, dwKeyOption);
+		std::vector<std::wstring> regfieldvalues = DVLib::RegistryGetMultiStringValue(
+			DVLib::wstring2HKEY(rootkey), path, fieldname, dwKeyOption);
 		LOG(L"Registry value: " << regfieldvalues.size() << L" string(s)");
 		std::vector<std::wstring> fieldvalues = DVLib::split(fieldvalue, L",");
 

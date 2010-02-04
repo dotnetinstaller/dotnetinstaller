@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{401947AE
 		build.cmd = build.cmd
 		dni.proj = dni.proj
 		dni.vsprops = dni.vsprops
+		Version.proj = Version.proj
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{2F6E6EC2-78ED-4D9F-A549-FDBB92E10C1A}"

@@ -46,24 +46,24 @@ bool Component::IsInstalled() const
 
 void Component::Load(TiXmlElement * node)
 {
-	id = XML_ATTRIBUTE(node->Attribute("id"));
-	display_name = XML_ATTRIBUTE(node->Attribute("display_name"));
+	id = node->Attribute("id");
+	display_name = node->Attribute("display_name");
 	if (id.empty()) id = display_name;
-	status_installed = XML_ATTRIBUTE(node->Attribute("status_installed"));
-	os_filter_greater = XML_ATTRIBUTE(node->Attribute("os_filter_greater"));
-	os_filter_smaller = XML_ATTRIBUTE(node->Attribute("os_filter_smaller"));
-	os_filter_lcid = XML_ATTRIBUTE(node->Attribute("os_filter_lcid"));
-	installcompletemessage = XML_ATTRIBUTE(node->Attribute("installcompletemessage"));
-	uninstallcompletemessage = XML_ATTRIBUTE(node->Attribute("uninstallcompletemessage"));
-	mustreboot = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("mustreboot")), false);
-    reboot_required = XML_ATTRIBUTE(node->Attribute("reboot_required"));
-	must_reboot_required = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("must_reboot_required")), false);
-    allow_continue_on_error = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("allow_continue_on_error")), true);
-    failed_exec_command_continue = XML_ATTRIBUTE(node->Attribute("failed_exec_command_continue"));
-	required = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("required")), true);
-	processor_architecture_filter = XML_ATTRIBUTE(node->Attribute("processor_architecture_filter"));		
-	supports_install = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("supports_install")), true);
-	supports_uninstall = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("supports_uninstall")), false);
+	status_installed = node->Attribute("status_installed");
+	os_filter_greater = node->Attribute("os_filter_greater");
+	os_filter_smaller = node->Attribute("os_filter_smaller");
+	os_filter_lcid = node->Attribute("os_filter_lcid");
+	installcompletemessage = node->Attribute("installcompletemessage");
+	uninstallcompletemessage = node->Attribute("uninstallcompletemessage");
+	mustreboot = XmlAttribute(node->Attribute("mustreboot")).GetBoolValue(false);
+    reboot_required = node->Attribute("reboot_required");
+	must_reboot_required = XmlAttribute(node->Attribute("must_reboot_required")).GetBoolValue(false);
+    allow_continue_on_error = XmlAttribute(node->Attribute("allow_continue_on_error")).GetBoolValue(true);
+    failed_exec_command_continue = node->Attribute("failed_exec_command_continue");
+	required = XmlAttribute(node->Attribute("required")).GetBoolValue(true);
+	processor_architecture_filter = node->Attribute("processor_architecture_filter");
+	supports_install = XmlAttribute(node->Attribute("supports_install")).GetBoolValue(true);
+	supports_uninstall = XmlAttribute(node->Attribute("supports_uninstall")).GetBoolValue(false);
 	// install checks, embed files, etc.
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )
@@ -72,33 +72,35 @@ void Component::Load(TiXmlElement * node)
 		
 		if (child_element == NULL)
 			continue;
+
+		std::wstring type = DVLib::UTF8string2wstring(child_element->Value());
 		
-		if (strcmp(child_element->Value(), "installedcheck") == 0)
+		if (type == L"installedcheck")
 		{
 			std::wstring installedcheck_type = DVLib::UTF8string2wstring(child_element->Attribute("type"));
 			InstalledCheckPtr installedcheck(InstalledCheck::Create(installedcheck_type));
 			installedcheck->Load(child_element);
 			installedchecks.push_back(installedcheck);
 		}
-		else if (strcmp(child_element->Value(), "installedcheckoperator") == 0)
+		else if (type == L"installedcheckoperator")
 		{
 			InstalledCheckPtr installedcheckoperator(new InstalledCheckOperator());
 			installedcheckoperator->Load(child_element);
 			installedchecks.push_back(installedcheckoperator);
 		}
-		else if (strcmp(child_element->Value(), "embedfile") == 0)
+		else if (type == L"embedfile")
 		{
 			EmbedFilePtr embedfile(new EmbedFile());
 			embedfile->Load(child_element);
 			embedfiles.push_back(embedfile);			
 		}
-		else if (strcmp(child_element->Value(), "embedfolder") == 0)
+		else if (type == L"embedfolder")
 		{
 			EmbedFolderPtr embedfolder(new EmbedFolder());
 			embedfolder->Load(child_element);
 			embedfolders.push_back(embedfolder);			
 		}
-		else if (strcmp(child_element->Value(), "downloaddialog") == 0)
+		else if (type == L"downloaddialog")
 		{
 			auto_any<DownloadDialog *, close_delete> newdownloaddialog(new DownloadDialog(id));
 			newdownloaddialog->Load(child_element);
@@ -106,7 +108,7 @@ void Component::Load(TiXmlElement * node)
 		}
 		else
 		{
-			THROW_EX(L"Unexpected node '" << child_element->Value() << L"'");
+			THROW_EX(L"Unexpected node '" << type << L"'");
 		}
 	}
 

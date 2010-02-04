@@ -19,18 +19,18 @@ void Configuration::Load(TiXmlElement * node)
 		L"Expected 'configuration' node, got '" << DVLib::string2wstring(node->Value()) << L"'");
 
 	// locale
-	lcid_filter = DVLib::UTF8string2wstring(node->Attribute("lcid_filter"));
+	lcid_filter = node->Attribute("lcid_filter");
 	// language
-	language_id = XML_ATTRIBUTE(node->Attribute("language_id"));
-	language = XML_ATTRIBUTE(node->Attribute("language"));
+	language_id = node->Attribute("language_id");
+	language = node->Attribute("language");
 	// os filters
-	os_filter_greater = DVLib::UTF8string2wstring(node->Attribute("os_filter_greater"));
-	os_filter_smaller = DVLib::UTF8string2wstring(node->Attribute("os_filter_smaller"));
+	os_filter_greater = node->Attribute("os_filter_greater");
+	os_filter_smaller = node->Attribute("os_filter_smaller");
 	// processor architecture filter
-	processor_architecture_filter = DVLib::UTF8string2wstring(node->Attribute("processor_architecture_filter"));
+	processor_architecture_filter = XmlAttribute(node->Attribute("processor_architecture_filter"));
 	// install modes
-	supports_install = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("supports_install")), true);
-	supports_uninstall = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("supports_uninstall")), true);
+	supports_install = XmlAttribute(node->Attribute("supports_install")).GetBoolValue(true);
+	supports_uninstall = XmlAttribute(node->Attribute("supports_uninstall")).GetBoolValue(true);
 }
 
 bool Configuration::IsSupported(LCID lcid) const
@@ -43,8 +43,8 @@ bool Configuration::IsSupported(LCID lcid) const
 std::wstring Configuration::GetLanguageString() const
 {
 	std::wstring result = language;
-	if (result.empty()) result = language_id;
-	if (result.empty()) result = lcid_filter;
+	if (result.empty()) result = language_id.GetValue();
+	if (result.empty()) result = lcid_filter.GetValue();
 	// \todo: get the string representation of the current language
 	if (result.empty()) result = DVLib::towstring(DVLib::GetOperatingSystemLCID(DVLib::LcidUser));
 	return result;

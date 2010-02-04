@@ -12,6 +12,8 @@ public:
 	std::wstring guid;
 	// session locale
 	DWORD languageid;
+	// language string
+	std::wstring language;
 	// CAB path
 	std::wstring SessionCABPath;
 	// additional cmdline arguments

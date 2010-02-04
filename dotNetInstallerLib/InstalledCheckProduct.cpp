@@ -12,10 +12,10 @@ InstalledCheckProduct::InstalledCheckProduct()
 void InstalledCheckProduct::Load(TiXmlElement * node)
 {
 	id_type = DVLib::UTF8string2wstring(node->Attribute("id_type"));
-	id = XML_ATTRIBUTE(node->Attribute("id"));
-	propertyname = XML_ATTRIBUTE(node->Attribute("propertyname"));
+	id = node->Attribute("id");
+	propertyname = node->Attribute("propertyname");
 	comparison = DVLib::UTF8string2wstring(node->Attribute("comparison"));
-	propertyvalue = XML_ATTRIBUTE(node->Attribute("propertyvalue"));
+	propertyvalue = node->Attribute("propertyvalue");
 	LOG(L"Loaded 'product' installed check '" << id << L"'");
 }
 
@@ -69,7 +69,7 @@ bool InstalledCheckProduct::IsInstalled() const
 		{
 			std::wstring pi_propertyvalue = pi.GetProperty(propertyname);
 			LOG(L"Product '" << pi.GetProductName() << L"', " << propertyname << L"='" << pi_propertyvalue << L"'");
-			if (pi_propertyvalue != propertyvalue)
+			if (propertyvalue != pi_propertyvalue)
 			{
 				LOG(L"Check value '" << propertyvalue << L"' doesn't match.");
 				return false;
@@ -84,7 +84,7 @@ bool InstalledCheckProduct::IsInstalled() const
 		{
 			std::wstring pi_propertyvalue = pi.GetProperty(propertyname);
 			LOG(L"Product '" << pi.GetProductName() << L"', " << propertyname << L"='" << pi_propertyvalue << L"'");
-			if (pi_propertyvalue == propertyvalue)
+			if (propertyvalue == pi_propertyvalue)
 			{
 				LOG(L"Check value '" << propertyvalue << L"' found.");
 				return true;

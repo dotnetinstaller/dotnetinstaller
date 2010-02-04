@@ -26,16 +26,16 @@ void DownloadFile::Load(TiXmlElement * node)
 	CHECK_BOOL(0 == strcmp(node->Value(), "download"),
 		L"Expected 'download' node, got '" << DVLib::string2wstring(node->Value()) << L"'");
 
-	componentname = XML_ATTRIBUTE(node->Attribute("componentname"));
-	sourceurl = XML_ATTRIBUTE(node->Attribute("sourceurl"));
-	sourcepath = XML_ATTRIBUTE(node->Attribute("sourcepath"));
-	destinationpath = XML_ATTRIBUTE(node->Attribute("destinationpath"));
-	destinationfilename = XML_ATTRIBUTE(node->Attribute("destinationfilename"));
+	componentname = node->Attribute("componentname");
+	sourceurl = node->Attribute("sourceurl");
+	sourcepath = node->Attribute("sourcepath");
+	destinationpath = node->Attribute("destinationpath");
+	destinationfilename = node->Attribute("destinationfilename");
 	alwaysdownload = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("alwaysdownload")), true);		
 	clear_cache = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("clear_cache")), false);		
 
 	LOG(L"Loaded 'download' dialog component '" << componentname 
-		<< L"', source=" << (sourceurl.length() ? sourceurl : sourcepath));
+		<< L"', source=" << (sourceurl.empty() ? sourcepath : sourceurl));
 
 	if (sourceurl.empty() && sourcepath.empty())
 	{
@@ -109,7 +109,8 @@ void DownloadFile::CopyFromSourcePath()
 	}
 
 	long source_size = DVLib::GetFileSize(sourcepath);
-	std::wstring tmp = DVLib::FormatMessage(L"%s (%s)", componentname.c_str(), DVLib::FormatBytesW(source_size).c_str());
+	std::wstring tmp = DVLib::FormatMessage(L"%s (%s)", 
+		componentname.GetValue().c_str(), DVLib::FormatBytesW(source_size).c_str());
 	if (callback != NULL)
 	{
 		callback->Status(0, source_size, tmp);
@@ -157,7 +158,7 @@ void DownloadFile::DownloadFromSourceUrl()
 
 	ClearCache();
 
-	CHECK_HR_DLL(URLDownloadToFile(NULL, sourceurl.c_str(), destination_full_filename_tmp.c_str(), 0, this),
+	CHECK_HR_DLL(URLDownloadToFile(NULL, sourceurl.GetValue().c_str(), destination_full_filename_tmp.c_str(), 0, this),
 		L"Error downloading \"" << sourceurl << L"\" to \"" << destination_full_filename_tmp << L"\"", L"urlmon.dll");
 
 	DVLib::FileMove(destination_full_filename_tmp, destination_full_filename);
@@ -181,7 +182,7 @@ bool DownloadFile::ClearCache()
 	}
 
 	LOG(L"Deleting cache entry for '" << sourceurl << L"'.");
-	if (! deleteUrlCacheEntry(sourceurl.c_str()))
+	if (! deleteUrlCacheEntry(sourceurl.GetValue().c_str()))
 	{
 		LOG(DVLib::GetLastErrorStringW(L"Ignoring error clearing cache"));
 		return false;
@@ -210,7 +211,9 @@ HRESULT DownloadFile::OnProgress(ULONG ulProgress, ULONG ulProgressMax, ULONG ul
 		break;
 	case BINDSTATUS_DOWNLOADINGDATA:
 		std::wstring tmp = DVLib::FormatMessage(L"%s (%s of %s)", 
-			componentname.c_str(), DVLib::FormatBytesW(ulProgress).c_str(), DVLib::FormatBytesW(ulProgressMax).c_str());
+			componentname.GetValue().c_str(), 
+			DVLib::FormatBytesW(ulProgress).c_str(), 
+			DVLib::FormatBytesW(ulProgressMax).c_str());
 		callback->Status(ulProgress, ulProgressMax, tmp);
 		break;
 	}

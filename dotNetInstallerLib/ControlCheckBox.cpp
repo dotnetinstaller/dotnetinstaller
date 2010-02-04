@@ -12,10 +12,10 @@ ControlCheckBox::ControlCheckBox()
 
 void ControlCheckBox::Load(TiXmlElement * node)
 {
-	checked = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("checked")));
-	id = DVLib::UTF8string2wstring(node->Attribute("id"));
-	checked_value = XML_ATTRIBUTE(node->Attribute("checked_value"));
-	unchecked_value = XML_ATTRIBUTE(node->Attribute("unchecked_value"));
+	checked = XmlAttribute(node->Attribute("checked")).GetBoolValue(false);
+	id = node->Attribute("id");
+	checked_value = node->Attribute("checked_value");
+	unchecked_value = node->Attribute("unchecked_value");
 	ControlText::Load(node);
 }
 

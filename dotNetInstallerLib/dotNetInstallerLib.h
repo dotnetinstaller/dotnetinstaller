@@ -1,5 +1,6 @@
 #pragma once
 
+#include "XmlAttribute.h"
 #include "Component.h"
 #include "Components.h"
 #include "CmdComponent.h"

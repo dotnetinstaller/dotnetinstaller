@@ -12,7 +12,7 @@ ControlHyperlink::ControlHyperlink()
 
 void ControlHyperlink::Load(TiXmlElement * node)
 {
-	uri = XML_ATTRIBUTE(node->Attribute("uri"));
+	uri = node->Attribute("uri");
 	ControlText::Load(node);
 }
 

@@ -23,35 +23,35 @@ public:
 	// component type: cmd, msi, openfile
 	component_type type;
 	// component id
-	std::wstring id;
+	XmlAttribute id;
 	// component display name
-	std::wstring display_name;
+	XmlAttribute display_name;
 	// component status when installed
-	std::wstring status_installed;
+	XmlAttribute status_installed;
 	// component status when not installed
-	std::wstring status_notinstalled;
+	XmlAttribute status_notinstalled;
 	// filtro che indica il minimo sistema operativo in cui lanciare il componente (estremo escluso)
-	std::wstring os_filter_greater;
+	XmlAttribute os_filter_greater;
 	// filtro che indica il massimo sistema operativo in cui lanciare il componente (estremo escluso)
-	std::wstring os_filter_smaller;
+	XmlAttribute os_filter_smaller;
 	// filtro che indica il filtro per lingua del sistema operativo (es. Italy = 1040, English - United Kingdom = 2057, English - United States = 1033)
-	std::wstring os_filter_lcid;
+	XmlAttribute os_filter_lcid;
 	// testo da visualizzare a fine installazione (se vuoto non visualizza niente)
-	std::wstring installcompletemessage;
+	XmlAttribute installcompletemessage;
 	// successful uninstall message
-	std::wstring uninstallcompletemessage;
+	XmlAttribute uninstallcompletemessage;
 	// true per forzare il reboot al termine dell'installazione altrimenti false
 	bool mustreboot;
     // message for a reboot after this component
-    std::wstring reboot_required;
+    XmlAttribute reboot_required;
     // true to force a reboot when required
     bool must_reboot_required;
     // message to display on error
-    std::wstring failed_exec_command_continue;
+    XmlAttribute failed_exec_command_continue;
     // allow to continue setup on error
     bool allow_continue_on_error;
 	// filter for processor architecture
-	std::wstring processor_architecture_filter;
+	XmlAttribute processor_architecture_filter;
     // cancelled by user
     bool cancelled;
     // true if component is required for final command to execute

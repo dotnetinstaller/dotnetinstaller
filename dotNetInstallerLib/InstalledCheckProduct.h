@@ -1,19 +1,21 @@
 #pragma once
+
 #include "InstalledCheck.h"
+#include "XmlAttribute.h"
 
 class InstalledCheckProduct : public InstalledCheck
 {
 public:
 	// UpgradeCode or ProductCode
-	std::wstring id_type;
+	XmlAttribute id_type;
 	// product/upgrade code
-	std::wstring id;
+	XmlAttribute id;
 	// product property to check
-	std::wstring propertyname;
+	XmlAttribute propertyname;
 	// one of version, match, etc.
 	std::wstring comparison;
 	// property value to match
-	std::wstring propertyvalue;
+	XmlAttribute propertyvalue;
 public:
     InstalledCheckProduct();
     void Load(TiXmlElement * node);

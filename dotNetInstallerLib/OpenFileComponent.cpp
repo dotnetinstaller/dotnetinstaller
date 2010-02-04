@@ -26,7 +26,7 @@ bool OpenFileComponent::IsExecuting() const
 
 void OpenFileComponent::Load(TiXmlElement * node)
 {
-	file = XML_ATTRIBUTE(node->Attribute("file"));
+	file = node->Attribute("file");
 	Component::Load(node);
 }
 

@@ -1,10 +1,12 @@
 #pragma once
 
+#include "XmlAttribute.h"
+
 class FileAttribute
 {
 public:
-	std::wstring name;
-	std::wstring value;
+	XmlAttribute name;
+	XmlAttribute value;
 public:
 	FileAttribute();
 	virtual void Load(TiXmlElement * node);

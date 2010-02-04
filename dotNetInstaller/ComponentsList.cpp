@@ -159,7 +159,7 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 			&& (component->required || ! component_installed))
             Enable(id, 0);
 
-		CSize size = pDC->GetTextExtent(component->display_name.c_str());
+		CSize size = pDC->GetTextExtent(component->display_name.GetValue().c_str());
 		if ((size.cx > 0) && (hScrollWidth < size.cx))
 			hScrollWidth = size.cx;
     }

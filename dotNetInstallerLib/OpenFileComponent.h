@@ -8,7 +8,7 @@ private:
 public:
     OpenFileComponent();
 public:
-	std::wstring file; //file to open. Can be a web link or a standard file
+	XmlAttribute file; //file to open. Can be a web link or a standard file
 	void Exec();
 	bool IsExecuting() const;
 	void Load(TiXmlElement * node);

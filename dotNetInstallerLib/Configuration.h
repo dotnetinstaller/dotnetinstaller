@@ -3,6 +3,7 @@
 class Component;
 
 #include "WidgetPosition.h"
+#include "XmlAttribute.h"
 
 enum configuration_type
 {
@@ -15,16 +16,16 @@ class Configuration
 {
 public:
 	// configuration lcid filter
-	std::wstring lcid_filter;
+	XmlAttribute lcid_filter;
 	// configuration language
-	std::wstring language;
-	std::wstring language_id;
+	XmlAttribute language;
+	XmlAttribute language_id;
 	// filter for minimum operating system version
-	std::wstring os_filter_greater;
+	XmlAttribute os_filter_greater;
 	// filter for maximum operating system version
-	std::wstring os_filter_smaller;
+	XmlAttribute os_filter_smaller;
 	// filter for processor architecture
-	std::wstring processor_architecture_filter;
+	XmlAttribute processor_architecture_filter;
 	// configuration type
 	configuration_type type;
 	// install mode

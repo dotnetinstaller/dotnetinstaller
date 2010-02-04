@@ -32,12 +32,12 @@ void Configurations::Load(TiXmlElement * node)
 	productversion = DVLib::UTF8string2wstring(node->Attribute("productversion"));
     // auto-enabled log options
     log_enabled = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("log_enabled")), false);
-    log_file = XML_ATTRIBUTE(node->Attribute("log_file"));
+    log_file = node->Attribute("log_file");
 	// language selection
 	show_language_selector = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("show_language_selector")), false);;
-	language_selector_title = XML_ATTRIBUTE(node->Attribute("language_selector_title"));
-	language_selector_ok = XML_ATTRIBUTE(node->Attribute("language_selector_ok"));
-	language_selector_cancel = XML_ATTRIBUTE(node->Attribute("language_selector_cancel"));
+	language_selector_title = node->Attribute("language_selector_title");
+	language_selector_ok = node->Attribute("language_selector_ok");
+	language_selector_cancel = node->Attribute("language_selector_cancel");
 	// no matching configuration message
 	configuration_no_match_message = DVLib::UTF8string2wstring(node->Attribute("configuration_no_match_message"));
 

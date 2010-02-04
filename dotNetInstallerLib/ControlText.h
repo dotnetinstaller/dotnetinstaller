@@ -7,9 +7,9 @@ public:
     ControlText(control_type type);
 public:
 	// control text
-	std::wstring text;
+	XmlAttribute text;
 	// font face name
-	std::wstring font_name;
+	XmlAttribute font_name;
 	// font point size
 	int font_size;
 	void Load(TiXmlElement * node);

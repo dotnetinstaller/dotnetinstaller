@@ -2,6 +2,7 @@
 #include "InstallerSession.h"
 #include "InstallerLog.h"
 #include "InstallerLauncher.h"
+#include "InstallUILevel.h"
 
 #define REGISTRY_CURRENTVERSION_RUN L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
 
@@ -85,6 +86,12 @@ std::wstring InstallerSession::ExpandPathVariables(const std::wstring& path)
 				value = guid;
 			else if (name == L"PID")
 				value = DVLib::towstring(::GetCurrentProcessId());
+			else if (name == L"UILEVEL")
+				value = InstallUILevelSetting::ToString(InstallUILevelSetting::Instance->GetUILevel());
+			else if (name == L"LANGID")
+				value = DVLib::towstring(languageid);
+			else if (name == L"LANGUAGE")
+				value = language;
 			else
 			{
 				THROW_EX(L"Invalid variable #" << name << L" in '" << path << L"'");

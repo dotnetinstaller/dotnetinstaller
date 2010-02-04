@@ -1,5 +1,6 @@
 <Project DefaultTargets="all" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+  <Import Project="Version.proj"/>
   <PropertyGroup Condition="'$(Configuration)'==''">
     <Configuration>Debug</Configuration>
   </PropertyGroup>
@@ -9,6 +10,8 @@
     <Copyright>Copyright (c) $(CompanyName)</Copyright>
     <Trademark>All Rights Reserved</Trademark>
     <ReleaseDir>target\$(Configuration)</ReleaseDir>
+    <MajorVersion>1</MajorVersion>
+    <MinorVersion>9</MinorVersion>
   </PropertyGroup>
   <ItemGroup>
     <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.txt" />
@@ -86,53 +89,6 @@
   <Target Name="built" DependsOnTargets="version">
     <Message Text="Built version: $(Major).$(Minor).$(Build).$(Revision)"/>
   </Target>
-  <Target Name="version">
-    <Version Major="1" Minor="8">
-      <Output TaskParameter="Major" PropertyName="Major" />
-      <Output TaskParameter="Minor" PropertyName="Minor" />
-      <Output TaskParameter="Revision" PropertyName="Revision"/>
-    </Version>
-    <SvnVersion LocalPath=".">
-      <Output TaskParameter="Revision" PropertyName="Build" />
-    </SvnVersion>
-    <Subtract Numbers="$(Build);30000" Condition="$(Build)&gt;30000">
-      <Output TaskParameter="Result" PropertyName="Build" />
-    </Subtract>
-    <CreateItem Include="Major" AdditionalMetadata="ReplacementValue=$(Major)">
-      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
-    </CreateItem>
-    <CreateItem Include="Minor" AdditionalMetadata="ReplacementValue=$(Minor)">
-      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
-    </CreateItem>
-    <CreateItem Include="Build" AdditionalMetadata="ReplacementValue=$(Build)">
-      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
-    </CreateItem>
-    <CreateItem Include="Revision" AdditionalMetadata="ReplacementValue=$(Revision)">
-      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
-    </CreateItem>
-    <CreateItem Include="ProductName" AdditionalMetadata="ReplacementValue=$(ProductName)">
-      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
-    </CreateItem>
-    <CreateItem Include="CompanyName" AdditionalMetadata="ReplacementValue=$(CompanyName)">
-      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
-    </CreateItem>
-    <CreateItem Include="Copyright" AdditionalMetadata="ReplacementValue=$(Copyright)">
-      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
-    </CreateItem>
-    <CreateItem Include="Trademark" AdditionalMetadata="ReplacementValue=$(Trademark)">
-      <Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/>
-    </CreateItem>
-    <Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)"/>
-    <MakeDir Directories="Version" />
-    <AssemblyInfo CodeLanguage="CS" OutputFile="Version\GlobalAssemblyInfo.cs"
-     AssemblyCompany="$(CompanyName)" AssemblyProduct="$(ProductName)"
-     AssemblyCopyright="$(Copyright)" AssemblyTrademark="$(Trademark)"
-     CLSCompliant="true" AssemblyDelaySign="false" AssemblyKeyName="" AssemblyCulture=""
-     AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
-     AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)" />
-    <TemplateFile Template="Version\Version.h.template" OutputFilename="Version.h" Tokens="@(AssemblyInfoTokens)"/>
-    <TemplateFile Template="Version\Version.wxi.template" OutputFilename="Version.wxi" Tokens="@(AssemblyInfoTokens)"/>
-  </Target>
   <Target Name="clean">
     <MSBuild Projects="Dni.sln" Targets="Clean" />
     <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Clean" />
@@ -150,6 +106,7 @@
     <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Bin" />
     <!-- Documentation -->
     <Copy SourceFiles="@(Documentation)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Doc" />
+    <TemplateFile Template="Documentation\WhatsNew.html" OutputFilename="..\$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)" Tokens="@(AssemblyInfoTokens)" />
     <!-- Samples -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples" />
     <!-- Sample: StandaloneSetup -->

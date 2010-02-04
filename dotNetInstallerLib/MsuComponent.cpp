@@ -53,10 +53,10 @@ void MsuComponent::Exec()
 
 void MsuComponent::Load(TiXmlElement * node)
 {
-	package = XML_ATTRIBUTE(node->Attribute("package"));
-	cmdparameters = XML_ATTRIBUTE(node->Attribute("cmdparameters"));
-	cmdparameters_silent = XML_ATTRIBUTE(node->Attribute("cmdparameters_silent"));
-	cmdparameters_basic = XML_ATTRIBUTE(node->Attribute("cmdparameters_basic"));
+	package = node->Attribute("package");
+	cmdparameters = node->Attribute("cmdparameters");
+	cmdparameters_silent = node->Attribute("cmdparameters_silent");
+	cmdparameters_basic = node->Attribute("cmdparameters_basic");
 	Component::Load(node);
 }
 

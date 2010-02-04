@@ -334,6 +334,10 @@
 				RelativePath=".\WidgetPosition.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\XmlAttribute.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

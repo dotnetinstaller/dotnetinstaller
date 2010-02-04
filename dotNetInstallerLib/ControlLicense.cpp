@@ -12,10 +12,10 @@ ControlLicense::ControlLicense()
 
 void ControlLicense::Load(TiXmlElement * node)
 {
-	resource_id = XML_ATTRIBUTE(node->Attribute("resource_id"));
-	license_file = XML_ATTRIBUTE(node->Attribute("license_file"));
-	accept_message = XML_ATTRIBUTE(node->Attribute("accept_message"));
-	accepted = DVLib::wstring2bool(XML_ATTRIBUTE(node->Attribute("accepted")));
+	resource_id = node->Attribute("resource_id");
+	license_file = node->Attribute("license_file");
+	accept_message = node->Attribute("accept_message");
+	accepted = XmlAttribute(node->Attribute("accepted")).GetBoolValue(false);
 	ControlText::Load(node);
 }
 

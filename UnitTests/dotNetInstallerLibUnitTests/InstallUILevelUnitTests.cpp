@@ -92,3 +92,28 @@ void InstallUILevelUnitTests::testIsAnything()
 		CPPUNIT_ASSERT(testdata[i].isSilent == InstallUILevelSetting::Instance->IsSilent());
 	}
 }
+
+void InstallUILevelUnitTests::testToFromString()
+{
+	struct TestData
+	{
+		InstallUILevel level;
+		std::wstring expected_value;
+	};
+
+	TestData testdata[] = 
+	{
+		// not set
+		{ InstallUILevelNotSet, L"" },
+		{ InstallUILevelSilent, L"silent" },
+		{ InstallUILevelBasic, L"basic" },
+		{ InstallUILevelFull, L"full" },
+	};
+
+	for (int i = 0; i < ARRAYSIZE(testdata); i++)
+	{
+		std::wstring label = InstallUILevelSetting::ToString(testdata[i].level);
+		std::wcout << std::endl << testdata[i].level << L": " << testdata[i].expected_value << L" => " << label;
+		CPPUNIT_ASSERT(testdata[i].expected_value == label);
+	}
+}

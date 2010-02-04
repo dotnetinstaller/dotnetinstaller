@@ -90,13 +90,13 @@ BOOL InstallComponentDlg::OnInitDialog()
 	m_BusyControl.Recalc();
 	m_BusyControl.Start();
 
-	SetWindowText(m_Component->display_name.c_str());
+	SetWindowText(m_Component->display_name.GetValue().c_str());
 
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_Configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 	std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(
-		p_configuration->installing_component_wait.c_str()), 
-		m_Component->display_name.c_str());
+		p_configuration->installing_component_wait.GetValue().c_str()), 
+		m_Component->display_name.GetValue().c_str());
     m_InstallMessage.SetWindowText(l_tmp.c_str());
     m_iTimer = this->SetTimer(1,1000,NULL);
 	return TRUE;
@@ -111,7 +111,7 @@ afx_msg LRESULT InstallComponentDlg::OnSetStatusInstall(WPARAM wParam, LPARAM /*
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_Configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 		std::wstring tmp = DVLib::FormatMessage(const_cast<wchar_t *>(
-			p_configuration->installing_component_wait.c_str()), 
+			p_configuration->installing_component_wait.GetValue().c_str()), 
 			status->status.c_str());
 		m_InstallMessage.SetWindowText(tmp.c_str());
     }

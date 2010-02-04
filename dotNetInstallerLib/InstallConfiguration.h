@@ -9,31 +9,31 @@ class InstallConfiguration : public Configuration
 {
 public:
 	// dialog options
-	std::wstring dialog_caption;
-	std::wstring dialog_message;
-	std::wstring dialog_message_uninstall;
-	std::wstring dialog_bitmap;
-	std::wstring skip_caption;
-	std::wstring install_caption;
-	std::wstring uninstall_caption;
-	std::wstring cancel_caption;
-	std::wstring status_installed;
-	std::wstring status_notinstalled;
-	std::wstring failed_exec_command_continue;
-	std::wstring installation_none;
-	std::wstring installation_completed;
+	XmlAttribute dialog_caption;
+	XmlAttribute dialog_message;
+	XmlAttribute dialog_message_uninstall;
+	XmlAttribute dialog_bitmap;
+	XmlAttribute skip_caption;
+	XmlAttribute install_caption;
+	XmlAttribute uninstall_caption;
+	XmlAttribute cancel_caption;
+	XmlAttribute status_installed;
+	XmlAttribute status_notinstalled;
+	XmlAttribute failed_exec_command_continue;
+	XmlAttribute installation_none;
+	XmlAttribute installation_completed;
     bool must_reboot_required;
-	std::wstring reboot_required;
-	std::wstring installing_component_wait;
+	XmlAttribute reboot_required;
+	XmlAttribute installing_component_wait;
 	// link properties
-	std::wstring dialog_otherinfo_caption;
-	std::wstring dialog_otherinfo_link;
+	XmlAttribute dialog_otherinfo_caption;
+	XmlAttribute dialog_otherinfo_link;
 	// complete command (executed when all components are installed correctly)
-	std::wstring complete_command;
+	XmlAttribute complete_command;
 	// complete command on silent install
-	std::wstring complete_command_silent;
+	XmlAttribute complete_command_silent;
 	// complete command on a basic UI install
-	std::wstring complete_command_basic;
+	XmlAttribute complete_command_basic;
 	// wait for the complete command to finish
 	bool wait_for_complete_command;
 	// if true auto close the dialog (display installation_completed or installation_none message 
@@ -50,17 +50,17 @@ public:
 	// allow user to continue on error
 	bool allow_continue_on_error;
     // message and caption to show during CAB extraction
-    std::wstring cab_dialog_message;
-    std::wstring cab_dialog_caption;
-    std::wstring cab_cancelled_message;
-    std::wstring cab_path;
+    XmlAttribute cab_dialog_message;
+    XmlAttribute cab_dialog_caption;
+    XmlAttribute cab_cancelled_message;
+    XmlAttribute cab_path;
     bool cab_path_autodelete;
 	// auto-start installation
     bool auto_start;
 	// auto-start installation on a reboot
 	bool auto_continue_on_reboot;
 	// additional reboot command
-	std::wstring reboot_cmd;
+	XmlAttribute reboot_cmd;
     // dialog elements position
     WidgetPosition dialog_position;
     WidgetPosition dialog_components_list_position;

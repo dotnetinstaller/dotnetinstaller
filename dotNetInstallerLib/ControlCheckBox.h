@@ -9,10 +9,10 @@ public:
 	// checked
 	bool checked;
 	// id
-	std::wstring id;
+	XmlAttribute id;
 	// values
-	std::wstring checked_value;
-	std::wstring unchecked_value;
+	XmlAttribute checked_value;
+	XmlAttribute unchecked_value;
 	void Load(TiXmlElement * node);
 	std::wstring GetString() const;
 };

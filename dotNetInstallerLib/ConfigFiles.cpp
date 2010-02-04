@@ -102,7 +102,8 @@ void ConfigFiles::Load()
 		else
 		{
 			THROW_EX(DVLib::FormatMessage(const_cast<wchar_t *>(
-				config.configuration_no_match_message.c_str()), DVLib::towstring(config.size()).c_str()));
+				config.configuration_no_match_message.GetValue().c_str()), 
+				DVLib::towstring(config.size()).c_str()));
 		}
 	}
 }

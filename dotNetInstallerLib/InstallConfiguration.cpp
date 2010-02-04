@@ -42,8 +42,8 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	Configuration::Load(node);
 
     // defines where to extract files and auto-delete options
-    cab_path = XML_ATTRIBUTE(node->Attribute("cab_path"));
-	InstallerSession::Instance->SessionCABPath = cab_path;
+    cab_path = node->Attribute("cab_path");
+	InstallerSession::Instance->SessionCABPath = cab_path.GetValue();
     cab_path_autodelete = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("cab_path_autodelete")), true);
     // positions within the dialog
     dialog_position.FromString(DVLib::UTF8string2wstring(node->Attribute("dialog_position")));
@@ -56,28 +56,28 @@ void InstallConfiguration::Load(TiXmlElement * node)
     dialog_cancel_button_position.FromString(DVLib::UTF8string2wstring(node->Attribute("dialog_cancel_button_position")));
     dialog_skip_button_position.FromString(DVLib::UTF8string2wstring(node->Attribute("dialog_skip_button_position")));
     // other dialog options
-	cancel_caption = XML_ATTRIBUTE(node->Attribute("cancel_caption"));
-	dialog_bitmap = XML_ATTRIBUTE(node->Attribute("dialog_bitmap"));
-	dialog_caption = XML_ATTRIBUTE(node->Attribute("dialog_caption"));
-	dialog_message = XML_ATTRIBUTE(node->Attribute("dialog_message"));
-	dialog_message_uninstall = XML_ATTRIBUTE(node->Attribute("dialog_message_uninstall"));
-	skip_caption = XML_ATTRIBUTE(node->Attribute("skip_caption"));
-	install_caption = XML_ATTRIBUTE(node->Attribute("install_caption"));
-	uninstall_caption = XML_ATTRIBUTE(node->Attribute("uninstall_caption"));
-	status_installed = XML_ATTRIBUTE(node->Attribute("status_installed"));
-	status_notinstalled = XML_ATTRIBUTE(node->Attribute("status_notinstalled"));
-	failed_exec_command_continue = XML_ATTRIBUTE(node->Attribute("failed_exec_command_continue"));
-	installation_completed = XML_ATTRIBUTE(node->Attribute("installation_completed"));
-	installation_none = XML_ATTRIBUTE(node->Attribute("installation_none"));
-	reboot_required = XML_ATTRIBUTE(node->Attribute("reboot_required"));
+	cancel_caption = node->Attribute("cancel_caption");
+	dialog_bitmap = node->Attribute("dialog_bitmap");
+	dialog_caption = node->Attribute("dialog_caption");
+	dialog_message = node->Attribute("dialog_message");
+	dialog_message_uninstall = node->Attribute("dialog_message_uninstall");
+	skip_caption = node->Attribute("skip_caption");
+	install_caption = node->Attribute("install_caption");
+	uninstall_caption = node->Attribute("uninstall_caption");
+	status_installed = node->Attribute("status_installed");
+	status_notinstalled = node->Attribute("status_notinstalled");
+	failed_exec_command_continue = node->Attribute("failed_exec_command_continue");
+	installation_completed = node->Attribute("installation_completed");
+	installation_none = node->Attribute("installation_none");
+	reboot_required = node->Attribute("reboot_required");
     must_reboot_required = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("must_reboot_required")), false);
-	installing_component_wait = XML_ATTRIBUTE(node->Attribute("installing_component_wait"));
-	dialog_otherinfo_caption = XML_ATTRIBUTE(node->Attribute("dialog_otherinfo_caption"));
-	dialog_otherinfo_link = XML_ATTRIBUTE(node->Attribute("dialog_otherinfo_link"));
+	installing_component_wait = node->Attribute("installing_component_wait");
+	dialog_otherinfo_caption = node->Attribute("dialog_otherinfo_caption");
+	dialog_otherinfo_link = node->Attribute("dialog_otherinfo_link");
 	// completion commands
-	complete_command = XML_ATTRIBUTE(node->Attribute("complete_command"));
-	complete_command_basic = XML_ATTRIBUTE(node->Attribute("complete_command_basic"));
-	complete_command_silent = XML_ATTRIBUTE(node->Attribute("complete_command_silent"));
+	complete_command = node->Attribute("complete_command");
+	complete_command_basic = node->Attribute("complete_command_basic");
+	complete_command_silent = node->Attribute("complete_command_silent");
 	wait_for_complete_command = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("wait_for_complete_command")), true);
 	auto_close_if_installed = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_close_if_installed")), true);
     auto_close_on_error = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_close_on_error")), false);
@@ -86,15 +86,15 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	dialog_show_uninstalled = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("dialog_show_uninstalled")), true);
     dialog_show_required = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("dialog_show_required")), true);
     // message and caption to show during CAB extraction
-    cab_dialog_caption = XML_ATTRIBUTE(node->Attribute("cab_dialog_caption"));
-    cab_dialog_message = XML_ATTRIBUTE(node->Attribute("cab_dialog_message"));
-    cab_cancelled_message = XML_ATTRIBUTE(node->Attribute("cab_cancelled_message"));
+    cab_dialog_caption = node->Attribute("cab_dialog_caption");
+    cab_dialog_message = node->Attribute("cab_dialog_message");
+    cab_cancelled_message = node->Attribute("cab_cancelled_message");
 	// auto start
 	auto_start = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_start")), false);
 	// auto start on reboot
 	auto_continue_on_reboot = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_continue_on_reboot")), false);
 	// additional reboot cmd
-    reboot_cmd = XML_ATTRIBUTE(node->Attribute("reboot_cmd"));
+    reboot_cmd = node->Attribute("reboot_cmd");
 	// components
 	TiXmlNode * child = NULL;
 	while ( (child = node->IterateChildren("component", child)) != NULL)

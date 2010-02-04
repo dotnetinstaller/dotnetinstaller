@@ -34,7 +34,9 @@ std::wstring MsiComponent::GetCommandLine() const
 	}
 
 	l_command.append(L" \"");
-	l_command += (DVLib::isguid(package) ? package : DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), package));
+	l_command += (DVLib::isguid(package) 
+		? package.GetValue() : DVLib::DirectoryCombine(
+			DVLib::GetCurrentDirectoryW(), package.GetValue()));
 	l_command.append(L"\"");
 
 	if (! l_cmdparameters.empty())
@@ -65,10 +67,10 @@ void MsiComponent::Exec()
 
 void MsiComponent::Load(TiXmlElement * node)
 {
-	package = XML_ATTRIBUTE(node->Attribute("package"));
-	cmdparameters = XML_ATTRIBUTE(node->Attribute("cmdparameters"));
-	cmdparameters_silent = XML_ATTRIBUTE(node->Attribute("cmdparameters_silent"));
-	cmdparameters_basic = XML_ATTRIBUTE(node->Attribute("cmdparameters_basic"));
+	package = node->Attribute("package");
+	cmdparameters = node->Attribute("cmdparameters");
+	cmdparameters_silent = node->Attribute("cmdparameters_silent");
+	cmdparameters_basic = node->Attribute("cmdparameters_basic");
 	Component::Load(node);
 }
 

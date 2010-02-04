@@ -10,20 +10,20 @@ public:
 	// download callback
 	IDownloadCallback * callback;
 	// download window caption
-	std::wstring caption;
+	XmlAttribute caption;
 	// component name
-	std::wstring component_id;
+	XmlAttribute component_id;
 	// help message
-	std::wstring help_message;
+	XmlAttribute help_message;
 	// progress messages
-	std::wstring downloading_message;
-	std::wstring copying_message;
-	std::wstring connecting_message;
-	std::wstring sendingrequest_message;
+	XmlAttribute downloading_message;
+	XmlAttribute copying_message;
+	XmlAttribute connecting_message;
+	XmlAttribute sendingrequest_message;
 	// start button caption
-	std::wstring start_caption;
+	XmlAttribute start_caption;
 	// cancel button caption
-	std::wstring cancel_caption;
+	XmlAttribute cancel_caption;
 	// download components
 	std::vector< DownloadFilePtr > downloadfiles;
 	// auto-start download

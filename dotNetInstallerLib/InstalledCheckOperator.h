@@ -5,9 +5,9 @@ class InstalledCheckOperator : public InstalledCheck
 {
 public:
 	// operator type
-	std::wstring type;
+	XmlAttribute type;
 	// operator description
-    std::wstring description; 
+    XmlAttribute description; 
 	// installed checks
 	std::vector< InstalledCheckPtr > installedchecks;
 public:	

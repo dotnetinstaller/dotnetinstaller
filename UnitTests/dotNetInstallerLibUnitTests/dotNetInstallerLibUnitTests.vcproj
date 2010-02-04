@@ -298,6 +298,10 @@
 				RelativePath=".\ThreadComponentUnitTests.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\XmlAttributeUnitTests.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -402,6 +406,10 @@
 			</File>
 			<File
 				RelativePath=".\ThreadComponentUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XmlAttributeUnitTests.h"
 				>
 			</File>
 		</Filter>

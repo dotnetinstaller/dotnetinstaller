@@ -91,11 +91,11 @@ BOOL ExtractCabDlg::OnInitDialog()
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_Configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
-	SetWindowText(p_configuration->cab_dialog_caption.c_str());
+	SetWindowText(p_configuration->cab_dialog_caption.GetValue().c_str());
 
 	std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(
-		p_configuration->cab_dialog_message.c_str()), 
-		p_configuration->cab_dialog_caption.c_str());
+		p_configuration->cab_dialog_message.GetValue().c_str()), 
+		p_configuration->cab_dialog_caption.GetValue().c_str());
     m_InstallMessage.SetWindowText(l_tmp.c_str());
     m_iTimer = this->SetTimer(1,1000,NULL);
 	return TRUE;
@@ -110,7 +110,7 @@ afx_msg LRESULT ExtractCabDlg::OnSetStatusInstall(WPARAM wParam, LPARAM /*lParam
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_Configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 		std::wstring tmp = DVLib::FormatMessage(const_cast<wchar_t *>(
-			p_configuration->cab_dialog_message.c_str()), 
+			p_configuration->cab_dialog_message.GetValue().c_str()), 
 			status->status.c_str());
 		m_InstallMessage.SetWindowText(tmp.c_str());
     }

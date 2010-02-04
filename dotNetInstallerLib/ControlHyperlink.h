@@ -6,7 +6,7 @@ class ControlHyperlink : public ControlText
 public:
     ControlHyperlink();
 public:
-	std::wstring uri;
+	XmlAttribute uri;
 	void Load(TiXmlElement * node);
 	std::wstring GetString() const;
 };

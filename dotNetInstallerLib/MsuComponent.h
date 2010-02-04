@@ -6,10 +6,10 @@ class MsuComponent : public ProcessComponent
 public:
     MsuComponent();
 public:
-	std::wstring package;
-	std::wstring cmdparameters;
-    std::wstring cmdparameters_silent;
-	std::wstring cmdparameters_basic;
+	XmlAttribute package;
+	XmlAttribute cmdparameters;
+    XmlAttribute cmdparameters_silent;
+	XmlAttribute cmdparameters_basic;
 	void Exec();
 	void Load(TiXmlElement * node);
 	void Wait(DWORD tt = 1000);
