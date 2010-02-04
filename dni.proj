@@ -56,7 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Documentation Include="Documentation/$(Configuration)/dotNetInstaller.chm" />
-    <Documentation Include="Documentation/WhatsNew.html" />
   </ItemGroup>
   <ItemGroup>
     <SupportFiles Include="Samples/SupportFiles/**/*.txt" />
@@ -106,7 +105,7 @@
     <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Bin" />
     <!-- Documentation -->
     <Copy SourceFiles="@(Documentation)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Doc" />
-    <TemplateFile Template="Documentation\WhatsNew.html" OutputFilename="..\$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)" Tokens="@(AssemblyInfoTokens)" />
+    <TemplateFile Template="Documentation\WhatsNew.html" OutputFilename="..\$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Doc\WhatsNew.html" Tokens="@(AssemblyInfoTokens)" />
     <!-- Samples -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples" />
     <!-- Sample: StandaloneSetup -->
