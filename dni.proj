@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Documentation Include="Documentation/$(Configuration)/dotNetInstaller.chm" />
+    <Documentation Include="Documentation/$(Configuration)/WhatsNew.html" />
   </ItemGroup>
   <ItemGroup>
     <SupportFiles Include="Samples/SupportFiles/**/*.txt" />
@@ -105,7 +106,6 @@
     <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Bin" />
     <!-- Documentation -->
     <Copy SourceFiles="@(Documentation)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Doc" />
-    <TemplateFile Template="Documentation\WhatsNew.html" OutputFilename="..\$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Doc\WhatsNew.html" Tokens="@(AssemblyInfoTokens)" />
     <!-- Samples -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples" />
     <!-- Sample: StandaloneSetup -->
@@ -142,6 +142,7 @@
     <Delete Files="Documentation\$(Configuration)\dotNetInstaller.chm" />
     <MSBuild Projects="Documentation\Dni.shfbproj" Properties="Configuration=$(Configuration)" />
     <Error Condition="Exists('Documentation\$(Configuration)\LastBuild.log')" Text="Documentation build failed, check Documentation\$(Configuration)\LastBuild.log" />
+    <TemplateFile Template="Documentation\WhatsNew.html" OutputFilename="$(Configuration)\WhatsNew.html" Tokens="@(AssemblyInfoTokens)" />
   </Target>
   <ItemGroup>
     <CppUnitTests Include="UnitTests\dotNetInstallerLibUnitTests\$(Configuration)\dotNetInstallerLibUnitTests.exe" />

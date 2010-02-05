@@ -51,7 +51,7 @@
           <Directory Id="doc" Name="doc">
             <Component Id="Documentation" Guid="00A1CB0D-BCE4-43a4-8AAC-7563F90B3E7C">
               <File Id="dotNetInstaller.chm" Source="..\Documentation\$(var.Configuration)\dotNetInstaller.chm" />
-              <File Id="WhatsNew.html" Source="..\Documentation\WhatsNew.html" />
+              <File Id="WhatsNew.html" Source="..\Documentation\$(var.Configuration)\WhatsNew.html" />
             </Component>
           </Directory>
         </Directory>
