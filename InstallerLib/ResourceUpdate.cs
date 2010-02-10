@@ -18,12 +18,30 @@ namespace InstallerLib
             string input)
         {
             GenericResource resource = new GenericResource(resourceType, resourceName, resourceLanguage);
-            using (FileStream binaryStream = new FileStream(input, FileMode.Open, FileAccess.Read))
+            
+            try
             {
-                resource.Data = new byte[binaryStream.Length];
-                binaryStream.Read(resource.Data, 0, (int)binaryStream.Length);
+                using (FileStream binaryStream = new FileStream(input, FileMode.Open, FileAccess.Read))
+                {
+                    resource.Data = new byte[binaryStream.Length];
+                    binaryStream.Read(resource.Data, 0, (int)binaryStream.Length);
+                }
             }
-            resource.SaveTo(output);            
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format("Error reading {0}: {1}", input, ex.Message),
+                    ex);
+            }
+
+            try
+            {
+                resource.SaveTo(output);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format("Error writing {0}: {1}", output, ex.Message),
+                    ex);
+            }
         }
 
         internal static void Write(
@@ -35,7 +53,15 @@ namespace InstallerLib
         {
             GenericResource resource = new GenericResource(resourceType, resourceName, resourceLanguage);
             resource.Data = buffer;
-            resource.SaveTo(output);
+            try
+            {
+                resource.SaveTo(output);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format("Error writing {0}: {1}", output, ex.Message),
+                    ex);
+            }
         }
     }
 }

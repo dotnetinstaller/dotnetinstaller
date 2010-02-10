@@ -321,11 +321,18 @@ namespace InstallerLib
                 return String.Format("{0} bytes", bytes);
         }
 
-        public string[] GetFileValuesWithSize()
+        public string[] GetFileValuesWithSize(int cut)
         {
             List<string> values = new List<string>();
             foreach (EmbedFilePair pair in this)
             {
+                if (cut > 0 && values.Count >= cut)
+                {
+                    int remaining = (Count - cut);
+                    values.Add(string.Format("+ {0} more file(s) ...", remaining));
+                    break;
+                }
+
                 values.Add(string.Format("{0} - {1}", pair.relativepath,
                     FormatBytes(new FileInfo(pair.fullpath).Length)));
             }

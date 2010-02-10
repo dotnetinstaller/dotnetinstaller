@@ -76,6 +76,7 @@ Using these conventions results in better readable code and less coding errors !
 
 #include "Defines.h"
 #include "Static.hpp"
+#include "UniqueList.hpp"
 #include "Map.hpp"
 #include "File.hpp"
 #include "Trace.hpp"
@@ -382,9 +383,12 @@ public:
 		// (in this example we must call FdiCopy(Part_1.cab) and FdiCopy(Part_3.cab))
 		// otherwise not all compressed files will be extracted.
 		// See comments in FDI.h
-		msw_NextCab.Clean();
-		while (TRUE)
+		msw_NextCabs.Clear();
+		msw_NextCabs.Add(sw_CabFile);
+		while(msw_NextCabs.Count() > 0)
 		{
+			sw_CabFile = msw_NextCabs.RemoveAt(0);
+
 			#if _TraceExtract
 				CTrace::TraceW(L"++++++++++++");
 				CTrace::TraceW(L"FDICopy ('%s') -> starting extraction", (WCHAR*)sw_CabFile);
@@ -397,14 +401,7 @@ public:
 			CStrA sa_File, sa_Folder;
 			if (!mf_FdiCopy(mh_FDIContext, sa_File.EncodeUtf8(sw_CabFile), sa_Folder.EncodeUtf8(sw_CabFolder), 
 			                0, (PFNFDINOTIFY)(FDICallback), 0, pParam))
-				break;
-
-			// Check if there are more splitted CAB parts to be extracted
-			if (!msw_NextCab.Len())
-				break; 
-			
-			// extract the next splitted CAB file
-			sw_CabFile = msw_NextCab;
+				break;			
 		}
 
 		// Close the extraction file (sometimes Cabinet.dll closes it on aborting, sometimes not)
@@ -490,8 +487,8 @@ protected:
 	kCurrentFile mk_CurrentFile; // the file that is currently written to disk
 	kCallbacks   mk_Callbacks;
 	CFilePtr     mi_Files;
-	CStrW       msw_TargetDir; // extract into this directory
-	CStrW       msw_NextCab;   // Stores the next CAB file of a spanned cabinet
+	CStrW        msw_TargetDir; // extract into this directory
+	CList<CStrW> msw_NextCabs; // Stores the next CAB files of a spanned cabinet
 	CBlowfish    mi_Blowfish;
 	CMemory      mi_ExtractMem;
 	CError       mi_Error;
@@ -800,7 +797,12 @@ private:
 				#endif
 
 				// Store the next CAB file name (required to unpack all files from a spanned archive)
-				msw_NextCab.DecodeUtf8(pfdin->psz1);
+				CStrW nextCab;
+				nextCab.DecodeUtf8(pfdin->psz1);
+				if (nextCab.Len() > 0)
+				{
+					msw_NextCabs.Add(nextCab);
+				}
 
 				if (mk_Callbacks.f_OnCabinetInfo)
 				{

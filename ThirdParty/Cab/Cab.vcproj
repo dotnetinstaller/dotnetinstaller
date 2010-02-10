@@ -229,11 +229,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Cabinet\File.hpp"
+				RelativePath=".\File.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\File.hpp"
+				RelativePath=".\Cabinet\File.hpp"
 				>
 			</File>
 			<File
@@ -258,6 +258,10 @@
 			</File>
 			<File
 				RelativePath=".\Cabinet\Trace.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Cabinet\UniqueList.hpp"
 				>
 			</File>
 		</Filter>

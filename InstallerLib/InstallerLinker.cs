@@ -175,7 +175,8 @@ namespace InstallerLib
                     fileslist.AppendLine(string.Format("{0} CAB size: {1}", 
                         string.IsNullOrEmpty(enumerator.Current.Key) ? "*" : enumerator.Current.Key,
                         EmbedFileCollection.FormatBytes(currentSize)));
-                    fileslist.Append(" " + String.Join("\r\n ", c_files.GetFileValuesWithSize()));
+
+                    fileslist.Append(" " + String.Join("\r\n ", c_files.GetFileValuesWithSize(2)));
                     allFilesList.Add(fileslist.ToString());
 
                     args.WriteLine(string.Format("Cleaning up \"{0}\"", cabtemp));
