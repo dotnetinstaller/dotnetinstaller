@@ -64,7 +64,7 @@ void ExtractComponent::ExtractFromResource()
 	callbacks.f_OnBeforeCopyFile = & ExtractComponent::OnBeforeCopyFile; 
 	callbacks.f_OnAfterCopyFile = & ExtractComponent::OnAfterCopyFile;
 	callbacks.f_OnProgressInfo = & ExtractComponent::OnProgressInfo;
-	callbacks.n_ProgressInfoInterval = status_interval;
+	callbacks.s32_ProgressInterval = status_interval;
 	extract.SetCallbacks(& callbacks);
 
 	CHECK_BOOL(extract.CreateFDIContext(),

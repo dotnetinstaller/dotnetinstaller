@@ -57,7 +57,57 @@ Using these conventions results in better readable code and less coding errors !
     p_Name  for pointer                     (e.g.   ps_Name  *pointer to string)
    pp_Name  for pointer to pointer          (e.g.  ppd_Name **pointer to double)
 
-*************************************************************************************/
+######################################################################################
+
+Extraction of splitted CAB files is quite tricky:
+When showing the content of a splitted CAB file (index) you see only those files that START in this CAB
+A compressed file may span over multiple CABs but its name appears only in the CAB where the file starts.
+Example:
+******************************
+Part_1.cab: (the index of Part_1.cab shows only Manager.exe)
+	Manager.exe (first part)
+Part_2.cab: (the index of Part_2.cab is empty !!)
+	Manager.exe (second part)
+Part_3.cab: (the index of Part_3.cab shows only Utils.dll and Config.xml !!)
+	Manager.exe (last part)
+	Utils.dll
+	Config.xml
+Part_4.cab: (the index of Part_4.cab shows only Data.bin !!)
+	Data.bin
+******************************
+In this example we must call mf_FdiCopy("Part_1.cab") and Cabinet.dll will automatically
+load Part_2.cab and Part_3.cab to extract the entire file Manager.exe
+But if we do not call mf_FdiCopy("Part_3.cab") afterwards, the files Utils.dll and Config.xml will 
+NOT be extracted although Part_3.cab has already been processed!!
+******************************
+mf_FdiCopy("Part_1.cab")
+		Reading Part_1.cab
+	Callback fdintCABINET_INFO with NextCAB = "Part_2.cab"
+		Extracting first part of Manager.exe
+	Callback fdintNEXT_CABINET with NextCAB = "Part_2.cab" because Manager.exe continues in the Part_2.cab
+		Reading Part_2.cab
+	Callback fdintCABINET_INFO with NextCAB = "Part_3.cab"
+		Extracting second part of Manager.exe
+	Callback fdintNEXT_CABINET with NextCAB = "Part_3.cab" because Manager.exe continues in the Part_3.cab
+		Reading Part_3.cab
+	Callback fdintCABINET_INFO with NextCAB = "Part_4.cab"
+		Extracting last part of Manager.exe
+mf_FdiCopy("Part_3.cab") !!! IMPORTANT to extract the remaining files in Part_3.cab !!!!
+		Reading Part_3.cab  (### AGAIN ###)
+	Callback fdintCABINET_INFO with NextCAB = "Part_4.cab" (### AGAIN ###)
+		Extracting Utils.dll
+		Extracting Config.xml
+mf_FdiCopy("Part_4.cab")
+		Reading Part_4.cab
+	Callback fdintCABINET_INFO with NextCAB = ""
+		Extracting Data.bin
+******************************
+ATTENTION: 
+The callback fdintNEXT_CABINET is ONLY called if a compressed file continues in the next CAB!!
+See also the comments in FDI.h
+
+######################################################################################
+*/
 
 #pragma once
 
@@ -76,7 +126,6 @@ Using these conventions results in better readable code and less coding errors !
 
 #include "Defines.h"
 #include "Static.hpp"
-#include "UniqueList.hpp"
 #include "Map.hpp"
 #include "File.hpp"
 #include "Trace.hpp"
@@ -137,22 +186,22 @@ public:
 		t_BeforeCopyFile f_OnBeforeCopyFile;
 		t_AfterCopyFile  f_OnAfterCopyFile;
 		t_ProgressInfo   f_OnProgressInfo;
-		int			     n_ProgressInfoInterval;
 		t_CabinetInfo    f_OnCabinetInfo;
 		t_NextCabinet    f_OnNextCabinet;
 		t_StreamGetLen   f_StreamGetLen;
 		t_StreamRead     f_StreamRead;
+		int            s32_ProgressInterval; // Interval in ms or 0 --> call always
 
 		kCallbacks()
 		{
-			f_OnBeforeCopyFile  = 0;
-			f_OnAfterCopyFile = 0;
-			f_OnProgressInfo = 0;
-			f_OnCabinetInfo = 0;
-			f_OnNextCabinet = 0;
-			f_StreamGetLen = 0;
-			f_StreamRead = 0;
-			n_ProgressInfoInterval = DEFAULT_PROGRESS_CALLBACK_INTERVAL;
+			f_OnBeforeCopyFile   = 0;
+			f_OnAfterCopyFile    = 0;
+			f_OnProgressInfo     = 0;
+			f_OnCabinetInfo      = 0;
+			f_OnNextCabinet      = 0;
+			f_StreamGetLen       = 0;
+			f_StreamRead         = 0;
+			s32_ProgressInterval = 200; // Call Progress Callback every 200 ms
 		}
 	};
 
@@ -372,23 +421,10 @@ public:
 			return FALSE;
 		}
 
-		// The information, which files are contained in a CAB file, is not only in the first part
-		// of a splitted archive. It is spread over multiple parts of the CAB file.
-		// Example:
-		// Part_1.cab --> start        of compressed File_1.exe
-		// Part_2.cab --> continuation of compressed File_1.exe
-		// Part_3.cab --> start        of compressed File_2.dll
-		// Part_4.cab --> continuation of compressed File_2.dll
-		// We have to extract every CAB file of a splitted archive which starts a new file 
-		// (in this example we must call FdiCopy(Part_1.cab) and FdiCopy(Part_3.cab))
-		// otherwise not all compressed files will be extracted.
-		// See comments in FDI.h
-		msw_NextCabs.Clear();
-		msw_NextCabs.Add(sw_CabFile);
-		while(msw_NextCabs.Count() > 0)
+		while (TRUE)
 		{
-			sw_CabFile = msw_NextCabs.RemoveAt(0);
-
+			msw_NextCab.Clean();
+			
 			#if _TraceExtract
 				CTrace::TraceW(L"++++++++++++");
 				CTrace::TraceW(L"FDICopy ('%s') -> starting extraction", (WCHAR*)sw_CabFile);
@@ -401,7 +437,15 @@ public:
 			CStrA sa_File, sa_Folder;
 			if (!mf_FdiCopy(mh_FDIContext, sa_File.EncodeUtf8(sw_CabFile), sa_Folder.EncodeUtf8(sw_CabFolder), 
 			                0, (PFNFDINOTIFY)(FDICallback), 0, pParam))
-				break;			
+				break;
+
+			// Check if there are more splitted CAB parts to be extracted
+			if (!msw_NextCab.Len())
+				break; 
+			
+			// Now extract the next file if the CAB is splitted.
+			// IMPORTANT: Please read the detailed comment at the top of this file!!
+			sw_CabFile = msw_NextCab;
 		}
 
 		// Close the extraction file (sometimes Cabinet.dll closes it on aborting, sometimes not)
@@ -487,8 +531,8 @@ protected:
 	kCurrentFile mk_CurrentFile; // the file that is currently written to disk
 	kCallbacks   mk_Callbacks;
 	CFilePtr     mi_Files;
-	CStrW        msw_TargetDir; // extract into this directory
-	CList<CStrW> msw_NextCabs; // Stores the next CAB files of a spanned cabinet
+	CStrW       msw_TargetDir; // extract into this directory
+	CStrW       msw_NextCab;   // Stores the next CAB file of a spanned cabinet
 	CBlowfish    mi_Blowfish;
 	CMemory      mi_ExtractMem;
 	CError       mi_Error;
@@ -706,13 +750,15 @@ private:
 		}
 		else s32_Written = Write(fd, memory, count);
 
-		// Call the ProgressInfo callback every n_ProgressInfoInterval ms
+		// Call the ProgressInfo callback every 200 ms
 		if (s32_Written > 0 && mk_CurrentFile.h_File == fd && mk_Callbacks.f_OnProgressInfo)
 		{
 			mk_CurrentFile.u32_Written += s32_Written;
 
 			int s32_Now = GetTickCount();
-			if (abs(s32_Now - mk_CurrentFile.s32_LastTick) >= mk_Callbacks.n_ProgressInfoInterval)
+			if (mk_Callbacks.s32_ProgressInterval == 0 ||
+			    abs(s32_Now - mk_CurrentFile.s32_LastTick) > mk_Callbacks.s32_ProgressInterval ||
+			    mk_CurrentFile.u32_Written == mk_CurrentFile.u32_TotSize) // always show 100%
 			{
 				mk_CurrentFile.s32_LastTick = s32_Now;
 
@@ -796,13 +842,10 @@ private:
 					CTrace::TraceW(L"FDICallback(CABINET_INFO)");
 				#endif
 
-				// Store the next CAB file name (required to unpack all files from a spanned archive)
-				CStrW nextCab;
-				nextCab.DecodeUtf8(pfdin->psz1);
-				if (nextCab.Len() > 0)
-				{
-					msw_NextCabs.Add(nextCab);
-				}
+				// This is required when skipping large files in splitted CABs -> fdintNEXT_CABINET is never called
+				// IMPORTANT: Please read the detailed comment at the top of this file!!
+				if (msw_NextCab.Len() == 0)
+					msw_NextCab.DecodeUtf8(pfdin->psz1);
 
 				if (mk_Callbacks.f_OnCabinetInfo)
 				{
@@ -825,6 +868,11 @@ private:
 				#if _TraceExtract
 					CTrace::TraceW(L"FDICallback(NEXT_CABINET)");
 				#endif
+
+				// This is just for optimization:
+				// It avoids re-reading CABs if a compressed file spans over multiple CABs.
+				// IMPORTANT: Please read the detailed comment at the top of this file!!
+				msw_NextCab.DecodeUtf8(pfdin->psz1);
 
 				if (pfdin->fdie) // error occurred
 				{
@@ -931,16 +979,30 @@ private:
 					// if the file to be written already exists and is bigger than the one in the CAB
 					nRet = FdiOpenW(sw_FullPath, _O_TRUNC | _O_BINARY | _O_CREAT | _O_WRONLY | _O_SEQUENTIAL, _S_IREAD | _S_IWRITE);
 
-					mk_CurrentFile.Reset();
-					if (nRet > 0) 
+					if (nRet <= 0) 
 					{
-						mk_CurrentFile.h_File       = nRet;
-						mk_CurrentFile.u32_TotSize  = pfdin->cb;
-						mk_CurrentFile.sw_FullPath  = sw_FullPath;
-						mk_CurrentFile.sw_RelPath   = sw_RelPath;
-						mk_CurrentFile.s32_LastTick = GetTickCount();
+						mi_Error.Set(FDIERROR_TARGET_FILE,0,0); // avoid error "User Aborted" if output file could not be written
+						break;
 					}
-					else mi_Error.Set(FDIERROR_TARGET_FILE,0,0); // avoid error "User Aborted" if output file could not be written
+
+					mk_CurrentFile.Reset();
+					mk_CurrentFile.h_File       = nRet;
+					mk_CurrentFile.u32_TotSize  = pfdin->cb;
+					mk_CurrentFile.sw_FullPath  = sw_FullPath;
+					mk_CurrentFile.sw_RelPath   = sw_RelPath;
+					mk_CurrentFile.s32_LastTick = GetTickCount();
+					
+					if (mk_Callbacks.f_OnProgressInfo) // Show Progress = 0 %
+					{
+						kProgressInfo k_Progress;
+						k_Progress.u16_FullPath = mk_CurrentFile.sw_FullPath;
+						k_Progress.u16_RelPath  = mk_CurrentFile.sw_RelPath;
+						k_Progress.u32_TotSize  = mk_CurrentFile.u32_TotSize;
+						k_Progress.u32_Written  = mk_CurrentFile.u32_Written;
+						k_Progress.fl_Percent   = 0.0;
+		
+						mk_Callbacks.f_OnProgressInfo(&k_Progress, mp_Param);
+					}
 				}
 			}
 			break;
@@ -969,7 +1031,6 @@ private:
 					SetAttribsAndDateW(sw_Path, pfdin->date, pfdin->time, pfdin->attribs); // AFTER!!
 				}
 				
-				// Call notification function
 				if (mk_Callbacks.f_OnAfterCopyFile)
 				{
 					CMemory* pi_Memory = (mb_ExtractToMemory) ? &mi_ExtractMem : 0;
@@ -1031,10 +1092,11 @@ protected:
 	// Sets the date and attributes for the specified file.
 	void SetAttribsAndDateW(WCHAR* u16_File, USHORT uDate, USHORT uTime, USHORT uAttribs)
 	{
+		BOOL b_Utf = (uAttribs & _A_NAME_IS_UTF)     > 0;
+		BOOL b_Utc = (uAttribs & FILE_ATTR_UTC_TIME) > 0;
+
 		#if _TraceExtract
 			CStrW sw_FileName;
-			BOOL b_Utf = (uAttribs & _A_NAME_IS_UTF)     > 0;
-			BOOL b_Utc = (uAttribs & FILE_ATTR_UTC_TIME) > 0;
 			CFile::SplitPathW(u16_File, 0, &sw_FileName);
 			CTrace::TraceW(L"SetAttribsAndDateW('%s'), UTC=%d, UTF=%d", (WCHAR*)sw_FileName, b_Utc, b_Utf);
 		#endif
@@ -1056,7 +1118,6 @@ protected:
 			// The Windows filesystem stores UTC times
 			::FILETIME k_FileTime = k_CabTime;
 			
-			BOOL b_Utc = (uAttribs & FILE_ATTR_UTC_TIME) > 0;
 			if (!b_Utc) LocalFileTimeToFileTime(&k_CabTime, &k_FileTime); // Local time --> UTC
 
 			SetFileTime(h_File, &k_FileTime, 0, &k_FileTime);
