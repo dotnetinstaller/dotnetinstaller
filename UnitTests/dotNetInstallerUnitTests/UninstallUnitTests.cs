@@ -130,5 +130,39 @@ namespace dotNetInstallerUnitTests
             // will fallback to uninstall since all components are installed
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
         }
+
+        [Test]
+        public void TestUninstallMsiSilentMode()
+        {
+            InstallUILevel[] testUILevels = { InstallUILevel.basic, InstallUILevel.silent };
+            foreach (InstallUILevel uilevel in testUILevels)
+            {
+                // a configuration with no components
+                ConfigFile configFile = new ConfigFile();
+                SetupConfiguration setupConfiguration = new SetupConfiguration();
+                configFile.Children.Add(setupConfiguration);
+                ComponentMsi msi = new ComponentMsi();
+                msi.package = "msidoesntexist.msi";
+                msi.uninstall_cmdparameters = "";
+                msi.uninstall_cmdparameters_basic = "/qb-";
+                msi.uninstall_cmdparameters_silent = "/qb-";
+                InstalledCheckFile self = new InstalledCheckFile();
+                self.filename = dotNetInstallerExeUtils.Executable;
+                self.comparison = installcheck_comparison.exists;
+                msi.Children.Add(self);
+                setupConfiguration.Children.Add(msi);
+                // silent install, no dialog messages
+                configFile.ui_level = uilevel;
+                // save config file
+                string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+                Console.WriteLine("Writing '{0}'", configFilename);
+                configFile.SaveAs(configFilename);
+                // execute dotNetInstaller
+                dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
+                options.uninstall = true;
+                Assert.AreEqual(1619, dotNetInstallerExeUtils.Run(options));
+                File.Delete(configFilename);
+            }
+        }
     }
 }

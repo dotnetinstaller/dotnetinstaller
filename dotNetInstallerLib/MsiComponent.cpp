@@ -71,6 +71,9 @@ void MsiComponent::Load(TiXmlElement * node)
 	cmdparameters = node->Attribute("cmdparameters");
 	cmdparameters_silent = node->Attribute("cmdparameters_silent");
 	cmdparameters_basic = node->Attribute("cmdparameters_basic");
+	uninstall_cmdparameters = node->Attribute("uninstall_cmdparameters");
+	uninstall_cmdparameters_silent = node->Attribute("uninstall_cmdparameters_silent");
+	uninstall_cmdparameters_basic = node->Attribute("uninstall_cmdparameters_basic");
 	Component::Load(node);
 }
 

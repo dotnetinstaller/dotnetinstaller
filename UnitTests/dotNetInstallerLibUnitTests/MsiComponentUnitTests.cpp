@@ -5,11 +5,30 @@ CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::MsiComponentUnitTests);
 
 using namespace DVLib::UnitTests;
 
-void MsiComponentUnitTests::testExec()
+void MsiComponentUnitTests::testExecInstall()
 {
 	MsiComponent component;
 	component.package = L"msidoesntexist.msi"; 
 	component.cmdparameters = L"/qn";
+	component.Exec();
+	try
+	{
+		component.Wait();
+		throw "expected std::exception";
+	}
+	catch(std::exception& /* ex */)
+	{
+		// msi file cannot be opened
+		CPPUNIT_ASSERT(1619 == component.GetProcessExitCode());
+	}
+}
+
+void MsiComponentUnitTests::testExecInstallSilent()
+{
+	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelSilent);
+	MsiComponent component;
+	component.package = L"msidoesntexist.msi"; 
+	component.cmdparameters_silent = L"/qn";
 	component.Exec();
 	try
 	{
@@ -58,5 +77,45 @@ void MsiComponentUnitTests::testGetCommandLine()
 		std::wstring command = component.GetCommandLine();
 		std::wcout << std::endl << L" " << command;
 		CPPUNIT_ASSERT(testdata[i].command == command);
+	}
+}
+
+void MsiComponentUnitTests::testExecUninstall()
+{
+	InstallerSession::Instance->sequence = SequenceUninstall;
+	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelSilent);
+	MsiComponent component;
+	component.package = L"msidoesntexist.msi"; 
+	component.uninstall_cmdparameters = L"/qn";
+	component.Exec();
+	try
+	{
+		component.Wait();
+		throw "expected std::exception";
+	}
+	catch(std::exception& /* ex */)
+	{
+		// msi file cannot be opened
+		CPPUNIT_ASSERT(1619 == component.GetProcessExitCode());
+	}
+}
+
+void MsiComponentUnitTests::testExecUninstallSilent()
+{
+	InstallerSession::Instance->sequence = SequenceUninstall;
+	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelSilent);
+	MsiComponent component;
+	component.package = L"msidoesntexist.msi"; 
+	component.uninstall_cmdparameters_silent = L"/qn";
+	component.Exec();
+	try
+	{
+		component.Wait();
+		throw "expected std::exception";
+	}
+	catch(std::exception& /* ex */)
+	{
+		// msi file cannot be opened
+		CPPUNIT_ASSERT(1619 == component.GetProcessExitCode());
 	}
 }

@@ -7,11 +7,17 @@ namespace DVLib
 		class MsiComponentUnitTests : public dotNetInstallerLibUnitTestFixture
 		{
 			CPPUNIT_TEST_SUITE( MsiComponentUnitTests );
-			CPPUNIT_TEST( testExec );
+			CPPUNIT_TEST( testExecInstall );
+			CPPUNIT_TEST( testExecInstallSilent );
+			CPPUNIT_TEST( testExecUninstall );
+			CPPUNIT_TEST( testExecUninstallSilent );
 			CPPUNIT_TEST( testGetCommandLine );
 			CPPUNIT_TEST_SUITE_END();
 		public:
-			void testExec();
+			void testExecInstall();
+			void testExecInstallSilent();
+			void testExecUninstall();
+			void testExecUninstallSilent();
 			void testGetCommandLine();
 		};
 	}
