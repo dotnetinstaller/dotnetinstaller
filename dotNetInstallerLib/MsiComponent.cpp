@@ -15,16 +15,21 @@ MsiComponent::MsiComponent()
 std::wstring MsiComponent::GetCommandLine() const
 {
 	std::wstring l_command = L"msiexec";
+	std::wstring l_package;
 	std::wstring l_cmdparameters;	
 
 	switch(InstallerSession::Instance->sequence)
 	{
 	case SequenceInstall:
+		l_package = package.GetValue();
 		l_cmdparameters = InstallUILevelSetting::Instance->GetCommand(
 			cmdparameters, cmdparameters_basic, cmdparameters_silent);
 		l_command += L" /i"; 
 		break;
 	case SequenceUninstall:
+		l_package = uninstall_package.empty() 
+			? package.GetValue()
+			: uninstall_package.GetValue();
 		l_cmdparameters = InstallUILevelSetting::Instance->GetCommand(
 			uninstall_cmdparameters, uninstall_cmdparameters_basic, uninstall_cmdparameters_silent);
 		l_command += L" /x"; 
@@ -34,10 +39,12 @@ std::wstring MsiComponent::GetCommandLine() const
 	}
 
 	l_command.append(L" \"");
-	l_command += (DVLib::isguid(package) 
-		? package.GetValue() : DVLib::DirectoryCombine(
-			DVLib::GetCurrentDirectoryW(), package.GetValue()));
+	l_command += (DVLib::isguid(l_package) 
+		? l_package : DVLib::DirectoryCombine(
+			DVLib::GetCurrentDirectoryW(), l_package));
 	l_command.append(L"\"");
+
+	LOG(L"-- Package: " << l_package);
 
 	if (! l_cmdparameters.empty())
 	{
@@ -71,6 +78,7 @@ void MsiComponent::Load(TiXmlElement * node)
 	cmdparameters = node->Attribute("cmdparameters");
 	cmdparameters_silent = node->Attribute("cmdparameters_silent");
 	cmdparameters_basic = node->Attribute("cmdparameters_basic");
+	uninstall_package = node->Attribute("uninstall_package");
 	uninstall_cmdparameters = node->Attribute("uninstall_cmdparameters");
 	uninstall_cmdparameters_silent = node->Attribute("uninstall_cmdparameters_silent");
 	uninstall_cmdparameters_basic = node->Attribute("uninstall_cmdparameters_basic");
@@ -85,7 +93,7 @@ void MsiComponent::Wait(DWORD tt)
 
 	// a non-zero error code represents failure
 	CHECK_BOOL(exitcode == ERROR_SUCCESS || exitcode == ERROR_SUCCESS_REBOOT_REQUIRED,
-		L"Error executing '" << id << "' (" << display_name << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
+		L"Error executing '" << id << "' (" << GetDisplayName() << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
 }
 
 bool MsiComponent::IsRebootRequired() const

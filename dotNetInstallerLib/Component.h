@@ -20,12 +20,14 @@ public:
     Component(component_type t);
     virtual ~Component();
 public:
+	// component display name
+	XmlAttribute display_name;
 	// component type: cmd, msi, openfile
 	component_type type;
 	// component id
 	XmlAttribute id;
-	// component display name
-	XmlAttribute display_name;
+	// component uninstall display name
+	XmlAttribute uninstall_display_name;
 	// component status when installed
 	XmlAttribute status_installed;
 	// component status when not installed
@@ -83,6 +85,7 @@ public:
 	virtual int GetExitCode() const = 0;
 	virtual std::wstring GetString(int indent = 0) const;
 	std::wstring GetAdditionalCmd() const;
+	std::wstring GetDisplayName() const;
 };
 
 typedef shared_any<Component *, close_delete> ComponentPtr;

@@ -10,6 +10,7 @@ public:
 	XmlAttribute cmdparameters; // es. "/qn REBOOT=ReallySuppress"
     XmlAttribute cmdparameters_silent;
 	XmlAttribute cmdparameters_basic;
+	XmlAttribute uninstall_package;
 	XmlAttribute uninstall_cmdparameters;
     XmlAttribute uninstall_cmdparameters_silent;
 	XmlAttribute uninstall_cmdparameters_basic;

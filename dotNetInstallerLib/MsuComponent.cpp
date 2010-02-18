@@ -65,5 +65,5 @@ void MsuComponent::Wait(DWORD tt)
 	ProcessComponent::Wait(tt);
 
 	CHECK_WIN32_DWORD(ProcessComponent::GetProcessExitCode(),
-		L"Error executing '" << id << L" (" << display_name << ")'");
+		L"Error executing '" << id << L" (" << GetDisplayName() << ")'");
 }

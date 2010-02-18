@@ -94,7 +94,7 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 		component->selected = true;
         bool component_installed = component->IsInstalled();
         
-        LOG(L"-- " << component->id << L" (" << component->display_name << L"): " 
+        LOG(L"-- " << component->id << L" (" << component->GetDisplayName() << L"): " 
 			<< (component_installed ? L"INSTALLED" : L"NOT INSTALLED"));		
 
 		// component selection
@@ -108,7 +108,7 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 		else if (InstallerSession::Instance->sequence == SequenceUninstall)
 			all &= (! component_installed);
 
-		std::wstring l_descr = component->display_name;
+		std::wstring l_descr = component->GetDisplayName();
 	    l_descr += L" ";
         l_descr += component_installed
 			? (component->status_installed.empty() ? p_configuration->status_installed : component->status_installed)
@@ -159,7 +159,7 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 			&& (component->required || ! component_installed))
             Enable(id, 0);
 
-		CSize size = pDC->GetTextExtent(component->display_name.GetValue().c_str());
+		CSize size = pDC->GetTextExtent(component->GetDisplayName().c_str());
 		if ((size.cx > 0) && (hScrollWidth < size.cx))
 			hScrollWidth = size.cx;
     }

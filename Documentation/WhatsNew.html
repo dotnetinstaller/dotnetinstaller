@@ -31,6 +31,10 @@
                     "silent" or "basic".</li>
                 <li>Added <code>#LANGUAGE</code> and <code>#LANGID</code> variables, current configuration
                     language and locale id.</li>
+                <li>Added <code>uninstall_display_name</code> to all components, optional component
+                    display name during uninstall.</li>
+                <li>Added <code>uninstall_package</code> to <code>msi</code> components, optional package
+                    to use during uninstall.</li>
             </ul>
         </li>
         <li><strong>Misc</strong>:
@@ -39,6 +43,8 @@
                     is shown as a summary.</li>
                 <li>Failures to read or write embedded resources, including CABs, CAB directory, banner
                     and manifest, reports the file name affected by the error.</li>
+                <li>Documented uninstall strategy for MSIs by remembering the product GUID in registry
+                    under the "Install and Uninstall Sequences" section.</li>
             </ul>
         </li>
         <li><strong>Bugs</strong>:

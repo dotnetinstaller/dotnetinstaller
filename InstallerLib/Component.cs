@@ -141,6 +141,15 @@ namespace InstallerLib
             set { m_display_name = value; OnDisplayNameChanged(); }
         }
 
+        private string m_uninstall_display_name;
+        [Description("Optional display name of this component during uninstall.")]
+        [Category("Component")]
+        public string uninstall_display_name
+        {
+            get { return m_uninstall_display_name; }
+            set { m_uninstall_display_name = value; OnDisplayNameChanged(); }
+        }
+
         private bool m_required = false;
         [Description("Indicates whether the component is required for a successful installation or uninstallation. (REQUIRED)")]
         [Category("Component")]
@@ -241,6 +250,7 @@ namespace InstallerLib
         {
             e.XmlWriter.WriteAttributeString("id", string.IsNullOrEmpty(m_id) ? m_display_name : m_id);
             e.XmlWriter.WriteAttributeString("display_name", m_display_name);
+            e.XmlWriter.WriteAttributeString("uninstall_display_name", m_uninstall_display_name);
             e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
             e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
             e.XmlWriter.WriteAttributeString("os_filter_lcid", m_os_filter_lcid);
@@ -267,6 +277,7 @@ namespace InstallerLib
             // backwards compatible description < 1.8
             ReadAttributeValue(e, "description", ref m_display_name);
             ReadAttributeValue(e, "display_name", ref m_display_name);
+            ReadAttributeValue(e, "uninstall_display_name", ref m_uninstall_display_name);
             ReadAttributeValue(e, "id", ref m_id);
             if (string.IsNullOrEmpty(m_id)) m_id = m_display_name;
             ReadAttributeValue(e, "installcompletemessage", ref m_installcompletemessage);

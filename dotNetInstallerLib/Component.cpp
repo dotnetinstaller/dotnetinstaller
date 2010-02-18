@@ -48,6 +48,7 @@ void Component::Load(TiXmlElement * node)
 {
 	id = node->Attribute("id");
 	display_name = node->Attribute("display_name");
+	uninstall_display_name = node->Attribute("uninstall_display_name");
 	if (id.empty()) id = display_name;
 	status_installed = node->Attribute("status_installed");
 	os_filter_greater = node->Attribute("os_filter_greater");
@@ -135,7 +136,7 @@ std::wstring Component::GetString(int indent) const
 {
 	std::wstringstream ss;
 	for (int i = 0; i < indent; i++) ss << L" ";
-	ss << id << L", display_name='" << display_name << L"'";
+	ss << id << L", display_name='" << GetDisplayName() << L"'";
 	if (! os_filter_lcid.empty())
 		ss << L", lang=" << os_filter_lcid;
 	if (! processor_architecture_filter.empty()) 
@@ -153,7 +154,7 @@ bool Component::IsRebootRequired() const
 std::wstring Component::GetAdditionalCmd() const
 {
 	std::wstring cmd;
-	std::wstring cmds[] = { L"*", id, display_name };
+	std::wstring cmds[] = { L"*", id, GetDisplayName() };
 
 	for (int i = 0; i < ARRAYSIZE(cmds); i++)
 	{
@@ -172,4 +173,17 @@ std::wstring Component::GetAdditionalCmd() const
 	}
 
 	return cmd;
+}
+
+std::wstring Component::GetDisplayName() const
+{
+	switch(InstallerSession::Instance->sequence)
+	{
+	case SequenceInstall:
+		return display_name;
+	case SequenceUninstall:
+		return uninstall_display_name.empty() ? display_name : uninstall_display_name;
+	default:
+		THROW_EX(L"Unsupported install sequence: " << InstallerSession::Instance->sequence << L".");
+	}
 }

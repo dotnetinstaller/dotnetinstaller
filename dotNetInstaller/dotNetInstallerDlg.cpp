@@ -593,8 +593,8 @@ bool CdotNetInstallerDlg::OnComponentExecBegin(const ComponentPtr& component)
 	{
 		if (! RunDownloadConfiguration(component->downloaddialog))
 		{
-			LOG(L"*** Component '" << component->id << L" (" << component->display_name << L"): ERROR ON DOWNLOAD");
-			THROW_EX(L"Error downloading '" << component->id << L" (" << component->display_name << L")");
+			LOG(L"*** Component '" << component->id << L" (" << component->GetDisplayName() << L"): ERROR ON DOWNLOAD");
+			THROW_EX(L"Error downloading '" << component->id << L" (" << component->GetDisplayName() << L")");
 		}
 	}
 
@@ -609,7 +609,7 @@ bool CdotNetInstallerDlg::OnComponentExecWait(const ComponentPtr& component)
 		m_component_dlg.DoModal();
 	}
 
-	LOG(L"--- Component '" << component->id << L" (" << component->display_name << L"): DIALOG CLOSED");
+	LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): DIALOG CLOSED");
 	return true;
 }
 
@@ -627,14 +627,14 @@ bool CdotNetInstallerDlg::OnComponentExecSuccess(const ComponentPtr& component)
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
-		LOG(L"--- Component '" << component->id << L" (" << component->display_name << L"): REQUESTS REBOOT");
+		LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): REQUESTS REBOOT");
 
 		std::wstring reboot_required = component->reboot_required;
 		if (reboot_required.empty()) reboot_required = p_configuration->reboot_required;
 		
 		if (p_configuration->must_reboot_required || component->must_reboot_required)
 		{
-			LOG(L"--- Component '" << component->id << L" (" << component->display_name << L"): REQUIRES REBOOT");
+			LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): REQUIRES REBOOT");
 			DniMessageBox::Show(reboot_required, MB_OK | MB_ICONQUESTION);
 			m_reboot = true;
 		}
@@ -645,7 +645,7 @@ bool CdotNetInstallerDlg::OnComponentExecSuccess(const ComponentPtr& component)
 
 		if (m_reboot)
 		{
-			LOG(L"--- Component '" << component->id << L" (" << component->display_name << L": CAUSED A REBOOT");
+			LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L": CAUSED A REBOOT");
 			return false;
 		}
 	}
@@ -655,7 +655,7 @@ bool CdotNetInstallerDlg::OnComponentExecSuccess(const ComponentPtr& component)
 
 bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, std::exception& ex)
 {
-	LOG(L"--- Component '" << component->id << L" (" << component->display_name << L")' FAILED: " << DVLib::string2wstring(ex.what()));
+	LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L")' FAILED: " << DVLib::string2wstring(ex.what()));
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
     // the component failed to install, display an error message and let the user choose to continue or not
@@ -663,7 +663,7 @@ bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, st
 	std::wstring failed_exec_command_continue = component->failed_exec_command_continue;
 	if (failed_exec_command_continue.empty()) failed_exec_command_continue = p_configuration->failed_exec_command_continue;
 	std::wstring error_message = DVLib::FormatMessage(const_cast<wchar_t *>(failed_exec_command_continue.c_str()), 
-		component->display_name.GetValue().c_str());
+		component->GetDisplayName().c_str());
 
     bool break_sequence = false;
     if (p_configuration->allow_continue_on_error && component->allow_continue_on_error)
@@ -678,7 +678,7 @@ bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, st
 
     if (break_sequence)
 	{
-		LOG(L"--- Component '" << component->id << L" (" << component->display_name << L"): FAILED, ABORTING");
+		LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): FAILED, ABORTING");
 		return false;
 	}
 

@@ -51,7 +51,7 @@ Components Components::GetSupportedComponents(DVLib::LcidType lcidtype) const
 			result.push_back(component);
 		}
 
-		LOG(L"-- " << component->id << L" (display_name='" << component->display_name << L"', os_filter_lcid=" << component->os_filter_lcid
+		LOG(L"-- " << component->id << L" (display_name='" << component->GetDisplayName() << L"', os_filter_lcid=" << component->os_filter_lcid
 			<< L", os_filter_greater=" << component->os_filter_greater
 			<< L", os_filter_smaller=" << component->os_filter_smaller
 			<< L", processor_architecture_filter=" << component->processor_architecture_filter
@@ -69,13 +69,13 @@ int Components::Exec(IExecuteCallback * callback)
 	{
 		if (! component->selected)
 		{
-			LOG(L"--- Component '" << component->id << L"' (" << component->display_name << L"): SKIPPED");
+			LOG(L"--- Component '" << component->id << L"' (" << component->GetDisplayName() << L"): SKIPPED");
 			continue;
 		}
 
 		try
 		{
-			LOG(L"--- Component '" << component->id << L"' (" << component->display_name << L"): EXECUTING");
+			LOG(L"--- Component '" << component->id << L"' (" << component->GetDisplayName() << L"): EXECUTING");
 			
 			if (callback && ! callback->OnComponentExecBegin(component))
 				break;
@@ -87,7 +87,7 @@ int Components::Exec(IExecuteCallback * callback)
 
 			component->Wait();
 
-			LOG(L"*** Component '" << component->id << L"' (" << component->display_name << L"): SUCCESS");
+			LOG(L"*** Component '" << component->id << L"' (" << component->GetDisplayName() << L"): SUCCESS");
 
 			if (callback && ! callback->OnComponentExecSuccess(component))
 				break;
@@ -97,7 +97,7 @@ int Components::Exec(IExecuteCallback * callback)
 			if (rc == 0) rc = component->GetExitCode();
 			if (rc == 0) rc = -1;
 
-			LOG(L"*** Component '" << component->id << L"' (" << component->display_name << L"): ERROR - " 
+			LOG(L"*** Component '" << component->id << L"' (" << component->GetDisplayName() << L"): ERROR - " 
 				<< DVLib::string2wstring(ex.what()));
 			
 			if (callback && ! callback->OnComponentExecError(component, ex))

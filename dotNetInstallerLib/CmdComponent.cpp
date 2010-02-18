@@ -74,12 +74,12 @@ void CmdComponent::Wait(DWORD tt)
 	if (returncodes_success.empty())
 	{
 		CHECK_BOOL(ERROR_SUCCESS == exitcode,
-			L"Error executing '" << id << "' (" << display_name << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
+			L"Error executing '" << id << "' (" << GetDisplayName() << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
 	}
 	else
 	{
 		CHECK_BOOL(IsReturnCode(exitcode, returncodes_success),
-			L"Error executing '" << id << "' (" << display_name << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
+			L"Error executing '" << id << "' (" << GetDisplayName() << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
 	}
 }
 

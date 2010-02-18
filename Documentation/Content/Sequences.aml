@@ -13,22 +13,32 @@
       <content>
         <para>
           In order to enable uninstall you will need to copy the bootstrapper itself with your application to the target machine.
-          It is recommended that you package a version of your dotNetInstaller without embedded CABs alongside the application being 
-          installed and that you create a shortcut to the bootstrapper with the <literal>/x</literal> command line option in cases 
+          It is recommended that you package a version of your dotNetInstaller without embedded CABs alongside the application being
+          installed and that you create a shortcut to the bootstrapper with the <literal>/x</literal> command line option in cases
           you need to manually indicate that an uninstall must be performed.
         </para>
         <para>
-          Uninstall is the opposite of install. Components that have the <literal>supports_uninstall</literal> option set to 
-          <literal>true</literal> are presented and uninstalled in reverse order from installation. Ensure that all components 
+          Uninstall is the opposite of install. Components that have the <literal>supports_uninstall</literal> option set to
+          <literal>true</literal> are presented and uninstalled in reverse order from installation. Ensure that all components
           have a proper installed check, that <literal>cmd</literal> components define uninstall commands and <literal>msi</literal>
           components define proper uninstall switches to the MSI engine.
         </para>
         <alert class="important">
           <para>
-            Do not try to uninstall shared pre-requisites that may be used by other applications by setting 
+            Do not try to uninstall shared pre-requisites that may be used by other applications by setting
             <literal>supports_uninstall</literal> to <literal>false</literal> where appropriate.
-          </para>          
+          </para>
         </alert>
+        <para>
+          MSIs can be uninstalled by specifying a product code (GUID) instead of an actual MSI to <command>msiexec.exe</command>.
+          This allows a bootstrapper not to embed MSIs for the sole purposes of uninstall. A working strategy for uninstalling
+          MSIs is to remember the product code in registry and use a registry reference in the bootstrapper. For example, an MSI
+          would write the value of the product code to <literal>HKEY_LOCAL_MACHINE\SOFTWARE\MyApplication\InstalledProductCode</literal>
+          and the value of <literal>uninstall_package</literal> for the <literal>msi</literal> component would be
+          <literal>@[HKEY_LOCAL_MACHINE\SOFTWARE\MyApplication\InstalledProductCode,N/A]</literal>. It may also be helpful to
+          store the current product version and use a similar registry reference to include the currently installed version in
+          the <literal>uninstall_display_name</literal> property.
+        </para>
       </content>
     </section>
   </developerConceptualDocument>
