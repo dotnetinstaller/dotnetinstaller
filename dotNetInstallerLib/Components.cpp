@@ -30,7 +30,7 @@ Components& Components::operator=(const Components& rhs)
 	return * this;
 }
 
-Components Components::GetSupportedComponents(DVLib::LcidType lcidtype) const
+Components Components::GetSupportedComponents(DVLib::LcidType lcidtype, InstallSequence sequence) const
 {
 	LCID lcid = DVLib::GetOperatingSystemLCID(lcidtype);
 	LOG(L"-- Loading supported components (lcid=" << lcid << L")");
@@ -48,7 +48,17 @@ Components Components::GetSupportedComponents(DVLib::LcidType lcidtype) const
 
 		if (supported)
 		{
-			result.push_back(component);
+			switch(sequence)
+			{
+			case SequenceInstall:
+				result.push_back(component);
+				break;
+			case SequenceUninstall:
+				result.insert(result.begin(), component);
+				break;
+			default:
+				THROW_EX(L"Invalid sequence: " << InstallSequenceUtil::towstring(sequence));
+			}
 		}
 
 		LOG(L"-- " << component->id << L" (display_name='" << component->GetDisplayName() << L"', os_filter_lcid=" << component->os_filter_lcid

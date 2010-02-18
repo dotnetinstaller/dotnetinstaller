@@ -37,7 +37,7 @@ void ComponentsUnitTests::testOsFilters()
 	components.add(component2);
 	components.add(component3);
 	CPPUNIT_ASSERT(components.size() == 3);
-	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser).size() == 1);
+	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 1);
 }
 
 void ComponentsUnitTests::testLcidFilters()
@@ -50,7 +50,7 @@ void ComponentsUnitTests::testLcidFilters()
 	components.add(component_currentlcid);
 	components.add(component_anotherlcid);
 	CPPUNIT_ASSERT(components.size() == 2);
-	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser).size() == 1);
+	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 1);
 }
 
 void ComponentsUnitTests::testPAFilters()
@@ -63,8 +63,8 @@ void ComponentsUnitTests::testPAFilters()
 	components.add(component_currentpa);
 	components.add(component_anotherpa);
 	CPPUNIT_ASSERT(components.size() == 2);
-	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser).size() == 1);
-	CPPUNIT_ASSERT(get(components.GetSupportedComponents(LcidUser)[0]) == get(component_anotherpa));
+	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 1);
+	CPPUNIT_ASSERT(get(components.GetSupportedComponents(LcidUser, SequenceInstall)[0]) == get(component_anotherpa));
 }
 
 void ComponentsUnitTests::testExecNoCallback()
@@ -113,4 +113,21 @@ void ComponentsUnitTests::testExecWithError()
 	CPPUNIT_ASSERT(0 == callback.waits);
 	CPPUNIT_ASSERT(0 == callback.successes);
 	CPPUNIT_ASSERT(1 == callback.errors);
+}
+
+void ComponentsUnitTests::testLoadUninstallSequence()
+{
+	Components components;
+	CmdComponent * component1 = new CmdComponent();
+	component1->id = DVLib::GenerateGUIDStringW();
+	components.add(ComponentPtr(component1));
+	CmdComponent * component2 = new CmdComponent();
+	component2->id = DVLib::GenerateGUIDStringW();
+	components.add(ComponentPtr(component2));
+	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 2);
+	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall)[0]->id == component1->id);
+	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall)[1]->id == component2->id);
+	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceUninstall).size() == 2);
+	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceUninstall)[0]->id == component2->id);
+	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceUninstall)[1]->id == component1->id);
 }

@@ -80,7 +80,7 @@ void Configurations::Load(TiXmlElement * node)
 	LOG(L"--- Read " << size() << L" configuration(s)");
 }
 
-std::vector<ConfigurationPtr> Configurations::GetSupportedConfigurations(LCID lcid) const
+std::vector<ConfigurationPtr> Configurations::GetSupportedConfigurations(LCID lcid, InstallSequence sequence) const
 {
 	if (lcid == 0) 
 	{
@@ -94,7 +94,17 @@ std::vector<ConfigurationPtr> Configurations::GetSupportedConfigurations(LCID lc
 	{
 		if (configuration->IsSupported(lcid))
 		{
-			result.push_back(configuration);
+			switch(sequence)
+			{
+			case SequenceInstall:
+				result.push_back(configuration);
+				break;
+			case SequenceUninstall:
+				result.insert(result.begin(), configuration);
+				break;
+			default:
+				THROW_EX(L"Invalid sequence: " << InstallSequenceUtil::towstring(sequence));
+			}
 		}
 	}
 	return result;

@@ -187,7 +187,7 @@ void ConfigFileUnitTests::testGetSupportedConfigurations()
 	ConfigFile config;
 	config.LoadFile(configxml);
 	// there're two configurations in this sample, opposite of each other
-	CPPUNIT_ASSERT(config.GetSupportedConfigurations(0).size() == 1);
+	CPPUNIT_ASSERT(config.GetSupportedConfigurations(0, SequenceInstall).size() == 1);
 }
 
 void ConfigFileUnitTests::testLoadOsFiltersSetup()
@@ -199,9 +199,37 @@ void ConfigFileUnitTests::testLoadOsFiltersSetup()
 	config.LoadFile(configxml);
 	// there're three components in this sample, but only 1 will show because the os filters don't overlap
 	CPPUNIT_ASSERT(config.size() == 1);
-	CPPUNIT_ASSERT(config.GetSupportedConfigurations(0).size() == 1);
+	CPPUNIT_ASSERT(config.GetSupportedConfigurations(0, SequenceInstall).size() == 1);
 	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
 	CPPUNIT_ASSERT(configuration->components.size() == 3);	
+}
+
+
+void ConfigFileUnitTests::testLoadMultipleSetup()
+{
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+		L"..\\..\\..\\Samples\\MultipleConfig\\Configuration.xml");
+	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
+	ConfigFile config;
+	config.LoadFile(configxml);
+	// configurations properties
+	CPPUNIT_ASSERT(config.size() == 2);	
+	// install sequence
+	std::vector<ConfigurationPtr> install_configurations = config.GetSupportedConfigurations(LcidUser, SequenceInstall);
+	CPPUNIT_ASSERT(configuration_reference == install_configurations[0]->type);
+	CPPUNIT_ASSERT(configuration_install == install_configurations[1]->type);
+	InstallConfiguration * p_configuration_install = reinterpret_cast<InstallConfiguration *>(get(install_configurations[1]));
+	Components install_components = p_configuration_install->GetSupportedComponents(LcidUser, SequenceInstall);
+	CPPUNIT_ASSERT(install_components.size() == 2);
+	CPPUNIT_ASSERT(install_components[0]->id == L"setup1");
+	CPPUNIT_ASSERT(install_components[1]->id == L"setup2");
+	Components uninstall_components = p_configuration_install->GetSupportedComponents(LcidUser, SequenceUninstall);
+	CPPUNIT_ASSERT(uninstall_components.size() == 2);
+	CPPUNIT_ASSERT(uninstall_components[0]->id == L"setup2");
+	CPPUNIT_ASSERT(uninstall_components[1]->id == L"setup1");
+	std::vector<ConfigurationPtr> uninstall_configurations = config.GetSupportedConfigurations(LcidUser, SequenceUninstall);
+	CPPUNIT_ASSERT(configuration_install == uninstall_configurations[0]->type);
+	CPPUNIT_ASSERT(configuration_reference == uninstall_configurations[1]->type);	
 }
 
 void ConfigFileUnitTests::testLoadMultilingualSetup()
@@ -213,9 +241,9 @@ void ConfigFileUnitTests::testLoadMultilingualSetup()
 	config.LoadFile(configxml);
 	// there're two configurations in this sample, but only 1 will show because the lcids don't overlap
 	CPPUNIT_ASSERT(config.size() == 2);
-	CPPUNIT_ASSERT(config.GetSupportedConfigurations(0).size() == 1);
-	CPPUNIT_ASSERT(config.GetSupportedConfigurations(1040).size() == 1);
-	CPPUNIT_ASSERT(config.GetSupportedConfigurations(1040)[0]->lcid_filter == L"1040");
+	CPPUNIT_ASSERT(config.GetSupportedConfigurations(0, SequenceInstall).size() == 1);
+	CPPUNIT_ASSERT(config.GetSupportedConfigurations(1040, SequenceInstall).size() == 1);
+	CPPUNIT_ASSERT(config.GetSupportedConfigurations(1040, SequenceInstall)[0]->lcid_filter == L"1040");
 }
 
 void ConfigFileUnitTests::testLoadLicenseAgreement()

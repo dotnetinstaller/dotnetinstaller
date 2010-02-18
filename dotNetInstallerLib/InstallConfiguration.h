@@ -4,6 +4,7 @@
 #include "Configuration.h"
 #include "Components.h"
 #include "Control.h"
+#include "InstallSequence.h"
 
 class InstallConfiguration : public Configuration
 {
@@ -77,7 +78,7 @@ public:
 	InstallConfiguration();
 	virtual void Load(TiXmlElement * node);
 	// returns components that match current platform and processor architecture
-	Components GetSupportedComponents(DVLib::LcidType lcidtype) const;
+	Components GetSupportedComponents(DVLib::LcidType lcidtype, InstallSequence sequence) const;
 	std::wstring GetString(int indent = 0) const;
 };
 

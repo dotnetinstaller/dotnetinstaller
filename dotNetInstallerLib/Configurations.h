@@ -4,6 +4,7 @@
 #include "Configuration.h"
 #include "InstallUILevel.h"
 #include "FileAttributes.h"
+#include "InstallSequence.h"
 
 class Configurations : public std::vector< ConfigurationPtr >
 {
@@ -29,7 +30,7 @@ public:
 	virtual ~Configurations();
 	virtual void Load(TiXmlElement * node);
 	// returns configurations that match current platform, lcid and processor architecture
-	std::vector<ConfigurationPtr> GetSupportedConfigurations(LCID lcid) const;
+	std::vector<ConfigurationPtr> GetSupportedConfigurations(LCID lcid, InstallSequence sequence) const;
 	std::vector<std::wstring> GetLanguages() const;
 	virtual std::wstring GetString() const;
 };

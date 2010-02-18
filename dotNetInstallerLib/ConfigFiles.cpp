@@ -44,7 +44,7 @@ std::vector<ConfigurationPtr> ConfigFiles::DownloadReferenceConfigurations(
 			}
 
 			std::vector<ConfigurationPtr> refs = DownloadReferenceConfigurations(
-				oslcid, downloadedconfig.GetSupportedConfigurations(oslcid), level + 1);
+				oslcid, downloadedconfig.GetSupportedConfigurations(oslcid, InstallerSession::Instance->sequence), level + 1);
 			result.insert(result.end(), refs.begin(), refs.end());
 		}
 		else
@@ -84,13 +84,14 @@ void ConfigFiles::Load()
 	// download reference configurations
 	std::vector<ConfigurationPtr> refs = DownloadReferenceConfigurations(
 		InstallerSession::Instance->languageid, 
-		config.GetSupportedConfigurations(InstallerSession::Instance->languageid));
+		config.GetSupportedConfigurations(InstallerSession::Instance->languageid, 
+			InstallerSession::Instance->sequence));
 
 	Configurations::insert(end(), refs.begin(), refs.end());
 
 	// select the set of configurations appropriate for this run
 	std::vector<ConfigurationPtr> supportedconfigurations = config.GetSupportedConfigurations(
-		InstallerSession::Instance->languageid);
+		InstallerSession::Instance->languageid, InstallerSession::Instance->sequence);
 
 	if (supportedconfigurations.size() == 0)
 	{

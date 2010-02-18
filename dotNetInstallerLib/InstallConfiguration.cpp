@@ -152,9 +152,9 @@ void InstallConfiguration::Load(TiXmlElement * node)
 		<< L")");
 }
 
-Components InstallConfiguration::GetSupportedComponents(DVLib::LcidType lcidtype) const
+Components InstallConfiguration::GetSupportedComponents(DVLib::LcidType lcidtype, InstallSequence sequence) const
 {
-	return components.GetSupportedComponents(lcidtype);
+	return components.GetSupportedComponents(lcidtype, sequence);
 }
 
 std::wstring InstallConfiguration::GetString(int indent) const

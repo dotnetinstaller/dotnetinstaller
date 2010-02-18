@@ -87,7 +87,9 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
     
-	Components components = p_configuration->GetSupportedComponents(lcidtype);
+	Components components = p_configuration->GetSupportedComponents(
+		lcidtype, InstallerSession::Instance->sequence);
+
 	for (size_t i = 0; i < components.size(); i++)
 	{
 		ComponentPtr component(components[i]);
@@ -129,19 +131,7 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
         if (! p_configuration->dialog_show_required && component->required)
             continue;
 
-		int id;
-		switch(InstallerSession::Instance->sequence)
-		{
-		case SequenceInstall:
-			id = AddString(l_descr.c_str());
-			break;
-		case SequenceUninstall:
-			id = InsertString(0, l_descr.c_str());
-			break;
-		default:
-			THROW_EX(L"Unsupported install sequence: " << InstallerSession::Instance->sequence << L".");
-		}
-
+		int id = AddString(l_descr.c_str());
 		SetItemDataPtr(id, get(component));
 
         if (component->selected)

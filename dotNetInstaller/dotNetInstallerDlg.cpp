@@ -342,7 +342,9 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
-		Components components = p_configuration->GetSupportedComponents(m_lcidtype);
+		Components components = p_configuration->GetSupportedComponents(
+			m_lcidtype, InstallerSession::Instance->sequence);
+
 		int rc = components.Exec(this);
 
 		if (rc != 0)
