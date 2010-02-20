@@ -64,6 +64,14 @@ void MsuComponent::Wait(DWORD tt)
 {
 	ProcessComponent::Wait(tt);
 
-	CHECK_WIN32_DWORD(ProcessComponent::GetProcessExitCode(),
-		L"Error executing '" << id << L" (" << GetDisplayName() << ")'");
+	DWORD exitcode = ProcessComponent::GetProcessExitCode();
+
+	// a non-zero error code represents failure
+	CHECK_BOOL(exitcode == ERROR_SUCCESS || exitcode == ERROR_SUCCESS_REBOOT_REQUIRED,
+		L"Error executing '" << id << "' (" << GetDisplayName() << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
+}
+
+bool MsuComponent::IsRebootRequired() const
+{
+	return GetProcessExitCode() == ERROR_SUCCESS_REBOOT_REQUIRED;
 }
