@@ -22,10 +22,13 @@ public:
 	XmlAttribute status_notinstalled;
 	XmlAttribute failed_exec_command_continue;
 	XmlAttribute installation_none;
+	XmlAttribute uninstallation_none;
 	XmlAttribute installation_completed;
+	XmlAttribute uninstallation_completed;
     bool must_reboot_required;
 	XmlAttribute reboot_required;
 	XmlAttribute installing_component_wait;
+	XmlAttribute uninstalling_component_wait;
 	// link properties
 	XmlAttribute dialog_otherinfo_caption;
 	XmlAttribute dialog_otherinfo_link;

@@ -68,10 +68,13 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	status_notinstalled = node->Attribute("status_notinstalled");
 	failed_exec_command_continue = node->Attribute("failed_exec_command_continue");
 	installation_completed = node->Attribute("installation_completed");
+	uninstallation_completed = node->Attribute("installation_completed");
 	installation_none = node->Attribute("installation_none");
+	uninstallation_none = node->Attribute("uninstallation_none");
 	reboot_required = node->Attribute("reboot_required");
     must_reboot_required = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("must_reboot_required")), false);
 	installing_component_wait = node->Attribute("installing_component_wait");
+	uninstalling_component_wait = node->Attribute("uninstalling_component_wait");
 	dialog_otherinfo_caption = node->Attribute("dialog_otherinfo_caption");
 	dialog_otherinfo_link = node->Attribute("dialog_otherinfo_link");
 	// completion commands

@@ -38,8 +38,11 @@ namespace InstallerLib
             m_install_caption = tpl.install_caption;
             m_uninstall_caption = tpl.uninstall_caption;
             m_installation_completed = tpl.installation_completed;
+            m_uninstallation_completed = tpl.uninstallation_completed;
             m_installation_none = tpl.installation_none;
+            m_uninstallation_none = tpl.uninstallation_none;
             m_installing_component_wait = tpl.installing_component_wait;
+            m_uninstalling_component_wait = tpl.uninstalling_component_wait;
             m_reboot_required = tpl.reboot_required;
             m_status_installed = tpl.status_installed;
             m_status_notinstalled = tpl.status_notinstalled;
@@ -202,6 +205,16 @@ namespace InstallerLib
             set { m_installation_none = value; }
         }
 
+        private string m_uninstallation_none;
+        [Description("Nothing to uninstall message.")]
+        [Category("Messages")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        public string uninstallation_none
+        {
+            get { return m_uninstallation_none; }
+            set { m_uninstallation_none = value; }
+        }
+
         private string m_installation_completed;
         [Description("Installation completed message. (REQUIRED)")]
         [Category("Messages")]
@@ -212,6 +225,16 @@ namespace InstallerLib
             set { m_installation_completed = value; }
         }
 
+        private string m_uninstallation_completed;
+        [Description("Uninstallation completed message.")]
+        [Category("Messages")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        public string uninstallation_completed
+        {
+            get { return m_uninstallation_completed; }
+            set { m_uninstallation_completed = value; }
+        }
+
         private string m_installing_component_wait;
         [Description("The message used when installing a component. Must contain one '%s' string where the application put the description of the component. (REQUIRED)")]
         [Category("Component")]
@@ -220,6 +243,16 @@ namespace InstallerLib
         {
             get { return m_installing_component_wait; }
             set { m_installing_component_wait = value; }
+        }
+
+        private string m_uninstalling_component_wait;
+        [Description("The message used when uninstalling a component. Must contain one '%s' string where the application put the description of the component.")]
+        [Category("Component")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        public string uninstalling_component_wait
+        {
+            get { return m_uninstalling_component_wait; }
+            set { m_uninstalling_component_wait = value; }
         }
 
         private string m_reboot_required;
@@ -488,10 +521,13 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("status_notinstalled", m_status_notinstalled);
             e.XmlWriter.WriteAttributeString("failed_exec_command_continue", m_failed_exec_command_continue);
             e.XmlWriter.WriteAttributeString("installation_completed", m_installation_completed);
+            e.XmlWriter.WriteAttributeString("uninstallation_completed", m_uninstallation_completed);
             e.XmlWriter.WriteAttributeString("installation_none", m_installation_none);
+            e.XmlWriter.WriteAttributeString("uninstallation_none", m_uninstallation_none);
             // e.XmlWriter.WriteAttributeString("dialog_install_next",m_dialog_install_next);
             // e.XmlWriter.WriteAttributeString("dialog_install_skip",m_dialog_install_skip);
             e.XmlWriter.WriteAttributeString("installing_component_wait", m_installing_component_wait);
+            e.XmlWriter.WriteAttributeString("uninstalling_component_wait", m_uninstalling_component_wait);
             e.XmlWriter.WriteAttributeString("reboot_required", m_reboot_required);
             e.XmlWriter.WriteAttributeString("must_reboot_required", m_must_reboot_required.ToString());
 
@@ -552,8 +588,13 @@ namespace InstallerLib
             ReadAttributeValue(e, "install_caption", ref m_install_caption);
             ReadAttributeValue(e, "uninstall_caption", ref m_uninstall_caption);
             ReadAttributeValue(e, "installation_completed", ref m_installation_completed);
+            if (! ReadAttributeValue(e, "uninstallation_completed", ref m_uninstallation_completed))
+                m_uninstallation_completed = m_installation_completed;
             ReadAttributeValue(e, "installation_none", ref m_installation_none);
+            ReadAttributeValue(e, "uninstallation_none", ref m_uninstallation_none);
             ReadAttributeValue(e, "installing_component_wait", ref m_installing_component_wait);
+            if (! ReadAttributeValue(e, "uninstalling_component_wait", ref m_uninstalling_component_wait))
+                m_uninstalling_component_wait = m_installing_component_wait;
             ReadAttributeValue(e, "reboot_required", ref m_reboot_required);
             ReadAttributeValue(e, "must_reboot_required", ref m_must_reboot_required);
             ReadAttributeValue(e, "status_installed", ref m_status_installed);

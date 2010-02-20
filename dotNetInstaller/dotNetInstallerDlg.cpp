@@ -544,11 +544,26 @@ void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
 
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-    std::wstring message = p_configuration->installation_completed;
-	// installation completed, but no components have been installed
-	if (! componentsInstalled && ! p_configuration->installation_none.empty())
+
+	std::wstring message;
+	switch(InstallerSession::Instance->sequence)
 	{
-		message = p_configuration->installation_none;
+	case SequenceInstall:
+		message = p_configuration->installation_completed;
+		// installation completed, but no components have been installed
+		if (! componentsInstalled && ! p_configuration->installation_none.empty())
+		{
+			message = p_configuration->installation_none;
+		}
+		break;
+	case SequenceUninstall:
+		message = p_configuration->uninstallation_completed;
+		// uninstallation completed, but no components have been uninstalled
+		if (! componentsInstalled && ! p_configuration->uninstallation_none.empty())
+		{
+			message = p_configuration->uninstallation_none;
+		}
+		break;
 	}
 
 	if (! message.empty())

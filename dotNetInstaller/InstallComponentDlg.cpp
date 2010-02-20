@@ -94,9 +94,18 @@ BOOL InstallComponentDlg::OnInitDialog()
 
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_Configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-	std::wstring l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(
-		p_configuration->installing_component_wait.GetValue().c_str()), 
-		m_Component->GetDisplayName().c_str());
+	std::wstring l_tmp;
+	switch(InstallerSession::Instance->sequence)
+	{
+	case SequenceInstall:
+		l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(p_configuration->installing_component_wait.GetValue().c_str()), 
+			m_Component->GetDisplayName().c_str());
+		break;
+	case SequenceUninstall:
+		l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(p_configuration->uninstalling_component_wait.GetValue().c_str()), 
+			m_Component->GetDisplayName().c_str());
+		break;
+	}
     m_InstallMessage.SetWindowText(l_tmp.c_str());
     m_iTimer = this->SetTimer(1,1000,NULL);
 	return TRUE;
@@ -110,10 +119,19 @@ afx_msg LRESULT InstallComponentDlg::OnSetStatusInstall(WPARAM wParam, LPARAM /*
         InstallStatusPtr status(reinterpret_cast<InstallStatus *>(wParam));
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_Configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-		std::wstring tmp = DVLib::FormatMessage(const_cast<wchar_t *>(
-			p_configuration->installing_component_wait.GetValue().c_str()), 
-			status->status.c_str());
-		m_InstallMessage.SetWindowText(tmp.c_str());
+		std::wstring l_tmp;
+		switch(InstallerSession::Instance->sequence)
+		{
+		case SequenceInstall:
+			l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(p_configuration->installing_component_wait.GetValue().c_str()), 
+				status->status.c_str());
+			break;
+		case SequenceUninstall:
+			l_tmp = DVLib::FormatMessage(const_cast<wchar_t *>(p_configuration->uninstalling_component_wait.GetValue().c_str()),
+				status->status.c_str());
+			break;
+		}		
+		m_InstallMessage.SetWindowText(l_tmp.c_str());
     }
 
 	return 0;

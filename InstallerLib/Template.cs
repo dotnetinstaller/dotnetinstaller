@@ -136,13 +136,25 @@ namespace InstallerLib
             {
                 get { return m_tpl.GetAttribute("setupconfiguration/@installation_completed").Replace(c_APPLICATION_NAME, m_ApplicationName); }
             }
+            public string uninstallation_completed
+            {
+                get { return m_tpl.GetAttribute("setupconfiguration/@uninstallation_completed").Replace(c_APPLICATION_NAME, m_ApplicationName); }
+            }
             public string installation_none
             {
                 get { return m_tpl.GetAttribute("setupconfiguration/@installation_none").Replace(c_APPLICATION_NAME, m_ApplicationName); }
             }
+            public string uninstallation_none
+            {
+                get { return m_tpl.GetAttribute("setupconfiguration/@uninstallation_none").Replace(c_APPLICATION_NAME, m_ApplicationName); }
+            }
             public string installing_component_wait
             {
                 get { return m_tpl.GetAttribute("setupconfiguration/@installing_component_wait").Replace(c_APPLICATION_NAME, m_ApplicationName); }
+            }
+            public string uninstalling_component_wait
+            {
+                get { return m_tpl.GetAttribute("setupconfiguration/@uninstalling_component_wait").Replace(c_APPLICATION_NAME, m_ApplicationName); }
             }
             public string reboot_required
             {
