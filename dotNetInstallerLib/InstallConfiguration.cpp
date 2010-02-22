@@ -68,7 +68,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	status_notinstalled = node->Attribute("status_notinstalled");
 	failed_exec_command_continue = node->Attribute("failed_exec_command_continue");
 	installation_completed = node->Attribute("installation_completed");
-	uninstallation_completed = node->Attribute("installation_completed");
+	uninstallation_completed = node->Attribute("uninstallation_completed");
 	installation_none = node->Attribute("installation_none");
 	uninstallation_none = node->Attribute("uninstallation_none");
 	reboot_required = node->Attribute("reboot_required");
