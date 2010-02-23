@@ -705,7 +705,7 @@ bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, st
 void CdotNetInstallerDlg::AddControl(const ControlLabel& label)
 {
 	CStatic * p_static = new CStatic();
-	p_static->Create(label.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP, label.position.ToRect(), this);
+	p_static->Create(label.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP | SS_NOPREFIX, label.position.ToRect(), this);
 	p_static->EnableWindow(label.enabled);
 	p_static->SetFont(CreateFont(label));
 	m_custom_controls.push_back(p_static);
@@ -838,7 +838,7 @@ void CdotNetInstallerDlg::AddControl(const ControlLicense& license)
 	CHyperlinkStatic * p_link = new CHyperlinkStatic();
 	CRect link_rect = license.position.ToRect();
 	link_rect.left += 20;
-	p_link->Create(license.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP, link_rect, this, 0);
+	p_link->Create(license.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP | SS_NOPREFIX, link_rect, this, 0);
 	p_link->SetHyperlink(license_file);
 	p_link->SetFont(CreateFont(license));
 	m_custom_controls.push_back(p_link);
@@ -847,7 +847,7 @@ void CdotNetInstallerDlg::AddControl(const ControlLicense& license)
 void CdotNetInstallerDlg::AddControl(const ControlHyperlink& hyperlink)
 {
 	CHyperlinkStatic * p_link = new CHyperlinkStatic();
-	p_link->Create(hyperlink.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP, hyperlink.position.ToRect(), this, 0);
+	p_link->Create(hyperlink.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP | SS_NOPREFIX, hyperlink.position.ToRect(), this, 0);
 	p_link->SetHyperlink(hyperlink.uri);
 	p_link->SetFont(CreateFont(hyperlink));
 	m_custom_controls.push_back(p_link);
