@@ -246,6 +246,7 @@ namespace InstallerEditorUnitTests
                     Window mainWindow = installerEditor.GetWindow(
                         string.Format("Installer Editor - {0}", configFileName), InitializeOption.NoCache);
                     UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Edit With Notepad").Click();
+                    Thread.Sleep(1000);
                     string windowText = string.Format("{0} - Notepad", Path.GetFileName(configFileName));
                     Console.WriteLine(windowText);
                     bool foundNotepad = false;
