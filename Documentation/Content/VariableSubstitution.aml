@@ -85,10 +85,12 @@
       <title>Registry Values</title>
       <content>
         <para>
-          You can substitute registry values with the <literal>@[key(:options)\path(\value)(,default)]</literal> syntax.
+          You can substitute registry values with the <literal>@[key(:options)\path(\value)(|key ...)(,default)]</literal> syntax.
           For example <literal>@[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CommonFilesDir,DefaultValue]</literal>.
-          The key must exist or you must specify a default value, otherwise loading of the configuration file will fail.
-          The value is optional, make sure to terminate a path without a value with a backslash.
+          The key doesn't have to exist and you don't have to specify a default value, which is assumed blank. Multiple key paths
+          may be separated by <literal>|</literal>, the first value found will be used. The default value will be used if no value
+          could be retrieved from registry. The key value within the registry path is optional, make sure to terminate a path without 
+          a value with a backslash.
         </para>
         <para>
           The following options are supported. For more information see <externalLink>

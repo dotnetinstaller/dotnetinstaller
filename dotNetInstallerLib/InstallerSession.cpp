@@ -119,6 +119,59 @@ std::wstring InstallerSession::ExpandPathVariables(const std::wstring& path)
 	return s;
 }
 
+bool InstallerSession::ExpandRegistryVariable(const std::wstring& variable, std::wstring& value)
+{
+	std::vector<std::wstring> parts = DVLib::split(variable, L"\\");
+	if (parts.size() < 2) THROW_EX(L"Invalid registry path '" << variable << L"'");
+	// hkey
+	ULONG ulFlags = 0;
+	std::vector<std::wstring> hkey_parts = DVLib::split(parts[0], L":", 2);
+	HKEY hkey = DVLib::wstring2HKEY(hkey_parts[0]);
+	DVLib::OperatingSystem type = DVLib::GetOperatingSystemVersion();
+	if (type >= DVLib::winXP)
+	{
+		if (hkey_parts.size() > 1)
+		{
+			if (hkey_parts[1] == L"WOW64_64") ulFlags |= KEY_WOW64_64KEY;
+			else if (hkey_parts[1] == L"WOW64_32") ulFlags |= KEY_WOW64_32KEY;
+			else THROW_EX(L"Invalid WOW option '" << hkey_parts[1] << L"' in '" << variable << L"'");
+		}
+	}
+	parts.erase(parts.begin());
+	// key name
+	std::wstring key_name;
+	if (parts.size() > 1)
+	{
+		key_name = parts[parts.size() - 1];
+		parts.erase(parts.end() - 1);
+	}
+	// path
+	std::wstring key_path = DVLib::join(parts, L"\\");
+
+	if (! DVLib::RegistryKeyExists(hkey, key_path, key_name, ulFlags))
+	{
+		return false;
+	}
+
+	DWORD dwType = DVLib::RegistryGetValueType(hkey, key_path, key_name, ulFlags);
+	switch(dwType)
+	{
+	case REG_SZ:
+		value = DVLib::RegistryGetStringValue(hkey, key_path, key_name, ulFlags);
+		break;
+	case REG_DWORD:
+		value = DVLib::towstring(DVLib::RegistryGetDWORDValue(hkey, key_path, key_name, ulFlags));
+		break;
+	case REG_MULTI_SZ:
+		value = DVLib::join(DVLib::RegistryGetMultiStringValue(hkey, key_path, key_name, ulFlags), L",");
+		break;
+	default:
+		THROW_EX(L"Registry value '" << key_path << L"\\" << key_name << L"' is of unsupported type " << dwType);
+	}
+
+	return true;
+}
+
 std::wstring InstallerSession::ExpandRegistryVariables(const std::wstring& s_in)
 {
 	std::wstring s(s_in);
@@ -129,54 +182,26 @@ std::wstring InstallerSession::ExpandRegistryVariables(const std::wstring& s_in)
 		{
 			std::wstring name = s.substr(i + 2, j - i - 2);
 			std::vector<std::wstring> value_parts = DVLib::split(name, L",", 2);
-			std::vector<std::wstring> parts = DVLib::split(value_parts[0], L"\\");
-			if (parts.size() < 2) THROW_EX(L"Invalid registry path '" << name << L"' in '" << s_in << L"'");
-			// hkey
-			ULONG ulFlags = 0;
-			std::vector<std::wstring> hkey_parts = DVLib::split(parts[0], L":", 2);
-			HKEY hkey = DVLib::wstring2HKEY(hkey_parts[0]);
-			DVLib::OperatingSystem type = DVLib::GetOperatingSystemVersion();
-			if (type >= DVLib::winXP)
+			std::vector<std::wstring> registry_parts = DVLib::split(value_parts[0], L"|");
+
+			std::wstring value;
+			bool resolved = false;
+
+			for (int r = 0; r < registry_parts.size(); r++)
 			{
-				if (hkey_parts.size() > 1)
+				if (ExpandRegistryVariable(registry_parts[r], value))
 				{
-					if (hkey_parts[1] == L"WOW64_64") ulFlags |= KEY_WOW64_64KEY;
-					else if (hkey_parts[1] == L"WOW64_32") ulFlags |= KEY_WOW64_32KEY;
-					else THROW_EX(L"Invalid WOW option '" << hkey_parts[1] << L"' in '" << s_in << L"'");
+					resolved = true;
+					break;
 				}
 			}
-			parts.erase(parts.begin());
-			// key name
-			std::wstring key_name;
-			if (parts.size() > 1)
-			{
-				key_name = parts[parts.size() - 1];
-				parts.erase(parts.end() - 1);
-			}
-			// path
-			std::wstring key_path = DVLib::join(parts, L"\\");
-			std::wstring value;
 
-			if (value_parts.size() > 1 && ! DVLib::RegistryKeyExists(hkey, key_path, key_name, ulFlags))
+			if (! resolved)
 			{
-				value = value_parts[1];
-			}
-			else
-			{
-				DWORD dwType = DVLib::RegistryGetValueType(hkey, key_path, key_name, ulFlags);
-				switch(dwType)
+				if (value_parts.size() > 1) 
 				{
-				case REG_SZ:
-					value = DVLib::RegistryGetStringValue(hkey, key_path, key_name, ulFlags);
-					break;
-				case REG_DWORD:
-					value = DVLib::towstring(DVLib::RegistryGetDWORDValue(hkey, key_path, key_name, ulFlags));
-					break;
-				case REG_MULTI_SZ:
-					value = DVLib::join(DVLib::RegistryGetMultiStringValue(hkey, key_path, key_name, ulFlags), L",");
-					break;
-				default:
-					THROW_EX(L"Registry value '" << name << L"' is of unsupported type " << dwType);
+					// default to the contents of the last value
+					value = value_parts[1];
 				}
 			}
 

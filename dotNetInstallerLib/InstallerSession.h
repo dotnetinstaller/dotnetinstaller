@@ -25,6 +25,7 @@ public:
 	// expand variables
 	std::wstring ExpandVariables(const std::wstring& value);
 	std::wstring ExpandRegistryVariables(const std::wstring& value);
+	bool ExpandRegistryVariable(const std::wstring& variable, std::wstring& value);
 	std::wstring ExpandPathVariables(const std::wstring& path);
 	std::wstring ExpandUserVariables(const std::wstring& value);
 	// sequence

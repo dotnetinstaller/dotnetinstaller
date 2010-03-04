@@ -86,18 +86,43 @@ void InstallerSessionUnitTests::testExpandRegistryVariables()
 		InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]"));
 	CPPUNIT_ASSERT(L"{" + common_files_dir + L"|" + common_files_dir + L"}" == 
 		InstallerSession::Instance->ExpandRegistryVariables(L"{@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]|@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]}"));
-	// missing value, missing default
-	try
-	{
-		InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\" + DVLib::GenerateGUIDStringW() + L"]");
-		throw "expected std::exception";
-	}
-	catch(std::exception&)
-	{
-	}
+	// missing value, default is blank
+	CPPUNIT_ASSERT(L"" == InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\" + DVLib::GenerateGUIDStringW() + L"]"));
 	// with default
 	CPPUNIT_ASSERT(L"DefaultValue" == InstallerSession::Instance->ExpandRegistryVariables(
 		L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\" + DVLib::GenerateGUIDStringW() + L",DefaultValue]"));
+	// with two registry keys, one doesn't exist (in order)
+	CPPUNIT_ASSERT(common_files_dir == 
+		InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDirDoesntExist|HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]"));
+	// with two registry keys, one doesn't exist (out of order)
+	CPPUNIT_ASSERT(common_files_dir == 
+		InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir|HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDirDoesntExist]"));
+	// with two registry keys, neither exist without default
+	CPPUNIT_ASSERT(L"" == 
+		InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DoesntExist1|HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DoesntExist2]"));
+	// with two registry keys, neither exist with default
+	CPPUNIT_ASSERT(L"DefaultValue" == 
+		InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DoesntExist1|HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DoesntExist2,DefaultValue]"));
+	// with two registry keys, both exist (in order)
+	CPPUNIT_ASSERT(common_files_dir == 
+		InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir|HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ProgramFilesDir]"));
+	// with two registry keys, both exist, with default (in order)
+	CPPUNIT_ASSERT(common_files_dir == 
+		InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir|HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ProgramFilesDir,DefaultValue]"));
+}
+
+void InstallerSessionUnitTests::testExpandRegistryVariable()
+{	
+	std::wstring common_files_dir = DVLib::RegistryGetStringValue(
+		HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion", L"CommonFilesDir");
+	// value exists
+	std::wstring value;
+	CPPUNIT_ASSERT(InstallerSession::Instance->ExpandRegistryVariable(
+		L"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir", value));
+	CPPUNIT_ASSERT(common_files_dir == value);
+	// value doesn't exist
+	CPPUNIT_ASSERT(! InstallerSession::Instance->ExpandRegistryVariable(
+		L"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDirDoesntExist", value));
 }
 
 void InstallerSessionUnitTests::testEnableRunOnReboot()
