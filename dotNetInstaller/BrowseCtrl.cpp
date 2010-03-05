@@ -1530,3 +1530,9 @@ void CBrowseCtrl::SetFont(CFont* pFont, BOOL bRedraw)
 {
 	m_wndEdit.SetFont(pFont, bRedraw);	
 }
+
+void CBrowseCtrl::EnableWindow(BOOL bEnabled)
+{
+	m_wndEdit.EnableWindow(bEnabled);
+	CButton::EnableWindow(bEnabled);
+}

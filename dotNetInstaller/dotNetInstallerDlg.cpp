@@ -167,15 +167,9 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 
 	for each(const ControlPtr& control in p_configuration->controls)
 	{
-		if (InstallerSession::Instance->sequence == SequenceInstall && ! control->display_install)
+		if (! control->IsVisible())
 		{
-			LOG(L"-- Skipping " << control->GetString() << L" on install");
-			continue;
-		}
-
-		if (InstallerSession::Instance->sequence == SequenceUninstall && ! control->display_uninstall)
-		{
-			LOG(L"-- Skipping " << control->GetString() << L" on uninstall");
+			LOG(L"-- Skipping " << control->GetString() << L", hidden");
 			continue;
 		}
 
@@ -706,7 +700,7 @@ void CdotNetInstallerDlg::AddControl(const ControlLabel& label)
 {
 	CStatic * p_static = new CStatic();
 	p_static->Create(label.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP | SS_NOPREFIX, label.position.ToRect(), this);
-	p_static->EnableWindow(label.enabled);
+	p_static->EnableWindow(label.IsEnabled());
 	p_static->SetFont(CreateFont(label));
 	m_custom_controls.push_back(p_static);
 }
@@ -723,9 +717,9 @@ CFont * CdotNetInstallerDlg::CreateFont(const ControlText& text)
 
 void CdotNetInstallerDlg::AddControl(const ControlCheckBox& checkbox)
 {
-	ControlValueCheckBox * p_checkbox = new ControlValueCheckBox(checkbox.checked_value, checkbox.unchecked_value);
+	ControlValueCheckBox * p_checkbox = new ControlValueCheckBox(checkbox);
 	p_checkbox->Create(checkbox.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX, checkbox.position.ToRect(), this, 0);
-	p_checkbox->EnableWindow(checkbox.enabled);
+	p_checkbox->EnableWindow(checkbox.IsEnabled());
 	p_checkbox->SetFont(CreateFont(checkbox));
 	std::map<std::wstring, std::wstring>::iterator value;
 	if ((value = InstallerSession::Instance->AdditionalControlArgs.find(checkbox.id)) != 
@@ -749,7 +743,7 @@ void CdotNetInstallerDlg::AddControl(const ControlCheckBox& checkbox)
 
 void CdotNetInstallerDlg::AddControl(const ControlEdit& edit)
 {
-	ControlValueEdit * p_edit = new ControlValueEdit();
+	ControlValueEdit * p_edit = new ControlValueEdit(edit);
 	p_edit->Create(WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_BORDER, edit.position.ToRect(), this, 0);
 	std::map<std::wstring, std::wstring>::iterator value;
 	if ((value = InstallerSession::Instance->AdditionalControlArgs.find(edit.id)) != 
@@ -761,7 +755,7 @@ void CdotNetInstallerDlg::AddControl(const ControlEdit& edit)
 	{
 		p_edit->SetWindowText(edit.text.GetValue().c_str());
 	}
-	p_edit->EnableWindow(edit.enabled);
+	p_edit->EnableWindow(edit.IsEnabled());
 	p_edit->SetFont(CreateFont(edit));
 	m_custom_control_values.insert(std::pair<std::wstring, ControlValue *>(edit.id, p_edit));
 	m_custom_controls.push_back(p_edit);
@@ -769,7 +763,7 @@ void CdotNetInstallerDlg::AddControl(const ControlEdit& edit)
 
 void CdotNetInstallerDlg::AddControl(const ControlBrowse& browse)
 {
-	ControlValueBrowse * p_browse = new ControlValueBrowse();
+	ControlValueBrowse * p_browse = new ControlValueBrowse(browse);
 	p_browse->Create(browse.position.ToRect(), this, 0);
 	// style and options
 	DWORD dwStyle = p_browse->GetButtonStyle();
@@ -814,6 +808,7 @@ void CdotNetInstallerDlg::AddControl(const ControlBrowse& browse)
 	p_browse->SetFont(CreateFont(browse));
 	// open, not save as
 	p_browse->SetOpenSave(TRUE); 
+	p_browse->EnableWindow(browse.IsEnabled());
 	m_custom_control_values.insert(std::pair<std::wstring, ControlValue *>(browse.id, p_browse));
 	m_custom_controls.push_back(p_browse);
 }
@@ -826,7 +821,7 @@ void CdotNetInstallerDlg::AddControl(const ControlLicense& license)
 	LOG(L"Extracting license '" << license.resource_id << L"' to " << license_file);
 	DVLib::FileWrite(license_file, license_buffer);
 	// checkbox
-	ControlValueLicense * p_checkbox = new ControlValueLicense(license.accept_message);
+	ControlValueLicense * p_checkbox = new ControlValueLicense(license);
 	CRect checkbox_rect = license.position.ToRect();
 	checkbox_rect.right = checkbox_rect.left + 20;
 	p_checkbox->Create(L"", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX, checkbox_rect, this, 0);
@@ -858,7 +853,21 @@ void CdotNetInstallerDlg::SetControlValues()
 	std::map<std::wstring, ControlValue *>::const_iterator iter;
 	for(iter = m_custom_control_values.begin(); iter != m_custom_control_values.end(); ++iter)
 	{
-		LOG(L"--- Setting user-defined value " << iter->first << L"=" << iter->second->GetValue());
-		InstallerSession::Instance->AdditionalControlArgs[iter->first] = iter->second->GetValue();
+		if (iter->second->IsVisible())
+		{
+			if (iter->second->IsEnabled())
+			{
+				LOG(L"--- Setting user-defined value '" << iter->first << L"'=" << iter->second->GetValue());
+				InstallerSession::Instance->AdditionalControlArgs[iter->first] = iter->second->GetValue();
+			}
+			else
+			{
+				LOG(L"--- Skipping user-defined value '" << iter->first << L"', control disabled");
+			}
+		}
+		else
+		{
+			LOG(L"--- Skipping user-defined value '" << iter->first << L"', control hidden");
+		}
 	}
 }

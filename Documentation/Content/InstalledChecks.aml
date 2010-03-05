@@ -3,9 +3,12 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        You can use the <newTerm>InstalledCheck</newTerm> configuration element to check whether a 
-        component is already installed. For example, you can check if .NET Framework 1.1 is installed 
-        by reading this registry key <fictitiousUri>SOFTWARE\Microsoft\NET Framework Setup\NDP\v1.1.4322\Install</fictitiousUri>.
+        You can use the <newTerm>InstalledCheck</newTerm> configuration element to check whether a
+        component is already installed or to conditionally enable or display user-defined controls.
+      </para>
+      <para>
+        For example, you can check if .NET Framework 1.1 is installed  by reading this registry key 
+        <fictitiousUri>SOFTWARE\Microsoft\NET Framework Setup\NDP\v1.1.4322\Install</fictitiousUri>.
         InstalledChecks can be combined with <newTerm>operating system filters</newTerm> which selects components 
         depending on the target OS and with <newTerm>processor architecture filters</newTerm> which check the operating 
         system or hardware architecture.
@@ -192,8 +195,12 @@
           <alert class="important">
             <para>
               Remember that the check tests whether the component is <legacyBold>installed</legacyBold> and a component appears
-              in the boostrapper at setup time only if it is <legacyBold>not installed</legacyBold>. When combining component operators
-              this behavior may require some mental gymnastics.
+              in the boostrapper at setup time only if it is <legacyBold>not installed</legacyBold>. When combining component 
+              operators this behavior may require some mental gymnastics.
+            </para>
+            <para>
+              User-defined controls are the opposite. A control will be enabled or visible if the installed check evaluates to 
+              <newTerm>True</newTerm>.
             </para>
           </alert>
         </para>

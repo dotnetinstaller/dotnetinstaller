@@ -40,6 +40,9 @@
                 <li>Added support for multiple registry paths in <code>@[registry path]</code> substitutions.
                     Separate multiple paths with a <code>|</code> character.</li>
                 <li>A default value is no longer required in registry substitutions, assumed blank.</li>
+                <li>Added optional installed checks for user-defined controls. The check must evaluate
+                    to <code>True</code> for the control to be displayed, enabled or both, depending
+                    on the value of the new <code>check</code> option.</li>
             </ul>
         </li>
         <li><strong>Misc</strong>:

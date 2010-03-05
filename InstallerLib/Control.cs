@@ -43,9 +43,29 @@ namespace InstallerLib
     }
 
     /// <summary>
+    /// Controls whether the nested installed check applies to control's enabled, display or both properties.
+    /// </summary>
+    public enum ControlCheckType
+    {
+        /// <summary>
+        /// Apply to the enabled property.
+        /// </summary>
+        enabled,
+        /// <summary>
+        /// Apply to the display property.
+        /// </summary>
+        display,
+        /// <summary>
+        /// Apply to both enabled and display property.
+        /// </summary>
+        both
+    };
+
+    /// <summary>
     /// A dynamic dialog control.
     /// </summary>
-    [XmlNoChildren]
+    [XmlChild(typeof(InstalledCheck))]
+    [XmlChild(typeof(InstalledCheckOperator))]
     public abstract class Control : XmlClass
     {
         public Control(ControlType type)
@@ -99,6 +119,15 @@ namespace InstallerLib
             set { m_display_uninstall = value; }
         }
 
+        private ControlCheckType m_check = ControlCheckType.enabled;
+        [Description("Defines how to apply a nested installed check (enable, display or both).")]
+        [Category("Layout")]
+        public ControlCheckType Check
+        {
+            get { return m_check; }
+            set { m_check = value; }
+        }
+
         #region XmlClass Members
 
         public override string XmlTag
@@ -115,6 +144,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("enabled", m_enabled.ToString());
             e.XmlWriter.WriteAttributeString("display_install", m_display_install.ToString());
             e.XmlWriter.WriteAttributeString("display_uninstall", m_display_uninstall.ToString());
+            e.XmlWriter.WriteAttributeString("check", m_check.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -132,6 +162,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "enabled", ref m_enabled);
             ReadAttributeValue(e, "display_install", ref m_display_install);
             ReadAttributeValue(e, "display_uninstall", ref m_display_uninstall);
+            ReadAttributeValue(e, "check", ref m_check);
             base.OnXmlReadTag(e);
         }
 

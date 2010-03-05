@@ -146,6 +146,7 @@ public:
 	POSITION GetStartPosition() const;	// The path-name start position, for multiple selection 
 	CString GetNextPathName(POSITION& pos) const;	// Next path name
 	BOOL GetReadOnlyPref() const; // The "Read-Only" checkbox on dialog, CFileDialog only
+	void EnableWindow(BOOL bEnabled = TRUE);
 
 	/////////////////////////////////////////////////////////////////////
 	//		Overloads
@@ -155,7 +156,6 @@ public:
 	int GetWindowText(LPTSTR lpszStringBuf, int nMaxCount) const;	
 
 	void SetFont(CFont* pFont, BOOL bRedraw = TRUE);
-
 protected:
 
 	/////////////////////////////////////////////////////////////////////

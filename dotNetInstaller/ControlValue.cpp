@@ -1,9 +1,10 @@
 #include "StdAfx.h"
 #include "ControlValue.h"
 
-ControlValue::ControlValue()
+ControlValue::ControlValue(const Control& control)
 {
-
+	enabled = control.IsEnabled();
+	visible = control.IsVisible();
 }
 
 ControlValue::~ControlValue()
@@ -11,7 +12,8 @@ ControlValue::~ControlValue()
 
 }
 
-ControlValueBrowse::ControlValueBrowse()
+ControlValueBrowse::ControlValueBrowse(const ControlBrowse& control)
+	: ControlValue(control)
 {
 
 }
@@ -21,7 +23,8 @@ std::wstring ControlValueBrowse::GetValue() const
 	return std::wstring((LPCTSTR) CBrowseCtrl::GetPathName());
 }
 
-ControlValueEdit::ControlValueEdit()
+ControlValueEdit::ControlValueEdit(const ControlEdit& control)
+	: ControlValue(control)
 {
 
 }
@@ -33,9 +36,10 @@ std::wstring ControlValueEdit::GetValue() const
 	return std::wstring((LPCTSTR) value);
 }
 
-ControlValueCheckBox::ControlValueCheckBox(const std::wstring& checked, const std::wstring& unchecked)
-	: checked_value(checked)
-	, unchecked_value(unchecked)
+ControlValueCheckBox::ControlValueCheckBox(const ControlCheckBox& checkbox)
+	: ControlValue(checkbox)
+	, checked_value(checkbox.checked_value)
+	, unchecked_value(checkbox.unchecked_value)
 {
 
 }
@@ -45,8 +49,9 @@ std::wstring ControlValueCheckBox::GetValue() const
 	return CButton::GetCheck() ? checked_value : unchecked_value;
 }
 
-ControlValueLicense::ControlValueLicense(const std::wstring& msg)
-	: accept_message(msg)
+ControlValueLicense::ControlValueLicense(const ControlLicense& license)
+	: ControlValue(license)
+	, accept_message(license.accept_message)
 {
 
 }

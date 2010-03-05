@@ -63,6 +63,18 @@
         </para>
       </content>
     </section>
+    <section address="conditionalenabledisablecontrolvalues">
+      <title>Conditionally Disabling User-Defined Controls</title>
+      <content>
+        <para>
+          You can use <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="13ba8ef4-383f-4dd4-9588-b4ace3fcbf12" />
+          to conditionally enable or disable controls. You can control whether the installed check applies to the 
+          <literal>enabled</literal>, <literal>display</literal> or both properties of the controls. Unlike installed checks for
+          components, installed checks for controls are not inverted, ie. the installed check must evaluate to <literal>true</literal>
+          for the control to be enabled or for the control to display.
+        </para>
+      </content>
+    </section>
     <section address="referencingusercontrolvalues">
       <title>Referencing User-Defined Control Values</title>
       <content>

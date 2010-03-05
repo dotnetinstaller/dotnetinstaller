@@ -47,6 +47,45 @@ namespace dotNetInstallerUnitTests
         }
 
         [Test]
+        public void TestUserControlCheckboxInstallCheck()
+        {
+            // a configuration with a checkbox control which has an installed check that disables it
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            // a checkbox that changes are return value
+            ControlCheckBox checkbox = new ControlCheckBox();
+            checkbox.UncheckedValue = "3";
+            checkbox.CheckedValue = "4";
+            checkbox.Checked = true;
+            checkbox.Id = "checkbox1";
+            setupConfiguration.Children.Add(checkbox);
+            // an installed check that is always false
+            InstalledCheckRegistry check = new InstalledCheckRegistry();
+            check.path = @"SOFTWARE\KeyDoesntExist";
+            check.comparison = installcheck_comparison.exists;
+            checkbox.Children.Add(check);
+            // command that depends on the value of checkbox1
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C exit /b [checkbox1]5";
+            setupConfiguration.Children.Add(cmd);
+            // save config file
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // execute dotNetInstaller, this checkbox is disabled, so all runs ignore checkbox1 value
+            Assert.AreEqual(5, dotNetInstallerExeUtils.Run(configFilename));
+            checkbox.Checked = false;
+            configFile.SaveAs(configFilename);
+            Assert.AreEqual(5, dotNetInstallerExeUtils.Run(configFilename));
+            checkbox.Checked = true;
+            checkbox.CheckedValue = "0";
+            configFile.SaveAs(configFilename);
+            Assert.AreEqual(5, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+        }
+
+        [Test]
         public void TestUserControlEdit()
         {
             // a configuration with a checkbox control
@@ -66,6 +105,64 @@ namespace dotNetInstallerUnitTests
             configFile.SaveAs(configFilename);
             // execute dotNetInstaller
             Assert.AreEqual(4, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+        }
+
+        [Test]
+        public void TestUserControlEditInstalledCheckBoth()
+        {
+            // a configuration with a checkbox control
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ControlEdit edit = new ControlEdit();
+            edit.Text = "4";
+            edit.Id = "edit1";
+            edit.Check = ControlCheckType.both;
+            setupConfiguration.Children.Add(edit);
+            // an installed check that is always false
+            InstalledCheckRegistry check = new InstalledCheckRegistry();
+            check.path = @"SOFTWARE\KeyDoesntExist";
+            check.comparison = installcheck_comparison.exists;
+            edit.Children.Add(check);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C exit /b [edit1]5";
+            setupConfiguration.Children.Add(cmd);
+            // save config file
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // execute dotNetInstaller
+            Assert.AreEqual(5, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+        }
+
+        [Test]
+        public void TestUserControlEditInstalledCheckDisplay()
+        {
+            // a configuration with a checkbox control
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ControlEdit edit = new ControlEdit();
+            edit.Text = "4";
+            edit.Id = "edit1";
+            edit.Check = ControlCheckType.display;
+            setupConfiguration.Children.Add(edit);
+            // an installed check that is always false
+            InstalledCheckRegistry check = new InstalledCheckRegistry();
+            check.path = @"SOFTWARE\KeyDoesntExist";
+            check.comparison = installcheck_comparison.exists;
+            edit.Children.Add(check);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C exit /b [edit1]5";
+            setupConfiguration.Children.Add(cmd);
+            // save config file
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // execute dotNetInstaller
+            Assert.AreEqual(5, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
         }
 
