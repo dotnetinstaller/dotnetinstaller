@@ -51,6 +51,11 @@
                 <definition>Check whether the version of the file is greater or equal than the check value.</definition>
               </definitionTable>
             </para>
+            <para>
+              It's possible that this check cannot make a decision of whether the component is installed or not per the comparison
+              definition. This is true in examples where the file doesn't exist and the comparison type is <literal>version</literal>. 
+              In this case the check returns <newTerm>defaultvalue</newTerm>.
+            </para>
           </content>
         </section>
         <section address="checktypesdirectory">
@@ -121,6 +126,13 @@
                   greater or equal than the check value.
                 </definition>
               </definitionTable>
+            </para>
+            <para>
+              It's possible that this check cannot make a decision of whether the component is installed or not per the comparison
+              definition. This is true in examples where the registry key doesn't exist and the comparison type is <literal>version</literal>.
+              In this case the check returns <newTerm>defaultvalue</newTerm>. This can be convenient for applying patches to existing
+              versions, because the patch should not be installed when neither version of the product is installed. In this case
+              set <newTerm>defaultValue</newTerm> to <newTerm>true</newTerm>.
             </para>
           </content>
         </section>

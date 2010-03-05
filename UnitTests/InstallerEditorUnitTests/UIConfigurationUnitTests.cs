@@ -207,13 +207,17 @@ namespace InstallerEditorUnitTests
                     Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
                     UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
                     UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
-                    UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Save As...").Click();
+                    Menu mainMenuFile = UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File");
+                    mainMenuFile.Click();
+                    Assert.IsFalse(mainMenuFile.ChildMenus.Find("Save").Enabled);
+                    mainMenuFile.ChildMenus.Find("Save As...").Click();
                     Window openWindow = mainWindow.ModalWindow("Save As");
                     TextBox filenameTextBox = openWindow.Get<TextBox>("File name:");
                     filenameTextBox.Text = configFileName;
                     openWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
                     mainWindow.WaitWhileBusy();
                     Assert.IsTrue(File.Exists(configFileName));
+                    Assert.IsTrue(UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Save").Enabled);
                     StatusStrip statusStrip = UIAutomation.Find<StatusStrip>(mainWindow, "statusStrip");
                     WinFormTextBox statusLabel = (WinFormTextBox)statusStrip.Items[0];
                     Assert.AreEqual(string.Format("Written {0}", configFileName), statusLabel.Text);

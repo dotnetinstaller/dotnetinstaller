@@ -40,11 +40,20 @@ namespace InstallerLib
             set { m_comparison = value; }
         }
 
+        private bool m_defaultvalue = false;
+        [Description("The default check value for comparison operators other than 'exists' when the file doesn't exist. (REQUIRED)")]
+        public bool defaultvalue
+        {
+            get { return m_defaultvalue; }
+            set { m_defaultvalue = value; }
+        }
+
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
             e.XmlWriter.WriteAttributeString("filename", m_filename);
             e.XmlWriter.WriteAttributeString("fileversion", m_fileversion);
             e.XmlWriter.WriteAttributeString("comparison", m_comparison.ToString());
+            e.XmlWriter.WriteAttributeString("defaultvalue", m_defaultvalue.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -53,6 +62,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "filename", ref m_filename);
             ReadAttributeValue(e, "fileversion", ref m_fileversion);
             ReadAttributeValue(e, "comparison", ref m_comparison);
+            ReadAttributeValue(e, "defaultvalue", ref m_defaultvalue);
             base.OnXmlReadTag(e);
         }
     }

@@ -45,6 +45,14 @@ namespace InstallerLib
             set { m_fieldvalue = value; }
         }
 
+        private bool m_defaultvalue = false;
+        [Description("The default check value for comparison operators other than 'exists' when the registry key doesn't exist. (REQUIRED)")]
+        public bool defaultvalue
+        {
+            get { return m_defaultvalue; }
+            set { m_defaultvalue = value; }
+        }
+
         private installcheck_registrytype m_fieldtype;
         [Description("Specifies the type of the registry field, can be 'REG_DWORD' (for numeric value) or 'REG_SZ' (for string value) or 'REG_MULTI_SZ' (for multi line strings). (REQUIRED)")]
         public installcheck_registrytype fieldtype
@@ -82,6 +90,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("path", m_path);
             e.XmlWriter.WriteAttributeString("fieldname", m_fieldname);
             e.XmlWriter.WriteAttributeString("fieldvalue", m_fieldvalue);
+            e.XmlWriter.WriteAttributeString("defaultvalue", m_defaultvalue.ToString());
             e.XmlWriter.WriteAttributeString("fieldtype", m_fieldtype.ToString());
             e.XmlWriter.WriteAttributeString("comparison", m_comparison.ToString());
             e.XmlWriter.WriteAttributeString("rootkey", m_rootkey.ToString());
@@ -94,6 +103,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "path", ref m_path);
             ReadAttributeValue(e, "fieldname", ref m_fieldname);
             ReadAttributeValue(e, "fieldvalue", ref m_fieldvalue);
+            ReadAttributeValue(e, "defaultvalue", ref m_defaultvalue);
             ReadAttributeValue(e, "fieldtype", ref m_fieldtype);
             ReadAttributeValue(e, "comparison", ref m_comparison);
             ReadAttributeValue(e, "rootkey", ref m_rootkey);

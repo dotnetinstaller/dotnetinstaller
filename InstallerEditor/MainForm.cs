@@ -932,6 +932,7 @@ namespace InstallerEditor
 
             m_TreeNodeConfigFile.IsDirty = false;
             statusLabel.Text = string.Format("Written {0}", m_TreeNodeConfigFile.Instance.filename);
+            RefreshMenu();
             return true;
         }
 

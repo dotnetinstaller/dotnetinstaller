@@ -18,13 +18,14 @@ void InstalledCheckRegistry::Load(TiXmlElement * node)
     comparison = DVLib::UTF8string2wstring(node->Attribute("comparison"));
     rootkey = DVLib::UTF8string2wstring(node->Attribute("rootkey"));
     wowoption = DVLib::UTF8string2wstring(node->Attribute("wowoption"));
+	defaultvalue = node->Attribute("defaultvalue");
 	LOG(L"Loaded 'registry' installed check '" << rootkey << L"\\" << path << L"\\" << fieldname << L"'");
 }
 
 bool InstalledCheckRegistry::IsInstalled() const
 {
 	std::wstring keypath(path.GetValue() + L"\\" + fieldname.GetValue());
-    LOG(L"Reading Registry: " << keypath);
+    LOG(L"Reading registry value: " << keypath);
 
 	DVLib::OperatingSystem type = DVLib::GetOperatingSystemVersion();
 	DWORD dwKeyOption = KEY_READ;
@@ -56,11 +57,11 @@ bool InstalledCheckRegistry::IsInstalled() const
 
 	if (! DVLib::RegistryKeyExists(DVLib::wstring2HKEY(rootkey), path, fieldname, dwKeyOption))
 	{
-		LOG(L"*** No registry key found: " << keypath);
-		return false;
+		bool default_result = defaultvalue.GetBoolValue(false);
+		LOG(L"*** No registry key found: " << keypath << L", default value: " << (default_result ? L"true" : L"false"));
+		return default_result;
 	}
 
-	LOG(L"Registry key found: " << keypath);
 	if (fieldtype == L"REG_DWORD")
 	{
 		DWORD regfieldvalue = DVLib::RegistryGetDWORDValue(
@@ -74,6 +75,10 @@ bool InstalledCheckRegistry::IsInstalled() const
 			return (regfieldvalue == checkvalue);
 		else if (comparison == L"version")
 			return (regfieldvalue >= checkvalue);
+		// EXPERIMENTAL
+		else if (comparison == L"version_patch")
+			return (regfieldvalue >= checkvalue);
+		// EXPERIMENTAL
 		else if (comparison == L"version_eq")
 			return (regfieldvalue == checkvalue);
 		else if (comparison == L"version_lt")
@@ -101,6 +106,10 @@ bool InstalledCheckRegistry::IsInstalled() const
 			return (fieldvalue == regfieldvalue);
 		else if (comparison == TEXT("version"))
 			return (DVLib::CompareVersion(regfieldvalue, fieldvalue) >= 0);
+		// EXPERIMENTAL
+		else if (comparison == TEXT("version_patch"))
+			return (DVLib::CompareVersion(regfieldvalue, fieldvalue) >= 0);
+		// EXPERIMENTAL
 		else if (comparison == TEXT("version_eq"))
 			return (DVLib::CompareVersion(regfieldvalue, fieldvalue) == 0);
 		else if (comparison == TEXT("version_lt"))
@@ -157,7 +166,7 @@ bool InstalledCheckRegistry::IsInstalled() const
 		}
 		else
 		{
-			THROW_EX("Invalid comparison type: " << comparison);
+			THROW_EX("Invalid comparison type for REG_MULTI_SZ: " << comparison);
 		}
 	}
 	else

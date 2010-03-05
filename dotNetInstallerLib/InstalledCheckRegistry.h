@@ -17,8 +17,10 @@ public:
 	// tipo di comparazione : match (verifica se le due stringhe sono uguali) version (che tratta le due stringhe come versioni e quindi se quella richiesta è minore bisogna installare altrimenti no)
 	XmlAttribute comparison;
 	XmlAttribute rootkey;
-	//support for KEY_WOW64_32KEY and KEY_WOW64_64KEY
+	// support for KEY_WOW64_32KEY and KEY_WOW64_64KEY
 	XmlAttribute wowoption; 
+	// default value when the registry key is not found
+	XmlAttribute defaultvalue;
 public:
     InstalledCheckRegistry();
     void Load(TiXmlElement * node);

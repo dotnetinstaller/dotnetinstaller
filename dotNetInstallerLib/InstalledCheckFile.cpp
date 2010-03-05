@@ -14,32 +14,43 @@ void InstalledCheckFile::Load(TiXmlElement * node)
     filename = node->Attribute("filename");
     fileversion = node->Attribute("fileversion");
     comparison = DVLib::UTF8string2wstring(node->Attribute("comparison"));
+	defaultvalue = node->Attribute("defaultvalue");
 	LOG(L"Loaded 'file' installed check '" << filename << L"'");
 }
 
 bool InstalledCheckFile::IsInstalled() const
 {
+	LOG(L"Checking file: " << filename);
+
+	if (comparison == TEXT("exists"))
+	{
+		return DVLib::FileExists(filename);
+	}
+
+	bool default_result = defaultvalue.GetBoolValue(false);
+
 	if (DVLib::FileExists(filename))
 	{
 		if (! fileversion.empty())
 		{
-			if (comparison == TEXT("exists"))
-				return DVLib::FileExists(filename);
-			else if (comparison == TEXT("match"))
-				return (fileversion == DVLib::GetFileVersion(filename));
+			std::wstring fileversion_current = DVLib::GetFileVersion(filename);
+			LOG(L"File version: " << filename << L" - " << fileversion_current);
+			if (comparison == TEXT("match"))
+				return (fileversion == fileversion_current);
 			else if (comparison == TEXT("version"))
-				return (DVLib::CompareVersion(DVLib::GetFileVersion(
-					filename), fileversion) >= 0);
+				return (DVLib::CompareVersion(fileversion_current, fileversion) >= 0);
+			else if (comparison == TEXT("version_patch"))
+				return (DVLib::CompareVersion(fileversion_current, fileversion) >= 0);
 			else if (comparison == TEXT("version_eq"))
-				return (DVLib::CompareVersion(DVLib::GetFileVersion(filename), fileversion) == 0);
+				return (DVLib::CompareVersion(fileversion_current, fileversion) == 0);
 			else if (comparison == TEXT("version_gt"))
-				return (DVLib::CompareVersion(DVLib::GetFileVersion(filename), fileversion) > 0);
+				return (DVLib::CompareVersion(fileversion_current, fileversion) > 0);
 			else if (comparison == TEXT("version_ge"))
-				return (DVLib::CompareVersion(DVLib::GetFileVersion(filename), fileversion) >= 0);
+				return (DVLib::CompareVersion(fileversion_current, fileversion) >= 0);
 			else if (comparison == TEXT("version_lt"))
-				return (DVLib::CompareVersion(DVLib::GetFileVersion(filename), fileversion) < 0);
+				return (DVLib::CompareVersion(fileversion_current, fileversion) < 0);
 			else if (comparison == TEXT("version_le"))
-				return (DVLib::CompareVersion(DVLib::GetFileVersion(filename), fileversion) <= 0);
+				return (DVLib::CompareVersion(fileversion_current, fileversion) <= 0);
 			else
 			{
 				THROW_EX(L"Invalid comparison type \"" << comparison << L"\"");
@@ -47,11 +58,13 @@ bool InstalledCheckFile::IsInstalled() const
 		}
 		else
 		{
-			return true;
+			LOG(L"*** File version not found: " << filename << L", default value: " << (default_result ? L"true" : L"false"));
 		}
 	}
 	else
 	{
-		return false;
+		LOG(L"*** File not found: " << filename << L", default value: " << (default_result ? L"true" : L"false"));
 	}
+
+	return default_result;
 }
