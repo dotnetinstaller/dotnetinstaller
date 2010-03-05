@@ -111,7 +111,7 @@ namespace InstallerLib
         {
             ReadAttributeValue(e, "command", ref m_command);
             ReadAttributeValue(e, "command_silent", ref m_command_silent);
-            ReadAttributeValue(e, "command_basic", ref m_command_silent);
+            ReadAttributeValue(e, "command_basic", ref m_command_basic);
             ReadAttributeValue(e, "uninstall_command", ref m_uninstall_command);
             ReadAttributeValue(e, "uninstall_command_silent", ref m_uninstall_command_silent);
             ReadAttributeValue(e, "uninstall_command_basic", ref m_uninstall_command_silent);
