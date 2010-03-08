@@ -114,7 +114,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "command_basic", ref m_command_basic);
             ReadAttributeValue(e, "uninstall_command", ref m_uninstall_command);
             ReadAttributeValue(e, "uninstall_command_silent", ref m_uninstall_command_silent);
-            ReadAttributeValue(e, "uninstall_command_basic", ref m_uninstall_command_silent);
+            ReadAttributeValue(e, "uninstall_command_basic", ref m_uninstall_command_basic);
             ReadAttributeValue(e, "returncodes_success", ref m_returncodes_success);
             ReadAttributeValue(e, "returncodes_reboot", ref m_returncodes_reboot);
             base.OnXmlReadTag(e);

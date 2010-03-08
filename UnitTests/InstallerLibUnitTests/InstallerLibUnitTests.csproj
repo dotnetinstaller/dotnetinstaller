@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Vestris.ResourceLib, Version=1.2.26529.0, Culture=neutral, processorArchitecture=MSIL">
@@ -54,6 +55,7 @@
     <Compile Include="ComponentMsiTests.cs" />
     <Compile Include="ComponentMsuTests.cs" />
     <Compile Include="ComponentOpenFileTests.cs" />
+    <Compile Include="ConfigFileTests.cs" />
     <Compile Include="ControlLicenseUnitTests.cs" />
     <Compile Include="DownloadTests.cs" />
     <Compile Include="ComponentEmbedFileTests.cs" />

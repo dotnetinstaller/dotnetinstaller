@@ -24,7 +24,7 @@ namespace InstallerLib
     /// An installed check.
     /// </summary>
     [XmlNoChildren]
-    public class InstalledCheck : XmlClass
+    public abstract class InstalledCheck : XmlClass
     {
         public InstalledCheck(string p_type)
         {
