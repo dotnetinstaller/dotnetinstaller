@@ -194,6 +194,11 @@
                 <definition>Check whether the version of the installed product(s) is greater or equal than the check value.</definition>
               </definitionTable>
             </para>
+            <para>
+              It's possible that this check cannot make a decision of whether the component is installed or not per the comparison
+              definition. This is true in examples where the product is not installed and the comparison type is <literal>version</literal>.
+              In this case the check returns <newTerm>defaultvalue</newTerm>.
+            </para>
           </content>
         </section>
       </sections>

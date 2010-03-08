@@ -16,6 +16,7 @@ void InstalledCheckProduct::Load(TiXmlElement * node)
 	propertyname = node->Attribute("propertyname");
 	comparison = DVLib::UTF8string2wstring(node->Attribute("comparison"));
 	propertyvalue = node->Attribute("propertyvalue");
+	defaultvalue = node->Attribute("defaultvalue");
 	LOG(L"Loaded 'product' installed check '" << id << L"'");
 }
 
@@ -61,7 +62,11 @@ bool InstalledCheckProduct::IsInstalled() const
 
 	// match, version or contains
 	if (products.size() == 0) 
-		return false;		
+	{
+		bool result = defaultvalue.GetBoolValue(false); 
+		LOG(L"Product id=" << id << L" not found, returning default value: " << (result ? L"True" : L"False"));
+		return result;
+	}
 
 	if (comparison == L"match")
 	{

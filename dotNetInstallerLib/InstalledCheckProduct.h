@@ -16,6 +16,8 @@ public:
 	std::wstring comparison;
 	// property value to match
 	XmlAttribute propertyvalue;
+	// default value for 'match', 'version' and 'contains' operators
+	XmlAttribute defaultvalue;
 public:
     InstalledCheckProduct();
     void Load(TiXmlElement * node);

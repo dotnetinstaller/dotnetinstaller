@@ -9,10 +9,12 @@ namespace DVLib
 			CPPUNIT_TEST_SUITE( InstalledCheckProductUnitTests );
 			CPPUNIT_TEST( testProductCode );
 			CPPUNIT_TEST( testUpgradeCode );
+			CPPUNIT_TEST( testDefaultValue );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testProductCode();
 			void testUpgradeCode();
+			void testDefaultValue();
 		};
 	}
 }

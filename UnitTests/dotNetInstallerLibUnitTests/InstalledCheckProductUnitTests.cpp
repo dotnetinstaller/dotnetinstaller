@@ -103,3 +103,38 @@ void InstalledCheckProductUnitTests::testUpgradeCode()
 		CPPUNIT_ASSERT(check->IsInstalled());
 	}
 }
+
+void InstalledCheckProductUnitTests::testDefaultValue()
+{
+	InstalledCheckProductPtr check(new InstalledCheckProduct());
+	check->id_type = L"upgradecode";
+	check->id = L"{3D1871AE-5696-45d4-B1C2-C321484B8DFF}"; // new GUID
+	check->propertyname = L"VersionString";
+	check->propertyvalue = L"1.0.0.0";
+
+	typedef struct
+	{
+		LPCWSTR comparison;
+		bool defaultvalue;
+		bool expected_result;
+	} TestData;
+
+	TestData data[] = 
+	{
+		{ L"exists", false, false },
+		{ L"exists", true, false },
+		{ L"contains", false, false },
+		{ L"contains", true, true },
+		{ L"match", false, false },
+		{ L"match", true, true },
+		{ L"version", false, false },
+		{ L"version", true, true },
+	};
+
+	for (int i = 0; i < ARRAYSIZE(data); i++)
+	{
+		check->comparison = data[i].comparison;
+		check->defaultvalue = (data[i].defaultvalue ? L"True" : L"False");
+		CPPUNIT_ASSERT(data[i].expected_result == check->IsInstalled());
+	}
+}

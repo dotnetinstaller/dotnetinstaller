@@ -68,6 +68,14 @@ namespace InstallerLib
             set { m_comparison = value; }
         }
 
+        private bool m_defaultvalue = false;
+        [Description("The default check value for comparison operators 'match', 'version' and 'contains' when the product is not installed.")]
+        public bool defaultvalue
+        {
+            get { return m_defaultvalue; }
+            set { m_defaultvalue = value; }
+        }
+
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
             e.XmlWriter.WriteAttributeString("id", m_id.ToString());
@@ -75,6 +83,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("propertyname", m_propertyname);
             e.XmlWriter.WriteAttributeString("propertyvalue", m_propertyvalue);
             e.XmlWriter.WriteAttributeString("comparison", m_comparison.ToString());
+            e.XmlWriter.WriteAttributeString("defaultvalue", m_defaultvalue.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -85,6 +94,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "propertyname", ref m_propertyname);
             ReadAttributeValue(e, "propertyvalue", ref m_propertyvalue);
             ReadAttributeValue(e, "comparison", ref m_comparison);
+            ReadAttributeValue(e, "defaultvalue", ref m_defaultvalue);
             base.OnXmlReadTag(e);
         }
     }

@@ -43,10 +43,11 @@
                 <li>Added optional installed checks for user-defined controls. The check must evaluate
                     to <code>True</code> for the control to be displayed, enabled or both, depending
                     on the value of the new <code>check</code> option.</li>
-                <li>Added <code>defaultvalue</code> options to registry and file installed checks. The
-                    default value is used when the bootstrapper does not find the registry key or file,
-                    ie. it cannot decide whether the component is installed based on the specifics of
-                    the check (eg. version comparison with a value that doesn't exist is not meaningful).</li>
+                <li>Added <code>defaultvalue</code> options to <code>registry</code>, <code>file</code>
+                    and <code>product</code> installed checks. The default value is used when the bootstrapper
+                    does not find the registry key or file, ie. it cannot decide whether the component
+                    is installed based on the specifics of the check (eg. version comparison with a
+                    value that doesn't exist is not meaningful).</li>
             </ul>
         </li>
         <li><strong>Misc</strong>:
