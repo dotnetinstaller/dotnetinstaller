@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="3bed3a1b-deee-4209-aB3f-9a7101fa15ba" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        An application that has been installed using the Microsoft Windows Installer can be upgraded by reinstalling
+        an updated installation package (.msi file), or by applying a Windows Installer patch (an .msp file) to the application.
+        A Windows Installer patch (.msp file) is a self-contained package that contains the updates to the application and
+        describes which versions of the application can receive the patch. For more information see <externalLink>
+          <linkUri>http://msdn.microsoft.com/en-us/library/aa370578(VS.85).aspx</linkUri>
+          <linkText>Patching in MSDN</linkText>
+        </externalLink>.
+      </para>
+      <para>
+        A component of type <literal>msp</literal> executes a Windows Installer patch using the <command>msiexec.exe</command>
+        command.
+      </para>
+    </introduction>
+    <section address="component_msp_options">
+      <title>Component Options</title>
+      <content>
+        <para>
+          <tableDefinition>
+            <definedTerm>patch</definedTerm>
+            <definition>
+              A full or relative path to an MSP update patch.
+            </definition>
+            <definedTerm>package</definedTerm>
+            <definition>
+              A full or relative path to an MSI package to be patched for administrative install. When specified during
+              installation, generates a <command>msiexec /p patch /a package</command> command-line.
+            </definition>
+            <definedTerm>cmdparameters</definedTerm>
+            <definition>
+              Additional command-line parameters to pass to msiexec.exe in full UI mode.
+            </definition>
+            <definedTerm>cmdparameters_basic</definedTerm>
+            <definition>
+              Additional command-line parameters to pass to msiexec.exe in basic UI mode, typically <literal>/qb</literal>.
+            </definition>
+            <definedTerm>cmdparameters_silent</definedTerm>
+            <definition>
+              Additional command-line parameters to pass to msiexec.exe in silent mode, typically <literal>/qn</literal>.
+            </definition>
+            <definedTerm>uninstall_cmdparameters</definedTerm>
+            <definition>
+              Additional command-line parameters to pass to msiexec.exe in full UI mode during uninstal.
+            </definition>
+            <definedTerm>uninstall_cmdparameters_basic</definedTerm>
+            <definition>
+              Additional command-line parameters to pass to msiexec.exe in basic UI mode during uninstall, 
+              typically <literal>/qb</literal>.
+            </definition>
+            <definedTerm>uninstall_cmdparameters_silent</definedTerm>
+            <definition>
+              Additional command-line parameters to pass to msiexec.exe in silent mode during uninstall, 
+              typically <literal>/qn</literal>.
+            </definition>
+            <definedTerm>reinstallmode</definedTerm>
+            <definition>
+              Value for <literal>REINSTALLMODE</literal> in the install sequence. Default is <literal>omus</literal>.
+            </definition>
+            <definedTerm>reinstall</definedTerm>
+            <definition>
+              Value for <literal>REINSTALL</literal> in the install sequence. Default is <literal>ALL</literal>.
+            </definition>
+            <definedTerm>uninstall_patch</definedTerm>
+            <definition>
+              GUID or package of the patch to uninstall. Defaults to <literal>patch</literal> when unspecified.
+            </definition>
+            <definedTerm>uninstall_package</definedTerm>
+            <definition>
+              Full path to MSI or product GUID to which the patch being uninstalled belongs. When specified during
+              installation, generates a <command>msiexec /uninstall patch /package package</command> command-line.
+            </definition>
+          </tableDefinition>
+        </para>
+      </content>
+    </section>
+    <relatedTopics>
+      <codeEntityReference qualifyHint="true">T:InstallerLib.ComponentMsp</codeEntityReference>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

@@ -10,6 +10,7 @@
     <Topic id="db007eb2-ccc6-4657-843e-adad7da5db5b" visible="True" title="Components">
       <Topic id="5af23faf-2976-41b6-87c2-2311ba275e77" visible="True" title="Windows Installer Components (MSI)" />
       <Topic id="86590fb5-5d18-4d8e-8997-cdda405f8a0c" visible="True" title="Windows Update Components (MSU)" />
+      <Topic id="3bed3a1b-deee-4209-aB3f-9a7101fa15ba" visible="True" title="Windows Patch Components (MSP)" />
       <Topic id="69d68f5b-26f3-44fe-a4b9-34f7617cc300" visible="True" title="Command Line Components" />
       <Topic id="cf68873b-8ccf-49e8-9241-b334fad069db" visible="True" title="Open File Components" />
       <Topic id="d028fe32-3599-48d5-a4d2-a78e23297d24" visible="True" title="Required &amp; Optional Components" />

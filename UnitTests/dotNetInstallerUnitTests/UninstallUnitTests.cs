@@ -164,5 +164,39 @@ namespace dotNetInstallerUnitTests
                 File.Delete(configFilename);
             }
         }
+
+        [Test]
+        public void TestUninstallMspSilentMode()
+        {
+            InstallUILevel[] testUILevels = { InstallUILevel.basic, InstallUILevel.silent };
+            foreach (InstallUILevel uilevel in testUILevels)
+            {
+                // a configuration with no components
+                ConfigFile configFile = new ConfigFile();
+                SetupConfiguration setupConfiguration = new SetupConfiguration();
+                configFile.Children.Add(setupConfiguration);
+                ComponentMsp msp = new ComponentMsp();
+                msp.package = "mspdoesntexist.msp";
+                msp.uninstall_cmdparameters = "";
+                msp.uninstall_cmdparameters_basic = "/qb-";
+                msp.uninstall_cmdparameters_silent = "/qb-";
+                InstalledCheckFile self = new InstalledCheckFile();
+                self.filename = dotNetInstallerExeUtils.Executable;
+                self.comparison = installcheck_comparison.exists;
+                msp.Children.Add(self);
+                setupConfiguration.Children.Add(msp);
+                // silent install, no dialog messages
+                configFile.ui_level = uilevel;
+                // save config file
+                string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+                Console.WriteLine("Writing '{0}'", configFilename);
+                configFile.SaveAs(configFilename);
+                // execute dotNetInstaller
+                dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
+                options.uninstall = true;
+                Assert.AreEqual(1619, dotNetInstallerExeUtils.Run(options));
+                File.Delete(configFilename);
+            }
+        }
     }
 }

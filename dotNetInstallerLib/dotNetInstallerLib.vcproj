@@ -287,6 +287,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MspComponent.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MsuComponent.cpp"
 				>
 			</File>
@@ -494,6 +498,10 @@
 			</File>
 			<File
 				RelativePath=".\MsiComponent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MspComponent.h"
 				>
 			</File>
 			<File

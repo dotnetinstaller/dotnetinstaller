@@ -40,6 +40,7 @@ namespace InstallerEditor
         private MenuItem mnView;
         private MenuItem mnRefresh;
         private MenuItem mnAddMsiComponent;
+        private MenuItem mnAddMspComponent;
         private MenuItem mnAddCommandComponent;
         private MenuItem mnAddInstalledCheckRegistry;
         private MenuItem mnAddInstalledCheckFile;
@@ -141,6 +142,7 @@ namespace InstallerEditor
             this.menuSep3 = new System.Windows.Forms.MenuItem();
             this.mnAddMsiComponent = new System.Windows.Forms.MenuItem();
             this.mnAddMsuComponent = new System.Windows.Forms.MenuItem();
+            this.mnAddMspComponent = new System.Windows.Forms.MenuItem();
             this.mnAddCommandComponent = new System.Windows.Forms.MenuItem();
             this.mnAddOpenFileComponent = new System.Windows.Forms.MenuItem();
             this.menuChecks = new System.Windows.Forms.MenuItem();
@@ -349,6 +351,7 @@ namespace InstallerEditor
             this.menuSep3,
             this.mnAddMsiComponent,
             this.mnAddMsuComponent,
+            this.mnAddMspComponent,
             this.mnAddCommandComponent,
             this.mnAddOpenFileComponent});
             this.menuComponents.Text = "Co&mponents";
@@ -376,15 +379,21 @@ namespace InstallerEditor
             this.mnAddMsuComponent.Text = "Msu Component";
             this.mnAddMsuComponent.Click += new System.EventHandler(this.mnAddMsuComponent_Click);
             // 
+            // mnAddMspComponent
+            // 
+            this.mnAddMspComponent.Index = 4;
+            this.mnAddMspComponent.Text = "Msp Component";
+            this.mnAddMspComponent.Click += new System.EventHandler(this.mnAddMspComponent_Click);
+            // 
             // mnAddCommandComponent
             // 
-            this.mnAddCommandComponent.Index = 4;
+            this.mnAddCommandComponent.Index = 5;
             this.mnAddCommandComponent.Text = "Command Component";
             this.mnAddCommandComponent.Click += new System.EventHandler(this.mnAddCommandComponent_Click);
             // 
             // mnAddOpenFileComponent
             // 
-            this.mnAddOpenFileComponent.Index = 5;
+            this.mnAddOpenFileComponent.Index = 6;
             this.mnAddOpenFileComponent.Text = "OpenFile Component";
             this.mnAddOpenFileComponent.Click += new System.EventHandler(this.mnAddOpenFileComponent_Click);
             // 
@@ -669,6 +678,7 @@ namespace InstallerEditor
             this.imageList.Images.SetKeyName(21, "");
             this.imageList.Images.SetKeyName(22, "");
             this.imageList.Images.SetKeyName(23, "");
+            this.imageList.Images.SetKeyName(24, "");
             // 
             // mainSplitContainer
             // 
@@ -1071,6 +1081,7 @@ namespace InstallerEditor
                 mnAddCommandComponent.Enabled = (item.Children.CanAdd(typeof(ComponentCmd)));
                 mnAddMsiComponent.Enabled = (item.Children.CanAdd(typeof(ComponentMsi)));
                 mnAddMsuComponent.Enabled = (item.Children.CanAdd(typeof(ComponentMsu)));
+                mnAddMspComponent.Enabled = (item.Children.CanAdd(typeof(ComponentMsp)));
                 mnAddOpenFileComponent.Enabled = (item.Children.CanAdd(typeof(ComponentOpenFile)));
                 mnAddEmbedFile.Enabled = (item.Children.CanAdd(typeof(EmbedFile)));
                 mnAddEmbedFolder.Enabled = (item.Children.CanAdd(typeof(EmbedFolder)));
@@ -1233,6 +1244,11 @@ namespace InstallerEditor
         private void mnAddMsiComponent_Click(object sender, System.EventArgs e)
         {
             AddTreeNode_Click<ComponentMsi>();
+        }
+
+        private void mnAddMspComponent_Click(object sender, System.EventArgs e)
+        {
+            AddTreeNode_Click<ComponentMsp>();
         }
 
         private void mnAddCommandComponent_Click(object sender, System.EventArgs e)

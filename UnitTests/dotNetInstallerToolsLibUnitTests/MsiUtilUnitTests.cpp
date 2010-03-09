@@ -49,3 +49,24 @@ void MsiUtilUnitTests::testIsProductInstalled()
 	CPPUNIT_ASSERT(! DVLib::MsiIsProductInstalled(DVLib::string2guid(L"{00000000-0000-0000-0000-000000000000}")));
 }
 
+void MsiUtilUnitTests::testGetQuotedPathOrGuid()
+{
+	struct TestData
+	{
+		std::wstring package;
+		std::wstring expected_result;
+	};
+
+	TestData testdata[] = 
+	{
+		{ L"{5BA68255-FD99-4f7b-99DE-78270969F8A2}", L"\"{5BA68255-FD99-4f7b-99DE-78270969F8A2}\"" },
+		{ L"5BA68255-FD99-4f7b-99DE-78270969F8A2", L"\"5BA68255-FD99-4f7b-99DE-78270969F8A2\"" },
+		{ L"file", L"\"" + DVLib::DirectoryCombine(DVLib::GetCurrentDirectoryW(), L"file") + L"\"" }, 
+	};
+
+	for (int i = 0; i < ARRAYSIZE(testdata); i++)
+	{
+		std::wcout << std::endl << testdata[i].package;
+		CPPUNIT_ASSERT(testdata[i].expected_result == DVLib::GetQuotedPathOrGuid(testdata[i].package));
+	}
+}

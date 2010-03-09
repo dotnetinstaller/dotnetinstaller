@@ -23,4 +23,6 @@ namespace DVLib
 	std::vector<MsiProductInfo> MsiGetInstalledProducts();
 	// the list of related products
 	std::vector<MsiProductInfo> MsiGetRelatedProducts(GUID upgradecode);
+	// quote a path or guid
+	std::wstring GetQuotedPathOrGuid(const std::wstring& package);
 }

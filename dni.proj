@@ -55,6 +55,9 @@
     <OsFiltersSetupSample Include="Samples/OsFiltersSetup/**/*.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PatchSetupSample Include="Samples/PatchSetup/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <Documentation Include="Documentation/$(Configuration)/dotNetInstaller.chm" />
     <Documentation Include="Documentation/$(Configuration)/WhatsNew.html" />
   </ItemGroup>
@@ -135,6 +138,9 @@
     <!-- Sample: OsFiltersSetup -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup" />
     <Copy SourceFiles="@(OsFiltersSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup\%(RecursiveDir)" />
+    <!-- Sample: PatchSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PatchSetup" />
+    <Copy SourceFiles="@(PatchSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PatchSetup\%(RecursiveDir)" />
   </Target>
   <Target Name="doc" DependsOnTargets="version">
     <Error Condition="'$(DXROOT)'==''" Text="Missing Sandcastle, DXROOT environment variable not set, install from http://www.codeplex.com/Sandcastle" />

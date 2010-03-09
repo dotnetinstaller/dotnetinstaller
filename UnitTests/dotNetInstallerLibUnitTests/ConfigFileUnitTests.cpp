@@ -280,3 +280,19 @@ void ConfigFileUnitTests::testLoadCustomInputSetup()
 	CPPUNIT_ASSERT(configuration->controls[4]->type == control_type_browse);
 	CPPUNIT_ASSERT(configuration->controls[5]->type == control_type_hyperlink);
 }
+
+void ConfigFileUnitTests::testLoadPatchSetup()
+{
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), L"..\\..\\..\\Samples\\PatchSetup\\Configuration.xml");
+	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
+	ConfigFile config;
+	config.LoadFile(configxml);
+	// configurations with components
+	CPPUNIT_ASSERT(config.size() == 1);
+	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
+	CPPUNIT_ASSERT(configuration->components.size() == 2);
+	ComponentPtr component_msi = configuration->components[0];
+	CPPUNIT_ASSERT(component_msi->type == component_type_msi);
+	ComponentPtr component_msp = configuration->components[1];
+	CPPUNIT_ASSERT(component_msp->type == component_type_msp);
+}

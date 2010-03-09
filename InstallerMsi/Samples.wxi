@@ -34,6 +34,11 @@
             <File Id="OsFilters.Configuration.xml" Name="Configuration.xml" Source="..\Samples\OsFilters\Configuration.xml" />
           </Component>
         </Directory>
+        <Directory Id="PatchSetupFolder" Name="Patch">
+          <Component Id="PatchSetupSample" Guid="28CC66F8-028E-4e3b-AB13-D24E437EC143">
+            <File Id="PatchSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\PatchSetup\Configuration.xml" />
+          </Component>
+        </Directory>
         <Directory Id="InstallCheckOperatorsFolder" Name="InstallCheckOperators">
           <Component Id="InstallCheckOperatorsSample" Guid="30AD6A29-CCC9-40D0-BDAB-D2414C39247A">
             <File Id="InstallCheckOperators.banner.bmp" Name="banner.bmp" Source="..\Samples\InstallCheckOperators\banner.bmp" />

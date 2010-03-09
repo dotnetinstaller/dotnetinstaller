@@ -187,7 +187,7 @@ std::wstring InstallerSession::ExpandRegistryVariables(const std::wstring& s_in)
 			std::wstring value;
 			bool resolved = false;
 
-			for (int r = 0; r < registry_parts.size(); r++)
+			for (unsigned int r = 0; r < registry_parts.size(); r++)
 			{
 				if (ExpandRegistryVariable(registry_parts[r], value))
 				{

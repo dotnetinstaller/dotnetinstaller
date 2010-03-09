@@ -5,7 +5,6 @@
 #include "ErrorUtil.h"
 #include "PathUtil.h"
 
-
 std::wstring DVLib::DirectoryNormalize(const std::wstring& path)
 {
 	return DVLib::replace(path, L"\\\\", L"\\");

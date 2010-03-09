@@ -68,6 +68,7 @@
     <None Include="Content\ComponentsCmd.aml" />
     <None Include="Content\ComponentsMsu.aml" />
     <None Include="Content\ComponentsMsi.aml" />
+    <None Include="Content\ComponentsMsp.aml" />
     <None Include="Content\ComponentsReboot.aml" />
     <None Include="Content\DownloadComponents.aml" />
     <None Include="Content\UIModes.aml" />

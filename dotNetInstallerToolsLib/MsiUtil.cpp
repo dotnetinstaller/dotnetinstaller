@@ -4,6 +4,7 @@
 #include "StringUtil.h"
 #include "ErrorUtil.h"
 #include "GuidUtil.h"
+#include "PathUtil.h"
 
 std::vector<DVLib::MsiProductInfo> DVLib::MsiGetInstalledProducts()
 {
@@ -121,4 +122,14 @@ bool DVLib::MsiIsProductInstalled(GUID guid)
 	}
 
 	return false;
+}
+
+std::wstring DVLib::GetQuotedPathOrGuid(const std::wstring& package)
+{
+	std::wstring result;
+	result.append(L"\"");
+	result += (DVLib::isguid(package) ? package : DVLib::DirectoryCombine(
+			DVLib::GetCurrentDirectoryW(), package));
+	result.append(L"\"");
+	return result;
 }

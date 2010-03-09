@@ -89,6 +89,7 @@
         <ComponentRef Id="OsFiltersSample" />
         <ComponentRef Id="MultilingualSetupSample" />
         <ComponentRef Id="LicenseAgreementSample" />
+        <ComponentRef Id="PatchSetupSample" />
       </Feature>
     </Feature>
     <UIRef Id="dotNetInstallerUI_InstallDir" />

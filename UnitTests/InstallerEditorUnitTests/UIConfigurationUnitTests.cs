@@ -89,7 +89,7 @@ namespace InstallerEditorUnitTests
                 UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
                 Tree configurationTree = UIAutomation.Find<Tree>(mainWindow, "configurationTree");
                 Assert.AreEqual(1, configurationTree.Nodes.Count);
-                string[] componentsMenuItems = { "Msi Component", "Command Component", "Msu Component", "OpenFile Component" };
+                string[] componentsMenuItems = { "Msi Component", "Command Component", "Msu Component", "Msp Component", "OpenFile Component" };
                 string[] checksMenuItems = { "Installed Check Registry", "Installed Check File", "Installed Check Directory", 
                     "Installed Check Operator", "Installed Check ProductCode" };
                 UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();

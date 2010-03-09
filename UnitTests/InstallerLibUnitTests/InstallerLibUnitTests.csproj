@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="ComponentEmbedFolderTests.cs" />
     <Compile Include="ComponentMsiTests.cs" />
+    <Compile Include="ComponentMspTests.cs" />
     <Compile Include="ComponentMsuTests.cs" />
     <Compile Include="ComponentOpenFileTests.cs" />
     <Compile Include="ConfigFileTests.cs" />

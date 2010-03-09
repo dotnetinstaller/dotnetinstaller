@@ -11,6 +11,7 @@ enum component_type
 	component_type_cmd, // shell command
 	component_type_msi, // windows installer setup
 	component_type_msu, // windows update
+	component_type_msp, // windows installer patch
 	component_type_openfile // ShellExecute call to open a file
 };
 
