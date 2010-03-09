@@ -68,7 +68,7 @@ namespace InstallerLib
         public string uninstall_patch
         {
             get { return m_uninstall_patch; }
-            set { uninstall_patch = value; }
+            set { m_uninstall_patch = value; }
         }
 
         private string m_uninstall_package;
