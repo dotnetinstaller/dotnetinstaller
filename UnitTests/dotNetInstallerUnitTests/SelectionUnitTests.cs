@@ -34,6 +34,11 @@ namespace dotNetInstallerUnitTests
             configFile.SaveAs(configFilename);
             dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
             Assert.AreEqual(42, dotNetInstallerExeUtils.Run(options));
+            // first component is selected and runs
+            component1.selected = true;
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            Assert.AreEqual(57, dotNetInstallerExeUtils.Run(options));
             File.Delete(configFilename);
         }
     }
