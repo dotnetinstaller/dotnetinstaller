@@ -59,6 +59,8 @@ public:
     bool cancelled;
     // true if component is required for final command to execute
     bool required;
+	// true if component is selected by default
+    bool selected;
 	// classi per gestire la verifica se il componente è installato o no
 	std::vector<InstalledCheckPtr> installedchecks;
 	// informazioni sull'eventuale download dei componenti (fa riferimento al nodo downloaddialog all'interno di Component, se non è presente non viene scaricato nessun componente)
@@ -78,7 +80,7 @@ public:
 	virtual bool IsExecuting() const = 0;
 	virtual bool IsInstalled() const;
 	// indica se il componente verrà eseguito o no
-	bool selected;
+	bool checked;
 	// load a component from an xml node
 	virtual void Load(TiXmlElement * node);
 	// returns true if this component is supported on this operating system/lcid

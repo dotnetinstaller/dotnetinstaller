@@ -77,7 +77,7 @@ int Components::Exec(IExecuteCallback * callback)
 	int rc = 0;
 	for each(const ComponentPtr& component in * this)
 	{
-		if (! component->selected)
+		if (! component->checked)
 		{
 			LOG(L"--- Component '" << component->id << L"' (" << component->GetDisplayName() << L"): SKIPPED");
 			continue;

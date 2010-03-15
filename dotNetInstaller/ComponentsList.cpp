@@ -93,7 +93,7 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 	for (size_t i = 0; i < components.size(); i++)
 	{
 		ComponentPtr component(components[i]);
-		component->selected = true;
+		component->checked = true;
         bool component_installed = component->IsInstalled();
         
         LOG(L"-- " << component->id << L" (" << component->GetDisplayName() << L"): " 
@@ -101,9 +101,9 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 
 		// component selection
 		if (component_installed && InstallerSession::Instance->sequence == SequenceInstall)
-			component->selected = false;
+			component->checked = false;
 		if (! component_installed && InstallerSession::Instance->sequence == SequenceUninstall)
-			component->selected = false;
+			component->checked = false;
 
 		if (InstallerSession::Instance->sequence == SequenceInstall)
 			all &= component_installed;
@@ -134,9 +134,12 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 		int id = AddString(l_descr.c_str());
 		SetItemDataPtr(id, get(component));
 
-        if (component->selected)
+        if (component->checked)
         {
-			SetCheck(id, 1);
+			if (component->selected)
+			{
+				SetCheck(id, 1);
+			}
         }
 
         // a component is considered installed when it has an install check which results

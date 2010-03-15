@@ -18,7 +18,8 @@ Component::Component(component_type t)
     , allow_continue_on_error(true)
     , cancelled(false)
     , required(true)
-    , selected(true)
+	, selected(true)
+    , checked(true)
 	, supports_install(true)
 	, supports_uninstall(false)
 {
@@ -62,6 +63,7 @@ void Component::Load(TiXmlElement * node)
     allow_continue_on_error = XmlAttribute(node->Attribute("allow_continue_on_error")).GetBoolValue(true);
     failed_exec_command_continue = node->Attribute("failed_exec_command_continue");
 	required = XmlAttribute(node->Attribute("required")).GetBoolValue(true);
+	selected = XmlAttribute(node->Attribute("selected")).GetBoolValue(true);
 	processor_architecture_filter = node->Attribute("processor_architecture_filter");
 	supports_install = XmlAttribute(node->Attribute("supports_install")).GetBoolValue(true);
 	supports_uninstall = XmlAttribute(node->Attribute("supports_uninstall")).GetBoolValue(false);

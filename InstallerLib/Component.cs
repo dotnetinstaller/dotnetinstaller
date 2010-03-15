@@ -159,6 +159,15 @@ namespace InstallerLib
             set { m_required = value; }
         }
 
+        private bool m_selected = true;
+        [Description("Indicates whether the component is selected by default.")]
+        [Category("Component")]
+        public bool selected
+        {
+            get { return m_selected; }
+            set { m_selected = value; }
+        }
+
         private string m_note;
         [Description("Note, not used by the setup. (OPTIONAL)")]
         public string note
@@ -263,6 +272,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("failed_exec_command_continue", m_failed_exec_command_continue);            
             e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
             e.XmlWriter.WriteAttributeString("required", m_required.ToString());
+            e.XmlWriter.WriteAttributeString("selected", m_selected.ToString());
             e.XmlWriter.WriteAttributeString("note", m_note);
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
             e.XmlWriter.WriteAttributeString("status_installed", m_status_installed);
@@ -288,6 +298,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "failed_exec_command_continue", ref m_failed_exec_command_continue);
             ReadAttributeValue(e, "allow_continue_on_error", ref m_allow_continue_on_error);
             ReadAttributeValue(e, "required", ref m_required);
+            ReadAttributeValue(e, "selected", ref m_selected);
             ReadAttributeValue(e, "os_filter_greater", ref m_os_filter_greater);
             ReadAttributeValue(e, "os_filter_lcid", ref m_os_filter_lcid);
             ReadAttributeValue(e, "os_filter_smaller", ref m_os_filter_smaller);
