@@ -7,7 +7,7 @@
         component is already installed or to conditionally enable or display user-defined controls.
       </para>
       <para>
-        For example, you can check if .NET Framework 1.1 is installed  by reading this registry key 
+        For example, you can check if .NET Framework 1.1 is installed by reading this registry key 
         <fictitiousUri>SOFTWARE\Microsoft\NET Framework Setup\NDP\v1.1.4322\Install</fictitiousUri>.
         InstalledChecks can be combined with <newTerm>operating system filters</newTerm> which selects components 
         depending on the target OS and with <newTerm>processor architecture filters</newTerm> which check the operating 
@@ -19,8 +19,8 @@
       <content>
         <para>
           There are four types of installed checks: <newTerm>check_file</newTerm>, <newTerm>check_directory</newTerm>,
-          <newTerm>check_registry_value</newTerm> and <newTerm>check_product</newTerm>. These can also be combined
-          with installed check operators.
+          <newTerm>check_registry_value</newTerm> and <newTerm>check_product</newTerm>. These can also be added under
+          installed check operators.
         </para>
       </content>
       <sections>
@@ -207,7 +207,8 @@
       <title>Check Operators</title>
       <content>
         <para>
-          You can combine results from multiple InstalledCheck elements with an <newTerm>InstalledCheckOperator</newTerm>.
+          You can combine results from multiple elements by adding one or more <newTerm>InstalledCheck</newTerm> elements under 
+          an <newTerm>InstalledCheckOperator</newTerm>. You may add operators under other operators to achieve more complex logic.
           The following operators are supported: <newTerm>And</newTerm>, <newTerm>Or</newTerm> and <newTerm>Not</newTerm>.
           <alert class="important">
             <para>
@@ -218,6 +219,13 @@
             <para>
               User-defined controls are the opposite. A control will be enabled or visible if the installed check evaluates to 
               <newTerm>True</newTerm>.
+            </para>
+          </alert>
+          <alert class="important">
+            <para>
+              By default the <newTerm>Not</newTerm> operator behaves as <newTerm>Not Or</newTerm>. When multiple installed checks
+              are added under this operator, if any of the checks returns True, the Not operator will return False. To achieve a
+              <newTerm>Not And</newTerm> behavior, add an <newTerm>And</newTerm> operator under a <newTerm>Not</newTerm> operator.
             </para>
           </alert>
         </para>
