@@ -24,8 +24,17 @@ void InstalledCheckRegistry::Load(TiXmlElement * node)
 
 bool InstalledCheckRegistry::IsInstalled() const
 {
-	std::wstring keypath(path.GetValue() + L"\\" + fieldname.GetValue());
-    LOG(L"Reading registry value: " << keypath);
+	std::wstring keypath = path.GetValue();
+	if (! fieldname.GetValue().empty())
+	{
+		keypath += L"\\";
+		keypath += fieldname.GetValue();
+		LOG(L"Checking registry value: " << keypath);
+	}
+	else
+	{
+		LOG(L"Checking registry key: " << keypath);
+	}
 
 	DVLib::OperatingSystem type = DVLib::GetOperatingSystemVersion();
 	DWORD dwKeyOption = KEY_READ;
@@ -55,10 +64,16 @@ bool InstalledCheckRegistry::IsInstalled() const
 		}
 	}
 
-	if (! DVLib::RegistryKeyExists(DVLib::wstring2HKEY(rootkey), path, fieldname, dwKeyOption))
+	if (fieldname.empty() && ! DVLib::RegistryKeyExists(DVLib::wstring2HKEY(rootkey), path, dwKeyOption))
 	{
 		bool default_result = defaultvalue.GetBoolValue(false);
 		LOG(L"*** No registry key found: " << keypath << L", default value: " << (default_result ? L"true" : L"false"));
+		return default_result;
+	}
+	else if (! DVLib::RegistryValueExists(DVLib::wstring2HKEY(rootkey), path, fieldname, dwKeyOption))
+	{
+		bool default_result = defaultvalue.GetBoolValue(false);
+		LOG(L"*** No registry value found: " << keypath << L", default value: " << (default_result ? L"true" : L"false"));
 		return default_result;
 	}
 

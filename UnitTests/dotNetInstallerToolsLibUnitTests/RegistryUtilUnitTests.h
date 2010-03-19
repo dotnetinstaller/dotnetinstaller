@@ -10,6 +10,7 @@ namespace DVLib
 			CPPUNIT_TEST( testHKEY2wstring );
 			CPPUNIT_TEST( testwstring2HKEY );
 			CPPUNIT_TEST( testKeyExists );
+			CPPUNIT_TEST( testValueExists );
 			CPPUNIT_TEST( testCreateDeleteKey );
 			CPPUNIT_TEST( testGetStringValue );
 			CPPUNIT_TEST( testSetStringValue );
@@ -21,6 +22,7 @@ namespace DVLib
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testKeyExists();
+			void testValueExists();
 			void testSetStringValue();
 			void testGetStringValue();
 			void testSetDWORDValue();

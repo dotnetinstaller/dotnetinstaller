@@ -140,7 +140,7 @@ void InstallerSessionUnitTests::testEnableRunOnReboot()
 
 	InstallerSession::Instance->DisableRunOnReboot();
 
-	CPPUNIT_ASSERT(! DVLib::RegistryKeyExists(
+	CPPUNIT_ASSERT(! DVLib::RegistryValueExists(
 		HKEY_LOCAL_MACHINE,
 		L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
 		DVLib::GetFileNameW(DVLib::GetModuleFileNameW())));

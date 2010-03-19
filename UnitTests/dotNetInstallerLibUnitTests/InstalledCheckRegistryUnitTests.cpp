@@ -45,6 +45,7 @@ void InstalledCheckRegistryUnitTests::testIsInstalled()
 		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib", L"DWORD", L"REG_DWORD", L"2", L"exists", false, true },
 		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib", L"DWORD-doesntexist", L"REG_DWORD", L"2", L"exists", false, false },
 		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib-doesntexist", L"DWORD", L"REG_DWORD", L"", L"exists", false, false },
+		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib-doesntexist", L"", L"REG_SZ", L"", L"exists", false, false },
 		{ L"HKEY_LOCAL_MACHINE", L"SOFTWARE\\DVLib", L"DWORD", L"REG_DWORD", L"1", L"match", false, false },
 		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib", L"DWORD", L"REG_DWORD", L"1", L"version", false, true },
 		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib", L"DWORD", L"REG_DWORD", L"0", L"version", false, true },

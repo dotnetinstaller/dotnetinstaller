@@ -21,8 +21,10 @@ namespace DVLib
 	std::wstring HKEY2wstring(HKEY root);
 	// convert a well-known HKEY value to a string
 	HKEY wstring2HKEY(const std::wstring& key);
-	// checks whether a registry key, and optionally registry value, exists
-	bool RegistryKeyExists(HKEY root, const std::wstring& key, const std::wstring& name = L"", DWORD ulFlags = 0);
+	// checks whether a registry key exists
+	bool RegistryKeyExists(HKEY root, const std::wstring& key, DWORD ulFlags = 0);
+	// checks whether a registry value exists
+	bool RegistryValueExists(HKEY root, const std::wstring& key, const std::wstring& name, DWORD ulFlags = 0);
 	// create a registry key
 	void RegistryCreateKey(HKEY root, const std::wstring& key, DWORD ulFlags = 0);
 	// delete a registry value

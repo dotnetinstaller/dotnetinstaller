@@ -31,9 +31,15 @@ void RegistryUtilUnitTests::testKeyExists()
 		L"SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v2.0.50727"));
 	CPPUNIT_ASSERT(! DVLib::RegistryKeyExists(HKEY_LOCAL_MACHINE, 
 		L"SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v2.Doesnt.Exist"));
-	CPPUNIT_ASSERT(DVLib::RegistryKeyExists(HKEY_LOCAL_MACHINE, 
+}
+
+void RegistryUtilUnitTests::testValueExists()
+{
+	CPPUNIT_ASSERT(DVLib::RegistryValueExists(HKEY_LOCAL_MACHINE, 
 		L"SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v2.0.50727", L"Version"));
-	CPPUNIT_ASSERT(! DVLib::RegistryKeyExists(HKEY_LOCAL_MACHINE, 
+	CPPUNIT_ASSERT(! DVLib::RegistryValueExists(HKEY_LOCAL_MACHINE, 
+		L"SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v2.0.50727", L""));
+	CPPUNIT_ASSERT(! DVLib::RegistryValueExists(HKEY_LOCAL_MACHINE, 
 		L"SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v2.0.50727", L"VersionDoesntExist"));
 }
 
@@ -82,18 +88,18 @@ void RegistryUtilUnitTests::testDeleteValue()
 		std::wstring name = L"Developer";
 		std::wstring value = L"abc";
 		DVLib::RegistrySetStringValue(HKEY_CURRENT_USER, path, name, value);
-		CPPUNIT_ASSERT(DVLib::RegistryKeyExists(HKEY_CURRENT_USER, path, name));
+		CPPUNIT_ASSERT(DVLib::RegistryValueExists(HKEY_CURRENT_USER, path, name));
 		DVLib::RegistryDeleteValue(HKEY_CURRENT_USER, path, name);
-		CPPUNIT_ASSERT(! DVLib::RegistryKeyExists(HKEY_CURRENT_USER, path, name));
+		CPPUNIT_ASSERT(! DVLib::RegistryValueExists(HKEY_CURRENT_USER, path, name));
 	}
 	// test empty value
 	{
 		std::wstring name = L"Blank";
 		std::wstring value = L"";
 		DVLib::RegistrySetStringValue(HKEY_CURRENT_USER, path, name, value);
-		CPPUNIT_ASSERT(DVLib::RegistryKeyExists(HKEY_CURRENT_USER, path, name));
+		CPPUNIT_ASSERT(DVLib::RegistryValueExists(HKEY_CURRENT_USER, path, name));
 		DVLib::RegistryDeleteValue(HKEY_CURRENT_USER, path, name);
-		CPPUNIT_ASSERT(! DVLib::RegistryKeyExists(HKEY_CURRENT_USER, path, name));
+		CPPUNIT_ASSERT(! DVLib::RegistryValueExists(HKEY_CURRENT_USER, path, name));
 	}
 	// cleanup
 	DVLib::RegistryDeleteKey(HKEY_CURRENT_USER, L"SOFTWARE\\DVLib");

@@ -148,7 +148,7 @@ bool InstallerSession::ExpandRegistryVariable(const std::wstring& variable, std:
 	// path
 	std::wstring key_path = DVLib::join(parts, L"\\");
 
-	if (! DVLib::RegistryKeyExists(hkey, key_path, key_name, ulFlags))
+	if (! DVLib::RegistryValueExists(hkey, key_path, key_name, ulFlags))
 	{
 		return false;
 	}
@@ -248,7 +248,7 @@ void InstallerSession::EnableRunOnReboot(const std::wstring& add)
 void InstallerSession::DisableRunOnReboot()
 {
 	std::wstring name = DVLib::GetFileNameW(DVLib::GetModuleFileNameW());
-	if (DVLib::RegistryKeyExists(HKEY_LOCAL_MACHINE, REGISTRY_CURRENTVERSION_RUN, name))
+	if (DVLib::RegistryValueExists(HKEY_LOCAL_MACHINE, REGISTRY_CURRENTVERSION_RUN, name))
 	{
 		DVLib::RegistryDeleteValue(HKEY_LOCAL_MACHINE, REGISTRY_CURRENTVERSION_RUN, name);
 	}

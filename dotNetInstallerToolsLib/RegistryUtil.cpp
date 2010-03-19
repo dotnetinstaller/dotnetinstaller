@@ -4,7 +4,7 @@
 #include "StringUtil.h"
 #include "ErrorUtil.h"
 
-bool DVLib::RegistryKeyExists(HKEY root, const std::wstring& key, const std::wstring& name, DWORD ulFlags)
+bool DVLib::RegistryKeyExists(HKEY root, const std::wstring& key, DWORD ulFlags)
 {
     HKEY reg = NULL;
     DWORD dwErr = ::RegOpenKeyEx(root, key.c_str(), 0, ulFlags | KEY_READ, & reg);
@@ -24,7 +24,30 @@ bool DVLib::RegistryKeyExists(HKEY root, const std::wstring& key, const std::wst
         break;
     }
 
-    if (result && ! name.empty())
+    return result;
+}
+
+bool DVLib::RegistryValueExists(HKEY root, const std::wstring& key, const std::wstring& name, DWORD ulFlags)
+{
+    HKEY reg = NULL;
+    DWORD dwErr = ::RegOpenKeyEx(root, key.c_str(), 0, ulFlags | KEY_READ, & reg);
+    auto_hkey reg_ptr(reg);
+
+    bool result = true;
+    switch(dwErr)
+    {
+    case ERROR_SUCCESS:
+        break;
+    case ERROR_FILE_NOT_FOUND:
+        result = false;
+        break;
+    default:
+        CHECK_WIN32_DWORD(dwErr,
+            L"Error checking whether '" << HKEY2wstring(root) << L"\\" << key << L"' exists");
+        break;
+    }
+
+    if (result)
     {
         DWORD dwSize = 0;
         DWORD dwType = 0;
@@ -60,7 +83,7 @@ std::wstring DVLib::RegistryGetStringValue(HKEY root, const std::wstring& key, c
     DWORD dwType = 0;
 
     CHECK_WIN32_DWORD(::RegQueryValueEx(reg, name.c_str(), 0, & dwType, NULL, & dwSize),
-        L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"' value size");
+		L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"' value size:");
 
 	CHECK_BOOL(dwType == REG_SZ || dwType == REG_EXPAND_SZ,
         L"Error quering '" << HKEY2wstring(root) << L"\\" << key << L"\\" << name << L"' value, unexpected type " << dwType);
