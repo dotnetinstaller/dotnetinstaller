@@ -5,6 +5,24 @@ using System.ComponentModel;
 namespace InstallerLib
 {
     /// <summary>
+    /// Install check comparison types
+    /// </summary>
+    public enum installcheckregistry_comparison
+    {
+        match,
+        version,
+        version_eq,
+        version_lt,
+        version_le,
+        version_gt,
+        version_ge,
+        exists,
+        key_exists,
+        value_exists,
+        contains
+    }
+
+    /// <summary>
     /// InstalledCheck of type "check_registry_value".
     /// </summary>
     public class InstalledCheckRegistry : InstalledCheck
@@ -13,7 +31,7 @@ namespace InstallerLib
             : base("check_registry_value")
         {
             m_path = "SOFTWARE\\MyCompany\\MyApplication\\1.0.1.0";
-            m_comparison = installcheck_comparison.match;
+            m_comparison = installcheckregistry_comparison.match;
             m_fieldname = "Installed";
             m_fieldtype = installcheck_registrytype.REG_DWORD;
             m_fieldvalue = "1";
@@ -61,9 +79,9 @@ namespace InstallerLib
             set { m_fieldtype = value; }
         }
 
-        private installcheck_comparison m_comparison;
-        [Description("Comparison mode; can be 'match' to check if the exact value is present in the registry or 'version' to compare the registry version with the specified version and return true if the registry version is equal or greater then the version specified. (REQUIRED)")]
-        public installcheck_comparison comparison
+        private installcheckregistry_comparison m_comparison;
+        [Description("Comparison mode; one of 'match', 'version', 'exists', etc. (REQUIRED)")]
+        public installcheckregistry_comparison comparison
         {
             get { return m_comparison; }
             set { m_comparison = value; }

@@ -5,22 +5,6 @@ using System.ComponentModel;
 namespace InstallerLib
 {
     /// <summary>
-    /// Install check comparison types
-    /// </summary>
-    public enum installcheck_comparison
-    {
-        match,
-        version,
-        version_eq,
-        version_lt,
-        version_le,
-        version_gt,
-        version_ge,
-        exists,
-        contains
-    }
-
-    /// <summary>
     /// An installed check.
     /// </summary>
     [XmlNoChildren]

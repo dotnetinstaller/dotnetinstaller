@@ -25,6 +25,13 @@ public:
     InstalledCheckRegistry();
     void Load(TiXmlElement * node);
 	bool IsInstalled() const;
+private:
+	DWORD GetKeyOption() const;
+	std::wstring GetKeyPath() const;
+	bool IsInstalledExists() const;
+	bool IsInstalledValue() const;
+	bool IsInstalledKeyExists() const;
+	bool IsInstalledValueExists() const;
 };
 
 typedef shared_any<InstalledCheckRegistry *, close_delete> InstalledCheckRegistryPtr;

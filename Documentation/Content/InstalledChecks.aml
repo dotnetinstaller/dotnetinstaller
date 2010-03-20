@@ -87,7 +87,20 @@
                   The registry value must match exactly the specified list.
                 </definition>
                 <definedTerm>exists</definedTerm>
-                <definition>Check whether the registry key or value exists.</definition>
+                <definition>
+                  Check whether the registry key or value exists. If <newTerm>fieldname</newTerm> is empty, check whether
+                  the registry key exists. Otherwise check whether the value exists. To check whether a default registry key 
+                  value is set, use <newTerm>value_exists</newTerm>.
+                </definition>
+                <definedTerm>key_exists</definedTerm>
+                <definition>
+                  Check whether the registry key exists. The value of <newTerm>fieldname</newTerm> is ignored.
+                </definition>
+                <definedTerm>value_exists</definedTerm>
+                <definition>
+                  Check whether the registry value exists. If <newTerm>fieldname</newTerm> is empty, checks whether
+                  the default value of a key is set.
+                </definition>
                 <definedTerm>contains</definedTerm>
                 <definition>
                   Check whether the registry value contains the check value.

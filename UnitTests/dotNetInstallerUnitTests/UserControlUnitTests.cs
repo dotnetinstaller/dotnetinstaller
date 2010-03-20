@@ -63,7 +63,7 @@ namespace dotNetInstallerUnitTests
             // an installed check that is always false
             InstalledCheckRegistry check = new InstalledCheckRegistry();
             check.path = @"SOFTWARE\KeyDoesntExist";
-            check.comparison = installcheck_comparison.exists;
+            check.comparison = installcheckregistry_comparison.exists;
             checkbox.Children.Add(check);
             // command that depends on the value of checkbox1
             ComponentCmd cmd = new ComponentCmd();
@@ -123,7 +123,7 @@ namespace dotNetInstallerUnitTests
             // an installed check that is always false
             InstalledCheckRegistry check = new InstalledCheckRegistry();
             check.path = @"SOFTWARE\KeyDoesntExist";
-            check.comparison = installcheck_comparison.exists;
+            check.comparison = installcheckregistry_comparison.exists;
             edit.Children.Add(check);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [edit1]5";
@@ -152,7 +152,7 @@ namespace dotNetInstallerUnitTests
             // an installed check that is always false
             InstalledCheckRegistry check = new InstalledCheckRegistry();
             check.path = @"SOFTWARE\KeyDoesntExist";
-            check.comparison = installcheck_comparison.exists;
+            check.comparison = installcheckregistry_comparison.exists;
             edit.Children.Add(check);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [edit1]5";

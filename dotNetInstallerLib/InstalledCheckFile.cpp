@@ -39,8 +39,6 @@ bool InstalledCheckFile::IsInstalled() const
 				return (fileversion == fileversion_current);
 			else if (comparison == TEXT("version"))
 				return (DVLib::CompareVersion(fileversion_current, fileversion) >= 0);
-			else if (comparison == TEXT("version_patch"))
-				return (DVLib::CompareVersion(fileversion_current, fileversion) >= 0);
 			else if (comparison == TEXT("version_eq"))
 				return (DVLib::CompareVersion(fileversion_current, fileversion) == 0);
 			else if (comparison == TEXT("version_gt"))

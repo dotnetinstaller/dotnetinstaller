@@ -11,6 +11,8 @@ void InstalledCheckRegistryUnitTests::setUp()
 	DVLib::RegistryCreateKey(HKEY_CURRENT_USER, L"SOFTWARE\\DVLib");
 	DVLib::RegistrySetDWORDValue(HKEY_CURRENT_USER, L"SOFTWARE\\DVLib", L"DWORD", 1);
 	DVLib::RegistrySetStringValue(HKEY_CURRENT_USER, L"SOFTWARE\\DVLib", L"String", L"1.2.3.4");
+	DVLib::RegistryCreateKey(HKEY_CURRENT_USER, L"SOFTWARE\\DVLib\\SubWithDefaultValue");
+	DVLib::RegistrySetStringValue(HKEY_CURRENT_USER, L"SOFTWARE\\DVLib\\SubWithDefaultValue", L"", L"default value");
 	std::vector<std::wstring> data;
 	data.push_back(L"abc");
 	data.push_back(L"defg");
@@ -43,6 +45,11 @@ void InstalledCheckRegistryUnitTests::testIsInstalled()
 		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib", L"DWORD", L"REG_DWORD", L"1", L"match", false, true },
 		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib", L"DWORD", L"REG_DWORD", L"2", L"match", false, false },
 		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib", L"DWORD", L"REG_DWORD", L"2", L"exists", false, true },
+		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib", L"DWORD", L"REG_DWORD", L"2", L"key_exists", false, true },
+		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib", L"DWORD", L"REG_DWORD", L"2", L"value_exists", false, true },
+		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib", L"", L"", L"", L"value_exists", false, false },
+		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib\\SubWithDefaultValue", L"", L"", L"", L"value_exists", false, true },
+		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib", L"DWORD-doesntexist", L"REG_DWORD", L"2", L"value_exists", false, false },
 		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib", L"DWORD-doesntexist", L"REG_DWORD", L"2", L"exists", false, false },
 		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib-doesntexist", L"DWORD", L"REG_DWORD", L"", L"exists", false, false },
 		{ L"HKEY_CURRENT_USER", L"SOFTWARE\\DVLib-doesntexist", L"", L"REG_SZ", L"", L"exists", false, false },

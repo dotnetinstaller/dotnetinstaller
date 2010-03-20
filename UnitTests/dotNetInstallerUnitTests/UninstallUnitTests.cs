@@ -113,7 +113,7 @@ namespace dotNetInstallerUnitTests
             cmd.supports_uninstall = true;
             InstalledCheckFile check = new InstalledCheckFile();
             cmd.Children.Add(check);
-            check.comparison = installcheck_comparison.exists;
+            check.comparison = installcheckfile_comparison.exists;
             check.filename = dotNetInstallerExeUtils.Executable;
             // a second component that doesn't support uninstall
             ComponentCmd cmd2 = new ComponentCmd();
@@ -148,7 +148,7 @@ namespace dotNetInstallerUnitTests
                 msi.uninstall_cmdparameters_silent = "/qb-";
                 InstalledCheckFile self = new InstalledCheckFile();
                 self.filename = dotNetInstallerExeUtils.Executable;
-                self.comparison = installcheck_comparison.exists;
+                self.comparison = installcheckfile_comparison.exists;
                 msi.Children.Add(self);
                 setupConfiguration.Children.Add(msi);
                 // silent install, no dialog messages
@@ -182,7 +182,7 @@ namespace dotNetInstallerUnitTests
                 msp.uninstall_cmdparameters_silent = "/qb-";
                 InstalledCheckFile self = new InstalledCheckFile();
                 self.filename = dotNetInstallerExeUtils.Executable;
-                self.comparison = installcheck_comparison.exists;
+                self.comparison = installcheckfile_comparison.exists;
                 msp.Children.Add(self);
                 setupConfiguration.Children.Add(msp);
                 // silent install, no dialog messages

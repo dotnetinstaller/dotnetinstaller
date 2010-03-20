@@ -5,6 +5,22 @@ using System.ComponentModel;
 namespace InstallerLib
 {
     /// <summary>
+    /// Install check comparison types
+    /// </summary>
+    public enum installcheckproduct_comparison
+    {
+        match,
+        version,
+        version_eq,
+        version_lt,
+        version_le,
+        version_gt,
+        version_ge,
+        exists,
+        contains
+    }
+
+    /// <summary>
     /// Type of installed product id.
     /// </summary>
     public enum InstalledCheckProductType
@@ -24,7 +40,7 @@ namespace InstallerLib
             m_id_type = InstalledCheckProductType.upgradecode;
             m_id = new Guid();
             m_propertyname = "VersionString";
-            m_comparison = installcheck_comparison.version;
+            m_comparison = installcheckproduct_comparison.version;
             m_propertyvalue = "1.0.0.0";
         }
 
@@ -60,9 +76,9 @@ namespace InstallerLib
             set { m_propertyvalue = value; }
         }
 
-        private installcheck_comparison m_comparison;
+        private installcheckproduct_comparison m_comparison;
         [Description("Comparison mode.")]
-        public installcheck_comparison comparison
+        public installcheckproduct_comparison comparison
         {
             get { return m_comparison; }
             set { m_comparison = value; }

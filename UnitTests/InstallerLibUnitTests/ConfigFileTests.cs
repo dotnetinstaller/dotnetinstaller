@@ -56,8 +56,12 @@ namespace InstallerLibUnitTests
                                 pi.SetValue(xmlclazz, Guid.NewGuid(), null);
                             else if (pi.PropertyType.Equals(typeof(Rectangle)))
                                 pi.SetValue(xmlclazz, new Rectangle(1, 2, 3, 4), null);
-                            else if (pi.PropertyType.Equals(typeof(installcheck_comparison)))
-                                pi.SetValue(xmlclazz, installcheck_comparison.version_gt, null);
+                            else if (pi.PropertyType.Equals(typeof(installcheckregistry_comparison)))
+                                pi.SetValue(xmlclazz, installcheckregistry_comparison.version_gt, null);
+                            else if (pi.PropertyType.Equals(typeof(installcheckfile_comparison)))
+                                pi.SetValue(xmlclazz, installcheckfile_comparison.version_gt, null);
+                            else if (pi.PropertyType.Equals(typeof(installcheckproduct_comparison)))
+                                pi.SetValue(xmlclazz, installcheckproduct_comparison.version_gt, null);
                             else if (pi.PropertyType.Equals(typeof(installcheck_wowoption)))
                                 pi.SetValue(xmlclazz, installcheck_wowoption.WOW64_64, null);
                             else if (pi.PropertyType.Equals(typeof(installcheck_rootkey)))

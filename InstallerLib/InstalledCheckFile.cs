@@ -4,6 +4,21 @@ using System.ComponentModel;
 namespace InstallerLib
 {
     /// <summary>
+    /// Install check comparison types
+    /// </summary>
+    public enum installcheckfile_comparison
+    {
+        match,
+        version,
+        version_eq,
+        version_lt,
+        version_le,
+        version_gt,
+        version_ge,
+        exists
+    }
+
+    /// <summary>
     /// InstalledCheck of type "check_file".
     /// </summary>
     public class InstalledCheckFile : InstalledCheck
@@ -12,7 +27,7 @@ namespace InstallerLib
             : base("check_file")
         {
             m_filename = "#SYSTEMPATH\\my_dll.dll";
-            m_comparison = installcheck_comparison.version;
+            m_comparison = installcheckfile_comparison.version;
             m_fileversion = "2.1.0.0";
         }
 
@@ -32,9 +47,9 @@ namespace InstallerLib
             set { m_fileversion = value; }
         }
 
-        private installcheck_comparison m_comparison;
-        [Description("Comparison mode, can be 'match' to check if the exact version of the file is present or 'version' to compare if a version equal or greater is present. (REQUIRED)")]
-        public installcheck_comparison comparison
+        private installcheckfile_comparison m_comparison;
+        [Description("Comparison mode, can be 'match', 'version', 'exists', etc. (REQUIRED)")]
+        public installcheckfile_comparison comparison
         {
             get { return m_comparison; }
             set { m_comparison = value; }
