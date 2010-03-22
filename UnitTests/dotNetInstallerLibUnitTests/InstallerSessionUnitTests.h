@@ -7,6 +7,7 @@ namespace DVLib
 		class InstallerSessionUnitTests : public dotNetInstallerLibUnitTestFixture
 		{
 			CPPUNIT_TEST_SUITE( InstallerSessionUnitTests );
+			CPPUNIT_TEST( testExpandVariables );
 			CPPUNIT_TEST( testExpandPathVariables );
 			CPPUNIT_TEST( testExpandEnvironmentVariables );
 			CPPUNIT_TEST( testExpandRegistryVariables );
@@ -17,6 +18,7 @@ namespace DVLib
 			CPPUNIT_TEST( testExpandPathVariablesBackslashes );
 			CPPUNIT_TEST_SUITE_END();
 		public:
+			void testExpandVariables();
 			void testExpandPathVariablesBackslashes();
 			void testExpandPathVariables();
 			void testExpandEnvironmentVariables();

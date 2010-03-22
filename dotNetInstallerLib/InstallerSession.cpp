@@ -32,7 +32,8 @@ std::wstring InstallerSession::ExpandVariables(const std::wstring& value)
 	std::wstring result = DVLib::ExpandEnvironmentVariables(value);
 	result = ExpandPathVariables(result);
 	result = ExpandRegistryVariables(result);
-	return result;	
+	result = ExpandUserVariables(result);
+	return result;
 }
 
 std::wstring InstallerSession::ExpandUserVariables(const std::wstring& s_in)

@@ -77,6 +77,15 @@ void InstallerSessionUnitTests::testExpandUserVariables()
 	CPPUNIT_ASSERT(L"t1t2" == InstallerSession::Instance->ExpandUserVariables(L"[test1][test2]"));
 }
 
+void InstallerSessionUnitTests::testExpandVariables()
+{
+	InstallerSession::Instance->AdditionalControlArgs[L"test1"] = L"t1";
+	InstallerSession::Instance->AdditionalControlArgs[L"test2"] = L"t2";
+	// expand varialbes includes expanding user variables
+	CPPUNIT_ASSERT(L"t1t2" + DVLib::GetWindowsDirectoryW() + DVLib::GetTemporaryDirectoryW() == 
+		InstallerSession::Instance->ExpandVariables(L"[test1][test2]%SystemRoot%#TEMPPATH"));
+}
+
 void InstallerSessionUnitTests::testExpandRegistryVariables()
 {
 	std::wstring common_files_dir = DVLib::RegistryGetStringValue(
