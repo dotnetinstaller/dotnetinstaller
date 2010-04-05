@@ -101,6 +101,15 @@ namespace InstallerLib
             set { m_enabled = value; }
         }
 
+        private bool m_has_value_disabled = false;
+        [Description("When true, collect value even if the control is disabled.")]
+        [Category("Value")]
+        public bool HasValueDisabled
+        {
+            get { return m_has_value_disabled; }
+            set { m_has_value_disabled = value; }
+        }
+
         private bool m_display_install = true;
         [Description("Display control on install.")]
         [Category("Layout")]
@@ -145,6 +154,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("display_install", m_display_install.ToString());
             e.XmlWriter.WriteAttributeString("display_uninstall", m_display_uninstall.ToString());
             e.XmlWriter.WriteAttributeString("check", m_check.ToString());
+            e.XmlWriter.WriteAttributeString("has_value_disabled", m_has_value_disabled.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -163,6 +173,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "display_install", ref m_display_install);
             ReadAttributeValue(e, "display_uninstall", ref m_display_uninstall);
             ReadAttributeValue(e, "check", ref m_check);
+            ReadAttributeValue(e, "has_value_disabled", ref m_has_value_disabled);
             base.OnXmlReadTag(e);
         }
 

@@ -6,6 +6,7 @@
 
 Control::Control(control_type t)
 	: type(t)
+	, has_value_disabled(false)
 {
 
 }
@@ -21,6 +22,7 @@ void Control::Load(TiXmlElement * node)
 	display_install = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("display_install")));
 	display_uninstall = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("display_uninstall")));
 	check = wstring2controlcheck(DVLib::UTF8string2wstring(node->Attribute("check")));
+	has_value_disabled = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("has_value_disabled")));
 	// install checks, embed files, etc.
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )

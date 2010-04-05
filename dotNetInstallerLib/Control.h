@@ -30,6 +30,8 @@ public:
 	// display
 	bool display_install;
 	bool display_uninstall;
+	// value
+	bool has_value_disabled;
 	// installed checks that define whether this control is enabled
 	std::vector<InstalledCheckPtr> installedchecks;
 	// control type

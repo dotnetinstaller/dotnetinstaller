@@ -85,6 +85,10 @@
           a unique <literal>id</literal> set in the editor that must be referenced in square brackets. For example, the value of
           the <literal>browse</literal> control with id <literal>MYDIR</literal> can be used by entering <literal>[MYDIR]</literal>.
         </para>
+        <para>
+          Enabled controls always have a value. Disabled controls only have a value when <literal>has_value_disabled</literal> is
+          set to <literal>True</literal>. Hidden controls never have a value.
+        </para>
       </content>
     </section>
     <section address="overridingcontrolvalues">

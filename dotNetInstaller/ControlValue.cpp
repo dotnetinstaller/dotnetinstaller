@@ -3,7 +3,7 @@
 
 ControlValue::ControlValue(const Control& control)
 {
-	enabled = control.IsEnabled();
+	enabled = (control.IsEnabled() || control.has_value_disabled);
 	visible = control.IsVisible();
 }
 

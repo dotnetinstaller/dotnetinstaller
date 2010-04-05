@@ -138,6 +138,66 @@ namespace dotNetInstallerUnitTests
         }
 
         [Test]
+        public void TestUserControlEditInstalledCheckHasValueDisabled()
+        {
+            // a configuration with a checkbox control
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ControlEdit edit = new ControlEdit();
+            edit.Text = "4";
+            edit.Id = "edit1";
+            edit.Check = ControlCheckType.enabled; // control will be disabled, but has a value when disabled
+            edit.HasValueDisabled = true;
+            setupConfiguration.Children.Add(edit);
+            // an installed check that is always false
+            InstalledCheckRegistry check = new InstalledCheckRegistry();
+            check.path = @"SOFTWARE\KeyDoesntExist";
+            check.comparison = installcheckregistry_comparison.exists;
+            edit.Children.Add(check);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C exit /b [edit1]5";
+            setupConfiguration.Children.Add(cmd);
+            // save config file
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // execute dotNetInstaller
+            Assert.AreEqual(45, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+        }
+
+        [Test]
+        public void TestUserControlEditInstalledCheckHasNoValueDisabled()
+        {
+            // a configuration with a checkbox control
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ControlEdit edit = new ControlEdit();
+            edit.Text = "4";
+            edit.Id = "edit1";
+            edit.Check = ControlCheckType.enabled; // control will be disabled, but has a value when disabled
+            edit.HasValueDisabled = false;
+            setupConfiguration.Children.Add(edit);
+            // an installed check that is always false
+            InstalledCheckRegistry check = new InstalledCheckRegistry();
+            check.path = @"SOFTWARE\KeyDoesntExist";
+            check.comparison = installcheckregistry_comparison.exists;
+            edit.Children.Add(check);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C exit /b [edit1]5";
+            setupConfiguration.Children.Add(cmd);
+            // save config file
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // execute dotNetInstaller
+            Assert.AreEqual(5, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+        }
+
+        [Test]
         public void TestUserControlEditInstalledCheckDisplay()
         {
             // a configuration with a checkbox control
