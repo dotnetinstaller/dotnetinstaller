@@ -87,6 +87,7 @@ namespace InstallerEditor
             else if (item is ComponentMsu) node = new TreeNodeComponentMsu(item as ComponentMsu);
             else if (item is ComponentMsp) node = new TreeNodeComponentMsp(item as ComponentMsp);
             else if (item is ComponentOpenFile) node = new TreeNodeComponentOpenFile(item as ComponentOpenFile);
+            else if (item is ComponentExe) node = new TreeNodeComponentExe(item as ComponentExe);
             else if (item is InstalledCheckFile) node = new TreeNodenstalledCheckFile(item as InstalledCheckFile);
             else if (item is InstalledCheckDirectory) node = new TreeNodenstalledCheckDirectory(item as InstalledCheckDirectory);
             else if (item is InstalledCheckRegistry) node = new TreeNodenstalledCheckRegistry(item as InstalledCheckRegistry);
@@ -448,6 +449,16 @@ namespace InstallerEditor
         {
             ImageIndex = 24;
             SelectedImageIndex = 24;
+        }
+    }
+
+    public class TreeNodeComponentExe : TreeNodeComponent<ComponentExe>
+    {
+        public TreeNodeComponentExe(ComponentExe value)
+            : base(value)
+        {
+            ImageIndex = 25;
+            SelectedImageIndex = 25;
         }
     }
 

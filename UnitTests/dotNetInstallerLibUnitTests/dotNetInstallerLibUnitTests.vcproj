@@ -223,6 +223,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ExeComponentUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ExecuteComponentCallbackImpl.cpp"
 				>
 			</File>
@@ -280,6 +284,18 @@
 			</File>
 			<File
 				RelativePath=".\OpenFileComponentUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFileIniUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFileTextUnitTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFileUnitTests.cpp"
 				>
 			</File>
 			<File
@@ -357,6 +373,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ExeComponentUnitTests.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ExecuteComponentCallbackImpl.h"
 				>
 			</File>
@@ -414,6 +434,18 @@
 			</File>
 			<File
 				RelativePath=".\OpenFileComponentUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFileIniUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFileTextUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFileUnitTests.h"
 				>
 			</File>
 			<File

@@ -88,6 +88,7 @@ namespace InstallerEditor
         private MenuItem mnAddLicenseAgreement;
         private MenuItem mnAddHyperlinkControl;
         private MenuItem mnEdit;
+        private MenuItem mnAddExeComponent;
         private System.ComponentModel.IContainer components;
 
         public MainForm()
@@ -192,6 +193,7 @@ namespace InstallerEditor
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtComment = new System.Windows.Forms.TextBox();
+            this.mnAddExeComponent = new System.Windows.Forms.MenuItem();
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
@@ -352,6 +354,7 @@ namespace InstallerEditor
             this.mnAddMsiComponent,
             this.mnAddMsuComponent,
             this.mnAddMspComponent,
+            this.mnAddExeComponent,
             this.mnAddCommandComponent,
             this.mnAddOpenFileComponent});
             this.menuComponents.Text = "Co&mponents";
@@ -387,13 +390,13 @@ namespace InstallerEditor
             // 
             // mnAddCommandComponent
             // 
-            this.mnAddCommandComponent.Index = 5;
+            this.mnAddCommandComponent.Index = 6;
             this.mnAddCommandComponent.Text = "Command Component";
             this.mnAddCommandComponent.Click += new System.EventHandler(this.mnAddCommandComponent_Click);
             // 
             // mnAddOpenFileComponent
             // 
-            this.mnAddOpenFileComponent.Index = 6;
+            this.mnAddOpenFileComponent.Index = 7;
             this.mnAddOpenFileComponent.Text = "OpenFile Component";
             this.mnAddOpenFileComponent.Click += new System.EventHandler(this.mnAddOpenFileComponent_Click);
             // 
@@ -679,6 +682,7 @@ namespace InstallerEditor
             this.imageList.Images.SetKeyName(22, "");
             this.imageList.Images.SetKeyName(23, "");
             this.imageList.Images.SetKeyName(24, "");
+            this.imageList.Images.SetKeyName(25, "");
             // 
             // mainSplitContainer
             // 
@@ -770,6 +774,12 @@ namespace InstallerEditor
             this.txtComment.Size = new System.Drawing.Size(620, 64);
             this.txtComment.TabIndex = 0;
             this.txtComment.Visible = false;
+            // 
+            // mnAddExeComponent
+            // 
+            this.mnAddExeComponent.Index = 5;
+            this.mnAddExeComponent.Text = "Exe Component";
+            this.mnAddExeComponent.Click += new System.EventHandler(this.mnAddExeComponent_Click);
             // 
             // MainForm
             // 
@@ -1079,6 +1089,7 @@ namespace InstallerEditor
                 mnAddSetupConfiguration.Enabled = (item.Children.CanAdd(typeof(SetupConfiguration)));
                 mnAddWebConfiguration.Enabled = (item.Children.CanAdd(typeof(WebConfiguration)));
                 mnAddCommandComponent.Enabled = (item.Children.CanAdd(typeof(ComponentCmd)));
+                mnAddExeComponent.Enabled = (item.Children.CanAdd(typeof(ComponentExe)));
                 mnAddMsiComponent.Enabled = (item.Children.CanAdd(typeof(ComponentMsi)));
                 mnAddMsuComponent.Enabled = (item.Children.CanAdd(typeof(ComponentMsu)));
                 mnAddMspComponent.Enabled = (item.Children.CanAdd(typeof(ComponentMsp)));
@@ -1109,6 +1120,7 @@ namespace InstallerEditor
                 mnAddSetupConfiguration.Enabled = false;
                 mnAddWebConfiguration.Enabled = false;
                 mnAddCommandComponent.Enabled = false;
+                mnAddExeComponent.Enabled = false;
                 mnAddMsiComponent.Enabled = false;
                 mnAddMsuComponent.Enabled = false;
                 mnAddOpenFileComponent.Enabled = false;
@@ -1825,6 +1837,11 @@ namespace InstallerEditor
             mnEdit_Popup(sender, e);
             contextMenuTreeView.MenuItems.Clear();
             contextMenuTreeView.MergeMenu(mnEdit);
+        }
+
+        private void mnAddExeComponent_Click(object sender, System.EventArgs e)
+        {
+            AddTreeNode_Click<ComponentExe>();
         }
     }
 }

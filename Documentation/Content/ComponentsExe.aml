@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="ec9da173-e6ce-4f7e-a8d4-d0a17ba5705e" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        A component of type <literal>exe</literal> executes a packaged setup executable with an optional response file.
+        A reponse file may be in either <newTerm>text</newTerm> or <newTerm>ini</newTerm> format and allows the installer
+        to perform path or user-defined property replacements.
+      </para>
+      <para>
+        For example, you may want to supply <literal>#CABPATH</literal> and a user-defined destination
+        <literal>[INSTALLLOCATION]</literal> within a setup.ini response file similar to this one.
+        <code langauge="ini">
+          <![CDATA[
+[Options]
+SourcePath=#CABPATH
+TargetPath=[INSTALLLOCATION]
+          ]]>          
+        </code>
+        dotNetInstaller will process this file defined by <newTerm>responsefile_source</newTerm> before running the setup executable
+        and write its output to <newTerm>responsefile_target</newTerm>.
+        <code langauge="ini">
+          <![CDATA[
+[Options]
+SourcePath=C:\temp\cabs
+TargetPath=C:\Program Files\MySampleSetup
+          ]]>
+        </code>
+        You can supply the value of <newTerm>responsefile_target</newTerm> in <newTerm>exeparameters</newTerm>.
+      </para>
+    </introduction>
+    <section address="component_exe_options">
+      <title>Component Options</title>
+      <content>
+        <para>
+          <tableDefinition>
+            <definedTerm>executable</definedTerm>
+            <definition>
+              Program to execute in full UI mode during installation.
+            </definition>
+            <definedTerm>executable_basic</definedTerm>
+            <definition>
+              Program to execute in basic UI mode during installation. Defaults to <newTerm>executable_silent</newTerm>,
+              then <newTerm>executable</newTerm>.
+            </definition>
+            <definedTerm>executable_silent</definedTerm>
+            <definition>
+              Program to execute in silent UI mode during installation. Defaults to <newTerm>executable_basic</newTerm>, 
+              then <newTerm>executable</newTerm>.
+            </definition>
+            <definedTerm>uninstall_executable</definedTerm>
+            <definition>
+              Program to execute in full UI mode during uninstallation.
+            </definition>
+            <definedTerm>uninstall_executable_basic</definedTerm>
+            <definition>
+              Program to execute in basic UI mode during uninstallation. Defaults to <newTerm>uninstall_executable_silent</newTerm>,
+              then <newTerm>uninstall_executable</newTerm>.
+            </definition>
+            <definedTerm>uninstall_executable_silent</definedTerm>
+            <definition>
+              Program to execute in silent UI mode during uninstallation. Defaults to <newTerm>uninstall_executable_basic</newTerm>,
+              then <newTerm>uninstall_executable</newTerm>.
+            </definition>
+            <definedTerm>exeparameters</definedTerm>
+            <definition>
+              Additional parameters for full UI mode during installation.
+            </definition>
+            <definedTerm>exeparameters_basic</definedTerm>
+            <definition>
+              Additional parameters for basic UI mode during installation.
+            </definition>
+            <definedTerm>exeparameters_silent</definedTerm>
+            <definition>
+              Program to execute in silent mode during installation.
+            </definition>
+            <definedTerm>uninstall_exeparameters</definedTerm>
+            <definition>
+              Additional parameters for full UI mode during uninstallation.
+            </definition>
+            <definedTerm>uninstall_exeparameters_basic</definedTerm>
+            <definition>
+              Additional parameters for basic UI mode during uninstallation.
+            </definition>
+            <definedTerm>uninstall_exeparameters_silent</definedTerm>
+            <definition>
+              Program to execute in silent mode during uninstallation.
+            </definition>
+            <definedTerm>responsefile_source</definedTerm>
+            <definition>
+              Optional response file in the <newTerm>responsefile_format</newTerm> format. The response file is processed
+              and the result is written to <newTerm>responsefile_target</newTerm> file.
+            </definition>
+            <definedTerm>responsefile_target</definedTerm>
+            <definition>
+              Output for the response file.
+            </definition>
+            <definedTerm>responsefile_format</definedTerm>
+            <definition>
+              Response file format. See below.              
+            </definition>
+            <definedTerm>returncodes_success</definedTerm>
+            <definition>
+              When specified, a comma-separated list of return codes that should be treated as a component success.
+              Specify <literal>all</literal> for a component that never fails. All other codes, unless specified
+              in <literal>returncodes_reboot</literal> are considered failures.
+            </definition>
+            <definedTerm>returncodes_reboot</definedTerm>
+            <definition>
+              A comma-separated list of return codes that indicate that a reboot is required.
+            </definition>
+          </tableDefinition>
+        </para>
+      </content>
+    </section>
+    <section address="component_exe_options">
+      <title>Response File Formats</title>
+      <content>
+        <para>
+          <tableDefinition>
+            <definedTerm>none</definedTerm>
+            <definition>
+              Do not process response file, copy.
+            </definition>
+            <definedTerm>text</definedTerm>
+            <definition>
+              The response file is text in ANSI format.
+            </definition>
+            <definedTerm>ini</definedTerm>
+            <definition>
+              The response file is an ANSI .ini file. Only ini values are processed for variables.
+            </definition>
+          </tableDefinition>
+        </para>
+      </content>
+    </section>
+    <relatedTopics>
+      <codeEntityReference qualifyHint="true">T:InstallerLib.ComponentExe</codeEntityReference>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

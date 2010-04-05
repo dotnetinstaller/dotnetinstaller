@@ -11,7 +11,7 @@
     <Trademark>All Rights Reserved</Trademark>
     <ReleaseDir>target\$(Configuration)</ReleaseDir>
     <MajorVersion>1</MajorVersion>
-    <MinorVersion>9</MinorVersion>
+    <MinorVersion>10</MinorVersion>
   </PropertyGroup>
   <ItemGroup>
     <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.txt" />
@@ -28,7 +28,7 @@
     <PackagedSetupSample Include="Samples/PackagedSetup/**/*.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <CustomInputSetupSample Include="Samples/PackagedSetup/**/*.xml" />
+    <CustomInputSetupSample Include="Samples/CustomInputSetup/**/*.xml" />
   </ItemGroup>
   <ItemGroup>
     <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.txt" />

@@ -74,6 +74,8 @@ namespace InstallerLibUnitTests
                                 pi.SetValue(xmlclazz, InstalledCheckOperatorType.Or, null);
                             else if (pi.PropertyType.Equals(typeof(ControlCheckType)))
                                 pi.SetValue(xmlclazz, ControlCheckType.display, null);
+                            else if (pi.PropertyType.Equals(typeof(ResponseFileFormat)))
+                                pi.SetValue(xmlclazz, ResponseFileFormat.none, null);
                             else
                             {
                                 Assert.Fail(string.Format("Value change required for type: {0}", pi.PropertyType));

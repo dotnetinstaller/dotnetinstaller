@@ -55,6 +55,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
   </PropertyGroup>
   <ItemGroup>
+    <None Include="Content\ComponentsExe.aml" />
     <None Include="Content\ConfigurationAttributes.aml" />
     <None Include="Content\UIMisc.aml" />
     <None Include="Content\Sequences.aml" />

@@ -325,6 +325,8 @@ namespace InstallerLib
                 l_Comp = new ComponentCmd();
             else if (xmltype == "openfile")
                 l_Comp = new ComponentOpenFile();
+            else if (xmltype == "exe")
+                l_Comp = new ComponentExe();
             else
                 throw new Exception(string.Format("Invalid type: {0}", xmltype));
 

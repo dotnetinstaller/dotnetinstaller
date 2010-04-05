@@ -52,6 +52,7 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ComponentEmbedFolderTests.cs" />
+    <Compile Include="ComponentExeTests.cs" />
     <Compile Include="ComponentMsiTests.cs" />
     <Compile Include="ComponentMspTests.cs" />
     <Compile Include="ComponentMsuTests.cs" />
@@ -114,9 +115,17 @@
     <EmbeddedResource Include="..\..\Samples\CustomInputSetup\Configuration.xml">
       <Link>Samples\CustomInputSetup\Configuration.xml</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\..\Samples\ExeSetup\Configuration.xml">
+      <Link>Samples\ExeSetup\Configuration.xml</Link>
+    </EmbeddedResource>
     <Content Include="Manifests\asInvoker.manifest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Samples\ExeSetup\Setup.rsp">
+      <Link>Samples\ExeSetup\Setup.rsp</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -64,6 +64,7 @@
     <Compile Include="ComponentCmd.cs">
     </Compile>
     <Compile Include="ComponentCollection.cs" />
+    <Compile Include="ComponentExe.cs" />
     <Compile Include="ComponentMsp.cs" />
     <Compile Include="ComponentMsu.cs" />
     <Compile Include="Control.cs" />

@@ -76,6 +76,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 		Documentation\Content\Checks.aml = Documentation\Content\Checks.aml
 		Documentation\Content\Components.aml = Documentation\Content\Components.aml
 		Documentation\Content\ComponentsCmd.aml = Documentation\Content\ComponentsCmd.aml
+		Documentation\Content\ComponentsExe.aml = Documentation\Content\ComponentsExe.aml
 		Documentation\Content\ComponentsMsi.aml = Documentation\Content\ComponentsMsi.aml
 		Documentation\Content\ComponentsMsp.aml = Documentation\Content\ComponentsMsp.aml
 		Documentation\Content\ComponentsMsu.aml = Documentation\Content\ComponentsMsu.aml
@@ -376,6 +377,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PatchSetup", "PatchSetup", 
 		Samples\PatchSetup\Configuration.xml = Samples\PatchSetup\Configuration.xml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExeSetup", "ExeSetup", "{1F971F63-F0D9-4E48-BAC0-37959E44FDE0}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		Samples\ExeSetup\Configuration.xml = Samples\ExeSetup\Configuration.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -539,6 +549,7 @@ Global
 		{72F4AC32-5C06-4ABA-9453-DA10AF36647D} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{71B70102-7C55-49CF-92BB-9341752986E4} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{D5B76C04-B265-4416-A4B1-F1C5B95F7A61} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
+		{1F971F63-F0D9-4E48-BAC0-37959E44FDE0} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{5DDA5610-5927-404B-9B03-76071159F8BE} = {AA6599BC-B3BA-4EC0-980D-5B66336A1350}
 		{49A3BD48-D506-4108-8F47-7CD7081C046C} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{48FFB2FD-215B-4DEE-8C38-EC1DB518477F} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}

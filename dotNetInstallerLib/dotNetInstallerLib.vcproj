@@ -223,6 +223,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ExeComponent.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ExtractComponent.cpp"
 				>
 			</File>
@@ -304,6 +308,22 @@
 			</File>
 			<File
 				RelativePath=".\ReferenceConfiguration.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFile.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFileIni.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFileNone.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFileText.cpp"
 				>
 			</File>
 			<File
@@ -433,6 +453,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ExeComponent.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ExecuteCallback.h"
 				>
 			</File>
@@ -518,6 +542,22 @@
 			</File>
 			<File
 				RelativePath=".\ReferenceConfiguration.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFile.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFileIni.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFileNone.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ResponseFileText.h"
 				>
 			</File>
 			<File
