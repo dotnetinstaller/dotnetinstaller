@@ -173,7 +173,7 @@ namespace InstallerLib
 
         private string m_uninstall_exeparameters;
         [Description("Optional command line parameters for the executable setup on uninstall.")]
-        [Category("Install")]
+        [Category("Uninstall")]
         public string uninstall_exeparameters
         {
             get { return m_uninstall_exeparameters; }
@@ -182,7 +182,7 @@ namespace InstallerLib
 
         private string m_uninstall_exeparameters_basic;
         [Description("Optional command line parameters for the executable setup in basic UI mode on uninstall.")]
-        [Category("Install")]
+        [Category("Uninstall")]
         public string uninstall_exeparameters_basic
         {
             get { return m_uninstall_exeparameters_basic; }
@@ -191,7 +191,7 @@ namespace InstallerLib
 
         private string m_uninstall_exeparameters_silent;
         [Description("Optional command line parameters for the executable setup in silent UI mode on uninstall.")]
-        [Category("Install")]
+        [Category("Uninstall")]
         public string uninstall_exeparameters_silent
         {
             get { return m_uninstall_exeparameters_silent; }

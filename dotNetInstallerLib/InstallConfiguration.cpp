@@ -8,6 +8,7 @@
 #include "MsuComponent.h"
 #include "MspComponent.h"
 #include "CmdComponent.h"
+#include "ExeComponent.h"
 #include "OpenFileComponent.h"
 #include "ControlLabel.h"
 #include "ControlCheckBox.h"
@@ -114,6 +115,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
 		else if (component_type == L"msu") component = shared_any<Component *, close_delete>(new MsuComponent());
 		else if (component_type == L"msp") component = shared_any<Component *, close_delete>(new MspComponent());
 		else if (component_type == L"cmd") component = shared_any<Component *, close_delete>(new CmdComponent());
+		else if (component_type == L"exe") component = shared_any<Component *, close_delete>(new ExeComponent());
 		else if (component_type == L"openfile") component = shared_any<Component *, close_delete>(new OpenFileComponent());
 		else 
 		{
