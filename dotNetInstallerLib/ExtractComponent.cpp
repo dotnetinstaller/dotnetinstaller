@@ -109,8 +109,8 @@ std::wstring ExtractComponent::GetNormalizedId(const std::wstring& id)
 	std::wstring result(id);
 	for (unsigned int i = 0; i < result.length(); i++)
 	{
-		result[i] = isalnum(result[i]) 
-			? (wchar_t) toupper(result[i])
+		result[i] = iswalnum(result[i]) 
+			? towupper(result[i])
 			: L'_';
 	}
 	return result;

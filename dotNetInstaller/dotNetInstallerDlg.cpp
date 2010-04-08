@@ -149,7 +149,22 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
     MoveWindow(m_btnInstall, p_configuration->dialog_install_button_position);
     MoveWindow(m_btnCancel, p_configuration->dialog_cancel_button_position);
     MoveWindow(m_btnSkip, p_configuration->dialog_skip_button_position);
-    
+
+	switch(DialogButton::wstring2button(p_configuration->dialog_default_button.GetValue()))
+	{
+	case DialogButton::dialog_default_button_cancel:
+		SetDefaultButton(IDCANCEL);
+		break;
+	case DialogButton::dialog_default_button_install:
+		SetDefaultButton(IDC_INSTALL);
+		break;
+	case DialogButton::dialog_default_button_skip:
+		SetDefaultButton(IDC_SKIP);
+		break;
+	default:
+		THROW_EX("Unsupported dialog_default_button: " << p_configuration->dialog_default_button.GetValue());
+	}
+
 	m_InfoLink.SetCaption(p_configuration->dialog_otherinfo_caption);
 	m_InfoLink.SetHyperlink(p_configuration->dialog_otherinfo_link);
 	if (p_configuration->dialog_otherinfo_caption.empty())
@@ -245,7 +260,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 		}
 	}
 
-	return TRUE;  // restituisce TRUE a meno che non venga impostato lo stato attivo su un controllo.
+	return FALSE; // don't set focus on the first control
 }
 
 // initiate component install(s) without end-user input
@@ -878,4 +893,15 @@ void CdotNetInstallerDlg::SetControlValues()
 			LOG(L"--- Skipping user-defined value '" << iter->first << L"', control hidden");
 		}
 	}
+}
+
+DWORD CdotNetInstallerDlg::SetDefaultButton(const DWORD id) 
+{
+	DWORD prev_id = GetDefID();
+	SendDlgItemMessage(prev_id, WM_KILLFOCUS);
+	SendDlgItemMessage(prev_id, BM_SETSTYLE, BS_PUSHBUTTON, (LPARAM) TRUE);
+	SetDefID(id);
+	SendDlgItemMessage(id, WM_SETFOCUS);
+	SendDlgItemMessage(id, BM_SETSTYLE, BS_DEFPUSHBUTTON, (LPARAM) TRUE);
+	return prev_id;
 }

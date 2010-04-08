@@ -17,6 +17,13 @@ namespace InstallerLib
     [XmlChild(typeof(Control))]
     public class SetupConfiguration : Configuration
     {
+        public enum DefaultButton
+        {
+            cancel,
+            install,
+            skip
+        }
+
         public SetupConfiguration()
             : this("APPLICATION_NAME")
         {
@@ -56,6 +63,15 @@ namespace InstallerLib
         }
 
         #region Attributes
+
+        private DefaultButton m_dialog_default_button = DefaultButton.cancel;
+        [Description("Default button.")]
+        [Category("Main Dialog")]
+        public DefaultButton dialog_default_button
+        {
+            get { return m_dialog_default_button; }
+            set { m_dialog_default_button = value; }
+        }
 
         private Rectangle m_dialog_position;
         [Description("Position of the main dialog. (OPTIONAL)")]
@@ -556,6 +572,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("cab_path_autodelete", m_cab_path_autodelete.ToString());
 
             // dialog, message and button positions
+            e.XmlWriter.WriteAttributeString("dialog_default_button", m_dialog_default_button.ToString());
             e.XmlWriter.WriteAttributeString("dialog_position", XmlRectangle.ToString(m_dialog_position));
             e.XmlWriter.WriteAttributeString("dialog_components_list_position", XmlRectangle.ToString(m_dialog_components_list_position));
             e.XmlWriter.WriteAttributeString("dialog_message_position", XmlRectangle.ToString(m_dialog_message_position));
@@ -619,6 +636,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "cab_path", ref m_cab_path);
             ReadAttributeValue(e, "cab_path_autodelete", ref m_cab_path_autodelete);
             // dialog, message and button positions
+            ReadAttributeValue(e, "dialog_default_button", ref m_dialog_default_button);
             ReadAttributeValue(e, "dialog_position", ref m_dialog_position);
             ReadAttributeValue(e, "dialog_components_list_position", ref m_dialog_components_list_position);
             ReadAttributeValue(e, "dialog_message_position", ref m_dialog_message_position);

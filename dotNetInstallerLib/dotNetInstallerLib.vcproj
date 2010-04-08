@@ -207,6 +207,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DialogButton.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DownloadDialog.cpp"
 				>
 			</File>
@@ -426,6 +430,10 @@
 			</File>
 			<File
 				RelativePath=".\ControlText.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DialogButton.h"
 				>
 			</File>
 			<File

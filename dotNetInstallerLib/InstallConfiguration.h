@@ -10,6 +10,7 @@ class InstallConfiguration : public Configuration
 {
 public:
 	// dialog options
+	XmlAttribute dialog_default_button;
 	XmlAttribute dialog_caption;
 	XmlAttribute dialog_message;
 	XmlAttribute dialog_message_uninstall;

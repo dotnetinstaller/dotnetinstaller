@@ -83,7 +83,7 @@ void GuidUtilUnitTests::testGenerateGUIDString()
 			CPPUNIT_ASSERT(wstring_guid[i] == L'-');
 			break;
 		default:
-			CPPUNIT_ASSERT(::isalnum(wstring_guid[i]));
+			CPPUNIT_ASSERT(::iswalnum(wstring_guid[i]));
 			break;
 		}
 	}

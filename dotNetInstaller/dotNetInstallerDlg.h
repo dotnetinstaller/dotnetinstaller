@@ -32,6 +32,7 @@ private:
 	void DisplaySplash();
     // move a window to the coordinates defined by a rectangle with defaults
     static bool MoveWindow(CWnd& dlg, const WidgetPosition& pos);
+	DWORD SetDefaultButton(DWORD id);
 public:
 	void ExecuteCompleteCode(bool componentsInstalled);
 	bool RunInstallConfiguration(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration, bool additional_config);

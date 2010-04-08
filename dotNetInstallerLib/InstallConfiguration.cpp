@@ -58,6 +58,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
     dialog_cancel_button_position.FromString(DVLib::UTF8string2wstring(node->Attribute("dialog_cancel_button_position")));
     dialog_skip_button_position.FromString(DVLib::UTF8string2wstring(node->Attribute("dialog_skip_button_position")));
     // other dialog options
+	dialog_default_button = node->Attribute("dialog_default_button");
 	cancel_caption = node->Attribute("cancel_caption");
 	dialog_bitmap = node->Attribute("dialog_bitmap");
 	dialog_caption = node->Attribute("dialog_caption");

@@ -51,3 +51,4 @@
 #include "ResponseFileText.h"
 #include "ResponseFileIni.h"
 #include "ResponseFileNone.h"
+#include "DialogButton.h"
