@@ -302,6 +302,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DisableWnd.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DniMessageBox.h"
 				>
 			</File>

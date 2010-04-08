@@ -10,6 +10,7 @@
 #include "BrowseCtrl.h"
 #include "ControlValue.h"
 #include "SplashWnd.h"
+#include "DisableWnd.h"
 #include <Version/Version.h>
 
 CdotNetInstallerDlg::CdotNetInstallerDlg(CWnd* pParent /*=NULL*/)
@@ -328,6 +329,13 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 {
 	try
 	{
+		auto_any<CWnd *, close_enable> btn_install(& m_btnInstall);
+		m_btnInstall.EnableWindow(FALSE);
+		auto_any<CWnd *, close_enable> btn_cancel(& m_btnCancel);
+		m_btnCancel.EnableWindow(FALSE);
+		auto_any<CWnd *, close_enable> btn_skip(& m_btnSkip);
+		m_btnSkip.EnableWindow(FALSE);
+		
 		ClearError();
         SelectComponents();
 		SetControlValues();
