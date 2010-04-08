@@ -21,6 +21,7 @@ namespace DVLib
 			CPPUNIT_TEST( testLoadCustomInputSetup );
 			CPPUNIT_TEST( testLoadMultipleSetup );
 			CPPUNIT_TEST( testLoadPatchSetup );
+			CPPUNIT_TEST( testLoadExeSetup );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testLoadPackagedSetup();
@@ -37,6 +38,7 @@ namespace DVLib
 			void testLoadCustomInputSetup();
 			void testLoadMultipleSetup();
 			void testLoadPatchSetup();
+			void testLoadExeSetup();
 		};
 	}
 }

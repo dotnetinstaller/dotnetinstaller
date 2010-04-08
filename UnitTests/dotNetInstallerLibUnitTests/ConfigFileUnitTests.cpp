@@ -7,7 +7,8 @@ using namespace DVLib::UnitTests;
 
 void ConfigFileUnitTests::testLoadPackagedSetup()
 {
-	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), L"..\\..\\..\\Samples\\PackagedSetup\\Configuration.xml");
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+		L"..\\..\\..\\Samples\\PackagedSetup\\Configuration.xml");
 	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
 	ConfigFile config;
 	config.LoadFile(configxml);
@@ -283,7 +284,8 @@ void ConfigFileUnitTests::testLoadCustomInputSetup()
 
 void ConfigFileUnitTests::testLoadPatchSetup()
 {
-	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), L"..\\..\\..\\Samples\\PatchSetup\\Configuration.xml");
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+		L"..\\..\\..\\Samples\\PatchSetup\\Configuration.xml");
 	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
 	ConfigFile config;
 	config.LoadFile(configxml);
@@ -295,4 +297,19 @@ void ConfigFileUnitTests::testLoadPatchSetup()
 	CPPUNIT_ASSERT(component_msi->type == component_type_msi);
 	ComponentPtr component_msp = configuration->components[1];
 	CPPUNIT_ASSERT(component_msp->type == component_type_msp);
+}
+
+void ConfigFileUnitTests::testLoadExeSetup()
+{
+	std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+		L"..\\..\\..\\Samples\\ExeSetup\\Configuration.xml");
+	CPPUNIT_ASSERT(DVLib::FileExists(configxml));
+	ConfigFile config;
+	config.LoadFile(configxml);
+	// configurations with components
+	CPPUNIT_ASSERT(config.size() == 1);
+	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
+	CPPUNIT_ASSERT(configuration->components.size() == 1);
+	ComponentPtr component_exe = configuration->components[0];
+	CPPUNIT_ASSERT(component_exe->type == component_type_exe);	
 }
