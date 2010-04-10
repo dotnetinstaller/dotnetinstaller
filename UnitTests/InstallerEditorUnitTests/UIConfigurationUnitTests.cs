@@ -17,6 +17,7 @@ using White.Core.UIItems.Finders;
 using White.Core.WindowsAPI;
 using System.IO;
 using InstallerLib;
+using System.Runtime.InteropServices;
 
 namespace InstallerEditorUnitTests
 {
@@ -224,6 +225,66 @@ namespace InstallerEditorUnitTests
                     ConfigFile savedConfigFile = new ConfigFile();
                     savedConfigFile.Load(configFileName);
                     Assert.AreEqual(1, savedConfigFile.Children.Count);
+                }
+            }
+            finally
+            {
+                if (File.Exists(configFileName))
+                    File.Delete(configFileName);
+            }
+        }
+
+        #region Short Display Name
+
+        [DllImport("shlwapi.dll", CharSet = CharSet.Auto)]
+        private static extern bool PathCompactPathEx(
+            StringBuilder pszOut,
+            string pszPath,
+            int cchMax,
+            int reserved);
+
+        private string GetShortDisplayName(string longName, int maxLen)
+        {
+            StringBuilder pszOut = new StringBuilder(maxLen + maxLen + 2);  // for safety
+
+            if (PathCompactPathEx(pszOut, longName, maxLen, 0))
+            {
+                return pszOut.ToString();
+            }
+            else
+            {
+                return longName;
+            }
+        }
+
+        #endregion
+
+        [Test]
+        public void TestOpenRecent()
+        {
+            string configFileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            try
+            {
+                using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
+                {
+                    Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
+                    UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
+                    UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
+                    Menu mainMenuFile = UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File");
+                    mainMenuFile.Click();
+                    mainMenuFile.ChildMenus.Find("Save As...").Click();
+                    Window openWindow = mainWindow.ModalWindow("Save As");
+                    TextBox filenameTextBox = openWindow.Get<TextBox>("File name:");
+                    filenameTextBox.Text = configFileName;
+                    openWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
+                    mainWindow.WaitWhileBusy();
+                    Assert.IsTrue(File.Exists(configFileName));
+                    string shortDisplayFileName = GetShortDisplayName(configFileName, 40);
+                    Console.WriteLine(shortDisplayFileName);
+                    UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Recent Files", shortDisplayFileName).Click();
+                    StatusStrip statusStrip = UIAutomation.Find<StatusStrip>(mainWindow, "statusStrip");
+                    WinFormTextBox statusLabel = (WinFormTextBox)statusStrip.Items[0];
+                    Assert.AreEqual(string.Format("Loaded {0}", configFileName), statusLabel.Text);
                 }
             }
             finally

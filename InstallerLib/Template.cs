@@ -42,7 +42,7 @@ namespace InstallerLib
                 if (name.StartsWith("InstallerLib.templates."))
                 {
                     Template template = new Template(Assembly.GetExecutingAssembly().GetManifestResourceStream(name));
-                    templates.Add(template);
+                    templates.Insert(0, template);
                 }
             }
             return templates;

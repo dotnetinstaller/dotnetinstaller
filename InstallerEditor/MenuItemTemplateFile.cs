@@ -11,8 +11,7 @@ namespace InstallerEditor
     {
         private string m_FileName;
 
-        public MenuItemTemplateFile(AppSetting p_AppSetting, string p_FileName)
-            : base(p_AppSetting)
+        public MenuItemTemplateFile(string p_FileName)
         {
             m_FileName = p_FileName;
             FileInfo fl = new FileInfo(p_FileName);
@@ -23,13 +22,12 @@ namespace InstallerEditor
         {
             try
             {
-                using (System.IO.FileStream st = new System.IO.FileStream(m_FileName, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                using (FileStream st = new FileStream(m_FileName, FileMode.Open, FileAccess.Read))
                 {
                     Template.CurrentTemplate = new Template(st, base.Text);
                     st.Close();
                 }
 
-                m_AppSetting.TemplateConfigFile = m_FileName;
                 base.OnClick(e);
             }
             catch (Exception err)

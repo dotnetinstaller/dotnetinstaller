@@ -1,19 +1,20 @@
 using System;
 using System.Drawing;
-using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Data;
 using InstallerLib;
 using System.ComponentModel.Design;
 using System.IO;
 using SourceLibrary.Windows.Forms;
+using Microsoft.Win32;
 
 namespace InstallerEditor
 {
     /// <summary>
     /// Summary description for MainForm.
     /// </summary>
-    public class MainForm : System.Windows.Forms.Form
+    public class MainForm : System.Windows.Forms.Form, IMRUClient
     {
         private System.Windows.Forms.MainMenu mainMenu;
         private MenuItem mnFile;
@@ -48,7 +49,7 @@ namespace InstallerEditor
         private MenuItem mnSaveAs;
         private MenuItem mnEditWithNotepad;
         private MenuItem mnTools;
-        private MenuItem mnLanguageForNewItem;
+        private MenuItem mnTemplates;
         private MenuItem mnHelp;
         private MenuItem mnHomePage;
         private MenuItem mnAddOpenFileComponent;
@@ -90,6 +91,14 @@ namespace InstallerEditor
         private MenuItem mnEdit;
         private MenuItem mnAddExeComponent;
         private System.ComponentModel.IContainer components;
+        private MenuItem mnOpenRecent;
+        private MenuItem menuItem3;
+
+        public const string registryPath = @"Software\dotNetInstaller\InstallerEditor";
+        private MRUManager m_recentFiles = new MRUManager();
+        private MRUManager m_templateFiles = new MRUManager();
+        private RegistryKey m_makeExeRegistry;
+        private RegistryKey m_settingsRegistry;
 
         public MainForm()
         {
@@ -132,6 +141,8 @@ namespace InstallerEditor
             this.mnEditWithNotepad = new System.Windows.Forms.MenuItem();
             this.mnCreateExe = new System.Windows.Forms.MenuItem();
             this.menuItem4 = new System.Windows.Forms.MenuItem();
+            this.mnOpenRecent = new System.Windows.Forms.MenuItem();
+            this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.mnExit = new System.Windows.Forms.MenuItem();
             this.mnEdit = new System.Windows.Forms.MenuItem();
             this.mnAdd = new System.Windows.Forms.MenuItem();
@@ -144,6 +155,7 @@ namespace InstallerEditor
             this.mnAddMsiComponent = new System.Windows.Forms.MenuItem();
             this.mnAddMsuComponent = new System.Windows.Forms.MenuItem();
             this.mnAddMspComponent = new System.Windows.Forms.MenuItem();
+            this.mnAddExeComponent = new System.Windows.Forms.MenuItem();
             this.mnAddCommandComponent = new System.Windows.Forms.MenuItem();
             this.mnAddOpenFileComponent = new System.Windows.Forms.MenuItem();
             this.menuChecks = new System.Windows.Forms.MenuItem();
@@ -177,7 +189,7 @@ namespace InstallerEditor
             this.mnView = new System.Windows.Forms.MenuItem();
             this.mnRefresh = new System.Windows.Forms.MenuItem();
             this.mnTools = new System.Windows.Forms.MenuItem();
-            this.mnLanguageForNewItem = new System.Windows.Forms.MenuItem();
+            this.mnTemplates = new System.Windows.Forms.MenuItem();
             this.mnCustomizeTemplates = new System.Windows.Forms.MenuItem();
             this.mnHelp = new System.Windows.Forms.MenuItem();
             this.mnUsersGuide = new System.Windows.Forms.MenuItem();
@@ -193,7 +205,6 @@ namespace InstallerEditor
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtComment = new System.Windows.Forms.TextBox();
-            this.mnAddExeComponent = new System.Windows.Forms.MenuItem();
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
@@ -223,8 +234,11 @@ namespace InstallerEditor
             this.mnEditWithNotepad,
             this.mnCreateExe,
             this.menuItem4,
+            this.mnOpenRecent,
+            this.menuItem3,
             this.mnExit});
             this.mnFile.Text = "&File";
+            this.mnFile.Click += new System.EventHandler(this.mnFile_Click);
             // 
             // mnNew
             // 
@@ -292,9 +306,19 @@ namespace InstallerEditor
             this.menuItem4.Index = 9;
             this.menuItem4.Text = "-";
             // 
+            // mnOpenRecent
+            // 
+            this.mnOpenRecent.Index = 10;
+            this.mnOpenRecent.Text = "&Recent Files";
+            // 
+            // menuItem3
+            // 
+            this.menuItem3.Index = 11;
+            this.menuItem3.Text = "-";
+            // 
             // mnExit
             // 
-            this.mnExit.Index = 10;
+            this.mnExit.Index = 12;
             this.mnExit.Shortcut = System.Windows.Forms.Shortcut.AltF4;
             this.mnExit.Text = "E&xit";
             this.mnExit.Click += new System.EventHandler(this.mnExit_Click);
@@ -387,6 +411,12 @@ namespace InstallerEditor
             this.mnAddMspComponent.Index = 4;
             this.mnAddMspComponent.Text = "Msp Component";
             this.mnAddMspComponent.Click += new System.EventHandler(this.mnAddMspComponent_Click);
+            // 
+            // mnAddExeComponent
+            // 
+            this.mnAddExeComponent.Index = 5;
+            this.mnAddExeComponent.Text = "Exe Component";
+            this.mnAddExeComponent.Click += new System.EventHandler(this.mnAddExeComponent_Click);
             // 
             // mnAddCommandComponent
             // 
@@ -601,14 +631,14 @@ namespace InstallerEditor
             // 
             this.mnTools.Index = 3;
             this.mnTools.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.mnLanguageForNewItem,
+            this.mnTemplates,
             this.mnCustomizeTemplates});
             this.mnTools.Text = "&Tools";
             // 
-            // mnLanguageForNewItem
+            // mnTemplates
             // 
-            this.mnLanguageForNewItem.Index = 0;
-            this.mnLanguageForNewItem.Text = "Template For New &Item";
+            this.mnTemplates.Index = 0;
+            this.mnTemplates.Text = "Template For New &Item";
             // 
             // mnCustomizeTemplates
             // 
@@ -775,12 +805,6 @@ namespace InstallerEditor
             this.txtComment.TabIndex = 0;
             this.txtComment.Visible = false;
             // 
-            // mnAddExeComponent
-            // 
-            this.mnAddExeComponent.Index = 5;
-            this.mnAddExeComponent.Text = "Exe Component";
-            this.mnAddExeComponent.Click += new System.EventHandler(this.mnAddExeComponent_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -791,7 +815,6 @@ namespace InstallerEditor
             this.Name = "MainForm";
             this.Text = "Installer Editor";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.Closed += new System.EventHandler(this.MainForm_Closed);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
             this.mainSplitContainer.Panel1.ResumeLayout(false);
             this.mainSplitContainer.Panel2.ResumeLayout(false);
@@ -871,31 +894,41 @@ namespace InstallerEditor
 
         private bool OpenConfiguration(string filename)
         {
-            if (!CloseConfiguration())
+            if (! CloseConfiguration())
                 return false;
 
-            ConfigFile l_File = new ConfigFile();
-            l_File.Load(filename);
-
-            if (!l_File.editor.IsCurrent())
+            try
             {
-                DialogResult convertResult = MessageBox.Show(this, string.Format("Do you want to convert configuration file version {0} to {1}?",
-                    l_File.editor.loaded_version, l_File.editor.current_version), "Convert config file?",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                ConfigFile l_File = new ConfigFile();
+                l_File.Load(filename);
 
-                if (convertResult == DialogResult.No)
+                if (!l_File.editor.IsCurrent())
                 {
-                    return false;
+                    DialogResult convertResult = MessageBox.Show(this, string.Format("Do you want to convert configuration file version {0} to {1}?",
+                        l_File.editor.loaded_version, l_File.editor.current_version), "Convert config file?",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (convertResult == DialogResult.No)
+                    {
+                        return false;
+                    }
                 }
+
+                m_TreeNodeConfigFile = new TreeNodeConfigFile(l_File);
+                m_TreeNodeConfigFile.IsDirty = !l_File.editor.IsCurrent();
+                m_TreeNodeConfigFile.CreateChildNodes();
+
+                RefreshMenu();
+                LoadTreeView(m_TreeNodeConfigFile);
+                statusLabel.Text = string.Format("Loaded {0}", m_TreeNodeConfigFile.Instance.filename);
+                m_recentFiles.Add(Path.GetFullPath(m_TreeNodeConfigFile.Instance.filename));
+            }
+            catch
+            {
+                m_recentFiles.Remove(filename);
+                throw;
             }
 
-            m_TreeNodeConfigFile = new TreeNodeConfigFile(l_File);
-            m_TreeNodeConfigFile.IsDirty = !l_File.editor.IsCurrent();
-            m_TreeNodeConfigFile.CreateChildNodes();
-
-            RefreshMenu();
-            LoadTreeView(m_TreeNodeConfigFile);
-            statusLabel.Text = string.Format("Loaded {0}", m_TreeNodeConfigFile.Instance.filename);
             return true;
         }
 
@@ -952,6 +985,7 @@ namespace InstallerEditor
 
             m_TreeNodeConfigFile.IsDirty = false;
             statusLabel.Text = string.Format("Written {0}", m_TreeNodeConfigFile.Instance.filename);
+            m_recentFiles.Add(m_TreeNodeConfigFile.Instance.filename);
             RefreshMenu();
             return true;
         }
@@ -1303,7 +1337,15 @@ namespace InstallerEditor
         private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (CloseConfiguration() == false)
+            {
                 e.Cancel = true;
+                return;
+            }
+
+            m_settingsRegistry.SetValue("WindowState", WindowState.ToString());
+            m_settingsRegistry.SetValue("Bounds", XmlRectangle.ToString(Bounds));
+            m_settingsRegistry.SetValue("ConfigurationTreeWidth", configurationTree.Width);
+            m_settingsRegistry.SetValue("CommentsDistance", mainSplitContainer.SplitterDistance);
         }
 
         private void mnDelete_Click(object sender, System.EventArgs e)
@@ -1410,29 +1452,37 @@ namespace InstallerEditor
             }
         }
 
-        //		private void mnLanguageEnglish_Click(object sender, System.EventArgs e)
-        //		{
-        //			mnLanguageEnglish.Checked = true;
-        //			mnLanguageItalian.Checked = false;
-        //			LanguageUI.Language = SupportedLanguage.English;
-        //		}
-        //
-        //		private void mnLanguageItalian_Click(object sender, System.EventArgs e)
-        //		{
-        //			mnLanguageItalian.Checked = true;
-        //			mnLanguageEnglish.Checked = false;
-        //			LanguageUI.Language = SupportedLanguage.Italian;
-        //		}
-
-        private AppSetting m_AppSetting = new AppSetting();
-
         private void MainForm_Load(object sender, System.EventArgs e)
         {
             try
             {
-                m_AppSetting.Load();
+                bool migrateSettings = (Registry.CurrentUser.OpenSubKey(registryPath) == null);
+
+                m_settingsRegistry = Registry.CurrentUser.CreateSubKey(registryPath);
+                m_recentFiles.Initialize(this, mnOpenRecent, registryPath + @"\RecentFiles");
+                m_templateFiles.Initialize(this, null, registryPath + @"\TemplateFiles");
+                m_templateFiles.MaxMRULength = 48;
+                m_makeExeRegistry = Registry.CurrentUser.CreateSubKey(registryPath + @"\MakeExe");
+
+                if (migrateSettings)
+                {
+                    MigrateLegacySettings();
+                }
+
                 RefreshTemplateFilesMenu();
 
+                Bounds = XmlRectangle.FromString((string)m_settingsRegistry.GetValue("Bounds", XmlRectangle.ToString(Bounds)));
+                WindowState = (FormWindowState)Enum.Parse(typeof(FormWindowState), (string)m_settingsRegistry.GetValue("WindowState", WindowState.ToString()));
+                configurationTree.Width = (int) m_settingsRegistry.GetValue("ConfigurationTreeWidth", configurationTree.Width);
+                mainSplitContainer.SplitterDistance = (int)m_settingsRegistry.GetValue("CommentsDistance", mainSplitContainer.SplitterDistance);
+            }
+            catch(Exception err)
+            {
+                ErrorDialog.Show(err, "Error loading settings");
+            }
+
+            try
+            {                
                 if (!string.IsNullOrEmpty(InstallerEditor.CmdArgs.configfile))
                 {
                     OpenConfiguration(InstallerEditor.CmdArgs.configfile);
@@ -1452,26 +1502,46 @@ namespace InstallerEditor
             }
         }
 
+        private void MigrateLegacySettings()
+        {
+            AppSetting legacyAppSetting = new AppSetting();
+            legacyAppSetting.Load();
+
+            if (legacyAppSetting.BannerBitmapFile != null)
+                m_makeExeRegistry.SetValue("BannerBitmap", legacyAppSetting.BannerBitmapFile);
+            if (legacyAppSetting.IconFile != null)
+                m_makeExeRegistry.SetValue("IconFile", legacyAppSetting.IconFile);
+            if (legacyAppSetting.OutputMakeFile != null)
+                m_makeExeRegistry.SetValue("OutputFile", legacyAppSetting.OutputMakeFile);
+            if (legacyAppSetting.TemplateConfigFile != null)
+                m_makeExeRegistry.SetValue("TemplateFile", legacyAppSetting.TemplateConfigFile);
+
+            if (legacyAppSetting.TemplateConfigFile != null)
+                m_settingsRegistry.SetValue("TemplateConfigFile", legacyAppSetting.TemplateConfigFile);
+
+            foreach (string template in legacyAppSetting.AvailableTemplates)
+            {                
+                m_templateFiles.Add(template);
+            }
+
+            legacyAppSetting.Reset();
+        }
+
         /// <summary>
         /// Select a template from previously saved settings.
         /// </summary>
         private void SelectTemplate()
         {
-            foreach (MenuItemTemplate menuItem in mnLanguageForNewItem.MenuItems)
+            foreach (MenuItemTemplate menuItem in mnTemplates.MenuItems)
             {
-                if (menuItem.AreEqual(m_AppSetting.TemplateConfigFile))
+                if (menuItem.AreEqual((string) m_settingsRegistry.GetValue("TemplateConfigFile", "English")))
                 {
                     menuItem.PerformClick();
                     return;
                 }
             }
 
-            mnLanguageForNewItem.MenuItems[0].PerformClick();
-        }
-
-        private void MainForm_Closed(object sender, System.EventArgs e)
-        {
-            m_AppSetting.Save();
+            mnTemplates.MenuItems[0].PerformClick();
         }
 
         private void mnCreateExe_Click(object sender, System.EventArgs e)
@@ -1479,19 +1549,28 @@ namespace InstallerEditor
             try
             {
                 MakeExe l_frmMakeExe = new MakeExe();
-                l_frmMakeExe.TemplateFile = m_AppSetting.TemplateInstallerFile;
-                l_frmMakeExe.BannerBitmapFile = m_AppSetting.BannerBitmapFile;
-                l_frmMakeExe.IconFile = m_AppSetting.IconFile;
-                l_frmMakeExe.OutputFileName = m_AppSetting.OutputMakeFile;
+                l_frmMakeExe.TemplateFile = (string) m_makeExeRegistry.GetValue("TemplateFile", string.Empty);
+                l_frmMakeExe.BannerBitmapFile = (string) m_makeExeRegistry.GetValue("BannerBitmapFile", string.Empty);
+                l_frmMakeExe.IconFile = (string) m_makeExeRegistry.GetValue("IconFile", string.Empty);
+                l_frmMakeExe.OutputFileName = (string) m_makeExeRegistry.GetValue("OutputFileName", string.Empty);
+                l_frmMakeExe.SplashBitmapFile = (string)m_makeExeRegistry.GetValue("SplashBitmapFile", string.Empty);
+                l_frmMakeExe.ManifestFile = (string)m_makeExeRegistry.GetValue("ManifestFile", string.Empty);
+                l_frmMakeExe.Embed = ((int) m_makeExeRegistry.GetValue("Embed", 1) != 0);
+
                 if (m_TreeNodeConfigFile != null && m_TreeNodeConfigFile.Instance != null)
+                {
                     l_frmMakeExe.Configuration = m_TreeNodeConfigFile.Instance.filename;
+                }
 
                 l_frmMakeExe.ShowDialog(this);
 
-                m_AppSetting.TemplateInstallerFile = l_frmMakeExe.TemplateFile;
-                m_AppSetting.BannerBitmapFile = l_frmMakeExe.BannerBitmapFile;
-                m_AppSetting.IconFile = l_frmMakeExe.IconFile;
-                m_AppSetting.OutputMakeFile = l_frmMakeExe.OutputFileName;
+                m_makeExeRegistry.SetValue("TemplateFile", l_frmMakeExe.TemplateFile);
+                m_makeExeRegistry.SetValue("BannerBitmapFile", l_frmMakeExe.BannerBitmapFile);
+                m_makeExeRegistry.SetValue("IconFile", l_frmMakeExe.IconFile);
+                m_makeExeRegistry.SetValue("OutputFileName", l_frmMakeExe.OutputFileName);
+                m_makeExeRegistry.SetValue("SplashBitmapFile", l_frmMakeExe.SplashBitmapFile);
+                m_makeExeRegistry.SetValue("ManifestFile", l_frmMakeExe.ManifestFile);
+                m_makeExeRegistry.SetValue("Embed", l_frmMakeExe.Embed ? 1 : 0);
             }
             catch (Exception err)
             {
@@ -1508,30 +1587,43 @@ namespace InstallerEditor
         private void mnCustomizeTemplates_Click(object sender, System.EventArgs e)
         {
             TemplatesEditor editors = new TemplatesEditor();
-            editors.AvailableTemplateFiles = m_AppSetting.AvailableTemplates;
+            editors.AvailableTemplateFiles = new List<String>(m_templateFiles);
             if (editors.ShowDialog(this) == DialogResult.OK)
             {
+                m_templateFiles.Clear();
+                m_templateFiles.AddRange(editors.AvailableTemplateFiles);
                 RefreshTemplateFilesMenu();
             }
         }
 
         private void RefreshTemplateFilesMenu()
         {
-            mnLanguageForNewItem.MenuItems.Clear();
+            mnTemplates.MenuItems.Clear();
 
             foreach (Template template in Template.EmbeddedTemplates)
             {
-                MenuItemTemplateInstance templateMenuItem = new MenuItemTemplateInstance(m_AppSetting, template);
-                mnLanguageForNewItem.MenuItems.Add(templateMenuItem);
+                MenuItemTemplateInstance templateMenuItem = new MenuItemTemplateInstance(template);
+                templateMenuItem.Click += new EventHandler(
+                    delegate(object sender, EventArgs e)
+                    {
+                        m_settingsRegistry.SetValue("TemplateConfigFile", templateMenuItem.Text);
+                    }
+                );
+                mnTemplates.MenuItems.Add(templateMenuItem);
             }
 
-            foreach (string file in m_AppSetting.AvailableTemplates)
+            foreach (string file in m_templateFiles)
             {
                 try
                 {
-                    MenuItemTemplateFile templateFileMenuItem = new MenuItemTemplateFile(
-                        m_AppSetting, file);
-                    mnLanguageForNewItem.MenuItems.Add(templateFileMenuItem);
+                    MenuItemTemplateFile templateFileMenuItem = new MenuItemTemplateFile(file);
+                    templateFileMenuItem.Click += new EventHandler(
+                        delegate(object sender, EventArgs e)
+                        {
+                            m_settingsRegistry.SetValue("TemplateConfigFile", file);
+                        }
+                    );
+                    mnTemplates.MenuItems.Add(templateFileMenuItem);
                 }
                 catch (Exception err)
                 {
@@ -1843,5 +1935,22 @@ namespace InstallerEditor
         {
             AddTreeNode_Click<ComponentExe>();
         }
+
+        private void mnFile_Click(object sender, EventArgs e)
+        {
+            if (mnOpenRecent.MenuItems.Count == 0)
+            {
+                mnOpenRecent.Enabled = false;
+            }
+        }
+
+        #region IMRUClient Members
+
+        public void OpenMRUFile(string fileName)
+        {
+            OpenConfiguration(fileName);
+        }
+
+        #endregion
     }
 }

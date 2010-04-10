@@ -313,8 +313,6 @@ namespace InstallerEditor
             this.Name = "MakeExe";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Create Executable";
-            this.Load += new System.EventHandler(this.MakeExe_Load);
-            this.Closed += new System.EventHandler(this.MakeExe_Closed);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -329,13 +327,6 @@ namespace InstallerEditor
                     throw new ApplicationException("Template not valid");
                 if (System.IO.File.Exists(txtConfiguration.Text) == false)
                     throw new ApplicationException("Configuration not valid");
-
-                m_Configuration = txtConfiguration.Text;
-                m_TemplateFile = txtTemplateFile.Text;
-                m_BannerBitmapFile = txtBannerBitmap.Text;
-                m_IconFile = txtIcon.Text;
-                m_SplashBitmapFile = txtSplashBitmap.Text;
-                m_ManifestFile = txtManifest.Text;
 
                 SaveFileDialog l_dg = new SaveFileDialog();
                 l_dg.FileName = m_OutputFileName;
@@ -371,58 +362,46 @@ namespace InstallerEditor
             set { m_OutputFileName = value; }
         }
 
-        private string m_TemplateFile;
         public string TemplateFile
         {
-            get { return m_TemplateFile; }
-            set { m_TemplateFile = value; }
+            get { return txtTemplateFile.Text; }
+            set { txtTemplateFile.Text = value; }
         }
-        private string m_BannerBitmapFile;
+        
         public string BannerBitmapFile
         {
-            get { return m_BannerBitmapFile; }
-            set { m_BannerBitmapFile = value; }
+            get { return txtBannerBitmap.Text; }
+            set { txtBannerBitmap.Text = value; }
         }
-        private string m_IconFile;
+
         public string IconFile
         {
-            get { return m_IconFile; }
-            set { m_IconFile = value; }
+            get { return txtIcon.Text; }
+            set { txtIcon.Text = value; }
         }
 
-        private string m_Configuration;
         public string Configuration
         {
-            get { return m_Configuration; }
-            set { m_Configuration = value; }
+            get { return txtConfiguration.Text; }
+            set { txtConfiguration.Text = value; }
         }
 
-        private string m_SplashBitmapFile;
         public string SplashBitmapFile
         {
-            get { return m_SplashBitmapFile; }
-            set { m_SplashBitmapFile = value; }
+            get { return txtSplashBitmap.Text; }
+            set { txtSplashBitmap.Text = value; }
         }
 
-        private string m_ManifestFile;
         public string ManifestFile
         {
-            get { return m_ManifestFile; }
-            set { m_ManifestFile = value; }
+            get { return txtManifest.Text; }
+            set { txtManifest.Text = value; }
         }
 
-        private void MakeExe_Load(object sender, System.EventArgs e)
+        public bool Embed
         {
-            txtTemplateFile.Text = m_TemplateFile;
-            txtConfiguration.Text = m_Configuration;
-            txtBannerBitmap.Text = m_BannerBitmapFile;
-            txtIcon.Text = m_IconFile;
-            txtSplashBitmap.Text = m_SplashBitmapFile;
-            txtManifest.Text = m_ManifestFile;
-        }
-
-        private void MakeExe_Closed(object sender, System.EventArgs e)
-        {
+            get { return chkEmbed.Checked; }
+            set { chkEmbed.Checked = value; }
         }
 
         private void btBrowseTemplateFile_Click(object sender, System.EventArgs e)

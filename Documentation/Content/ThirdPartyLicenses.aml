@@ -132,5 +132,17 @@
         </para>
       </content>
     </section>
+    <section address="mrumanager">
+      <title>MRUManager</title>
+      <content>
+        <para>
+          Recent files list in InstallerEditor is maintained in registry by MRUManager written by Alex Farber.
+          See <externalLink>
+            <linkText>http://www.codeproject.com/KB/cs/mru.aspx</linkText>
+            <linkUri>http://www.codeproject.com/KB/cs/mru.aspx</linkUri>
+          </externalLink> for more information.
+        </para>
+      </content>
+    </section>
   </developerConceptualDocument>
 </topic>

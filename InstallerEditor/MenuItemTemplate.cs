@@ -8,11 +8,8 @@ namespace InstallerEditor
     /// </summary>
     public class MenuItemTemplate : System.Windows.Forms.MenuItem
     {
-        protected AppSetting m_AppSetting;
-
-        public MenuItemTemplate(AppSetting appsettings)
+        public MenuItemTemplate()
         {
-            m_AppSetting = appsettings;
             RadioCheck = true;
         }
 
@@ -38,8 +35,7 @@ namespace InstallerEditor
     {
         private Template m_Template;
 
-        public MenuItemTemplateInstance(AppSetting appsetting, Template template)
-            : base(appsetting)
+        public MenuItemTemplateInstance(Template template)
         {
             m_Template = template;
             Text = template.Name;
@@ -47,9 +43,8 @@ namespace InstallerEditor
 
         protected override void OnClick(EventArgs e)
         {
-            m_AppSetting.TemplateConfigFile = m_Template.Name;
-            Template.CurrentTemplate = m_Template;
             base.OnClick(e);
+            Template.CurrentTemplate = m_Template;
         }
     }
 }

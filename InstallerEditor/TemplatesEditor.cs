@@ -1,6 +1,6 @@
 using System;
 using System.Drawing;
-using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -22,19 +22,9 @@ namespace InstallerEditor
 
 		public TemplatesEditor()
 		{
-			//
-			// Required for Windows Form Designer support
-			//
 			InitializeComponent();
-
-			//
-			// TODO: Add any constructor code after InitializeComponent call
-			//
 		}
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
 		protected override void Dispose( bool disposing )
 		{
 			if( disposing )
@@ -174,7 +164,7 @@ namespace InstallerEditor
 			}
 		}
 
-		private System.Collections.Specialized.StringCollection m_AvailableTemplateFiles;
+		private List<String> m_AvailableTemplateFiles;
 
 		private void btOK_Click(object sender, System.EventArgs e)
 		{
@@ -226,10 +216,10 @@ namespace InstallerEditor
 			}
 		}
 
-		public System.Collections.Specialized.StringCollection AvailableTemplateFiles
+		public List<String> AvailableTemplateFiles
 		{
-			get{return m_AvailableTemplateFiles;}
-			set{m_AvailableTemplateFiles = value;}
+			get { return m_AvailableTemplateFiles; }
+			set { m_AvailableTemplateFiles = value; }
 		}
 	}
 }

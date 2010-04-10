@@ -131,6 +131,7 @@
     <Compile Include="MenuItemTemplateFile.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="MRUManager.cs" />
     <Compile Include="TemplatesEditor.cs">
       <SubType>Form</SubType>
     </Compile>
