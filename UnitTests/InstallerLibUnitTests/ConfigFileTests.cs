@@ -77,7 +77,7 @@ namespace InstallerLibUnitTests
                             else if (pi.PropertyType.Equals(typeof(ResponseFileFormat)))
                                 pi.SetValue(xmlclazz, ResponseFileFormat.none, null);
                             else if (pi.PropertyType.Equals(typeof(SetupConfiguration.DefaultButton)))
-                                pi.SetValue(xmlclazz, SetupConfiguration.DefaultButton.skip);
+                                pi.SetValue(xmlclazz, SetupConfiguration.DefaultButton.skip, null);
                             else
                             {
                                 Assert.Fail(string.Format("Value change required for type: {0}", pi.PropertyType));
