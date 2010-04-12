@@ -1452,7 +1452,7 @@ namespace InstallerEditor
             }
         }
 
-        private void MainForm_Load(object sender, System.EventArgs e)
+        private void LoadSettings()
         {
             try
             {
@@ -1473,16 +1473,21 @@ namespace InstallerEditor
 
                 Bounds = XmlRectangle.FromString((string)m_settingsRegistry.GetValue("Bounds", XmlRectangle.ToString(Bounds)));
                 WindowState = (FormWindowState)Enum.Parse(typeof(FormWindowState), (string)m_settingsRegistry.GetValue("WindowState", WindowState.ToString()));
-                configurationTree.Width = (int) m_settingsRegistry.GetValue("ConfigurationTreeWidth", configurationTree.Width);
+                configurationTree.Width = (int)m_settingsRegistry.GetValue("ConfigurationTreeWidth", configurationTree.Width);
                 mainSplitContainer.SplitterDistance = (int)m_settingsRegistry.GetValue("CommentsDistance", mainSplitContainer.SplitterDistance);
             }
-            catch(Exception err)
+            catch (Exception err)
             {
-                ErrorDialog.Show(err, "Error loading settings");
+                ErrorDialog.Show(this, err, "Error loading settings");
             }
+        }
+
+        private void MainForm_Load(object sender, System.EventArgs e)
+        {
+            LoadSettings();
 
             try
-            {                
+            {
                 if (!string.IsNullOrEmpty(InstallerEditor.CmdArgs.configfile))
                 {
                     OpenConfiguration(InstallerEditor.CmdArgs.configfile);
@@ -1491,13 +1496,13 @@ namespace InstallerEditor
             catch (FileNotFoundException err)
             {
                 Environment.ExitCode = -2;
-                ErrorDialog.Show(err, "Error");
+                ErrorDialog.Show(this, err, "Error");
                 Close();
             }
             catch (Exception err)
             {
                 Environment.ExitCode = -3;
-                ErrorDialog.Show(err, "Error");
+                ErrorDialog.Show(this, err, "Error");
                 Close();
             }
         }

@@ -46,9 +46,19 @@ namespace InstallerEditorUnitTests
         {
             InstallerEditorExeUtils.RunOptions options = new InstallerEditorExeUtils.RunOptions();
             options.args = Guid.NewGuid().ToString();
-            InstallerEditorExeUtils.RunResult r = InstallerEditorExeUtils.Run(options);
-            Assert.AreEqual("Error", r.WindowTitle);
-            Assert.AreEqual(-2, r.ExitCode);
+            ProcessStartInfo pi = new ProcessStartInfo(InstallerEditorExeUtils.Executable, options.CommandLineArgs);
+            using (Application installerEditor = Application.Launch(pi))
+            {
+                List<Window> windows = installerEditor.GetWindows();
+                Assert.AreEqual(windows.Count, 2);
+                Window errorWindow = windows[1];
+                Assert.IsNotNull(errorWindow);
+                Assert.AreEqual(errorWindow.Title, "Error");
+                Button exitButton = UIAutomation.Find<Button>(errorWindow, "OK");
+                exitButton.Click();
+                while (!installerEditor.HasExited) Thread.Sleep(100);
+                Assert.AreEqual(-2, installerEditor.Process.ExitCode);
+            }
         }
 
         [Test]
@@ -70,7 +80,7 @@ namespace InstallerEditorUnitTests
                     Tree configurationTree = UIAutomation.Find<Tree>(mainWindow, "configurationTree");
                     Assert.AreEqual("Config File", configurationTree.SelectedNode.Name);
                     StatusStrip statusStrip = UIAutomation.Find<StatusStrip>(mainWindow, "statusStrip");
-                    WinFormTextBox statusLabel = (WinFormTextBox) statusStrip.Items[0];
+                    WinFormTextBox statusLabel = (WinFormTextBox)statusStrip.Items[0];
                     Assert.AreEqual(string.Format("Loaded {0}", configFileName), statusLabel.Text);
                 }
             }
@@ -85,10 +95,19 @@ namespace InstallerEditorUnitTests
         {
             InstallerEditorExeUtils.RunOptions options = new InstallerEditorExeUtils.RunOptions();
             options.args = Environment.SystemDirectory;
-            InstallerEditorExeUtils.RunResult r = InstallerEditorExeUtils.Run(options);
-            Assert.AreEqual("Error", r.WindowTitle);
-            Assert.AreEqual(-3, r.ExitCode);
+            ProcessStartInfo pi = new ProcessStartInfo(InstallerEditorExeUtils.Executable, options.CommandLineArgs);
+            using (Application installerEditor = Application.Launch(pi))
+            {
+                List<Window> windows = installerEditor.GetWindows();
+                Assert.AreEqual(windows.Count, 2);
+                Window errorWindow = windows[1];
+                Assert.IsNotNull(errorWindow);
+                Assert.AreEqual(errorWindow.Title, "Error");
+                Button exitButton = UIAutomation.Find<Button>(errorWindow, "OK");
+                exitButton.Click();
+                while (!installerEditor.HasExited) Thread.Sleep(100);
+                Assert.AreEqual(-3, installerEditor.Process.ExitCode);
+            }
         }
-
     }
 }
