@@ -93,16 +93,13 @@
           a value with a backslash.
         </para>
         <para>
-          The following options are supported. For more information see <externalLink>
+          Registry variable substitution supports both 32-bit and 64-bit registry views. dotNetInstaller is a 32-bit application 
+          and by default accesses the 32-bit registry view on a 64-bit operating system. To access the 64-bit registry view, set
+          options to <literal>WOW64_64</literal>. For example <literal>@[HKEY_LOCAL_MACHINE:WOW64_64\SOFTWARE\64BitApplication\Name,DefaultValue]</literal>.
+          For more information see <externalLink>
             <linkUri>http://msdn.microsoft.com/en-us/library/aa384129(VS.85).aspx</linkUri>
             <linkText>Accessing an Alternate Registry View</linkText>
           </externalLink>.
-          <definitionTable>
-            <definedTerm>WOW64_64</definedTerm>
-            <definition>Indicates that an application on 64-bit Windows should operate on the 64-bit registry view.</definition>
-            <definedTerm>WOW64_32</definedTerm>
-            <definition>Indicates that an application on 64-bit Windows should operate on the 32-bit registry view.</definition>
-          </definitionTable>
         </para>
       </content>
     </section>

@@ -141,6 +141,14 @@
               </definitionTable>
             </para>
             <para>
+              Registry checks support both 32-bit and 64-bit registry views. dotNetInstaller is a 32-bit application and by 
+              default accesses the 32-bit registry view on a 64-bit operating system. To access the 64-bit registry view, set
+              <literal>wowoption</literal> to <literal>WOW64_64</literal>. For more information see <externalLink>
+                <linkUri>http://msdn.microsoft.com/en-us/library/aa384129(VS.85).aspx</linkUri>
+                <linkText>Accessing an Alternate Registry View</linkText>
+              </externalLink>.
+            </para>
+            <para>
               It's possible that this check cannot make a decision of whether the component is installed or not per the comparison
               definition. This is true in examples where the registry key doesn't exist and the comparison type is <literal>version</literal>.
               In this case the check returns <newTerm>defaultvalue</newTerm>. This can be convenient for applying patches to existing
