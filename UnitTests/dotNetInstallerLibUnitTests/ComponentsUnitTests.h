@@ -19,6 +19,7 @@ namespace DVLib
 		public:
 			void testAdd();
 			void testOsFilters();
+			void testOsFiltersGreaterSmaller();
 			void testLcidFilters();
 			void testPAFilters();
 			void testExecNoCallback();

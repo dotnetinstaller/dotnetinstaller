@@ -17,8 +17,18 @@ namespace InstallerLib
 
         #region Configuration Properties
 
+        private string m_os_filter;
+        [Description("A filter to install this configuration only on all operating system equal or not equal the value(s) specified. Separate multiple operating system ids with comma (',') and use not symbol ('!') for NOT logic (eg. '44,!45' ).")]
+        [Category("Operating System")]
+        public string os_filter
+        {
+            get { return m_os_filter; }
+            set { m_os_filter = value; }
+        }
+
         // filter for minimal OS version
         private string m_os_filter_greater;
+        [Category("Filters")]
         [Description("A filter to run this setup only on all operating system id greater than the id specified (see Help->Operating System Table). For example to run this setup only in Windows 2000 or later write '44'. (OPTIONAL)")]
         public string os_filter_greater
         {
@@ -28,6 +38,7 @@ namespace InstallerLib
 
         // filter for maximal OS version
         private string m_os_filter_smaller;
+        [Category("Filters")]
         [Description("A filter to run this setup only on all operating system id smaller than the id specified (see operating system table). For example to run this setup preceding Windows 2000 write '45'. (OPTIONAL)")]
         public string os_filter_smaller
         {
@@ -37,7 +48,8 @@ namespace InstallerLib
 
         // filter for processor architecture
         private string m_processor_architecture_filter;
-        [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Separate by commas, can use the NOT sign ('!') to exclude. (es. 'x86,x64' or '!x86'). (OPTIONAL)")]
+        [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Separate by commas, can use the NOT sign ('!') to exclude. (eg. 'x86,x64' or '!x86'). (OPTIONAL)")]
+        [Category("Filters")]
         public string processor_architecture_filter
         {
             get { return m_processor_architecture_filter; }
@@ -45,7 +57,7 @@ namespace InstallerLib
         }
 
         private string m_lcid_filter = string.Empty;
-        [Description("A filter to install this configuration only on all operating system language equals or not equals than the LCID specified (see Help->LCID Table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter a specified component. (OPTIONAL)")]
+        [Description("A filter to install this configuration only on all operating system language equals or not equals than the LCID specified (see Help->LCID Table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (eg. '1044,1033,!1038' ). You can also filter a specified component. (OPTIONAL)")]
         [Category("Language")]
         public string lcid_filter
         {
@@ -124,6 +136,7 @@ namespace InstallerLib
                 OnLCIDChanged();
             ReadAttributeValue(e, "language", ref m_language);
             ReadAttributeValue(e, "language_id", ref m_language_id);
+            ReadAttributeValue(e, "os_filter", ref m_os_filter);
             ReadAttributeValue(e, "os_filter_greater", ref m_os_filter_greater);
             ReadAttributeValue(e, "os_filter_smaller", ref m_os_filter_smaller);
             ReadAttributeValue(e, "processor_architecture_filter", ref m_processor_architecture_filter);
@@ -137,6 +150,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("lcid_filter", m_lcid_filter);
             e.XmlWriter.WriteAttributeString("language_id", m_language_id);
             e.XmlWriter.WriteAttributeString("language", m_language);
+            e.XmlWriter.WriteAttributeString("os_filter", m_os_filter);
             e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
             e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);

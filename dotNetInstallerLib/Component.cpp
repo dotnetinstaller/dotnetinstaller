@@ -52,6 +52,7 @@ void Component::Load(TiXmlElement * node)
 	uninstall_display_name = node->Attribute("uninstall_display_name");
 	if (id.empty()) id = display_name;
 	status_installed = node->Attribute("status_installed");
+	os_filter = node->Attribute("os_filter");
 	os_filter_greater = node->Attribute("os_filter_greater");
 	os_filter_smaller = node->Attribute("os_filter_smaller");
 	os_filter_lcid = node->Attribute("os_filter_lcid");
@@ -131,7 +132,7 @@ bool Component::IsSupported(LCID lcid) const
 {
 	return DVLib::IsOperatingSystemLCIDValue(lcid, os_filter_lcid) &&
 		DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), processor_architecture_filter) &&
-		DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter_greater, os_filter_smaller);
+		DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter, os_filter_greater, os_filter_smaller);
 }
 
 std::wstring Component::GetString(int indent) const
@@ -143,8 +144,10 @@ std::wstring Component::GetString(int indent) const
 		ss << L", lang=" << os_filter_lcid;
 	if (! processor_architecture_filter.empty()) 
 		ss << L", pa=" << processor_architecture_filter;
+	if (! os_filter.empty())
+		ss << L", os=" << os_filter;
 	if (! os_filter_greater.empty() || ! os_filter_smaller.empty())
-		ss << L", os=" << os_filter_greater << L"/" << os_filter_smaller;
+		ss << L", os=" << os_filter_greater << L"-" << os_filter_smaller;
 	return ss.str();
 }
 

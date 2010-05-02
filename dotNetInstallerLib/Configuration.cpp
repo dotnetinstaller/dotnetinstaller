@@ -24,6 +24,7 @@ void Configuration::Load(TiXmlElement * node)
 	language_id = node->Attribute("language_id");
 	language = node->Attribute("language");
 	// os filters
+	os_filter = node->Attribute("os_filter");
 	os_filter_greater = node->Attribute("os_filter_greater");
 	os_filter_smaller = node->Attribute("os_filter_smaller");
 	// processor architecture filter
@@ -37,7 +38,7 @@ bool Configuration::IsSupported(LCID lcid) const
 {
 	return DVLib::IsOperatingSystemLCIDValue(lcid, lcid_filter) &&
 		DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), processor_architecture_filter) &&
-		DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter_greater, os_filter_smaller);
+		DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter, os_filter_greater, os_filter_smaller);
 }
 
 std::wstring Configuration::GetLanguageString() const
@@ -56,7 +57,9 @@ std::wstring Configuration::GetString(int /* indent */) const
 	ss << L", lang=" << GetLanguageString();
 	if (! processor_architecture_filter.empty()) 
 		ss << L", pa=" << processor_architecture_filter;
+	if (! os_filter.empty())
+		ss << L", os=" << os_filter;
 	if (! os_filter_greater.empty() || ! os_filter_smaller.empty())
-		ss << L", os=" << os_filter_greater << L"/" << os_filter_smaller;
+		ss << L", os=" << os_filter_greater << L"-" << os_filter_smaller;
 	return ss.str();
 }

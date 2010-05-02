@@ -5,15 +5,35 @@
       <para>
         A component may not be required for a specific operating system or may be required for a specific operating 
         system only. These behaviors can be achieved with <newTerm>operating system filters</newTerm>, specifically 
-        <literal>os_filter_greater</literal> and <literal>os_filter_smaller</literal>.
+        <literal>os_filter</literal>, <literal>os_filter_greater</literal> and <literal>os_filter_smaller</literal>.
       </para>
     </introduction>
     <section address="operatingsystemfilters">
       <title>Operating System Filters</title>
       <content>
         <para>
-          The following operating system table values can be used for <literal>os_filter_greater</literal>
-          and <literal>os_filter_smaller</literal>.
+          The <literal>os_filter</literal> value specifies a filter to install a configuration or component on. 
+          The operating system must be equal to any of the values specified. Separate multiple operating system ids 
+          with commas. For example, <literal>45</literal> means only to install a configuration on Windows 2000, 
+          <literal>45,50,110</literal> means Windows 2000, Windows 2000 SP1 or Windows 2008. You can use the 
+          <literal>!</literal> sign to define a NOT operator. For example, <literal>!40,!50</literal> means installing
+          on any operating system except Windows 2000 and Windows 2000 SP1.
+        </para>
+        <alert class="note">
+          <para>
+            You cannot mix positive and negative operating system filters as it would produce an ambiguous filter. 
+            For example, <literal>!40,50</literal> is an invalid filter and the installer will fail with an error.
+          </para>
+        </alert>
+        <para>
+          The <literal>os_filter_greater</literal> and <literal>os_filter_smaller</literal> pair allow to specify 
+          a bound or unbound range of operating system values. The operating system id must be within the range.
+          If one of the bounds is not specified, the value must be greater than <literal>os_filter_greater</literal>
+          or smaller than <literal>os_filter_smaller</literal> respectively.
+        </para>
+        <para>
+          The following operating system table values can be used for <literal>os_filter</literal>, 
+          <literal>os_filter_greater</literal> and <literal>os_filter_smaller</literal>.
           <table>
             <title>Operating System Values</title>
             <tableHeader>

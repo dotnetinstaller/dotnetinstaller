@@ -9,6 +9,7 @@ namespace DVLib
 			CPPUNIT_TEST_SUITE( OsUtilUnitTests );
 			CPPUNIT_TEST( testGetOperatingSystemVersion );
 			CPPUNIT_TEST( testGetOperatingSystemVersionString );
+			CPPUNIT_TEST( testIsOperatingSystemID );
 			CPPUNIT_TEST( testIsInOperatingSystemInRange );
 			CPPUNIT_TEST( testGetOperatingSystemLCID );
 			CPPUNIT_TEST( testIsOperatingSystemLCID );
@@ -26,6 +27,7 @@ namespace DVLib
 		public:
 			void testGetOperatingSystemVersion();
 			void testGetOperatingSystemVersionString();
+			void testIsOperatingSystemID();
 			void testIsInOperatingSystemInRange();
 			void testGetOperatingSystemLCID();
 			void testIsOperatingSystemLCID();

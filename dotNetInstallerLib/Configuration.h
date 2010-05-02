@@ -20,6 +20,8 @@ public:
 	// configuration language
 	XmlAttribute language;
 	XmlAttribute language_id;
+	// filter for operating system version
+	XmlAttribute os_filter;
 	// filter for minimum operating system version
 	XmlAttribute os_filter_greater;
 	// filter for maximum operating system version

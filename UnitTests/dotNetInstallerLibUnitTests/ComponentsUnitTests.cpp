@@ -25,6 +25,24 @@ void ComponentsUnitTests::testOsFilters()
 {
 	Components components;
 	ComponentPtr component1(new MsiComponent());
+	component1->os_filter = L"!6";
+	ComponentPtr component2(new MsiComponent());
+	component2->os_filter = L"5";
+	ComponentPtr component3(new MsiComponent());
+	component3->os_filter = L"6";
+	ComponentPtr component4(new MsiComponent());
+	components.add(component1);
+	components.add(component2);
+	components.add(component3);
+	components.add(component4);
+	CPPUNIT_ASSERT(components.size() == 4);
+	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 2);
+}
+
+void ComponentsUnitTests::testOsFiltersGreaterSmaller()
+{
+	Components components;
+	ComponentPtr component1(new MsiComponent());
 	component1->os_filter_greater = L"1";
 	component1->os_filter_smaller = L"10";
 	ComponentPtr component2(new MsiComponent());

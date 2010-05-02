@@ -122,13 +122,16 @@ namespace DVLib
 	std::wstring GetOperatingSystemVersionString();
 	std::wstring os2wstring(OperatingSystem os);
 	// true if operating system within bounds
-	bool IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& l, const std::wstring& r);
+	bool IsOperatingSystemID(OperatingSystem os, const std::wstring& os_filter);
+	bool IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& os_filter, 
+		const std::wstring& l, const std::wstring& r);
 	// get the operating system LCID
 	LCID GetOperatingSystemLCID(LcidType lcidtype);
 	// does the filter match a system LCID
 	bool IsOperatingSystemLCID(LcidType lcidtype, const std::wstring& lcid);
 	// does the filter match the operating system LCID
 	bool IsOperatingSystemLCIDValue(LCID lcidtype, const std::wstring& lcid);
+	bool IsOperatingSystemID(OperatingSystem os, const std::wstring& id);
 
 	struct PROCESSOR_ARCHITECTURE
 	{

@@ -20,12 +20,22 @@ void OsUtilUnitTests::testGetOperatingSystemVersionString()
 
 void OsUtilUnitTests::testIsInOperatingSystemInRange()
 {
-	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"49", L"59"));
-	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"50", L"59"));
-	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"49", L"50"));
-	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"39", L"49"));
-	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"49", L""));
-	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"", L"55"));
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"", L"", L""));
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"49,50", L"", L""));
+	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"", L"50", L"59"));
+	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"", L"49", L"50"));
+	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"", L"39", L"49"));
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"", L"49", L""));
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"", L"", L"55"));
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"50", L"", L""));
+	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"!50", L"", L""));	
+}
+
+void OsUtilUnitTests::testIsOperatingSystemID()
+{
+	CPPUNIT_ASSERT(DVLib::IsOperatingSystemID(static_cast<OperatingSystem>(22), L""));
+	CPPUNIT_ASSERT(DVLib::IsOperatingSystemID(static_cast<OperatingSystem>(22), L"22"));
+	CPPUNIT_ASSERT(! DVLib::IsOperatingSystemID(static_cast<OperatingSystem>(23), L"22"));
 }
 
 void OsUtilUnitTests::testGetOperatingSystemLCID()

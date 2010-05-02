@@ -34,6 +34,15 @@ namespace InstallerLib
             get { return m_type; }
         }
 
+        private string m_os_filter;
+        [Description("A filter to install this component only on all operating system equal or not equal the value(s) specified. Separate multiple operating system ids with comma (',') and use not symbol ('!') for NOT logic (es. '44,!45' ).")]
+        [Category("Filters")]
+        public string os_filter
+        {
+            get { return m_os_filter; }
+            set { m_os_filter = value; }
+        }
+
         private string m_os_filter_greater;
         [Description("A filter to install this component only on all operating system id greater than the id specified (see Help->Operating System Table). For example to install a component only in Windows 2000 or later write '44'. (OPTIONAL)")]
         [Category("Filters")]
@@ -260,6 +269,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("id", string.IsNullOrEmpty(m_id) ? m_display_name : m_id);
             e.XmlWriter.WriteAttributeString("display_name", m_display_name);
             e.XmlWriter.WriteAttributeString("uninstall_display_name", m_uninstall_display_name);
+            e.XmlWriter.WriteAttributeString("os_filter", m_os_filter);
             e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
             e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
             e.XmlWriter.WriteAttributeString("os_filter_lcid", m_os_filter_lcid);
@@ -299,6 +309,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "allow_continue_on_error", ref m_allow_continue_on_error);
             ReadAttributeValue(e, "required", ref m_required);
             ReadAttributeValue(e, "selected", ref m_selected);
+            ReadAttributeValue(e, "os_filter", ref m_os_filter);
             ReadAttributeValue(e, "os_filter_greater", ref m_os_filter_greater);
             ReadAttributeValue(e, "os_filter_lcid", ref m_os_filter_lcid);
             ReadAttributeValue(e, "os_filter_smaller", ref m_os_filter_smaller);

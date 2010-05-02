@@ -62,6 +62,7 @@ Components Components::GetSupportedComponents(DVLib::LcidType lcidtype, InstallS
 		}
 
 		LOG(L"-- " << component->id << L" (display_name='" << component->GetDisplayName() << L"', os_filter_lcid=" << component->os_filter_lcid
+			<< L", os_filter=" << component->os_filter
 			<< L", os_filter_greater=" << component->os_filter_greater
 			<< L", os_filter_smaller=" << component->os_filter_smaller
 			<< L", processor_architecture_filter=" << component->processor_architecture_filter

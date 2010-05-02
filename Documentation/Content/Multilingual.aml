@@ -22,9 +22,22 @@
             <linkUri>http://msdn.microsoft.com/en-us/library/0h88fahh(VS.85).aspx</linkUri>
           </externalLink> for a table of LCID values.
         </para>
+        <para>
+          The user or system locale must be equal to any of the values specified. Separate multiple locale ids
+          with commas. For example, <literal>1033</literal> means only to install a configuration on an English (US) 
+          operating system, <literal>1033,1049</literal> means to install a configuration on either an English (US) or Russian
+          operating system. You can use the <literal>!</literal> sign to define a NOT operator. For example, 
+          <literal>!1033</literal> means installing on any operating system except English (US).
+        </para>
+        <alert class="note">
+          <para>
+            You cannot mix positive and negative locale IDs as it would produce an ambiguous filter. For example, 
+            <literal>!1033,1049</literal> is an invalid filter and the installer will fail with an error.
+          </para>
+        </alert>
         <alert class="important">
           <para>
-            dotNetInstaller will produce an error and exit when it fails to identify an acceptable configuration. Hence, when defining
+            dotNetInstaller will fail with an error when it fails to identify an acceptable configuration. Hence, when defining
             localized configuration it's important to either create one configuration without an <literal>lcid</literal>
             value for all other locales or use a <literal>!</literal> operator. For example, your setup can have two configurations
             <literal>1040</literal> and <literal>!1040</literal>.

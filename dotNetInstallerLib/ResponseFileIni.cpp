@@ -17,7 +17,7 @@ void ResponseFileIni::Exec()
 	std::vector<char> data = DVLib::FileReadToEnd(source);
 	std::string data_s(data.begin(), data.end());
 	std::vector<std::string> lines = DVLib::split(data_s, "\r\n");
-	for(int i = 0; i < lines.size(); i++)
+	for(size_t i = 0; i < lines.size(); i++)
 	{
 		std::vector<std::string> parts = DVLib::split(lines[i], "=", 2);
 		if (parts.size() == 2) 

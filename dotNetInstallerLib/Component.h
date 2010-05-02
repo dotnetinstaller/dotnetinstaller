@@ -34,6 +34,8 @@ public:
 	XmlAttribute status_installed;
 	// component status when not installed
 	XmlAttribute status_notinstalled;
+	// operating system filter
+	XmlAttribute os_filter;
 	// filtro che indica il minimo sistema operativo in cui lanciare il componente (estremo escluso)
 	XmlAttribute os_filter_greater;
 	// filtro che indica il massimo sistema operativo in cui lanciare il componente (estremo escluso)

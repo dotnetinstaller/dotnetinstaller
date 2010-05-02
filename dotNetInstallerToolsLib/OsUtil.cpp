@@ -166,11 +166,25 @@ std::wstring DVLib::GetOperatingSystemVersionString()
 	return os2wstring(GetOperatingSystemVersion());
 }
 
-bool DVLib::IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& l, const std::wstring& r)
+bool DVLib::IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& os_filter, const std::wstring& l, const std::wstring& r)
 {
-	long min = l.empty() ? winMin : DVLib::wstring2long(l);
-	long max = r.empty() ? winMax : DVLib::wstring2long(r);
-	return os > min && os < max;
+	if (! os_filter.empty())
+	{
+		if (! l.empty() || ! r.empty())
+		{
+			THROW_EX(L"Conflicting os_filter=" << os_filter << L", os_filter_greater=" << l << L", os_filter_smaller=" << r);
+		}
+
+		return IsOperatingSystemID(os, os_filter);
+	}
+	else if (! l.empty() || ! r.empty())
+	{
+		long min = l.empty() ? winMin : DVLib::wstring2long(l);
+		long max = r.empty() ? winMax : DVLib::wstring2long(r);
+		return os > min && os < max;
+	}
+	
+	return true;
 }
 
 LCID DVLib::GetOperatingSystemLCID(LcidType lcidtype)
@@ -196,37 +210,108 @@ bool DVLib::IsOperatingSystemLCID(LcidType lcidtype, const std::wstring& lcid)
 }
 
 // \todo: this should probably move to dotNetInstallerLib since lcid is dotNetInstaller-format-specific
-bool DVLib::IsOperatingSystemLCIDValue(LCID oslcid, const std::wstring& lcid)
+bool DVLib::IsOperatingSystemLCIDValue(LCID lcid_in, const std::wstring& filter)
 {
-	if (lcid.empty())
+	if (filter.empty())
 		return true;
 
-	std::vector<std::wstring> lcids = DVLib::split(lcid, L",");
+	std::vector<std::wstring> lcids = DVLib::split(filter, L",");
+
+	std::vector<LCID> lcid_or;
+	std::vector<LCID> lcid_andnot;
 
 	for (size_t i = 0; i < lcids.size(); i++)
 	{
 		if (lcids[i].empty())
 			continue; // tolerate an empty value
 
-		bool not = false;
-		LCID lcid = 0;
 		if (lcids[i][0] == L'!')
 		{
-			not = true;
-			lcid = DVLib::wstring2long(lcids[i].substr(1));
+			lcid_andnot.push_back(DVLib::wstring2long(lcids[i].substr(1)));
 		}
 		else
 		{
-			lcid = DVLib::wstring2long(lcids[i]);
+			lcid_or.push_back(DVLib::wstring2long(lcids[i]));
 		}
-
-		if (lcid == oslcid && ! not)
-			return true;
-		else if (lcid != oslcid && not)
-			return true;
 	}
 
-	return false;
+	if (lcid_or.size() > 0 && lcid_andnot.size() >0)
+	{
+		THROW_EX(L"Ambiguous LCID filter: " << filter);
+	}
+
+	if (lcid_or.size() > 0)
+	{
+		for each(LCID lcid in lcid_or)
+		{
+			if (lcid == lcid_in)
+				return true;
+		}
+
+		return false;
+	} 
+	else 
+	{
+		for each(LCID lcid in lcid_andnot)
+		{
+			if (lcid == lcid_in)
+				return false;
+		}
+
+		return true;
+	}
+}
+
+bool DVLib::IsOperatingSystemID(OperatingSystem os_in, const std::wstring& filter)
+{
+	if (filter.empty())
+		return true;
+
+	std::vector<std::wstring> oss = DVLib::split(filter, L",");
+
+	std::vector<OperatingSystem> os_or;
+	std::vector<OperatingSystem> os_andnot;
+
+	for (size_t i = 0; i < oss.size(); i++)
+	{
+		if (oss[i].empty())
+			continue; // tolerate an empty value
+
+		if (oss[i][0] == L'!')
+		{
+			os_andnot.push_back(static_cast<OperatingSystem>(DVLib::wstring2long(oss[i].substr(1))));
+		}
+		else
+		{
+			os_or.push_back(static_cast<OperatingSystem>(DVLib::wstring2long(oss[i])));
+		}
+	}
+
+	if (os_or.size() > 0 && os_andnot.size() >0)
+	{
+		THROW_EX(L"Ambiguous OS filter: " << filter);
+	}
+
+	if (os_or.size() > 0)
+	{
+		for each(OperatingSystem os in os_or)
+		{
+			if (os == os_in)
+				return true;
+		}
+
+		return false;
+	} 
+	else 
+	{
+		for each(OperatingSystem os in os_andnot)
+		{
+			if (os == os_in)
+				return false;
+		}
+
+		return true;
+	}
 }
 
 WORD DVLib::wstring2pa(const std::wstring& pa)
