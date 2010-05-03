@@ -9,7 +9,7 @@
 
 DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 {
-	DVLib::OperatingSystem os = winNotSupported;
+	DVLib::OperatingSystem os = winNone;
 	OSVERSIONINFOEX osvi = { 0 };
 
 	// use GetVersionEx, fallback on GetVersion when unavaialble
@@ -152,7 +152,7 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 			break;
 	}
 
-	CHECK_BOOL(os != winNotSupported, 
+	CHECK_BOOL(os != winNone, 
 		L"Unsupported operating system, major=" << osvi.dwMajorVersion 
 			<< L", version=" << osvi.dwMinorVersion << L"." << osvi.dwMinorVersion
 			<< L", sp=" << osvi.wServicePackMajor << L"." << osvi.wServicePackMinor
@@ -166,22 +166,29 @@ std::wstring DVLib::GetOperatingSystemVersionString()
 	return os2wstring(GetOperatingSystemVersion());
 }
 
-bool DVLib::IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& os_filter, const std::wstring& l, const std::wstring& r)
+bool DVLib::IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& os_filter, OperatingSystem l, OperatingSystem r)
 {
 	if (! os_filter.empty())
 	{
-		if (! l.empty() || ! r.empty())
+		if (l != winNone || r != winNone)
 		{
-			THROW_EX(L"Conflicting os_filter=" << os_filter << L", os_filter_greater=" << l << L", os_filter_smaller=" << r);
+			THROW_EX(L"Conflicting os_filter=" << os_filter << 
+				L", os_filter_min=" << DVLib::os2wstring(l) << L", os_filter_max=" << DVLib::os2wstring(r));
 		}
 
 		return IsOperatingSystemID(os, os_filter);
 	}
-	else if (! l.empty() || ! r.empty())
+	else if (l != winNone && r != winNone)
 	{
-		long min = l.empty() ? winMin : DVLib::wstring2long(l);
-		long max = r.empty() ? winMax : DVLib::wstring2long(r);
-		return os > min && os < max;
+		return os >= l && os <= r;
+	}
+	else if (l != winNone)
+	{
+		return os >= l;
+	}
+	else if (r != winNone)
+	{
+		return os <= r;
 	}
 	
 	return true;
@@ -279,11 +286,11 @@ bool DVLib::IsOperatingSystemID(OperatingSystem os_in, const std::wstring& filte
 
 		if (oss[i][0] == L'!')
 		{
-			os_andnot.push_back(static_cast<OperatingSystem>(DVLib::wstring2long(oss[i].substr(1))));
+			os_andnot.push_back(static_cast<OperatingSystem>(DVLib::oscode2os(oss[i].substr(1))));
 		}
 		else
 		{
-			os_or.push_back(static_cast<OperatingSystem>(DVLib::wstring2long(oss[i])));
+			os_or.push_back(static_cast<OperatingSystem>(DVLib::oscode2os(oss[i])));
 		}
 	}
 
@@ -472,8 +479,27 @@ std::wstring DVLib::lcidtype2wstring(LcidType lcidtype)
 	THROW_EX(L"Invalid LCID type: " << lcidtype);
 }
 
+DVLib::OperatingSystem DVLib::oscode2os(const std::wstring& oscode)
+{
+	if (oscode.empty())
+		return winNone;
+
+	for (int i = 0; i < ARRAYSIZE(Os2StringMap); i++)
+	{
+		if (Os2StringMap[i].oscode == oscode)
+		{
+			return Os2StringMap[i].os;
+		}
+	}
+
+	THROW_EX(L"Unsupported operating system code: " << oscode);
+}
+
 std::wstring DVLib::os2wstring(OperatingSystem os)
 {
+	if (os == winNone)
+		return L"";
+
 	for (int i = 0; i < ARRAYSIZE(Os2StringMap); i++)
 	{
 		if (Os2StringMap[i].os == os)
@@ -482,5 +508,5 @@ std::wstring DVLib::os2wstring(OperatingSystem os)
 		}
 	}
 
-	THROW_EX(L"Unsupported operating system, os=" << os);
+	THROW_EX(L"Unsupported operating system, os=" << (int) os);
 }

@@ -25,11 +25,11 @@ void ComponentsUnitTests::testOsFilters()
 {
 	Components components;
 	ComponentPtr component1(new MsiComponent());
-	component1->os_filter = L"!6";
+	component1->os_filter = L"!win95";
 	ComponentPtr component2(new MsiComponent());
-	component2->os_filter = L"5";
+	component2->os_filter = L"win95osr2";
 	ComponentPtr component3(new MsiComponent());
-	component3->os_filter = L"6";
+	component3->os_filter = L"win95";
 	ComponentPtr component4(new MsiComponent());
 	components.add(component1);
 	components.add(component2);
@@ -43,14 +43,14 @@ void ComponentsUnitTests::testOsFiltersGreaterSmaller()
 {
 	Components components;
 	ComponentPtr component1(new MsiComponent());
-	component1->os_filter_greater = L"1";
-	component1->os_filter_smaller = L"10";
+	component1->os_filter_min = winNone;
+	component1->os_filter_max = win95Max;
 	ComponentPtr component2(new MsiComponent());
-	component2->os_filter_greater = L"10";
-	component2->os_filter_smaller = L"100";
+	component2->os_filter_min = win98;
+	component2->os_filter_max = win2000Max;
 	ComponentPtr component3(new MsiComponent());
-	component3->os_filter_greater = L"100";
-	component3->os_filter_smaller = L"1000";
+	component3->os_filter_min = winXP;
+	component3->os_filter_max = winNone;
 	components.add(component1);
 	components.add(component2);
 	components.add(component3);

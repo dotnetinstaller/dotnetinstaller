@@ -14,7 +14,7 @@ namespace InstallerLib
             : base("msu", "mysetup.msu")
         {
             m_package = "#APPPATH\\mysetup.msu";
-            os_filter_greater = "99";
+            os_filter_min = OperatingSystem.winVista;
         }
 
         private string m_package;

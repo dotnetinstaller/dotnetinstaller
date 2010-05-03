@@ -36,34 +36,34 @@ namespace InstallerLib
 
         private string m_os_filter;
         [Description("A filter to install this component only on all operating system equal or not equal the value(s) specified. Separate multiple operating system ids with comma (',') and use not symbol ('!') for NOT logic (es. '44,!45' ).")]
-        [Category("Filters")]
+        [Category("Operating System")]
         public string os_filter
         {
             get { return m_os_filter; }
             set { m_os_filter = value; }
         }
 
-        private string m_os_filter_greater;
-        [Description("A filter to install this component only on all operating system id greater than the id specified (see Help->Operating System Table). For example to install a component only in Windows 2000 or later write '44'. (OPTIONAL)")]
-        [Category("Filters")]
-        public string os_filter_greater
+        private OperatingSystem m_os_filter_min;
+        [Description("A filter to install this component only on all operating system id greater or equal than the id specified. For example to install a component only in Windows 2000 or later use win2000. (OPTIONAL)")]
+        [Category("Operating System")]        
+        public OperatingSystem os_filter_min
         {
-            get { return m_os_filter_greater; }
-            set { m_os_filter_greater = value; }
+            get { return m_os_filter_min; }
+            set { m_os_filter_min = value; }
         }
 
-        private string m_os_filter_smaller;
-        [Description("A filter to install this component only on all operating system id smaller than the id specified (see operating system table). For example to install a component preceding Windows 2000 write '45'. (OPTIONAL)")]
-        [Category("Filters")]
-        public string os_filter_smaller
+        private OperatingSystem m_os_filter_max;
+        [Description("A filter to install this component only on all operating system id smaller or equal than the id specified. For example to install a component preceding Windows 2000 use winNT4sp6a. (OPTIONAL)")]
+        [Category("Operating System")]
+        public OperatingSystem os_filter_max
         {
-            get { return m_os_filter_smaller; }
-            set { m_os_filter_smaller = value; }
+            get { return m_os_filter_max; }
+            set { m_os_filter_max = value; }
         }
 
         private string m_os_filter_lcid;
         [Description("A filter to install this component only on all operating system language equals or not equals than the LCID specified (see Help->LCID table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter all the configuration element. (OPTIONAL)")]
-        [Category("Filters")]
+        [Category("Operating System")]
         public string os_filter_lcid
         {
             get { return m_os_filter_lcid; }
@@ -270,8 +270,10 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("display_name", m_display_name);
             e.XmlWriter.WriteAttributeString("uninstall_display_name", m_uninstall_display_name);
             e.XmlWriter.WriteAttributeString("os_filter", m_os_filter);
-            e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
-            e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
+            e.XmlWriter.WriteAttributeString("os_filter_min", (m_os_filter_min == OperatingSystem.winNone
+                ? "" : Enum.GetName(typeof(OperatingSystem), m_os_filter_min)));
+            e.XmlWriter.WriteAttributeString("os_filter_max", (m_os_filter_max == OperatingSystem.winNone
+                ? "" : Enum.GetName(typeof(OperatingSystem), m_os_filter_max)));
             e.XmlWriter.WriteAttributeString("os_filter_lcid", m_os_filter_lcid);
             e.XmlWriter.WriteAttributeString("type", m_type);
             e.XmlWriter.WriteAttributeString("installcompletemessage", m_installcompletemessage);
@@ -310,9 +312,15 @@ namespace InstallerLib
             ReadAttributeValue(e, "required", ref m_required);
             ReadAttributeValue(e, "selected", ref m_selected);
             ReadAttributeValue(e, "os_filter", ref m_os_filter);
-            ReadAttributeValue(e, "os_filter_greater", ref m_os_filter_greater);
             ReadAttributeValue(e, "os_filter_lcid", ref m_os_filter_lcid);
-            ReadAttributeValue(e, "os_filter_smaller", ref m_os_filter_smaller);
+            string os_filter_greater = string.Empty;
+            if (ReadAttributeValue(e, "os_filter_greater", ref os_filter_greater) && !String.IsNullOrEmpty(os_filter_greater))
+                m_os_filter_min = (OperatingSystem)(int.Parse(os_filter_greater) + 1);
+            string os_filter_smaller = string.Empty;
+            if (ReadAttributeValue(e, "os_filter_smaller", ref os_filter_smaller) && !String.IsNullOrEmpty(os_filter_smaller))
+                m_os_filter_max = (OperatingSystem)(int.Parse(os_filter_smaller) - 1);
+            ReadAttributeValue(e, "os_filter_min", ref m_os_filter_min);
+            ReadAttributeValue(e, "os_filter_max", ref m_os_filter_max);
             ReadAttributeValue(e, "note", ref m_note);
             ReadAttributeValue(e, "processor_architecture_filter", ref m_processor_architecture_filter);
             ReadAttributeValue(e, "status_installed", ref m_status_installed);

@@ -27,31 +27,36 @@ namespace DVLib
 
 	enum OperatingSystem
 	{
-		winMin = -1,
-		winNotSupported = 0,
+		winNone = -1,
 
 		win95 = 5,
 		win95osr2 = 10,
+		win95Max = 14,
 
 		win98 = 15,
 		win98se = 20,
+		win98Max = 24,
 
 		winME = 25,
+		winMEMax = 29,
 
 		winNT4 = 30,
 		winNT4sp6 = 35,
 		winNT4sp6a = 40,
+		winNT4Max = 44,
 
 		win2000 = 45,
 		win2000sp1 = 50,
 		win2000sp2 = 55,
 		win2000sp3 = 60,
 		win2000sp4 = 65,
+		win2000Max = 74,
 
 		winXP = 75,
 		winXPsp1 = 80, 
 		winXPsp2 = 82,
 		winXPsp3 = 84,
+		winXPMax = 89,
 
 		winServer2003 = 90,
 		winServer2003R2 = 91,
@@ -59,61 +64,69 @@ namespace DVLib
 		winServer2003R2sp1 = 93,
 		winServer2003sp2 = 94,
 		winServer2003R2sp2 = 95,
+		winServer2003Max = 99,
 
 		winVista = 100,
 		winVistaSp1 = 102, 
 		winVistaSp2 = 103, 
+		winVistaMax = 109,
 
 		winServer2008 = 110,
 		winServer2008R2 = 111,
+		winServer2008Max = 119,
 
 		win7 = 120,
-
-		//
-		// winMax must be +1 the highest configuration 
-		// since IsInOperatingSystemInRange is not inclusive
-		// 
-
-		winMax = 121
+		win7Max = 129,
 	};
 
 	struct Os2StringMapEntry
 	{
 		OperatingSystem os;
+		LPCWSTR oscode;
 		LPCWSTR name;
 	};
 
 	static const Os2StringMapEntry Os2StringMap[] =
 	{
-		{ win95, L"Windows 95" },
-		{ win95osr2, L"Windows 95 OSR2" },
-		{ win98, L"Windows 98" },
-		{ win98se, L"Windows 98 Second Edition" },
-		{ winME, L"Windows ME" },
-		{ winNT4, L"Windows NT 4" },
-		{ winNT4sp6, L"Windows NT 4 Sp6" },
-		{ winNT4sp6a, L"Windows NT 4 Sp6a" },
-		{ win2000, L"Windows 2000" },
-		{ win2000sp1, L"Windows 2000 Sp1" },
-		{ win2000sp2, L"Windows 2000 Sp2" },
-		{ win2000sp3, L"Windows 2000 Sp3" },
-		{ win2000sp4, L"Windows 2000 Sp4" },
-		{ winXP, L"Windows XP" },
-		{ winXPsp1, L"Windows XP Sp1" },
-		{ winXPsp2, L"Windows XP Sp2" },
-		{ winXPsp3, L"Windows XP Sp3" },
-		{ winServer2003, L"Windows Server 2003" },
-		{ winServer2003sp1, L"Windows Server 2003 Sp1" },
-		{ winServer2003sp2, L"Windows Server 2003 Sp2" },
-		{ winServer2003R2, L"Windows Server 2003 R2" },
-		{ winServer2003R2sp1, L"Windows Server 2003 R2 Sp1" },
-		{ winServer2003R2sp2, L"Windows Server 2003 R2 Sp2" },
-		{ winServer2008, L"Windows Server 2008" },
-		{ winServer2008R2, L"Windows Server 2008 R2" },
-		{ winVista, L"Windows Vista" },
-		{ winVistaSp1, L"Windows Vista Sp1" },
-		{ winVistaSp2, L"Windows Vista Sp2" },
-		{ win7, L"Windows 7" }
+		{ win95, L"win95", L"Windows 95" },
+		{ win95osr2, L"win95osr2", L"Windows 95 OSR2" },
+		{ win95Max, L"win95Max", L"Windows 95+" },
+		{ win98, L"win98", L"Windows 98" },
+		{ win98se, L"win98se", L"Windows 98 Second Edition" },
+		{ win98Max, L"win98Max", L"Windows 98+" },
+		{ winME, L"winME", L"Windows ME" },
+		{ winMEMax, L"winMEMax", L"Windows ME+" },
+		{ winNT4, L"winNT4", L"Windows NT 4" },
+		{ winNT4sp6, L"winNT4sp6", L"Windows NT 4 Sp6" },
+		{ winNT4sp6a, L"winNT4sp6a", L"Windows NT 4 Sp6a" },
+		{ winNT4Max, L"winNT4Max", L"Windows NT 4+" },
+		{ win2000, L"win2000", L"Windows 2000" },
+		{ win2000sp1, L"win2000sp1", L"Windows 2000 Sp1" },
+		{ win2000sp2, L"win2000sp2", L"Windows 2000 Sp2" },
+		{ win2000sp3, L"win2000sp3", L"Windows 2000 Sp3" },
+		{ win2000sp4, L"win2000sp4", L"Windows 2000 Sp4" },
+		{ win2000Max, L"win2000Max", L"Windows 2000+" },
+		{ winXP, L"winXP", L"Windows XP" },
+		{ winXPsp1, L"winXPsp1", L"Windows XP Sp1" },
+		{ winXPsp2, L"winXPsp2", L"Windows XP Sp2" },
+		{ winXPsp3, L"winXPsp3", L"Windows XP Sp3" },
+		{ winXPMax, L"winXPMax", L"Windows XP+" },
+		{ winServer2003, L"winServer2003", L"Windows Server 2003" },
+		{ winServer2003sp1, L"winServer2003sp1", L"Windows Server 2003 Sp1" },
+		{ winServer2003sp2, L"winServer2003sp2", L"Windows Server 2003 Sp2" },
+		{ winServer2003R2, L"winServer2003R2", L"Windows Server 2003 R2" },
+		{ winServer2003R2sp1, L"winServer2003R2sp1", L"Windows Server 2003 R2 Sp1" },
+		{ winServer2003R2sp2, L"winServer2003R2sp2", L"Windows Server 2003 R2 Sp2" },
+		{ winServer2003Max, L"winServer2003Max", L"Windows Server 2003+" },
+		{ winServer2008, L"winServer2008", L"Windows Server 2008" },
+		{ winServer2008R2, L"winServer2008R2", L"Windows Server 2008 R2" },
+		{ winServer2008Max, L"winServer2008Max", L"Windows Server 2008+" },
+		{ winVista, L"winVista", L"Windows Vista" },
+		{ winVistaSp1, L"winVistaSp1", L"Windows Vista Sp1" },
+		{ winVistaSp2, L"winVistaSp2", L"Windows Vista Sp2" },
+		{ winVistaMax, L"winVistaMax", L"Windows Vista+" },
+		{ win7, L"win7", L"Windows 7" },
+		{ win7Max, L"win7Max", L"Windows 7+" }
 	};
 
 	// operating system version
@@ -121,10 +134,11 @@ namespace DVLib
 	// operating system version string
 	std::wstring GetOperatingSystemVersionString();
 	std::wstring os2wstring(OperatingSystem os);
+	OperatingSystem oscode2os(const std::wstring& oscode);
 	// true if operating system within bounds
 	bool IsOperatingSystemID(OperatingSystem os, const std::wstring& os_filter);
 	bool IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& os_filter, 
-		const std::wstring& l, const std::wstring& r);
+		OperatingSystem l, OperatingSystem r);
 	// get the operating system LCID
 	LCID GetOperatingSystemLCID(LcidType lcidtype);
 	// does the filter match a system LCID

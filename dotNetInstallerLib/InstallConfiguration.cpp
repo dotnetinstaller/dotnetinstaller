@@ -155,8 +155,8 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	LOG(L"Loaded " << components.size() << L" component(s) from configuration type=" << type 
 		<< L" (lcid_filter=" << lcid_filter
 		<< L", os_filter=" << os_filter
-		<< L", os_filter_greater=" << os_filter_greater
-		<< L", os_filter_smaller=" << os_filter_smaller
+		<< L", os_filter_min=" << DVLib::os2wstring(os_filter_min)
+		<< L", os_filter_max=" << DVLib::os2wstring(os_filter_max)
 		<< L", processor_architecture_filter=" << processor_architecture_filter
 		<< L")");
 }

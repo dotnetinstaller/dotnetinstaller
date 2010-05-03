@@ -98,6 +98,7 @@
     <Compile Include="InstallerLinker.cs" />
     <Compile Include="InstallerLinkerArguments.cs" />
     <Compile Include="Lcid.cs" />
+    <Compile Include="OperatingSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceFileCollection.cs" />
     <Compile Include="ResourceUpdate.cs" />

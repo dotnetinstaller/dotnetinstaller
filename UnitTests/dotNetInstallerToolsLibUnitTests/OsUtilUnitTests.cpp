@@ -8,7 +8,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(OsUtilUnitTests);
 void OsUtilUnitTests::testGetOperatingSystemVersion()
 {
 	DVLib::OperatingSystem os = DVLib::GetOperatingSystemVersion();
-	CPPUNIT_ASSERT(os != winMin && os != winMax && os != winNotSupported);
+	CPPUNIT_ASSERT(os != DVLib::winNone);
 }
 
 void OsUtilUnitTests::testGetOperatingSystemVersionString()
@@ -20,22 +20,26 @@ void OsUtilUnitTests::testGetOperatingSystemVersionString()
 
 void OsUtilUnitTests::testIsInOperatingSystemInRange()
 {
-	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"", L"", L""));
-	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"49,50", L"", L""));
-	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"", L"50", L"59"));
-	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"", L"49", L"50"));
-	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"", L"39", L"49"));
-	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"", L"49", L""));
-	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"", L"", L"55"));
-	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"50", L"", L""));
-	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(static_cast<OperatingSystem>(50), L"!50", L"", L""));	
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::win2000sp1, L"", DVLib::winNone, DVLib::winNone));
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::win2000sp1, L"win2000sp1,win2000sp2", DVLib::winNone, DVLib::winNone));
+	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(DVLib::win2000sp1, L"", 
+		static_cast<DVLib::OperatingSystem>(DVLib::win2000sp1 + 1), static_cast<DVLib::OperatingSystem>(DVLib::win2000sp3 - 1)));
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::win2000sp1, L"", DVLib::win2000sp1, DVLib::win2000sp1));
+	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(DVLib::win2000sp1, L"", 
+		static_cast<DVLib::OperatingSystem>(DVLib::winNT4sp6a - 1), static_cast<DVLib::OperatingSystem>(DVLib::win2000sp1 - 1)));
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::win2000sp1, L"",
+		static_cast<DVLib::OperatingSystem>(DVLib::winNT4sp6a - 1), DVLib::win2000sp1));
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::win2000sp1, L"", DVLib::win2000sp1, DVLib::winNone));
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::win2000sp1, L"", DVLib::winNone, DVLib::win2000sp2));
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::win2000sp1, L"win2000sp1", DVLib::winNone, DVLib::winNone));
+	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(DVLib::win2000sp1, L"!win2000sp1", DVLib::winNone, DVLib::winNone));	
 }
 
 void OsUtilUnitTests::testIsOperatingSystemID()
 {
-	CPPUNIT_ASSERT(DVLib::IsOperatingSystemID(static_cast<OperatingSystem>(22), L""));
-	CPPUNIT_ASSERT(DVLib::IsOperatingSystemID(static_cast<OperatingSystem>(22), L"22"));
-	CPPUNIT_ASSERT(! DVLib::IsOperatingSystemID(static_cast<OperatingSystem>(23), L"22"));
+	CPPUNIT_ASSERT(DVLib::IsOperatingSystemID(DVLib::winME, L""));
+	CPPUNIT_ASSERT(DVLib::IsOperatingSystemID(DVLib::winME, L"winME"));
+	CPPUNIT_ASSERT(! DVLib::IsOperatingSystemID(DVLib::winME, L"winXP"));
 }
 
 void OsUtilUnitTests::testGetOperatingSystemLCID()
@@ -157,6 +161,35 @@ void OsUtilUnitTests::testlcidtype2wstring()
 	CPPUNIT_ASSERT(DVLib::wstring2lcidtype(L"User") == DVLib::LcidUser);
 }
 
+void OsUtilUnitTests::testoscode2os()
+{
+	for (int i = 0; i < ARRAYSIZE(Os2StringMap); i++)
+	{
+		OperatingSystem os = DVLib::oscode2os(Os2StringMap[i].oscode);
+		CPPUNIT_ASSERT(os == Os2StringMap[i].os);
+	}
+
+	LPCWSTR KnownOperatingSystems[] = 
+	{
+		L"win95", L"win95osr2", L"win95Max",
+		L"win98", L"win98se", L"win98Max",
+		L"winME", L"winMEMax",
+		L"winNT4", L"winNT4sp6", L"winNT4sp6a", L"winNT4Max",
+		L"win2000", L"win2000sp1", L"win2000sp2", L"win2000sp3", L"win2000sp4", L"win2000Max",
+		L"winXP", L"winXPsp1", L"winXPsp2", L"winXPsp3", L"winXPMax",
+		L"winServer2003", L"winServer2003R2", L"winServer2003sp1", L"winServer2003R2sp1", L"winServer2003sp2", L"winServer2003R2sp2", L"winServer2003Max",
+		L"winVista", L"winVistaSp1", L"winVistaSp2", L"winVistaMax",
+		L"winServer2008", L"winServer2008R2", L"winServer2008Max",
+		L"win7", L"win7Max",
+	};
+
+	for (int i = 0; i < ARRAYSIZE(KnownOperatingSystems); i++)
+	{
+		OperatingSystem os = DVLib::oscode2os(KnownOperatingSystems[i]);
+		CPPUNIT_ASSERT(os != winNone);
+	}
+}
+
 void OsUtilUnitTests::testos2wstring()
 {
 	for (int i = 0; i < ARRAYSIZE(Os2StringMap); i++)
@@ -167,14 +200,16 @@ void OsUtilUnitTests::testos2wstring()
 
 	OperatingSystem KnownOperatingSystems[] = 
 	{
-		win95, win95osr2, win98, win98se, winME,
-		winNT4, winNT4sp6, winNT4sp6a,
-		win2000, win2000sp1, win2000sp2, win2000sp3, win2000sp4,
-		winXP, winXPsp1, winXPsp2, winXPsp3,
-		winServer2003, winServer2003R2, winServer2003sp1, winServer2003R2sp1, winServer2003sp2, winServer2003R2sp2,
-		winVista, winVistaSp1, winVistaSp2,
-		winServer2008, winServer2008R2, 
-		win7
+		win95, win95osr2, win95Max,
+		win98, win98se, win98Max,
+		winME, winMEMax,
+		winNT4, winNT4sp6, winNT4sp6a, winNT4Max,
+		win2000, win2000sp1, win2000sp2, win2000sp3, win2000sp4, win2000Max,
+		winXP, winXPsp1, winXPsp2, winXPsp3, winXPMax,
+		winServer2003, winServer2003R2, winServer2003sp1, winServer2003R2sp1, winServer2003sp2, winServer2003R2sp2, winServer2003Max,
+		winVista, winVistaSp1, winVistaSp2, winVistaMax,
+		winServer2008, winServer2008R2, winServer2008Max,
+		win7, win7Max,
 	};
 
 	for (int i = 0; i < ARRAYSIZE(KnownOperatingSystems); i++)

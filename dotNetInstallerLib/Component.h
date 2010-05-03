@@ -36,10 +36,9 @@ public:
 	XmlAttribute status_notinstalled;
 	// operating system filter
 	XmlAttribute os_filter;
-	// filtro che indica il minimo sistema operativo in cui lanciare il componente (estremo escluso)
-	XmlAttribute os_filter_greater;
-	// filtro che indica il massimo sistema operativo in cui lanciare il componente (estremo escluso)
-	XmlAttribute os_filter_smaller;
+	// operating system filter range
+	DVLib::OperatingSystem os_filter_min;
+	DVLib::OperatingSystem os_filter_max;
 	// filtro che indica il filtro per lingua del sistema operativo (es. Italy = 1040, English - United Kingdom = 2057, English - United States = 1033)
 	XmlAttribute os_filter_lcid;
 	// testo da visualizzare a fine installazione (se vuoto non visualizza niente)

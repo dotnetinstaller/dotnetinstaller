@@ -22,6 +22,8 @@ Component::Component(component_type t)
     , checked(true)
 	, supports_install(true)
 	, supports_uninstall(false)
+	, os_filter_min(DVLib::winNone)
+	, os_filter_max(DVLib::winNone)
 {
 
 }
@@ -53,8 +55,8 @@ void Component::Load(TiXmlElement * node)
 	if (id.empty()) id = display_name;
 	status_installed = node->Attribute("status_installed");
 	os_filter = node->Attribute("os_filter");
-	os_filter_greater = node->Attribute("os_filter_greater");
-	os_filter_smaller = node->Attribute("os_filter_smaller");
+	os_filter_min = DVLib::oscode2os(XmlAttribute(node->Attribute("os_filter_min")).GetValue());
+	os_filter_max = DVLib::oscode2os(XmlAttribute(node->Attribute("os_filter_max")).GetValue());
 	os_filter_lcid = node->Attribute("os_filter_lcid");
 	installcompletemessage = node->Attribute("installcompletemessage");
 	uninstallcompletemessage = node->Attribute("uninstallcompletemessage");
@@ -132,7 +134,7 @@ bool Component::IsSupported(LCID lcid) const
 {
 	return DVLib::IsOperatingSystemLCIDValue(lcid, os_filter_lcid) &&
 		DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), processor_architecture_filter) &&
-		DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter, os_filter_greater, os_filter_smaller);
+		DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter, os_filter_min, os_filter_max);
 }
 
 std::wstring Component::GetString(int indent) const
@@ -146,8 +148,10 @@ std::wstring Component::GetString(int indent) const
 		ss << L", pa=" << processor_architecture_filter;
 	if (! os_filter.empty())
 		ss << L", os=" << os_filter;
-	if (! os_filter_greater.empty() || ! os_filter_smaller.empty())
-		ss << L", os=" << os_filter_greater << L"-" << os_filter_smaller;
+	if (os_filter_min != DVLib::winNone)
+		ss << L", os_filter_min=" << DVLib::os2wstring(os_filter_min);
+	if (os_filter_max != DVLib::winNone)
+		ss << L", os_filter_max=" << DVLib::os2wstring(os_filter_max);
 	return ss.str();
 }
 

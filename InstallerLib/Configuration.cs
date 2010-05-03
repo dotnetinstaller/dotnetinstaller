@@ -26,30 +26,28 @@ namespace InstallerLib
             set { m_os_filter = value; }
         }
 
-        // filter for minimal OS version
-        private string m_os_filter_greater;
-        [Category("Filters")]
-        [Description("A filter to run this setup only on all operating system id greater than the id specified (see Help->Operating System Table). For example to run this setup only in Windows 2000 or later write '44'. (OPTIONAL)")]
-        public string os_filter_greater
+        private OperatingSystem m_os_filter_min;
+        [Category("Operating System")]
+        [Description("A filter to run this setup only on all operating system id greater or equal than the id specified. For example to run this setup only in Windows 2000 or later write '45'. (OPTIONAL)")]
+        public OperatingSystem os_filter_min
         {
-            get { return m_os_filter_greater; }
-            set { m_os_filter_greater = value; }
+            get { return m_os_filter_min; }
+            set { m_os_filter_min = value; }
         }
 
-        // filter for maximal OS version
-        private string m_os_filter_smaller;
-        [Category("Filters")]
-        [Description("A filter to run this setup only on all operating system id smaller than the id specified (see operating system table). For example to run this setup preceding Windows 2000 write '45'. (OPTIONAL)")]
-        public string os_filter_smaller
+        private OperatingSystem m_os_filter_max;
+        [Category("Operating System")]
+        [Description("A filter to run this setup only on all operating system id smaller or equal than the id specified. For example to run this setup preceding Windows 2000 write '44'. (OPTIONAL)")]
+        public OperatingSystem os_filter_max
         {
-            get { return m_os_filter_smaller; }
-            set { m_os_filter_smaller = value; }
+            get { return m_os_filter_max; }
+            set { m_os_filter_max = value; }
         }
 
         // filter for processor architecture
         private string m_processor_architecture_filter;
         [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Separate by commas, can use the NOT sign ('!') to exclude. (eg. 'x86,x64' or '!x86'). (OPTIONAL)")]
-        [Category("Filters")]
+        [Category("Operating System")]
         public string processor_architecture_filter
         {
             get { return m_processor_architecture_filter; }
@@ -137,8 +135,14 @@ namespace InstallerLib
             ReadAttributeValue(e, "language", ref m_language);
             ReadAttributeValue(e, "language_id", ref m_language_id);
             ReadAttributeValue(e, "os_filter", ref m_os_filter);
-            ReadAttributeValue(e, "os_filter_greater", ref m_os_filter_greater);
-            ReadAttributeValue(e, "os_filter_smaller", ref m_os_filter_smaller);
+            string os_filter_greater = string.Empty;
+            if (ReadAttributeValue(e, "os_filter_greater", ref os_filter_greater) && !String.IsNullOrEmpty(os_filter_greater))
+                m_os_filter_min = (OperatingSystem)(int.Parse(os_filter_greater) + 1);
+            string os_filter_smaller = string.Empty;
+            if (ReadAttributeValue(e, "os_filter_smaller", ref os_filter_smaller) && !String.IsNullOrEmpty(os_filter_smaller))
+                m_os_filter_max = (OperatingSystem)(int.Parse(os_filter_smaller) - 1);
+            ReadAttributeValue(e, "os_filter_min", ref m_os_filter_min);
+            ReadAttributeValue(e, "os_filter_max", ref m_os_filter_max);
             ReadAttributeValue(e, "processor_architecture_filter", ref m_processor_architecture_filter);
             ReadAttributeValue(e, "supports_install", ref m_supports_install);
             ReadAttributeValue(e, "supports_uninstall", ref m_supports_uninstall);
@@ -151,8 +155,10 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("language_id", m_language_id);
             e.XmlWriter.WriteAttributeString("language", m_language);
             e.XmlWriter.WriteAttributeString("os_filter", m_os_filter);
-            e.XmlWriter.WriteAttributeString("os_filter_greater", m_os_filter_greater);
-            e.XmlWriter.WriteAttributeString("os_filter_smaller", m_os_filter_smaller);
+            e.XmlWriter.WriteAttributeString("os_filter_min", (m_os_filter_min == OperatingSystem.winNone 
+                ? "" : Enum.GetName(typeof(OperatingSystem), m_os_filter_min)));
+            e.XmlWriter.WriteAttributeString("os_filter_max", (m_os_filter_max == OperatingSystem.winNone 
+                ? "" : Enum.GetName(typeof(OperatingSystem), m_os_filter_max)));
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
             e.XmlWriter.WriteAttributeString("supports_install", m_supports_install.ToString());
             e.XmlWriter.WriteAttributeString("supports_uninstall", m_supports_uninstall.ToString());

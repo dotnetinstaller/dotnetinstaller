@@ -23,6 +23,7 @@ namespace DVLib
 			CPPUNIT_TEST( testwstring2lcidtype );
 			CPPUNIT_TEST( testlcidtype2wstring );
 			CPPUNIT_TEST( testos2wstring );
+			CPPUNIT_TEST( testoscode2os );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testGetOperatingSystemVersion();
@@ -41,6 +42,7 @@ namespace DVLib
 			void testwstring2lcidtype();
 			void testlcidtype2wstring();
 			void testos2wstring();
+			void testoscode2os();
 		};
 	}
 }

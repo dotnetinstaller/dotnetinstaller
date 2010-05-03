@@ -22,10 +22,9 @@ public:
 	XmlAttribute language_id;
 	// filter for operating system version
 	XmlAttribute os_filter;
-	// filter for minimum operating system version
-	XmlAttribute os_filter_greater;
-	// filter for maximum operating system version
-	XmlAttribute os_filter_smaller;
+	// operating system filter range
+	DVLib::OperatingSystem os_filter_min;
+	DVLib::OperatingSystem os_filter_max;
 	// filter for processor architecture
 	XmlAttribute processor_architecture_filter;
 	// configuration type
