@@ -75,6 +75,9 @@ public:
 	bool supports_install;
 	// supports uninstall
 	bool supports_uninstall;
+	// dialog options
+	bool show_progress_dialog;
+	bool show_cab_dialog;
 	// funzione virtuale specifica per il tipo di componente
 	virtual void Exec() = 0;
 	virtual void Wait(DWORD tt = 1000);

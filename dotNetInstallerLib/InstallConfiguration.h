@@ -78,6 +78,9 @@ public:
     WidgetPosition dialog_skip_button_position;
 	Components components;
 	std::vector<ControlPtr> controls;
+	// progress options
+	bool show_progress_dialog;
+	bool show_cab_dialog;
 public:
 	InstallConfiguration();
 	virtual void Load(TiXmlElement * node);

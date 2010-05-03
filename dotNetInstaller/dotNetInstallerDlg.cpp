@@ -238,7 +238,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 				|| ! p_configuration->complete_command_silent.empty()
 				|| ! p_configuration->complete_command_basic.empty())
             {
-                ExtractCab(L""); // the command may need to execute a file
+                ExtractCab(L"", p_configuration->show_cab_dialog); // the command may need to execute a file
             }
 
 			ExecuteCompleteCode(false);
@@ -354,11 +354,12 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		ClearError();
         SelectComponents();
 		SetControlValues();
-        ExtractCab(L"");
-		
+
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
+        ExtractCab(L"", p_configuration->show_cab_dialog);
+		
 		Components components = p_configuration->GetSupportedComponents(
 			m_lcidtype, InstallerSession::Instance->sequence);
 
@@ -469,7 +470,7 @@ void CdotNetInstallerDlg::OnBnClickedCancel()
 	OnCancel();
 }
 
-void CdotNetInstallerDlg::ExtractCab(const std::wstring& id)
+void CdotNetInstallerDlg::ExtractCab(const std::wstring& id, bool display_progress)
 {
     ExtractCabDlg dlg;
 	ExtractCabProcessorPtr p_extractcab(new ExtractCabProcessor(AfxGetApp()->m_hInstance, id, & dlg));	
@@ -482,7 +483,7 @@ void CdotNetInstallerDlg::ExtractCab(const std::wstring& id)
 
 	LOG(L"Extracting embedded files for component '" << (id.empty() ? L"*" : id) << L"': " << cab_count << L" CAB(s)");
 
-	if (InstallUILevelSetting::Instance->IsAnyUI())
+	if (display_progress && InstallUILevelSetting::Instance->IsAnyUI())
 		dlg.LoadComponent(m_configuration, p_extractcab);
 
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
@@ -490,7 +491,7 @@ void CdotNetInstallerDlg::ExtractCab(const std::wstring& id)
 	p_extractcab->cab_cancelled_message = p_configuration->cab_cancelled_message;
 	p_extractcab->BeginExec();
 
-	if (InstallUILevelSetting::Instance->IsAnyUI())
+	if (display_progress && InstallUILevelSetting::Instance->IsAnyUI())
 		dlg.DoModal();
 
 	p_extractcab->EndExec();
@@ -620,7 +621,10 @@ void CdotNetInstallerDlg::ExecuteCompleteCode(bool componentsInstalled)
 bool CdotNetInstallerDlg::OnComponentExecBegin(const ComponentPtr& component)
 {
 	// embedded cab?
-	ExtractCab(component->id);
+	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
+	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+
+	ExtractCab(component->id, p_configuration->show_cab_dialog && component->show_cab_dialog);
 
 	// download?
 	if (get(component->downloaddialog))
@@ -640,10 +644,16 @@ bool CdotNetInstallerDlg::OnComponentExecWait(const ComponentPtr& component)
 {
 	if (InstallUILevelSetting::Instance->IsAnyUI())
 	{
-		m_component_dlg.DoModal();
+		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
+		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+
+		if (p_configuration->show_progress_dialog && component->show_progress_dialog)
+		{
+			m_component_dlg.DoModal();
+			LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): DIALOG CLOSED");
+		}
 	}
 
-	LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): DIALOG CLOSED");
 	return true;
 }
 

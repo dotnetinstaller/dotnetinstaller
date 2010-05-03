@@ -229,6 +229,24 @@ namespace InstallerLib
             set { m_supports_uninstall = value; }
         }
 
+        private bool m_show_progress_dialog = true;
+        [Description("Show progress dialogs.")]
+        [Category("Component")]
+        public bool show_progress_dialog
+        {
+            get { return m_show_progress_dialog; }
+            set { m_show_progress_dialog = value; }
+        }
+
+        private bool m_show_cab_dialog = true;
+        [Description("Show CAB extraction dialogs.")]
+        [Category("Component")]
+        public bool show_cab_dialog
+        {
+            get { return m_show_cab_dialog; }
+            set { m_show_cab_dialog = value; }
+        }
+
         #endregion
 
         #region Events
@@ -291,6 +309,9 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("status_notinstalled", m_status_installed);
             e.XmlWriter.WriteAttributeString("supports_install", m_supports_install.ToString());
             e.XmlWriter.WriteAttributeString("supports_uninstall", m_supports_uninstall.ToString());
+            // dialog options
+            e.XmlWriter.WriteAttributeString("show_progress_dialog", m_show_progress_dialog.ToString());
+            e.XmlWriter.WriteAttributeString("show_cab_dialog", m_show_cab_dialog.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -327,6 +348,9 @@ namespace InstallerLib
             ReadAttributeValue(e, "status_notinstalled", ref m_status_notinstalled);
             ReadAttributeValue(e, "supports_install", ref m_supports_install);
             ReadAttributeValue(e, "supports_uninstall", ref m_supports_uninstall);
+            // dialog options
+            ReadAttributeValue(e, "show_progress_dialog", ref m_show_progress_dialog);
+            ReadAttributeValue(e, "show_cab_dialog", ref m_show_cab_dialog);
             base.OnXmlReadTag(e);
         }
 

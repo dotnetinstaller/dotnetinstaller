@@ -49,7 +49,7 @@ namespace InstallerLib
 
         private InstallUILevel m_ui_level = InstallUILevel.full;
         [Description("Set the install-time UI level. Default to silent or basic UI installation.")]
-        [Category("Runtime")]
+        [Category("UI")]
         public InstallUILevel ui_level
         {
             get { return m_ui_level; }
@@ -96,7 +96,7 @@ namespace InstallerLib
 
         private LcidType m_lcidtype = LcidType.UserExe;
         [Description(@"Choose between using LCID from system32\user.exe, GetUserDefaultLCID or system GetSystemDefaultLCID.")]
-        [Category("Runtime")]
+        [Category("Locale")]
         public LcidType lcidtype
         {
             get { return m_lcidtype; }
@@ -107,7 +107,7 @@ namespace InstallerLib
         private bool m_show_language_selector = false;
         [Description("Show a language selector instead of automatically choosing the language based on the operating system's and user locale.")]
         [DefaultValue(false)]
-        [Category("Runtime")]
+        [Category("Locale")]
         public bool show_language_selector
         {
             get { return m_show_language_selector; }
@@ -116,7 +116,7 @@ namespace InstallerLib
 
         private string m_language_selector_title = "";
         [Description("Optional text that appears above the list of supported locales.")]
-        [Category("Runtime")]
+        [Category("Locale")]
         public string language_selector_title
         {
             get { return m_language_selector_title; }
@@ -125,7 +125,7 @@ namespace InstallerLib
 
         private string m_language_selector_ok = "OK";
         [Description("Language selector OK button text.")]
-        [Category("Runtime")]
+        [Category("Locale")]
         public string language_selector_ok
         {
             get { return m_language_selector_ok; }
@@ -134,7 +134,7 @@ namespace InstallerLib
 
         private string m_language_selector_cancel = "Cancel";
         [Description("Language selector cancel button text.")]
-        [Category("Runtime")]
+        [Category("Locale")]
         public string language_selector_cancel
         {
             get { return m_language_selector_cancel; }

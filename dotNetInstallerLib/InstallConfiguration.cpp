@@ -29,6 +29,8 @@ InstallConfiguration::InstallConfiguration()
 	, auto_start(false)
 	, auto_continue_on_reboot(false)
 	, wait_for_complete_command(true)
+	, show_progress_dialog(true)
+	, show_cab_dialog(true)
 {
 
 }
@@ -46,7 +48,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
     // defines where to extract files and auto-delete options
     cab_path = node->Attribute("cab_path");
 	InstallerSession::Instance->SessionCABPath = cab_path.GetValue();
-    cab_path_autodelete = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("cab_path_autodelete")), true);
+    cab_path_autodelete = XmlAttribute(node->Attribute("cab_path_autodelete")).GetBoolValue(true);
     // positions within the dialog
     dialog_position.FromString(DVLib::UTF8string2wstring(node->Attribute("dialog_position")));
     dialog_components_list_position.FromString(DVLib::UTF8string2wstring(node->Attribute("dialog_components_list_position")));
@@ -75,7 +77,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	installation_none = node->Attribute("installation_none");
 	uninstallation_none = node->Attribute("uninstallation_none");
 	reboot_required = node->Attribute("reboot_required");
-    must_reboot_required = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("must_reboot_required")), false);
+    must_reboot_required = XmlAttribute(node->Attribute("must_reboot_required")).GetBoolValue(false);
 	installing_component_wait = node->Attribute("installing_component_wait");
 	uninstalling_component_wait = node->Attribute("uninstalling_component_wait");
 	dialog_otherinfo_caption = node->Attribute("dialog_otherinfo_caption");
@@ -84,23 +86,26 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	complete_command = node->Attribute("complete_command");
 	complete_command_basic = node->Attribute("complete_command_basic");
 	complete_command_silent = node->Attribute("complete_command_silent");
-	wait_for_complete_command = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("wait_for_complete_command")), true);
-	auto_close_if_installed = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_close_if_installed")), true);
-    auto_close_on_error = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_close_on_error")), false);
-    allow_continue_on_error = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("allow_continue_on_error")), true);
-    dialog_show_installed = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("dialog_show_installed")), true);
-	dialog_show_uninstalled = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("dialog_show_uninstalled")), true);
-    dialog_show_required = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("dialog_show_required")), true);
+	wait_for_complete_command = XmlAttribute(node->Attribute("wait_for_complete_command")).GetBoolValue(true);
+	auto_close_if_installed = XmlAttribute(node->Attribute("auto_close_if_installed")).GetBoolValue(true);
+    auto_close_on_error = XmlAttribute(node->Attribute("auto_close_on_error")).GetBoolValue(false);
+    allow_continue_on_error = XmlAttribute(node->Attribute("allow_continue_on_error")).GetBoolValue(true);
+    dialog_show_installed = XmlAttribute(node->Attribute("dialog_show_installed")).GetBoolValue(true);
+	dialog_show_uninstalled = XmlAttribute(node->Attribute("dialog_show_uninstalled")).GetBoolValue(true);
+    dialog_show_required = XmlAttribute(node->Attribute("dialog_show_required")).GetBoolValue(true);
     // message and caption to show during CAB extraction
     cab_dialog_caption = node->Attribute("cab_dialog_caption");
     cab_dialog_message = node->Attribute("cab_dialog_message");
     cab_cancelled_message = node->Attribute("cab_cancelled_message");
 	// auto start
-	auto_start = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_start")), false);
+	auto_start = XmlAttribute(node->Attribute("auto_start")).GetBoolValue(false);
 	// auto start on reboot
-	auto_continue_on_reboot = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("auto_continue_on_reboot")), false);
+	auto_continue_on_reboot = XmlAttribute(node->Attribute("auto_continue_on_reboot")).GetBoolValue(false);
 	// additional reboot cmd
     reboot_cmd = node->Attribute("reboot_cmd");
+	// progress options
+	show_progress_dialog = XmlAttribute(node->Attribute("show_progress_dialog")).GetBoolValue(true);
+	show_cab_dialog = XmlAttribute(node->Attribute("show_cab_dialog")).GetBoolValue(true);
 	// components
 	TiXmlNode * child = NULL;
 	while ( (child = node->IterateChildren("component", child)) != NULL)

@@ -24,6 +24,8 @@ Component::Component(component_type t)
 	, supports_uninstall(false)
 	, os_filter_min(DVLib::winNone)
 	, os_filter_max(DVLib::winNone)
+	, show_progress_dialog(true)
+	, show_cab_dialog(true)
 {
 
 }
@@ -70,6 +72,9 @@ void Component::Load(TiXmlElement * node)
 	processor_architecture_filter = node->Attribute("processor_architecture_filter");
 	supports_install = XmlAttribute(node->Attribute("supports_install")).GetBoolValue(true);
 	supports_uninstall = XmlAttribute(node->Attribute("supports_uninstall")).GetBoolValue(false);
+	// progress options
+	show_progress_dialog = XmlAttribute(node->Attribute("show_progress_dialog")).GetBoolValue(true);
+	show_cab_dialog = XmlAttribute(node->Attribute("show_cab_dialog")).GetBoolValue(true);
 	// install checks, embed files, etc.
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )

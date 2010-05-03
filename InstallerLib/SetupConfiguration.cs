@@ -520,6 +520,24 @@ namespace InstallerLib
             set { m_reboot_cmd = value; }
         }
 
+        private bool m_show_progress_dialog = true;
+        [Description("Show progress dialogs.")]
+        [Category("Runtime")]
+        public bool show_progress_dialog
+        {
+            get { return m_show_progress_dialog; }
+            set { m_show_progress_dialog = value; }
+        }
+
+        private bool m_show_cab_dialog = true;
+        [Description("Show CAB extraction dialogs.")]
+        [Category("Self-Extracting CAB")]
+        public bool show_cab_dialog
+        {
+            get { return m_show_cab_dialog; }
+            set { m_show_cab_dialog = value; }
+        }
+
         #endregion
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
@@ -589,7 +607,9 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("auto_continue_on_reboot", m_auto_continue_on_reboot.ToString());
             // additional reboot command
             e.XmlWriter.WriteAttributeString("reboot_cmd", m_reboot_cmd);
-
+            // dialog options
+            e.XmlWriter.WriteAttributeString("show_progress_dialog", m_show_progress_dialog.ToString());
+            e.XmlWriter.WriteAttributeString("show_cab_dialog", m_show_cab_dialog.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -652,6 +672,9 @@ namespace InstallerLib
             ReadAttributeValue(e, "auto_continue_on_reboot", ref m_auto_continue_on_reboot);
             // additional reboot command
             ReadAttributeValue(e, "reboot_cmd", ref m_reboot_cmd);
+            // dialog options
+            ReadAttributeValue(e, "show_progress_dialog", ref m_show_progress_dialog);
+            ReadAttributeValue(e, "show_cab_dialog", ref m_show_cab_dialog);
             base.OnXmlReadTag(e);
         }
     }
