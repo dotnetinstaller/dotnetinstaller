@@ -33,7 +33,7 @@
     <Topic id="6cad4ea6-b7ab-4aae-a2a5-514a10b6fc34" visible="True" title="Samples" />
   </Topic>
   <Topic id="ec5c1920-55c4-4f57-8e18-9dd2d37350d6" visible="True" title="Install Linker">
-    <Topic id="51bb945c-fd5f-48c0-a1d8-ef469a3850b9" visible="True" title="UAC and Manifest Options" />
+    <Topic id="51bb945c-fd5f-48c0-a1d8-ef469a3850b9" visible="True" title="Embedding a Manifest" />
   </Topic>
   <Topic id="59204cba-278b-4648-a149-35f864cae8cf" visible="True" title="Setup Executable">
     <Topic id="1d803485-bce5-4d08-93e6-c2935074a8ba" visible="True" title="User Interface Modes" />

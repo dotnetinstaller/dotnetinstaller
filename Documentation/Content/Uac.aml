@@ -4,8 +4,17 @@
     <introduction>
       <para>
         The setup bootstrapper has a default embedded manifest that specifies the <newTerm>requireAdministrator</newTerm>
-        execution level. The <newTerm>installer linker</newTerm> is capable of embedding a custom UAC manifest, enabling you
-        to generate a setup executable that either forces elevation or runs under the invoker's privileges.
+        execution level. The <newTerm>installer linker</newTerm> is capable of embedding a custom manifest, enabling you
+        to generate a setup executable that either forces elevation or runs under the invoker's privileges. The manifest
+        can also specify compatibility options, therefore preventing the Windows compatibility assistant from appearing in
+        failure cases.
+      </para>
+      <para>
+        For more information about the application manifest see
+        <externalLink>
+          <linkText>http://msdn.microsoft.com/en-us/library/aa374191(VS.85).aspx</linkText>
+          <linkUri>http://msdn.microsoft.com/en-us/library/aa374191(VS.85).aspx</linkUri>
+        </externalLink>.
       </para>
     </introduction>
     <section address="commandlineusage">
@@ -33,6 +42,14 @@
       </requestedPrivileges>
     </security>
   </trustInfo>
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- Windows Vista -->
+      <supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}"/>
+      <!-- Windows 7 -->
+      <supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}"/>
+    </application>
+  </compatibility>
 </assembly>
           ]]>
         </code>
