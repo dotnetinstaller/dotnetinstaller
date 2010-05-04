@@ -277,12 +277,16 @@ namespace dotNetInstallerUnitTests
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
             ControlImage image = new ControlImage();
+            image.ResourceId = "RES_BANNER_DOESNTEXIST";
             setupConfiguration.Children.Add(image);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b 0";
             setupConfiguration.Children.Add(cmd);
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            Assert.AreEqual(-1, dotNetInstallerExeUtils.Run(configFilename));
+            image.ResourceId = "RES_BANNER";
             configFile.SaveAs(configFilename);
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
