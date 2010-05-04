@@ -39,7 +39,11 @@ namespace InstallerLib
         /// <summary>
         /// Hyperlink.
         /// </summary>
-        hyperlink
+        hyperlink,
+        /// <summary>
+        /// Image.
+        /// </summary>
+        image
     }
 
     /// <summary>
@@ -201,6 +205,9 @@ namespace InstallerLib
                     break;
                 case ControlType.hyperlink:
                     control = new ControlHyperlink();
+                    break;
+                case ControlType.image:
+                    control = new ControlImage();
                     break;
                 default:
                     throw new Exception(string.Format("Invalid type: {0}", xmltype));

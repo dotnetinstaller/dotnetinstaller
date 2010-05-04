@@ -210,6 +210,9 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 		case control_type_hyperlink:
 			AddControl(* (ControlHyperlink *) get(control));
 			break;
+		case control_type_image:
+			AddControl(* (ControlImage *) get(control));
+			break;
 		default:
 			THROW_EX(L"Invalid control type: " << control->type);
 		}
@@ -879,6 +882,17 @@ void CdotNetInstallerDlg::AddControl(const ControlHyperlink& hyperlink)
 	p_link->SetHyperlink(hyperlink.uri);
 	p_link->SetFont(CreateFont(hyperlink));
 	m_custom_controls.push_back(p_link);
+}
+
+void CdotNetInstallerDlg::AddControl(const ControlImage& image)
+{
+	CStatic * p_image = new CStatic();
+	DWORD dwStyle = WS_CHILD | WS_VISIBLE | SS_BITMAP;
+	if (image.center) dwStyle |= SS_CENTERIMAGE;
+	p_image->Create(NULL, dwStyle, image.position.ToRect(), this);
+	p_image->SetBitmap(DVLib::LoadBitmapFromResource(AfxGetApp()->m_hInstance, image.resource_id.GetValue(), L"CUSTOM"));
+	p_image->EnableWindow(image.IsEnabled());
+	m_custom_controls.push_back(p_image);
 }
 
 void CdotNetInstallerDlg::SetControlValues()

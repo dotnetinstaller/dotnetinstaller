@@ -251,7 +251,6 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlBrowse()
         {
-            // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -268,6 +267,24 @@ namespace dotNetInstallerUnitTests
             configFile.SaveAs(configFilename);
             // execute dotNetInstaller
             Assert.AreEqual(4, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+        }
+
+        [Test]
+        public void TestUserControlImage()
+        {
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ControlImage image = new ControlImage();
+            setupConfiguration.Children.Add(image);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C exit /b 0";
+            setupConfiguration.Children.Add(cmd);
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
         }
 

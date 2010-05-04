@@ -195,6 +195,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ControlImage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ControlLabel.cpp"
 				>
 			</File>
@@ -418,6 +422,10 @@
 			</File>
 			<File
 				RelativePath=".\ControlHyperlink.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ControlImage.h"
 				>
 			</File>
 			<File

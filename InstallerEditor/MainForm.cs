@@ -98,6 +98,7 @@ namespace InstallerEditor
         private MRUManager m_recentFiles = new MRUManager();
         private MRUManager m_templateFiles = new MRUManager();
         private RegistryKey m_makeExeRegistry;
+        private MenuItem mnAddImageControl;
         private RegistryKey m_settingsRegistry;
 
         public MainForm()
@@ -205,6 +206,7 @@ namespace InstallerEditor
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtComment = new System.Windows.Forms.TextBox();
+            this.mnAddImageControl = new System.Windows.Forms.MenuItem();
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
@@ -520,6 +522,7 @@ namespace InstallerEditor
             this.mnAddCheckboxControl,
             this.mnAddBrowseControl,
             this.mnAddHyperlinkControl,
+            this.mnAddImageControl,
             this.menuSep4,
             this.mnAddLicenseAgreement});
             this.menuControls.Text = "Contro&ls";
@@ -556,12 +559,12 @@ namespace InstallerEditor
             // 
             // menuSep4
             // 
-            this.menuSep4.Index = 5;
+            this.menuSep4.Index = 6;
             this.menuSep4.Text = "-";
             // 
             // mnAddLicenseAgreement
             // 
-            this.mnAddLicenseAgreement.Index = 6;
+            this.mnAddLicenseAgreement.Index = 7;
             this.mnAddLicenseAgreement.Text = "License &Agreement";
             this.mnAddLicenseAgreement.Click += new System.EventHandler(this.mnAddLicenseAgreement_Click);
             // 
@@ -713,6 +716,7 @@ namespace InstallerEditor
             this.imageList.Images.SetKeyName(23, "");
             this.imageList.Images.SetKeyName(24, "");
             this.imageList.Images.SetKeyName(25, "");
+            this.imageList.Images.SetKeyName(26, "");
             // 
             // mainSplitContainer
             // 
@@ -804,6 +808,12 @@ namespace InstallerEditor
             this.txtComment.Size = new System.Drawing.Size(620, 64);
             this.txtComment.TabIndex = 0;
             this.txtComment.Visible = false;
+            // 
+            // mnAddImageControl
+            // 
+            this.mnAddImageControl.Index = 5;
+            this.mnAddImageControl.Text = "&Image";
+            this.mnAddImageControl.Click += new System.EventHandler(this.mnAddImageControl_Click);
             // 
             // MainForm
             // 
@@ -1147,6 +1157,7 @@ namespace InstallerEditor
                 mnAddBrowseControl.Enabled = (item.Children.CanAdd(typeof(ControlBrowse)));
                 mnAddLicenseAgreement.Enabled = (item.Children.CanAdd(typeof(ControlLicense)));
                 mnAddHyperlinkControl.Enabled = (item.Children.CanAdd(typeof(ControlHyperlink)));
+                mnAddImageControl.Enabled = (item.Children.CanAdd(typeof(ControlImage)));
             }
             else
             {
@@ -1176,6 +1187,7 @@ namespace InstallerEditor
                 mnAddBrowseControl.Enabled = false;
                 mnAddLicenseAgreement.Enabled = false;
                 mnAddHyperlinkControl.Enabled = false;
+                mnAddImageControl.Enabled = false;
             }
         }
 
@@ -1330,6 +1342,12 @@ namespace InstallerEditor
         private void mnAddHyperlinkControl_Click(object sender, EventArgs e)
         {
             AddTreeNode_Click<ControlHyperlink>();
+        }
+
+
+        private void mnAddImageControl_Click(object sender, EventArgs e)
+        {
+            AddTreeNode_Click<ControlImage>();
         }
 
         #endregion

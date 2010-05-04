@@ -12,6 +12,7 @@ enum control_type
 	control_type_browse, // browse
 	control_type_license, // license
 	control_type_hyperlink, // hyperlink
+	control_type_image, // image
 };
 
 enum control_check

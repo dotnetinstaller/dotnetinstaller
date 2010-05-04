@@ -72,6 +72,7 @@
     <Compile Include="ControlCheckBox.cs" />
     <Compile Include="ControlEdit.cs" />
     <Compile Include="ControlHyperlink.cs" />
+    <Compile Include="ControlImage.cs" />
     <Compile Include="ControlLabel.cs" />
     <Compile Include="ControlLicense.cs" />
     <Compile Include="ControlText.cs" />

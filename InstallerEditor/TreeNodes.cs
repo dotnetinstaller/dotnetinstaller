@@ -1,6 +1,8 @@
 using System;
 using System.Windows.Forms;
 using InstallerLib;
+using System.Text;
+using System.IO;
 
 namespace InstallerEditor
 {
@@ -40,6 +42,9 @@ namespace InstallerEditor
 
         public void MoveTo(XmlTreeNodeImpl newParent)
         {
+            if (Parent == newParent || this == newParent)
+                return;
+
             MoveTo(newParent, newParent.Nodes.Count);
         }
 
@@ -99,6 +104,7 @@ namespace InstallerEditor
             else if (item is ControlBrowse) node = new TreeNodeControlBrowse(item as ControlBrowse);
             else if (item is ControlLicense) node = new TreeNodeControlLicense(item as ControlLicense);
             else if (item is ControlHyperlink) node = new TreeNodeControlHyperlink(item as ControlHyperlink);
+            else if (item is ControlImage) node = new TreeNodeControlImage(item as ControlImage);
             else
                 throw new Exception(string.Format("Unsupported type: {0}", item.GetType().Name));
 
@@ -820,6 +826,43 @@ namespace InstallerEditor
             get
             {
                 return Cut(Instance.Text);
+            }
+        }
+    }
+
+    public class TreeNodeControlImage : TreeNodeControl<ControlImage>
+    {
+        public TreeNodeControlImage(ControlImage value)
+            : base(value)
+        {
+            ImageIndex = 26;
+            SelectedImageIndex = 26;
+        }
+
+        public override ControlImage Instance
+        {
+            get
+            {
+                return base.Instance;
+            }
+            set
+            {
+                base.Instance = value;
+                value.OnTextChanged += new EventHandler(OnTextChanged);
+            }
+        }
+
+        private void OnTextChanged(object sender, EventArgs e)
+        {
+            Text = XmlNodeText;
+        }
+
+        protected override string XmlNodeText
+        {
+            get
+            {
+                return string.IsNullOrEmpty(Instance.ImageFile)
+                    ? string.Empty : Cut(Path.GetFileName(Instance.ImageFile));
             }
         }
     }

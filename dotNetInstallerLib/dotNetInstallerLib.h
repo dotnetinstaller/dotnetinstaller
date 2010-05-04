@@ -47,6 +47,7 @@
 #include "ControlBrowse.h"
 #include "ControlLicense.h"
 #include "ControlHyperlink.h"
+#include "ControlImage.h"
 #include "ResponseFile.h"
 #include "ResponseFileText.h"
 #include "ResponseFileIni.h"

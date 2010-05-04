@@ -31,6 +31,8 @@
             <definition>A file or directory locator.</definition>
             <definedTerm>license</definedTerm>
             <definition>A license agremeent.</definition>
+            <definedTerm>image</definedTerm>
+            <definition>A user-defined image.</definition>
           </definitionTable>
         </para>
       </content>
