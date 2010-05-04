@@ -83,6 +83,9 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 
 	CDialog::OnInitDialog();
 
+	// set components list callback for double-click execution
+	m_ListBoxComponents.SetExecuteCallback(this);
+
 	// Impostare l'icona per questa finestra di dialogo. Il framework non esegue questa operazione automaticamente
 	//  se la finestra principale dell'applicazione non è una finestra di dialogo.
 	SetIcon(m_hIcon, TRUE);			// Impostare icona grande.

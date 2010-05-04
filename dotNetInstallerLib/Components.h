@@ -20,6 +20,8 @@ public:
 	bool contains(const std::wstring& description) const;
 	// returns components that match current platform and processor architecture
 	Components GetSupportedComponents(DVLib::LcidType lcidtype, InstallSequence sequence) const;
+	// get a pointer reference for a component
+	ComponentPtr GetComponentPtr(Component * pc) const;
 	// reference
 	const_reference operator[](size_type pos) const { return std::vector<ComponentPtr>::operator[](pos); }
 	// execute components, returns true if all succeeded

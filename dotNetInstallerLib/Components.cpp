@@ -30,6 +30,17 @@ Components& Components::operator=(const Components& rhs)
 	return * this;
 }
 
+ComponentPtr Components::GetComponentPtr(Component * pc) const
+{
+	for each (const ComponentPtr& component in * this)
+	{
+		if (get(component) == pc)
+			return component;
+	}
+
+	THROW_EX(L"Invalid component: " << pc->GetString());
+}
+
 Components Components::GetSupportedComponents(DVLib::LcidType lcidtype, InstallSequence sequence) const
 {
 	LCID lcid = DVLib::GetOperatingSystemLCID(lcidtype);

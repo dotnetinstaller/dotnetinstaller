@@ -78,10 +78,10 @@
             <definedTerm>/ComponentArgs "*|id|display_name":"value"</definedTerm>
             <definition>
               <para>
-                Additional component parameters. This enables passing additional command-line arguments to all (<code>*</code>) or 
-                specific components by their <code>id</code> and/or <code>display_name</code>, in this order. The value is appended 
-                to both non-silent and silent command lines of <literal>msi</literal> and <literal>cmd</literal> type components. 
-                The component <literal>id</literal> or <literal>display_name</literal> must match exactly the one in the 
+                Additional component parameters. This enables passing additional command-line arguments to all (<code>*</code>) or
+                specific components by their <code>id</code> and/or <code>display_name</code>, in this order. The value is appended
+                to both non-silent and silent command lines of <literal>msi</literal> and <literal>cmd</literal> type components.
+                The component <literal>id</literal> or <literal>display_name</literal> must match exactly the one in the
                 configuration.xml.
               </para>
               <alert class="note">
@@ -155,6 +155,15 @@
               <literal>msi</literal> components and process exit code for <literal>cmd</literal> components.
             </definition>
           </definitionTable>
+        </para>
+      </content>
+    </section>
+    <section address="uitricks">
+      <title>UI Tricks</title>
+      <content>
+        <para>
+          Holding the keyboard Control key and double-clicking on a bootstrapper component in the components list 
+          will install it, regardless of whether the component is selected or not.
         </para>
       </content>
     </section>

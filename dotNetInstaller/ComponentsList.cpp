@@ -9,6 +9,7 @@ IMPLEMENT_DYNAMIC(CComponentsList, CCheckListBox)
 
 BEGIN_MESSAGE_MAP(CComponentsList, CCheckListBox) 
   ON_CONTROL_REFLECT(CLBN_CHKCHANGE, OnCheckChange)
+  ON_WM_LBUTTONDBLCLK()
 END_MESSAGE_MAP()
 
 void CComponentsList::OnCheckChange()
@@ -84,10 +85,10 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 	ASSERT(pDC);
 
 	int hScrollWidth = 0;
-	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(configuration));
-	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+	m_pConfiguration = reinterpret_cast<InstallConfiguration *>(get(configuration));
+	CHECK_BOOL(m_pConfiguration != NULL, L"Invalid configuration");
     
-	Components components = p_configuration->GetSupportedComponents(
+	Components components = m_pConfiguration->GetSupportedComponents(
 		lcidtype, InstallerSession::Instance->sequence);
 
 	for (size_t i = 0; i < components.size(); i++)
@@ -113,22 +114,22 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 		std::wstring l_descr = component->GetDisplayName();
 	    l_descr += L" ";
         l_descr += component_installed
-			? (component->status_installed.empty() ? p_configuration->status_installed : component->status_installed)
-			: (component->status_notinstalled.empty() ? p_configuration->status_notinstalled : component->status_notinstalled);
+			? (component->status_installed.empty() ? m_pConfiguration->status_installed : component->status_installed)
+			: (component->status_notinstalled.empty() ? m_pConfiguration->status_notinstalled : component->status_notinstalled);
 
 		// show installed
         if (InstallerSession::Instance->sequence == SequenceInstall 
-			&& ! p_configuration->dialog_show_installed 
+			&& ! m_pConfiguration->dialog_show_installed 
 			&& component_installed)
             continue;
 
 		// show uninstalled
         if (InstallerSession::Instance->sequence == SequenceUninstall 
-			&& ! p_configuration->dialog_show_uninstalled
+			&& ! m_pConfiguration->dialog_show_uninstalled
 			&& ! component_installed)
             continue;
 
-        if (! p_configuration->dialog_show_required && component->required)
+        if (! m_pConfiguration->dialog_show_required && component->required)
             continue;
 
 		int id = AddString(l_descr.c_str());
@@ -164,4 +165,54 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 
 	ReleaseDC(pDC); 
 	return all;
+}
+
+void CComponentsList::OnLButtonDblClk(UINT nFlags, CPoint point)
+{
+	if (nFlags & MK_CONTROL && nFlags && MK_LBUTTON)
+	{
+		BOOL bOutside = false;
+		UINT uiItem = ItemFromPoint(point, bOutside);
+		if (! bOutside)
+		{
+			ComponentPtr component = m_pConfiguration->GetComponentPtr((Component *) GetItemDataPtr(uiItem));
+			Exec(component);
+		}
+	}
+}
+
+void CComponentsList::Exec(const ComponentPtr& component)
+{
+	try
+	{
+		LOG(L"--- Component '" << component->id << L"' (" << component->GetDisplayName() << L"): EXECUTING");
+		
+		if (m_pExecuteCallback && ! m_pExecuteCallback->OnComponentExecBegin(component))
+			return;
+
+		component->Exec();
+		
+		if (m_pExecuteCallback && ! m_pExecuteCallback->OnComponentExecWait(component))
+			return;
+
+		component->Wait();
+
+		LOG(L"*** Component '" << component->id << L"' (" << component->GetDisplayName() << L"): SUCCESS");
+
+		if (m_pExecuteCallback && ! m_pExecuteCallback->OnComponentExecSuccess(component))
+			return;
+	}
+	catch(std::exception& ex)
+	{
+		LOG(L"*** Component '" << component->id << L"' (" << component->GetDisplayName() << L"): ERROR - " 
+			<< DVLib::string2wstring(ex.what()));
+		
+		if (m_pExecuteCallback && ! m_pExecuteCallback->OnComponentExecError(component, ex))
+			return;
+	}
+}
+
+void CComponentsList::SetExecuteCallback(IExecuteCallback * pExec)
+{
+	m_pExecuteCallback = pExec;
 }

@@ -173,6 +173,11 @@ Components InstallConfiguration::GetSupportedComponents(DVLib::LcidType lcidtype
 	return components.GetSupportedComponents(lcidtype, sequence);
 }
 
+ComponentPtr InstallConfiguration::GetComponentPtr(Component * pc) const
+{
+	return components.GetComponentPtr(pc);
+}
+
 std::wstring InstallConfiguration::GetString(int indent) const
 {
 	std::wstringstream ss;
