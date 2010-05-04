@@ -258,8 +258,9 @@ void ConfigFileUnitTests::testLoadLicenseAgreement()
 	CPPUNIT_ASSERT(config.size() == 1);
 	const InstallConfiguration * configuration = reinterpret_cast<InstallConfiguration *>(get(config[0]));
 	CPPUNIT_ASSERT(configuration->components.size() == 1);
-	CPPUNIT_ASSERT(configuration->controls.size() == 1);
+	CPPUNIT_ASSERT(configuration->controls.size() == 2);
 	CPPUNIT_ASSERT(configuration->controls[0]->type == control_type_license);
+	CPPUNIT_ASSERT(configuration->controls[1]->type == control_type_image);
 }
 
 void ConfigFileUnitTests::testLoadCustomInputSetup()
