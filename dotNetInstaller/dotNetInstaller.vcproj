@@ -93,6 +93,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="if not exist (&quot;$(TargetDir)\unicows.dll&quot;) (&#x0D;&#x0A; copy &quot;$(SolutionDir)\ThirdParty\mslu\unicows.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -172,6 +173,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="if not exist (&quot;$(TargetDir)\unicows.dll&quot;) (&#x0D;&#x0A; copy &quot;$(SolutionDir)\ThirdParty\mslu\unicows.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -398,10 +400,6 @@
 		</Filter>
 		<File
 			RelativePath=".\dotNetInstaller.exe.manifest"
-			>
-		</File>
-		<File
-			RelativePath="..\ThirdParty\Mslu\unicows.dll"
 			>
 		</File>
 	</Files>

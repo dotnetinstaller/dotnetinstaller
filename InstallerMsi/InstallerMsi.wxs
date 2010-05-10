@@ -47,6 +47,9 @@
             <Component Id="dotNetInstaller" Guid="E28F4986-00F0-489f-99A3-99745FEC243D">
               <File Id="dotNetInstaller.exe" Source="..\dotNetInstaller\$(var.Configuration)\dotNetInstaller.exe" />
             </Component>
+            <Component Id="MSLU" Guid="95984BB5-05F2-4db4-AFE7-C017411EB7AA">
+              <File Id="unicows.dll" Source="..\ThirdParty\Mslu\Unicows.dll" />
+            </Component>
           </Directory>
           <Directory Id="doc" Name="doc">
             <Component Id="Documentation" Guid="00A1CB0D-BCE4-43a4-8AAC-7563F90B3E7C">
@@ -77,6 +80,7 @@
       <ComponentRef Id="InstallerEditor" />
       <ComponentRef Id="InstallerLinker" />
       <ComponentRef Id="dotNetInstaller" />
+      <ComponentRef Id="MSLU" />
       <ComponentRef Id="Documentation" />
       <ComponentRef Id="DotNetInstallerMenuShortcuts" />
       <Feature Id="SamplesFeature" Title="Samples" Level="1">
@@ -90,6 +94,7 @@
         <ComponentRef Id="MultilingualSetupSample" />
         <ComponentRef Id="LicenseAgreementSample" />
         <ComponentRef Id="PatchSetupSample" />
+        <ComponentRef Id="ExeSetupSample" />
       </Feature>
     </Feature>
     <UIRef Id="dotNetInstallerUI_InstallDir" />

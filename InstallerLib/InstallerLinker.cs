@@ -87,6 +87,8 @@ namespace InstallerLib
                 ? Environment.CurrentDirectory
                 : args.apppath;
 
+            string templatepath = Path.GetDirectoryName(Path.GetFullPath(args.template));
+
             // create a temporary directory for CABs
             string cabtemp = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             Directory.CreateDirectory(cabtemp);
@@ -231,6 +233,22 @@ namespace InstallerLib
                     args.WriteLine(string.Format("Embedding resource \"{0}\": {1}", r_pair.id, r_pair.path));
                     ResourceUpdate.WriteFile(h, new ResourceId("CUSTOM"), new ResourceId(r_pair.id),
                         ResourceUtil.NEUTRALLANGID, r_pair.path);
+                }
+
+                if (args.mslu)
+                {
+                    args.WriteLine("Embedding MSLU unicows.dll");
+
+                    string unicowsdll = Path.Combine(templatepath, "unicows.dll");
+                    if (! File.Exists(unicowsdll)) unicowsdll = Path.Combine(supportdir, "unicows.dll");
+                    if (! File.Exists(unicowsdll)) unicowsdll = Path.Combine(Environment.CurrentDirectory, "unicows.dll");
+                    if (! File.Exists(unicowsdll))
+                    {
+                        throw new Exception(string.Format("Error locating \"{0}\\unicows.dll\"", templatepath));
+                    }
+
+                    ResourceUpdate.WriteFile(h, new ResourceId("CUSTOM"), new ResourceId("RES_UNICOWS"),
+                        ResourceUtil.NEUTRALLANGID, unicowsdll);
                 }
 
                 args.WriteLine(string.Format("Writing {0}", EmbedFileCollection.FormatBytes(totalSize)));

@@ -39,6 +39,48 @@ namespace InstallerLibUnitTests
                     ri.Load(args.output);
                     List<Resource> custom = ri.Resources[new ResourceId("CUSTOM")];
                     Assert.IsNotNull(custom);
+                    Assert.AreEqual(2, custom.Count);
+                    // default banner
+                    Assert.AreEqual(custom[0].Name, new ResourceId("RES_BANNER"));
+                    // embedded configuration
+                    Assert.AreEqual(custom[1].Name, new ResourceId("RES_CONFIGURATION"));
+                    Assert.AreEqual(custom[1].Size, new FileInfo(args.config).Length);
+                }
+            }
+            finally
+            {
+                if (File.Exists(args.config))
+                    File.Delete(args.config);
+                if (File.Exists(args.output))
+                    File.Delete(args.output);
+            }
+        }
+
+        [Test]
+        public void TestLinkUnicows()
+        {
+            InstallerLinkerArguments args = new InstallerLinkerArguments();
+            try
+            {
+                ConfigFile configFile = new ConfigFile();
+                SetupConfiguration setupConfiguration = new SetupConfiguration();
+                configFile.Children.Add(setupConfiguration);
+                args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+                Console.WriteLine("Writing '{0}'", args.config);
+                configFile.SaveAs(args.config);
+                args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
+                Console.WriteLine("Linking '{0}'", args.output);
+                args.template = dotNetInstallerExeUtils.Executable;
+                args.mslu = true;
+                InstallerLib.InstallerLinker.CreateInstaller(args);
+                // check that the linker generated output
+                Assert.IsTrue(File.Exists(args.output));
+                Assert.IsTrue(new FileInfo(args.output).Length > 0);
+                using (ResourceInfo ri = new ResourceInfo())
+                {
+                    ri.Load(args.output);
+                    List<Resource> custom = ri.Resources[new ResourceId("CUSTOM")];
+                    Assert.IsNotNull(custom);
                     Assert.AreEqual(3, custom.Count);
                     // default banner
                     Assert.AreEqual(custom[0].Name, new ResourceId("RES_BANNER"));

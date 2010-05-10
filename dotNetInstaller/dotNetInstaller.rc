@@ -148,7 +148,6 @@ END
 //
 
 RES_BANNER              CUSTOM                  "res\\banner.bmp"
-RES_UNICOWS             CUSTOM                  "..\\ThirdParty\\Mslu\\unicows.dll"
 
 /////////////////////////////////////////////////////////////////////////////
 //

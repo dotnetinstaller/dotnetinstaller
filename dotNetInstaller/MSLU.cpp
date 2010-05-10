@@ -39,7 +39,7 @@ static HMODULE SaveAndLoadMSLU()
 	return ::LoadLibraryA(tf);
 }
 
-static HMODULE __stdcall LoadMSLU (void)
+static HMODULE __stdcall LoadMSLU()
 {
     HMODULE hUnicows = ::LoadLibraryA("unicows.dll");
 	if (hUnicows == 0) hUnicows = SaveAndLoadMSLU();
@@ -54,4 +54,4 @@ static HMODULE __stdcall LoadMSLU (void)
 
 // load Microsoft Layer for Unicode (MSLU)
 // http://msdn.microsoft.com/en-us/magazine/cc301794.aspx
-extern "C" HMODULE (__stdcall *_PfnLoadUnicows) (void) = & LoadMSLU; 
+extern "C" HMODULE (__stdcall *_PfnLoadUnicows) (void) = & LoadMSLU;

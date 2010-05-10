@@ -39,6 +39,11 @@
             <File Id="PatchSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\PatchSetup\Configuration.xml" />
           </Component>
         </Directory>
+        <Directory Id="ExeSetupFolder" Name="ExeSetup">
+          <Component Id="ExeSetupSample" Guid="BE8E5561-D195-4a0c-9ADA-1769F20F19A8">
+            <File Id="ExeSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\ExeSetup\Configuration.xml" />
+          </Component>
+        </Directory>
         <Directory Id="InstallCheckOperatorsFolder" Name="InstallCheckOperators">
           <Component Id="InstallCheckOperatorsSample" Guid="30AD6A29-CCC9-40D0-BDAB-D2414C39247A">
             <File Id="InstallCheckOperators.banner.bmp" Name="banner.bmp" Source="..\Samples\InstallCheckOperators\banner.bmp" />

@@ -37,6 +37,8 @@ namespace InstallerLib
         public string icon;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Embed manifest", LongName = "Manifest", ShortName = "m")]
         public string manifest;
+        [Argument(ArgumentType.AtMostOnce, HelpText = "Embed MSLU unicows.dll", LongName = "Mslu", ShortName = "u", DefaultValue = false)]
+        public bool mslu;
 
         public void Validate()
         {
