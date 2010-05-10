@@ -440,10 +440,18 @@ void CdotNetInstallerDlg::OnDestroy()
 	CDialog::OnDestroy();
 
 	// destroy custom dialog controls
-	for each(CObject * control in m_custom_controls)
+	for each(CWnd * control in m_custom_controls)
 	{
+		control->DestroyWindow();
 		delete control;
 	}
+
+	for each(CFont * font in m_custom_fonts)
+	{
+		delete font;
+	}
+
+	m_custom_controls.clear();
 
 	try
 	{
@@ -750,7 +758,7 @@ CFont * CdotNetInstallerDlg::CreateFont(const ControlText& text)
 	int nFontHeight = MulDiv(text.font_size, GetDeviceCaps(GetDC()->GetSafeHdc(), LOGPIXELSY), 72);
 	p_font->CreateFont(nFontHeight, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS,
 		CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, text.font_name.GetValue().c_str());
-	m_custom_controls.push_back(p_font);
+	m_custom_fonts.push_back(p_font);
 	return p_font;
 }
 

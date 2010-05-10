@@ -10,6 +10,11 @@ Configuration::Configuration(configuration_type t)
 
 }
 
+Configuration::~Configuration()
+{
+
+}
+
 void Configuration::Load(TiXmlElement * node)
 {
 	CHECK_BOOL(node != NULL,

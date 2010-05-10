@@ -97,7 +97,7 @@ void CHyperlinkStatic::PreSubclassWindow()
 	CStatic::PreSubclassWindow();
 }
 
-void CHyperlinkStatic::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
+void CHyperlinkStatic::DrawItem(LPDRAWITEMSTRUCT)
 {
 
 }

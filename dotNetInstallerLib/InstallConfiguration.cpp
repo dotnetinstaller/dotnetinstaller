@@ -143,13 +143,13 @@ void InstallConfiguration::Load(TiXmlElement * node)
 		std::wstring control_type = DVLib::UTF8string2wstring(node_control->Attribute("type"));
 
 		shared_any<Control *, close_delete> control;
-		if (control_type == L"label") control = shared_any<Control *, close_delete>(new ControlLabel());
-		else if (control_type == L"checkbox") control = shared_any<Control *, close_delete>(new ControlCheckBox());
-		else if (control_type == L"edit") control = shared_any<Control *, close_delete>(new ControlEdit());
-		else if (control_type == L"browse") control = shared_any<Control *, close_delete>(new ControlBrowse());
-		else if (control_type == L"license") control = shared_any<Control *, close_delete>(new ControlLicense());
-		else if (control_type == L"hyperlink") control = shared_any<Control *, close_delete>(new ControlHyperlink());
-		else if (control_type == L"image") control = shared_any<Control *, close_delete>(new ControlImage());
+		if (control_type == L"label") reset(control, new ControlLabel());
+		else if (control_type == L"checkbox") reset(control, new ControlCheckBox());
+		else if (control_type == L"edit") reset(control, new ControlEdit());
+		else if (control_type == L"browse") reset(control, new ControlBrowse());
+		else if (control_type == L"license") reset(control, new ControlLicense());
+		else if (control_type == L"hyperlink") reset(control, new ControlHyperlink());
+		else if (control_type == L"image") reset(control, new ControlImage());
 		else 
 		{
 			THROW_EX(L"Unsupported control type: " << control_type);

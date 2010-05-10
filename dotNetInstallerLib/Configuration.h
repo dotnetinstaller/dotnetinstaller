@@ -34,6 +34,7 @@ public:
 	bool supports_uninstall;
 public:
 	Configuration(configuration_type t);
+	virtual ~Configuration();
 	virtual void Load(TiXmlElement * node);
 	// returns true if this configuration is supported on this operating system/lcid
 	virtual bool IsSupported(LCID lcid) const;
