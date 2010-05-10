@@ -1,33 +1,22 @@
-
-/****************************************************************************
- *	class		:	CHyperlinkStatic
- *	author		:	Franz Wong / Simple Hyperlink Static Control / http://www.codeguru.com/Cpp/controls/staticctrl/article.php/c5801/
- */
-
-// HyperlinkStatic.cpp : implementation file
-//
-
 #include "stdafx.h"
 #include "HyperlinkStatic.h"
 #include "DniMessageBox.h"
 #include "resource.h"
 
-/////////////////////////////////////////////////////////////////////////////
-// CHyperlinkStatic
-
 CHyperlinkStatic::CHyperlinkStatic()
 	: _rect(0, 0, 0, 0)
+	, _bCreateFont(false)
+	, _bMouseInControl(false)
+	, _bGetCaptionSize(false)
+	, _hHandCursor(::LoadCursor(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDC_CUSTOM_HAND)))
+	, _hArrowCursor(::LoadCursor(NULL, IDC_ARROW))
 {
-	_strCaption = _strHyperlink = _T("");	 
-	_bMouseInControl = _bCreateFont = _bGetCaptionSize = false;
 
-//	_hHandCursor = ::LoadCursor(NULL, IDC_HAND); //non supportato in WIN 95
-	_hHandCursor = ::LoadCursor(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDC_CUSTOM_HAND));
-	_hArrowCursor = ::LoadCursor(NULL, IDC_ARROW);
 }
 
 CHyperlinkStatic::~CHyperlinkStatic()
 {
+
 }
 
 BEGIN_MESSAGE_MAP(CHyperlinkStatic, CStatic)
@@ -39,9 +28,6 @@ BEGIN_MESSAGE_MAP(CHyperlinkStatic, CStatic)
 	//}}AFX_MSG_MAP
 	ON_MESSAGE(WM_MOUSELEAVE, OnMouseLeave)
 END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-// CHyperlinkStatic message handlers
 
 void CHyperlinkStatic::SetHyperlink(std::wstring strHyperlink)
 {
@@ -81,12 +67,20 @@ BOOL CHyperlinkStatic::Create(LPCTSTR lpszText, DWORD dwStyle, const RECT& rect,
 void CHyperlinkStatic::OnPaint() 
 {	
 	if ( _bCreateFont == false )
+	{
 		CreateFont();
+	}
+
 	CPaintDC dc(this);
-	CFont *pOldFont = (CFont*) dc.SelectObject(&_fontCaption);
+	CFont * pOldFont = (CFont*) dc.SelectObject(& _fontCaption);
 	dc.SetBkMode(TRANSPARENT);
 	dc.SetTextColor(RGB(0, 0, 255));
-	GetCaptionSize();
+
+	if (! _bGetCaptionSize)
+	{
+		GetCaptionSize();
+	}
+
 	dc.TextOut(_captionRect.left, _captionRect.top, _strCaption);
 	dc.SelectObject(pOldFont);
 }
@@ -99,10 +93,13 @@ void CHyperlinkStatic::OnDestroy()
 
 void CHyperlinkStatic::PreSubclassWindow() 
 {
-	ModifyStyle(0, SS_NOTIFY, TRUE);
-	GetWindowText(_strCaption);
-	_bGetCaptionSize = false;
+	ModifyStyle(0, SS_NOTIFY | SS_OWNERDRAW, TRUE);
 	CStatic::PreSubclassWindow();
+}
+
+void CHyperlinkStatic::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
+{
+
 }
 
 LRESULT CHyperlinkStatic::OnMouseLeave(WPARAM /*wParam*/, LPARAM /*lParam*/)
@@ -114,8 +111,8 @@ LRESULT CHyperlinkStatic::OnMouseLeave(WPARAM /*wParam*/, LPARAM /*lParam*/)
 
 void CHyperlinkStatic::OnMouseMove(UINT nFlags, CPoint point) 
 {
-	if ( _bMouseInControl == false ) {
-		//Track the mouse leave event
+	if ( _bMouseInControl == false ) 
+	{
 		TRACKMOUSEEVENT tme;
 		tme.cbSize = sizeof(tme);
         tme.hwndTrack = GetSafeHwnd();
@@ -123,21 +120,27 @@ void CHyperlinkStatic::OnMouseMove(UINT nFlags, CPoint point)
 		_TrackMouseEvent(&tme);
 		_bMouseInControl = true;
 	}
-	else {
+	else 
+	{
 		if ( _bGetCaptionSize == false )
+		{
 			GetCaptionSize();
+		}
+
 		::SetCursor((InCaptionRange(point))?_hHandCursor:_hArrowCursor);		
 	}
+
 	CStatic::OnMouseMove(nFlags, point);
 }
 
 void CHyperlinkStatic::CreateFont()
 {
-	CFont* pFontParent = GetParent()->GetFont();	
-	if ( pFontParent ) {
+	CFont * pFontParent = GetParent()->GetFont();
+	if ( pFontParent ) 
+	{
 		LOGFONT lf;
 		pFontParent->GetObject(sizeof(lf), &lf);
-		lf.lfUnderline = TRUE;		
+		lf.lfUnderline = TRUE;
 		_fontCaption.CreateFontIndirect(&lf);
 		_bCreateFont = true;
 	}
@@ -145,9 +148,10 @@ void CHyperlinkStatic::CreateFont()
 
 void CHyperlinkStatic::GetCaptionSize()
 {
-	if (( _bGetCaptionSize == false ) && ( _bCreateFont )) {
+	if (! _bGetCaptionSize && _bCreateFont) 
+	{
 		CClientDC dc(this);
-		CFont *pOldFont = dc.SelectObject(&_fontCaption);
+		CFont * pOldFont = dc.SelectObject(& _fontCaption);
 		_sizeCaption = dc.GetTextExtent(_strCaption);
 		dc.SelectObject(pOldFont);
 
