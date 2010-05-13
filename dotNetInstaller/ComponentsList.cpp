@@ -129,28 +129,33 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 			&& ! component_installed)
             continue;
 
-        if (! m_pConfiguration->dialog_show_required && component->required)
-            continue;
+        if (! m_pConfiguration->dialog_show_required)
+		{
+			if (component->required_install && InstallerSession::Instance->sequence == SequenceInstall)
+				continue;
+			else if (component->required_uninstall && InstallerSession::Instance->sequence == SequenceUninstall)
+				continue;
+		}
 
 		int id = AddString(l_descr.c_str());
 		SetItemDataPtr(id, get(component));
 
         if (component->checked)
         {
-			if (component->selected)
-			{
+			if (component->selected_install && InstallerSession::Instance->sequence == SequenceInstall)
 				SetCheck(id, 1);
-			}
+			else if (component->selected_uninstall && InstallerSession::Instance->sequence == SequenceUninstall)
+				SetCheck(id, 1);
         }
 
         // a component is considered installed when it has an install check which results
         // in a clear positive; if a component doesn't have any install checks, it cannot
         // be required (there's no way to check whether the component was installed)
         if (InstallerSession::Instance->sequence == SequenceInstall 
-			&& (component->required || component_installed))
+			&& (component->required_install || component_installed))
             Enable(id, 0);
         else if (InstallerSession::Instance->sequence == SequenceUninstall 
-			&& (component->required || ! component_installed))
+			&& (component->required_uninstall || ! component_installed))
             Enable(id, 0);
 
 		CSize size = pDC->GetTextExtent(component->GetDisplayName().c_str());

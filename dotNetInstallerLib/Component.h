@@ -59,10 +59,12 @@ public:
 	XmlAttribute processor_architecture_filter;
     // cancelled by user
     bool cancelled;
-    // true if component is required for final command to execute
-    bool required;
-	// true if component is selected by default
-    bool selected;
+    // true if component is required
+    bool required_install;
+	bool required_uninstall;
+	// true if component is selected
+    bool selected_install;
+    bool selected_uninstall;
 	// classi per gestire la verifica se il componente è installato o no
 	std::vector<InstalledCheckPtr> installedchecks;
 	// informazioni sull'eventuale download dei componenti (fa riferimento al nodo downloaddialog all'interno di Component, se non è presente non viene scaricato nessun componente)

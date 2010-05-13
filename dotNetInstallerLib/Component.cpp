@@ -17,8 +17,10 @@ Component::Component(component_type t)
     , must_reboot_required(false)
     , allow_continue_on_error(true)
     , cancelled(false)
-    , required(true)
-	, selected(true)
+    , required_install(true)
+	, required_uninstall(true)
+	, selected_install(true)
+	, selected_uninstall(true)
     , checked(true)
 	, supports_install(true)
 	, supports_uninstall(false)
@@ -67,8 +69,10 @@ void Component::Load(TiXmlElement * node)
 	must_reboot_required = XmlAttribute(node->Attribute("must_reboot_required")).GetBoolValue(false);
     allow_continue_on_error = XmlAttribute(node->Attribute("allow_continue_on_error")).GetBoolValue(true);
     failed_exec_command_continue = node->Attribute("failed_exec_command_continue");
-	required = XmlAttribute(node->Attribute("required")).GetBoolValue(true);
-	selected = XmlAttribute(node->Attribute("selected")).GetBoolValue(true);
+	required_install = XmlAttribute(node->Attribute("required_install")).GetBoolValue(true);
+	required_uninstall = XmlAttribute(node->Attribute("required_uninstall")).GetBoolValue(true);
+	selected_install = XmlAttribute(node->Attribute("selected_install")).GetBoolValue(true);
+	selected_uninstall = XmlAttribute(node->Attribute("selected_uninstall")).GetBoolValue(true);
 	processor_architecture_filter = node->Attribute("processor_architecture_filter");
 	supports_install = XmlAttribute(node->Attribute("supports_install")).GetBoolValue(true);
 	supports_uninstall = XmlAttribute(node->Attribute("supports_uninstall")).GetBoolValue(false);

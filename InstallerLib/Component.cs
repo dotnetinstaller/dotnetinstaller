@@ -159,22 +159,40 @@ namespace InstallerLib
             set { m_uninstall_display_name = value; OnDisplayNameChanged(); }
         }
 
-        private bool m_required = false;
-        [Description("Indicates whether the component is required for a successful installation or uninstallation. (REQUIRED)")]
+        private bool m_required_install = false;
+        [Description("Indicates whether the component is required for a successful installation.")]
         [Category("Component")]
-        public bool required
+        public bool required_install
         {
-            get { return m_required; }
-            set { m_required = value; }
+            get { return m_required_install; }
+            set { m_required_install = value; }
         }
 
-        private bool m_selected = true;
-        [Description("Indicates whether the component is selected by default.")]
+        private bool m_required_uninstall = false;
+        [Description("Indicates whether the component is required for a successful uninstallation.")]
         [Category("Component")]
-        public bool selected
+        public bool required_uninstall
         {
-            get { return m_selected; }
-            set { m_selected = value; }
+            get { return m_required_uninstall; }
+            set { m_required_uninstall = value; }
+        }
+
+        private bool m_selected_install = true;
+        [Description("Indicates whether the component is selected by default during install.")]
+        [Category("Component")]
+        public bool selected_install
+        {
+            get { return m_selected_install; }
+            set { m_selected_install = value; }
+        }
+
+        private bool m_selected_uninstall = true;
+        [Description("Indicates whether the component is selected by default during uninstall.")]
+        [Category("Component")]
+        public bool selected_uninstall
+        {
+            get { return m_selected_uninstall; }
+            set { m_selected_uninstall = value; }
         }
 
         private string m_note;
@@ -301,8 +319,10 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("must_reboot_required", m_must_reboot_required.ToString());
             e.XmlWriter.WriteAttributeString("failed_exec_command_continue", m_failed_exec_command_continue);            
             e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
-            e.XmlWriter.WriteAttributeString("required", m_required.ToString());
-            e.XmlWriter.WriteAttributeString("selected", m_selected.ToString());
+            e.XmlWriter.WriteAttributeString("required_install", m_required_install.ToString());
+            e.XmlWriter.WriteAttributeString("required_uninstall", m_required_uninstall.ToString());
+            e.XmlWriter.WriteAttributeString("selected_install", m_selected_install.ToString());
+            e.XmlWriter.WriteAttributeString("selected_uninstall", m_selected_uninstall.ToString());
             e.XmlWriter.WriteAttributeString("note", m_note);
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
             e.XmlWriter.WriteAttributeString("status_installed", m_status_installed);
@@ -330,8 +350,17 @@ namespace InstallerLib
             ReadAttributeValue(e, "must_reboot_required", ref m_must_reboot_required);
             ReadAttributeValue(e, "failed_exec_command_continue", ref m_failed_exec_command_continue);
             ReadAttributeValue(e, "allow_continue_on_error", ref m_allow_continue_on_error);
-            ReadAttributeValue(e, "required", ref m_required);
-            ReadAttributeValue(e, "selected", ref m_selected);
+            // required -> required_install and required_uninstall
+            if (! ReadAttributeValue(e, "required_install", ref m_required_install))
+                ReadAttributeValue(e, "required", ref m_required_install);
+            if (! ReadAttributeValue(e, "required_uninstall", ref m_required_uninstall))
+                m_required_uninstall = m_required_install;
+            // selected -> selected_install & selected_uninstall
+            if (! ReadAttributeValue(e, "selected_install", ref m_selected_install))
+                ReadAttributeValue(e, "selected", ref m_selected_install);
+            if (! ReadAttributeValue(e, "selected_uninstall", ref m_selected_uninstall))
+                m_selected_uninstall = m_selected_install;
+            // filters
             ReadAttributeValue(e, "os_filter", ref m_os_filter);
             ReadAttributeValue(e, "os_filter_lcid", ref m_os_filter_lcid);
             string os_filter_greater = string.Empty;
