@@ -163,5 +163,23 @@ namespace InstallerLibUnitTests
             File.Delete(configFilenameOriginal);
             File.Delete(configFilenameLoaded);
         }
+
+        [Test]
+        public void TestLoadClear()
+        {
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            ComponentCmd cmd = new ComponentCmd();
+            setupConfiguration.Children.Add(cmd);
+            setupConfiguration.Children.Add(cmd);
+            configFile.Children.Add(setupConfiguration);
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            configFile.SaveAs(configFilename);
+            int previousConfigurationCount = configFile.ConfigurationCount;
+            XmlDocument xmlConfigFile = new XmlDocument();
+            xmlConfigFile.Load(configFilename);
+            configFile.LoadXml(xmlConfigFile);
+            Assert.AreEqual(previousConfigurationCount, configFile.ConfigurationCount);
+        }
     }
 }

@@ -331,9 +331,10 @@ namespace InstallerLib
         }
 
         public void LoadXml(XmlDocument xml)
-        {
+        {            
             XmlElement configurations = (XmlElement)xml.SelectSingleNode("//configurations");
             if (configurations == null) throw new Exception("Invalid configuration xml.");
+            Clear();
             base.FromXml(configurations);
         }
 

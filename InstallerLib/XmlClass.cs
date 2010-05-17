@@ -28,6 +28,12 @@ namespace InstallerLib
             set { _comment = value; }
         }
 
+        internal void Clear()
+        {
+            _comment = string.Empty;
+            m_children.Clear();
+        }
+
         internal void ToXml(XmlWriter p_Writer, XmlFilter filter)
         {
             // write header
