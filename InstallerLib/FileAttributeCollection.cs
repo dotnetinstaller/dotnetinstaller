@@ -17,7 +17,7 @@ namespace InstallerLib
             p_Writer.WriteStartElement("fileattributes");
             foreach (FileAttribute a in this)
             {
-                a.ToXml(p_Writer);
+                a.ToXml(p_Writer, null);
             }
             p_Writer.WriteEndElement();
         }

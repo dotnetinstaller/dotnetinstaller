@@ -186,7 +186,7 @@ namespace InstallerLib
         /// <param name="p_FileName">target filename</param>
         public void SaveAs(string p_FileName)
         {
-            Xml.Save(p_FileName);
+            GetXml(null).Save(p_FileName);
             m_filename = p_FileName;
         }
 
@@ -194,21 +194,18 @@ namespace InstallerLib
         /// Raw configuration xml.
         /// </summary>
         [Browsable(false)]
-        public XmlDocument Xml
+        public XmlDocument GetXml(XmlFilter filter)
         {
-            get
-            {
-                MemoryStream ms = new MemoryStream();
-                XmlTextWriter l_XmlWriter = new XmlTextWriter(ms, Encoding.UTF8);
-                l_XmlWriter.Formatting = Formatting.Indented;
-                l_XmlWriter.WriteStartDocument();
-                ToXml(l_XmlWriter);
-                XmlDocument xmldoc = new XmlDocument();
-                l_XmlWriter.Flush();
-                ms.Position = 0;
-                xmldoc.Load(ms);
-                return xmldoc;
-            }
+            MemoryStream ms = new MemoryStream();
+            XmlTextWriter l_XmlWriter = new XmlTextWriter(ms, Encoding.UTF8);
+            l_XmlWriter.Formatting = Formatting.Indented;
+            l_XmlWriter.WriteStartDocument();
+            ToXml(l_XmlWriter, filter);
+            XmlDocument xmldoc = new XmlDocument();
+            l_XmlWriter.Flush();
+            ms.Position = 0;
+            xmldoc.Load(ms);
+            return xmldoc;
         }
 
         public override string XmlTag
@@ -235,7 +232,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("log_enabled", m_log_enabled.ToString());
             e.XmlWriter.WriteAttributeString("log_file", m_log_file);
             // tag schema
-            editor.ToXml(e.XmlWriter);
+            editor.ToXml(e.XmlWriter, null);
             // file attributes
             fileattributes.ToXml(e.XmlWriter);
             base.OnXmlWriteTag(e);
@@ -245,14 +242,14 @@ namespace InstallerLib
         {
             // [legacy] auto-enable logging (convert from 1.6 and older)
             XmlNodeList configurations = e.XmlElement.SelectNodes("//configuration[@type='install']");
-            foreach(XmlNode configuration in configurations)
+            foreach (XmlNode configuration in configurations)
             {
-                XmlElementEventArgs configurationArgs = new XmlElementEventArgs((XmlElement) configuration);
-                
+                XmlElementEventArgs configurationArgs = new XmlElementEventArgs((XmlElement)configuration);
+
                 string log_file = string.Empty;
                 if (ReadAttributeValue(configurationArgs, "log_file", ref log_file))
                     m_log_file = log_file;
-                
+
                 bool log_enabled = false;
                 if (ReadAttributeValue(configurationArgs, "log_enabled", ref log_enabled))
                     m_log_enabled = log_enabled;
@@ -338,6 +335,28 @@ namespace InstallerLib
             XmlElement configurations = (XmlElement)xml.SelectSingleNode("//configurations");
             if (configurations == null) throw new Exception("Invalid configuration xml.");
             base.FromXml(configurations);
+        }
+
+        /// <summary>
+        /// Number of nested components.
+        /// </summary>
+        public int ConfigurationCount
+        {
+            get
+            {
+                return GetCount<Configuration>();
+            }
+        }
+
+        /// <summary>
+        /// Number of nested components.
+        /// </summary>
+        public int ComponentCount
+        {
+            get
+            {
+                return GetCount<Component>();
+            }
         }
     }
 }

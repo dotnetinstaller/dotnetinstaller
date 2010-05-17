@@ -7,6 +7,7 @@ using System.IO;
 using CabLib;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
+using System.Xml;
 
 namespace InstallerLib
 {
@@ -23,12 +24,30 @@ namespace InstallerLib
             System.IO.File.Copy(args.template, args.output, true);
             System.IO.File.SetAttributes(args.output, System.IO.FileAttributes.Normal);
 
+            string configFilename = args.config;
+
             #region Version Information
 
             ConfigFile configfile = new ConfigFile();
-            configfile.Load(args.config);
+            configfile.Load(configFilename);
 
             // \todo: check XML with XSD, warn if nodes are being dropped
+
+            // filter the configuration
+            string configTemp = null;
+            if (!string.IsNullOrEmpty(args.processorArchitecture))
+            {
+                int configurationCount = configfile.ConfigurationCount;
+                int componentCount = configfile.ComponentCount;
+                args.WriteLine(string.Format("Applying processor architecture filter \"{0}\"", args.processorArchitecture));
+                ProcessorArchitectureFilter filter = new ProcessorArchitectureFilter(args.processorArchitecture);
+                XmlDocument filteredXml = configfile.GetXml(filter);
+                configTemp = configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+                filteredXml.Save(configTemp);
+                configfile.LoadXml(filteredXml);
+                args.WriteLine(string.Format(" configurations: {0} => {1}", configurationCount, configfile.ConfigurationCount));
+                args.WriteLine(string.Format(" components: {0} => {1}", componentCount, configfile.ComponentCount));                
+            }
 
             args.WriteLine(string.Format("Updating binary attributes in \"{0}\"", args.output));
             VersionResource rc = new VersionResource();
@@ -198,9 +217,9 @@ namespace InstallerLib
                         ResourceUtil.NEUTRALLANGID, args.splash);
                 }
 
-                args.WriteLine(string.Format("Embedding configuration \"{0}\"", args.config));
+                args.WriteLine(string.Format("Embedding configuration \"{0}\"", configFilename));
                 ResourceUpdate.WriteFile(h, new ResourceId("CUSTOM"), new ResourceId("RES_CONFIGURATION"),
-                    ResourceUtil.NEUTRALLANGID, args.config);
+                    ResourceUtil.NEUTRALLANGID, configFilename);
 
                 // embed CABs
                 if (args.embed)
@@ -260,11 +279,16 @@ namespace InstallerLib
             }
             finally
             {
-                args.WriteLine(string.Format("Cleaning up \"{0}\"", cabtemp));
-
                 if (Directory.Exists(cabtemp))
                 {
+                    args.WriteLine(string.Format("Cleaning up \"{0}\"", cabtemp));
                     Directory.Delete(cabtemp, true);
+                }
+
+                if (!string.IsNullOrEmpty(configTemp))
+                {
+                    args.WriteLine(string.Format("Cleaning up \"{0}\"", configTemp));
+                    File.Delete(configTemp);
                 }
             }
 

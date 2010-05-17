@@ -408,5 +408,88 @@ namespace InstallerLibUnitTests
                     File.Delete(args.output);
             }
         }
+
+        [Test]
+        public void TestLinkProcessorArchitectureFilter()
+        {
+            // configurations
+            SetupConfiguration nofilterConfiguration = new SetupConfiguration();
+            SetupConfiguration x86Configuration = new SetupConfiguration();
+            x86Configuration.processor_architecture_filter = "x86";
+            SetupConfiguration x64Configuration = new SetupConfiguration();
+            x64Configuration.processor_architecture_filter = "x64";
+            SetupConfiguration mipsConfiguration = new SetupConfiguration();
+            mipsConfiguration.processor_architecture_filter = "mips";
+            // components
+            ComponentCmd nofilterComponent = new ComponentCmd();
+            ComponentCmd x86Component = new ComponentCmd();
+            x86Component.processor_architecture_filter = "x86";
+            ComponentCmd x64Component = new ComponentCmd();
+            x64Component.processor_architecture_filter = "x64";
+            ComponentCmd mipsComponent = new ComponentCmd();
+            mipsComponent.processor_architecture_filter = "mips";
+            // make a tree
+            nofilterConfiguration.Children.Add(nofilterComponent);
+            nofilterConfiguration.Children.Add(x86Component);
+            nofilterConfiguration.Children.Add(x64Component);
+            nofilterConfiguration.Children.Add(mipsComponent);
+            x86Configuration.Children.Add(nofilterComponent);
+            x86Configuration.Children.Add(x86Component);
+            x86Configuration.Children.Add(x64Component);
+            x86Configuration.Children.Add(mipsComponent);
+            x64Configuration.Children.Add(nofilterComponent);
+            x64Configuration.Children.Add(x86Component);
+            x64Configuration.Children.Add(x64Component);
+            x64Configuration.Children.Add(mipsComponent);
+            mipsConfiguration.Children.Add(nofilterComponent);
+            mipsConfiguration.Children.Add(x86Component);
+            mipsConfiguration.Children.Add(x64Component);
+            mipsConfiguration.Children.Add(mipsComponent);
+            // configfile
+            ConfigFile configFile = new ConfigFile();
+            configFile.Children.Add(nofilterConfiguration);
+            configFile.Children.Add(x86Configuration);
+            configFile.Children.Add(x64Configuration);
+            configFile.Children.Add(mipsConfiguration);
+            // write a configuration
+            InstallerLinkerArguments args = new InstallerLinkerArguments();
+            args.processorArchitecture = "x86,alpha";
+            args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
+            Console.WriteLine("Writing '{0}'", args.config);
+            try
+            {
+                configFile.SaveAs(args.config);
+                Console.WriteLine("Linking '{0}'", args.output);
+                args.template = dotNetInstallerExeUtils.Executable;
+                InstallerLib.InstallerLinker.CreateInstaller(args);
+                // check that the linker generated output
+                Assert.IsTrue(File.Exists(args.output));
+                Assert.IsTrue(new FileInfo(args.output).Length > 0);
+                using (ResourceInfo ri = new ResourceInfo())
+                {
+                    ri.Load(args.output);
+                    List<Resource> custom = ri.Resources[new ResourceId("CUSTOM")];
+                    Assert.AreEqual(custom[1].Name, new ResourceId("RES_CONFIGURATION"));
+                    byte[] data = custom[1].WriteAndGetBytes();
+                    // skip BOM
+                    String config = Encoding.UTF8.GetString(data, 3, data.Length - 3);
+                    XmlDocument xmldoc = new XmlDocument();
+                    xmldoc.LoadXml(config);
+                    ConfigFile filteredConfig = new ConfigFile();
+                    filteredConfig.LoadXml(xmldoc);
+                    Assert.AreEqual(2, filteredConfig.ConfigurationCount);
+                    Assert.AreEqual(4, filteredConfig.ComponentCount);
+                }
+            }
+            finally
+            {
+                if (File.Exists(args.config))
+                    File.Delete(args.config);
+                if (File.Exists(args.output))
+                    File.Delete(args.output);
+            }
+        }
+
     }
 }

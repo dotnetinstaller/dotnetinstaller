@@ -28,7 +28,7 @@ namespace InstallerLib
             set { _comment = value; }
         }
 
-        internal void ToXml(XmlWriter p_Writer)
+        internal void ToXml(XmlWriter p_Writer, XmlFilter filter)
         {
             // write header
             if (!string.IsNullOrEmpty(Comment))
@@ -39,7 +39,7 @@ namespace InstallerLib
             p_Writer.WriteStartElement(XmlTag);
             OnXmlWriteTag(new XmlWriterEventArgs(p_Writer));
             // write children
-            Children.ToXml(p_Writer);
+            Children.ToXml(p_Writer, filter);
             // close tag
             p_Writer.WriteEndElement();
         }
@@ -158,6 +158,27 @@ namespace InstallerLib
 
         protected virtual void OnXmlReadTag(XmlElementEventArgs e)
         {
+        }
+
+        /// <summary>
+        /// Total count of nodes of a given type.
+        /// </summary>
+        /// <typeparam name="T">Node type.</typeparam>
+        /// <returns>Total count.</returns>
+        public int GetCount<T>()
+            where T : XmlClass 
+        {
+            int total = 0;
+            
+            foreach (XmlClass xmlclazz in Children)
+            {
+                if (xmlclazz is T)
+                    total++;
+
+                total += xmlclazz.GetCount<T>();
+            }
+
+            return total;
         }
 
         #region Attribute Values
@@ -397,11 +418,14 @@ namespace InstallerLib
             return result;
         }
 
-        public virtual void ToXml(XmlWriter p_Writer)
+        public virtual void ToXml(XmlWriter p_Writer, XmlFilter filter)
         {
             foreach (XmlClass c in this)
             {
-                c.ToXml(p_Writer);
+                if (filter != null && ! filter.IsSupported(c))
+                    continue;
+
+                c.ToXml(p_Writer, filter);
             }
         }
     }

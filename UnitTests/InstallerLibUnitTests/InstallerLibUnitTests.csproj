@@ -64,6 +64,7 @@
     <Compile Include="InstallerLinkerUnitTests.cs" />
     <Compile Include="SamplesUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XmlFilterUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\InstallerLib\InstallerLib.csproj">
