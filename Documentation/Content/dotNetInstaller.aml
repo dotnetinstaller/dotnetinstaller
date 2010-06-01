@@ -165,6 +165,10 @@
           Holding the keyboard Control key and double-clicking on a bootstrapper component in the components list 
           will install it, regardless of whether the component is selected or not.
         </para>
+        <para>
+          Holding the keyboard Shift key and double-clicking on a bootstrapper component in the components list
+          will toggle it's selected state, regardless of whether the component is required or not.
+        </para>
       </content>
     </section>
   </developerConceptualDocument>

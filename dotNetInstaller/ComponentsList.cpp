@@ -184,6 +184,16 @@ void CComponentsList::OnLButtonDblClk(UINT nFlags, CPoint point)
 			Exec(component);
 		}
 	}
+	else if (nFlags & MK_SHIFT && nFlags && MK_LBUTTON)
+	{
+		BOOL bOutside = false;
+		UINT uiItem = ItemFromPoint(point, bOutside);
+		if (! bOutside)
+		{
+			ComponentPtr component = m_pConfiguration->GetComponentPtr((Component *) GetItemDataPtr(uiItem));			
+			SetCheck(uiItem, ! GetCheck(uiItem));
+		}
+	}
 }
 
 void CComponentsList::Exec(const ComponentPtr& component)
