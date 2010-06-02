@@ -7,6 +7,13 @@ using namespace DVLib::UnitTests;
 
 void MsuComponentUnitTests::testExecInstall()
 {
+	if (DVLib::GetOperatingSystemVersion() < winVista)
+	{
+		std::wcout << std::endl << L"skipping: MsuComponentUnitTests::testExecInstall (os=" 
+			<< DVLib::GetOperatingSystemVersionString() << L")";
+		return;
+	}
+
 	MsuComponent component;
 	component.package = L"msidoesntexist.msu"; 
 	component.cmdparameters = L"/quiet";
@@ -25,6 +32,13 @@ void MsuComponentUnitTests::testExecInstall()
 
 void MsuComponentUnitTests::testExecInstallSilent()
 {
+	if (DVLib::GetOperatingSystemVersion() < winVista)
+	{
+		std::wcout << std::endl << L"skipping: MsuComponentUnitTests::testExecInstallSilent (os=" 
+			<< DVLib::GetOperatingSystemVersionString() << L")";
+		return;
+	}
+
 	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelSilent);
 	MsuComponent component;
 	component.package = L"msidoesntexist.msu";
@@ -44,6 +58,13 @@ void MsuComponentUnitTests::testExecInstallSilent()
 
 void MsuComponentUnitTests::testExecUninstall()
 {
+	if (DVLib::GetOperatingSystemVersion() < winVista)
+	{
+		std::wcout << std::endl << L"skipping: MsuComponentUnitTests::testExecUninstall (os=" 
+			<< DVLib::GetOperatingSystemVersionString() << L")";
+		return;
+	}
+
 	InstallSequenceState state;
 	InstallerSession::Instance->sequence = SequenceUninstall;
 	MsuComponent component;
@@ -61,6 +82,13 @@ void MsuComponentUnitTests::testExecUninstall()
 
 void MsuComponentUnitTests::testExecUninstallSilent()
 {
+	if (DVLib::GetOperatingSystemVersion() < winVista)
+	{
+		std::wcout << std::endl << L"skipping: MsuComponentUnitTests::testExecUninstallSilent (os=" 
+			<< DVLib::GetOperatingSystemVersionString() << L")";
+		return;
+	}
+
 	InstallSequenceState state;
 	InstallerSession::Instance->sequence = SequenceUninstall;
 	InstallUILevelSetting::Instance->SetRuntimeLevel(InstallUILevelSilent);

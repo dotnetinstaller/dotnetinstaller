@@ -162,7 +162,7 @@
       <Output TaskParameter="Include" ItemName="UnitTestBinaries" />
     </CreateItem>
     <MakeDir Directories="$(ReleaseDir)" />
-    <NUnit Assemblies="@(UnitTestBinaries)" ToolPath="$(NUnitDir)\bin" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
+    <NUnit Assemblies="@(UnitTestBinaries)" ToolPath="$(NUnitBinDir)" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
   </Target>
   <Target Name="zip" DependsOnTargets="version">
     <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip;$(ReleaseDir)\UnitTests.xml;$(ReleaseDir)\*.msi">
