@@ -29,6 +29,7 @@ namespace InstallerLib
 
         private string m_type;
         [Description("The type of the component; can be 'cmd' for executing generic command line installation or 'msi' for installing Windows Installer MSI package or 'openfile' to open a file. (REQUIRED)")]
+        [Category("Component")]
         public string type
         {
             get { return m_type; }
@@ -92,6 +93,7 @@ namespace InstallerLib
 
         private bool m_mustreboot = false;
         [Description("Indicates whether to reboot automatically after this component is installed or uninstalled successfully. Normally if the system must be restarted, the component tells this setup (with special return code) to stop and restart the system. This forces a reboot without prompting. (REQUIRED)")]
+        [Category("Runtime")]
         public bool mustreboot
         {
             get { return m_mustreboot; }
@@ -101,6 +103,7 @@ namespace InstallerLib
         private string m_failed_exec_command_continue;
         [Description("The message used when a component cannot be installed and ask if the application can continue with others components (Yes/No message). Must contain one '%s' string where the application put the description of the component. (OPTIONAL)")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        [Category("Runtime")]
         public string failed_exec_command_continue
         {
             get { return m_failed_exec_command_continue; }
@@ -110,6 +113,7 @@ namespace InstallerLib
         private string m_reboot_required;
         [Description("The message used when this component signaled the installer that it requires a reboot. (OPTIONAL)")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        [Category("Runtime")]
         public string reboot_required
         {
             get { return m_reboot_required; }
@@ -118,6 +122,7 @@ namespace InstallerLib
 
         private bool m_must_reboot_required = false;
         [Description("Component setting for reboot behavior. When true, installation won't continue after this component required a reboot. (REQUIRED)")]
+        [Category("Runtime")]
         public bool must_reboot_required
         {
             get { return m_must_reboot_required; }
@@ -125,11 +130,21 @@ namespace InstallerLib
         }
 
         private bool m_allow_continue_on_error = true;
-        [Description("If true, the user will be prompted to continue when a component fails to install. (REQUIRED)")]
+        [Description("If true, the user will be prompted to continue when a component fails to install.")]
+        [Category("Runtime")]
         public bool allow_continue_on_error
         {
             get { return m_allow_continue_on_error; }
             set { m_allow_continue_on_error = value; }
+        }
+
+        private bool m_default_continue_on_error = false;
+        [Description("The default value of whether to continue when a component fails to install.")]
+        [Category("Runtime")]
+        public bool default_continue_on_error
+        {
+            get { return m_default_continue_on_error; }
+            set { m_default_continue_on_error = value; }
         }
 
         private string m_id;
@@ -197,6 +212,7 @@ namespace InstallerLib
 
         private string m_note;
         [Description("Note, not used by the setup. (OPTIONAL)")]
+        [Category("Component")]
         public string note
         {
             get { return m_note; }
@@ -215,6 +231,7 @@ namespace InstallerLib
 
         private string m_status_installed;
         [Description("The string used for indicating that this component is installed. (OPTIONAL)")]
+        [Category("Component")]
         public string status_installed
         {
             get { return m_status_installed; }
@@ -223,6 +240,7 @@ namespace InstallerLib
 
         private string m_status_notinstalled;
         [Description("The string used for indicating that this component is not installed. (OPTIONAL)")]
+        [Category("Component")]
         public string status_notinstalled
         {
             get { return m_status_notinstalled; }
@@ -319,6 +337,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("must_reboot_required", m_must_reboot_required.ToString());
             e.XmlWriter.WriteAttributeString("failed_exec_command_continue", m_failed_exec_command_continue);            
             e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
+            e.XmlWriter.WriteAttributeString("default_continue_on_error", m_default_continue_on_error.ToString());
             e.XmlWriter.WriteAttributeString("required_install", m_required_install.ToString());
             e.XmlWriter.WriteAttributeString("required_uninstall", m_required_uninstall.ToString());
             e.XmlWriter.WriteAttributeString("selected_install", m_selected_install.ToString());
@@ -350,6 +369,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "must_reboot_required", ref m_must_reboot_required);
             ReadAttributeValue(e, "failed_exec_command_continue", ref m_failed_exec_command_continue);
             ReadAttributeValue(e, "allow_continue_on_error", ref m_allow_continue_on_error);
+            ReadAttributeValue(e, "default_continue_on_error", ref m_default_continue_on_error);
             // required -> required_install and required_uninstall
             if (! ReadAttributeValue(e, "required_install", ref m_required_install))
                 ReadAttributeValue(e, "required", ref m_required_install);

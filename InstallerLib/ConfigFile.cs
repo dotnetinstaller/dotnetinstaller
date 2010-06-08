@@ -341,6 +341,7 @@ namespace InstallerLib
         /// <summary>
         /// Number of nested components.
         /// </summary>
+        [Browsable(false)]
         public int ConfigurationCount
         {
             get
@@ -352,6 +353,7 @@ namespace InstallerLib
         /// <summary>
         /// Number of nested components.
         /// </summary>
+        [Browsable(false)]
         public int ComponentCount
         {
             get

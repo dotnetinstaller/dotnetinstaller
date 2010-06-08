@@ -394,7 +394,16 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		// failure and auto-close-on-error
 		if (rc != 0 && p_configuration->auto_close_on_error)
 		{
+			LOG(L"*** Failed to install one or more components, closing (auto_close_on_error).");
 			OnOK();
+			return;
+		}
+
+		// failure and reload-on-error
+		if (rc != 0 && p_configuration->reload_on_error)
+		{
+			LOG(L"*** Failed to install one or more components, reloading components (reload_on_error).");
+			LoadComponentsList();
 			return;
 		}
 
@@ -724,9 +733,11 @@ bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, st
 		component->GetDisplayName().c_str());
 
     bool break_sequence = false;
-    if (p_configuration->allow_continue_on_error && component->allow_continue_on_error)
+    if (component->allow_continue_on_error)
     {
-	    break_sequence = (DniMessageBox::Show(error_message, MB_YESNO, IDNO, MB_YESNO | MB_ICONEXCLAMATION) == IDNO);
+	    break_sequence = (DniMessageBox::Show(error_message, MB_YESNO, 
+			component->default_continue_on_error ? IDYES : IDNO,
+			MB_YESNO | MB_ICONEXCLAMATION) == IDNO);
     }
     else
     {

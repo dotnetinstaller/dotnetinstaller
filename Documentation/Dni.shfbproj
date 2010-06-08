@@ -64,7 +64,7 @@
     <None Include="Content\ProcessorFilters.aml" />
     <None Include="Content\OsFilters.aml" />
     <None Include="Content\InstalledChecks.aml" />
-    <None Include="Content\ComponentsRequiredOptional.aml" />
+    <None Include="Content\ComponentRules.aml" />
     <None Include="Content\ComponentsOpenFile.aml" />
     <None Include="Content\ComponentsCmd.aml" />
     <None Include="Content\ComponentsMsu.aml" />

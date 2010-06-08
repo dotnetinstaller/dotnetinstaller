@@ -50,8 +50,8 @@
                 <li>Added user-defined image control.</li>
                 <li>Holding the keyboard Control key and double-clicking on a bootstrapper component
                     will install it, regardless of whether the component is selected or not.</li>
-                <li>Holding the keyboard Shift key and double-clicking on a bootstrapper component
-                    will toggle it's selected state, regardless of whether the component is required or not.</li>
+                <li>Holding the keyboard Shift key and double-clicking on a bootstrapper component will
+                    toggle it's selected state, regardless of whether the component is required or not.</li>
                 <li>Unicows.dll embedding is now optional. Specify <code>/Mslu+</code> on the InstallerLinker
                     command line if you plan to run your setup on Windows 95 and 98 platforms.</li>
                 <li>Replaced components' <code>selected</code> by <code>selected_install</code> and
@@ -60,6 +60,15 @@
                     <code>required_uninstall</code>.</li>
                 <li>Added <code>/ProcessorArchitecture:list</code> to InstallerLinker to link an installer
                     targeting a specific platform architecture.</li>
+                <li>Removed configuration-level <code>allow_continue_on_error</code> that confused component
+                    logic.</li>
+                <li>Added <code>default_allow_continue_on_error</code> to components. Sets the default
+                    value of the selection when <code>allow_continue_on_error</code> is set to True.
+                    In UI mode, sets the default dialog selection for the prompt. In silent mode allows
+                    to continue on failure.</li>
+                <li>Added <code>reload_on_error</code> to setup configuration. Controls whether to reload
+                    the components list after a component error has occurred. Unlike previous versions,
+                    default is set to True.</li>
             </ul>
         </li>
         <li><strong>Misc</strong>:
@@ -363,7 +372,7 @@
             the failure and installation aborts. Combine this option with <code>auto_close_on_error</code>
             to get predictable failure behavior as bootstrapper will close after an element
             of setup failed. Note that in order for a component to allow continuing on error
-            both the global and the component setting must be set to True. </li>
+            both the global and the component setting must be set to True.</li>
         <li>DotNetInstaller: warns and offers the user to abort if configuration was not generated
             with a matching version of InstallerEditor.</li>
         <li>DotNetInstaller: merged functionality of the Advanced component selector into the

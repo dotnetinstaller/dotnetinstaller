@@ -14,7 +14,7 @@
       <Topic id="69d68f5b-26f3-44fe-a4b9-34f7617cc300" visible="True" title="Command Line Components" />
       <Topic id="cf68873b-8ccf-49e8-9241-b334fad069db" visible="True" title="Open File Components" />
       <Topic id="ec9da173-e6ce-4f7e-a8d4-d0a17ba5705e" visible="True" title="Executable Components" />
-      <Topic id="d028fe32-3599-48d5-a4d2-a78e23297d24" visible="True" title="Required &amp; Optional Components" />
+      <Topic id="d028fe32-3599-48d5-a4d2-a78e23297d24" visible="True" title="Component Rules" />
       <Topic id="edadc51b-8e65-47a0-9b94-91a6a86e78fd" visible="True" title="Requiring Reboot" />
     </Topic>
     <Topic id="9cd31590-c899-40a7-897a-d5ca844c2324" visible="True" title="Checks, Operators and Filters">

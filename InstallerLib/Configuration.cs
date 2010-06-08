@@ -83,6 +83,7 @@ namespace InstallerLib
 
         private string m_type;
         [Description("Type of the configuration. Can be 'install' or 'reference'. (REQUIRED)")]
+        [Category("Configuration")]
         public string type
         {
             get { return m_type; }

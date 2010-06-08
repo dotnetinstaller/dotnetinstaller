@@ -16,6 +16,7 @@ Component::Component(component_type t)
     , mustreboot(false)
     , must_reboot_required(false)
     , allow_continue_on_error(true)
+	, default_continue_on_error(false)
     , cancelled(false)
     , required_install(true)
 	, required_uninstall(true)
@@ -68,6 +69,7 @@ void Component::Load(TiXmlElement * node)
     reboot_required = node->Attribute("reboot_required");
 	must_reboot_required = XmlAttribute(node->Attribute("must_reboot_required")).GetBoolValue(false);
     allow_continue_on_error = XmlAttribute(node->Attribute("allow_continue_on_error")).GetBoolValue(true);
+	default_continue_on_error = XmlAttribute(node->Attribute("default_continue_on_error")).GetBoolValue(false);
     failed_exec_command_continue = node->Attribute("failed_exec_command_continue");
 	required_install = XmlAttribute(node->Attribute("required_install")).GetBoolValue(true);
 	required_uninstall = XmlAttribute(node->Attribute("required_uninstall")).GetBoolValue(true);

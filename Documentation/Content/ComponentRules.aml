@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="d028fe32-3599-48d5-a4d2-a78e23297d24" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        Component execution follows a number of rules. This behavior is controlled by a combination of component, 
+        configuration and runtime settings.
+      </para>
+    </introduction>
+    <section address="componentoptionsrequired">
+      <title>Required Components</title>
+      <content>
+        <para>
+          Components may be <newTerm>required</newTerm> or <newTerm>optional</newTerm>. This is set by the
+          <literal>required</literal> option. When a component is <newTerm>required</newTerm>, it must be installed 
+          successfully in order for the entire installation to succeed. When a component is optional, the user may 
+          de-select the component and therefore the success of the entire installation does not depend on it.
+        </para>
+      </content>
+    </section>
+    <section address="continueonerror">
+      <title>Continue on Error</title>
+      <content>
+        <para>
+          The <literal>allow_continue_on_error</literal> and <literal>default_continue_on_error</literal> options
+          control the behavior of the bootstrapper following a component error.
+        </para>
+        <para>          
+          If <literal>allow_continue_on_error</literal> is <literal>true</literal>, the user is informed
+          of the failure with the <literal>failed_exec_command_continue</literal> message and offered a choice of whether
+          to continue or abort. When <literal>allow_continue_on_error</literal> is set to <literal>false</literal>, the user
+          is informed of the failure with the same <literal>failed_exec_command_continue</literal> message, but is not given the
+          choice to continue. The user is then returned to the bootstrapper where the component list is recalculated if
+          <literal>reload_on_error</literal> is set to <literal>True</literal>.
+        </para>
+        <para>
+          The default option to continue in the <literal>failed_exec_command_continue</literal> prompt is set by 
+          the <literal>default_continue_on_error</literal> option. In silent (basic and no UI) installations the 
+          behavior is identical, but the choice to continue is made automatically for the user based on the value
+          of <literal>default_continue_on_error</literal>.
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

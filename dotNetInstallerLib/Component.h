@@ -55,6 +55,8 @@ public:
     XmlAttribute failed_exec_command_continue;
     // allow to continue setup on error
     bool allow_continue_on_error;
+	// default value of continue on error
+	bool default_continue_on_error;
 	// filter for processor architecture
 	XmlAttribute processor_architecture_filter;
     // cancelled by user

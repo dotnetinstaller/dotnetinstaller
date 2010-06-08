@@ -46,14 +46,14 @@ public:
 	bool auto_close_if_installed;
     // if true, auto-close on error when the user chooses not to continue
     bool auto_close_on_error;
+	// if true, reload on error
+	bool reload_on_error;
     // if false, don't display installed components during install
     bool dialog_show_installed;
     // if false, don't display uninstalled components during uninstall
     bool dialog_show_uninstalled;
     // ff false, don't display required components
     bool dialog_show_required;
-	// allow user to continue on error
-	bool allow_continue_on_error;
     // message and caption to show during CAB extraction
     XmlAttribute cab_dialog_message;
     XmlAttribute cab_dialog_caption;

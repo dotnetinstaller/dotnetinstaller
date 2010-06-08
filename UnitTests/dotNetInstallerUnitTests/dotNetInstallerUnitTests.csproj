@@ -52,6 +52,7 @@
     <Compile Include="CompleteCommandUnitTests.cs" />
     <Compile Include="ComponentArgsUnitTests.cs" />
     <Compile Include="ConfigurationUnitTests.cs" />
+    <Compile Include="ContinueOnErrorUnitTests.cs" />
     <Compile Include="DownloadComponentsUnitTests.cs" />
     <Compile Include="LanguageUnitTests.cs" />
     <Compile Include="LoggingUnitTests.cs" />

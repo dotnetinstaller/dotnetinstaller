@@ -23,10 +23,10 @@ InstallConfiguration::InstallConfiguration()
     , must_reboot_required(false)
     , auto_close_if_installed(false)
     , auto_close_on_error(false)
+	, reload_on_error(true)
     , dialog_show_installed(false)
     , dialog_show_uninstalled(false)
     , dialog_show_required(false)
-    , allow_continue_on_error(true)
 	, auto_start(false)
 	, auto_continue_on_reboot(false)
 	, wait_for_complete_command(true)
@@ -90,7 +90,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	wait_for_complete_command = XmlAttribute(node->Attribute("wait_for_complete_command")).GetBoolValue(true);
 	auto_close_if_installed = XmlAttribute(node->Attribute("auto_close_if_installed")).GetBoolValue(true);
     auto_close_on_error = XmlAttribute(node->Attribute("auto_close_on_error")).GetBoolValue(false);
-    allow_continue_on_error = XmlAttribute(node->Attribute("allow_continue_on_error")).GetBoolValue(true);
+	reload_on_error = XmlAttribute(node->Attribute("reload_on_error")).GetBoolValue(true);
     dialog_show_installed = XmlAttribute(node->Attribute("dialog_show_installed")).GetBoolValue(true);
 	dialog_show_uninstalled = XmlAttribute(node->Attribute("dialog_show_uninstalled")).GetBoolValue(true);
     dialog_show_required = XmlAttribute(node->Attribute("dialog_show_required")).GetBoolValue(true);

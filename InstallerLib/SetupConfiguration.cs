@@ -185,7 +185,7 @@ namespace InstallerLib
 
         private string m_status_installed;
         [Description("The string used for indicating an installed component. (OPTIONAL)")]
-        [Category("Component")]
+        [Category("Components")]
         public string status_installed
         {
             get { return m_status_installed; }
@@ -194,7 +194,7 @@ namespace InstallerLib
 
         private string m_status_notinstalled;
         [Description("The string used for indicating a not installed component. (OPTIONAL)")]
-        [Category("Component")]
+        [Category("Components")]
         public string status_notinstalled
         {
             get { return m_status_notinstalled; }
@@ -253,7 +253,7 @@ namespace InstallerLib
 
         private string m_installing_component_wait;
         [Description("The message used when installing a component. Must contain one '%s' string where the application put the description of the component. (REQUIRED)")]
-        [Category("Component")]
+        [Category("Components")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string installing_component_wait
         {
@@ -263,7 +263,7 @@ namespace InstallerLib
 
         private string m_uninstalling_component_wait;
         [Description("The message used when uninstalling a component. Must contain one '%s' string where the application put the description of the component.")]
-        [Category("Component")]
+        [Category("Components")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string uninstalling_component_wait
         {
@@ -283,7 +283,7 @@ namespace InstallerLib
 
         private bool m_must_reboot_required = false;
         [Description("Global setting for reboot behavior. When true, installation won't continue after any component required a reboot. (REQUIRED)")]
-        [Category("Component")]
+        [Category("Components")]
         public bool must_reboot_required
         {
             get { return m_must_reboot_required; }
@@ -398,13 +398,13 @@ namespace InstallerLib
             set { m_auto_close_on_error = value; }
         }
 
-        private bool m_allow_continue_on_error = true;
-        [Description("If true prompt the user to continue on error, otherwise an error is simply reported. Make sure to adjust failed_exec_command_continue if set to false.")]
+        private bool m_reload_on_error = true;
+        [Description("Reload the components list on error, re-evaluating installed checks.")]
         [Category("Runtime")]
-        public bool allow_continue_on_error
+        public bool reload_on_error
         {
-            get { return m_allow_continue_on_error; }
-            set { m_allow_continue_on_error = value; }
+            get { return m_reload_on_error; }
+            set { m_reload_on_error = value; }
         }
 
         // message and caption to show during CAB extraction
@@ -575,7 +575,7 @@ namespace InstallerLib
             
             e.XmlWriter.WriteAttributeString("auto_close_if_installed", m_auto_close_if_installed.ToString());
             e.XmlWriter.WriteAttributeString("auto_close_on_error", m_auto_close_on_error.ToString());
-            e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
+            e.XmlWriter.WriteAttributeString("reload_on_error", m_reload_on_error.ToString());
             e.XmlWriter.WriteAttributeString("dialog_show_installed", m_dialog_show_installed.ToString());
             e.XmlWriter.WriteAttributeString("dialog_show_uninstalled", m_dialog_show_uninstalled.ToString());
             e.XmlWriter.WriteAttributeString("dialog_show_required", m_dialog_show_required.ToString());
@@ -600,7 +600,6 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("dialog_install_button_position", XmlRectangle.ToString(m_dialog_install_button_position));
             e.XmlWriter.WriteAttributeString("dialog_cancel_button_position", XmlRectangle.ToString(m_dialog_cancel_button_position));
             e.XmlWriter.WriteAttributeString("dialog_skip_button_position", XmlRectangle.ToString(m_dialog_skip_button_position));
-
             // auto start
             e.XmlWriter.WriteAttributeString("auto_start", m_auto_start.ToString());
             // auto start on reboot
@@ -644,7 +643,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "wait_for_complete_command", ref m_wait_for_complete_command);
             ReadAttributeValue(e, "auto_close_if_installed", ref m_auto_close_if_installed);
             ReadAttributeValue(e, "auto_close_on_error", ref m_auto_close_on_error);
-            ReadAttributeValue(e, "allow_continue_on_error", ref m_allow_continue_on_error);
+            ReadAttributeValue(e, "reload_on_error", ref m_reload_on_error);
             ReadAttributeValue(e, "dialog_show_installed", ref m_dialog_show_installed);
             ReadAttributeValue(e, "dialog_show_uninstalled", ref m_dialog_show_uninstalled);
             ReadAttributeValue(e, "dialog_show_required", ref m_dialog_show_required);
