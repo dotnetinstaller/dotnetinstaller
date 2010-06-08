@@ -3,6 +3,16 @@
   <Fragment>
     <DirectoryRef Id="INSTALLLOCATION">
       <Directory Id="Samples" Name="samples">
+        <Directory Id="DownloadSetupFolder" Name="DownloadSetup">
+          <Component Id="DownloadSetupSample" Guid="0538290C-0458-4ff7-A765-A92FEF8294FE">
+            <File Id="DownloadSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\DownloadSetup\Configuration.xml" />
+          </Component>
+        </Directory>
+        <Directory Id="OsFiltersSetupFolder" Name="OsFiltersSetup">
+          <Component Id="OsFiltersSetupSample" Guid="40392BA4-AF86-4bf3-96D6-70EC9BC0440F">
+            <File Id="OsFiltersSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\OsFilters\Configuration.xml" />
+          </Component>
+        </Directory>
         <Directory Id="MultilingualSetupFolder" Name="MultilingualSetup">
           <Component Id="MultilingualSetupSample" Guid="B343AC65-ACA1-4ac2-89F3-CB7505051631">
             <File Id="MultilingualSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\MultilingualSetup\Configuration.xml" />
@@ -12,6 +22,7 @@
           <Component Id="LicenseAgreementSample" Guid="35CF3A16-6311-4c0f-8A86-D58470376293">
             <File Id="LicenseAgreement.Configuration.xml" Name="Configuration.xml" Source="..\Samples\LicenseAgreement\Configuration.xml" />
             <File Id="LicenseAgreement.license.txt" Name="license.txt" Source="..\Samples\LicenseAgreement\license.txt" />
+            <File Id="LicenseAgreementSetup.Setup.exe" Name="Setup.exe" Source="..\Samples\LicenseAgreement\bin\$(var.Configuration)\Setup.exe" />
           </Component>
         </Directory>
         <Directory Id="CustomInputSetupFolder" Name="CustomInputSetup">
@@ -29,12 +40,7 @@
             <File Id="ReferenceSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\ReferenceSetup\Configuration.xml" />
           </Component>
         </Directory>
-        <Directory Id="OsFiltersFolder" Name="OsFilters">
-          <Component Id="OsFiltersSample" Guid="62B22E8A-D813-4bd0-8C82-A0A40497418F">
-            <File Id="OsFilters.Configuration.xml" Name="Configuration.xml" Source="..\Samples\OsFilters\Configuration.xml" />
-          </Component>
-        </Directory>
-        <Directory Id="PatchSetupFolder" Name="Patch">
+        <Directory Id="PatchSetupFolder" Name="PatchSetup">
           <Component Id="PatchSetupSample" Guid="28CC66F8-028E-4e3b-AB13-D24E437EC143">
             <File Id="PatchSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\PatchSetup\Configuration.xml" />
           </Component>
@@ -65,6 +71,8 @@
               <File Id="PackagedSetupSource.Configuration.xml" Name="Configuration.xml" Source="..\Samples\PackagedSetup\Configuration.xml" />
               <File Id="PackagedSetupSource.icon.ico" Name="icon.ico" Source="..\Samples\PackagedSetup\icon.ico" />
               <File Id="PackagedSetupSource.Readme.txt" Name="Readme.txt" Source="..\Samples\PackagedSetup\Readme.txt" />
+              <File Id="PackagedSetupSource.splash.bmp" Name="splash.bmp" Source="..\Samples\PackagedSetup\splash.bmp" />
+              <File Id="PackagedSetupSource.packagedsetup.manifest" Name="packagedsetup.manifest" Source="..\Samples\PackagedSetup\packagedsetup.manifest" />
             </Component>
             <Directory Id="PackagedSetupSimpleFolder" Name="Simple">
               <Component Id="PackagedSetupSimple" Guid="C0669897-61C6-45FC-A943-94C767906B69">

@@ -24,6 +24,10 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLLOCATION" Name="dotNetInstaller">
+          <Component Id="WhatsNew" Guid="17767F7D-4603-43a2-8C05-652B2067AA1D">
+            <File Id="WhatsNew.html" Source="..\Documentation\$(var.Configuration)\WhatsNew.html" />
+            <File Id="License.txt" Source="..\Documentation\License.txt" />
+          </Component>
           <Directory Id="bin" Name="bin">
             <Component Id="InstallerRegistry" Guid="5FBAE1CD-CBE6-406c-AB80-DD5675CED1BC">
               <RegistryKey Root="HKLM" Key="Software\CodePlex\dotNetInstaller" Action="create">
@@ -46,6 +50,7 @@
             </Component>
             <Component Id="dotNetInstaller" Guid="E28F4986-00F0-489f-99A3-99745FEC243D">
               <File Id="dotNetInstaller.exe" Source="..\dotNetInstaller\$(var.Configuration)\dotNetInstaller.exe" />
+              <File Id="dotNetInstaller.pdb" Source="..\dotNetInstaller\$(var.Configuration)\dotNetInstaller.pdb" />
             </Component>
             <Component Id="MSLU" Guid="95984BB5-05F2-4db4-AFE7-C017411EB7AA">
               <File Id="unicows.dll" Source="..\ThirdParty\Mslu\Unicows.dll" />
@@ -54,7 +59,6 @@
           <Directory Id="doc" Name="doc">
             <Component Id="Documentation" Guid="00A1CB0D-BCE4-43a4-8AAC-7563F90B3E7C">
               <File Id="dotNetInstaller.chm" Source="..\Documentation\$(var.Configuration)\dotNetInstaller.chm" />
-              <File Id="WhatsNew.html" Source="..\Documentation\$(var.Configuration)\WhatsNew.html" />
             </Component>
           </Directory>
         </Directory>
@@ -80,6 +84,7 @@
       <ComponentRef Id="InstallerEditor" />
       <ComponentRef Id="InstallerLinker" />
       <ComponentRef Id="dotNetInstaller" />
+      <ComponentRef Id="WhatsNew" />
       <ComponentRef Id="MSLU" />
       <ComponentRef Id="Documentation" />
       <ComponentRef Id="DotNetInstallerMenuShortcuts" />
@@ -90,10 +95,11 @@
         <ComponentRef Id="InstallCheckProductSample" />
         <ComponentRef Id="CustomInputSetupSample" />
         <ComponentRef Id="ReferenceSetupSample" />
-        <ComponentRef Id="OsFiltersSample" />
+        <ComponentRef Id="OsFiltersSetupSample" />
         <ComponentRef Id="MultilingualSetupSample" />
         <ComponentRef Id="LicenseAgreementSample" />
         <ComponentRef Id="PatchSetupSample" />
+        <ComponentRef Id="DownloadSetupSample" />
         <ComponentRef Id="ExeSetupSample" />
       </Feature>
     </Feature>
