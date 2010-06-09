@@ -48,6 +48,23 @@ void ExeComponent::Exec()
 
 	LOG(L"-- Executable: " << l_command);
 
+	// install_dir
+	std::wstring installdir = InstallerSession::Instance->ExpandUserVariables(install_directory.GetValue());
+	if (InstallerSession::Instance->sequence == SequenceInstall && ! installdir.empty())
+	{
+		bool installdir_exists = DVLib::DirectoryExists(installdir);
+		if (! installdir_exists)
+		{
+			LOG(L"-- Creating install_directory directory '" << installdir << L"'");
+			DVLib::DirectoryCreate(installdir);
+		}
+		else
+		{
+			LOG(L"-- Directory '" << installdir << L"' exists");
+		}
+	}
+
+	// response file
 	if (! l_responsefile_source.empty() && ! l_responsefile_target.empty()) 
 	{
 		LOG(L"-- Response file source: " << l_responsefile_source << L" (" << responsefile_format << L")");
@@ -89,6 +106,9 @@ void ExeComponent::Exec()
 	l_command = InstallerSession::Instance->ExpandUserVariables(l_command);
 
 	LOG(L"Executing: " << l_command);
+
+	CHECK_BOOL(! l_command.empty(), L"Component command is empty");
+
 	DVLib::RunCmd(l_command, & m_process_info);
 };
 
@@ -97,6 +117,7 @@ void ExeComponent::Load(TiXmlElement * node)
 	executable = node->Attribute("executable");
     executable_silent = node->Attribute("executable_silent");
 	executable_basic = node->Attribute("executable_basic");	
+	install_directory = node->Attribute("install_directory");
 	responsefile_source = node->Attribute("responsefile_source");
 	responsefile_target = node->Attribute("responsefile_target");
 	responsefile_format = node->Attribute("responsefile_format");

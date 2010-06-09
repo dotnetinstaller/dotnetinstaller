@@ -198,6 +198,15 @@ namespace InstallerLib
             set { m_uninstall_exeparameters_silent = value; }
         }
 
+        private string m_install_directory;
+        [Description("Optional install directory that will be created if it doesn't exist.")]
+        [Category("Install")]
+        public string install_directory
+        {
+            get { return m_install_directory; }
+            set { m_install_directory = value; }
+        }
+
         #endregion
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
@@ -205,6 +214,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("executable", m_executable);
             e.XmlWriter.WriteAttributeString("executable_silent", m_executable_silent);
             e.XmlWriter.WriteAttributeString("executable_basic", m_executable_basic);
+            e.XmlWriter.WriteAttributeString("install_directory", m_install_directory);
             e.XmlWriter.WriteAttributeString("responsefile_source", m_responsefile_source);
             e.XmlWriter.WriteAttributeString("responsefile_target", m_responsefile_target);
             e.XmlWriter.WriteAttributeString("responsefile_format", m_responsefile_format.ToString());
@@ -229,6 +239,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "executable", ref m_executable);
             ReadAttributeValue(e, "executable_silent", ref m_executable_silent);
             ReadAttributeValue(e, "executable_basic", ref m_executable_basic);
+            ReadAttributeValue(e, "install_directory", ref m_install_directory);
             ReadAttributeValue(e, "responsefile_source", ref m_responsefile_source);
             ReadAttributeValue(e, "responsefile_target", ref m_responsefile_target);
             ReadAttributeValue(e, "responsefile_format", ref m_responsefile_format);

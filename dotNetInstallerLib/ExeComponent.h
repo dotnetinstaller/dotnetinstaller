@@ -30,6 +30,8 @@ public:
 	// return codes
 	XmlAttribute returncodes_success;
 	XmlAttribute returncodes_reboot;
+	// destination directory
+	XmlAttribute install_directory;
 	void Exec();
 	void Load(TiXmlElement * node);
 	void Wait(DWORD tt = 1000);

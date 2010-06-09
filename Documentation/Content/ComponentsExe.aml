@@ -109,6 +109,13 @@ TargetPath=C:\Program Files\MySampleSetup
             <definition>
               A comma-separated list of return codes that indicate that a reboot is required.
             </definition>
+            <definedTerm>install_directory</definedTerm>
+            <definition>
+              Optional directory created by the bootstrapper before processing the response file and executing the 
+              component command. When specified, the directory is created on installation when it doesn't exist.
+              This supports typical packaged setup programs that require the destination folder to exist prior to
+              installation.
+            </definition>
           </tableDefinition>
         </para>
       </content>

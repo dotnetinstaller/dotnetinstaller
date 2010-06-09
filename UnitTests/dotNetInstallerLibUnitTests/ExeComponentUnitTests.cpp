@@ -52,3 +52,24 @@ void ExeComponentUnitTests::testExecInstallResponseFile()
 	DVLib::FileDelete(responsefile_target);
 }
 
+void ExeComponentUnitTests::testExecInstallDir()
+{
+	// install
+	std::wstring install_dir = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), DVLib::GenerateGUIDStringW());
+	ExeComponent component;
+	component.executable = L"cmd.exe";
+	component.uninstall_executable = L"cmd.exe";
+	component.install_directory = install_dir;
+	component.exeparameters = L"/C exit /b 0";
+	component.uninstall_exeparameters = L"/C exit /b 0";
+	component.Exec();
+	component.Wait();
+	CPPUNIT_ASSERT(DVLib::DirectoryExists(install_dir));
+	DVLib::DirectoryDelete(install_dir);
+	// uninstall
+	InstallSequenceState state;
+	InstallerSession::Instance->sequence = SequenceUninstall;
+	component.Exec();
+	component.Wait();
+	CPPUNIT_ASSERT(! DVLib::DirectoryExists(install_dir));
+}
