@@ -160,7 +160,11 @@ void ExeComponent::Wait(DWORD tt)
 	else
 	{
 		CHECK_BOOL(IsReturnCode(exitcode, returncodes_success),
-			L"Error executing '" << id << "' (" << GetDisplayName() << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
+			L"Error executing component '" << id << "' (" << GetDisplayName() << L"), return code is not in '" << returncodes_success 
+			<< L"': " << DVLib::FormatMessage(L"0x%x", exitcode));
+
+		LOG(L"Component '" << id << "' (" << GetDisplayName() << L") return code '" << exitcode 
+			<< L", defined as success in '" << returncodes_success << L".");
 	}
 }
 
