@@ -73,3 +73,11 @@ void ExeComponentUnitTests::testExecInstallDir()
 	component.Wait();
 	CPPUNIT_ASSERT(! DVLib::DirectoryExists(install_dir));
 }
+
+void ExeComponentUnitTests::testMustReboot()
+{
+	ExeComponent component;
+	CPPUNIT_ASSERT(! component.IsRebootRequired());
+	component.mustreboot = L"True";
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+}

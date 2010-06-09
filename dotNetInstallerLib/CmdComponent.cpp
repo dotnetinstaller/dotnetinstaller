@@ -128,6 +128,6 @@ bool CmdComponent::IsReturnCodeReboot(DWORD return_code) const
 
 bool CmdComponent::IsRebootRequired() const
 {
-	return IsReturnCodeReboot(
+	return Component::IsRebootRequired() || IsReturnCodeReboot(
 		ProcessComponent::GetProcessExitCode());
 }

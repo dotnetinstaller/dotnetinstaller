@@ -11,3 +11,11 @@ void OpenFileComponentUnitTests::testExec()
 	component.file = L"cmd.exe /C";
 	component.Exec();
 }
+
+void OpenFileComponentUnitTests::testMustReboot()
+{
+	OpenFileComponent component;
+	CPPUNIT_ASSERT(! component.IsRebootRequired());
+	component.mustreboot = L"True";
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+}

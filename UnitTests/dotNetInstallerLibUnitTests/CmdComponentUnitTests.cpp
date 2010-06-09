@@ -226,3 +226,11 @@ void CmdComponentUnitTests::testReturnCodeSuccess()
 	}
 	CPPUNIT_ASSERT(! component.IsRebootRequired());
 }
+
+void CmdComponentUnitTests::testMustReboot()
+{
+	CmdComponent component;
+	CPPUNIT_ASSERT(! component.IsRebootRequired());
+	component.mustreboot = L"True";
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+}

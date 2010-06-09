@@ -10,11 +10,13 @@ namespace DVLib
 			CPPUNIT_TEST( testExecInstall );
 			CPPUNIT_TEST( testExecInstallResponseFile );
 			CPPUNIT_TEST( testExecInstallDir );
+			CPPUNIT_TEST( testMustReboot );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testExecInstall();
 			void testExecInstallResponseFile();
 			void testExecInstallDir();
+			void testMustReboot();
 		};
 	}
 }

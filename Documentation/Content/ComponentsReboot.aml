@@ -2,26 +2,26 @@
 <topic id="edadc51b-8e65-47a0-9b94-91a6a86e78fd" revisionNumber="1">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
-      <para>dotNetInstaller fully supports and handles rebooting between components.</para>
+      <para>dotNetInstaller fully supports and handles restarting the computer between components.</para>
     </introduction>
     <section address="componentoptionsreboot">
       <title>Requiring Reboot</title>
       <content>
         <para>
-          Reboot behavior is supported by three component-based and install-based options: <literal>mustreboot</literal>,
+          Reboot behavior is enabled by three component-based and install-based options: <literal>mustreboot</literal>,
           <literal>reboot_required</literal> and <literal>must_reboot_required</literal> as well as by special handling
-          in <literal>msi</literal>, <literal>msu</literal> and <literal>cmd</literal> components.
+          in <literal>msi</literal>, <literal>msu</literal>, <literal>exe</literal> and <literal>cmd</literal> components.
           <definitionTable>
             <definedTerm>mustreboot</definedTerm>
             <definition>
               This option forces the bootstrapper to make a reboot decision in all successful installation cases.
-              You should never have to use this option with an <literal>msi</literal> component because it signals the
-              bootstrapper to reboot automatically.
+              Using <literal>mustreboot</literal> is not recommended because it signals the bootstrapper to reboot automatically, which is seldomly
+              required in modern installers. Instead, rely on mechanisms, such as <literal>returncodes_reboot</literal>.
             </definition>
             <definedTerm>must_reboot_required</definedTerm>
             <definition>
               By default, dotNetInstaller will ask whether the user wants to reboot now. Setting this option to <literal>true</literal>
-              will force the user to reboot when a reboot is required without offering an opportunity to postpone the reboot.
+              will force the computer to reboot when it is required without offering an opportunity to postpone the reboot.
               Note that regardless of the value of this option the message defined by <literal>reboot_required</literal>
               is displayed.
             </definition>
@@ -35,17 +35,30 @@
           </definitionTable>
         </para>
         <para>
-          Reboot options are most effective with <literal>msi</literal> components and with <literal>cmd</literal> components
-          wth a bit more work. A Windows Installer may signal the bootstrapper that a reboot is required via a special
-          return code (<literal>ERROR_SUCCESS_REBOOT_REQUIRED=3010</literal>). This happens when, for example, a locked file
-          couldn't be replaced. Windows schedules the replacement after the reboot. dotNetInstaller is capable to force a
-          reboot and return to the previous location in the installation sequence. The options define how the bootstrapper
-          behaves in this situation and whether to offer users the possibility to postpone the reboot.
+          Reboot options are most effective with <literal>msi</literal> components and with <literal>exe</literal> and
+          <literal>cmd</literal> components wth a bit more work.
         </para>
         <para>
-          The same behavior can be simulated in <literal>cmd</literal> components with the <literal>returncodes_reboot</literal>
-          option. Use this optoin to specify a comma-separated return codes that signal a required reboot.
+          For <literal>msi</literal> components, Windows Installer may signal that a reboot is required via a special 
+          return code (<literal>ERROR_SUCCESS_REBOOT_REQUIRED = 3010</literal>). This happens when, for example, a locked file 
+          couldn't be replaced. Windows schedules the replacement after the reboot. dotNetInstaller is capable to force the
+          computer to reboot and will return to the previous location in the installation sequence. The options define how 
+          the bootstrapper behaves in this situation and whether to offer users the possibility to postpone the reboot.
         </para>
+        <para>
+          The same behavior can be emulated in <literal>cmd</literal> and <literal>exe</literal> components with the 
+          <literal>returncodes_reboot</literal> option. Use this option to specify a comma-separated return codes that 
+          signal a required reboot.
+        </para>
+        <alert class="important">
+          <para>
+            When bootstrapping a package that may require reboot, you must suppress it in order for dotNetInstaller to resume
+            installation after the computer restarts. For example, .NET Framework's setup.exe accepts a <command>/norestart</command> 
+            command-line option which avoids the reboot and returns a <literal>3010</literal> return code when it is required. 
+            Combine this behavior with the component's <literal>returncodes_reboot</literal> set to <literal>3010</literal>
+            to achieve the desired behavior of resuming installation after the computer restarts.
+          </para>
+        </alert>
         <para>
           In silent installations (basic and no UI) the choice to reboot is made automatically for the user when reboot
           is required.

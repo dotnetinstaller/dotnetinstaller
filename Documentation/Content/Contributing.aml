@@ -10,7 +10,7 @@
         The project is maintained on
         <externalLink>
           <linkText>CodePlex</linkText>
-          <linkUri>http://www.codeplex.com/dotnetinstaller/</linkUri>
+          <linkUri>http://dotnetinstaller.codeplex.com/</linkUri>
         </externalLink>. The website has a bug tracking system and a discussions forum. Please don't hesitate to post suggestions
         or questions.
       </para>
@@ -30,7 +30,7 @@
       <steps class="ordered">
         <step>
           <content>
-            <para>Install a Subversion (SVN) client, for example TortoiseSVN.</para>
+            <para>Install a command-line Subversion (SVN) client (not TortoiseSVN Shell Extension).</para>
           </content>
         </step>
         <step>
@@ -41,10 +41,10 @@
         <step>
           <content>
             <para>
-              Install MSBuild Community Tasks 1.3 from
+              Install
               <externalLink>
-                <linkText>http://msbuildtasks.tigris.org/</linkText>
-                <linkUri>http://msbuildtasks.tigris.org/</linkUri>
+                <linkText>MSBuild Community Tasks 1.3</linkText>
+                <linkUri>http://dl.dropbox.com/u/4321494/MSBuild%20Community%20Tasks/MSBuild.Community.Tasks.1.3.0.msi</linkUri>
               </externalLink>.
             </para>
           </content>

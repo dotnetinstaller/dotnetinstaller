@@ -123,3 +123,11 @@ void MsiComponentUnitTests::testExecUninstallSilent()
 		CPPUNIT_ASSERT(1619 == component.GetProcessExitCode());
 	}
 }
+
+void MsiComponentUnitTests::testMustReboot()
+{
+	MsiComponent component;
+	CPPUNIT_ASSERT(! component.IsRebootRequired());
+	component.mustreboot = L"True";
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+}

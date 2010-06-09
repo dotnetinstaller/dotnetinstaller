@@ -12,6 +12,7 @@ namespace DVLib
 			CPPUNIT_TEST( testExecUninstall );
 			CPPUNIT_TEST( testExecUninstallSilent );
 			CPPUNIT_TEST( testGetCommandLine );
+			CPPUNIT_TEST( testMustReboot );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testExecInstall();
@@ -19,6 +20,7 @@ namespace DVLib
 			void testExecUninstall();
 			void testExecUninstallSilent();
 			void testGetCommandLine();
+			void testMustReboot();
 		};
 	}
 }

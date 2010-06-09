@@ -19,6 +19,7 @@ namespace DVLib
 			CPPUNIT_TEST( testReturnCodeNonValue );
 			CPPUNIT_TEST( testReturnCodeRebootRequired );
 			CPPUNIT_TEST( testReturnCodeSuccess );
+			CPPUNIT_TEST( testMustReboot );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testExecInstall();
@@ -33,6 +34,7 @@ namespace DVLib
 			void testReturnCodeNonValue();
 			void testReturnCodeRebootRequired();
 			void testReturnCodeSuccess();
+			void testMustReboot();
 		};
 	}
 }

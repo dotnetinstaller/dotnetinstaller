@@ -173,3 +173,11 @@ void MspComponentUnitTests::testGetCommandLine()
 		CPPUNIT_ASSERT(testdata[i].command == command);
 	}
 }
+
+void MspComponentUnitTests::testMustReboot()
+{
+	MspComponent component;
+	CPPUNIT_ASSERT(! component.IsRebootRequired());
+	component.mustreboot = L"True";
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+}

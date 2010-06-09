@@ -106,3 +106,11 @@ void MsuComponentUnitTests::testExecUninstallSilent()
 		// sequence is not supported
 	}
 }
+
+void MsuComponentUnitTests::testMustReboot()
+{
+	MsuComponent component;
+	CPPUNIT_ASSERT(! component.IsRebootRequired());
+	component.mustreboot = L"True";
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+}

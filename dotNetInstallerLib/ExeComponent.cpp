@@ -209,6 +209,6 @@ bool ExeComponent::IsReturnCodeReboot(DWORD return_code) const
 
 bool ExeComponent::IsRebootRequired() const
 {
-	return IsReturnCodeReboot(
+	return Component::IsRebootRequired() || IsReturnCodeReboot(
 		ProcessComponent::GetProcessExitCode());
 }

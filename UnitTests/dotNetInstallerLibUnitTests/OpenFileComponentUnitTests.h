@@ -8,9 +8,11 @@ namespace DVLib
 		{
 			CPPUNIT_TEST_SUITE( OpenFileComponentUnitTests );
 			CPPUNIT_TEST( testExec );
+			CPPUNIT_TEST( testMustReboot );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testExec();
+			void testMustReboot();
 		};
 	}
 }
