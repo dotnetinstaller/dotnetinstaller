@@ -53,7 +53,8 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 					os = winVistaSp2;
 			}
 			// Windows Server 2003 versions
-			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && GetSystemMetrics(89 /* SM_SERVERR2 */) != 0)
+			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && 
+				osvi.wProductType != VER_NT_WORKSTATION && GetSystemMetrics(89 /* SM_SERVERR2 */) != 0)
 			{
 				os = winServer2003;
 
@@ -62,7 +63,8 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 				else if (osvi.wServicePackMajor >= 2)
 					os = winServer2003sp2;
 			}
-			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && GetSystemMetrics(89 /* SM_SERVERR2 */) == 0)
+			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && 
+				osvi.wProductType != VER_NT_WORKSTATION && GetSystemMetrics(89 /* SM_SERVERR2 */) == 0)
 			{
 				os = winServer2003R2;
 
@@ -72,7 +74,8 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 					os = winServer2003R2sp2;
 			}
 			// Windows XP 64 bit Professional
-			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && osvi.wProductType == VER_NT_WORKSTATION && si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64)
+			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && 
+				osvi.wProductType == VER_NT_WORKSTATION)
 			{
 				os = winXP;
 
