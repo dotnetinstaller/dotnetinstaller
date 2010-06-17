@@ -200,6 +200,11 @@ void CComponentsList::Exec(const ComponentPtr& component)
 {
 	try
 	{
+		if (m_pExecuteCallback)
+		{
+			m_pExecuteCallback->OnExecBegin();
+		}
+
 		LOG(L"--- Component '" << component->id << L"' (" << component->GetDisplayName() << L"): EXECUTING");
 		
 		if (m_pExecuteCallback && ! m_pExecuteCallback->OnComponentExecBegin(component))

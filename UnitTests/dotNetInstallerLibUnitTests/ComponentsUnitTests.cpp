@@ -112,6 +112,7 @@ void ComponentsUnitTests::testExecWithCallback()
 	components.Exec(& callback);
 	CPPUNIT_ASSERT(DVLib::FileExists(check_file));
 	DVLib::FileDelete(check_file);
+	CPPUNIT_ASSERT(1 == callback.starts);
 	CPPUNIT_ASSERT(1 == callback.begins);
 	CPPUNIT_ASSERT(1 == callback.waits);
 	CPPUNIT_ASSERT(1 == callback.successes);
@@ -127,6 +128,7 @@ void ComponentsUnitTests::testExecWithError()
 	components.add(ComponentPtr(component1));
 	ExecuteComponentCallbackImpl callback;
 	components.Exec(& callback);
+	CPPUNIT_ASSERT(1 == callback.starts);
 	CPPUNIT_ASSERT(1 == callback.begins);
 	CPPUNIT_ASSERT(0 == callback.waits);
 	CPPUNIT_ASSERT(0 == callback.successes);

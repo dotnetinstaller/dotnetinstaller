@@ -4,11 +4,18 @@
 using namespace DVLib::UnitTests;
 
 ExecuteComponentCallbackImpl::ExecuteComponentCallbackImpl()
-	: begins(0)
+	: starts(0)
+	, begins(0)
 	, waits(0)
 	, successes(0)
 	, errors(0)
 {
+}
+
+void ExecuteComponentCallbackImpl::OnExecBegin()
+{
+	::InterlockedIncrement(& starts);
+	std::wcout << std::endl << L"Starting execution";
 }
 
 bool ExecuteComponentCallbackImpl::OnComponentExecBegin(const ComponentPtr& component)

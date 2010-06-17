@@ -346,6 +346,16 @@ void CdotNetInstallerDlg::SelectComponents()
 	}
 }
 
+void CdotNetInstallerDlg::OnExecBegin()
+{
+	SetControlValues();
+
+	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
+	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+
+    ExtractCab(L"", p_configuration->show_cab_dialog);		
+}
+
 void CdotNetInstallerDlg::OnBnClickedInstall()
 {
 	try
@@ -359,13 +369,10 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		
 		ClearError();
         SelectComponents();
-		SetControlValues();
 
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
-        ExtractCab(L"", p_configuration->show_cab_dialog);
-		
 		Components components = p_configuration->GetSupportedComponents(
 			m_lcidtype, InstallerSession::Instance->sequence);
 

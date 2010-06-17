@@ -3,6 +3,8 @@
 class IExecuteCallback
 {
 public:
+	// executiion begins
+	virtual void OnExecBegin() = 0;
 	// component execution begins
 	virtual bool OnComponentExecBegin(const ComponentPtr&) = 0;
 	// component execution is in progress

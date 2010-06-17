@@ -86,6 +86,11 @@ Components Components::GetSupportedComponents(DVLib::LcidType lcidtype, InstallS
 
 int Components::Exec(IExecuteCallback * callback)
 {
+	if (callback)
+	{
+		callback->OnExecBegin();
+	}
+
 	int rc = 0;
 	for each(const ComponentPtr& component in * this)
 	{

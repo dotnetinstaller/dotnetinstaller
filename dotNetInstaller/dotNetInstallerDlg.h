@@ -55,6 +55,7 @@ public:
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedSkip();
 	// IExecuteCallback
+	void OnExecBegin();
 	bool OnComponentExecBegin(const ComponentPtr& component);
 	bool OnComponentExecWait(const ComponentPtr& component);
 	bool OnComponentExecSuccess(const ComponentPtr& component);
