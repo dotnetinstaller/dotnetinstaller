@@ -202,7 +202,7 @@ namespace InstallerLib
         }
 
         private string m_failed_exec_command_continue;
-        [Description("The message used when a component cannot be installed and ask if the application can continue with others components (Yes/No message). Must contain one '%s' string where the application put the description of the component. (REQUIRED)")]
+        [Description("The message to display when a component failed to install. The user is then asked whether installation can continue using this message. May contain one '%s' replaced by the description of the component. (OPTIONAL)")]
         [Category("Messages")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string failed_exec_command_continue

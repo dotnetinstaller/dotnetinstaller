@@ -56,5 +56,50 @@ namespace dotNetInstallerUnitTests
             File.Delete(markerFilename2);
             File.Delete(configFilename);
         }
+
+        [Test]
+        public void TestContinueOnErrorNoMessage()
+        {
+            // test that with all failed_exec_command_continue blanked, 
+            // user is never asked a question in full UI mode (not blocked)
+            ConfigFile configFile = new ConfigFile();
+            string markerFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            string markerFilename1 = string.Format("{0}.1", markerFilename);
+            string markerFilename2 = string.Format("{0}.2", markerFilename);
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            // running in full UI mode, auto-start
+            setupConfiguration.auto_start = true;
+            // running in full UI mode, installation is expected to fail, auto-close
+            setupConfiguration.auto_close_on_error = true;
+            ComponentCmd cmd1 = new ComponentCmd();
+            setupConfiguration.Children.Add(cmd1);
+            cmd1.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 1", markerFilename1);
+            ComponentCmd cmd2 = new ComponentCmd();
+            setupConfiguration.Children.Add(cmd2);
+            cmd2.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 2", markerFilename2);
+            // continue on error by default -> continues on the first and the second component, returns the last error code
+            cmd1.default_continue_on_error = true;
+            cmd2.default_continue_on_error = true;
+            // remove all continue or stop error messages
+            setupConfiguration.failed_exec_command_continue = "";
+            cmd1.failed_exec_command_continue = "";
+            cmd1.failed_exec_command_continue = "";
+            cmd2.failed_exec_command_continue = "";
+            // save config file
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // the return code of the first failure is saved
+            dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
+            // all continue error messages are blank, nothing should popup to block the test
+            options.quiet = false;
+            Assert.AreEqual(1, dotNetInstallerExeUtils.Run(options));
+            Assert.IsTrue(File.Exists(markerFilename1));
+            Assert.IsTrue(File.Exists(markerFilename2));
+            File.Delete(markerFilename1);
+            File.Delete(markerFilename2);
+            File.Delete(configFilename);
+        }
     }
 }

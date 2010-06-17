@@ -733,7 +733,11 @@ bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, st
 		component->GetDisplayName().c_str());
 
     bool break_sequence = false;
-    if (component->allow_continue_on_error)
+	if (error_message.empty())
+	{
+		break_sequence = ! component->default_continue_on_error;
+	}
+    else if (component->allow_continue_on_error)
     {
 	    break_sequence = (DniMessageBox::Show(error_message, MB_YESNO, 
 			component->default_continue_on_error ? IDYES : IDNO,
@@ -749,6 +753,8 @@ bool CdotNetInstallerDlg::OnComponentExecError(const ComponentPtr& component, st
 	{
 		LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): FAILED, ABORTING");
 		return false;
+	} else {
+		LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): FAILED, CONTINUE");
 	}
 
 	return true;

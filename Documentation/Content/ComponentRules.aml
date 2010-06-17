@@ -39,6 +39,11 @@
           behavior is identical, but the choice to continue is made automatically for the user based on the value
           of <literal>default_continue_on_error</literal>.
         </para>
+        <para>
+          If the configuration-level <literal>failed_exec_command_continue</literal> is blank, the component-level
+          <literal>failed_exec_command_continue</literal> is used. If both are blank, the user is not asked a question
+          and the continue decision is made automatically based on <literal>default_continue_on_error</literal>.
+        </para>
       </content>
     </section>
   </developerConceptualDocument>

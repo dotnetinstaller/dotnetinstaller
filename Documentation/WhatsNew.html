@@ -70,6 +70,10 @@
                 <li>Added <code>reload_on_error</code> to setup configuration. Controls whether to reload
                     the components list after a component error has occurred. Unlike previous versions,
                     default is set to True.</li>
+                <li>Allowing empty <code>failed_exec_command_continue</code> messages. When both the
+                    configuration-level and component-level messages are empty, the user is not prompted
+                    with a question to continue and the value of <code>default_continue_on_error</code>
+                    is used to make the decision to continue or abort.</li>
             </ul>
         </li>
         <li><strong>Misc</strong>:
