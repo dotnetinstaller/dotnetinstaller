@@ -42,8 +42,8 @@ BOOL CdotNetInstallerApp::InitInstance()
 		LOG(L"dotNetInstaller (DNI) started, version " << TEXT(VERSION_VALUE));
 		LOG(VERSION_LEGALCOPYRIGHT_VALUE);
 		LOG(L"Operating system: " << DVLib::GetOperatingSystemVersionString());
-		LOG(L"Sequence: " << InstallSequenceUtil::towstring(InstallerSession::Instance->sequence));
 		LOG(L"-------------------------------------------------------------------");
+		LOG(L"Sequence: " << InstallSequenceUtil::towstring(InstallerSession::Instance->sequence));
 
 		std::map<std::wstring, std::wstring>::iterator arg = InstallerCommandLineInfo::Instance->componentCmdArgs.begin();
 		while(arg != InstallerCommandLineInfo::Instance->componentCmdArgs.end())

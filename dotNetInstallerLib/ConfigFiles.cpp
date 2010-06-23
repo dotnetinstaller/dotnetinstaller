@@ -125,10 +125,12 @@ void ConfigFiles::Run()
 		LOG(VERSION_LEGALCOPYRIGHT_VALUE);
 		LOG(L"Operating system: " << DVLib::GetOperatingSystemVersionString());
 		LOG(L"-------------------------------------------------------------------");
+		LOG(L"Sequence: " << InstallSequenceUtil::towstring(InstallerSession::Instance->sequence));
 	}
 
 	// set configuration install ui level per configuration
 	InstallUILevelSetting::Instance->SetConfigLevel(config.uilevel);
+	LOG(L"UI level: " << InstallUILevelSetting::ToString(InstallUILevelSetting::Instance->GetUILevel()));
 
 	for (size_t i = 0; i < size(); i++)
 	{
