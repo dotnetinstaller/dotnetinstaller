@@ -78,11 +78,17 @@
             <definedTerm>/ComponentArgs "*|id|display_name":"value"</definedTerm>
             <definition>
               <para>
-                Additional component parameters. This enables passing additional command-line arguments to all (<code>*</code>) or
-                specific components by their <code>id</code> and/or <code>display_name</code>, in this order. The value is appended
+                Additional component parameters. This enables passing additional command-line arguments to all (<literal>*</literal>) or
+                specific components by their <literal>id</literal> and/or <literal>display_name</literal>, in this order. The value is appended
                 to both non-silent and silent command lines of <literal>msi</literal> and <literal>cmd</literal> type components.
                 The component <literal>id</literal> or <literal>display_name</literal> must match exactly the one in the
                 configuration.xml.
+              </para>
+              <para>
+                Example:
+                <code language="cmd">
+                  <![CDATA[setup.exe /ComponentArgs "MySetup":"INSTALLLOCATION=C:\Program Files\MySetup"]]>
+                </code>
               </para>
               <alert class="note">
                 <para>
