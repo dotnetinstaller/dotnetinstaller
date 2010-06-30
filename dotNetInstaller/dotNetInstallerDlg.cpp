@@ -442,7 +442,9 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 // returns true if all components have been installed
 bool CdotNetInstallerDlg::LoadComponentsList()
 {
-	return m_ListBoxComponents.Load(m_lcidtype, m_configuration);
+	InstallConfiguration * pConfiguration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
+	CHECK_BOOL(pConfiguration != NULL, L"Invalid configuration");
+	return m_ListBoxComponents.Load(m_lcidtype, pConfiguration);
 }
 
 // skip the current config section and go to the next valid one

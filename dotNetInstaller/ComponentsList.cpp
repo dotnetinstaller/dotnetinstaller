@@ -1,8 +1,13 @@
 #include "StdAfx.h"
 #include "ComponentsList.h"
+#include "DniMessageBox.h"
 
 CComponentsList::CComponentsList()
+	: m_pConfiguration(NULL)
+	, m_pExecuteCallback(NULL)
+	, m_lcidtype(DVLib::LcidUserExe)
 {
+
 }
 
 IMPLEMENT_DYNAMIC(CComponentsList, CCheckListBox)
@@ -75,7 +80,12 @@ void CComponentsList::PreDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CCheckListBox::PreDrawItem(lpDrawItemStruct);
 }
 
-bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration)
+bool CComponentsList::Reload()
+{
+	return Load(m_lcidtype, m_pConfiguration);
+}
+
+bool CComponentsList::Load(DVLib::LcidType lcidtype, InstallConfiguration * pConfiguration)
 {
 	bool all = true;
 
@@ -85,10 +95,8 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 	ASSERT(pDC);
 
 	int hScrollWidth = 0;
-	m_pConfiguration = reinterpret_cast<InstallConfiguration *>(get(configuration));
-	CHECK_BOOL(m_pConfiguration != NULL, L"Invalid configuration");
-    
-	Components components = m_pConfiguration->GetSupportedComponents(
+
+	Components components = pConfiguration->GetSupportedComponents(
 		lcidtype, InstallerSession::Instance->sequence);
 
 	for (size_t i = 0; i < components.size(); i++)
@@ -114,22 +122,22 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 		std::wstring l_descr = component->GetDisplayName();
 	    l_descr += L" ";
         l_descr += component_installed
-			? (component->status_installed.empty() ? m_pConfiguration->status_installed : component->status_installed)
-			: (component->status_notinstalled.empty() ? m_pConfiguration->status_notinstalled : component->status_notinstalled);
+			? (component->status_installed.empty() ? pConfiguration->status_installed : component->status_installed)
+			: (component->status_notinstalled.empty() ? pConfiguration->status_notinstalled : component->status_notinstalled);
 
 		// show installed
         if (InstallerSession::Instance->sequence == SequenceInstall 
-			&& ! m_pConfiguration->dialog_show_installed 
+			&& ! pConfiguration->dialog_show_installed 
 			&& component_installed)
             continue;
 
 		// show uninstalled
         if (InstallerSession::Instance->sequence == SequenceUninstall 
-			&& ! m_pConfiguration->dialog_show_uninstalled
+			&& ! pConfiguration->dialog_show_uninstalled
 			&& ! component_installed)
             continue;
 
-        if (! m_pConfiguration->dialog_show_required)
+        if (! pConfiguration->dialog_show_required)
 		{
 			if (component->required_install && InstallerSession::Instance->sequence == SequenceInstall)
 				continue;
@@ -168,7 +176,10 @@ bool CComponentsList::Load(DVLib::LcidType lcidtype, const ConfigurationPtr& con
 		SetHorizontalExtent(hScrollWidth);
 	}
 
-	ReleaseDC(pDC); 
+	m_lcidtype = lcidtype;
+	m_pConfiguration = pConfiguration;
+
+	ReleaseDC(pDC);
 	return all;
 }
 
@@ -182,6 +193,7 @@ void CComponentsList::OnLButtonDblClk(UINT nFlags, CPoint point)
 		{
 			ComponentPtr component = m_pConfiguration->GetComponentPtr((Component *) GetItemDataPtr(uiItem));
 			Exec(component);
+			Reload();
 		}
 	}
 	else if (nFlags & MK_SHIFT && nFlags && MK_LBUTTON)
@@ -226,9 +238,8 @@ void CComponentsList::Exec(const ComponentPtr& component)
 	{
 		LOG(L"*** Component '" << component->id << L"' (" << component->GetDisplayName() << L"): ERROR - " 
 			<< DVLib::string2wstring(ex.what()));
-		
-		if (m_pExecuteCallback && ! m_pExecuteCallback->OnComponentExecError(component, ex))
-			return;
+
+		DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
 	}
 }
 

@@ -7,8 +7,9 @@ class CComponentsList :
 private:
 	IExecuteCallback * m_pExecuteCallback;
 	InstallConfiguration * m_pConfiguration;
-protected:
+	DVLib::LcidType m_lcidtype;
 	void Exec(const ComponentPtr& component);
+protected:
 	void PreDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
 	void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct); 
 	void OnCheckChange();
@@ -16,6 +17,7 @@ protected:
 	DECLARE_MESSAGE_MAP();
 public:
 	void SetExecuteCallback(IExecuteCallback *);
-	bool Load(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration);
+	bool Load(DVLib::LcidType lcidtype, InstallConfiguration * pConfiguration);
+	bool Reload();
 	CComponentsList();
 };
