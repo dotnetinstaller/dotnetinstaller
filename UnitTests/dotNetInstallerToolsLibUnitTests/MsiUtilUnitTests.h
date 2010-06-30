@@ -11,12 +11,16 @@ namespace DVLib
 			CPPUNIT_TEST( testGetRelatedProducts );
 			CPPUNIT_TEST( testIsProductInstalled );
 			CPPUNIT_TEST( testGetQuotedPathOrGuid );
+			CPPUNIT_TEST( testGetUpgradeCodes );
+			// CPPUNIT_TEST( testGetRelatedInstalledProducts );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testGetInstalledProducts();
 			void testGetRelatedProducts();
 			void testIsProductInstalled();
 			void testGetQuotedPathOrGuid();
+			void testGetUpgradeCodes();
+			void testGetRelatedInstalledProducts();
 		};
 	}
 }

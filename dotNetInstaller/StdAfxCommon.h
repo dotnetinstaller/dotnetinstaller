@@ -49,3 +49,4 @@
 
 #include <strsafe.h>
 #include <msi.h>
+#include <msiquery.h>

@@ -15,6 +15,8 @@ namespace DVLib
 		std::wstring GetProductName() const { return GetProperty(INSTALLPROPERTY_PRODUCTNAME); }
 		std::wstring GetVersionString() const { return GetProperty(INSTALLPROPERTY_VERSIONSTRING); }
 		std::wstring GetLocalPackage() const { return GetProperty(INSTALLPROPERTY_LOCALPACKAGE); }
+		std::vector<GUID> GetUpgradeCodes() const;
+		std::vector<MsiProductInfo> GetRelatedProducts() const;
 	};
 
 	// is the product installed

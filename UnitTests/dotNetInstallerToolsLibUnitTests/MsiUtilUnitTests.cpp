@@ -5,6 +5,9 @@ using namespace DVLib::UnitTests;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(MsiUtilUnitTests);
 
+// MSBuild Community Tasks required to build this project
+#define WELLKNOWN_UPGRADECODE "{F289AA13-BBAF-4EA2-97C8-BAEC7E5B743E}"
+
 void MsiUtilUnitTests::testGetInstalledProducts()
 {
 	std::vector<DVLib::MsiProductInfo> installedproducts = DVLib::MsiGetInstalledProducts();
@@ -25,9 +28,8 @@ void MsiUtilUnitTests::testGetInstalledProducts()
 
 void MsiUtilUnitTests::testGetRelatedProducts()
 {
-	// MSBuild Community Tasks, required to build this project
 	std::vector<DVLib::MsiProductInfo> relatedproducts = DVLib::MsiGetRelatedProducts(
-		DVLib::string2guid(L"{F289AA13-BBAF-4EA2-97C8-BAEC7E5B743E}"));
+		DVLib::string2guid(WELLKNOWN_UPGRADECODE));
 	CPPUNIT_ASSERT(relatedproducts.size() >= 1);
 	for each(const DVLib::MsiProductInfo& product in relatedproducts)
 	{		
@@ -41,7 +43,7 @@ void MsiUtilUnitTests::testIsProductInstalled()
 {
 	// MSBuild Community Tasks 1.3, required to build this project
 	std::vector<DVLib::MsiProductInfo> relatedproducts = DVLib::MsiGetRelatedProducts(
-		DVLib::string2guid(L"{F289AA13-BBAF-4EA2-97C8-BAEC7E5B743E}"));
+		DVLib::string2guid(WELLKNOWN_UPGRADECODE));
 	for each(const DVLib::MsiProductInfo& product in relatedproducts)
 	{
 		CPPUNIT_ASSERT(DVLib::MsiIsProductInstalled(product.product_id));
@@ -68,5 +70,51 @@ void MsiUtilUnitTests::testGetQuotedPathOrGuid()
 	{
 		std::wcout << std::endl << testdata[i].package;
 		CPPUNIT_ASSERT(testdata[i].expected_result == DVLib::GetQuotedPathOrGuid(testdata[i].package));
+	}
+}
+
+void MsiUtilUnitTests::testGetUpgradeCodes()
+{
+	GUID wellknown_upgradecode = DVLib::string2guid(WELLKNOWN_UPGRADECODE);
+	std::vector<DVLib::MsiProductInfo> products = DVLib::MsiGetRelatedProducts(wellknown_upgradecode);
+	CPPUNIT_ASSERT(products.size() > 0);
+	bool found = false;
+	for each(const DVLib::MsiProductInfo& product in products)
+	{
+		std::wcout << std::endl << DVLib::guid2wstring(product.product_id) << L": " << product.GetProductName()
+			<< L" (" << product.GetLocalPackage() << L")";
+		std::vector<GUID> upgrade_codes = product.GetUpgradeCodes();
+		for each(const GUID& upgrade_code in upgrade_codes)
+		{
+			if (upgrade_code == wellknown_upgradecode)
+				found = true;
+
+			std::wcout << std::endl << L"  " << DVLib::guid2wstring(upgrade_code);
+		}
+	}
+	CPPUNIT_ASSERT(found);
+}
+
+void MsiUtilUnitTests::testGetRelatedInstalledProducts()
+{
+	std::vector<DVLib::MsiProductInfo> installedproducts = DVLib::MsiGetInstalledProducts();
+	CPPUNIT_ASSERT(installedproducts.size() > 0);
+	for each(const DVLib::MsiProductInfo& product in installedproducts)
+	{
+		std::wcout << std::endl << DVLib::guid2wstring(product.product_id) << L": " << product.GetProductName()
+			<< L" (" << product.GetLocalPackage() << L")";
+		try
+		{
+			std::vector<DVLib::MsiProductInfo> related_products = product.GetRelatedProducts();
+			for each(const DVLib::MsiProductInfo& related_product in related_products)
+			{
+				std::wcout << std::endl << L"  * " << DVLib::guid2wstring(product.product_id) << 
+					L": " << related_product.GetProductName();
+			}
+		}
+		catch(std::exception& ex)
+		{
+			std::cout << std::endl << " ERROR:" << ex.what();
+		}
 	}
 }
