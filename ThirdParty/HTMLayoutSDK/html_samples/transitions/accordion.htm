@@ -1,0 +1,67 @@
+<html>
+<head>
+  <style>
+  
+    ul.accordion
+    {
+      width:25%;
+      height:*;
+      overflow:hidden;
+      border:1px solid;
+      padding:0;
+      /* setup initial state, li[default] or first-child is initially open */
+      assigned!: self.$1(:root > li[default], :root > li:first-child):checked = true,
+                 self.ready = true;
+                 
+    }
+    ul.accordion > li
+    {
+      display:block;
+      behavior:switch; /* behaves as a radio group, only one item is :checked */
+      height:auto; 
+    }
+    ul.accordion > li:checked
+    {
+      height:1*; /* it equals to 200%% to make sum of collapsing+expanding always greater than 100%% */
+    }
+    ul.accordion[ready] > li:checked /* do transitions only when ready */
+    {
+      transition: height(linear,.4s);
+    }    
+    
+    ul.accordion > li > div.content 
+    {
+      overflow:hidden;
+      height:*;
+      background-color: moccasin;
+    }
+    
+    ul.accordion > li > caption
+    {
+      background-color: white white saddlebrown saddlebrown;
+      padding:4px;
+    }
+  
+  </style>  
+</head>
+<body>
+
+  <h1>Accordion demo using transitions</h1>
+  
+  <ul .accordion>
+    <li #test>
+      <caption>Item 1</caption>
+      <div .content>1</div>
+    </li>
+    <li>
+      <caption>Item 2</caption>
+      <div .content>2</div>
+    </li>
+    <li>
+      <caption>Item 3</caption>
+      <div .content>3</div>
+    </li>
+  </ul>
+
+</body>
+</html>

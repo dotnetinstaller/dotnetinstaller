@@ -1,0 +1,34 @@
+HKCR
+{
+	AxHTMLayout.Engine.1 = s 'Engine Class'
+	{
+		CLSID = s '{58BD87DF-8687-4CEC-9710-A4CEEE7D0F7D}'
+	}
+	AxHTMLayout.Engine = s 'Engine Class'
+	{
+		CLSID = s '{58BD87DF-8687-4CEC-9710-A4CEEE7D0F7D}'
+		CurVer = s 'AxHTMLayout.Engine.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {58BD87DF-8687-4CEC-9710-A4CEEE7D0F7D} = s 'Engine Class'
+		{
+			ProgID = s 'AxHTMLayout.Engine.1'
+			VersionIndependentProgID = s 'AxHTMLayout.Engine'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			ForceRemove 'Control'
+			ForceRemove 'Insertable'
+			ForceRemove 'ToolboxBitmap32' = s '%MODULE%, 101'
+			'MiscStatus' = s '0'
+			{
+			    '1' = s '131473'
+			}
+			'TypeLib' = s '{22A83438-4B36-4CEC-9AF7-C0001674E2A8}'
+			'Version' = s '1.0'
+		}
+	}
+}

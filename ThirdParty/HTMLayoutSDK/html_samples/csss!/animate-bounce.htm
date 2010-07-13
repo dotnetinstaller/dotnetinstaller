@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <style>
+
+      div.panel
+      {
+        border:1px solid;
+        margin:20px;
+      }
+      div.panel > caption
+      {
+        active-on!: panel = self.parent(),
+                    panel.state = panel.state == "expanded" ? "collapsing" # "expanding";
+      }
+
+      div.panel > div.details
+      {
+        background:yellow;
+      }
+
+      div.panel[state="collapsed"] > div.details
+      {
+        overflow:hidden;
+        height:0;
+      }
+
+      div.panel[state="collapsing"] > div.details
+      {
+        overflow:hidden;
+        border-top:1px solid;
+        assigned! 			: self.start-animation( 0.4s );
+        animation-step!	: self::height  = morph("bounce-in", self.min-intrinsic-height(), 0px);
+        animation-end!	: self::height  = null, self.parent().state = "collapsed";
+      }
+
+      div.panel[state="expanding"] > div.details
+      {
+        overflow:hidden;
+        height:0;
+        border-top:1px solid;
+        assigned! : self.start-animation(0.4s);
+        animation-end!:   self::height = null, self.parent().state = "expanded";
+        animation-step!:  self::height  = morph("bounce-in", 0px, self.min-intrinsic-height());
+      }
+
+      div.panel[state="expanded"] > div.details
+      {
+        border-top:1px solid;
+      }
+
+    </style>
+  </head>
+<body>
+  <p>This sample demonstrates following ideas:</p>
+	<ul>
+	  <li>Expanding to intrinsic height of the element using <code>self.min-intrinsic-height()</code> value.</li>
+		<li>Use of the <code>morph(ease-function-name, start-value, end-value)</code> - non-linear ease functions</li>
+	</ul>
+  <div .panel state="collapsed">
+    <caption>Lorem ipsum</caption>
+    <div .details>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+        esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+        in culpa qui officia deserunt mollit anim id est laborum.
+    </div>
+  </div>
+  <div .panel state="expanded">
+    <caption>Nam porta</caption>
+    <div .details>Nam porta, neque ac accumsan condimentum, erat velit interdum arcu, id
+        laoreet erat neque in urna. Aliquam erat volutpat. Integer eget quam velit. Aenean rutrum sodales leo a faucibus.
+        Phasellus sodales mi in velit egestas sit amet feugiat risus ornare. Nam sed velit quis dui blandit euismod.
+        Fusce interdum placerat tristique. Donec adipiscing eros a enim malesuada vitae fermentum diam bibendum.
+        Quisque nec elit quis nulla pellentesque rutrum. Ut vel justo ut urna elementum tincidunt in eget est.
+    </div>
+  </div>
+  <text>Something else</text>
+</body>
+</html>

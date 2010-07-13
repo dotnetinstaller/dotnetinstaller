@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title></title>
+		<style> 
+    body 
+    {
+      
+    }
+    
+    /* top level menu band */
+    menu 
+    {
+      flow:horizontal;  /* top level menu is horizontal bar */
+      width:max-intrinsic;
+      white-space:nowrap;
+      padding-right:100%%; /* all items sticked to the left */
+      margin:0;
+      background-color: silver;
+    }
+    
+    menu li
+    {
+      display: block; /* all menu items inside are blocks*/
+      padding: 2px 6px;
+      margin:0;
+      position:relative; /* to make our popup relative to this one */
+    }
+   
+    menu li:hover
+    {
+      background-color:navy;
+      color:white;
+    }
+    
+    menu menu 
+    {
+      flow: vertical;       /* popup menus are vertically replaced */
+      min-width:100%;       /* at least it is caption wide */
+      //height:min-intrinsic; /* at least it is caption wide */
+      position:absolute;  /* out of normal flow */
+      display:none;       /* non-visible normally */
+      left:-6px;          /* to compensate menu li (parent) paddings */
+      background-color: transparent;
+      background-image: url(images/menu-back.png);
+      background-repeat: expand;
+      background-position:10px 10px 10px 10px; /*top right bottom left offsets*/
+      padding:5px 10px 10px 5px;
+      color:black;
+    }
+    
+    menu > li:hover > menu
+    {
+      display: block; /* now it is visible */
+    }
+    
+    menu menu hr
+    {
+      margin:0;
+      padding:0;
+      border:none;
+      border-bottom:1px solid silver;
+      height:0;
+    }
+    
+    #slider-one-value
+    {
+      display:inline-block;
+      overflow:hidden; // to stop layout changes propagation
+      width:2em;
+      height:1.2em;
+    }
+    
+		</style>
+	</head>
+	<body>
+    <h1>Pure CSS menus</h1>
+		<menu>
+      <li>
+        File
+        <menu>
+            <li>New</li>
+            <li>Open</li>
+            <li>Save</li>
+            <li>Save As</li>
+            <hr/>
+            <li>Exit</li>
+        </menu>
+      </li>
+      <li>
+        Edit
+        <menu>
+            <li>Undo</li>
+            <li>Redo</li>
+            <hr/>
+            <li>Cut</li>
+            <li>Copy</li>
+            <li>Paste</li>
+            <hr/>
+            <li>Select All</li>
+        </menu>
+      </li>
+      <li>
+        Dialog
+        <menu>
+        <table>
+          <!--<tr><th colspan=2>Here are some inputs:</th><tr>-->
+          <caption>Here are some inputs:</caption>
+          <tr><td>First:</td> <td><input type="text" /></td></tr>
+          <tr><td>Second:</td><td><input type="number" size=6 step=1 minvalue=0 maxvalue=100 /></td></tr>
+          <tr><td>Third:</td> <td><input type="checkbox" /></td></tr>
+        </table>
+        </menu>
+      </li>
+      <li>
+        Radio
+        <menu>
+            <li><input type="checkbox" />Check 1</li>
+            <li><input type="checkbox" />Check 2</li>
+            <hr/>
+            <li><input type="radio" name="r-one" />Radio 1</li>
+            <li><input type="radio" name="r-one" />Radio 2</li>
+            <li><input type="radio" name="r-one" />Radio 3</li>
+            <hr/>
+            <li><input type="hslider" name="slider-one" buddy="slider-one-value"/> value=<b id="slider-one-value"> </b>.</li>
+        </menu>
+      </li>
+      
+      
+    </menu>
+	</body>
+</html>

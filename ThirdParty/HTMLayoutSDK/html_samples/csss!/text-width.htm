@@ -1,0 +1,13 @@
+<html>
+<head>
+  <style>
+    input[type="text"]
+    {
+      value-changed!: $1(span#out):value = self.text-width(self:value);
+    }
+  </style>  
+<head>
+<body>
+  Width of the text: <input type="text" /> is <span #out></span> pixels.
+</body>
+</html>

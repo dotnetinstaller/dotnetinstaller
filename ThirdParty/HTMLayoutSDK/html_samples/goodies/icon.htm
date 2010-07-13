@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <style>
+      img#the-img { border:2px dotted silver; }
+      input#img-size 
+      { 
+        vertical-align: middle;
+        value-changed!: img = $1(img#the-img), img::width = self:value, img::height = self:value;
+      }
+    </style>
+  </head>
+<body>
+  <img src="../../wtl/browse/res/browse.ico" /> 
+  <img src="../../wtl/browse/res/browse.ico" width=32 height=32 />
+  <img src="../../wtl/browse/res/browse.ico" width=48 height=48 /> 
+  <hr/>
+  min intrinsic size: <img src="../../wtl/browse/res/browse.ico" style="width:min-intrinsic; height:min-intrinsic;" /> 
+  and max intrinsic size: <img src="../../wtl/browse/res/browse.ico" style="width:max-intrinsic; height:max-intrinsic;" /> 
+  <hr/>
+  Select size (1px)<input type="hslider" #img-size value=16 max=256 min=1 />(255px) of<br/> 
+  the image: <img #the-img src="../../wtl/browse/res/browse.ico" />.
+  
+  
+</body>
+</html>

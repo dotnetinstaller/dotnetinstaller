@@ -1,0 +1,36 @@
+<html #test>
+<head>
+  <style>
+
+    button.with-text 
+    {
+      border:1px solid red; 
+      width: calc( max( text-width( self.child(1):value ),
+                        text-width( self.child(2):value ) ) );
+    }
+    button.with-text:checked > text:nth-child(1) { display:none; } 
+    button.with-text:not(:checked) > text:nth-child(2) { display:none; } 
+        
+        
+  </style>  
+</head>
+<body #test>
+  <H1>CSS <code>calc()</code> function test. DOM operations.</H1>
+  
+  This button has width of its longest option:
+  <button .with-text type="checkbox">
+    <text>I am off</text>
+    <text>And now I am on</text>
+  </button>,
+  click on it to switch its state. 
+  <p>In classic CSS, even with calc(), such functionality is not achievable.</p>
+  <pre>
+button.with-text 
+{
+  border:1px solid red; 
+  width: calc( max( text-width( self.child(1):value ),
+                    text-width( self.child(2):value ) ) );
+}</pre>
+    
+</body>
+</html>

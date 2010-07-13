@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <style>
+      div.test
+      {
+        border:    2dip solid red;
+        background:yellow url(images/10x10.png) repeat;
+        width:     100dip;
+        height:    100dip;
+        margin:    20dip;
+      }
+    </style>
+  </head>
+<body>
+  <h1>Device Indepenedent Pixels</h1>
+  Perfect oxymoron above, isn't it?
+  <div .test />
+  <pre>1dip == 1/96 inch; 1dip = 72/96pt;</pre>
+  <dl>
+    <dt>on 96dpi screen</dt>
+    <dd>this will be 100x100px with 2px border</dt>
+    <dt>on 120dpi screen</dt>
+    <dd>it will be 125x125px with 3px border</dd>
+  </dl>
+</body>
+</html>

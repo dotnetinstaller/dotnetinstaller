@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <style>
+    ul.sample > li
+    {
+      width:max-intrinsic;
+      padding:4px;
+      margin:4px;
+      border: 1px solid;
+      background-color:lightyellow;
+      behavior:dropdown;
+      display:block;
+    }    
+    ul.sample > li:hover
+    {
+      background-color:yellow;
+    }
+    ul.sample > li > popup
+    {
+      width:100px; 
+      height:100px;
+      background:orange;
+      border:1px solid;
+    }
+    </style>
+  </head>
+<body>
+  <p>Values of attribute <code>transition</code> related to popup appearance:
+  <ul .sample>
+    <li>none<popup style="transition:none;" /></li>
+    <li>window-blend<popup style="transition:window-blend;" /></li>
+    <li>window-slide-ttb<popup style="transition:window-slide-ttb;" /></li>
+    <li>window-slide-btt<popup style="transition:window-slide-btt;" /></li>
+    <li>window-slide-ltr<popup style="transition:window-slide-ltr;" /></li>
+    <li>window-slide-rtl<popup style="transition:window-slide-rtl;" /></li>
+  </ul>
+</body>
+</html>

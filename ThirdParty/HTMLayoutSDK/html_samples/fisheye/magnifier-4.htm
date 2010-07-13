@@ -1,0 +1,101 @@
+<html>
+<head>
+  <style>
+    body
+    {
+      margin:0;
+    }
+   
+    div.top
+    {
+      behavior: magnifier;
+    
+      position:relative;
+      overflow-y: visible;       
+      padding-top:4px;
+      padding-left:*;
+      padding-right:*;
+      
+      width:min-intrinsic;
+      
+      flow: horizontal;
+      height: 60px; 
+      background-image:url(strip.png);
+      background-position:60px 8px 0px 8px; /*top right bottom left offsets - we will stretch image in full*/
+      background-repeat:expand; /* h-smile specific */
+    }
+    
+    div.body
+    {
+      width: 50%;
+      margin: 0 *; 
+    }
+
+    widget[type=button] 
+    { 
+      position:relative;
+      padding:0;
+      border:0;
+      background-repeat: stretch;
+      width:64px; 
+      height:64px; 
+    }
+    
+    widget#icon1
+    {
+      background-image: url(icon1.png);
+    }
+    widget#icon2
+    {
+      background-image: url(icon2.png);
+    }
+    
+    widget#icon3
+    {
+      background-image: url(icon3.png);
+    }
+    widget#icon3[magnified]
+    {
+      background-image: url(icon3m.png);
+    }
+    widget#icon4
+    {
+      background-image: url(icon4.png);
+      //max-width:96px;
+      //max-height:96px;
+    }
+    widget#icon4[magnified]
+    {
+      background-image: url(icon4m.png);
+    }
+   
+   
+  </style>
+</head>
+<body>
+  <div .top magnify='widget[type="button"],table' magnification=4.0 magnification-step=0.3 radius-x=300 radius-y=100 >
+    <widget type="button" #icon1></widget>
+    <widget type="button" #icon2></widget>
+    <widget type="button" #icon3></widget>
+    <widget type="button" #icon4></widget>
+  </div>
+  <div .body>
+  <h1 align=center>Fisheye demo, magnification=4</h1>
+    <p>This is an example of <code>behavior:magnifier</code>. This behavior can be assigned to any container element.</p>
+    <p>Attribute <code>magnify</code> ot the container element defines CSS selector of elements that will be magnfied when mouse will move around them.</p>
+    <p>Other attributes that <code>behavior:magnifier</code> knows about:</p>
+    <ul>
+      <li><code>magnify</code> - CSS selector of child elements to magnify;</li>
+      <li><code>radius</code> - "fisheye" radii - distance in which mouse movements will take effect, in pixels;</li>
+      <li><code>radius-x</code> and <code>radius-y</code> - the same as the above but allow to define elliptical sensitive area;</li>
+      <li><code>magnification</code> - maximum magnification, by default is 2.0.</li>
+      <li><code>magnification-step</code> - maximum magnification step, by default is 0.15.</li>
+    </ul>
+    <p>Magnified elements will get attribute <code>magnified="N.NN"</code> set. Where <code>N.NN</code> is a value of current magnification. 
+       This value is multiple of 0.25 so for magnification=2.0 this attribute will take values: 1.25, 1.50, 1.75, 2.00.</p>
+    <p>Use <code>magnified</code> attribute to tune up font sizes or images in different scale factors.</p>
+  </div>
+
+</body>
+</html>
+

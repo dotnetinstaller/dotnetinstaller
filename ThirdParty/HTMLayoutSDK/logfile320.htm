@@ -1,0 +1,1878 @@
+<HTML>
+  <HEAD>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <META name="GENERATOR" content="BLOCKNOTE.NET">
+    <META name="source">
+    <META name="source">
+    <META name="source" content="mhtml:mid://00000207/">
+    <META name="source">
+    <META name="source">
+    <META name="source">
+    <META name="source">
+    <BASEFONT face="Verdana" size="2">
+    <TITLE></TITLE><STYLE>BODY { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+P { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+DIV { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+TD { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+</STYLE>
+  </HEAD>
+<BODY>
+<TABLE border="1" cellspacing="1" width="100%">
+  <TR>
+    <TD nowrap valign="top" align="center">Build#</TD>
+    <TD nowrap valign="top" align="center">Date</TD>
+    <TD align="center">Updates</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.18</TD>
+    <TD nowrap valign="top" align="center">04-05-2008</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of possible AV on dynamic updates of float:left|right elements.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of bullet positioning.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of scrollbar handling in &lt;textare&gt;, &lt;richtext&gt; and &lt;plaintext&gt; input elements.</LI>
+<LI><FONT color=#ff00ff>Update</FONT>, support of multiple rendering behaviors attached to the same element.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of line-height attribute interpretation.</LI>
+<LI><FONT color=#339933>New</FONT> CSS attributes <U>list-marker-color</U> : color, <U>list-marker-size</U> : length and <U>list-marker-style</U> : border-style-enumeartion. These attributes are used to style bullets (and so tree lines). <FONT color=#ff00ff>ATTN</FONT>: outline-*** attributes used for defining tree view styles are not in effect now.</LI>
+<LI><FONT color=#339933>New</FONT> function for <U>fore/background-image-transformation</U> : <U>opacity</U>(opacity-value) where opacity-value is a number between 0.0 and 1.0 - opacity of the image. This function is in effect only for 32bpp images.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.17</TD>
+    <TD nowrap valign="top" align="center">23-04-2008</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of custom scrollbar rendering while smooth-scrolling.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of handling of input elements inside other inputs (e.g. &lt;select&gt;) (MOUSE_UP/set_capture() issue).</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of outline rendering inside abs positioned elements.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of popup/anchor style inheritance.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of Ctrl-Enter handling in &lt;texarea&gt;/&lt;richtext&gt;.</LI>
+<LI><FONT color=#339933>New</FONT> sample /forms/custom-ctl-styles.htm - custom edit background/border + glow.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of Layered Window rendering when background bitmap is semitransparent. See updated skin sample.</LI>
+<LI><FONT color=#339933>New</FONT> attribute in behavior:popup-menu: align-popup = left | right | top | bottom; - allows to define poition of popup window.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of MOUSE_MOVE handling (capturing) in scrollbars.</LI>
+<LI><FONT color=#339933>New</FONT>, &quot;inverse&quot; slider support: if min &gt; max then slider operates in opposite direction.</LI>
+<LI><FONT color=#ff00ff>ATTN, CRITICAL</FONT>: <FONT color=#ff0033>fix</FONT> of possible AV introduced in 3.2.2.16 version. Thanks to rsdn::creatman.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of text-overflow: ellipsis handling. <FONT color=#ff00ff>ATTN</FONT>: code behind ellipsis was redesigned significantly, please verify if you use them.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of float:left | right layout/rendering. Thanks to rsdn::Lazarus.</LI>
+<LI>Some RTL <FONT color=#ff0033>fixes</FONT>.</LI></UL>
+<HR>
+<DIV><EM>Mobile version</EM> was also updated in this release.</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.16</TD>
+    <TD nowrap valign="top" align="center">15-04-2008</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of GIF animations on tabs and other elements that are getting shown/hidden in runtime.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>(?) of hang-up while loading through http/https.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of date format determination on some locales.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <U>:empty</U> state flag for date/calendar inputs.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of scrollbar recalculation for root (&lt;html&gt;) node.</LI>
+<LI>More scrolling <FONT color=#ff0033>fix</FONT>es.</LI>
+<LI><FONT color=#339933>New</FONT>/<FONT color=#ff00ff>update</FONT>. Implementation of <U>background/border/outline for &lt;tr&gt;</U> elements in tables. See grid/scrollable-table.htm<BR>Background/borders of &lt;tr&gt; are rendered now as in any other solid block e.g. with gradient spanning whole row. Exception are &nbsp;rows that contain &quot;holes&quot; - for example cells that spanned over such rows.</LI>
+<LI><FONT color=#339933>New</FONT>. Support of new value of outline-style:<STRONG>glow</STRONG> and two more CSS attributes:</LI>
+<UL>
+<LI><U>outline-shift-x</U>: length;</LI>
+<LI><U>outline-shift-y</U>: length;</LI>
+<LI>or <U>outline-shift</U>: length [ length];</LI></UL>
+
+<P>outline-style:glow and outline-shift allow to define glows and shadows. Here is an example of glow rendering:<BR><IMG src="http://www.terrainformatica.com/w3/outline-glow-sample.png" alt="Glow outline samples"><BR>Glow outline is implemented as 2D filter with shape close to this:<BR><IMG src="http://www.terrainformatica.com/w3/outline-glow-filter.png" alt="Filter chart"><BR>and filter radii equal to sum of outline-offset and outline-width values.</P>
+<P>See samples: /html_samples/css-plus/outline-glow.htm and /html_samples/css-plus/outline-styles.htm</P></UL>
+<HR>
+<DIV><EM>Mobile version</EM> was also updated in this release.</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.15</TD>
+    <TD nowrap valign="top" align="center">06-04-2008</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of horizontal scrollbar for RTL elements.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>es of scrolling.</LI>
+<LI>Final <FONT color=#ff0033>fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=457&page&replies=8">Crash - repeatable in browse.exe</A>.</LI>
+<LI>Various other <FONT color=#ff0033>fix</FONT>es.</LI></UL>
+<HR>
+<DIV><EM>Mobile version</EM> was also updated in this release.</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.14</TD>
+    <TD nowrap valign="top" align="center">29-03-2008</TD>
+    <TD>
+<UL>
+<LI>RTL <FONT color=#ff0033>fix</FONT>es:</LI>
+<UL>
+<LI>Fix of <EM>tooltip</EM> generation for <EM>text-overflow:ellipsis</EM> RTLed items. See: html_samples/drag-n-drop/tree-view-rtl.htm</LI>
+<LI>Popups properly inherit directionality from anchor elements.</LI>
+<LI>More fixes with dir=rtl text rendering.</LI></UL>
+
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=457&page&replies=8">Crash - repeatable in browse.exe</A>. That is also related to loading new document when previous one did not finish loading.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>HTMLayoutSetScrollPos</EM> for &lt;richedit&gt;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>behavior_font_size.cpp</EM></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of parsing of attribute &quot;behavior&quot; in style parser</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of warnings in json_***.h</LI>
+<LI><FONT color=#ff0033>Fix</FONT>/<FONT color=#ff00ff>Update</FONT>. Support of the <EM>inherit</EM> value in CSS attributes.</LI>
+<LI><FONT color=#ff00ff>Update</FONT>. Support of the <EM>outline</EM> for inline elements (spans).</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>outline</EM> rendering for cases when outline is outside of border box of element.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of drag-n-drop of relatively positioned elements. See: html_samples/drag-n-drop/tabs-reordering.htm</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>expando.finalize</EM> call. expando.finalize is getting called as a very last step of DOM element destruction.</LI>
+<LI><FONT color=#339933>New</FONT>, support of the <EM>tooltip</EM> attribute. It is the same as <EM>title</EM> but supports inline html.</LI>
+<LI><FONT color=#339933>New</FONT> attribute <EM>bar = clip | resize</EM> in <EM>behavior:progress</EM>, see:html_samples/forms/progress.htm</LI>
+<LI><FONT color=#339933>New</FONT>, support of flex units (%%, *) for left/right/top/bottom attributes for position:absolute | fixed elements. See: html_samples/abs/fix_center.htm</LI>
+<LI><FONT color=#339933>New</FONT>, &lt;frameset&gt; may contain &lt;hr&gt; elements inside. That enables styling of splitters. See: html_samples/frames/frame-splitter-styling.htm</LI>
+<LI>Resizing and measurement should work a bit faster.</LI></UL>
+<HR>
+<DIV><EM>Mobile version</EM> was also updated in this release.</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.13</TD>
+    <TD nowrap valign="top" align="center">22-03-2008</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> (attempt) of <A href="http://terrainformatica.com/forums/topic.php?id=457&page&replies=8">Crash - repeatable in browse.exe</A>. Problem is related to reloading document that has external (http:/https:) resources.</LI>
+<LI>One more <FONT color=#ff0033>fix</FONT> of WM_SIZE handling.</LI>
+<LI><FONT color=#ff00ff>Update</FONT>, <EM>behaviors_tabs.cpp</EM> - should work faster while switching tabs.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of hiding HWND based controls when they placed on tabs.</LI>
+<LI><FONT color=#ff00ff>Update</FONT> of <EM>DATA_ARRIVED_PARAMS</EM> structure, it got <EM>uri</EM> and <EM>status</EM> fields.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in CSS parser. <U>behavior: ~ something;</U> declaration properly assigns value of the behavior if initial behavior list was empty.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of rendering of &quot;one\r\n &nbsp;two&quot; text - visually it used to contain more than one whitespace.</LI>
+<LI>Minor RTL rendering <FONT color=#ff0033>fix</FONT>es.</LI>
+<LI><FONT color=#339933>New</FONT>, support of:</LI>
+<UL>
+<LI><A href="http://www.w3.org/TR/css3-color/#hsl-color"><EM>hsl()</EM> function (CSS3)</A> - it allows to define colors using HSL color space.</LI>
+<LI><EM>tint({base-color}, {luminance} [,{saturation}])</EM> function. This function allows to define color values linked with some other {base-color}. See example in: /html_samples/css-plus/hsl-colors.htm and <A href="http://www.terrainformatica.com/htmlayout/cssmap.whtm">CSS Map</A> (at the end).</LI></UL>
+</UL>
+<HR>
+<DIV><EM>Mobile version</EM> was also updated in this release.</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.12</TD>
+    <TD nowrap valign="top" align="center">18-03-2008</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of resizing bug: black stripe may appear in place of scrollbar in some circumstances.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of outline rendering: outline was obscured by elements that are on the same layer in some cases.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of handling STATE_EXPANDED/STATE_COLLAPSED flags.</LI></UL>
+<HR>
+<DIV><EM>Mobile version</EM> was also updated in this release.</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.11</TD>
+    <TD nowrap valign="top" align="center">15-03-2008</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of IME issues reported in &quot;<A href="http://terrainformatica.com/forums/topic.php?id=210&page&replies=14">Can not activate the IME in TEXTAREA</A>&quot;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of &quot;<A href="http://terrainformatica.com/forums/topic.php?id=434&page&replies=2">Different font face are used for controls</A>&quot;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of &quot;<A href="http://terrainformatica.com/forums/topic.php?id=432&page&replies=2">'line-height' bug</A>&quot;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=429&page&replies=7">'expand' mode background stretching bug</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of margin collapsing between blocks having different values of the <EM>flow</EM> attribute. See: <A href="http://www.rsdn.ru/forum/message/2868564.1.aspx">margin-top</A> (in Russian).</LI>
+<LI>Various <FONT color=#ff0033>fixes</FONT> related to rendering of RTL texts in the engine. Editing of RTL texts in &lt;textarea&gt; is not complete yet though.</LI>
+<UL>
+<LI><FONT color=#339933>New</FONT> CSS pseudo-classes <EM>:rtl</EM> and <EM>:ltr</EM>. These classes reflect current state of directionality of text for the element. E.g. if document has &lt;html dir=&quot;rtl&quot;&gt; then all subelements will have :rtl state set. I suggest to use these flags to style elements that are rtl/ltr aware and have non-symmetric attriubutes. For example:<BR><FONT face="Courier New">blockquote { padding-left:25%; padding-right:10%; }</FONT><BR><FONT face="Courier New">blockquote:rtl { padding-left:10%; padding-right:25%; }<BR></FONT>See: <A href="http://www.terrainformatica.com/htmlayout/selectors.whtm">CSS Selectors support map</A></LI></UL>
+
+<LI><FONT color=#ff0033>Fix</FONT> of scrollbar appearance on the root element.</LI>
+<LI><FONT color=#339933>New</FONT> @<EM>step</EM> attribute in behavior:slider, see: <A href="http://terrainformatica.com/forums/topic.php?id=436&page&replies=3">can a slider have a step?</A></LI>
+<LI><FONT color=#339933>New</FONT> <EM>behavior_sizer.cpp</EM> - simple behavior that enables resizing of elements (including popups) by mouse/gripper. See samples: /html_samples/behaviors/sizer.htm and /html_samples/behaviors/sizer-popup.htm.</LI></UL>
+<HR>
+<DIV><EM>Mobile version</EM> was also updated in this release.</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.10</TD>
+    <TD nowrap valign="top" align="center">08-03-2008</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New</FONT> &lt;richtext&gt; commands: <U>load</U>, <U>save</U>, <U>setForeSpan</U>, <U>setBackSpan</U>, <U>setBlock</U>, <U>indentPlus</U>, <U>indentMinus</U>, <U>selectAll</U>, see <A href="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:richtext">more</A>;</LI>
+<LI><FONT color=#339933>New</FONT> back/foreground-repeat: stretch <U>keep-ratio</U>; See /html_samples/back/keep-ratio.htm sample;</LI>
+<LI><FONT color=#339933>New</FONT> &lt;frame <U>content-style=&quot;url.css&quot;</U>&gt;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of rtl/text-align:justify rendering;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of the &quot;height:100%&quot; problem when consequent window resizes cause incremental doc size increasing.</LI>
+<LI><FONT color=#339933>New</FONT> <U>AxHTMLayout</U> demo project - ActiveX wrapper of htmlayout.</LI>
+<LI><FONT color=#339933>New</FONT> attribute &lt;richtext <U>allow-clipboard-images</U>&gt;, see <A href="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:richtext">more</A>;</LI>
+<LI><FONT color=#339933>New</FONT> drop:<U>replace</U> value. Idea is to support editing of maps like <A href="http://www.terrainformatica.com/sciter/screenshots/the-map.png">this</A>, where elements from pallete can be dragged into destination cells.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>, IME input support in &lt;richtext&gt;, &lt;plaintext&gt; and &lt;textarea&gt;.</LI>
+<LI><FONT color=#ff00ff>Update</FONT> in <U>browse.exe</U>: support of <U>WM_DROPFILES</U> - files can be dragged into the view window.</LI>
+<LI><FONT color=#ff00ff>Update</FONT> in <U>skin</U> sample - it shows how to create not strictly rectangular windows.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.9</TD>
+    <TD nowrap valign="top" align="center">01-03-2008</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of :nth-child(-2) selector parsing</LI>
+<LI><FONT color=#ff0033>Fix</FONT>. Master CSS update: <FONT face="Courier New" size="1">select[editable] &gt; caption { context-menu:url(res:behavior-edit-menu.htm); &nbsp;} <BR></FONT>That enables context menu for editable portion.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of FOCUS notifications on behavior attached to the window (view).</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of scrolling of position:relative elements.</LI></UL>
+<HR>
+<DIV><EM>Mobile version</EM> was also updated in this release.</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.8<EM>b</EM></TD>
+    <TD nowrap valign="top" align="center">23-02-2008</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of CSS resolution bug introduced in 3.2.2.8. Desktop and CE version.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.8</TD>
+    <TD nowrap valign="top" align="center">23-02-2008</TD>
+    <TD>
+<UL>
+<LI><A href="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:drag-n-drop">built-in <STRONG>drag-n-drop</STRONG> support</A>, continued.</LI>
+<UL>
+<LI><EM><FONT color=#339933>new</FONT> :drag-source</EM> flag and CSS pseudo class.</LI>
+<LI><FONT color=#339933>new</FONT> <EM>behavior_gripper.cpp</EM> demonstarting how to start D&amp;D operation. Example /html_samples/drag-n-drop/gripper.htm.</LI></UL>
+
+<LI><EM>outline-style:dotted</EM> and <EM>outline-style:dashed</EM> rendering was <FONT color=#ff00ff>changed</FONT>. See: /html_samples/css-plus/outline-styles.htm</LI>
+<LI><FONT color=#339933>New</FONT> value of <EM>list-style-type: tree-line</EM>; - allows to draw tree outlines. See: /html_samples/css-plus/tree-view-lines.htm</LI>
+<LI><FONT color=#339933>New</FONT> values of the <EM>transition</EM> CSS attribute:</LI>
+<UL>
+<LI>window-blend</LI>
+<LI>window-slide-ttb</LI>
+<LI>window-slide-btt</LI>
+<LI>window-slide-ltr</LI>
+<LI>window-slide-rtl</LI></UL>
+
+<DIV>Tohether with the <EM>none</EM> value these values allow to define the way how popup windows appear on the screen. See: /html_samples/animations/popup-animations.htm sample.</DIV></UL>
+
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>text-overflow:ellipsis</EM> rendering on WinCE/Mobile.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>PrintEx.registerHyperlinkArea()</EM> callback generation.</LI></UL>
+<HR>
+<DIV><EM>Mobile version</EM> was also updated in this release.</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.7</TD>
+    <TD nowrap valign="top" align="center">16-02-2008</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New</FONT>, support of <A href="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:drag-n-drop">built-in <STRONG>drag-n-drop</STRONG> support</A>. Examples are in /html_samples/drag-n-drop/ folder.</LI>
+<LI><FONT color=#339933>New</FONT>, HTMLayoutProcessUIEvent API.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>, added BUTTON_CLICK generation in &lt;input type=&quot;slider&quot;&gt; (<EM>behavior:slider</EM>). This event is generated after MOUSE_UP or KEY_UP processing.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in &lt;input type=&quot;radio&quot;&gt; (<EM>behavior:radio</EM>). It used to treat <EM>id</EM> attribute as <EM>name</EM> in some circumstances.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in &lt;input type=&quot;edit&quot;&gt; (<EM>behavior:edit</EM>). Ctrl-Shift combination switches RTL/LTR input only if <EM>direction</EM> CSS attribute (or <EM>dir</EM> HTML attribute) is defined for the element (and so in any of its parents).</LI>
+<LI><FONT color=#ff00ff>Update</FONT>, &lt;input type=&quot;currency&quot;&gt; and &lt;input type=&quot;decimal&quot;&gt; elements can use <EM>format</EM> attribute defined at element itself (as element attribute in HTML) or <EM>-format</EM> custom CSS attribute. Thus:<BR><FONT face="Courier New">input[type=&quot;currency&quot;] <BR>{<BR>-format: &quot;grouping-sep:' '&quot;;<BR>}<BR></FONT>will set whitespace as a grouping separator for all currency input elements.</LI></UL>
+<HR>
+<DIV><EM>Mobile version</EM> was also updated in this release.</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.6</TD>
+    <TD nowrap valign="top" align="center">02-02-2008</TD>
+    <TD>
+<UL>
+<LI>Minor <FONT color=#ff0033>fix</FONT>es in &lt;richtext&gt;.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>es in &lt;input type=&quot;calendar&quot; /&gt;</LI>
+<LI><FONT color=#339933>New</FONT>. Support of %= selector. See <A href="http://www.terrainformatica.com/htmlayout/selectors.whtm">CSS Selectors support map</A>.</LI></UL>
+<HR>
+<DIV><EM>Mobile version</EM> was updated in this release. Graphin API is also available on Mobiles.</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.5</TD>
+    <TD nowrap valign="top" align="center">13-01-2008</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT>es in richtext: <A href="http://terrainformatica.com/forums/topic.php?id=371&page&replies=2">select-all/paste</A> and <A href="http://terrainformatica.com/forums/topic.php?id=373&page&replies=6">indication of &lt;br&gt;</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>es in json-value.h file - in array append function.</LI>
+<LI><FONT color=#339933>New</FONT> Graphin API (based on <A href="http://antigrain.com">AGG</A>): <EM>htmlayout_graphin.h</EM> has plain C definition and C++ classes <EM>htmlayout::image</EM> and <EM>htmlayout::graphics</EM>. There is one more file: <EM>htmlayout_canvas.hpp</EM> that defines class <EM>htmlayout::canvas</EM> - specialization of htmlayout::behavior for drawing. Samples:</LI>
+<UL>
+<LI><EM>behavior_graphin_clock.cpp</EM> - demonstrates basic drawing operations,<BR>html_samples/behaviors/graphin-live-clock.htm.</LI>
+<LI><EM>behavior_chart.cpp</EM> - demonstrates drawing with simple animation. It also demonstrates that <EM>dom::element::get_value()</EM> can be used for getting value of &lt;script type=&quot;application/json&quot;&gt; element,<BR>/html_samples/behaviors/chart.htm.</LI></UL>
+</UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.4</TD>
+    <TD nowrap valign="top" align="center">06-01-2008</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of &quot;100% CPU consumption when engine is attached to WM_EX_LAYERED window&quot;.</LI>
+<LI><FONT color=#339933>Update</FONT> of <EM>json_value.h</EM>: New method json::value::append(v) - allows to dynamically append arrays(lists) of values. <FONT color=#ff00ff>Attention</FONT>: this change in json::value is not binary compatible with previous version - you need to recompile your side if you use arrays of values.</LI>
+<LI><FONT color=#339933>New</FONT> API function: <EM>HTMLayoutParseValue</EM>( text, textLength, mode, JSON_VALUE *pVal ); This is parser of so called relaxed JSON (superset of <A href="http://json.org">original JSON</A>):<BR><FONT face="Courier New">{ one:1 2:two }</FONT><BR>is a valid input. In strict JSON that sample above must be written as:<BR><FONT face="Courier New">{ &quot;one&quot;:1, 2:&quot;two&quot; }<BR></FONT>Relaxation:</LI>
+<UL>
+<LI><FONT face="Courier New">','</FONT> is made optional;</LI>
+<LI>NMTOKEN (that is <FONT face="Courier New">[A-Z][A-Z0-9]* )</FONT> is allowed and parsed to string value;</LI>
+<LI>Strings literals can be written by using ' (apostrophe symbol);</LI>
+<LI>Sequence '(' text ')' is treated as string literal that is parsed into trimmed string:<BR><FONT face="Courier New">{ one: ( .sel[name=&quot;two&quot;] &gt; :current ) }</FONT> <BR>is an equivalent of: <BR><FONT face="Courier New">{ &quot;one&quot;: &quot;.sel[name=\&quot;two\&quot;] &gt; :current&quot; }</FONT></LI></UL>
+
+<LI><EM>behavior_action.cpp</EM> is <FONT color=#339933>updated</FONT> to support copy-state: method. See: samples/behaviors/actions.htm.</LI>
+<LI><EM><FONT color=#339933>New</FONT>, &lt;richtext&gt;</EM> supports <EM>insertion of images from clipboard</EM> now. Code that will allow to serialize them together with HTML is not there yet. Will be in the next build.</LI></UL>
+<HR>
+<DIV><EM>Mobile version</EM> is updated in this release:</DIV>
+<P>Windows CE / Mobile was significantly redesigned and optimized by <A href="http://activekitten.com"><EM>Dmitriy Yakimov, the Great</EM></A>. He even managed to enable animations on this platform. Animated gifs work smoothly but animations like transition:slide make sense to use only for simple contstructions (if they make sense at all on mobile devices). Popups and all behvairos (inputs) are all working.</P>
+<P>Thus <EM>htmlayout/CE</EM> has exactly the same feature set as desktop version.</P>
+<P>Only &lt;richtext&gt; is not compiled in Mobile version simply because we are not sure about richtext editing on Mobile. Probably it makes sense for some Windows CE devices with keyboard, but for Mobile? In any case it is a matter of changing #define in source. Let us know if someone will need it there.</P></TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.3</TD>
+    <TD nowrap valign="top" align="center">28-12-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> in <EM>behavior:date</EM>, keyboard handling after popup was shown and closed.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>behavior:popup-menu</EM> intoduced in previous build.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=342&page&replies=1">&quot;foreground-image-transformation problem&quot;</A>.</LI>
+<LI>IE7/Vista compatibility <FONT color=#ff0033>fix</FONT>: htmlayout used in ActiveX inside IE7 may cause browser to disappear while navigating out of the page.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of encoding problem in <EM>&lt;textarea&gt;, &lt;plaintext&gt; and &lt;richtext&gt;</EM>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=343&page&replies=3">[3.2.2.2] outline and content update problems</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=346&page&replies=2">[3.2.2.2] button text disappears</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=345&page&replies=2">[3.2.2.2] SDK sample broken</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=353&page&replies=2">problem with text-decoration attribute</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.rsdn.ru/forum/message/2779223.1.aspx">[</A><A href="http://www.rsdn.ru/forum/message/2779223.1.aspx">3.2.2.2</A><A href="http://www.rsdn.ru/forum/message/2779223.1.aspx">] the &lt;a href=&quot;&quot;&gt; bug (russian)</A>. Markup like this:<BR><FONT face="Courier New">one&lt;a&gt; &lt;img src=...&gt; &lt;/a&gt;two</FONT> <BR>is getting transformed on parser level to:<BR><FONT face="Courier New">one &lt;a&gt;&lt;img src=...&gt;&lt;/a&gt; two</FONT><BR>to avoid &quot;nasty underlinings&quot; before and after the image. Each UA has something special in handling of such cases so I really do not know what is better.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of rendering of <EM>PNG images</EM> that have background color field set. Seems like all UAs simply ignore this field. So do I.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=352&page&replies=4"><EM>&lt;select editable&gt;</EM> get_value() issue</A>.</LI>
+<LI><FONT color=#339933>New</FONT> <EM>behavior_font_size.cpp</EM>. Ctrl+MouseWheel inc/decreases font size in element under this behavior (a.k.a. textual zoom). Try Ctrl+MouseWheel in sdk/html_samples/cssmap.htm.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.2</TD>
+    <TD nowrap valign="top" align="center">21-12-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>memory leak</EM> that happens on mouse over &lt;font&gt;&lt;a href=...&gt;...&lt;/a&gt;&lt;/font&gt; constructions.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of entities parsing, see <A href="http://terrainformatica.com/forums/topic.php?id=340&page">details</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>parsing of empty elements</EM>, e.g. &lt;table/&gt;.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in <EM>behavior:select-dropdown</EM>, it is closer to standard system combobox (mouse down on items in popup).</LI>
+<LI><FONT color=#339933>New</FONT> element <EM>&lt;plaintext&gt;</EM> that is block (not inline) version of &lt;textarea&gt; input. &lt;textarea&gt; is using now <EM>behavior:plaintext</EM> too. I've removed previous implementation of multiline editors completely. behavior:htmlarea is still there though - it supports &nbsp;read-only selection of text for applied elements.</LI>
+<LI><FONT color=#339933>New</FONT> method dom::element::<EM>xcall()</EM>, see htmlayout_dom.hpp, <A href="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:richtext#methods">behavior:richtext (and so plaintext) actively uses it</A>. Other inputs will support it too.</LI>
+<LI><FONT color=#339933>New</FONT> <EM>UI_STATE_CHANGED behavior event</EM>. It is generated by behavior:richtext and behavior:plaintext. It is being sent when UI state of the editor is changed. See behavior_rtc_current_objects.cpp and /html/richtext/richtext.htm.<BR><EM>behavior_rtc_current_objects.cpp</EM> is so called richtext-companion behavior - it shows stack of current elements under the caret.</LI>
+<LI><FONT color=#ff0033>Fixes</FONT> in <EM>behavior:richtext</EM>. RTL is not yet supported but will.</LI>
+<LI><FONT color=#339933>New</FONT> option in HTMLayoutSetOption - HTMLAYOUT_FONT_SMOOTHING.</LI>
+<LI>Update of <EM>mfclite</EM> sample, it shows of how to handle timer events -so animation works in the sample. I've also added CMemDC based rendering there. Ctrl-O allows to load html files.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.2.1</TD>
+    <TD nowrap valign="top" align="center">15-12-2007</TD>
+    <TD>
+<UL>
+<LI>Better scrolling. <BR>Simple and smooth scrolling were redesigned significantly. It works better in many aspects now. Best results are for elements that have solid background defined, e.g. background-color: #xxx; or background-image(theme:edit-normal). <BR>Whole window scroll is still implemented by using system scrolling so if you have no HWND based controls inside then I suggest to declare body { overflow:auto; } to use internal smooth scrolling mechanism.<BR>Samples: in sdk/html_samples/grid/, sdk/html_samples/generic/custom-control-border.htm and other files with overflow:auto elements.</LI>
+<LI>Last parameter in <EM>HTMLayoutScrollToView</EM> function was redefined from BOOL to UINT. That will not require any changes in existing code but allow to define explicitly what type of scrolling you want: simple or with animation.</LI>
+<LI><A href="http://www.terrainformatica.com/wiki/doku.php?id=h-smile:built-in-behaviors:richtext"><STRONG>&lt;richtext&gt;</STRONG> engine (behavior:richtext)</A> has been added in this build. <BR>Richtext is not 100% complete but will be finalized in upcomming builds. The plan is to replace current behavior:textarea|htmlarea by this one completely. But I will not change API of existing textarea|htmlarea.<BR>See sdk/html_samples/richtext/richtext.htm for an example. I expect more public behaviors - &quot;richtext companions&quot; that will automate tasks like insert table/image, etc.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of position:absolute positioning when elements have no explicit left/right and top/bottom defined.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.15</TD>
+    <TD nowrap valign="top" align="center">09-12-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of AV for elements having titleid=&quot;non-existent-id&quot;.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in popup elements implementation. Anchor is getting MOUSE_LEAVE correctly when popup is closed.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.14</TD>
+    <TD nowrap valign="top" align="center">07-12-2007</TD>
+    <TD>
+<UL>
+<LI>Various highly professional and effective <FONT color=#ff0033>fix</FONT>es and optimizations made by <EM>Dmitriy Yakimov</EM> from <A href="http://activekitten.com">activekitten.com</A> . His patches are targeted primarily on htmlayout for Windows Mobile/CE but desktop version should also feel better.</LI>
+<LI><FONT color=#ff0033>Fix </FONT>(attempt of) <EM>HTMLayoutElementUpdate</EM>. Couple of cases were reported on the forum. This should fix them if I understand them correctly.</LI>
+<LI><FONT color=#339933>New</FONT> <EM>HLN_DOCUMENT_LOADED</EM> notification. It is sent when parsing is finished so DOM is complete. HLN_DOCUMENT_LOADED is raised before HLN_DOCUMENT_COMPLETE.</LI>
+<LI><FONT color=#339933>New</FONT> API functions <EM>HTMLayoutElementSetExpando</EM>/<EM>HTMLayoutElementGetExpando</EM>. These functions allow to associate custom struct/class/data with the DOM element. Rationale: better support of various language bindings.</LI>
+<LI><FONT color=#339933>New</FONT>, support of <A href="http://www.w3.org/TR/REC-CSS2/cascade.html#important-rules"><EM>!important</EM></A> modifier in CSS.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.13</TD>
+    <TD nowrap valign="top" align="center">24-11-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of border-spacing computation for collapsed/hidden rows;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in <EM>behavior:dropdown-select</EM>, intrinsic size computation for empty &lt;select&gt;s;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in editing widgets: &quot;<EM>AltGr</EM> fix&quot; - text input by using Polish (programmer's) and some other European keyboards;</LI>
+<LI><FONT color=#ff0033>Fix</FONT>, <EM>http GET</EM> is allowed to get data from WinInet cache now;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in <EM>htmlite</EM> - AV when no callback set. &nbsp;<EM>mfclite</EM> update - handling keyboard events has been added;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in CSS parser <EM>@set</EM> sections can contain <EM>@media</EM> sub-sections now;</LI>
+<LI><FONT color=#ff0033>Fix,</FONT> <EM>:owns-popup</EM> ( STATE_OWNS_POPUP ) flag is cleared in POPUP_DISMISSED handler. See updated <EM>behavior_popup.cpp</EM> for the idea.</LI>
+<LI><FONT color=#339933>New</FONT> sample <EM>sdk/html_samples/MSVS-start-page/</EM>, that reproduces Microsoft Visual Studio start page: &nbsp;<A href="http://www.terrainformatica.com/htmlayout/images/vs-start-page.jpg">http://www.terrainformatica.com/htmlayout/images/vs-start-page.jpg</A> in HTMLayout.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.12</TD>
+    <TD nowrap valign="top" align="center">17-11-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> in behavior:tabs (behavior_tabs.cpp), problems when some tab panel contains inner tabs element</LI>
+<UL>
+<LI><FONT color=#339933>Update</FONT> in dom::element::find_first() /all() methods(<EM>HTMLayoutSelectElements</EM>). This method knows about :root pseudo-element in selector. :root matches element that find_first is applied to. Use it when you need to select immediate children only.</LI></UL>
+
+<LI><FONT color=#ff0033>Fix</FONT> in <EM>behavior:dropdown-select</EM>, custom combobox mode ( see: forms/custom-dropdown-selects.htm ) element with @role=&quot;dropdown&quot; is propely recognized now.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>overflow:none</EM> value interpretation. (Itamar, this is yours, thanks) <BR>Note that <EM>none</EM> is a non-standard value of @overflow but supported by htmlayout. Its effect can be modelled by the following: <BR><FONT face="Courier New">.no-overflow <BR>{<BR>overflow: visible;<BR>min-width: min-intrinsic;<BR>min-height: min-intrinsic; <BR>}</FONT></LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.11</TD>
+    <TD nowrap valign="top" align="center">13-11-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fixes</FONT> of problems introduced in build #3.2.1.10.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.10</TD>
+    <TD nowrap valign="top" align="center">11-11-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> in CSS parser. <EM>clear:none</EM> and <EM>float:none</EM> parsed properly now. Fixes in <EM>float</EM>:<EM>left|right</EM> elements rendering.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of the bug in <EM>behavior:textarea</EM> - copy to clipboard was not copying last character.</LI>
+<LI>RTL <FONT color=#ff0033>fix</FONT>es: behavior:edit, Ctrl+LeftShift and Ctrl+RightShift combinations switch value of the <EM>dir</EM> attribute to <EM>ltr</EM> and <EM>rtl</EM>. behavior:calendar was also updated.</LI>
+<LI><FONT color=#339933>New</FONT> enumeration value for <EM>overflow</EM>, <EM>overflow-x</EM> and <EM>overflow-y</EM>: <EM>hidden-scroll</EM>. No scrollbars are shown but content of the element can be scrolled. E.g. <EM>HTMLayoutScrollToView</EM> also allows to scroll elements in such a container.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.9</TD>
+    <TD nowrap valign="top" align="center">27-10-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>behavior:hslider|vslider</EM>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of RTL issue: <A href="http://terrainformatica.com/forums/topic.php?id=294&page">decimals and rtl</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of htmlayout::dom::element::update() - it should work more optimal (faster) in some cases.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.rsdn.ru/forum/message/2695025.1.aspx">gradient svg</A> rendering.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.8</TD>
+    <TD nowrap valign="top" align="center">24-10-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>behavior:frameset</EM></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>flow:v-flow</EM> layout manager, <A href="http://www.rsdn.ru/forum/message/2704861.1.aspx">details</A>.</LI>
+<LI><FONT color=#339933>Update</FONT> of PrintEx::onNextPage() callback. <FONT color=#ff00ff>Attention!</FONT> signature of <EM>HTMPRINT_NEXT_PAGE</EM> callback function was changed.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.7</TD>
+    <TD nowrap valign="top" align="center">22-10-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> in <EM>behavior:number</EM>: MOUSE_WHEEL message in it &quot;disable&quot; element with the behavior.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in <EM>behavior:textarea</EM>: deletuion of last word may cause AV.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in <EM>behavior:decimal</EM>: bad rendering after LOST_FOCUS.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in <EM>behavior:select</EM>: it may not send SELECTION_CHANGED event in some cases.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.6</TD>
+    <TD nowrap valign="top" align="center">21-10-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of transition:slide problem, <A href="http://terrainformatica.com/forums/topic.php?id=297&page&replies=2">details</A>.</LI></UL>
+<HR>
+<DIV>Mobile build was updated too.</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.5</TD>
+    <TD nowrap valign="top" align="center">16-10-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of memory leak while parsing inline style attribute. The leak &quot;introduced&quot; in 3.2.0.26 so if you use this version or after - please update.</LI>
+<LI><FONT color=#339933>Update</FONT>, better support of system fonts. CSS attribute <EM>font</EM> supports now following predefined font names:</LI>
+<UL>
+<LI><FONT face="Courier New">system</FONT> - default system UI font used for input elements;</LI>
+<LI><FONT face="Courier New">system-menu</FONT> - system menu font;</LI>
+<LI><FONT face="Courier New">system-caption</FONT> - window caption font;</LI>
+<LI><FONT face="Courier New">system-status</FONT> - statusbar and tooltip system font.</LI></UL>
+
+<DIV>Note: To be in effect these font names can be used only in <EM>font</EM> attribute - in font-family such names are ignored. Rationale of this is simple: declaration <FONT face="Courier New">font:system-menu;</FONT> is a shortcut of four attributes of the font - font-family, font-size, font-weight and font-variant.</DIV></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.4</TD>
+    <TD nowrap valign="top" align="center">13-10-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>value</EM> attribute interpretation in <EM>&lt;input type=&quot;date&quot; /&gt;</EM></LI>
+<LI><FONT color=#339933>New</FONT>, support of theme:toolbar-*** group of images.</LI>
+<LI><FONT color=#339933>New</FONT> API function <EM>HTMPrintSetNextPageCallback.</EM> It allows to print pages of variable height.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.3</TD>
+    <TD nowrap valign="top" align="center">06-10-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of overflow-x scrollbar positioning for &lt;table width=auto&gt;. See <A href="http://www.rsdn.ru/forum/message/2675497.1.aspx">details</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of MOUSE_PARAMS.cursor_type. It is now a read/write field.</LI>
+<LI><FONT color=#339933>New</FONT>, support of <EM>HLN_BEHAVIOR_CHANGED</EM> notification. This notification allows to detect moment of changing behaviors of DOM elements. See <A href="http://terrainformatica.com/forums/topic.php?id=287&page">HOW-TO: HTMLayout and scripting engines...</A> for the rationale.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.2</TD>
+    <TD nowrap valign="top" align="center">29-09-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of behavior:textarea, it now supports &nbsp;TEXT_EDIT_GET_SELECTION, TEXT_EDIT_SET_SELECTION, TEXT_EDIT_REPLACE_SELECTION methods.</LI>
+<LI><FONT color=#339933>New</FONT> method TEXT_EDIT_GET_CARET_POSITION. Allows to get position(rectangle) of the caret. Supported by behavior:edit and behavior:textarea.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.1</TD>
+    <TD nowrap valign="top" align="center">26-09-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of text-overflow:ellipsis, direction: rtl. &nbsp;See <A href="http://terrainformatica.com/forums/topic.php?id=264&page&replies=10">[BUG] text-overflow in 3.2.0.25 or 26</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> in HTML parser, parsing of custom html elements. See: <A href="http://rsdn.ru/forum/message/2666753.1.aspx">BLOCK_BLOCK_ELEMENT</A> (in Russian).</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of rendering of inline elements with vertical-align attribute.</LI>
+<LI><FONT color=#339933>New</FONT> pseudo classes in CSS:<BR><EM>:has-child</EM> <STRONG>- </STRONG>Matches element that has exactly one child.<BR><EM>:has-children</EM><STRONG> - </STRONG>Matches element that has more than one child.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.1.0</TD>
+    <TD nowrap valign="top" align="center">15-09-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New</FONT> layout manager: <A href="http://terrainformatica.com/htmlayout/flow.whtm#grid">flow:grid</A>.<FONT color=#ff0033> </FONT>See examples in html_samples/flows/grid***.htm</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of text-overflow:ellipsis for direction:rtl elements.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of text-align:justify for direction:rtl elements. Itamar, thanks for your test cases.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.0.29</TD>
+    <TD nowrap valign="top" align="center">09-09-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of VK_UP/VK_DOWN handling in &lt;textarea&gt;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of handling of { position:relative; display:inline; } elements.</LI>
+<LI><FONT color=#339933>Update</FONT><EM> behavior:magnifier</EM>, support of <EM>magnification-step</EM> attribute.</LI>
+<LI><FONT color=#339933>Update</FONT> of <EM>behavior</EM> CSS attribute, it supports append mode now:</LI>
+<BLOCKQUOTE>
+<DIV><EM>behavior: <STRONG>~</STRONG> new-behavior;</EM> will update list of behaviors defined before for the element and</DIV>
+<DIV><EM>behavior: new-behavior <STRONG>~</STRONG>;</EM> will insert new-behavior in front of behaviors defined before for the element.</DIV></BLOCKQUOTE>
+</UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.0.28</TD>
+    <TD nowrap valign="top" align="center">07-09-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of AV while parsing &lt;td background=...&gt;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of memory leak in json::string(wchar*) constructor. Details: <A href="http://terrainformatica.com/forums/topic.php?id=270&page&replies=6">memory leak</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=274&page&replies=2">Perfomance issue</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=273&page&replies=2">BUG: Image scaling [3.2.0.27]</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=264&page&replies=10">[BUG] text-overflow in 3.2.0.25 or 26</A></LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD valign="top">3.2.0.27</TD>
+    <TD nowrap valign="top" align="center">03-09-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New</FONT> <EM>behavior:magnifier</EM>. See samples in /html_samples/fisheye/ folder. Magnifier a.k.a. fisheye magnifies elements when mouse moves over them.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.26</TD>
+    <TD nowrap valign="top" align="center">26-08-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New.</FONT> Support of <EM>text-transform</EM> : none | lowercase | uppercase | capitalize; CSS attribute. See <A href="http://www.w3.org/TR/CSS21/text.html#propdef-text-transform">CSS 2.1</A> and htmlayoutsdk/html_samples/css-plus/content-transform.htm sample.</LI>
+<LI><FONT color=#339933>New.</FONT> Support of <EM>content</EM>: &quot;text&quot; CSS attribute. Pay attentrion that <A href="CSS 2.1 the content attribute">CSS 2.1 the <EM>content</EM> attribute</A> is applicable only to ::before and ::after pseudo elements bu in h-smile core it works for the element itself. This allow to define different captions of some element by CSS using for example some attribute as a switch:</LI>
+<BLOCKQUOTE>
+<DIV><FONT face="Courier New">p.status[state=&quot;pending&quot;] { content: &quot;Pending&quot;; foreground-image:...; }</FONT></DIV>
+<DIV><FONT face="Courier New">p.status[state=&quot;done&quot;] { content: &quot;Done&quot;; foreground-image:...; }</FONT></DIV>
+<DIV><FONT face="Courier New">p.status[state=&quot;warning&quot;] { content: &quot;Warning!&quot;; foreground-image:...; }</FONT></DIV></BLOCKQUOTE>
+
+<DIV>Note: <EM>content</EM> is applicable only to elements that allowed to have textual content. E.g. it will work for P, SPAN, etc. but not to DIV.</DIV></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.25</TD>
+    <TD nowrap valign="top" align="center">23-08-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> (final) of AV introduced in 3.2.0.23.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of &lt;select editable&gt;</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.24</TD>
+    <TD nowrap valign="top" align="center">22-08-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New</FONT>, <A href="http://www.terrainformatica.com/wiki/h-smile:built-in-behaviors:edit">&lt;input novalue&gt;</A>/&lt;select novalue&gt; support. See: html_samples.forms/form.htm</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=257&page">CRASH [3.2.0.23]</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=258&page">popups vs. russian letters</A></LI>
+<LI>One more attempt to improve behavior: frame-set.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.23</TD>
+    <TD nowrap valign="top" align="center">20-08-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=254&page&replies=3">Focus problems [3.2.0.22]</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=183&page&replies=3">BUTTON + image bug</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of behavior:frame-set; more predictable behavior when frameset is getting resized.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.22</TD>
+    <TD nowrap valign="top" align="center">18-08-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix. </FONT>Better rendering of text-overflow:ellipsis.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of back/foreground-position-right CSS attribute parsing. So &lt;select multiple=&quot;checks&quot; dir=&quot;rtl&quot;&gt;, &lt;button type=&quot;checkbox&quot; dir=&quot;rtl&quot;&gt; place checkboxes in correct position.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of popup elements position determination.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.21</TD>
+    <TD nowrap valign="top" align="center">14-08-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=230&page&replies=3">Alt-Gr Key</A> issue.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>es in filter implementation of &lt;input type=text <EM>filter=...</EM> &gt;. IME input is getting filtered too now.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of &lt;table align=right&gt; rendering.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.20</TD>
+    <TD nowrap valign="top" align="center">&nbsp;</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of dynamic update of z-index CSS attribute.</LI>
+<LI><FONT color=#ff0033>Fixes</FONT> in behavior:popup-menu.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>, call <EM>HTMLayoutSetStyleAttribute(he, name, NULL)</EM> will clear attribute name previously set by <EM>HTMLayoutSetStyleAttribute</EM>(<EM>he, name, value</EM>) call.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=239&page&replies=3">HWND control and named background-color</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=241&page&replies=2">accesskeys and beep</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=210&page&replies=9">Can not activate the IME in TEXTAREA</A>. Not perfect yet but works. Sorry for the delay.</LI>
+<LI><FONT color=#339933>New</FONT> API function: <EM>HTMLayoutAppendMasterCSS </EM>- allows to append custom styles to MasterCSS.</LI>
+<LI><FONT color=#339933>New</FONT> API function: <EM>HTMLayoutEnumElementStyles</EM> - allows to get list of CSS rules applied to the element. <BR>In <EM>browse.exe</EM> menu <U>Debug/Element probe on</U> + right click on element you are interested in.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.19</TD>
+    <TD nowrap valign="top" align="center">28-07-2007</TD>
+    <TD>
+<UL>
+<LI>Set of of minor fixes.</LI>
+<LI><FONT color=#339933>New</FONT>, support of custom CSS attributes. Any CSS attribute that starts from '-' is interpreted as custom CSS attribute. See <A href="http://www.terrainformatica.com/htmlayout/cssmap.whtm">CSS Attributes support map</A> for more details.</LI>
+<LI><FONT color=#339933>New</FONT>, support of <STRONG>visibility:collapse</STRONG>. See <A href="http://www.terrainformatica.com/htmlayout/cssmap.whtm">CSS Attributes support map</A>. Use <STRONG>visibility:collapse</STRONG> for dynamic show/hide effects. Technically it is almost display:none; but is more convenient for design as it has single &quot;on&quot; value - visibility:visible.</LI></UL>
+<HR>
+<DIV>Mobile build was also updated.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.18</TD>
+    <TD nowrap valign="top" align="center">20-07-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix. </FONT>Generation of LPNMHL_DATA_LOADED for resources pointed by file:// urls.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>es in <EM>rtl support</EM>. Columns in &lt;table dir=&quot;rtl&quot;&gt; are getting reordered.</LI></UL>
+<HR>
+<DIV>Mobile build was also updated.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.17</TD>
+    <TD nowrap valign="top" align="center">17-07-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> in table layout engine, <A href="http://terrainformatica.com/forums/topic.php?id=226&page&replies=4">details</A> (first sample at the bottom). &nbsp;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in printing module, <A href="http://terrainformatica.com/forums/topic.php?id=226&page&replies=4">details</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>es in <EM>rtl support</EM>. In particular flow:horizontal and flow:h-flow are rtl aware - they replace blocks in proper <EM>direction.</EM></LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.16</TD>
+    <TD nowrap valign="top" align="center">13-07-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=221&page&replies=2">position: relative and tabs</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=215&page&replies=8">Access violation in HTMLayoutUpdateElement</A>, need verification.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=217&page&replies=3">rowspan/colspan in dynamically created tables</A>.</LI>
+<LI><FONT color=#339933>New</FONT> API functions <EM>HTMLayoutDeclareElementType</EM>. This function allows you to define your own types of html elements. So you can define your own tags like &lt;dialog&gt;, &lt;panel&gt;, etc. See htmlayout.h file and samples in /html_samples/goodies/custom-tags.htm and /wtl/browse/browse.cpp</LI>
+<LI>Retail version contains htmlayout.pdb file now.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.15</TD>
+    <TD nowrap valign="top" align="center">04-07-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of layout of absolute positioned spans. <A href="http://terrainformatica.com/forums/topic.php?id=203&page">Details</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of AV in dibex interface implementation.</LI>
+<LI><FONT color=#339933>Update</FONT> of SVG engine: support of &lt;<EM>linearGradient</EM>&gt; and &lt;<EM>radialGradient</EM>&gt; elements. See: sdk/html_samples/svg/gradient-svg.htm</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.14</TD>
+    <TD nowrap valign="top" align="center">08-06-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT>es in behavior:dropdown-select and behavior:number, <A href="http://terrainformatica.com/forums/topic.php?id=177">details</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>: transparency support for svg images. See: html_samples/svg/.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.13</TD>
+    <TD nowrap valign="top" align="center">01-06-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of HTMLiteSetDataReady function.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of focus handling in intrinsic popup-menu behavior.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of calculation of heights of absolute positioned elements.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of interpretation of fullwidth digit characters.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in behavior:select, generation of notification when selection was caused by character press.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of hangup that happen when Internet Explorer is used as a child widget of htmlayout.</LI>
+<LI><FONT color=#ff0033>Fix</FONT><FONT color=#ff00ff> (attn: behavior change)</FONT>, FOCUS_PARAMS::target field is indeed a handle of new focus element now (used to be current focus element).</LI></UL>
+<HR>
+<DIV>Mobile build was also updated.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.12</TD>
+    <TD nowrap valign="top" align="center">18-05-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of AV that may happen on call of set_html() without following update().</LI>
+<LI><FONT color=#ff0033>Fix</FONT>. Engine used to generate mouse events for elements with visibility:hidden. Not anymore.</LI>
+<LI><FONT color=#339933>New</FONT> API functions: htmlayout_dom.h: &nbsp;<EM>HTMLayoutEnumerate</EM> and <EM>HTMLayoutGetCharacterRect</EM>. htmlayout_dom.hpp was updated accordingly, see struct <EM>dom::enumerator</EM>. Demo: browse.exe -&gt; Tests -&gt; Test enumeration. See also <A href="http://terrainformatica.com/forums/topic.php?id=142&page&replies=9">Bounding Boxes of Words</A> discussion.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.11</TD>
+    <TD nowrap valign="top" align="center">11-05-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of &lt;select&gt; parsing, <A href="http://terrainformatica.com/forums/topic.php?id=137&page&replies=3">Dropdown Select does not work when optgroups &gt; 2</A> &nbsp;</LI>
+<LI><FONT color=#ff0033>Fix</FONT>. Wrong area passed in DRAW_BACKGROUND behavior event.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in <A href="http://terrainformatica.com/forums/topic.php?id=125&page&replies=4">contrast-brightness-gamma(0.5, 0.5, 1.0) image filter</A>.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.10</TD>
+    <TD nowrap valign="top" align="center">09-05-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT>, &nbsp;<FONT face="monospace">context-menu:none;</FONT> is properly handled now.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>, &amp;#x200b; character (zero-width space) is properly handled now.</LI>
+<LI><FONT color=#ff00ff>Attn!</FONT>: change, png loader uses now screen gamma value 2.2 (used to be 2.0). It appears as in FF gamma is 2.2 and IE uses 1.8 value.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.9</TD>
+    <TD nowrap valign="top" align="center">07-05-2007</TD>
+    <TD>
+<UL>
+<LI>Another <FONT color=#ff0033>fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=106&page&replies=2">Double pasting from default context menu</A>.</LI>
+<LI>More <FONT color=#ff0033>fixes</FONT> in <EM>IAccessible</EM> implementation.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.8</TD>
+    <TD nowrap valign="top" align="center">06-05-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of fore/background-image-transformation: color-schema(...); rendering.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.7</TD>
+    <TD nowrap valign="top" align="center">03-05-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=120&page&replies=3">Hide table column</A> issue.</LI>
+<LI><EM>htmlite</EM> <FONT color=#ff0033>fixes</FONT>, HLN_DATA_LOADED and HLN_DOCUMENT_COMPLETE notifications should work now.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>(?) of <A href="http://terrainformatica.com/forums/topic.php?id=105&page&replies=4">Invalid outer HTML generated</A>.</LI>
+<LI>New htmlite sample added - &nbsp;mfclite.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.6</TD>
+    <TD nowrap valign="top" align="center">01-05-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=107&page&replies=5">URI with non-latin characters doesn't work</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=106&page&replies=1">Double pasting from default context menu</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of html_samples/abs/menu.htm sample.</LI>
+<LI><FONT color=#ff00ff>Attn!</FONT>: &lt;style&gt; element is getting parsed into DOM element now. Previously parser did not create DOM nodes for &lt;style&gt; elements.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.5</TD>
+    <TD nowrap valign="top" align="center">25-04-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of background-attachment: fixed rendering, <A href="http://terrainformatica.com/forums/topic.php?id=102&page">HTMLayout &amp; sizing</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=103&page">Problem with scrolling in textarea</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=94&page">text-align: justify not working well with RTL</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of tree view ( &lt;select&gt;/&lt;options&gt; ) behavior inside &lt;frame&gt;'s.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of unexpected scroll on set focus for inline elements. Lazarus, this is yours.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.4</TD>
+    <TD nowrap valign="top" align="center">19-04-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of memory corruption in <EM>HTMLiteRenderOnBitmap</EM>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of access violation while removing absolute positioned elements. See, <A href="http://www.rsdn.ru/Forum/Message.aspx?mid=2452397&only=1">detalis</A>.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.3</TD>
+    <TD nowrap valign="top" align="center">16-04-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of PrintEx problem introduced in 3.2.0.2, see: <A href="http://terrainformatica.com/forums/topic.php?id=85&page">Problem with color RGB</A>, thanks to tomap.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of mouse hover detection introduced in 3.2.0.2. David, thanks.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.2</TD>
+    <TD nowrap valign="top" align="center">14-04-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of update of absolute positioned elements, <A href="http://terrainformatica.com/forums/topic.php?id=83&page&replies=9">the efficiency of updating a element.</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=56&page&replies=5">hover background-position ignored</A> for images with transparency.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of rgb() function parsing, see: <A href="http://terrainformatica.com/forums/topic.php?id=85&page&replies=4">problem with color RGB</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of position:relative elements rendering, see: <A href="http://www.rsdn.ru/Forum/Message.aspx?mid=2447348&only=1">[BUG] htmlayout.3.2.0.1</A></LI>
+<LI><FONT color=#339933>New</FONT> API function: <EM>HTMLayoutSwapElements</EM>. Function changes &quot;insertion points&quot; of two elements. So it exchange indexes (and parents if required) of two elements. See: <A href="http://terrainformatica.com/forums/topic.php?id=63&page&replies=17">best way to swap TRs</A> for motivation of this.</LI>
+<LI><FONT color=#ff00ff>Attn!</FONT>: default rendering style of &lt;fieldset&gt;/&lt;legend&gt; was changed to be more compatible with printing.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.1</TD>
+    <TD nowrap valign="top" align="center">31-03-2007</TD>
+    <TD>
+<UL>
+<LI>Mobile SDK <FONT color=#339933>update</FONT> only. It is now supports SVG too.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.1</TD>
+    <TD nowrap valign="top" align="center">30-03-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of theme image rendering introduced in the previous build.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.2.0.0</TD>
+    <TD nowrap valign="top" align="center">29-03-2007</TD>
+    <TD>
+<UL>
+<LI><P><IMG src="http://www.terrainformatica.com/htmlayout/images/svgce.png" align="right">Initial <FONT color=#339933>implementation</FONT> of <EM>SVG support</EM>. Currently engine accepts svg files as background and foreground images:<BR>background-image:url(some.svg) and foreground-image:url(some.svg) and plan is to support TinySVG specification.</P></LI>
+<P>Implementation of SVG engine is based on AGG library of Maxim Shemanarev (Максим Шеманарев) - <A href="http://www.antigrain.com">www.antigrain.com</A>, SVG layer is of Pavel Korzh (Павел Корж).</P>
+<P>Sample: sdk/html_samples/svg/simple-svg.htm</P>
+<LI><FONT color=#ff0033>Fix</FONT> of memory leak in http client module.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of the background-position issue: <A href="http://terrainformatica.com/forums/topic.php?id=56&page&replies=3">hover background-position ignored</A>.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.2.11</TD>
+    <TD nowrap valign="top" align="center">25-03-2007</TD>
+    <TD>
+<UL>
+<LI>Another <FONT color=#ff0033>fix</FONT> of <EM>HTMLayoutScrollToView</EM>(he, <EM>TRUE</EM> /*toTopOfView*/) function. Scroll to top of the view scrolls element unconditionaly. &nbsp;See <A href="http://terrainformatica.com/forums/topic.php?id=12">discussion</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/forums/topic.php?id=8&page&replies=11">HtmLayout breaks HWND ComboBox after scrolling window</A> .</LI>
+<LI><FONT color=#ff0033>&quot;Fix&quot;</FONT> of <EM>position:absolute</EM> rendering. While rendering <A href="http://www.terrainformatica.com/w3/abspos.htm">this document</A> HTMLayout uses IE way of rendering it. This is not conformant to CSS spec but anyway there is no correct implementation of this case - FF and O both show rendering bugs on this document.</LI></UL>
+<HR>
+<BLOCKQUOTE>
+<DIV>Mobile SDK was also updated in this build.</DIV></BLOCKQUOTE>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.2.10</TD>
+    <TD nowrap valign="top" align="center">18-03-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>HTMLayoutScrollToView</EM>(he, <EM>TRUE</EM> /*toTopOfView*/) function.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of scroll/rendering error in nested frames.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.2.9</TD>
+    <TD nowrap valign="top" align="center">17-03-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of issue with frames nested 2 levels deep.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> (attempt to fix) of NT4 compatibility.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.2.8</TD>
+    <TD nowrap valign="top" align="center">11-03-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of &lt;include&gt; pseudo-element parsing inside table.</LI>
+<LI><FONT color=#339933>Update:</FONT> generalization of image <EM>***-position-left, ***-position-right, ***-position-top and &nbsp;***-position-bottom</EM> attributes. See <A href="http://www.terrainformatica.com/htmlayout/css-images-plus.whtm">CSS images plus</A>.</LI>
+<LI><FONT color=#339933>New</FONT> &nbsp;<EM>hit-margin</EM> CSS attribute. Allows to change (extend or reduce) hit (or clickable) area of the element. See <A href="http://www.terrainformatica.com/htmlayout/cssmap.whtm">CSS map</A>.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.2.7</TD>
+    <TD nowrap valign="top" align="center">02-03-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of timer handling in <EM>htmlite</EM>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=637">Problem with version 3.1.2.6 not print image and tables</A> and <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=624">Gif transparancy</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=615">Memory leak in behavior_form.cpp</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=634">Change in SELECT_SELECTION_CHANGED event parameters</A></LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.2.6</TD>
+    <TD nowrap valign="top" align="center">25-02-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of mouse handling in behavior:hyperlink and behavior:button.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of position:relative | absolute | fixed elements, layout and rendering. It should be more standard conforming now and work inside frames. ATTN: all places where positioning used need to be verified.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of outline issue: <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=626">outline CSS style doesn't work in :hover condidtion</A></LI>
+<LI><FONT color=#339933>New</FONT> sample <EM>wtl/htmlite</EM> demonstrating use of htmlite windowless API.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.2.5</TD>
+    <TD nowrap valign="top" align="center">18-02-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> in PrintEx. Transparent GIF and PNG printing.</LI>
+<LI><FONT color=#339933>Support</FONT> of rgb(r,g,b) color notation in CSS.</LI>
+<LI><FONT color=#339933>Update</FONT> of <EM>event propagation schema</EM> - new HANDLED flag. Now bubbling/sinking uses &quot;full cycle&quot;. When some event handler returns <EM>true</EM> then event dispatching does not stop as it used to be - event.cmd field is getting HANDLED flag and event ptopagation continues. This way container can do some event handling <EM>after</EM> handling of the event by the child.</LI>
+<DIV><FONT face="Courier New" size="1">switch(evt.cmd)</FONT></DIV>
+<DIV><FONT face="Courier New" size="1">{</FONT></DIV>
+<DIV><FONT face="Courier New" size="1"> &nbsp;case MOUSE_DOWN | SINKING:</FONT><FONT face="Courier New" size="1" color=#669900> // before all children.</FONT></DIV>
+<DIV><FONT face="Courier New" size="1"> &nbsp;case MOUSE_DOWN: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT><FONT face="Courier New" size="1" color=#669900>&nbsp;&nbsp;&nbsp;// after all children and no one of them has handled it.</FONT></DIV>
+<DIV><FONT face="Courier New" size="1"> &nbsp;case MOUSE_DOWN | HANDLED: </FONT><FONT face="Courier New" size="1" color=#669900>// after all children, and some child has handled it.</FONT></DIV>
+<DIV><FONT face="Courier New" size="1">}</FONT></DIV>
+<DIV>&nbsp;</DIV></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.2.4</TD>
+    <TD nowrap valign="top" align="center">8-02-2007</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT>es of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=613&start=0&postdays=0&postorder=asc&highlight=">Problems: printing module and &lt;select&gt;</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=612">Strange behavior of CSS selector </A><A href="http://www.terrainformatica.com/bb/viewtopic.php?t=612">:focus</A></LI>
+<LI><FONT color=#339933>Update</FONT> of <EM>HTMLite</EM> engine: it now generates HLN_UPDATE_UI notification. Host shall call draw() and update screen while handling this message. This is needed for drawing of animations.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.2.3</TD>
+    <TD nowrap valign="top" align="center">31-01-2007</TD>
+    <TD>
+<UL>
+<LI>Various HTMLite related <FONT color=#ff0033>fix</FONT>es.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=592&start=0&postdays=0&postorder=asc&highlight=">Strange behavior of complex widget during resizing</A></LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.2.0</TD>
+    <TD nowrap valign="top" align="center">20-01-2007</TD>
+    <TD>
+<UL>
+<LI>W2K compatibility <FONT color=#ff0033>fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=585">&lt;input type=&quot;calendar&quot;&gt;</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of problem with behavior:popup-menu introduced in 3.1.2.00.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of printing issue <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=586">EMF Print : multiple pages</A></LI></UL>
+
+<DIV>Mobile SDK was updated also in this build.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.2.0</TD>
+    <TD nowrap valign="top" align="center">17-01-2007</TD>
+    <TD>
+<DIV><FONT color=#ff0033>Fixes:</FONT></DIV>
+<UL>
+<LI>behavior:number, various fixes. See discussion: <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=567">Scroll issue when collapsing tree nodes</A></LI>
+<LI>the scroll issue, see <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=567">Scroll issue when collapsing tree nodes</A></LI>
+<LI>fieldset with floats inside: <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=583">BUG : float:left and fieldset</A></LI>
+<LI>bug: <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=573">Context menu question</A></LI></UL>
+
+<DIV><FONT color=#339933>New:</FONT></DIV>
+<UL>
+<LI><A href="http://www.terrainformatica.com/wiki/h-smile:built-in-behaviors:calendar">behavior:calendar</A>, sample: /html_samples/forms/datetime.htm</LI>
+<LI><A href="http://www.terrainformatica.com/wiki/h-smile:built-in-behaviors:date">behavior:date</A>, sample: /html_samples/forms/datetime.htm</LI>
+<LI><A href="http://www.terrainformatica.com/wiki/h-smile:built-in-behaviors:masked">behavior:masked</A>, sample: /html_samples/forms/datetime.htm</LI>
+<LI>behavior:selector, not documented yet, but sample is in /html_samples/forms/popup-selector.htm</LI>
+<LI>behavior:clickable, non-focusable (so mouse only) button. Generates BUTTON_CLICK event.</LI></UL>
+
+<DIV><FONT color=#339933>New</FONT> in CSS:</DIV>
+<UL>
+<LI>&quot;CSS++&quot; feature. attribute <EM>style-set</EM> (will be documented later), used together with the @set block definition allows to establish local style set for the element. @set abstraction was updated - now one set can be derived from another.<BR>Example: <FONT face="monospace">@set std-date &lt; std-edit</FONT> {} &nbsp;introduces named set <EM>std-date</EM> that inherits from <EM>std-edit</EM>.<BR><A href="http://www.terrainformatica.com/wiki/h-smile:built-in-behaviors:master_style_sheet">Master style sheet</A> was redesigned by using @sets. Main reason: to improve style lookup process.</LI>
+<LI>attributes: foreground-position-left, foreground-position-right, foreground-position-top and foreground-position-bottom. Allow to define separately components of foreground-position integral attribute.</LI></UL>
+
+<DIV><FONT color=#339933>Update</FONT>:</DIV>
+<UL>
+<LI>HTMLite now supports animation and animated gifs too.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.67</TD>
+    <TD nowrap valign="top" align="center">26-12-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of behavior:button, see <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=553">Button appearance</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in intrinsic behavior:hyperlink implementation. See <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=551">a bug in HtmLayout?</A></LI>
+<LI><FONT color=#339933>New</FONT>. Support of <EM>page-break-before</EM> and <EM>page-break-after</EM> CSS attributes. Pay attention that only <EM>auto</EM> and <EM>always</EM> values are supported. Also note that the engine supports conditional page breaks (non-standard) - e.g. <EM>page-break-before</EM>:<EM> 75%</EM> means that page break will be inserted only if position of the element happens to be in last quarter of the page. See <A href="http://www.terrainformatica.com/htmlayout/cssmap.whtm">CSS Attributes support map</A> for more details.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.66</TD>
+    <TD nowrap valign="top" align="center">12-12-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>Update</FONT> in HTMLayoutSetOption, it now allows to set HTMLAYOUT_CONNECTION_TIMEOUT.</LI>
+<LI>CSS, <FONT color=#339933>new</FONT> value of <FONT face="monospace">foreground-image-transformation</FONT> and <FONT face="monospace">background-image-transformation</FONT> attributes:<BR><FONT face="monospace">foreground-image-transformation: contrast-brightness-gamma(0.5,0.5, 1.0);<BR></FONT>Values of attribute foreground-image-transformation are defined <A href="http://www.terrainformatica.com/wiki/h-smile:css-atts">here</A>.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.65</TD>
+    <TD nowrap valign="top" align="center">07-12-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of HTMLayoutDetachElement for inline elements.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of background-repeat:stretch rendering.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in behavior:button, mouse click that originated in the button but ended up outside of the button is not causing BUTTON_CLICK now.</LI>
+<LI><FONT color=#339933>Update</FONT> in behavior:edit, implementation of Ctrl-Delete handling.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of scroll on focus issue, see <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=531">bug report</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in scrollable tables - header row is drawn improperly when table was scrolled horizontally.</LI>
+<LI><FONT color=#339933>Update</FONT> in HLN_DATA_LOADED - notification structure got new field - <EM>status</EM>. See htmlayout.h for more details.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.64</TD>
+    <TD nowrap valign="top" align="center">28-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of cursor appearance, see <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=525">Window resizing?</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of various problems with &lt;fieldset&gt; rendering, see: <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=512">Fieldset, CSS and Gif transparency</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of expandable image rendering. Chris, this is yours #860991.</LI>
+<LI><FONT color=#339933>New</FONT> alternative WTL wrapper by Alexander Murashko. This is clean and simple WTL wrapper of HTMLayout free from remnants of previous versions. I suggest to use it for new projects. Alexander, thanks a lot!</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.63</TD>
+    <TD nowrap valign="top" align="center">26-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New</FONT>, <EM>64-bit</EM> version of the HTMLayout.dll.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of margin collapsing given in flex units (%% or *).</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.62</TD>
+    <TD nowrap valign="top" align="center">25-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of opacity rendering in HTMLite.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of HTMLayoutCloneElement for &lt;select&gt; elements.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of rendering issues in the <EM>skin</EM> sample</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.61</TD>
+    <TD nowrap valign="top" align="center">23-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New</FONT>, support of <A href="http://www.w3.org/TR/css3-color/#transparency" target="_blank"><EM>opacity</EM> CSS attribute</A> . Opacity supported for all elements including &lt;input&gt; and &lt;popup&gt;. Samples are sdk/html_samples/abs/abs.htm and sdk/html_samples/tooltips/titles.htm.</LI>
+<LI><FONT color=#339933>Update</FONT> of transition:slide implementation, it also dissolves item being collapsed.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of layout &lt;img align=&quot;middle&quot;&gt; when image dimensions are significantly bigger than font size in the line.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of HTMLayoutCloneElement implementation for &lt;input&gt; and &lt;widget&gt; elements.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in file sdk/include/behaviors/behavior_aux.h - obsolete declarations there were removed.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of inline &lt;style&gt; section parsing - wrong encoding used while parsing it.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>HTMLayoutGetMinWidth</EM>/<EM>HTMLayoutGetMinHeight</EM>. They shall return size needed to show html document without scrollbars.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.60</TD>
+    <TD nowrap valign="top" align="center">19-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of repainting issue on popup elements introduced in previous 3.1.1.60 build.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of caret repainting in HTMLite.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.60</TD>
+    <TD nowrap valign="top" align="center">18-11-2006</TD>
+    <TD>
+<P><FONT color=#339933>New</FONT> header file <EM>htmlayout_queue.h</EM> in the SDK - implementation of asynchronous action queue. This queue allows to post actions that will be executed in the GUI thread.</P>
+<P>Please read <EM>htmlayout_queue.h</EM> file - it is really simple - not a rocket science at all. At the end it contains example - implementation of append_and_update action that can be used from worker thread.</P>
+<P>As soon as some DOM element is not connected to the DOM it is safe to call low level methods like HTMLayoutCreateElement, HTMLayoutInsertElement, etc in worker (non-gui) thread. And only when you need to connect it to the DOM you need to do this in GUI thread so to use append_and_update or the like.</P><HR>
+<DIV>Mobile SDK was updated also in this build. Bug with &lt;input type=&quot;text&quot;&gt; rendering is <FONT color=#ff0033>fix</FONT>ed.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.59</TD>
+    <TD nowrap valign="top" align="center">17-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=503">margin-top</A> issue.</LI>
+<LI><FONT color=#ff0033>Attention</FONT>, intrinsic style has been changed: <EM>body</EM> element used to have <EM>padding:8px -</EM> not anymore. Instead, by default, it is getting <EM>margin:8px;</EM> value. Rationale: compatibility with browsers. So default style sheet looks like:<BR><FONT face="Courier New">html { padding:0; margin</FONT>:0; <FONT face="Courier New">}<BR>body { padding:0; margin:8px; }</FONT></LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.58</TD>
+    <TD nowrap valign="top" align="center">16-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of &lt;select type=&quot;dropdown-select&quot;&gt; and &lt;inout type=&quot;number&quot;&gt; rendering.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of margin collapsing in flow:horizontal containers.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.57</TD>
+    <TD nowrap valign="top" align="center">14-11-2006</TD>
+    <TD>
+<UL>
+<LI>One more <FONT color=#ff0033>fix</FONT> of layout algorithm. display:inline-blocks with vertical-align:middle were not properly handled. Joel, this is yours, thanks for the test case.</LI>
+<LI><FONT color=#ff0033>Removed</FONT> generation of behavior notifications (VALUE_CHANGED) in edit boxes inside set_value() implementation. Such notification may cause stack overflow when value of the edit box is updated programmatically in VALUE_CHANGED event.</LI>
+<LI>htmlayout_controls.hpp got <FONT color=#339933>new</FONT> function clr_values(). Thanks to its author - Vladimir Kubyshev.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.56</TD>
+    <TD nowrap valign="top" align="center">11-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fixes</FONT> for that funny <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=486">Rendering failed</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of old problem with computation of <A href="http://www.w3.org/TR/CSS21/box.html#collapsing-margins">collapsing margins</A> in h-smile core.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of relative URLs resolution preventing some images on <A href="http://www.terrainformatica.com/htmlayout">http://www.terrainformatica.com/htmlayout/</A> page to appear :)</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.55</TD>
+    <TD nowrap valign="top" align="center">10-11-2006</TD>
+    <TD>
+<UL>
+<LI>Attempt to <FONT color=#ff0033>fix</FONT> issue with VC2002/2003 compiler known as <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=478">FORCE_LINKAGE_OF</A> , <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=468">Multiple instances of static _root</A></LI>
+<LI>Attempt to <FONT color=#ff0033>fix</FONT> issue with popups on Win Server 2003: <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=481">Interesting bug. Unable to create popup.</A> Request for testing for whom who have this OS installed.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of HLN_ATTACH_BEHAVIOR generation in htmlite.</LI>
+<LI><FONT color=#339933>F5</FONT> handling in browse.exe</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.54</TD>
+    <TD nowrap valign="top" align="center">09-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of HLN_ATTACH_BEHAVIOR handling for htmlayout and htmlite.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.53</TD>
+    <TD nowrap valign="top" align="center">08-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=449">img:incomplete</A></LI>
+<LI><FONT color=#339933>Update</FONT> of sdk/html_samples/frames/frames.htm - it uses now :busy selector to show that spining thing while loading frame from remote source.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.52</TD>
+    <TD nowrap valign="top" align="center">07-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of &lt;include&gt; bug introduced in previous build (#3.1.1.51).</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.51</TD>
+    <TD nowrap valign="top" align="center">06-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=469">Table layout problem</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=466">Splitter resizing bug</A>, behavior:frameset only.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=459">default context menu</A> for &lt;textarea&gt;.</LI>
+<LI>Various <FONT color=#ff0033>fixes</FONT> in David's <EM>win32.directx.htmlite</EM>.</LI>
+<LI><FONT color=#339933>New</FONT> CSS pseudo class <EM>:busy</EM> and <EM>STATE_BUSY</EM> state flag. HTMLayoutRequestElementData will set this flag if external data was requested for the element. When data will be delivered engine will reset this flag on the element. Introduced for compatibility with the Sciter where it is used by Element.request() (AJAX/JSON-RPC call) for styling &quot;retrieving data&quot; state.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.50</TD>
+    <TD nowrap valign="top" align="center">03-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New</FONT> sample <EM>win32.directx.htmlite</EM> demonstrating use of htmlite on DirectX surface. Courtesy of its author: <EM>David Suede</EM> at <A href="http://www.picclique.com">PicClique.com</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of scrollbar rendering issue.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.49</TD>
+    <TD nowrap valign="top" align="center">02-11-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New</FONT> feature: <EM>@const</EM> declarations in CSS. Details and formal definition is <A href="http://www.terrainformatica.com/hsmile/css-extensions.whtm">here</A>. <BR>I cannot resist anymore, it appears as &quot;must have&quot; thing in emebeddable engine. Beg my pardon in advance to the CSS purists camp.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=460">bug with selecting in textarea</A> ;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=461">Problem with TAG &lt;OL type=a&gt;</A> ;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=459">default context menu</A> ;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of scrollbar positioning in scrollable tables;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of position:absolute problem introduced in one of the recent builds.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.48</TD>
+    <TD nowrap valign="top" align="center">31-10-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of the bug in animated gifs, more details are here: <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=449">img:incomplete</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=458">Possible &lt;include /&gt; bug</A></LI></UL>
+
+<DIV>Mobile SDK was updated also in this build. Bug with &lt;input type=&quot;text&quot;&gt; rendering is still not fixed, will fix it in the next build.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.47</TD>
+    <TD nowrap valign="top" align="center">29-10-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> in animated GIF handling when first frame is transparent. See: <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=453">Problems with animated GIF</A> , thanks to Orangy for the sample.</LI>
+<LI><FONT color=#339933>New</FONT> function <EM>HTMLayoutSetOption</EM>, currently it allows to enable/disable smooth scrolling.</LI>
+<LI>class HTMLite - <FONT color=#339933>new</FONT> <EM>traverseTimerEvent</EM> function, fixes in getDocumentMinWidth/Height functions.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.46</TD>
+    <TD nowrap valign="top" align="center">27-10-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> in <EM>json-value.h</EM>, see: <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=445">bug in json::value?</A> Thanks to ccoder for the fix.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of old bug in animated gifs - when HTML contains multiple animated gifs from the same URL their speed of animation is wrong. Fixed now.</LI>
+<LI><FONT color=#339933>Change</FONT><FONT color=#3333ff>,</FONT> <EM>:incomplete</EM> flag now only reflects state of foreground image only. This allows to define animated indicators for loading images using solely CSS. You can assign such image to the background-image. See <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=449">img:incomplete</A> discussion.</LI>
+<LI><FONT color=#339933>Update</FONT> in <EM>htmlite.h</EM> - new methods <EM>traverseMouseEvent</EM> and <EM>traverseKeyEvent</EM>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of VK_TAB handling in select type=&quot;dropdown-select&quot; when its popup window is open.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=447">HLN_DATA_LOADED missing</A></LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.45</TD>
+    <TD nowrap valign="top" align="center">25-10-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New</FONT> API: <EM>htmlite.h</EM> - <EM>windowless htmlayout engine</EM> (rendering and event processing). This feature is not tested yet. Sample of using htmlayout on DirectX surface is in design.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of WM_NCPAINT handling when htmlayout is a desktop window.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.44</TD>
+    <TD nowrap valign="top" align="center">22-10-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of IME window positioning.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.43</TD>
+    <TD nowrap valign="top" align="center">19-10-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of &quot;<EM>behavior:edit</EM>, VK_END is not removing selection&quot;</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of &quot;<EM>HTMLayoutHttpRequest</EM> does not allow to send GET and POST parameters in single requests&quot;.</LI>
+<LI>Various <FONT color=#ff0033>fix</FONT>es of CSS resolving issues (minor).</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of &quot;engine does not report state of <EM>STATE_POPUP</EM> flag&quot;.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of &quot;engine does not fire <EM>POPUP_DISMISSED</EM> behavior event&quot;. POPUP_DISMISSED shall work now.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>. Second click on button in &lt;<EM>select type=&quot;dropdown-select&quot;</EM>&gt; will close popup window if it was open already.</LI>
+<LI>Fix <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=433">Alt+arrows keyboard shortcut</A>.</LI>
+<LI><FONT color=#339933>Updates</FONT> in <EM>behavior_accesskeys.cpp</EM> and <EM>behavior_tabs.cpp</EM> to support activation of tabs by hot keys (accesskey attribute). See /html_samples/behaviors/more_tabs.htm for example.</LI></UL>
+
+<DIV>Mobile SDK was updated also in this build.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.42</TD>
+    <TD nowrap valign="top" align="center">18-10-2006</TD>
+    <TD>
+<UL>
+<LI>More fixes of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=413">C++ warnings</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=399">Tracking problem</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=430">SetValue with dropdown-select</A></LI>
+<LI>json::string was updated - in particular copy ctor just adds reference to the string buffer instead of copying it. Also json::value -&gt; json::string is more optimal now.</LI>
+<LI>Public version of the DLL is packaged by UPX by default now.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.41</TD>
+    <TD nowrap valign="top" align="center">12-10-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of named sets handling in CSS. Engine was ignoring named sets declared in master style sheet.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=413">C++ warnings</A>.</LI>
+<LI><FONT color=#339933>New</FONT> API functions:</LI>
+<UL>
+<LI><EM>HTMLayoutControlGetType(CTL_TYPE)</EM></LI>
+<LI><EM>HTMLayoutControlGetValue(JSON_VALUE)</EM></LI>
+<LI><EM>HTMLayoutControlSetValue(JSON_VALUE)</EM></LI></UL>
+
+<DIV>These functions allow to get/set values of DOM elements that have intrinsic behaviors applied. For other elements these functions are equivalents of get/set_text.</DIV></UL>
+
+<UL>
+<LI><FONT color=#339933>New</FONT> headers <EM>json-value.h</EM> and <EM>json-aux.h</EM>. json::value is an extended version of htmlayout::value_t.</LI></UL>
+
+<DIV>Mobile SDK was updated also in this build.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.40</TD>
+    <TD nowrap valign="top" align="center">07-10-2006</TD>
+    <TD>
+<UL>
+<LI>More <FONT color=#ff0033>fixes</FONT> and <FONT color=#ff0033>updates</FONT> of behavior:dropdown-select. Now behavior matches reasonably close Windows COMBOBOX.</LI>
+<LI>Implementation of DO_CLICK behavior method for behavior:menu-button.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of mouse events handling on scrollbars of scrollable tables.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.39</TD>
+    <TD nowrap valign="top" align="center">05-10-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT>es in &lt;htmlarea&gt; (behavior:htmlarea), in particular AV while pasting HTML from clipboard.</LI>
+<LI><FONT color=#339933>Update</FONT> in &lt;select&gt; (behavior:dropdown-select). Alphanumeric character pressed will cause popup of the list. &nbsp;</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.38</TD>
+    <TD nowrap valign="top" align="center">04-10-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>Improvements</FONT> (various) in drawing of transparent popups.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=407">[BUG] Cloning tables - crush.</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <EM>HTMLayoutSelectElements</EM> function. Being called on &quot;super-root&quot; element it used to match elements in contained &lt;frame&gt;s.</LI>
+<LI><FONT color=#339933>New</FONT> API function <EM>HTMLayoutRender</EM>(HWND hWndHTMLayout, HBITMAP hBmp, RECT area ). This function allows to draw HTML on 32bpp surfaces with alpha transparency. This is (partial?) solution of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=363">Rendering with alpha channel</A> problem.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.37</TD>
+    <TD nowrap valign="top" align="center">28-09-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of AV while reading (narrating) documents that contain &lt;iframe&gt;s by JAWS application.</LI>
+<LI><FONT color=#339933>New</FONT>, <EM>behavior:shell-icon</EM> , simple behavior allowing to show system shell icons registered for files in system. Source is in include/behaviors/behavior_shellicon.cpp and sample is in html_samples/behaviors/shell-icon.htm.</LI>
+<LI><FONT color=#339933>New</FONT>, HTMLayoutSetHttpHeaders API function implementation. Allows to set additional http headers while sending http requests. Demo is under menu Tests -&gt; Test of SetHttpHeaders function.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.36</TD>
+    <TD nowrap valign="top" align="center">25-09-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=395">[3.1.1.35] browse.exe crashes w/ custom-dropdown-selects.htm</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of byte-order-mark parsing in fragments loaded by &lt;include&gt; meta tag.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of misspelling in htmlayout_controls.hpp described here <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=387">Stable 3.1</A>.</LI>
+<LI><FONT color=#339933>Update</FONT> of FOCUS_PARAMS structure (htmlayout_behavior.h). It got new field <EM>cancel</EM> allowing to cancel set focus operation during FOCUS_LOST event handling.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.35</TD>
+    <TD nowrap valign="top" align="center">11-09-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=383&start=0&postdays=0&postorder=asc&highlight=">[3.1.1.34] 2 &lt;select&gt; issues</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=376&start=0&postdays=0&postorder=asc&highlight=">[3.1.1.27] Scrollbar in RTL layout misdrawn</A></LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.34</TD>
+    <TD nowrap valign="top" align="center">02-09-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>Update</FONT>. Intrinsic hyperlink behavior handles RETURN key press - it used to handle only spacebar click.</LI>
+<LI>behavior_accesskeys.cpp <FONT color=#339933>update</FONT> - hidden IFRAMEs are not used in accesskey lookup now.</LI>
+<LI>behavior_tabs.cpp <FONT color=#339933>update</FONT> - it now supports behavior event/command DO_SWITCH_TAB to do switch programmatically. select_tab method does not require previous tab be selected.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of border-color default value assignment. If border defined as border:1px solid; it shall be drawn by using color (text color) value.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>. Memory consumption optimization of basic DOM structures. It shall take less memory to render average html/css constructions.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> related to static data initialization. Chris, this is #785459 of yours.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.33</TD>
+    <TD nowrap valign="top" align="center">27-08-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fixes</FONT> in HTMLayoutScrollToView function. It properly scrolls to span elements. <FONT color=#ff0033>Change</FONT>: from now on it will not try to scroll blocks with overflow:hidden set in scrolling direction. Only overflow:auto and overflow:scroll blocks will be affected.</LI>
+<LI><FONT color=#ff0033>Optimization and fix</FONT> of dynamic resolution of &quot;deep state selectors&quot; like &quot;element1:state element2&quot;. It used to take too much processor power to be resolved. That issue arised in &lt;select&gt;s and grids with large sets of options/rows in them.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=376">[3.1.1.27] Scrollbar in RTL layout misdrawn</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=375">[BUG] Table view after row modification-</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of resizing issues of intrinsic frames - behavior:frame / &lt;frame&gt;.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of possible AV when HTMLayoutSetInnerText[16] is getting garbage text (probably binary data casted to utf8/utf16 sequence of code units). That not happen in real life but mighty Symantec QA managed to get it. My honest thanks to them for that.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in behavior_tabs.cpp - to better style in-focus state. See /html_samples/forms/tabs.htm.</LI>
+<LI><FONT color=#339933>Update</FONT> in /html_samples/stress/ folder. I've added there animation.htm file showing big transition:blend areas.</LI>
+<LI><IMG src="http://www.terrainformatica.com/htmlayout/images/color-transform.jpg" align="right"><FONT color=#339933>Implementation</FONT> of simple color transformations of images. <BR>[back/fore]ground-image-transformation: color-schema(...)<BR>allows to use single source image for rendering it in different visual states. Here is a screenshot for the same element and image on it in two different states (second - on hover). Please see html_samples/css-plus/color-transform.htm for more details :). color transformations was planned feature for 3.1 and here is it.</LI></UL>
+<HR color=#ff0033>
+<DIV><STRONG><FONT color=#ff0033>ATTN:</STRONG> </FONT>This is last build of 3.1.*.* series having something new in it. All further 3.1.*.* builds will contain only <EM>critical</EM> bug fixes. Amen!</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.32</TD>
+    <TD nowrap valign="top" align="center">24-08-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=367">HTMLayoutDeleteElement</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=366">Bouncing buttons</A></LI>
+<LI><FONT color=#339933>Update</FONT> in colors table: <EM>invert</EM> pseudo color. Use it in e.g. <EM>outline:</EM>... to draw focus rect - dotted inverted rectangle.</LI>
+<LI><FONT color=#339933>New</FONT> CSS state flag <EM>:tab-focus</EM> and STATE_TABFOCUS state bit. This flag is active if element got focus only by tab traversal. Engine will set it together with :focus. In Windows UI focus rectangle is being drawn on buttons only if focus was set by tab traversal. <EM>:tab-focus</EM> allows to style this situation properly. I've updated <A href="http://www.terrainformatica.com/htmlayout/master_ss_css.php">Master style sheet</A> accordingly.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.31</TD>
+    <TD nowrap valign="top" align="center">23-08-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> in animation module. It works and works better a bit.</LI>
+<LI>By request of one gentlemen from Japan IME composition window position was updated again.</LI>
+<LI>More hearings of MS Narrator.exe. This guy is dubbing DOM elements marked as OFFSCREEN... Now it should be silent on those.</LI>
+<LI>More <FONT color=#ff0033>fix</FONT>es in dynamic measurement module.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in HTMLayoutUpdateElement function for cases when element is located inside &lt;frame&gt;.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in <EM>themes</EM> module - it supports now change of OS theme on fly.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.30</TD>
+    <TD nowrap valign="top" align="center">22-08-2006</TD>
+    <TD>
+<UL>
+<LI>Better mouse events handling while popup is visible.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of drawing issues in scrollables (overflow:auto).</LI>
+<LI>Better IME composition window positioning.</LI>
+<LI>Better handling of IAccessible::get_accFocus, IAccessible::get_accRole and IAccessible::get_accState.</LI>
+<LI>After call of FreeLibrary for HTMLayout it frees all allocated memory.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.29</TD>
+    <TD nowrap valign="top" align="center">21-08-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=362">Where did the menus go-</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=361">Problem with HTMLayoutUpdateElement--</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of TAB traversal for IFRAMEs</LI>
+<LI><FONT color=#ff0033>Fix</FONT> (not-verified yet) of positioning of IME composition window.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.28</TD>
+    <TD nowrap valign="top" align="center">21-08-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Critical fix </FONT>in <EM>HTMLayoutGetElementHtml</EM>/<EM>HTMLayoutGetElementInnerText</EM> - it used to be memory leakage there. Great thanks to Brian and Chris and their team.</LI>
+<LI><FONT color=#339933>Optimization</FONT> of HTMLayoutUpdateElement - dynamic updates should work faster now.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=306">[v3.1.1.18] Key handling</A> . Joel thanks a lot.</LI>
+<LI><FONT color=#339933>Implementation</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=357">&quot;All children&quot; ideom for sorting</A></LI>
+<LI>More memory management <FONT color=#ff0033>fixes</FONT> related to dynamic freeing of the library.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.27</TD>
+    <TD nowrap valign="top" align="center">18-08-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=355">[PRB] Rendering of an image with rounded corners</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=352">[PROBLEM] element of class &quot;sidebar&quot; changes posit</A> . To avoid problems like this (call EnsureVisible) I suggest to use explicitly overflow-y and overflow-x rather than just overflow. Another thing here: remember that LI has by default display:list-item - its visible shape includes bullet so I recommend to define display:block for cases when LI is not supposed to use bullets.</LI>
+<LI>Better handling of my internal FinalizeLibrary function (called by ::FreeLibrary). It clears also some static references to DOM elements I have. For those who are using tools like dll2lib - please verify your code.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of compatibility with Windows 98/NT4.0.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of compatibility with Windows CE5.0.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.26</TD>
+    <TD nowrap valign="top" align="center">18-08-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>Implementation</FONT> of <STRONG>non-rectangular menus and popups</STRONG> in general. See /html_samples/menus/non-rectangular-menu.htm , /html_samples/tooltips/titles.htm and this screenshot: <A href="http://www.terrainformatica.com/htmlayout/images/tooltip-balloon.jpg">http://www.terrainformatica.com/htmlayout/images/tooltip-balloon.jpg</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of the bug in rendering /html_samples/tooltips/titles.htm, float:left/right was not propely wrapped by surrounding text.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.25</TD>
+    <TD nowrap valign="top" align="center">17-08-2006</TD>
+    <TD>
+<UL>
+<LI>Implementation of stock <EM>context menus</EM> for <EM>input type=&quot;edit&quot;</EM>. These menus are customizeable - you can provide your own HTML for them, for example to translate them to different languages or change default menu item icons.</LI>
+<LI><EM>context-menu</EM> CSS attribute now accept two forms:</LI>
+<OL>
+<LI>context-menu: selector( menu-selector );</LI>
+<LI>context-menu: <FONT color=#339933>url( url-of-menu-html );</FONT></LI></OL>
+
+<DIV>use second form if you need to generate menu on the fly. You need to process HLN_LOAD_DATA for url-of-menu-html appropriately.</DIV></UL>
+
+<UL>
+<LI><FONT color=#339933>Update</FONT> of HLN_LOAD_DATA structure. It has now new field: <EM>HELEMENT principal</EM>. This field contains reference of DOM element for which data was requested. For context-menus this is a reference to the element with context-menu defined.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.24</TD>
+    <TD nowrap valign="top" align="center">15-08-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>Update</FONT> of HTMLayoutDialog API function. Parameter alignment accepts also -9..-1 range of values allowing to align dialog relative to its parent window. &nbsp;See: htmlayout.h or documentation<FONT color=#339933>.</FONT></LI>
+<LI><FONT color=#339933>Optimization</FONT> of <EM>HTMLayoutInsertElement</EM>/<EM>HTMLayoutDetachElement</EM> functions. They should work significantly faster for tables/rows/cells now.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in slider behaviors, see: <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=351">Trackbar bugs</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of NT4/Win98 compatibilities. Use of functions mentioned in <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=350">Dependencies</A> and some others are optional.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.23</TD>
+    <TD nowrap valign="top" align="center">13-08-2006</TD>
+    <TD>
+<DIV><FONT color=#339933>New.</FONT> Initial <EM>Menus</EM> implementation, see <A href="http://www.terrainformatica.com/index.php/?p=8">H-SMILE core. Popup and context menus (HTMLayout and Sciter engines)</A></DIV>
+<DIV><FONT color=#339933>New.</FONT> <EM>:not</EM> CSS3 selector support. See: <A href="http://www.w3.org/TR/css3-selectors/#negation">Negation selector</A> specification.</DIV>
+<DIV><FONT color=#339933>Update</FONT> in popup block management. If popup block is shown and is getting new dimensions during update() &nbsp;window resizes accordingly. Should help to implement collapsible menus in MS Office style.</DIV>
+<DIV><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=342">follow up on HTMLayoutGetElementHtml() and '-0' inside html</A></DIV>
+<DIV><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=348">&lt;include&gt; bug</A></DIV>
+<DIV><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=346">[BUG] cannot retrieve selected item from a dialog</A> . Joel, thanks a lot.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.22</TD>
+    <TD nowrap valign="top" align="center">05-08-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>Update</FONT>. &lt;table <EM>fixedlayout</EM>&gt; calculation algorthim was changed and time needed to show/resize fixedlayout tables <EM>significantly</EM> improved - near the order of magnitude. The price of this is that fixedlayout tables will have all rows calculated having the same height equals to the height of first non-fixed row. This limitation is not so critical for most &quot;grid&quot; cases though. I've added also stress sample html_samples/stress/grid-fixed-10000.htm demonstrating of what timing you should expect for loading and showing recordsets with 10,000 records. <EM>fixedlayout</EM> also allows to implement virtual grids now.</LI>
+<LI><FONT color=#339933>New</FONT>. Support of <EM>IAccessible</EM> interface. Such accessibilty tools as Narrator use it for presenting UI to people with vision impairments.</LI>
+<LI><FONT color=#339933>New</FONT> API function <EM>HTMLayoutTraverseUIEvent</EM> (htmlayout_dom.h)- allows you to send sinking/bubbling mouse and key events. One of possible use of this function it to automate testing of UI.</LI>
+<LI><FONT color=#339933>New</FONT> API function <EM>HTMLayoutSetMediaType</EM> (htmlayout.h) - allows to change default value of media type (&quot;screen&quot;) of window based html views. I've added method SetupMediaType into wtl_htmlayout.h - use it as an example.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of &nbsp;<A href="http://www.terrainformatica.com/bb/viewtopic.php?t=337">AnimateWindow API, and Windows NT</A> problem.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=341">Problem with STATE_SYNTHETIC</A> issue.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.21</TD>
+    <TD nowrap valign="top" align="center">30-07-2006</TD>
+    <TD>
+<UL>
+<LI>RTL <FONT color=#ff0033>fix</FONT>es:</LI>
+<UL>
+<LI>RTL editing in <EM>behavior:edit</EM> ( &lt;input dir=&quot;rtl&quot; type=&quot;text&quot; /&gt; ).</LI>
+<LI>Proper handling of '(' ')' in RTL texts.</LI>
+<LI>&quot;text-align:left; direction:rtl&quot; aligns text to the left now.</LI></UL>
+
+<LI><FONT color=#339933>New</FONT>, behavior:edit got simple undo implementation. Not perfect but at least something.</LI>
+<LI><FONT color=#ff0033>Fix</FONT>es in &lt;table&gt; layout module. In particular margin:0; is not required anymore in cases like <A href="http://terrainformatica.com/bb/viewtopic.php?t=328">Layouting questions</A>.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://terrainformatica.com/bb/viewtopic.php?t=324">Odd background-color gradient issue.</A></LI>
+<LI><FONT color=#339933>New</FONT> &quot;secret&quot; CSS selector :synthetic and state flag STATE_SYNTHETIC. I am marking by this flag some synthesized elements. For example: I am creating empty TDs to cover table &quot;holes&quot;. All such synthesized elements are getting this flag. You can use this flag for your own purposes too - element is getting this value in parse time and after that engine is not touching it.</LI>
+<LI>Public version of the engine is compiled now with Optimization for Speed rather than Optimization for Size. This increases size of the dll but improves speed too - up to 10%. (Retail build is still using Optimization for Size).</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.20</TD>
+    <TD nowrap valign="top" align="center">20-07-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=317">[3.1.1.19] RTLLayout issues</A> [except of input elements]</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=304">White space handling</A></LI>
+<LI><FONT color=#ff0033>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=318">Why in the last version appears vertical scroll bar-</A> I would suggest to define explicitly <BR>@media print { <BR>html { overflow:none; }<BR>}<BR>in your documents. <EM>html</EM> element in HTMLayout has intrinsic html { overflow:auto; } definition. Requirement of &lt;FRAME&gt; support.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.19</TD>
+    <TD nowrap valign="top" align="center">19-07-2006</TD>
+    <TD>
+<DIV>&quot;Middle East build&quot;, RTL support, phase I:</DIV>
+<UL>
+<LI>Engine renders pure RTL texts written in Hebrew, Arabic, N'ko, Syriac, Thaana/Thana with correct word order.</LI>
+<LI><EM>dir</EM>=ltr/rtl HTML attribute and CSS <EM>direction</EM> attribute are recognized now by the engine for all elements.</LI>
+<LI>direction:rtl overflowed elements shows vertical scrollbar at the left side.</LI>
+<LI>direction:rtl list elements (ul and ol) shall show bullets on the right side.</LI>
+<LI>direction:rtl block elements shall properly allign text on the right side.</LI></UL>
+
+<DIV>This is an initial implementation and I expect some problems when mixed rtl/ltr text is used in the same paragraph. Let me know if you will find problems here.</DIV>
+<P><FONT size="4">I am publishng this build in hope that it will help stop somehow that brainless <EM>cauchemar</EM> happening on the Middle East now. Cradle of the Civilization, peoples with deepest history on the Earth and such ... <STRONG>Are we human or what?</FONT></STRONG></P></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.18</TD>
+    <TD nowrap valign="top" align="center">08-07-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New</FONT>.<STRONG> &lt;frameset&gt;</STRONG> and <STRONG>&lt;frame&gt;</STRONG> support ( <EM>behavior:frame-set</EM> and <EM>behavior:frame</EM> accordingly).</LI>
+<BLOCKQUOTE>
+<P><STRONG><FONT color=#339933>&lt;frameset&gt;</FONT></STRONG></P>
+<UL>
+<LI>implements splitters. Supports multiple elements in the row or column.</LI>
+<LI>supports either <EM>cols</EM> or <EM>rows</EM> attributes (but not both).</LI>
+<LI>can be placed in any arbitrary place where block elements are acceptable. behavior:frame-set can be applied to any div alike element. Even to &lt;td&gt;.</LI>
+<LI>can contain any arbitrary blocks inside (not only frames). See: html_samples/frames.</LI></UL>
+
+<P><STRONG><FONT color=#339933>&lt;frame&gt;</FONT></STRONG></P>
+<UL>
+<LI>is a div alike block element.</LI>
+<LI>close to standard HTML frame.</LI>
+<LI><EM>src</EM> attribute if provided will cause loading of referred document into the element. After loading the frame will contain single child - &lt;html&gt; element (root) of the loaded document. So you can access its DOM from the &lt;frame&gt; element.</LI>
+<LI>Styles and images loaded for the document will not affect parent DOM. Reloading such document will free its resources. So if you need isolated HTML islands - here they are.</LI>
+<LI>The frame can appear in any place where block elements are allowed (not only in &lt;frameset&gt;). From this point of view &lt;frame&gt; and &lt;iframe&gt; are equivalents but IFRAME is reserved for HWND based frames.</LI></UL>
+
+<P><STRONG><FONT color=#339933>behavior:hyperlink</FONT></STRONG> implemented internally now. Reason is simple - to support &lt;a target&gt; attribute with the frames. And you have two options with hyperlinks:</P>
+<OL>
+<LI>If you are not going to use &lt;frame&gt;s you can use implementation of behavior:hyperlink from SDK - it works now and beyond.</LI>
+<LI>If you are going to use &lt;frame&gt;s then simply remove behavior_hyperlink.cpp from your project. Thus you will enable internal implementation. Internal implementation posts bubbling BEHAVIOR_EVENT/HYPERLINK_CLICK as old one.</LI></OL>
+</BLOCKQUOTE>
+</UL>
+<HR>
+<UL>
+<LI><FONT color=#339933>New</FONT>, support of <EM>border-spacing</EM> CSS attribute [<A href="http://www.w3.org/TR/CSS21/tables.html#separated-borders">description</A>] with following differences from standard:</LI>
+<UL>
+<LI>Only single value supported, border-spacing:2px 4px; will set spacing 2px in both directions.</LI>
+<LI><EM>border-spacing</EM> applies not only to tables but to all div alike elements. For such elements it establishes minimum margin value between children of such elements.</LI></UL>
+
+<LI><FONT color=#339933>New</FONT>, support of &lt;select <EM>editable</EM>&gt;. If dropdown select element will have <EM>editable</EM> attribute defined then its caption will have behavior:edit applied - will be editable. Thing is known as combobox in Windows.</LI>
+<LI><FONT color=#339933>Update</FONT> of behavior:edit. GOT_FOCUS event selects whole text in the element.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of table-in-scrollable-div problem, George and Oliver, thanks for report.</LI>
+<LI><FONT color=#339933>New</FONT>, support of misterious WM_UNICHAR message [<A href="http://www.terrainformatica.com/bb/viewtopic.php?t=290">discussion</A>].</LI>
+<LI><FONT color=#339933>New</FONT><FONT color=#ff0033> </FONT>API functions:</LI>
+<UL>
+<LI><EM>HTMLayoutAttachEventHandlerEx</EM> - allows to assign event handler with event group subscription flags.</LI>
+<LI><EM>HTMLayoutWindowAttachEventHandler</EM></LI>
+<LI><EM>HTMLayoutWindowDetachEventHandler</EM> - these two allow to install permanent event handler on the window. Such handler being set once will work for all documents loaded cosequently in the window. Consider it as a &quot;surface&quot; or &quot;ground&quot; permanent handler.</LI></UL>
+
+<LI><FONT color=#ff0033>Fix</FONT> of absolute positioning of children of flow:horizontal containers. [<A href="http://www.terrainformatica.com/bb/viewtopic.php?t=267">description</A>]</LI>
+<LI><FONT color=#339933>Update</FONT> of scrollbar styling. It is possible now to define width of vscrollbar and height of hscrollbar. Sample is in /css-plus/ folder.</LI></UL>
+
+<DIV>RTL implementation was not included in the build - still have things to do there.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.17</TD>
+    <TD nowrap valign="top" align="center">01-07-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>Update</FONT> of <EM>behavior:select</EM>. Key handling was changed according to [<A href="http://www.terrainformatica.com/bb/viewtopic.php?t=272">discussion</A>].</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of TAB navigation handling in empty IFRAMEs.</LI>
+<LI>Various minor layout fixes.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of AV in fixedlayout tables [<A href="http://www.terrainformatica.com/bb/viewtopic.php?t=276">description</A>].</LI>
+<LI><FONT color=#339933>Update</FONT>. Max length of paragraphs (max number of characters paragraph can contain) was increased from number close to 10000 to 0xFFFFFFF (268435455). Please pay attention that limitation of number of &lt;spans&gt; paragraph can contain still exist - only 6400 first level spans per paragraph please.</LI>
+<LI>Fixes of DOM manipulation functions related to adding cells in tables. Insertion of cells in rows is still only possible in disconnetcted rows though.</LI>
+<LI><FONT color=#339933>New</FONT> behavior:scroller. Sample in html_samples/behaviors/scroller.htm. It is better to load it to get an idea.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.16</TD>
+    <TD nowrap valign="top" align="center">25-06-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> in animation module. In some circumstances it could produce AV.</LI>
+<LI><FONT color=#339933>Update</FONT> of behavior:grid. It is generating <EM>TABLE_ROW_DBL_CLICK</EM> event on double click on the row.</LI>
+<LI><FONT color=#339933>New</FONT> API function: <EM>HTMLayoutSortElements</EM>, it allows to sort children of some element by sorting rule provided by application.</LI>
+<LI><FONT color=#339933>New</FONT> <EM>behavior:sortable-grid</EM> in file behavior_grid.cpp. Its sample is in html_samples/grid/sortable-grid.htm</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.15</TD>
+    <TD nowrap valign="top" align="center">23-06-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> in get_value() function (in htmlayout_controls.hpp), thanks to Leon &amp; the crew. This was causing AV in bahaviors/test-form.htm sample (click on Reset).</LI>
+<LI><FONT color=#ff0033>Fix</FONT> WM_CHAR handling - it used to return 0 as LRESULT and bHandled == TRUE in all cases. Now it returns 0/bHandled(TRUE) only if character was really consumed. Chris, thanks.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of HTMLayoutCloneElement for table rows. Thanks go to Zverok this time.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in behavior:select. &lt;options&gt; elements having children are getting either one :expanded or :collapsed flag set while parsing. &lt;options&gt; without children (caption is not included here) will have both :expanded and :collapsed flags reset. You can use this fact for proper styling of tree views. &lt;options&gt; having no leafs should not show +/- icon. Joel, thanks.</LI>
+<LI><FONT color=#339933>Update</FONT> of behavior:check and behavior:radio. They now DO_CLICK (change value) when assigned accesskey pressed.</LI>
+<LI><P><FONT color=#339933>New</FONT> CSS feature - <EM>named style sets</EM>. Style set is a set of style definitions applied as a whole system. Notation is as:<BR>@set name <BR>{ <BR>selector1 { ... style attributes... }<BR>selector2 { ... style attributes... }<BR>}<BR>There are many cases where sets are needed. The first one is:</P></LI>
+<LI><FONT color=#339933>New</FONT>. <EM>Styleable scrollbars</EM>. Example: <BR><IMG src="http://www.terrainformatica.com/htmlayout/images/custom-scrollbars.png"><BR>Scrollbar style definition is made by named style set and applied to the particular element by using <FONT color=#339933>new</FONT> CSS attributes:</LI>
+<UL>
+<LI><EM>vertical-scrollbar</EM>: name-of-style-set;</LI>
+<LI><EM>horizontal-scrollbar</EM>: name-of-style-set;</LI></UL>
+
+<DIV>Please see sample of styleable scrollbar in sdk/html_samples/css-plus/scrollbar-styling.htm</DIV></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.14</TD>
+    <TD nowrap valign="top" align="center">20-06-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New</FONT>, &nbsp;support of IME - input method used in China, Japan and some other countries.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of the <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=259">problem</A>. Rainer, danke.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of HTMLayoutMinWidth/HTMLayoutMinHeight computation when document dimensions defined explicitly. Chris, thanks.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.13</TD>
+    <TD nowrap valign="top" align="center">19-06-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>New</FONT> <EM>CSS attribute selector</EM>: [attr==&quot;value&quot;] - case insensitive string match. Given selector will match elements having attr=&quot;Value&quot; or attr=&quot;vALUE&quot; defined.</LI>
+<LI><EM>behavior:acesskeys</EM> was <FONT color=#339933>updated</FONT> to use case insensitive string match above so now value of accesskey attribute is case insensitive: accesskey=&quot;^m&quot; and accesskey=&quot;^M&quot; will trigger on Ctrl-M.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of CSS parser hanging <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=251">problem</A>. Thanks, Alex.</LI>
+<LI>New SDK sample: skin - an example of window styling using solely HTML/CSS/behaviors:<BR><IMG src="http://www.terrainformatica.com/htmlayout/images/skinned.png"></LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.12</TD>
+    <TD nowrap valign="top" align="center">17-06-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of the problem loading images from styles referred by &lt;link&gt;. [<A href="http://www.terrainformatica.com/bb/viewtopic.php?t=248">description</A>]</LI>
+<LI>One more <FONT color=#ff0033>fix</FONT> of @media rule parsing [<A href="http://www.terrainformatica.com/bb/viewtopic.php?t=247">description</A>]</LI>
+<LI><FONT color=#339933>Update</FONT> of behavior:accesskeys. Now this behavior does deep search including content of possible &lt;iframe&gt;s. &nbsp;I also have updated Master CSS with the line: <EM>html { behavior:accesskeys; }</EM> so all documents will have this behavior by default.</LI>
+<LI><FONT color=#339933>New</FONT> <EM>behavior:decimal</EM> and <EM>behavior:currency</EM> and correspondent <EM>&lt;input type=&quot;decimal&quot; /&gt;</EM> and <EM>&lt;input type=&quot;currency&quot; /&gt;. </EM>Details are <A href="http://www.terrainformatica.com/htmlayout/behaviors.whtm">here</A>. See: html_samples/forms/form.htm for example.</LI>
+<LI><FONT color=#339933>New</FONT> API functions <EM>HTMLayoutIsElementVisible</EM> and <EM>HTMLayoutIsElementEnabled</EM> - detectors of deep visibility and enabled state.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.11</TD>
+    <TD nowrap valign="top" align="center">15-06-2006</TD>
+    <TD>
+<UL>
+<LI>More <FONT color=#ff0033>fix</FONT>es in <EM>CSS parser</EM>, in particular problem of parsing @media section.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in <EM>behavior:hyperlink</EM> - now it clicks only on left mouse button.</LI>
+<LI>Update of <EM>behavior:tabs</EM> - it generates now bubbling notifications ELEMENT_EXPANDED/COLLAPSED on tab switch.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> in b<EM>ehavior:button</EM>. It clciks now on ENTER too.</LI>
+<LI><FONT color=#ff0033>Fix</FONT> of HTMLayoutHttpRequest function - POST requests.</LI>
+<LI><FONT color=#339933>New</FONT> <EM>behavior:form</EM> - support of submit / reset buttons. This is a template behavior - you should override on_data_arrived to do something usefull. Currently it popups HTML dialog with server answer. See: html_samples/behaviors/form-test.htm</LI>
+<LI>browse.exe updated. It popups now debugging console window in case of CSS parsing errors.</LI></UL>
+
+<DIV>Mobile version was updated too in this build.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.10</TD>
+    <TD nowrap valign="top" align="center">11-06-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of problem in CSS parser causing parser to hang up while loading document.</LI>
+<LI><EM>behavior:grid</EM><FONT color=#ff0033> fix</FONT>.</LI>
+<LI><FONT color=#339933>New</FONT>. C++ comments in CSS.<BR>Being caught once again writing C++ comments ( from // and up to the end of the string ) in CSS files I decided to implement them in CSS parser. Please be aware - they are non-standard. But convenient. <BR>Probably it's time to use name &nbsp;CSS++ for what is used in HTMLayout?</LI>
+<LI><FONT color=#339933>New</FONT> <EM>behavior:path. </EM>One more drawing behavior sample. This <EM>behavior:path</EM> renders content of the element with DT_PATH_ELLIPSIS style. Sample is in sdk/html_samples/behaviors/path-behavior.htm.</LI>
+<LI><FONT color=#339933>Added</FONT> '/' and '\' characters to the list of symbols where text can wrap.</LI>
+<LI><FONT color=#339933>New</FONT> API function <EM>HTMLayoutHttpRequest</EM>. It allows to send HTTP GET/POST requests with collection of parameters. ATTN: not tested yet at all.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.9</TD>
+    <TD nowrap valign="top" align="center">10-06-2006</TD>
+    <TD>
+<UL>
+<LI><EM>CSS parser </EM>was <FONT color=#ff0033>completely redesigned</FONT> in this build. It is more stable and maintainable and fixes <A href="http://terrainformatica.com/bb/viewtopic.php?t=232">this bug</A> among other things. This version also allowed to implement:</LI>
+<LI><FONT color=#339933>New</FONT> API function <EM>HTMLayoutSetupDebugOutput</EM>. This function allows to setup debug output stream for HTMLayout. When it will be set HTMLayout will report there parsing problems (only CSS parsing for a while).<BR>See file browse.cpp, it has following declaration:</LI>
+<BLOCKQUOTE>
+<DIV><FONT color=#003399>#ifdef</FONT> _DEBUG</DIV>
+<DIV><FONT color=#006600> &nbsp;// enable debug output</FONT></DIV>
+<DIV>htmlayout::debug_output _debug_stream;</DIV>
+<DIV><FONT color=#003399>#endif</FONT></DIV></BLOCKQUOTE>
+
+<DIV>This installs debug output stream for HTMLayout. This stream uses Visual Studio output panel for showing debug messages. Pretty convenient - I immediately found one CSS bug in file /behaviors/more_tabs.htm sample.</DIV></UL>
+
+<UL>
+<LI><FONT color=#ff0033>Fix</FONT> of css selector specificity calculation for pseudo-classes <EM>nth-child</EM> and <EM>nth-last-child</EM>.</LI></UL>
+
+<DIV>Gentlemen, this is pretty significant change, so please test first your projects in debug mode. <EM>Praemonitus - praemunitus</EM>.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.8</TD>
+    <TD nowrap valign="top" align="center">06-06-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>Update</FONT> of behavior:grid (<EM>behavior_grid.cpp</EM>) - made it compileable by VC 2003.</LI>
+<LI><FONT color=#ff3300>Fix</FONT> of <EM>behavior:textarea</EM> and <EM>behavior:htmlarea </EM>- now they correctly handle readonly and disable attributes and state flags. Rainer, your case should be fixed now, thanks.</LI>
+<LI><FONT color=#339933>Update</FONT> of <EM>behavior:textarea</EM>, it supports <EM>maxlength</EM> attribute now. See <A href="http://www.terrainformatica.com/htmlayout/behaviors.whtm">Behaviors, Event Handlers and builtin HTML Controls</A></LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.7a</TD>
+    <TD nowrap valign="top" align="center">05-06-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#339933>Update</FONT> of <EM>behavior_grid.cpp</EM>. Now it supports multiple row selection. Thanks to <STRONG>Andrey Kubyshev</STRONG> for the updates. html_samples/grid/scrollable_grid.cpp has been updated too. Use CSS to style :checked rows.</LI>
+<LI><FONT color=#339933>Added</FONT> CSS support of :anchor state flag (STATE_ANCHOR). Typically used to mark anchor element in multiple selection lists.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.7</TD>
+    <TD nowrap valign="top" align="center">02-06-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff3300>Fix</FONT> &lt;input type=button&gt; rendering when it is in disabled sate.</LI>
+<LI><FONT color=#ff3300>Fix</FONT> in behavior_hyperlink.cpp, on_focus return TRUE now.</LI>
+<LI><FONT color=#ff3300>Fix</FONT>, WM_SYSKEYDOWN, WM_SYSKEYUP, WM_SYSCHAR handling so now is possible to handle Alt-A for example.</LI>
+<LI><FONT color=#339933>New</FONT>, engine interprets characters -,?,!, ], ) as wordbreaks now [ <A href="http://www.cs.tut.fi/~jkorpela/html/nobr.html">source</A> ].</LI>
+<LI><STRONG>&lt;textarea&gt;</STRONG> is in feature complete state.</LI>
+<LI><FONT color=#ff3300>Fix</FONT> of CSS nth-child selector handling, now it correctly selects first 3 children by :nth-child(-n+3).</LI>
+<LI>Other <FONT color=#ff3300>fixes</FONT> in CSS parser.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.6</TD>
+    <TD nowrap valign="top" align="center">01-06-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff3300>Fix</FONT> of focus event propagation. GOT_FOCUS/LOST_FOCUS | EVENT_SINKING is sent now to the element itself [<A href="http://www.terrainformatica.com/bb/viewtopic.php?t=215">problem definition</A>].</LI>
+<LI><FONT color=#ff3300>Fix</FONT> of bgcolor attribute parsing - it accepts color names in upper case too now. Mark, this is yours, thanks.</LI>
+<LI><FONT color=#ff3300>Fix</FONT> of programmatic insertion of &lt;options&gt; element [<A href="http://www.terrainformatica.com/bb/viewtopic.php?t=223">problem definition</A>].</LI>
+<LI>HTMLayout_Use/UnuseElement is thread safe now.</LI>
+<LI><FONT color=#339933>New</FONT> behavior:<EM>scroll-bar</EM> and &lt;input/widget <EM>type=&quot;vscrollbar&quot;</EM>&gt; / &lt;input/widget <EM>type=&quot;hscrollbar&quot;</EM>&gt;. Useful for creation of virtual lists or grids. See html_samples/forms/scrollbar.html</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.5</TD>
+    <TD nowrap valign="top" align="center">30-05-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff3300>Redesign</FONT> of &lt;table fixedlayout&gt;. Table fixed layout principles:</LI>
+<UL>
+<LI>All rows will have height of first non-fixed row.</LI>
+<LI>Columns will have widths determined by width of cells in fixed rows and in first non-fixed row. Rule is first-definition-come-first-used.</LI>
+<LI>All cells in fixed table behave as if overflow:hidden set to them.</LI>
+<P>Main goal of the fixedlayout is to support behavior:grid alike use cases. fixedlayout significantly improves speed of layout (e.g. due to resizing) of tables having more than 5.000 of rows or so.</P>
+<P>Two **-fixed-**.htm files were added into html_samples/stress/ folder.</P></UL>
+
+<LI>WM_ERASEBKGND - <FONT color=#ff3300>fix</FONT> of fix :) For child HTMLayout windows it just returns TRUE as it was before.</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.4</TD>
+    <TD nowrap valign="top" align="center">29-05-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff3300>Fix</FONT> of <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=219">problem with table</A> vertical adjustment.</LI>
+<LI><FONT color=#ff3300>Fix</FONT> of &lt;table fixedrows&gt; problems (AV and row resizing) described <A href="http://www.terrainformatica.com/bb/viewtopic.php?t=214">here</A>. Now if there is overflow-y set to the table its rows are not expanded to fit the whole table height.</LI></UL>
+<HR>
+<DIV>Updated Sciter to version 3.1.1.4. Tests like dynamic DOM manipulation are more convenient to write using its scripting.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.3</TD>
+    <TD nowrap valign="top" align="center">28-05-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff3300>Fix </FONT>in HTMLayoutDialog function. [<A href="http://www.terrainformatica.com/bb/viewtopic.php?t=200">problem definition</A>]</LI>
+<LI><FONT color=#ff3300>Fix</FONT> of AV in call of HTMLayoutInsertElement( EMPTY ROW); &nbsp;[<A href="http://www.terrainformatica.com/bb/viewtopic.php?t=212">problem defintion</A>]</LI>
+<LI><FONT color=#339933>New</FONT> <EM>behavior:accesskeys</EM>. Support of accesskey html attribute, format:</LI>
+<UL>
+<LI><EM>&quot;</EM><STRONG>^keyname</STRONG><EM>&quot; - </EM>press of CTRL + keyname;</LI>
+<LI><EM>&quot;</EM><STRONG>!keyname</STRONG><EM>&quot; - </EM>just keyname press (without any modifier);</LI>
+<LI><EM>&quot;</EM><STRONG>keyname</STRONG><EM>&quot; - </EM>press of ALT + keyname;</LI></UL>
+
+<DIV>See source in /include/behaviors/behavior_accesskeys.cpp and /html_samples/behaviors/accesskeys.htm</DIV></UL>
+
+<UL>
+<LI><FONT color=#339933>New</FONT> <EM>behavior:actions</EM>. It is pure demo behavior. Now it allows to declare some actions directly in HTML. In fact this behavior should use some interpretter (see question on forum).</LI></UL>
+</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.2</TD>
+    <TD nowrap valign="top" align="center">27-05-2006</TD>
+    <TD>
+<UL>
+<LI><FONT color=#ff3300>Fix</FONT> of parsing of erroneous html tables. Previously parsing of &lt;table&gt;hi!&lt;/table&gt; was skipping &quot;hi!&quot; at all. Now parser is trying to do its best to place such erroneous content somewhere in table structure. Mark, this is yours, thanks.</LI>
+<LI><FONT color=#ff3300>Fix</FONT> in HTMLayoutCloneElement. [<A href="http://www.terrainformatica.com/bb/viewtopic.php?t=200">problem definition</A>]</LI>
+<LI><FONT color=#ff3300>Fix</FONT> of empty &lt;option&gt;&lt;/option&gt; tag rendering. [<A href="http://www.terrainformatica.com/bb/viewtopic.php?t=198">problem definition</A>]. Comment: to calculate height of &lt;select size=4&gt; element (its height/min-intrinsic) uses first option' height for calculations. Empty &lt;option&gt; has 0 height so total height evaluated to zero too.</LI>
+<LI><STRONG><FONT color=#ff3300>Fix</FONT></STRONG> of latent bug may cause segmentation fault while measuring some documents. Thanks, Chris!</LI>
+<LI><FONT color=#ff3300>Fix</FONT> of vertical alignment calculation of blocks containing float elements for typical use cases. Use of floating elements and elements having vertical flex'es (%%) in the same container is still a gray area - logical conflicts. Anatoly, this is yours, thanks.</LI>
+<LI><FONT color=#ff3300>Fix</FONT> of rendering when htmlayout is attached to frame window (not a child window). Moving other windows over such window used to create artifacts - non-painted areas. This can be observed in Sciter now.</LI>
+<LI><FONT color=#ff3300>Fix</FONT> of repainting of bulleted lists. Anatoly, this is also yours.</LI></UL>
+<HR>
+<DIV><STRONG><FONT color=#660033>Mobile version</FONT></STRONG>: it was also updated in this build. I switched back to eVC4 (couple of last builds were made using VC2005). Let me know if you will find any problems with this.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.1</TD>
+    <TD nowrap valign="top" align="center">24-05-2006</TD>
+    <TD>
+<DIV>Updates of SDK source files:</DIV>
+<UL>
+<LI>htmlayout_dailog.hpp:</LI>
+<UL>
+<LI>Made it compileable under VS 2003.</LI>
+<LI>Use of files from /xool/ folder was eliminated. The whole /xool/ folder has gone from SDK.</LI>
+<LI>new method group htmlayout::dialog::input(html, named_values) - allows to show input dialog and set/get input values in single function call. Forget about DDX.</LI></UL>
+
+<LI>browse sample: added new menu item Dialogs/Input Dialog to demonstrate new dialog::input methods.</LI>
+<LI>htmlayout_aux.h file got new helper classes a2w, w2a, utf2w and w2utf.</LI></UL>
+
+<DIV>HTMLayout.dll has no new features or major fixes in this build.</DIV></TD>
+  </TR>
+  <TR>
+    <TD colspan="2" nowrap valign="top" align="center">&nbsp;</TD>
+    <TD bgcolor=#fff0fb valign="middle">Version 3.1.1.1 of HTMLayout SDK is also available here: <A href="HTMLayoutSDK.3.1.1.1.zip">HTMLayoutSDK.3.1.1.1</A> as a separate distribution.</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="center">3.1.1.0</TD>
+    <TD nowrap valign="top" align="center">23-05-2006</TD>
+    <TD>
+<UL>
+<LI>Final <FONT color=#ff3300>fixes</FONT> in printing module, in particular bug &quot;same line of text can appear as last and first line on two consequent pages&quot; was fixed.</LI>
+<LI><FONT color=#339933>New</FONT> API function: HTMLayoutDialog. It allows to show HTML based dialogs. See file (also new): htmlayout_dialog.hpp</LI></UL>
+</TD>
+  </TR>
+</TABLE>
+<P align="left"><A href="logfile310.htm">log file of versions prior 3.1.1.0</A></P>
+</BODY>
+</HTML>

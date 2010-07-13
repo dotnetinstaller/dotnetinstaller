@@ -1,0 +1,89 @@
+<html>
+<head>
+  <style>
+    table 
+    {
+      width:25%;
+      height:*;
+    }
+    
+    thead 
+    {
+      background:wheat;
+    }
+    thead th { border:1px dotted black; }
+    
+    tbody 
+    {
+      background:cornsilk;
+      color:red;
+      overflow-y:auto;
+      height:*;
+    }
+    tfoot
+    {
+      background:gold;
+    }
+    
+    tbody > tr:nth-child(odd) { color:green; }
+  
+  </style>  
+  
+</head>
+<body>
+  <h1>table, thead, tbody, tfoot</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>head 11</th><th>head 12</th><th>head 13</th>
+      </tr>        
+      <tr>
+        <th colspan=2>head 21-22</th><th>head 23</th>
+      </tr>
+    </thead>
+    <tbody .first>
+      <tr>
+        <td>11</td><td>12</td><td>13</td>
+      </tr>
+      <tr>
+        <td>21</td><td>22</td><td>23</td>
+      </tr>
+      <tr>
+        <td>21</td><td>22</td><td>23</td>
+      </tr>
+      <tr>
+        <td>21</td><td>22</td><td>23</td>
+      </tr>
+      <tr>
+        <td>21</td><td>22</td><td>23</td>
+      </tr>
+      <tr>
+        <td>21</td><td>22</td><td>23</td>
+      </tr>
+      <tr>
+        <td>21</td><td>22</td><td>23</td>
+      </tr>
+      <tr>
+        <td>21</td><td>22</td><td>23</td>
+      </tr>
+      <tr>
+        <td>21</td><td>22</td><td>23</td>
+      </tr>
+      <tr>
+        <td>21</td><td>22</td><td>23</td>
+      </tr>
+      <tr>
+        <td>21</td><td>22</td><td>23</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>footer 11</td><td>footer 12</td><td>footer 13</td>
+      </tr>
+      <tr>
+        <td>footer 21</td><td>footer 22</td><td>footer 23</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<title>CSS background/foreground images</title>
+<style type="text/css"> 
+	body { 
+		font-family:Verdana; font-size:10pt; 
+		width:100%%; height:100%%;  
+		background-color: window;
+		padding:10px;
+		margin:0;
+	}
+
+	.command-bar {
+	  flow:horizontal;
+		background-color: #b3cfe4;
+		padding: 2px 100%%; /* to center its content */
+	}	
+	
+	.command {
+	  background: url(button-back.png) repeat;
+		foreground: url(button-fore.png) repeat;
+		color: #0c2e5a;
+	  width: 65px;
+		height: 24px;
+	  text-align:center;
+	  margin:1em;
+		vertical-align:middle;
+		behavior:command;
+	}
+	.command:hover 
+	{
+		background-image: url(button-back-hover.png);
+		color: #000;
+	}
+	.command:active 
+	{
+		background-image: url(button-back-active.png);
+	}
+	.command:focus 
+	{
+		outline:1px dotted black -4px; /* inside */
+	}
+	.command:focus:active
+	{
+		outline:none;
+	}
+	
+</style>
+	</head>
+	<body>
+	<center>commands:</center>
+	<div class="command-bar">
+		<div class=command id="FirstCommand"  tabindex=1 title="First!"><img src="icon.png"> One</div>
+		<div class=command id="SecondCommand" tabindex=2 title="Second!">Two</div>
+		<div class=command id="ThirdCommand"  tabindex=3 title="Third!">Three</div>
+		<div class=command id="FourthCommand" tabindex=4 title="Fourth!">Four</div>
+	</div>
+	</body>
+</html>

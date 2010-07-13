@@ -93,7 +93,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="if not exist (&quot;$(TargetDir)\unicows.dll&quot;) (&#x0D;&#x0A; copy &quot;$(SolutionDir)\ThirdParty\mslu\unicows.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;)&#x0D;&#x0A;"
+				CommandLine="if not exist (&quot;$(TargetDir)\unicows.dll&quot;) (&#x0D;&#x0A;copy &quot;$(SolutionDir)\ThirdParty\mslu\unicows.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -173,7 +173,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="if not exist (&quot;$(TargetDir)\unicows.dll&quot;) (&#x0D;&#x0A; copy &quot;$(SolutionDir)\ThirdParty\mslu\unicows.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;)&#x0D;&#x0A;"
+				CommandLine="if not exist (&quot;$(TargetDir)\unicows.dll&quot;) (&#x0D;&#x0A;copy &quot;$(SolutionDir)\ThirdParty\mslu\unicows.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -199,10 +199,6 @@
 			</File>
 			<File
 				RelativePath=".\ControlValue.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DniMessageBox.cpp"
 				>
 			</File>
 			<File
@@ -238,10 +234,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\InstallerCommandLineInfo.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\InstallStatus.cpp"
 				>
 			</File>
@@ -251,14 +243,6 @@
 			</File>
 			<File
 				RelativePath=".\LanguageSelectorDialog.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MSLU.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\SplashWnd.cpp"
 				>
 			</File>
 			<File
@@ -301,14 +285,6 @@
 			</File>
 			<File
 				RelativePath=".\ControlValue.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DisableWnd.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DniMessageBox.h"
 				>
 			</File>
 			<File
@@ -361,10 +337,6 @@
 			</File>
 			<File
 				RelativePath=".\Resource.h"
-				>
-			</File>
-			<File
-				RelativePath=".\SplashWnd.h"
 				>
 			</File>
 			<File

@@ -1,0 +1,95 @@
+<HTML>
+	<HEAD>
+		<TITLE>Tree view lines styling</TITLE>
+	<STYLE>
+    h1 
+    {
+      font-size: 14pt;
+    }
+    h2
+    {
+      font-size: 14pt;
+      text-align:right; 
+    }
+  
+    #dd options > * /* tree line support */
+    {
+      display: list-item;
+      list-style-type: tree-line;
+      list-marker-size:1px;
+      list-marker-color:red;
+      list-marker-style:dotted;      
+    }
+    #dd options 
+    {
+      padding-left:16px;
+    }
+    #dd options >:first-child
+    {
+      margin-left:0;
+    } 
+    #dd option code
+    {
+      /*display:inline-block;
+      margin-left:*;
+      text-align:center;
+      min-width:2em;*/
+      background-color:cornsilk;
+      padding:0 2px;
+      border:1px solid threedshadow;
+    } 
+    
+    ul.tree-lines > li
+    {
+      display: list-item;
+      list-style-type: tree-line;
+      list-marker-color:green;
+      list-marker-style:dashed;      
+      list-marker-size:3px;
+      padding:2px;
+    }
+    
+	</STYLE>
+	</HEAD>
+	<BODY>
+	<h1>Select: tree view with tree lines</h1>
+  
+  <widget #dd type="select" style="height:*">
+    <options expanded>Metals
+      <options expanded>Alkaline Metals
+        <option>Lithium <code>Li</code></option>
+        <option>Sodium <code>Na</code></option>
+        <option>Potassium <code>K</code></option>
+      </options>
+      <options expanded>Transition Metals
+        <option>Scandium <code>Sc</code></option>
+        <option>Titanium <code>Ti</code></option>
+        <option>Vanadium <code>V</code></option>
+      </options>
+    </options>
+    <options expanded>Halogens
+        <option>Fluorine <code>F</code></option>
+        <option>Chlorine <code>Cl</code></option>
+        <option>Bromine <code>Br</code></option>
+    </options>
+  </widget> 
+  <h1>Simple list with tree lines:</h1>
+  <div style="flow:horizontal">
+    <h2>LTR:</h2>
+    <ul .tree-lines>
+      <li>First</li>
+      <li>Second<br/>(spans two lines)</li>
+      <li>Third</li>
+      <li>Fourth</li>
+    </ul> 
+    <h2>RTL:</h2>
+    <ul .tree-lines dir="rtl">
+      <li>First</li>
+      <li>Second<br/><span dir=ltr>(spans two lines)</span></li>
+      <li>Third</li>
+      <li>Fourth</li>
+    </ul>
+  </div>
+	</BODY>
+  
+</HTML>

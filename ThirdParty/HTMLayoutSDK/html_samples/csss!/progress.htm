@@ -1,0 +1,46 @@
+<HTML>
+	<HEAD>
+		<STYLE>
+      input#val
+      {
+        value-changed!: $1(input#pro).requested-value = self:value; 
+      } 
+      input#pro[requested-value] 
+      {   
+        assigned!: self.start-animation();
+        
+        animation-step!: 
+            rqval = int(self.requested-value),
+            rqval == int(self:value) ? return, 
+            self:value = self:value + (rqval < self:value? -1 # 1), 
+            //debug(self:value),
+            return 20;
+        animation-end!: self.requested-value = null;
+      }
+      
+      input#val2
+      {
+        value-changed!: $1(span#pro2)::foreground-offset-right = 100 - self:value; 
+      } 
+      span#pro2 
+      {   
+        vertical-align:middle; 
+        foreground: url(images/anim-bar.gif) no-repeat;
+        display:inline-block; 
+        foreground-offset-right:90;
+        width:100px;
+        height:6px;
+        border:1px solid;
+      }
+	  </STYLE>
+	</HEAD>
+	<BODY>
+      <h1>Progress 1</h1>
+      Change this value:<input #val type="number" value=10 maxvalue=100 minvalue=0 step="10" /> and you should see
+      this: <input #pro type="progress" maxvalue="100" value="0"/> animating.
+      <h1>Progress 2, animation</h1>
+      Change this value:<input #val2 type="number" value=10 maxvalue=100 minvalue=0 step="10" /> and you should see
+      this: <span #pro2 /> animating.
+	</BODY>
+	</BASEFONT>
+</HTML>

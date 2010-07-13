@@ -1,0 +1,138 @@
+<html>
+	<head>
+		<title>Editor widgets</title>
+<style type="text/css"> 
+
+	body { 
+		font-family:Verdana; font-size:10pt; 
+		width:100%%; height:100%%;  
+		padding:10px;
+		margin:0;
+	}
+	.hcontainer { 
+		width:100%%; height:100%%;  
+		flow:horizontal;
+	}
+	
+	.vcontainer { 
+		width:100%%; height:100%%;  
+	}
+		
+	.hfixed 
+	{
+	  height:100%%; 
+	  width:100px;	  
+	}
+	
+	.hspring 
+	{
+	  height:100%%; 
+	  width:100%%;	  
+	}
+	
+	.hsplitter 
+	{
+	  height:100%%; 
+	  width:6px;	  
+	  behavior:splitter;
+	  cursor:w-resize;
+	  margin:0;
+	  border:none;
+	  background-color: threedlight; 
+	}
+	.hsplitter:hover
+	{
+	  background-color: threedface; 
+	}
+	
+	.vsplitter 
+	{
+	  height:6px; 
+	  width:100%%;	  
+	  behavior:splitter;
+	  cursor:n-resize;
+	  margin:0;
+	  border:none; 
+	  background-color: threedlight; 
+	}
+	.vsplitter:hover
+	{
+  	  background-color: threedface; 
+	}
+	
+	.header 
+	{ 
+		padding:6px; 
+	    font-size: 11pt;
+		font-family:'Century Gothic', Tahoma, Arial;
+	}
+	
+  richtext
+  {
+    context-menu:selector(menu#custom);
+  }
+  
+  @set popup-menu < std-popup-menu
+  {
+  }
+  
+  menu#custom
+  {
+    style-set: "popup-menu";
+  }
+	
+</style>
+
+    <menu #custom>
+      <caption>Custom menu!</caption>
+      <li	command="richtext:redo"
+        style="foreground-image:url(res:edit-redo.png)"
+        >Redo-doo-doo<span class="accesskey">Ctrl+Y</span></li>
+      <li	command="richtext:undo"
+        style="foreground-image:url(res:edit-undo.png)"
+        >Undo<span class="accesskey">Ctrl+Z</span></li>
+      <hr/>
+      <li	command="richtext:cut" 
+        style="foreground-image:url(res:edit-cut.png)"
+        >Cut<span class="accesskey">Ctrl+X</span></li>
+      <li	command="richtext:copy"
+        style="foreground-image:url(res:edit-copy.png)"
+        >Copy<span class="accesskey">Ctrl+C</span></li>
+      <li	command="richtext:paste"
+        style="foreground-image:url(res:edit-paste.png)"
+        >Paste<span class="accesskey">Ctrl+V</span></li>
+      <hr/>
+      <li	command="richtext:selectall"
+        >Select All<span class="accesskey">Ctrl+A</span></li>
+    </menu>       
+
+
+	</head>
+	<body class="hcontainer">
+		<div class="hfixed">Text editing <a href=#>widgets</a> in HTMLayout</div>
+	<hr class="hsplitter">
+		<div class="vcontainer">
+			<div style="height:50%%">
+				<caption class="header">plaintext (a.k.a. textarea/display:block)</caption>
+				<plaintext style="height:100%%; font:10pt monospace">
+Editable content. Sample.
+				</plaintext>
+			</div>
+		<hr class="vsplitter">
+			<div style="height:50%%">
+				<caption class="header">richtext (a.k.a. htmlarea/display:block)</caption>
+				<richtext style="height:100%%; font:10pt Verdana" >
+           <b>Bold</b> Text
+				   <small>(behavior is under construction)</small>
+				   <p>Editable content. <strong>Sample!</strong></p> 
+           <ol>
+            <li>First item</li>
+            <li>Second item</li>
+            <li>Third item</li>
+           </ol>
+				</richtext>
+			</div>
+		</div>
+    
+	</body>
+</html>

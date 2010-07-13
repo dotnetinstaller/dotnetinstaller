@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <menu id="external-items">
+      <li value="red"><img style="background-color:red; width:14px; height:14px"/></li>
+      <li value="blue"><img style="background-color:blue; width:14px; height:14px"/></li>
+      <li value="green"><img style="background-color:green; width:14px; height:14px"/></li>
+    </menu>
+    
+    <table id="another-external-items">
+      <tr>
+        <td value="red"><img style="background-color:red; width:14px; height:14px"/></td>
+        <td value="blue"><img style="background-color:blue; width:14px; height:14px"/></td>
+        <td value="green"><img style="background-color:green; width:14px; height:14px"/></td>
+      <tr></tr>      
+        <td value="yellow"><img style="background-color:yellow; width:14px; height:14px"/></td>
+        <td value="magenta"><img style="background-color:magenta; width:14px; height:14px"/></td>
+        <td value="cyan"><img style="background-color:cyan; width:14px; height:14px"/></td>
+      </tr>
+    </table>
+    
+  </head>
+  <style>
+    #external-items { width:*; }
+    #external-items > li { padding:2px 4px ; }
+    
+    #another-external-items { background:window; border:2px solid threedface; behavior:menu; /*is a menu*/  }
+    #another-external-items td { role:"menu-item"; padding:2px; }
+    #another-external-items td:current { background-color:highlight; color:highlighttext; }
+   
+    button.colors { width:18px; }
+   
+    button.colors > caption img { 
+      border-top:1px solid threedshadow; 
+      border-left:1px solid threedshadow; 
+      border-right:1px solid threedhighlight; 
+      border-bottom:1px solid threedhighlight; 
+      margin:2px; 
+      }
+    
+  </style>
+<body>
+
+<h2>&lt;button type="selector" /&gt;</h2>
+
+<!--Internal menu items: <button type="selector" value="1">
+  <menu>
+    <li value="1">First</li>
+    <li value="2">Second</li>
+    <li value="3">Third</li>
+    <li value="4">Fourth</li>
+  </menu>
+</button>-->
+
+<p style="border:1px solid red">External menu items <button type="selector" class="colors" value="red" menu="#external-items" style="vertical-align:middle" />
+another one <button type="selector" class="colors" value="red" menu="#another-external-items" style="vertical-align:middle" /></p>
+
+
+</body>
+
+
+
+</html>
+	
+	

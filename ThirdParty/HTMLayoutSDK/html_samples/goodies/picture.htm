@@ -1,0 +1,32 @@
+<html>
+<head>
+  <style>
+    button[name="img"]
+    {
+      click!: $1(picture#photo).src = self.src;
+    }
+    
+    picture#photo
+    {
+      width:320px;
+      height:320px;
+      border:1px dashed silver;
+      foreground-repeat:stretch keep-ratio;
+      foreground-position: 50% 50%;
+    }
+  </style>  
+  
+<head>
+<body>
+  <h1>Demo of &lt;picture&gt; element</h1>
+  Select picture:<button type="radio" name="img" checked src="pictures/pic1.jpg">pic1.jpg</button>
+  <button type="radio" name="img" src="pictures/pic2.jpg">pic2.jpg</button>
+  <picture #photo src="pictures/pic1.jpg" />
+  <p>The &lt;picture&gt; element is different from the &lt;img&gt; element by the following:</p> 
+  <ol>
+    <li>It has intrinsic display:block model, so behaves as a DIV.</li>
+    <li>It does not store image data in runtime cache. Use it when you need to e.g. present sequence of photos - unique images for the document.</li>
+    <li>Its 'src' attribute is not mapped on the <code>foreground-image</code> CSS attribute but other foreground-*** attributes do apply to the image.</li>
+  </ol>
+</body>
+</html>

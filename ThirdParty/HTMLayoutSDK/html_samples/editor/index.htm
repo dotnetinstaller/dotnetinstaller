@@ -1,0 +1,288 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>AxHTMLayout 'Olive' skin</title>
+		<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<style>
+
+body { 
+    width:100%%;
+    height:100%%;
+    font-family:system; background-color:#EEF5E4; 
+}
+ul { list-style-type: none; }
+
+.toolbar { flow:horizontal; }
+.statusbar { flow:horizontal; }
+.hdiv { flow:horizontal; }
+
+/* #EEF5E9 #A3A8A0 #F5F4E9 #A8A8A0 #0A0A0A #F5F5F5 */
+
+.button 
+{ 
+	width:18px; height:18px; 
+	padding:4px; margin:1px;
+	border:1px solid transparent;
+	/*cursor:pointer;*/
+}
+.button:hover 
+{ 
+    background-color:#F5FCF0 #EEF5E7 #DDE3D0 #EEF5E7;  
+    border-top: solid 1px #F5FCF0;
+    border-left: solid 1px #F5FCF0;
+    border-right: solid 1px #A3A8A0;
+    border-bottom: solid 1px #A3A8A0;
+}
+.button:active 
+{ 
+    background-color:#DDE3D0 #EEF5E7 #F5FCF0 #EEF5E7;  
+    padding:5px 3px 3px 5px;
+    border-top: solid 1px #A3A8A0;
+    border-left: solid 1px #A3A8A0;
+    border-right: solid 1px #F5FCF0;
+    border-bottom: solid 1px #F5FCF0;
+}
+
+.divider {
+    padding:0;
+    margin:0;
+    border-top: solid 1px #DDE3D0;
+    border-left: solid 1px #DDE3D0;
+    border-right: solid 1px #F5FCF0;
+    border-bottom: solid 1px #F5FCF0;
+}
+.vdivider {
+    padding:0;
+    margin:2px;
+    border-top: solid 1px #DDE3D0;
+    border-left: solid 1px #DDE3D0;
+    border-right: solid 1px #F5FCF0;
+    border-bottom: solid 1px #F5FCF0;
+    width:0;
+    height:100%%;
+}
+
+.textbutton 
+{ 
+	padding:3px; margin:2px;
+	white-space:nowrap;
+    border:solid 1px;
+    border-top: #FFFFDD;
+    border-left: #FFFFDD;
+    border-right: #A8A8A0;
+    border-bottom: #A8A8A0;
+    background-color:#F5F4E9 #F5F4E9 #E3E2D2 #E3E2D2;
+    /*cursor:pointer;*/
+    /* will take 'max intrinsic' width */
+    max-width:auto;
+}
+.textbutton:active 
+{ 
+    padding:4px 2px 2px 4px;
+    border: #A8A8A0;
+    background-color: #F5F4E9;
+}
+.textbutton:visited 
+{ 
+    padding:3px;
+    border: #A8A8A0;
+    background-color: white;
+}
+
+.spring { width:100%%; }
+
+
+.editor {
+    font: 10pt Verdana,Arial,sans-serif;
+    background-image:none;
+    border:1px solid #A8A8A0;
+    background-color:white;
+    width:100%%;
+    height:100%%;
+}
+
+.sidebar
+{
+    margin:0px 6px;
+    width:max-intrinsic;
+    height:100%%;
+    overflow-x:hidden;
+    overflow-y:hidden;
+}
+
+.sidebar-caption 
+{
+    color:#F5F5F5;
+    font-family:Tahoma;
+    font-size:8.5pt;
+    font-weight:bold;
+    text-align:center;
+    background-image: url(images/toptab.png);
+    /* HtmLayout specific: expandable image fill.*/
+    background-repeat: expand;
+    background-position: 4px 4px 0 4px;
+    margin:0;
+    padding:4px;
+}
+
+.sidebar-body 
+{
+    font-family:Tahoma;
+    font-size:8.5pt;
+    text-align:center;
+    background-color: #F5F4E9;
+    border:1px solid #CACABC;
+    margin:0; 
+    padding:4px;
+}
+
+.sidebar-item 
+{
+	margin:0px;
+	padding:3px;
+  border:1px solid transparent;
+  cursor:default;
+}
+
+.sidebar-item:link
+{
+	color:black;
+  text-decoration:none;
+	margin:0px;
+	padding:3px;
+  border:1px solid transparent;
+}
+
+.sidebar-item:hover 
+{
+    border:dotted 1px #A8A8A0;
+    color:red;
+    text-decoration:none;
+    background-color:#E3E2D2;
+}
+.sidebar-item:visited 
+{
+    border:dashed 1px #A8A8A0;
+    color:red;
+    text-decoration:none;
+    background-color:#ffc;
+}
+.sidebar-item:active 
+{
+    border:dotted 1px #A8A8A0;
+    color:red;
+    text-decoration:none;
+    padding:4px 2px 2px 4px;
+    background-color:white;
+}
+
+.logo 
+{ 
+    width:100%%; 
+    color:#A3A8A0;
+	  border-bottom:dashed 1px #A3A8A0; 
+	  /* align it to the bottom of container */
+	  margin-top: 100%%;
+	  margin-bottom: 2px;
+	  margin-left: 2px;
+	  margin-right: 2px; 
+}
+
+		</style>
+	</head>
+	<body>
+<!-- main toolbar --><hr class="divider">
+		<div class="toolbar">
+			<widget id="new" href="command:new" class=button><img src="images/new.png"></widget>
+			<widget id="open" href="command:open" class=button><img src="images/open.png"></widget>
+			<widget id="save" href="command:save" class=button><img src="images/save.png"></widget>
+			<hr class="vdivider" />
+			<widget id="undo" href="command:undo" class=button><img src="images/undo.png"></widget>
+			<widget id="redo" href="command:redo" class=button><img src="images/redo.png"></widget>
+			<hr class="vdivider" />
+			<widget id="cut" href="command:cut" class=button><img src="images/cut.png"></widget>
+			<widget id="copy" href="command:copy" class=button><img src="images/copy.png"></widget>
+			<widget id="paste" href="command:paste" class=button><img src="images/paste.png"></widget>
+			<hr class="vdivider" />
+			<widget id="search" href="command:search" class=button><img src="images/search.png"></widget>
+			<widget id="spell" href="command:spell" class=button><img src="images/spell.png"></widget>
+			<hr class="vdivider" />
+			<div class="spring" />
+			<hr class="vdivider" />
+			<widget id="insert-table" href="command:insert-table" class=button><img src="images/insert-table.png"></widget>
+			<widget id="insert-img" href="command:insert-img" class=button><img src="images/insert-img.png"></widget>
+			<widget id="insert-rule" href="command:insert-rule" class=button><img src="images/insert-rule.png"></widget>
+			<widget id="insert-anchor" href="command:insert-anchor" class=button><img src="images/insert-anchor.png"></widget>
+			<widget id="insert-link" href="command:insert-link" class=button><img src="images/insert-link.png"></widget>
+		</div>
+<!-- editing toolbar --><hr class="divider">
+		<div class="toolbar">
+		    <!-- WIDGET is INPUT having intrinsic display:block value --> 
+		    <widget type="select-dropdown" name="font-name" id="font-name" style="margin:50%% 2px;">
+				<option selected>Arial (sans-serif)</option>
+				<option>Verdana (sans-serif)</option>
+				<option>Times New Roman (serif)</option>
+				<option>Courier(monospace)</option>
+				</widget>
+			<widget type="select-dropdown" name="font-size" id="font-size"  style="margin:50%% 4px;">
+				<option selected>xx-small</option>
+				<option>x-small</option>
+				<option>small</option>
+				<option>medium</option>
+				<option>large</option>
+				<option>x-large</option>
+				<option>xx-large</option>
+				</widget>
+			<div id="char-bold" href="command:char-bold" class=button><img src="images/bold.png"></div>
+			<div id="char-italic" href="command:char-italic" class=button><img src="images/italic.png"></div>
+			<div id="char-underline" href="command:char-underline" class=button><img src="images/underline.png"></div>
+		</div>
+<!-- middle section height:100%% -->
+		<div style="margin:3px 0px; width:100%%; height:100%%; flow:horizontal">
+			<div class="sidebar">
+<!-- sidebar content : start -->			    
+				<!-- should be generated from 'master style sheet', I guess -->
+				<p class=sidebar-caption >Phrase Element</p>
+					<ul class="sidebar-body">
+					<!-- is it a good idea at all to have these items 'styled'? -->
+					<li command="command:" class=sidebar-item >Normal</li>
+					<li command="command:" class=sidebar-item ><em>Emphasis</em></li>
+					<li command="command:" class=sidebar-item ><strong>Strong</strong></li>
+					<li command="command:" class=sidebar-item ><cite>Citation</cite></li>
+					<li command="command:" class=sidebar-item ><dfn>Definition</dfn></li>
+					<li command="command:" class=sidebar-item ><code>Code</code></li>
+					<li command="command:" class=sidebar-item >Inline Quotation</li>
+					<li command="command:" class=sidebar-item >Highlighting</li>
+					</ul>
+				<p class=sidebar-caption style="margin-top:6px">Paragraph</p>
+					<ul class="sidebar-body">
+						<li command="command:" class=sidebar-item>Normal</li>
+						<li class="hdiv">
+							<div class=sidebar-item command="command:H1">H1</div>
+							<div class=sidebar-item command="command:H2">H2</div>
+							<div class=sidebar-item command="command:H3">H3</div></li>
+						<li class="hdiv">
+							<div class=sidebar-item command="command:H4">H4</div>
+							<div class=sidebar-item command="command:H5">H5</div>
+							<div class=sidebar-item command="command:H6">H6</div></li>
+					</ul>
+				<p class=sidebar-caption style="margin-top:6px">Blocks</p>
+					<ul class=sidebar-body>
+						<li command="command:" class=sidebar-item>Normal</li>
+						<li command="command:" class=sidebar-item>Quotation</li>
+						<li command="command:" class=sidebar-item>Address</li>
+						<li command="command:" class=sidebar-item>Plain Text</li>
+					</ul>
+<!-- sidebar content : end -->					
+			</div>
+			<widget class="editor">Content of the document</widget>
+		</div>
+<!-- statusbar -->		
+		<div class="statusbar">
+			<p class="logo">terrainformatica.com/htmlayout</p>
+			<div command=command:wysiwyg class="textbutton">Design View</div>
+			<div command=command:source class="textbutton">Source View</div>		
+		</div>
+	</body>
+</html>

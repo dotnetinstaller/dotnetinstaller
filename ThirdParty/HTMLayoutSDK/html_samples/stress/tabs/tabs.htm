@@ -1,0 +1,94 @@
+<html>
+<head><style>
+
+@import url(grid-1000.css);
+@import url(tree-view.css);
+
+html{ background-color:#C4C2C3; }
+
+.tabs 
+{ 
+  behavior:tabs;
+  width:100%%;
+  height:100%%;
+}
+
+.tabs .strip
+{ 
+  flow:horizontal;
+  font: 8.5pt Tahoma;
+  padding-top:3px;
+  padding-left:20px;
+  background-image: url(more_tabs/stripback.png);
+  background-position:0px 0px 0px 0px; /*top right bottom left  offsets - we will stretch image in full*/
+  background-repeat:expand stretch-middle; /* h-smile specific */
+}
+
+.tabs .strip [panel] /* tab in normal state */
+{ 
+  padding: 4px 8px;
+  color:#333365;
+  max-width:auto; /* take only as much as really needed */
+}
+
+.tabs .strip [panel]:hover 
+{ 
+  color:#a55f00;
+}
+
+.tabs .strip [panel][selected] /* selected tab */
+{ 
+  background-color: gold;
+  background-image: url(more_tabs/tabback.png);
+  background-position:2px 2px 0px 2px; /*top right bottom left offsets*/
+  background-repeat:expand stretch-middle stretch-left stretch-top stretch-right;
+  color:#a55f00;
+}
+
+.tabs:focus .strip
+{
+	foreground-image: url(more_tabs/focusled.png);
+	foreground-position:6px 50%; 
+	foreground-repeat:no-repeat;
+}
+
+
+.tabs > [name] /* panel */
+{ 
+  height:100%%;
+  display: none;
+  padding: 10px;
+  border:1px solid #888;
+}
+
+.tabs > [name][selected] /* selected panel */
+{ 
+  display:block;
+  background-color:#ffffff;
+  background-image: url(more_tabs/toolbarback.png);
+  background-position:60px 8px 0px 8px; /*top right bottom left offsets - we will stretch image in full*/
+  background-repeat:expand; /* h-smile specific */
+  
+}
+
+</style></head>
+<body>
+   <div class="tabs">
+      <div class="strip"> <!-- our tab strip, can be placed on any side of tab container. -->
+         <div panel="panel-id1" selected="true" accesskey="T"><u>T</u>ree</div>
+         <div panel="panel-id2" accesskey="A">T<u>a</u>ble</div>
+		     <div panel="panel-id3" accesskey="F"><u>F</u>orm</div>
+      </div>
+      <div name="panel-id1" selected="true"> 
+        <include src="tree-view.htm" />
+      </div>
+      <div name="panel-id2">
+        <include src="grid-1000.htm" />
+      </div>
+	    <div name="panel-id3"> 
+        IFRAME element (HWND based container):
+        <iframe src="form.htm" style="width:*;height:*" />
+      </div>
+   </div>
+</body>   
+</html>

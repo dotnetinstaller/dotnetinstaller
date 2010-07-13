@@ -1,0 +1,40 @@
+<html>
+<head>
+  <style>
+    ul.picture-list
+    {
+      flow:h-flow;
+      padding:0;
+      border-spacing:2px;
+    }
+    ul.picture-list > li 
+    { 
+      display:block;
+      width:30%;
+      height: width(30%);
+      
+      border:1px solid green; 
+    }
+    ul.picture-list > li:nth-child(3n) // three elements in the row
+    { 
+      clear:left;
+      margin-left:50%%;
+    }
+  </style>  
+<head>
+<body>
+Each green rectangle here shall maintain aspect ratio (10:3) while resizing.
+<ul .picture-list>
+  <li>Some picture 1</li>
+  <li>Some picture 2</li>
+  <li>Some picture 3</li>
+  <li>Some picture 4</li>
+  <li>Some picture 5</li>
+  <li>Some picture 6</li>
+  <li>Some picture 7</li>
+  <li>Some picture 8</li>
+  <li>Some picture 9</li>
+</ul>
+
+</body>
+</html>

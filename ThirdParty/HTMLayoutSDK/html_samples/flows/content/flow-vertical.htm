@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <style>
+      
+      ul { flow: vertical; 
+           padding:4px; border-spacing:4px; border:2px solid black; 
+           height:* }
+      li { display:block; border: 2px solid salmon; background: seashell; }
+      
+      p.comment { font-size:70%; }
+        
+    </style>
+  </head>
+<body>
+  <h1>flow:vertical</h1>
+  Two elements in the middle have heights defined in flex units so they will fill available space proportionally.
+  <code>UL</code> element itself has <code>height:*</code> defined so it by itself will fill space left in the <code>BODY</code>.
+  <ul>
+    <li style="height:50px"  > height:50px </li>
+    <li style="height:1*"    > flexible height:1* flexible height:1* </li>
+    <li style="height:2*"    > flexible height:2* flexible height:2* flexible height:2* </li>
+    <li style="height:100px" > height:100px</li>
+  </ul>
+  <p .comment>Resize the window to wrap text in elements in multiple lines to see effects of vertical alignment.</p>
+</body>
+</html>

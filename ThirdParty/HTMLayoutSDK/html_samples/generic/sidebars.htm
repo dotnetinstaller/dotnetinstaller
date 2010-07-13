@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>%% units demonstartion</title>
+		<style>
+body { font-family: Verdana, Arial, sins-serif;	font-size: 10pt; width:100%%; height:100%% }
+p { margin:0; }
+p.comment { font-size: 8.5pt; }
+
+#topmenu /* top menu bar */
+{
+	padding:2px 30%%;
+	width:40%%;
+	margin: 0 0 6px 0;
+	border: 1px solid green; 
+	list-style-type: none;
+	flow:horizontal;  /* all children will go from left to right */
+}
+#topmenu LI
+{
+  margin: 6px;
+	border: 1px solid brown; 
+	text-align:center;
+	background: gold;
+	padding: 4px;
+}
+#topmenu LI:hover
+{
+	background: yellow;
+}
+
+#main /* main section: contains leftbar and rightbar */
+{ 
+	width:100%%; 
+	height:100%%; 
+	border: 1px dotted blue; 
+	flow:horizontal; 
+} 
+#leftbar 
+{ 
+	margin:6px; 
+	padding:2px;
+	width:120px; 
+	height:100%%;
+	border: 1px solid black; 
+	text-align:center;
+} 
+#rightbar 
+{ 
+	margin:6px; 
+	text-align:center;
+	width:100%%; 
+	padding: 50%% 2px; /* place its content in the middle*/ 
+	border: 1px solid red; 
+}
+#disclaimer
+{
+	padding:2px;
+	margin: 6px;
+    text-align:center;	
+}
+
+#line .dashed-line 
+{ 
+	    background-image:url(sidebars/dashed-line.gif); 
+	    background-repeat:repeat; 
+	    vertical-align:middle;
+	    margin:0px;
+	    width:100%%; 
+	    height:15px; 
+	}
+#line .arrow 
+{ 
+	    vertical-align:middle;
+	    margin:0px;
+}
+		</style>
+	</head>
+	<body>
+		<ul id="topmenu">
+			<li>Home</li>
+			<li>Projects</li>
+			<li>Products</li>
+			<li>About</li>
+		</ul>
+		<p class="comment">Dotted div [id=main] below has height:100%% and flow:horizontal</p>
+		<div id="main">
+			<div id="leftbar">
+				<p>Left sidebar content</p>
+				<p style="margin-top:100%%">This should be<br/>
+					at very bottom as it has margin-top:100%%</p>
+			</div>
+			<div id="rightbar">
+				<p>The line below is just a paragraph having %% inline elemnts.</p>
+				<p id="line"><IMG src="sidebars/left-arrow.gif" class="arrow"><img class="dashed-line" />100%%<img class="dashed-line" /><img src="sidebars/right-arrow.gif" class="arrow" /></p>
+				<p>These two paragraphs and the line between them should be in the middle</p>
+			</div>
+		</div>
+		<div id="disclaimer">&copy; 2004, Terra Informatica Software, Inc.</div>
+	</body>
+</html>

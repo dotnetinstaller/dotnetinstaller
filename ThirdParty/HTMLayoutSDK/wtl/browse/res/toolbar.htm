@@ -1,0 +1,157 @@
+<html>
+<style>
+html
+{
+  overflow: hidden; /* prevent scrollbar to appear*/
+}
+
+body
+{
+  font:system;
+  background-color: threedhighlight threedhighlight threedlightshadow threedlightshadow;
+  margin:0;
+  padding: 4px 6px;
+  border-bottom: 1px solid threedshadow;
+  border-right: 1px solid threedshadow;
+  border-left: 1px solid threedhighlight;
+}
+
+@media contrast-screen
+{
+  background-color: window;
+  padding:2px 2px 2px 8px;
+  border: 1px solid threedface;
+}
+
+popup
+{
+  padding:6px;
+  background-color: window window infobackground infobackground ;
+}
+
+popup em
+{
+  color: saddlebrown;
+}
+
+.toolbar{
+	flow:horizontal;
+	white-space: nowrap;
+	text-align: left;
+}
+.sep{
+	width: 0px;
+	height: 80%;
+	margin: 0 6px;
+	border-left: 1px dotted #ccc;
+	border-right: 1px dotted #fff;
+	vertical-align: middle;
+}
+.button
+{
+  height: 22px;
+	width:  22px;
+	margin: 0;
+	vertical-align: middle;
+	behavior: clickable; // but not TAB traversible
+	transition: blend;
+	cursor: pointer;
+
+	foreground-repeat:no-repeat;
+	foreground-position: 50% 50%;
+	border: 1px solid transparent;
+}
+.button:hover
+{
+	background-color: #FFF #FFF #E1EFFF #E1EFFF;
+	border: 1px solid #0099FF;
+}
+.button:active
+{
+	background-color: #D2E8FF #D2E8FF #E8F3FF #E8F3FF;
+	border: 1px solid #99CCFF;
+	foreground-position:2px 3px;
+}
+
+.inputbox{
+	margin-left: 10px;
+	width:100%%;
+	color: #666;
+}
+.inputbox input[type=text]{
+	color: #000;
+	border: 1px solid #999;
+	background-image: none;
+	background-color: #fff;
+}
+.inputbox input[type=text]:hover{
+	color: #003F7D;
+	border: 1px solid #0099FF;
+}
+</style>
+<body>
+
+<div class="toolbar">
+	<div class="button" style="foreground-image: url(new_win.png)" id="new-win" titleid="for-new-win" />
+	<div class="button" style="foreground-image: url(open.png)" id="open-file" titleid="for-open-file" />
+	<div class="button" style="foreground-image: url(recent.png); behavior: ~ popup-menu; " id="recent-file" titleid="for-recent-file" >
+		<!--<div class="sep" />-->
+		<menu.popup id="recent-file-list">
+			<li>no history</li>
+		</menu>
+
+	</div>
+	<div class="button" style="foreground-image: url(view_source.png)" id="view-source" titleid="for-view-source" />
+		<div class="sep" />
+	<div class="button" style="foreground-image: url(back.png)" id="back" titleid="for-back"/>
+	<div class="button" style="foreground-image: url(forward.png)" id="forward" titleid="for-forward"/>
+	<div class="button" style="foreground-image: url(refresh.png)" id="refresh" titleid="for-refresh" />
+		<div class="sep" />
+	<div class="inputbox" style="min-width:50px;width:100%%;">
+		URL
+		<input id=url type=text style="width:100%%" titleid="for-url" value="http://www.terrainformatica.com/">
+	</div>
+		<div class="sep" />
+	<div class="inputbox" style="width:200px;">
+		Search
+		<input id=google type=text style="width:100%%" titleid="for-search" value="embeddable html engine">
+	</div>
+</div>
+<popup id="for-new-win">
+Open a new window.<br>
+<em>Ctrl-N</em>
+</popup>
+<popup id="for-open-file">
+Open file from your hard drive.<br>
+You can also drag &amp; drop file into the window to open it.<br>
+<em>Ctrl-O</em>
+</popup>
+<popup id="for-recent-file">
+  Show a list of Recent Visited Files.
+</popup>
+<popup id="for-view-source">
+  View Source.<br>
+</popup>
+<popup id="for-forward">
+  Go Forward.<br>
+</popup>
+<popup id="for-back">
+  Go Back.<br>
+</popup>
+
+<popup id="for-refresh">
+  Refresh the Page.<br>
+<em>F5</em>
+</popup>
+
+<popup id="for-url">
+  Type the URL here and press <em>Enter</em><br>
+  to visit it.<br>
+</popup>
+<popup id="for-search">
+  Type the keyword here and press <em>Enter</em><br>
+  to search it in Google.
+</popup>
+
+</body>
+</html>

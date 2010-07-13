@@ -1,0 +1,22 @@
+<html>
+<head>
+  <style>
+    div.slave { visibility:collapse; }
+    widget.master:checked + div.slave { visibility:visible; }
+  </style>  
+<head>
+<body>
+  <widget type="checkbox" .master>First group:</widget> 
+  <div .slave>
+    <li>item #1</li>
+    <li>item #2</li>
+    <li>item #3</li>
+  </div>
+  <widget type="checkbox" .master>Second group:</widget> 
+  <div .slave>
+    <li>item #1</li>
+    <li>item #2</li>
+    <li>item #3</li>
+  </div>
+</body>
+</html>

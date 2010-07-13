@@ -1,0 +1,101 @@
+<html>
+<head>
+<style>
+
+@import url( definitions.css );
+
+@const MY_BORDER_COLOR      : #AF0000;
+@const MY_BORDER            : 3px solid #0000AF;
+@const MY_SPECIAL_BORDER    : 3px dashed @MY_BORDER_COLOR;
+@const MY_BORDER1, 
+       MY_BORDER2           : 5px solid #00AFAF;
+
+@const MY_BACKGROUND        : #AFAFFF;
+@const MY_HATCH_BACKGROUND  : repeat url(sb-scroll-base.png);
+
+/* this is an attempt to override value of MY_SUPER_BORDER that is defined in definitions.css
+   this declaration *will not* override constant defined before - const is const by design  */
+@const MY_SUPER_BORDER        : 1px solid #00FF00;
+
+div
+{
+	border:2px solid @MY_BORDER_COLOR;
+  margin:8px;
+  padding:4px;
+}
+
+div#d2
+{
+	border: @MY_BORDER;
+}
+
+div#d3
+{
+	border: @MY_SPECIAL_BORDER;
+}
+
+div#d4
+{
+	background: @MY_BACKGROUND;
+}
+
+div#d5
+{
+	background: @MY_HATCH_BACKGROUND;
+}
+
+div#d6
+{
+  border: @MY_BORDER1;
+	background: @MY_HATCH_BACKGROUND;
+}
+
+div#d7
+{
+  border: @MY_BORDER2;
+	background: @MY_HATCH_BACKGROUND;
+}
+
+div#d8
+{
+  border: @MY_SUPER_BORDER;
+}
+
+body 
+{
+  background-color: antiquewhite;
+}
+
+</style></head>
+
+<body>
+<h1>@const demo</h1>
+<div>
+  this div shall have border of color #AF0000
+</div>
+<div id="d2">
+  this div shall have border of color #0000AF
+</div>
+<div id="d3">
+  this div shall have dashed border of color #AF0000
+</div>
+<div id="d4">
+  this div shall have solid background of color #AFAFFF
+</div>
+<div id="d5">
+  this div shall have solid transparent hatch background
+</div>
+<div id="d6">
+  this div shall have solid transparent hatch background with border of color #00AFAF
+</div>
+<div id="d7">
+  this div shall be identical to the one above
+</div>
+<div id="d8">
+  this div shall have 6px dotted red border
+</div>
+
+
+</body>
+</html>
+

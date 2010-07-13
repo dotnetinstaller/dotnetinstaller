@@ -1,0 +1,117 @@
+<html>
+  <head>
+    <title></title>
+		<style>
+		  table#test 
+      { 
+        behavior: column-resizer;
+        width:*; height:*;  
+				flow: table-fixed;
+      }
+		  table#test tr { height:1.4em; }
+      
+      table#test > thead tr th { overflow-x: hidden; border:1px solid red; }
+			table#test tr td { overflow-x: hidden; border:1px solid blue; vertical-align: top; }
+			
+			table#test > thead th:nth-child(1) { width: 20%; min-width:4em; }
+			table#test > thead th:nth-child(2) { width: 200px; }
+			table#test > thead th:nth-child(3) { width: *; min-width:4em; }
+			table#test > thead th:nth-child(4) { width: *; min-width:4em; }
+			
+			table#test > tbody.first > tr > td[rowspan="5"] { background-color: bisque; }
+			table#test > tbody.first > tr > td[rowspan="3"] { background-color: antiquewhite; }
+			table#test > tbody.first > tr > td[rowspan="2"] { background-color: cornsilk; }
+
+      table#test > tbody.second { width:*; height:*; overflow-y:auto; }
+			table#test > tbody.second > tr > td[rowspan="5"] { background-color: paleturquoise; }
+			table#test > tbody.second > tr > td[rowspan="3"] { background-color: #E0EFEF; }
+			table#test > tbody.second > tr > td[rowspan="2"] { background-color: azure; }
+			
+			table#test td:hover { color:red; }
+			
+		</style>
+  </head>
+<body>
+  Sections 2 and 3 are inside scrollable tbody
+	<table #test>
+    <thead>
+			<tr>
+				<th>first</th>
+				<th>second</th>
+				<th>third</th>
+				<th>fourth</th>
+			</tr>
+    </thead>
+	  <tbody .first>
+			<tr>
+				<td rowspan="5">1</td>
+				<td rowspan="2">something</td>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="3">something</td>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="2">anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td>somewhere</td>
+			</tr>
+	  </tbody>
+		<tbody .second>
+			<tr>
+				<td rowspan="5">2</td>		
+				<td rowspan="2">something</td>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="3">something</td>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="2">anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="5">3</td>		
+				<td rowspan="2">something</td>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="3">something</td>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="2">anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td>somewhere</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

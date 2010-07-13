@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <style>
+
+  div.tab-strip span
+  {
+    active-on!: /* remove @current attribute */        
+                $1(div.tab-strip span[current]).current = null, 
+                /* set @current attribute on this */
+                self.current = true;  
+  }
+
+  div.tab-strip span[current]
+  {
+    assigned!:  /* remove @current from card panel */
+                $1(div.panels > div[current]).current = null,    
+                /* set @current to card panel by this index */
+                $1(div.panels > div:nth-child(< self:index >)).current = true; 
+  }
+  
+  div.tab-strip span[current] { background: yellow; border:1px solid; border-bottom:none; } 
+  div.panels > div { visibility: hidden; } 
+  div.panels > div[current] { visibility: visible; height:*; } 
+  div.panels
+  {
+    background: yellow; 
+    border: 1px solid;
+    flow: stack;
+  }
+      
+    </style>
+  </head>
+<body>
+  This a bit simpler than with state flags but requires @current to be defined.
+  <div class="tab-strip">
+    <span current>First tab</span>
+    <span>Second tab</span>
+    <span>Third tab</span>
+  </div> 
+  <div class="panels">
+    <div>
+      First panel.
+    </div> 
+    <div>
+      Second panel.
+      <div style="width:100px; height:200px; border:1px dotted red">
+        This one is here to make the pannel tall
+      </div>
+    </div> 
+    <div>
+      Third panel.
+    </div> 
+  </div> 
+</body>
+</html>

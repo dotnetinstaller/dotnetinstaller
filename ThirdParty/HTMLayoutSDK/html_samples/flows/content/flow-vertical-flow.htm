@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <style>
+      
+      ul { flow: vertical-flow; 
+           overflow:auto;
+           padding:4px; border-spacing:4px; border:2px solid black; height:*; }
+      li { display:block; border: 2px solid salmon; background: seashell; width:150px; }
+      
+      p.comment { font-size:70%; }
+        
+    </style>
+  </head>
+<body>
+  <h1>flow:vertical-flow</h1>
+ 
+  All list items here have <code>width:150</code> and various heights. If element doe not fit into the container it will be wrapped to next column.
+  
+  <p>Column will wrap: if sum of vertical flexes in the row > 1* (100%%) or if not enough vertical space in the column.</p>
+  
+  <ul>
+    <li style="height:150px" > 1. height:150px </li>
+    <li style="height:100px" > 2. height:100px</li>
+    <li style="height:0.3*"  > 3. flexible height:0.3* flexible height:0.3* </li>
+    <li style="height:0.7*"  > 4. flexible height:0.7* flexible height:0.7* flexible height:0.7* </li>
+    <li style="height:150px" > 5. height:150px</li>
+    <li style="height:150px" > 6. height:150px</li>
+    <li style="height:150px" > 7. height:150px</li>
+  </ul>
+
+  <p .comment>Resize the window vertically to see column wrapping.</p>
+  
+</body>
+</html>

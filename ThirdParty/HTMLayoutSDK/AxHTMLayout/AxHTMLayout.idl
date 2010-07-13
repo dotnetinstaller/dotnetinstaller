@@ -1,0 +1,297 @@
+// AxHTMLayout.idl : IDL source for AxHTMLayout.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (AxHTMLayout.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+#include "olectl.h"
+
+	 typedef enum 
+	 {
+		ContentBox = 0x00,   // content (inner)  box
+		PaddingBox = 0x10,   // content + paddings
+		BorderBox  = 0x20,   // content + paddings + border
+		MarginBox  = 0x30,   // content + paddings + border + margins 
+  
+		BackImageArea = 0x40, // relative to content origin - location of background image (if it set no-repeat)
+		ForeImageArea = 0x50, // relative to content origin - location of foreground image (if it set no-repeat)
+
+		ScrollableArea = 0x60,   // scroll_area - scrollable area in content box 
+	 } ElementBoxType;
+	typedef enum  
+	{
+	  RootRelative = 0x01,       // - or this flag if you want to get HTMLayout window relative coordinates,
+								 //   otherwise it will use nearest windowed container e.g. popup window.
+	  SelfRelative = 0x02,       // - "or" this flag if you want to get coordinates relative to the origin
+							     //   of element iself.
+	  ContainerRelative = 0x03,  // - position inside immediate container.
+	  ViewRelative = 0x04,       // - position relative to view - HTMLayout window
+	} RelativeToType;
+
+
+    interface IElements;
+
+	[
+		object,
+		uuid(F144258B-4129-42E1-9A07-9F04845C6290),
+		dual,
+		helpstring("IElement Interface"),
+		pointer_default(unique)
+	]
+	interface IElement : IDispatch
+	{
+		[propget, id(1), helpstring("Tag name of the element")] HRESULT Tag([out, retval] BSTR *pVal);
+		[propget, id(2), helpstring("Value of the element: text or specific value of input element")] HRESULT Value([out, retval] VARIANT *pVal);
+		[propput, id(2), helpstring("Value of the element: text or specific value of input element")] HRESULT Value([in] VARIANT newVal);
+		[id(3), helpstring("Find first element matching the cssSelector")] HRESULT Select([in] BSTR cssSelector, [out, retval] IElement** elm);
+		[id(4), helpstring("Returns enumerable collection of all subelemts matching the selector")] HRESULT SelectAll([in] BSTR cssSelector, [out,retval] IElements** ppEls);
+		[propget, id(5), helpstring("DOM element attribute")] HRESULT attribute(BSTR name, [out, retval] VARIANT *pVal);
+		[propput, id(5), helpstring("DOM element attribute")] HRESULT attribute(BSTR name, [in] VARIANT newVal);
+		[propget, id(6), helpstring("CSS attribute - string or nothing")] HRESULT styleAttribute(BSTR name, [out, retval] VARIANT *pVal);
+		[propput, id(6), helpstring("CSS attribute - string or nothing")] HRESULT styleAttribute(BSTR name, [in] VARIANT newVal);
+		[id(7), helpstring("Show this element as popup")] HRESULT ShowPopup(long x, long y);
+		[id(8), helpstring("method HidePopup")] HRESULT HidePopup();
+		[id(9), helpstring("StartTimer event that will be delivered to onTimer")] HRESULT StartTimer(long milliseconds, long timerId);
+		[id(10), helpstring("method StopTimer")] HRESULT StopTimer(long timerId);
+		[id(11), helpstring("method PostControlEvent")] HRESULT PostControlEvent(long eventType, [defaultvalue(0)] long reason);
+		[id(12), helpstring("method SendControlEvent")] HRESULT SendControlEvent(long eventType, [defaultvalue(0)] long reason, [out, retval]  VARIANT_BOOL* handled);
+		[id(13), helpstring("method Position")] HRESULT Position([out] long* x, [out] long* y, ElementBoxType ofWhat, RelativeToType relTo);
+		[id(14), helpstring("method Dimension")] HRESULT Dimension([out] long* w, [out] long* h,  ElementBoxType ofWhat);
+		[id(15), helpstring("method Call"), vararg] HRESULT Call(BSTR name, SAFEARRAY(VARIANT) params, [out,retval] VARIANT *rv);
+	};
+
+	[
+		object,
+		uuid(F4032083-0553-4AC1-B08A-6A854DFD1153),
+		dual,
+		helpstring("IEngine Interface"),
+		pointer_default(unique)
+	]
+	interface IEngine : IDispatch
+	{
+		[propput, id(DISPID_AUTOSIZE)]
+		HRESULT AutoSize([in]VARIANT_BOOL vbool);
+		[propget, id(DISPID_AUTOSIZE)]
+		HRESULT AutoSize([out,retval]VARIANT_BOOL* pbool);
+		[propput, id(DISPID_ENABLED)]
+		HRESULT Enabled([in]VARIANT_BOOL vbool);
+		[propget, id(DISPID_ENABLED)]
+		HRESULT Enabled([out,retval]VARIANT_BOOL* pbool);
+		[propget, id(DISPID_HWND)]
+		HRESULT Window([out, retval]long* phwnd);
+		[propput, id(DISPID_TABSTOP)]
+		HRESULT TabStop([in]VARIANT_BOOL vbool);
+		[propget, id(DISPID_TABSTOP)]
+		HRESULT TabStop([out, retval]VARIANT_BOOL* pbool);
+		[propput, id(DISPID_BORDERVISIBLE)]
+		HRESULT BorderVisible([in]VARIANT_BOOL vbool);
+		[propget, id(DISPID_BORDERVISIBLE)]
+		HRESULT BorderVisible([out, retval]VARIANT_BOOL* pbool);
+		[id(1), helpstring("Load html document from the url")] HRESULT Load([in]BSTR url);
+		[id(2), helpstring("Load html from memory")] HRESULT LoadHtml([in] BSTR html, [in, defaultvalue("")] BSTR baseUrl);
+		[propget, id(3), helpstring("property Root")] HRESULT Root([out, retval] IElement* *pVal);
+	};
+
+[
+	uuid(22A83438-4B36-4CEC-9AF7-C0001674E2A8),
+	version(1.0),
+	helpstring("AxHTMLayout 1.0 Type Library")
+]
+library HTMLayout
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(A9CCCA1B-4E1B-4AE0-8004-DD8184BA8FDA),
+		helpstring("_IEngineEvents Interface")
+	]
+	dispinterface _IEngineEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("Document complete - all resources are loaded")] HRESULT DocumentComplete();
+		[id(2), helpstring("Document loaded - DOM complete")] HRESULT DocumentLoaded();
+		[id(3), helpstring("DataDelivered - requested document or image delivered")] HRESULT DataDelivered(BSTR url, LONG dataType, LONG status, BYTE* data , LONG dataSize);
+	};
+	[
+		uuid(58BD87DF-8687-4CEC-9710-A4CEEE7D0F7D),
+		helpstring("Engine Class")
+	]
+	coclass Engine
+	{
+		[default] interface IEngine;
+		[default, source] dispinterface _IEngineEvents;
+	};
+
+    coclass Element;
+
+	enum PhaseMask 
+	  {
+		  MASK_BUBBLING = 0,        // bubbling (emersion) phase
+		  MASK_SINKING  = 0x08000,  // capture (immersion) phase, this flag is or'ed with EVENTS codes below
+		  MASK_HANDLED  = 0x10000   // event already processed.
+		// see: http://www.w3.org/TR/xml-events/Overview.html#s_intro
+	  };
+
+	enum MouseEvents
+	  {
+		  ME_MOUSE_ENTER = 0,
+		  ME_MOUSE_LEAVE = 1,
+		  ME_MOUSE_MOVE  = 2,
+		  ME_MOUSE_UP    = 3,
+		  ME_MOUSE_DOWN  = 4,
+		  ME_MOUSE_DCLICK = 5,
+		  ME_MOUSE_WHEEL = 6, 
+		  ME_MOUSE_TICK  = 7, // mouse pressed ticks
+		  ME_MOUSE_IDLE  = 8, // mouse stay idle for some time
+
+		  ME_DROP        = 9,   // item dropped, target is that dropped item 
+		  ME_DRAG_ENTER  = 0xA, // drag arrived to the target element that is one of current drop targets.  
+		  ME_DRAG_LEAVE  = 0xB, // drag left one of current drop targets. target is the drop target element.  
+
+		  ME_DRAGGING = 0x100, // This flag is 'ORed' with MOUSE_ENTER..MOUSE_DOWN codes if dragging operation is in effect.
+							// E.g. event DRAGGING | MOUSE_MOVE is sent to underlying DOM elements while dragging.
+	  };
+
+	enum BehaviorEvents
+	  {
+		  BE_BUTTON_CLICK = 0,              // click on button
+		  BE_BUTTON_PRESS = 1,              // mouse down or key down in button
+		  BE_BUTTON_STATE_CHANGED = 2,      // checkbox/radio/slider changed its state/value 
+		  BE_EDIT_VALUE_CHANGING = 3,       // before text change
+		  BE_EDIT_VALUE_CHANGED = 4,        // after text change
+		  BE_SELECT_SELECTION_CHANGED = 5,  // selection in <select> changed
+		  BE_SELECT_STATE_CHANGED = 6,      // node in select expanded/collapsed, heTarget is the node
+
+		  BE_POPUP_REQUEST   = 7,           // request to show popup just received, 
+										 //     here DOM of popup element can be modifed.
+		  BE_POPUP_READY     = 8,           // popup element has been measured and ready to be shown on screen,
+										 //     here you can use functions like ScrollToView.
+		  BE_POPUP_DISMISSED = 9,           // popup element is closed,
+										 //     here DOM of popup element can be modifed again - e.g. some items can be removed
+										 //     to free memory.
+
+		  BE_MENU_ITEM_ACTIVE = 0xA,        // menu item activated by mouse hover or by keyboard,
+		  BE_MENU_ITEM_CLICK = 0xB,         // menu item click, 
+										 //   BEHAVIOR_EVENT_PARAMS structure layout
+										 //   BEHAVIOR_EVENT_PARAMS.cmd - MENU_ITEM_CLICK/MENU_ITEM_ACTIVE   
+										 //   BEHAVIOR_EVENT_PARAMS.heTarget - the menu item, presumably <li> element
+										 //   BEHAVIOR_EVENT_PARAMS.reason - BY_MOUSE_CLICK | BY_KEY_CLICK
+
+		  BE_CONTEXT_MENU_SETUP   = 0xF,    // evt.he is a menu dom element that is about to be shown. You can disable/enable items in it.      
+		  BE_CONTEXT_MENU_REQUEST = 0x10,   // "right-click", BEHAVIOR_EVENT_PARAMS::he is current popup menu HELEMENT being processed or NULL.
+										 // application can provide its own HELEMENT here (if it is NULL) or modify current menu element.
+      
+		  BE_VISIUAL_STATUS_CHANGED = 0x11, // broadcast notification, sent to all elements of some container being shown or hidden   
+
+
+		  // "grey" event codes  - notfications from behaviors from this SDK 
+		  BE_HYPERLINK_CLICK = 0x80,        // hyperlink click
+		  BE_TABLE_HEADER_CLICK,            // click on some cell in table header, 
+										 //     target = the cell, 
+										 //     reason = index of the cell (column number, 0..n)
+		  BE_TABLE_ROW_CLICK,               // click on data row in the table, target is the row
+										 //     target = the row, 
+										 //     reason = index of the row (fixed_rows..n)
+		  BE_TABLE_ROW_DBL_CLICK,           // mouse dbl click on data row in the table, target is the row
+										 //     target = the row, 
+										 //     reason = index of the row (fixed_rows..n)
+
+		  BE_ELEMENT_COLLAPSED = 0x90,      // element was collapsed, so far only behavior:tabs is sending these two to the panels
+		  BE_ELEMENT_EXPANDED,              // element was expanded,
+
+		  BE_ACTIVATE_CHILD,                // activate (select) child, 
+										 // used for example by accesskeys behaviors to send activation request, e.g. tab on behavior:tabs. 
+
+		  BE_DO_SWITCH_TAB = BE_ACTIVATE_CHILD,// command to switch tab programmatically, handled by behavior:tabs 
+										 // use it as HTMLayoutPostEvent(tabsElementOrItsChild, DO_SWITCH_TAB, tabElementToShow, 0);
+
+		  BE_INIT_DATA_VIEW,                // request to virtual grid to initialize its view
+      
+		  BE_ROWS_DATA_REQUEST,             // request from virtual grid to data source behavior to fill data in the table
+										 // parameters passed throug DATA_ROWS_PARAMS structure.
+
+		  BE_UI_STATE_CHANGED,              // ui state changed, observers shall update their visual states.
+										 // is sent for example by behavior:richtext when caret position/selection has changed.
+
+		  BE_FORM_SUBMIT,                   // behavior:form detected submission event. BEHAVIOR_EVENT_PARAMS::data field contains data to be posted.
+										 // BEHAVIOR_EVENT_PARAMS::data is of type T_MAP in this case key/value pairs of data that is about 
+										 // to be submitted. You can modify the data or discard submission by returning TRUE from the handler.
+		  BE_FORM_RESET,                    // behavior:form detected reset event (from button type=reset). BEHAVIOR_EVENT_PARAMS::data field contains data to be reset.
+										 // BEHAVIOR_EVENT_PARAMS::data is of type T_MAP in this case key/value pairs of data that is about 
+										 // to be rest. You can modify the data or discard reset by returning TRUE from the handler.
+                                     
+		  BE_DOCUMENT_COMPLETE,             // behavior:frame have complete document.
+
+		  BE_HISTORY_PUSH,                  // behavior:history stuff
+		  BE_HISTORY_DROP,                     
+		  BE_HISTORY_PRIOR,
+		  BE_HISTORY_NEXT,
+
+		  BE_HISTORY_STATE_CHANGED,         // behavior:history notification - history stack has changed
+
+
+		  BE_FIRST_APPLICATION_EVENT_CODE = 0x100 
+		  // all custom event codes shall be greater
+		  // than this number. All codes below this will be used
+		  // solely by application - HTMLayout will not intrepret it 
+		  // and will do just dispatching.
+		  // To send event notifications with  these codes use
+		  // HTMLayoutSend/PostEvent API.
+
+	  };
+
+	[
+		uuid(A6F09FE1-EB03-4679-B972-2C4EF9596751),
+		helpstring("_IElementEvents Interface")
+	]
+	dispinterface _IElementEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method onMouse")] HRESULT onMouse(Element* target, long eventType, long x, long y, long buttons, long keys, [out] VARIANT_BOOL* handled);
+		[id(2), helpstring("method onKey")] HRESULT onKey(Element* target, long eventType, long code, long keys, [out]VARIANT_BOOL* handled);
+		[id(3), helpstring("method onFocus")] HRESULT onFocus(Element* target, long eventType, [out]VARIANT_BOOL* handled);
+		[id(4), helpstring("method onTimer")] HRESULT onTimer(long timerId, [out]VARIANT_BOOL* handled);
+		[id(5), helpstring("method onSize")] HRESULT onSize();
+		[id(6), helpstring("method onControlEvent")] HRESULT onControlEvent(Element* target, long eventType, long reason, [out]VARIANT_BOOL* handled);
+		[id(7), helpstring("method onScroll")] HRESULT onScroll(Element* target, long eventType, long pos, VARIANT_BOOL vertical, [out]VARIANT_BOOL* handled);
+	};
+
+	[
+		uuid(DE1EBB05-E806-4434-A7C3-494D28CFFE24),
+		helpstring("Element Class")
+	]
+	coclass Element
+	{
+		[default] interface IElement;
+		[default, source] dispinterface _IElementEvents;
+	};
+
+	[
+		object,
+		uuid(F8745FCD-98FE-4B6F-96CA-F0B969BBFD31),
+		dual,
+		helpstring("IElements Interface"),
+		pointer_default(unique)
+	]
+	interface IElements : IDispatch
+	{
+	    [propget, id(DISPID_NEWENUM), restricted] HRESULT _NewEnum([out, retval] IUnknown** ppEnum);
+		[propget, id(1), helpstring("property Count")] HRESULT Count([out, retval] long *pVal);
+		[propget, id(2), helpstring("returns nth item of the collection"), defaultcollelem] HRESULT Item([in] long index, [out, retval] IElement* *pVal);
+	};
+
+	[
+		uuid(BB9B507A-1F92-4C43-A2ED-A0B0570200BC),
+		helpstring("Elements Class")
+	]
+	coclass Elements
+	{
+		[default] interface IElements;
+	};
+};

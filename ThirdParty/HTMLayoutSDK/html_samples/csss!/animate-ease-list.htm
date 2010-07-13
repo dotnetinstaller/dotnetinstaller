@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <style>
+
+			body { flow:grid; }
+			
+			div#playground
+			{
+				position:relative;
+        width:*;
+        height:*;
+        margin:30px;
+        border:1px dashed #7f0000;			
+				left:1#;
+				top:2#;
+				
+        active-off! : 
+				    self.ease-function = $1(widget#ease-f):value, 
+						ball = self.$1(#ball),
+						self.to-x = mouse-x(),      // storing click coordinates
+						self.to-y = mouse-y(),
+						self.from-x = ball.x-parent(),
+						self.from-y = ball.y-parent(),
+						self.start-animation(0.4s); // start the animation with duration 400ms
+        animation-step!:  
+				    ease-function = self.ease-function,
+						ball = self.$1(#ball),
+ 		        ball::left = morph(ease-function, length(self.from-x), length(self.to-x) - 10px), // morph position
+						ball::top  = morph(ease-function, length(self.from-y), length(self.to-y) - 10px);
+		  }
+			picture#ball
+      {
+        position:absolute;
+        left:40px;
+        top:40px;
+        width:21px;
+        height:21px;
+      }
+			widget#ease-f
+			{
+			  width:8em;
+				height:*;
+				left:2#;
+				top:2#;
+			}
+			p#caption
+			{
+				left:1#; right:2#;
+				top:1#;
+			}
+    </style>
+  </head>
+<body>
+  <p #caption>This sample demonstrates all available ease functions of the <code>morph()</code>. Select ease function from the list and click in the outlined area.</p>
+  <div #playground>
+	  <picture #ball src="images/ball.png" />
+	</div>
+	<widget type="select" #ease-f>
+		<option selected>linear</option>		 	 
+		<option>quad-in</option>		 
+		<option>quad-out</option>		 
+		<option>quad-in-out</option>	
+		<option>cubic-in</option>		 
+		<option>cubic-out</option>		
+		<option>cubic-in-out</option> 
+		<option>quart-in</option>		 
+		<option>quart-out</option>		
+		<option>quart-in-out</option>
+		<option>quint-in</option>		 
+		<option>quint-out</option>		
+		<option>quint-in-out</option> 
+		<option>sine-in</option>		 
+		<option>sine-out</option>		 
+		<option>sine-in-out</option>	
+		<option>expo-in</option>		 
+		<option>expo-out</option>		 
+		<option>expo-in-out</option>	
+		<option>circ-in</option>		 
+		<option>circ-out</option>		 
+		<option>circ-in-out</option>	
+		<option>elastic-in</option>		
+		<option>elastic-out</option>	
+		<option>elastic-in-out</option>
+		<option>back-in</option>
+		<option>back-out</option>
+		<option>back-in-out</option>
+		<option>bounce-in</option>
+		<option>bounce-out</option>
+		<option>bounce-in-out</option>
+	</widget>
+</body>
+</html>

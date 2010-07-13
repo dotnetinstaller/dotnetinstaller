@@ -1,0 +1,97 @@
+<html>
+	<head>
+	<title>Input Dialog Demo</title>
+	<style>
+html 
+{ 
+    margin:0; padding:0; 
+    overflow:hidden; /* no scrolbars at all */
+	  width:min-intrinsic; height:min-intrinsic; /* but dimensions of the content */
+	//background-color:transparent;
+}
+body { margin:0; padding:0 }
+
+div.content 
+{ 
+	padding:8px; 
+	text-align:center;
+	background-color: infobackground window window infobackground;
+	height:*;
+}
+
+div.content table { height:*; }
+
+div.content table td { white-space:nowrap; }
+div.content table td:nth-child(1) { text-align:right; }
+
+div.footer 
+{ 
+	padding:8px; 
+	text-align:center;
+	border-top:1px solid threedshadow;
+	background-color: threedface;
+}
+
+h3 
+{
+	background-repeat:no-repeat;
+	background-position: left center;	
+	padding-left:32px;
+}
+
+div.content h3 
+{ 
+  background-image:url(res:activity.gif);
+  transition:image;
+}
+
+	</style>
+	</head>
+	<body>
+	<div class="content">
+	    <h3>This spinning thing is here only for the demo purposes</h3>
+		<TABLE cellpadding="1" cellspacing="4" width="300px" height="*">
+			<TR>
+				<TD>Your name (Ctrl-N):</TD>
+				<TD><INPUT accesskey="^N" name="YourName" type="text" size="17" maxlength=20></TD>
+			</TR>
+			<TR>
+				<TD>Your password:</TD>
+				<TD><INPUT name="YourPassword" type="password" size="17" maxlength=17></TD>
+			</TR>
+			<TR>
+				<TD>Age:</TD>
+				<TD><INPUT name="Age" type="number" value="1" size="6" step=1 minvalue=0 maxvalue=100></TD>
+			</TR>
+			<TR>
+				<TD>Color of Eyes:</TD>
+				<TD ><INPUT type="radio" name="color"> Blue&nbsp; <INPUT type="radio" name="color">
+					Green&nbsp; <INPUT type="radio" name="color">Red <INPUT type="radio" name="color">
+					Cyan</TD>
+			</TR>
+			<TR>
+				<TD>Alignment:</TD>
+				<TD><SELECT name="Alignment" size=1> 
+					<OPTION value="left">Left</OPTION><OPTION value="right">Right</OPTION><OPTION value="center">Center</OPTION></SELECT> notes <INPUT name="text10" size="17" maxlength=50></TD>
+			</TR>
+			<TR>
+				<TD>Text:</TD>
+				<TD>
+				<TEXTAREA name="Textarea" rows="4" cols="40" style="font:10pt monospace">
+This is sample text line #1
+This is sample text line #2
+This is sample text line #3
+This is sample text line #4
+				</TEXTAREA></TD>
+			</TR>
+
+		</TABLE>
+	</div>
+	<div class="footer">
+		<button name="OK" role="default-button">OK</button>
+		<button name="CANCEL" role="cancel-button">Cancel</button>
+    <button id="child-dlg">Show other dialog</button>
+    
+	</div>
+	</body>
+</html>

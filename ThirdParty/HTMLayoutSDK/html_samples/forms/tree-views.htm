@@ -1,0 +1,529 @@
+<HTML>
+	<HEAD>
+		<TITLE></TITLE>
+		<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<META name="GENERATOR" content="BLOCKNOTE.NET">
+	<STYLE>
+	BODY { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+	P { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+
+  widget[type="select"]
+  {
+    overflow-x: auto;
+    overflow-y: auto;
+	  width:100%%; /* for this demo purposes */
+    height:100%%; /* for this demo purposes */
+  }
+	  
+	#select-with-checks
+	{
+    behavior:select select-checkmark;
+	}
+	
+  #select-with-checks option:has-children-of-type(option) /* subtree */
+  {
+    margin:0;
+    margin-left:16px;
+    
+    padding:0;
+    
+    foreground-image:url(theme:tree-view-glyph-closed);
+    foreground-repeat: no-repeat;
+    foreground-position: -13px 3px;  
+  }
+  
+  #select-with-checks option:has-children-of-type(option):expanded
+  {
+    foreground-image:url(theme:tree-view-glyph-open);
+  }  
+  
+  /*  "caption" - visual portion of listitem
+      behavior should change value of checkmark attribute 
+      caption here has two icons - checkmark and item icon (as background image)
+      */
+  
+  #select-with-checks caption
+  {
+    margin:0;
+    padding:1px 2px 2px 32px; /* space for two icons */
+    white-space:nowrap;
+        
+    foreground-image:url(theme:check-normal);
+    foreground-repeat: no-repeat;
+    foreground-position: 0px 50%;
+    
+    background-color:transparent; color:windowtext; 
+    foreground-image-cursor: pointer;
+    
+  }
+  #select-with-checks option[check="mixed"] > caption,
+  #select-with-checks options[check="mixed"] > caption
+  {
+    foreground-image:url(theme:check-mixed-normal);
+  }
+  #select-with-checks option[check="on"] > caption,
+  #select-with-checks options[check="on"] > caption
+  {
+    foreground-image:url(theme:check-checked-normal);
+  }
+    
+  #select-with-checks :current > caption
+  { 
+    background-color:highlight; color:highlighttext; 
+  }
+    
+  #select-with-checks options > caption
+  {
+    /* put icon as a background image */
+    background-image:url(images/icon-folder.png);
+    background-repeat: no-repeat;
+    background-position: 16px 0px;
+  }
+  
+  #select-with-checks option
+  {
+    margin:0 0 0 16px;
+    padding:0;
+    background-color:transparent; color:windowtext; 
+  }
+  
+  /* caption of terminal node */
+  #select-with-checks option > caption
+  {
+    background-image:url(images/icon-file.png);
+    background-repeat: no-repeat;
+    background-position: 16px 0px;
+  }
+
+  
+	</STYLE>
+	</HEAD>
+	<BODY style="flow:horizontal; border-spacing:10px;">
+    <div style="width:1*;height:1*">Single select tree view  
+    <widget type="select">
+      <OPTION expanded>AFRICA
+        <OPTION>Algeria</OPTION>
+        <OPTION>Angola</OPTION>
+        <OPTION>Benin</OPTION>
+        <OPTION>Botswana</OPTION>
+        <OPTION>Burkina</OPTION>
+        <OPTION>Burundi</OPTION>
+        <OPTION>Cameroon</OPTION>
+        <OPTION>Cape Verde</OPTION>
+        <OPTION>Central African Republic</OPTION>
+        <OPTION>Chad</OPTION>
+        <OPTION>Comoros</OPTION>
+        <OPTION>Congo</OPTION>
+        <OPTION>Congo (Dem. Rep.)</OPTION>
+        <OPTION>Djibouti</OPTION>
+        <OPTION>Egypt</OPTION>
+        <OPTION>Equatorial Guinea</OPTION>
+        <OPTION>Eritrea</OPTION>
+        <OPTION>Ethiopia</OPTION>
+        <OPTION>Gabon</OPTION>
+        <OPTION>Gambia</OPTION>
+        <OPTION>Ghana</OPTION>
+        <OPTION>Guinea</OPTION>
+        <OPTION>Guinea-Bissau</OPTION>
+        <OPTION>Ivory Coast</OPTION>
+        <OPTION>Kenya</OPTION>
+        <OPTION>Lesotho</OPTION>
+        <OPTION>Liberia</OPTION>
+        <OPTION>Libya</OPTION>
+        <OPTION>Madagascar</OPTION>
+        <OPTION>Malawi</OPTION>
+        <OPTION>Mali</OPTION>
+        <OPTION>Mauritania</OPTION>
+        <OPTION>Mauritius</OPTION>
+        <OPTION>Morocco</OPTION>
+        <OPTION>Mozambique</OPTION>
+        <OPTION>Namibia</OPTION>
+        <OPTION>Niger</OPTION>
+        <OPTION>Nigeria</OPTION>
+        <OPTION>Rwanda</OPTION>
+        <OPTION>Sao Tome and Principe</OPTION>
+        <OPTION>Senegal</OPTION>
+        <OPTION>Seychelles</OPTION>
+        <OPTION>Sierra Leone</OPTION>
+        <OPTION>Somalia</OPTION>
+        <OPTION>South Africa</OPTION>
+        <OPTION>Sudan</OPTION>
+        <OPTION>Swaziland</OPTION>
+        <OPTION>Tanzania</OPTION>
+        <OPTION>Togo</OPTION>
+        <OPTION>Tunisia</OPTION>
+        <OPTION>Uganda</OPTION>
+        <OPTION>Zambia</OPTION>
+        <OPTION>Zimbabwe</OPTION>
+      </OPTION>
+      <OPTION expanded>ASIA
+        <OPTION>Afghanistan</OPTION> 
+        <OPTION>Bahrain</OPTION> 
+        <OPTION>Bangladesh</OPTION>
+        <OPTION>Bhutan</OPTION>
+        <OPTION>Brunei</OPTION>
+        <OPTION>Burma (Myanmar)</OPTION>
+        <OPTION>Cambodia</OPTION>
+        <OPTION>China</OPTION>
+        <OPTION>East Timor</OPTION>
+        <OPTION>India</OPTION>
+        <OPTION>Indonesia</OPTION>
+        <OPTION>Iran</OPTION>
+        <OPTION>Iraq</OPTION>
+        <OPTION>Israel</OPTION>
+        <OPTION>Japan</OPTION>
+        <OPTION>Jordan</OPTION>
+        <OPTION>Kazakhstan</OPTION>
+        <OPTION>Korea (north)</OPTION>
+        <OPTION>Korea (south)</OPTION>
+        <OPTION>Kuwait</OPTION>
+        <OPTION>Kyrgyzstan</OPTION>
+        <OPTION>Laos</OPTION>
+        <OPTION>Lebanon</OPTION>
+        <OPTION>Malaysia</OPTION>
+        <OPTION>Maldives</OPTION>
+        <OPTION>Mongolia</OPTION>
+        <OPTION>Nepal</OPTION>
+        <OPTION>Oman</OPTION>
+        <OPTION>Pakistan</OPTION>
+        <OPTION>Philippines</OPTION>
+        <OPTION>Qatar</OPTION>
+        <OPTION>Russian</OPTION>
+        <OPTION>Federation</OPTION>
+        <OPTION>Saudi Arabia</OPTION>
+        <OPTION>Singapore</OPTION>
+        <OPTION>Sri Lanka</OPTION>
+        <OPTION>Syria</OPTION>
+        <OPTION>Tajikistan</OPTION>
+        <OPTION>Thailand</OPTION>
+        <OPTION>Turkey</OPTION>
+        <OPTION>Turkmenistan</OPTION>
+        <OPTION>United Arab Emirates</OPTION>
+        <OPTION>Uzbekistan</OPTION>
+        <OPTION>Vietnam</OPTION>
+        <OPTION>Yemen</OPTION>
+      </OPTION>
+      <OPTION expanded>EUROPE
+       <OPTION>Albania</OPTION>
+       <OPTION>Andorra</OPTION> 
+       <OPTION>Armenia</OPTION> 
+       <OPTION>Austria</OPTION> 
+       <OPTION>Azerbaijan</OPTION> 
+       <OPTION>Belarus</OPTION> 
+       <OPTION>Belgium</OPTION>
+       <OPTION>Bosnia and Herzegovina</OPTION> 
+       <OPTION>Bulgaria</OPTION> 
+       <OPTION>Croatia</OPTION> 
+       <OPTION>Cyprus</OPTION> 
+       <OPTION>Czech Republic</OPTION> 
+       <OPTION>Denmark</OPTION>
+       <OPTION>Estonia</OPTION> 
+       <OPTION>Finland</OPTION> 
+       <OPTION>France</OPTION> 
+       <OPTION>Georgia</OPTION> 
+       <OPTION>Germany</OPTION> 
+       <OPTION>Greece</OPTION>
+       <OPTION>Hungary</OPTION> 
+       <OPTION>Iceland</OPTION> 
+       <OPTION>Ireland</OPTION> 
+       <OPTION>Italy</OPTION> 
+       <OPTION>Latvia</OPTION> 
+       <OPTION>Liechtenstein</OPTION>
+       <OPTION>Lithuania</OPTION> 
+       <OPTION>Luxembourg</OPTION> 
+       <OPTION>Macedonia</OPTION> 
+       <OPTION>Malta</OPTION> 
+       <OPTION>Moldova</OPTION> 
+       <OPTION>Monaco</OPTION>
+       <OPTION>Montenegro</OPTION> 
+       <OPTION>Netherlands</OPTION> 
+       <OPTION>Norway</OPTION> 
+       <OPTION>Poland</OPTION> 
+       <OPTION>Portugal</OPTION> 
+       <OPTION>Romania</OPTION>
+       <OPTION>San Marino</OPTION> 
+       <OPTION>Serbia</OPTION> 
+       <OPTION>Slovakia</OPTION> 
+       <OPTION>Slovenia</OPTION> 
+       <OPTION>Spain</OPTION> 
+       <OPTION>Sweden</OPTION>
+       <OPTION>Switzerland</OPTION> 
+       <OPTION>Ukraine</OPTION> 
+       <OPTION>United Kingdom</OPTION> 
+       <OPTION>Vatican City</OPTION> 
+      </OPTION>
+      <OPTION expanded>NORTH AMERICA
+       <OPTION>Antigua and Barbuda</OPTION> 
+       <OPTION>Bahamas</OPTION>
+       <OPTION>Barbados</OPTION> 
+       <OPTION>Belize</OPTION> 
+       <OPTION>Canada</OPTION> 
+       <OPTION>Costa Rica</OPTION> 
+       <OPTION>Cuba</OPTION> 
+       <OPTION>Dominica</OPTION> 
+       <OPTION>Dominican Rep.</OPTION>
+       <OPTION>El Salvador</OPTION> 
+       <OPTION>Grenada</OPTION> 
+       <OPTION>Guatemala</OPTION> 
+       <OPTION>Haiti</OPTION> 
+       <OPTION>Honduras</OPTION> 
+       <OPTION>Jamaica</OPTION> 
+       <OPTION>Mexico</OPTION>
+       <OPTION>Nicaragua</OPTION> 
+       <OPTION>Panama</OPTION> 
+       <OPTION>St. Kitts and Nevis</OPTION> 
+       <OPTION>St. Lucia</OPTION> 
+       <OPTION>St. Vincent and the Grenadines</OPTION> 
+       <OPTION>Trinidad and Tobago</OPTION> 
+       <OPTION>United States</OPTION>
+      </OPTION>  
+       
+      <OPTION expanded>SOUTH AMERICA
+       <OPTION>Argentina</OPTION> 
+       <OPTION>Bolivia</OPTION> 
+       <OPTION>Brazil</OPTION> 
+       <OPTION>Chile</OPTION> 
+       <OPTION>Colombia</OPTION> 
+       <OPTION>Ecuador</OPTION> 
+       <OPTION>Guyana</OPTION>
+       <OPTION>Paraguay</OPTION> 
+       <OPTION>Peru</OPTION> 
+       <OPTION>Suriname</OPTION> 
+       <OPTION>Uruguay</OPTION> 
+       <OPTION>Venezuela</OPTION> 
+      </OPTION>
+      
+      <OPTION expanded>OCEANIA
+       <OPTION>Australia</OPTION> 
+       <OPTION>Fiji</OPTION>
+       <OPTION>Kiribati</OPTION> 
+       <OPTION>Marshall Islands</OPTION> 
+       <OPTION>Micronesia</OPTION> 
+       <OPTION>Nauru</OPTION> 
+       <OPTION>New Zealand</OPTION> 
+       <OPTION>Palau</OPTION> 
+       <OPTION>Papua New Guinea</OPTION>
+       <OPTION>Samoa</OPTION> 
+       <OPTION>Solomon Islands</OPTION> 
+       <OPTION>Tonga</OPTION> 
+       <OPTION>Tuvalu</OPTION> 
+       <OPTION>Vanuatu</OPTION> 
+      </OPTION>
+    </widget>
+  </div>
+  <div style="width:1*;height:1*">Multi-select tree view  
+    <widget type="select" id="select-with-checks">
+      <OPTION expanded><caption>AFRICA</caption>
+        <OPTION><caption>Algeria</caption></OPTION>
+        <OPTION><caption>Angola</caption></OPTION>
+        <OPTION><caption>Benin</caption></OPTION>
+        <OPTION><caption>Botswana</caption></OPTION>
+        <OPTION><caption>Burkina</caption></OPTION>
+        <OPTION><caption>Burundi</caption></OPTION>
+        <OPTION><caption>Cameroon</caption></OPTION>
+        <OPTION><caption>Cape Verde</caption></OPTION>
+        <OPTION><caption>Central African Republic</caption></OPTION>
+        <OPTION><caption>Chad</caption></OPTION>
+        <OPTION><caption>Comoros</caption></OPTION>
+        <OPTION><caption>Congo</caption></OPTION>
+        <OPTION><caption>Congo (Dem. Rep.)</caption></OPTION>
+        <OPTION><caption>Djibouti</caption></OPTION>
+        <OPTION><caption>Egypt</caption></OPTION>
+        <OPTION><caption>Equatorial Guinea</caption></OPTION>
+        <OPTION><caption>Eritrea</caption></OPTION>
+        <OPTION><caption>Ethiopia</caption></OPTION>
+        <OPTION><caption>Gabon</caption></OPTION>
+        <OPTION><caption>Gambia</caption></OPTION>
+        <OPTION><caption>Ghana</caption></OPTION>
+        <OPTION><caption>Guinea</caption></OPTION>
+        <OPTION><caption>Guinea-Bissau</caption></OPTION>
+        <OPTION><caption>Ivory Coast</caption></OPTION>
+        <OPTION><caption>Kenya</caption></OPTION>
+        <OPTION><caption>Lesotho</caption></OPTION>
+        <OPTION><caption>Liberia</caption></OPTION>
+        <OPTION><caption>Libya</caption></OPTION>
+        <OPTION><caption>Madagascar</caption></OPTION>
+        <OPTION><caption>Malawi</caption></OPTION>
+        <OPTION><caption>Mali</caption></OPTION>
+        <OPTION><caption>Mauritania</caption></OPTION>
+        <OPTION><caption>Mauritius</caption></OPTION>
+        <OPTION><caption>Morocco</caption></OPTION>
+        <OPTION><caption>Mozambique</caption></OPTION>
+        <OPTION><caption>Namibia</caption></OPTION>
+        <OPTION><caption>Niger</caption></OPTION>
+        <OPTION><caption>Nigeria</caption></OPTION>
+        <OPTION><caption>Rwanda</caption></OPTION>
+        <OPTION><caption>Sao Tome and Principe</caption></OPTION>
+        <OPTION><caption>Senegal</caption></OPTION>
+        <OPTION><caption>Seychelles</caption></OPTION>
+        <OPTION><caption>Sierra Leone</caption></OPTION>
+        <OPTION><caption>Somalia</caption></OPTION>
+        <OPTION><caption>South Africa</caption></OPTION>
+        <OPTION><caption>Sudan</caption></OPTION>
+        <OPTION><caption>Swaziland</caption></OPTION>
+        <OPTION><caption>Tanzania</caption></OPTION>
+        <OPTION><caption>Togo</caption></OPTION>
+        <OPTION><caption>Tunisia</caption></OPTION>
+        <OPTION><caption>Uganda</caption></OPTION>
+        <OPTION><caption>Zambia</caption></OPTION>
+        <OPTION><caption>Zimbabwe</caption></OPTION>
+      </OPTION>
+      <OPTION expanded><caption>ASIA</caption>
+        <OPTION><caption>Afghanistan</caption></OPTION> 
+        <OPTION><caption>Bahrain</caption></OPTION> 
+        <OPTION><caption>Bangladesh</caption></OPTION>
+        <OPTION><caption>Bhutan</caption></OPTION>
+        <OPTION><caption>Brunei</caption></OPTION>
+        <OPTION><caption>Burma (Myanmar)</caption></OPTION>
+        <OPTION><caption>Cambodia</caption></OPTION>
+        <OPTION><caption>China</caption></OPTION>
+        <OPTION><caption>East Timor</caption></OPTION>
+        <OPTION><caption>India</caption></OPTION>
+        <OPTION><caption>Indonesia</caption></OPTION>
+        <OPTION><caption>Iran</caption></OPTION>
+        <OPTION><caption>Iraq</caption></OPTION>
+        <OPTION><caption>Israel</caption></OPTION>
+        <OPTION><caption>Japan</caption></OPTION>
+        <OPTION><caption>Jordan</caption></OPTION>
+        <OPTION><caption>Kazakhstan</caption></OPTION>
+        <OPTION><caption>Korea (north)</caption></OPTION>
+        <OPTION><caption>Korea (south)</caption></OPTION>
+        <OPTION><caption>Kuwait</caption></OPTION>
+        <OPTION><caption>Kyrgyzstan</caption></OPTION>
+        <OPTION><caption>Laos</caption></OPTION>
+        <OPTION><caption>Lebanon</caption></OPTION>
+        <OPTION><caption>Malaysia</caption></OPTION>
+        <OPTION><caption>Maldives</caption></OPTION>
+        <OPTION><caption>Mongolia</caption></OPTION>
+        <OPTION><caption>Nepal</caption></OPTION>
+        <OPTION><caption>Oman</caption></OPTION>
+        <OPTION><caption>Pakistan</caption></OPTION>
+        <OPTION><caption>Philippines</caption></OPTION>
+        <OPTION><caption>Qatar</caption></OPTION>
+        <OPTION><caption>Russian</caption></OPTION>
+        <OPTION><caption>Federation</caption></OPTION>
+        <OPTION><caption>Saudi Arabia</caption></OPTION>
+        <OPTION><caption>Singapore</caption></OPTION>
+        <OPTION><caption>Sri Lanka</caption></OPTION>
+        <OPTION><caption>Syria</caption></OPTION>
+        <OPTION><caption>Tajikistan</caption></OPTION>
+        <OPTION><caption>Thailand</caption></OPTION>
+        <OPTION><caption>Turkey</caption></OPTION>
+        <OPTION><caption>Turkmenistan</caption></OPTION>
+        <OPTION><caption>United Arab Emirates</caption></OPTION>
+        <OPTION><caption>Uzbekistan</caption></OPTION>
+        <OPTION><caption>Vietnam</caption></OPTION>
+        <OPTION><caption>Yemen</caption></OPTION>
+      </OPTION>
+      <OPTION expanded><caption>EUROPE</caption>
+       <OPTION><caption>Albania</caption></OPTION>
+       <OPTION><caption>Andorra</caption></OPTION> 
+       <OPTION><caption>Armenia</caption></OPTION> 
+       <OPTION><caption>Austria</caption></OPTION> 
+       <OPTION><caption>Azerbaijan</caption></OPTION> 
+       <OPTION><caption>Belarus</caption></OPTION> 
+       <OPTION><caption>Belgium</caption></OPTION>
+       <OPTION><caption>Bosnia and Herzegovina</caption></OPTION> 
+       <OPTION><caption>Bulgaria</caption></OPTION> 
+       <OPTION><caption>Croatia</caption></OPTION> 
+       <OPTION><caption>Cyprus</caption></OPTION> 
+       <OPTION><caption>Czech Republic</caption></OPTION> 
+       <OPTION><caption>Denmark</caption></OPTION>
+       <OPTION><caption>Estonia</caption></OPTION> 
+       <OPTION><caption>Finland</caption></OPTION> 
+       <OPTION><caption>France</caption></OPTION> 
+       <OPTION><caption>Georgia</caption></OPTION> 
+       <OPTION><caption>Germany</caption></OPTION> 
+       <OPTION><caption>Greece</caption></OPTION>
+       <OPTION><caption>Hungary</caption></OPTION> 
+       <OPTION><caption>Iceland</caption></OPTION> 
+       <OPTION><caption>Ireland</caption></OPTION> 
+       <OPTION><caption>Italy</caption></OPTION> 
+       <OPTION><caption>Latvia</caption></OPTION> 
+       <OPTION><caption>Liechtenstein</caption></OPTION>
+       <OPTION><caption>Lithuania</caption></OPTION> 
+       <OPTION><caption>Luxembourg</caption></OPTION> 
+       <OPTION><caption>Macedonia</caption></OPTION> 
+       <OPTION><caption>Malta</caption></OPTION> 
+       <OPTION><caption>Moldova</caption></OPTION> 
+       <OPTION><caption>Monaco</caption></OPTION>
+       <OPTION><caption>Montenegro</caption></OPTION> 
+       <OPTION><caption>Netherlands</caption></OPTION> 
+       <OPTION><caption>Norway</caption></OPTION> 
+       <OPTION><caption>Poland</caption></OPTION> 
+       <OPTION><caption>Portugal</caption></OPTION> 
+       <OPTION><caption>Romania</caption></OPTION>
+       <OPTION><caption>San Marino</caption></OPTION> 
+       <OPTION><caption>Serbia</caption></OPTION> 
+       <OPTION><caption>Slovakia</caption></OPTION> 
+       <OPTION><caption>Slovenia</caption></OPTION> 
+       <OPTION><caption>Spain</caption></OPTION> 
+       <OPTION><caption>Sweden</caption></OPTION>
+       <OPTION><caption>Switzerland</caption></OPTION> 
+       <OPTION><caption>Ukraine</caption></OPTION> 
+       <OPTION><caption>United Kingdom</caption></OPTION> 
+       <OPTION><caption>Vatican City</caption></OPTION> 
+      </OPTION>
+      <OPTION expanded><caption>NORTH AMERICA</caption>
+       <OPTION><caption>Antigua and Barbuda</caption></OPTION> 
+       <OPTION><caption>Bahamas</caption></OPTION>
+       <OPTION><caption>Barbados</caption></OPTION> 
+       <OPTION><caption>Belize</caption></OPTION> 
+       <OPTION><caption>Canada</caption></OPTION> 
+       <OPTION><caption>Costa Rica</caption></OPTION> 
+       <OPTION><caption>Cuba</caption></OPTION> 
+       <OPTION><caption>Dominica</caption></OPTION> 
+       <OPTION><caption>Dominican Rep.</caption></OPTION>
+       <OPTION><caption>El Salvador</caption></OPTION> 
+       <OPTION><caption>Grenada</caption></OPTION> 
+       <OPTION><caption>Guatemala</caption></OPTION> 
+       <OPTION><caption>Haiti</caption></OPTION> 
+       <OPTION><caption>Honduras</caption></OPTION> 
+       <OPTION><caption>Jamaica</caption></OPTION> 
+       <OPTION><caption>Mexico</caption></OPTION>
+       <OPTION><caption>Nicaragua</caption></OPTION> 
+       <OPTION><caption>Panama</caption></OPTION> 
+       <OPTION><caption>St. Kitts and Nevis</caption></OPTION> 
+       <OPTION><caption>St. Lucia</caption></OPTION> 
+       <OPTION><caption>St. Vincent and the Grenadines</caption></OPTION> 
+       <OPTION><caption>Trinidad and Tobago</caption></OPTION> 
+       <OPTION><caption>United States</caption></OPTION>
+      </OPTION>  
+       
+      <OPTION expanded><caption>SOUTH AMERICA</caption>
+       <OPTION><caption>Argentina</caption></OPTION> 
+       <OPTION><caption>Bolivia</caption></OPTION> 
+       <OPTION><caption>Brazil</caption></OPTION> 
+       <OPTION><caption>Chile</caption></OPTION> 
+       <OPTION><caption>Colombia</caption></OPTION> 
+       <OPTION><caption>Ecuador</caption></OPTION> 
+       <OPTION><caption>Guyana</caption></OPTION>
+       <OPTION><caption>Paraguay</caption></OPTION> 
+       <OPTION><caption>Peru</caption></OPTION> 
+       <OPTION><caption>Suriname</caption></OPTION> 
+       <OPTION><caption>Uruguay</caption></OPTION> 
+       <OPTION><caption>Venezuela</caption></OPTION> 
+      </OPTION>
+      
+      <OPTION expanded><caption>OCEANIA</caption>
+       <OPTION><caption>Australia</caption></OPTION> 
+       <OPTION><caption>Fiji</caption></OPTION>
+       <OPTION><caption>Kiribati</caption></OPTION> 
+       <OPTION><caption>Marshall Islands</caption></OPTION> 
+       <OPTION><caption>Micronesia</caption></OPTION> 
+       <OPTION><caption>Nauru</caption></OPTION> 
+       <OPTION><caption>New Zealand</caption></OPTION> 
+       <OPTION><caption>Palau</caption></OPTION> 
+       <OPTION><caption>Papua New Guinea</caption></OPTION>
+       <OPTION><caption>Samoa</caption></OPTION> 
+       <OPTION><caption>Solomon Islands</caption></OPTION> 
+       <OPTION><caption>Tonga</caption></OPTION> 
+       <OPTION><caption>Tuvalu</caption></OPTION> 
+       <OPTION><caption>Vanuatu</caption></OPTION> 
+      </OPTION>
+
+      
+    </widget>
+  </div>
+  </BODY>
+</HTML>

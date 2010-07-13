@@ -1,0 +1,62 @@
+<html>
+<head>
+<style>
+  form 
+  { 
+    border      :1px dotted silver; 
+    behavior    :form;
+  }
+</style>
+</head>
+<body>
+
+<form action="http://www.terrainformatica.com/htmlayout/form-echo.php?getparam1=one&getparam2=two" method="post"> 
+		<TABLE cellpadding="1" cellspacing="4" width="100%">
+			<TR>
+				<TD width=25%>Your name</TD>
+				<TD><INPUT name="YourName" type="text" size="17" maxlength=20></TD>
+			</TR>
+			<TR>
+				<TD width=25%>Your password</TD>
+				<TD><INPUT name="YourPassword" type="password" size="17" maxlength=17></TD>
+			</TR>
+			<TR>
+				<TD>Age</TD>
+				<TD><INPUT name="Age" type="number" value="1" size="6" step=1 minvalue=0 maxvalue=100></TD>
+			</TR>
+			<TR>
+				<TD>Date of birth</TD>
+				<TD><INPUT name="DateOfBirth" type="date" </TD>
+			</TR>
+			<TR>
+				<TD>How did you find your way in the world?</TD>
+				<TD>
+				<TEXTAREA name="Textarea" rows="4" cols="40" maxlength="1024" style="font:10pt monospace">
+This is sample text line #1
+This is sample text line #2
+This is sample text line #3
+This is sample text line #4
+				</TEXTAREA></TD>
+			</TR>
+			<TR>
+				<TD colspan="2">Color of Eyes: <INPUT type="radio" name="color"> Blue&nbsp; <INPUT type="radio" name="color">
+					Green&nbsp; <INPUT type="radio" name="color">Red <INPUT type="radio" name="color">
+					Cyan</TD>
+			</TR>
+			<TR>
+				<TD>Alignment:</TD>
+				<TD><SELECT name="Alignment" size=1> 
+					<OPTION value="left">Left</OPTION><OPTION value="right">Right</OPTION><OPTION value="center">Center</OPTION></SELECT> notes <INPUT name="text10" size="17" maxlength=50></TD>
+			</TR>
+			<TR>
+				<TD></TD>
+				<TD><button name="Submit" type="submit" role="default-button">Submit</button>
+            <button name="Reset" type="reset">Reset</button></TD>
+			</TR>
+		
+		</TABLE>
+
+</form>
+
+</body>
+</html> 

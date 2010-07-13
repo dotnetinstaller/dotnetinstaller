@@ -53,3 +53,7 @@
 #include "ResponseFileIni.h"
 #include "ResponseFileNone.h"
 #include "DialogButton.h"
+#include "DniMessageBox.h"
+#include "SplashWnd.h"
+#include "InstallerCommandLineInfo.h"
+#include "DisableWnd.h"

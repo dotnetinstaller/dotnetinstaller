@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <style>
+      a
+      {
+        hover-on!: $(p.slave):hover = true;
+        hover-off!: $(p.slave):hover = false;
+        border:1px solid;
+      }
+      p.slave:hover
+      {
+        color:red;
+      }
+    </style>
+  </head>
+<body>
+  <a>Hover me!</a>
+  <p .slave>Slave</p>
+</body>
+</html>

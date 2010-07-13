@@ -1,0 +1,64 @@
+<html>
+<head>
+  <style>
+    widget 
+    {
+      width:100px;
+      border:1px solid;
+      padding:2px;
+      position:relative;
+      background-image: url(stock:arrow-down);
+      background-repeat: no-repeat;
+      background-position-top: 50%;
+      background-position-right: 3px;
+      
+      active-on!: self.popup-shown? (self.popup-shown = null) # (self.popup-shown = true, self.$1(popup):focus = true);
+      focus-on!: ; // define focus-on just to indicate that it is focusable
+     
+    } 
+    widget > popup 
+    {
+      behavior:select;
+      display:none;
+      position:absolute;
+      border:1px solid black;
+      left:-1px;
+      right:-1px;
+      height:min-intrinsic;
+    }
+    widget[popup-shown] > popup 
+    {
+      display:block;
+      outline:3px glow silver 1px;
+      outline-shift:3px;      
+    }
+    widget > popup > option:current
+    {
+      color:highlighttext;
+      background:highlight;
+    }
+    widget > popup 
+    {  
+      active-off!: self.parent().child(1):value = self.$1(option:current):value, // copy text of current option to the caption
+                   self.parent():focus = true, // and set focus on the parent   
+                   self.parent().popup-shown = null; // and hide the popup   
+      focus-off!:  self.parent().popup-shown = null; // just hide the popup   
+      key-off! :  key-code() == 'RETURN'?  self.active-off();
+                  
+      
+      
+    }
+  </style>  
+  
+<head>
+<body>
+  <widget>
+    Click to see
+    <popup>
+      <option>One</option>
+      <option>Two</option>
+      <option>Three</option>
+    </popup>
+  </widget>
+</body>
+</html>

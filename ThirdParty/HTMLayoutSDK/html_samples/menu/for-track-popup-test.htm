@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <style>
+      menu.popup > caption 
+      { 
+        margin:0;
+        padding:4px;
+        background-color: threedface threedface window window;
+      }
+      div#marker 
+      {
+        position: fixed;
+        left:96px;
+        top:96px;
+        width:7px;
+        height:7px;
+        color:red;
+        foreground: url(stock:arrow-down) no-repeat 50% 50%;
+      }
+    </style>
+  </head>
+<body>
+  Click on TrackPopup test in Test menu.
+  <menu .popup>
+    <caption>Track popup demo</caption>
+    <li>First</li>
+    <li>Second
+      <menu>
+        <li>Second First</li>
+        <li>Second Second</li>
+        <li>Second Third</li>
+      </menu>
+    <li>Third</li>
+  </menu>
+  <div #marker />
+</body>
+</html>

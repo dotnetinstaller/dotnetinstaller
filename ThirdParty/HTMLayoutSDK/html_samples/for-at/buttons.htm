@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <style>
+      div#container
+      {
+        flow:horizontal;
+        border-spacing:20px; // to create gap for the demo purposes. 
+        width:*;
+        height:*;
+      }    
+      div#container > widget[type="select"]
+      {
+        width:*;
+        height:*;
+      }
+      div#container > div.buttons
+      {
+        width:max-intrinsic;
+        height:*;
+      }
+      div#container > div.buttons > widget
+      {
+        -for: selector(widget[type="select"]);
+        -at: selector(div#container);
+        click!: $1(widget[type="select"]):value = self:index;
+      }
+    </style>
+  </head>
+<body>
+  Clicking on the buttons will not steal focus from the select:
+  <div #container>
+    <widget type="select">
+      <option value=1>First</option>
+      <option value=2>Second</option>
+      <option value=3>Third</option>
+    </widget>
+    <div .buttons>
+      <widget type="button" .b1 >set #1</widget>
+      <widget type="button" .b2 >set #2</widget>
+      <widget type="button" .b3 >set #3</widget>
+    </div>
+  </div>
+</body>
+</html>

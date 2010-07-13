@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <style>
+    
+      table#checked-list > tr 
+      {
+        active-on! : self:checked = !self:checked;
+      }
+      a#toggler
+      {
+        click! : $(table#checked-list>tr) -> @(row) row:checked = !row:checked;
+      }
+      
+      table#checked-list td:nth-child(1) 
+      {
+        padding-left: system-small-icon-width;
+        background-repeat:no-repeat; 
+        background-position:1px 50%;
+        background-image:url(theme:check-normal);  
+      } 
+      table#checked-list > tr:checked > td:nth-child(1)
+      {
+        background-image:url(theme:check-checked-normal);  
+      }
+      table#checked-list > tr:hover
+      {
+        background-color:white white orange orange;
+        cursor:pointer;
+      }
+      
+    </style>
+  </head>
+<body>
+  Simple table with checkable rows. Link on the bottom inverses the selection.
+  <table #checked-list border=1px >
+    <tr><td>001</td><td>002</td><td>003</td></tr>
+    <tr><td>011</td><td>012</td><td>013</td></tr>
+    <tr><td>021</td><td>022</td><td>023</td></tr>
+    <tr><td>031</td><td>032</td><td>033</td></tr>
+    <tr><td>041</td><td>042</td><td>043</td></tr>
+  </table>
+  <a #toggler href=#>Toggle selection</a>
+</body>
+</html>

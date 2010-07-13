@@ -1,0 +1,122 @@
+<html>
+<head>
+  <style>
+    body
+    {
+      margin:0;
+      padding-bottom:48px; // docking place for div.bottom
+    }
+   
+    div.bottom
+    {
+      behavior: magnifier;
+      position:fixed;
+      bottom:0;
+      overflow-y: visible;       
+      padding-bottom:4px;
+      padding-left:*;
+      padding-right:*;
+      width:min-intrinsic;
+      flow: horizontal;
+      height: 48px; 
+      background:#888;
+    }
+    
+    div.left
+    {
+      behavior: magnifier;
+      position:fixed;
+      top:0;
+      left:0;
+      bottom:54px;
+      width:64px;      
+      overflow-x: visible;       
+      padding-left:4px;
+      padding-top:*;
+      padding-bottom:*;
+      flow: vertical;
+      background:#aaa;
+    }
+    
+    
+    div.body
+    {
+      width: 50%;
+      height: *;
+      margin: 0 *; 
+    }
+
+    widget[type=button] 
+    { 
+      position:relative;
+      padding:0;
+      vertical-align:bottom;
+      border:0;
+      background-repeat: stretch;
+      //margin-top:50%%;
+      width:64px; 
+      height:64px; 
+    }
+    
+    widget#icon1
+    {
+      background-image: url(icon1.png);
+    }
+    widget#icon2
+    {
+      background-image: url(icon2.png);
+    }
+    
+    widget#icon3
+    {
+      background-image: url(icon3.png);
+    }
+    widget#icon3[magnified]
+    {
+      background-image: url(icon3m.png);
+    }
+    widget#icon4
+    {
+      background-image: url(icon4.png);
+      //max-width:96px;
+      //max-height:96px;
+    }
+    widget#icon4[magnified]
+    {
+      background-image: url(icon4m.png);
+    }
+
+    
+   
+  </style>
+</head>
+<body>
+  <div .body>
+  <h1 align=center>Fisheye demo</h1>
+    <p>This is an example of <code>behavior:magnifier</code>. This behavior can be assigned to any container element.</p>
+    <p>Attribute <code>magnify</code> ot the container element defines CSS selector of elements that will be magnfied when mouse will move around them.</p>
+    <p>Other attributes that <code>behavior:magnifier</code> knows about:</p>
+    <ul>
+      <li><code>magnify</code> - CSS selector of child elements to magnify;</li>
+      <li><code>radius</code> - "fisheye" radii - distance in which mouse movements will take effect, in pixels;</li>
+      <li><code>radius-x</code> and <code>radius-y</code> - the same as the above but allow to define elliptical sensitive area;</li>
+    </ul>
+  </div>
+  
+  <div .left magnify='widget[type="button"]' magnification=2.0 radius-x=50 radius-y=200 >
+    <widget type="button" #icon1></widget>
+    <widget type="button" #icon2></widget>
+    <widget type="button" #icon3></widget>
+    <widget type="button" #icon4></widget>
+  </div>
+  
+  
+  <div .bottom magnify='widget[type="button"]' magnification=2.0 radius-x=200 radius-y=0 >
+    <widget type="button" #icon1></widget>
+    <widget type="button" #icon2></widget>
+    <widget type="button" #icon3></widget>
+    <widget type="button" #icon4></widget>
+  </div>
+</body>
+</html>
+

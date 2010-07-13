@@ -1,0 +1,42 @@
+<html>
+<head>
+  <style>
+    
+    div#grid
+    {
+      flow: horizontal;
+      border-spacing: 4px; 
+      width:*;
+      height:100px;
+      overflow:hidden;
+    }     
+        
+    div#grid > div
+    {
+      width:*;
+      height:*;
+      border: 1px solid black;
+      background-color:white;
+    }
+    div#grid > div:hover
+    {
+      background-color: gold;
+      width:3*;
+      transition: width(linear,0.4s)
+                  background-color(linear,0.4s);   
+    }
+  </style>  
+  <script type="text/tiscript"></script>  
+</head>
+<body>
+  <h1>Extended transition property demo</h1>
+  <p>Flex units animation demo</p>
+  <div #grid>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+
+</body>
+</html>

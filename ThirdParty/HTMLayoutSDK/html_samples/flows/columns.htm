@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>v-flow demonstartion</title>
+		<style>
+    body { font-family: Verdana, Arial, sans-serif;	font-size: 8.5pt; width:100%%; height:100%% }
+  
+	  h1,h2,h3 { font:10pt bold Verdana; }
+  
+	  div.columns	  
+	  {
+    flow:v-flow; 
+		border:1px solid gray; 
+		overflow:auto; 
+    height:100%%;
+    width:100%%;
+    padding:10px;
+	  }
+
+    div.columns > *
+    {
+      width:200px;
+    }
+  
+		</style>
+	</head>
+	<body>
+
+		<h1>V-FLOW (columns) layout</h1>
+		<div class="columns">
+      <include src="text-fragment.htm">
+        Ooops, text-fragment.htm not found!
+      </include>
+		</div>
+  
+	</body>
+</html>

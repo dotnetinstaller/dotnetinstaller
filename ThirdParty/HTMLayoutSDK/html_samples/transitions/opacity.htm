@@ -1,0 +1,36 @@
+<html>
+<head>
+  <style>
+    body
+    {
+      background: url(back.png) repeat;
+      color:white;
+    }
+    div#test
+    {
+      background-color: #FFF;
+      color:black;
+      opacity:0.5;
+      size:100px;
+      margin:*;
+      text-align: center;
+    }
+    div#test:hover
+    {
+      opacity:1.0;
+      size:200px;
+      transition: opacity(linear,400ms)
+                  size(cubic-in-out,400ms);
+    }
+  </style>  
+</head>
+<body>
+  <h1>Extended transition property demo</h1>
+  <p>Opacity animation</p>
+
+  <div #test>
+    Hover me!
+  </div>  
+
+</body>
+</html>

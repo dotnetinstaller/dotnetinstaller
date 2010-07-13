@@ -1,0 +1,109 @@
+<HTML>
+	<HEAD>
+		<TITLE>Tree view with drag-n-drop</TITLE>
+	<STYLE>
+  
+    #dd 
+    {
+      background-image:none;
+      background-color:window;
+      border:1px solid threedshadow;
+      width:25%; 
+      height:*;
+    }
+  
+    #dd,        
+    #dd options // containers
+    {
+      accept-drop: selector(#dd option,#dd options);
+      drop:append;
+      background-color:window;
+    }
+    
+    #dd:drag-over, 
+    #dd options:drag-over // dragged over container state
+    {
+      background:yellow; // current target highlightion
+    }
+    
+    #dd option,
+    #dd options
+    {
+      draggable:only-move; // we support only reordering here
+    }
+    #dd option:moving,
+    #dd options:moving
+    {
+      opacity:0.5;
+    }
+    
+    #dd option:drag-source,
+    #dd options:drag-source
+    {
+      color:graytext;
+    }
+
+    /* tree line support */
+    
+    #dd options:has-children > * // all options with more than one child (that is caption)
+    {
+      display: list-item;
+      list-style-type: tree-line;
+      outline-color:red;
+    }
+    
+    #dd options > *:first-child // caption of the options element
+    {
+      font-weight:bold;
+    }
+    
+    #dd options 
+    {
+      padding-left:16px;
+    }
+    #dd options:rtl 
+    {
+      padding-left:0;
+      padding-right:16px;
+    }
+    
+    #dd option,
+    #dd options >:first-child
+    {
+      overflow: hidden;
+      text-overflow:ellipsis;
+      margin:0;
+    } 
+    //#dd options >:first-child:rtl
+    //{
+    //  margin-left:0;
+    //  margin-right:0;
+    //} 
+    
+    
+	</STYLE>
+	</HEAD>
+	<BODY dir="rtl">
+	<h1>Tree view with drag-n-drop, RTL.</h1>
+  <widget #dd type="select">
+    <OPTIONS expanded>Metals
+      <OPTIONS expanded>Alkaline Metals
+        <OPTION>Lithium (Li)</OPTION>
+        <OPTION>Sodium (Na)</OPTION>
+        <OPTION>Potassium (K)</OPTION>
+      </OPTIONS>
+      <OPTIONS expanded>Transition Metals
+        <OPTION>Scandium (Sc)</OPTION>
+        <OPTION>Titanium (Ti)</OPTION>
+        <OPTION>Vanadium (V)</OPTION>
+      </OPTIONS>
+    </OPTIONS>
+    <OPTIONS expanded>Halogens
+        <OPTION>Fluorine (F)</OPTION>
+        <OPTION>Chlorine (Cl)</OPTION>
+        <OPTION>Bromine (Br)</OPTION>
+    </OPTIONS>
+    <OPTIONS>Empty group</OPTIONS>
+  </widget>
+	</BODY>
+</HTML>

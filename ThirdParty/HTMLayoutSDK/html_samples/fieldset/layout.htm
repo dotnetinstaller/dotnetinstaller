@@ -1,0 +1,77 @@
+<html>
+  <head>
+  <title></title>
+<style>
+  fieldset.metal 
+  {
+    margin:0;
+    padding:0;
+    border:none;
+  }
+  fieldset.metal > legend
+  {
+    flow:horizontal;
+	background:transparent;
+    width:*;
+	max-width:*;
+    margin:0;
+    padding:0;
+    position:relative;
+    top:1px;
+  }
+  fieldset.metal > legend > caption
+  {
+    color:windowtext;
+    width:max-intrinsic;
+    line-height:23px;
+    padding:0 20px 0 12px; 
+    margin:0 * 0 0;
+    background-image:url(legend.png);
+    background-repeat:expand;
+    background-position:0 20px 0 10px; /*top right bottom left offsets*/
+  }
+  fieldset.metal > legend > widget
+  {
+    behavior: button;
+    width:max-intrinsic;
+    color:windowtext;
+    width:max-intrinsic;
+    font-family: marlett;
+    line-height:23px;
+    padding:0 8px 0 20px; 
+    margin:0 0 0 *;
+    background-image:url(widget.png);
+    background-repeat:expand;
+    background-position:0 10px 0 20px; /*top right bottom left offsets*/
+  }
+  fieldset.metal > legend > widget:hover
+  {
+    color:orange;
+  }
+  
+  fieldset.metal > div.content
+  {
+    height:*;
+    width:*;
+    background-image:url(borders.png);
+    background-repeat:expand stretch-left stretch-right stretch-middle;
+    background-position:15px 15px 15px 15px; /*left top right bottom offsets*/
+	  border: none;
+	  padding: 15px;
+  }
+
+</style>
+  </head>
+<body style="background-color:threedface">
+<fieldset.metal style="width:50%;height:50%;margin:*">
+  <legend>
+    <caption>hello world!</caption>
+    <widget>r</widget>
+  </legend>
+  <div.content>
+    Urbi et orbi...
+  </div>
+</fieldset>
+
+</body>
+</html>

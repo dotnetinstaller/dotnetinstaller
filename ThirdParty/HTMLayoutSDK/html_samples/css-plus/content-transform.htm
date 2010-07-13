@@ -1,0 +1,25 @@
+﻿<html>
+<head>
+  <style>
+    p.test > span { background-color:yellow; }
+    p.test > span:hover { content:"hover"; }
+    p.test > span:active { content:"activated"; }
+    
+    p.test1 { text-transform: uppercase; }
+    p.test2 { text-transform: lowercase; }
+    p.test3 { text-transform: capitalize; }
+    
+  </style>
+</head>
+<body>
+<h1>Content transformations test</h1>
+
+<p .test>Content test: test span in <span>normal</span> state.</p>
+
+<p .test1>uppercase: hello world! привет мир!</p>
+<p .test2>lowercase: hello WORLD! привет МИР!</p>
+<p .test3>capitalized: hello world! привет мир!</p>
+
+</body>
+</html>
+

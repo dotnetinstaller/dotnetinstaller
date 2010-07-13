@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<title>Simple Tree View</title>
+<style type="text/css"> 
+	body { 
+		font-family:Verdana; font-size:10pt; 
+		width:100%%; height:100%%; 
+        //width:640px; height:480px;
+		background-color: window;
+		padding:10px;
+		margin:0;
+	}
+
+	.command-bar {
+	    flow:horizontal;
+		background-color: threedface;
+		padding: 2px 100%%; /* to center its content */
+	}	
+	
+	.command {
+	    border: 1px solid threedshadow;
+	    text-align:center;
+	    padding:2px;
+	    margin:0 1em;
+	    width: 5em;
+		  behavior:command;
+	}
+	.command:hover 
+	{
+		background-color: threedhighlight threedhighlight inactivecaption inactivecaption;
+	}
+	.command:active 
+	{
+		background-color: highlight highlight threedlight threedlight;
+	}
+	
+</style>
+	</head>
+	<body>
+	<center>commands:</center>
+	<div class="command-bar">
+		<div class=command id="FirstCommand"  title="First!">One</div>
+		<div class=command id="SecondCommand" title="Second!">Two</div>
+		<div class=command id="ThirdCommand"  title="Third!">Three</div>
+		<div class=command id="FourthCommand"  title="Fourth!">Four</div>
+	</div>
+	</body>
+</html>

@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 #include "ComponentsList.h"
-#include "DniMessageBox.h"
 
 CComponentsList::CComponentsList()
 	: m_pConfiguration(NULL)

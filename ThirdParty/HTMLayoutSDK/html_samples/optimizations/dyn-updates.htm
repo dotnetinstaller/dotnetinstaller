@@ -1,0 +1,90 @@
+<html>
+<head>
+  <style>
+    widget.bottles
+    {
+      margin:4px *;
+    }
+    code#bottles-value 
+    {
+      overflow:hidden;
+      display:inline-block;
+      background-color:yellow;
+      width:2em;
+      height:1em;
+    } 
+    code#no-bottles-value 
+    {
+      display:inline-block;
+      background-color:pink;
+    }
+    
+    code#container-bottles-value
+    {
+      display:inline-block;
+      background-color:#00FA9A;      
+    }
+    caption { text-align:center; }
+    caption.overflowed { overflow:hidden; height:1.4em; }
+    
+    p.note 
+    { 
+      background-color: infobackground; 
+      border:1px solid threedshadow; 
+      margin:10px;
+      padding:8px;
+    }
+  </style>  
+<head>
+<body>
+      <p>To minimize time/cpu cycles needed to update elements enclose then into overflowed elements.</p>
+      This slider is bound with code#bottles-value that uses overflow:hidden;
+      <widget class="bottles" type="hslider" min=0 max=99 value=0 buddy="bottles-value" />
+      <caption>There <code id="bottles-value">00</code> bottles on the wall</caption>
+
+      <p>And this one is bound with code#no-bottles-value that resides in container with overflow:hidden;<p>
+      <widget class="bottles" type="hslider" min=0 max=99 value=0 buddy="container-bottles-value" />
+      <caption .overflowed>There <code id="container-bottles-value">00</code> bottles on the wall</caption>
+
+
+      <p>And this one is bound with code#no-bottles-value that <strong>does not</strong> use overflow:hidden;<p>
+      <widget class="bottles" type="hslider" min=0 max=99 value=0 buddy="no-bottles-value" />
+      <caption>There <code id="no-bottles-value">00</code> bottles on the wall</caption>
+    
+<p .note>
+  Use Process Explorer or similar tool to see difference in CPU load while changing values of these two sliders.
+</p>
+    
+      <ul class="bound">
+       <li shown="true">
+        <h3>Praesent fermentum.</h3>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+        Maecenas vulputate malesuada erat. Nulla quam quam, porttitor nec, suscipit at, interdum in, pede. 
+      </li>         
+      <li>
+        <h3>Ut imperdiet lacinia ligula.</h3>
+        Vestibulum dui enim, porta sed, suscipit sed, eleifend vitae, tortor. 
+        Aenean dolor. Morbi mi turpis, suscipit ac, feugiat ac, tincidunt ut, leo. 
+      </li> 
+      <li>        
+        <h3>Ut imperdiet lacinia ligula.</h3>
+        <p>
+        Ut tellus sem, tristique ac, consequat vitae, condimentum et, urna. 
+        Mauris egestas eros ac tellus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. 
+        Integer fringilla mi. Quisque vel eros. Morbi mi turpis, consectetuer nec, dictum lobortis, facilisis sit amet, libero. 
+        Praesent fermentum, dolor vel porttitor venenatis, dui lacus dignissim mauris, et lobortis nibh tortor et pede.  
+        </p>
+      </li> 
+      <li>        
+        <h3>Vivamus auctor.</h3> 
+        Ut porttitor bibendum diam. Sed nibh risus, accumsan cursus, luctus ut, scelerisque vitae, libero. 
+        Nunc ac metus eu nibh consectetuer lacinia. 
+        Vestibulum malesuada ipsum a mi. 
+        Phasellus aliquet nulla a nunc. Curabitur commodo felis nec arcu. Duis eu pede ut quam adipiscing mattis. 
+        Cras est orci, iaculis in, fermentum nec, mollis a, felis. Proin elementum adipiscing diam. Sed luctus nunc in elit.  
+      </li>
+    </ul>
+    
+    
+</body>
+</html>

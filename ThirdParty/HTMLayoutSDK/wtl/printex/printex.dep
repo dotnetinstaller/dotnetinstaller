@@ -1,0 +1,52 @@
+# Microsoft Developer Studio Generated Dependency File, included by printex.mak
+
+.\printex.cpp : \
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_controls.hpp"\
+	"..\..\include\htmlayout_dialog.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	"..\..\include\htmlayout_dom.hpp"\
+	"..\..\include\htmlayout_notifications.hpp"\
+	"..\..\include\htmlayout_queue.h"\
+	"..\..\include\htmlayout_value.hpp"\
+	"..\..\include\htmprint.h"\
+	"..\..\include\json-aux.h"\
+	"..\..\include\json-value.h"\
+	".\aboutdlg.h"\
+	".\html_canvas.h"\
+	".\maindlg.h"\
+	".\stdafx.h"\
+	{$(INCLUDE)}"atlapp.h"\
+	{$(INCLUDE)}"atlctrls.h"\
+	{$(INCLUDE)}"atlctrlw.h"\
+	{$(INCLUDE)}"atldlgs.h"\
+	{$(INCLUDE)}"atlframe.h"\
+	{$(INCLUDE)}"atlgdi.h"\
+	{$(INCLUDE)}"atlmisc.h"\
+	{$(INCLUDE)}"atlprint.h"\
+	{$(INCLUDE)}"atlres.h"\
+	{$(INCLUDE)}"atlresce.h"\
+	{$(INCLUDE)}"atluser.h"\
+	{$(INCLUDE)}"atlwinx.h"\
+	
+
+.\printex.rc : \
+	".\res\printex.exe.manifest"\
+	".\res\printex.ico"\
+	{$(INCLUDE)}"atlres.h"\
+	
+
+.\stdafx.cpp : \
+	".\stdafx.h"\
+	{$(INCLUDE)}"atlapp.h"\
+	{$(INCLUDE)}"atlgdi.h"\
+	{$(INCLUDE)}"atlmisc.h"\
+	{$(INCLUDE)}"atlres.h"\
+	{$(INCLUDE)}"atlresce.h"\
+	{$(INCLUDE)}"atluser.h"\
+	{$(INCLUDE)}"atlwinx.h"\
+	

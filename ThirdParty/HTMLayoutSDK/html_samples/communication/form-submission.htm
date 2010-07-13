@@ -1,0 +1,38 @@
+<html>
+<head>
+  <style>
+    frame#response 
+    {
+      border:1px dashed red;
+    }
+    form
+    {
+      background-color: khaki;
+      padding:10px;
+    }
+  </style>  
+  <script type="text/tiscript"></script>  
+<head>
+<body>
+  The form:
+  <form action="http://terrainformatica.com/tests/formecho.php" target="response" method="post" >
+    text1 = <input name="text1" type="text" /> <br/>
+    radio1 = <button name="radio1" type="radio" value="on">On</button> <button name="radio1" type="radio" value="off">Off</button><br/>
+    checkbox1 = <button name="checkbox1" type="checkbox" value="fire-on">Fire-on</button> 
+    checkbox2 = <button name="checkbox2" type="checkbox" value="alarm-on">Alarm-on</button><br/>
+    plaintext1 = 
+    <plaintext name="plaintext1" style="height:4em">
+      Hello <i>world</i>!
+    </plaintext>
+    
+    richtext1 = 
+    <richtext name="richtext1" style="height:4em">
+      <b>Hello</b> <i>world</i>!
+    </richtext>
+    <button type="submit">Submit</button>
+    <button type="reset">Reset</button>
+  </form>
+  Response from http://terrainformatica.com/tests/formecho.php is:
+  <frame #response></frame>
+</body>
+</html>

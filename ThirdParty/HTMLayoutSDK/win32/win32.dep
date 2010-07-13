@@ -1,0 +1,65 @@
+# Microsoft Developer Studio Generated Dependency File, included by win32.mak
+
+.\StdAfx.cpp : \
+	".\StdAfx.h"\
+	
+
+.\win32.cpp : \
+	"..\include\behaviors\notifications.h"\
+	"..\include\htmlayout.h"\
+	"..\include\htmlayout_aux.h"\
+	"..\include\htmlayout_behavior.h"\
+	"..\include\htmlayout_behavior.hpp"\
+	"..\include\htmlayout_controls.hpp"\
+	"..\include\htmlayout_dialog.hpp"\
+	"..\include\htmlayout_dom.h"\
+	"..\include\htmlayout_dom.hpp"\
+	"..\include\htmlayout_notifications.hpp"\
+	"..\include\htmlayout_queue.h"\
+	"..\include\htmlayout_value.hpp"\
+	"..\include\json-aux.h"\
+	"..\include\json-value.h"\
+	".\StdAfx.h"\
+	
+
+.\win32.rc : \
+	".\default.htm"\
+	".\small.ico"\
+	".\win32.ico"\
+	
+
+..\include\behaviors\behavior_command.cpp : \
+	"..\include\behaviors\behavior_aux.h"\
+	"..\include\behaviors\notifications.h"\
+	"..\include\htmlayout.h"\
+	"..\include\htmlayout_aux.h"\
+	"..\include\htmlayout_behavior.h"\
+	"..\include\htmlayout_behavior.hpp"\
+	"..\include\htmlayout_controls.hpp"\
+	"..\include\htmlayout_dialog.hpp"\
+	"..\include\htmlayout_dom.h"\
+	"..\include\htmlayout_dom.hpp"\
+	"..\include\htmlayout_notifications.hpp"\
+	"..\include\htmlayout_queue.h"\
+	"..\include\htmlayout_value.hpp"\
+	"..\include\json-aux.h"\
+	"..\include\json-value.h"\
+	
+
+..\include\behaviors\behavior_hyperlink.cpp : \
+	"..\include\behaviors\behavior_aux.h"\
+	"..\include\behaviors\notifications.h"\
+	"..\include\htmlayout.h"\
+	"..\include\htmlayout_aux.h"\
+	"..\include\htmlayout_behavior.h"\
+	"..\include\htmlayout_behavior.hpp"\
+	"..\include\htmlayout_controls.hpp"\
+	"..\include\htmlayout_dialog.hpp"\
+	"..\include\htmlayout_dom.h"\
+	"..\include\htmlayout_dom.hpp"\
+	"..\include\htmlayout_notifications.hpp"\
+	"..\include\htmlayout_queue.h"\
+	"..\include\htmlayout_value.hpp"\
+	"..\include\json-aux.h"\
+	"..\include\json-value.h"\
+	

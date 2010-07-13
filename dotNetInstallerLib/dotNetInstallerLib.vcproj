@@ -215,6 +215,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DniMessageBox.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DownloadDialog.cpp"
 				>
 			</File>
@@ -275,6 +279,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstallerCommandLineInfo.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\InstallerLauncher.cpp"
 				>
 			</File>
@@ -296,6 +304,10 @@
 			</File>
 			<File
 				RelativePath=".\MsiComponent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MSLU.cpp"
 				>
 			</File>
 			<File
@@ -336,6 +348,10 @@
 			</File>
 			<File
 				RelativePath=".\Schema.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SplashWnd.cpp"
 				>
 			</File>
 			<File
@@ -437,11 +453,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Controls.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ControlText.h"
 				>
 			</File>
 			<File
 				RelativePath=".\DialogButton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DisableWnd.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DniMessageBox.h"
 				>
 			</File>
 			<File
@@ -517,6 +545,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstallerCommandLineInfo.h"
+				>
+			</File>
+			<File
 				RelativePath=".\InstallerLauncher.h"
 				>
 			</File>
@@ -578,6 +610,10 @@
 			</File>
 			<File
 				RelativePath=".\Schema.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SplashWnd.h"
 				>
 			</File>
 			<File

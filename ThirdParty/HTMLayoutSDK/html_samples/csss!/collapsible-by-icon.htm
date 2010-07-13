@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <style>
+    
+  img.icon 
+  {
+    active-on!: $1p(li):collapsed = ! $1p(li):collapsed; 
+    vertical-align:middle;
+    margin-right: 4px;
+    foreground-image:url(images/minus.png);
+    cursor:pointer;
+  }
+  li { display:block; }
+  li > p { display:block }
+  li:collapsed > p { display:none; }
+  li:collapsed img.icon { foreground-image:url(images/plus.png); }
+      
+    </style>
+  </head>
+<body>
+  <ul>
+    <li><img class="icon"/>First item.
+      <p>First item content (collapsible). Some input: <input type="text" value="hi!" /></p>
+    </li>
+    <li><img class="icon"/>Second item.
+      <p>Second item content (collapsible).</p>
+    </li>
+    <li><img class="icon"/>Third item.
+      <p>Third item content (collapsible).</p>
+    </li>
+  </ul>
+</body>
+</html>

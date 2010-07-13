@@ -1,0 +1,105 @@
+<html>
+<head>
+  <style>
+    body
+    {
+      margin:0;
+    }
+   
+    div.bottom
+    {
+      behavior: magnifier;
+      position:relative;
+      bottom:0;
+      overflow-y: visible;       
+      padding-bottom:4px;
+      padding-left:*;
+      padding-right:*;
+      width:min-intrinsic;
+      flow: horizontal;
+      height: 64px; 
+      background:#888;
+      margin:0;
+    }
+    
+    
+    div.body
+    {
+      width: 50%;
+      height: *;
+      margin: 10px *; 
+    }
+
+    widget[type=button] 
+    { 
+      position:relative;
+      padding:0;
+      vertical-align:bottom;
+      border:0;
+      background-repeat: stretch;
+      //margin-top:50%%;
+      width:64px; 
+      height:64px; 
+    }
+    
+    widget#icon1
+    {
+      background-image: url(icon1.png);
+    }
+    widget#icon2
+    {
+      background-image: url(icon2.png);
+    }
+    
+    widget#icon3
+    {
+      background-image: url(icon3.png);
+    }
+    widget#icon3[magnified]
+    {
+      background-image: url(icon3m.png);
+    }
+    widget#icon4
+    {
+      background-image: url(icon4.png);
+      //max-width:96px;
+      //max-height:96px;
+    }
+    widget#icon4[magnified]
+    {
+      background-image: url(icon4m.png);
+    }
+
+    
+   
+  </style>
+</head>
+<body>
+  <div .body>
+  <h1 align=center>Fisheye demo</h1>
+    <p>This is an example of <code>behavior:magnifier</code>. This behavior can be assigned to any container element.</p>
+    <p>Attribute <code>magnify</code> ot the container element defines CSS selector of elements that will be magnfied when mouse will move around them.</p>
+    <p>Other attributes that <code>behavior:magnifier</code> knows about:</p>
+    <ul>
+      <li><code>magnify</code> - CSS selector of child elements to magnify;</li>
+      <li><code>radius</code> - "fisheye" radii - distance in which mouse movements will take effect, in pixels;</li>
+      <li><code>radius-x</code> and <code>radius-y</code> - the same as the above but allow to define elliptical sensitive area;</li>
+    </ul>
+  </div>
+  
+  <div .bottom magnify='widget[type="button"]' magnification=2.0 radius-x=200 radius-y=0 >
+    <widget type="button" #icon4></widget>
+    <widget type="button" #icon3></widget>
+    <widget type="button" #icon2></widget>
+    <widget type="button" #icon1></widget>
+  </div>
+    
+  <div #test .bottom magnify='widget[type="button"]' magnification=2.0 radius-x=200 radius-y=0 >
+    <widget type="button" #icon1></widget>
+    <widget type="button" #icon2></widget>
+    <widget type="button" #icon3></widget>
+    <widget type="button" #icon4></widget>
+  </div>
+</body>
+</html>
+

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>h-flow demonstartion</title>
+		<style>
+    body { font-family: Verdana, Arial, sins-serif;	font-size: 10pt; width:100%%; height:100%% }
+	  
+	  h1 { font:10pt bold Verdana; }
+	  
+      div.sub  
+	  { 
+	    color:white;
+		  width:64px; 
+		  height:64px; 
+		  border:1px solid brown; 
+		  margin:20px; 
+	  }
+	  
+	  div.sub:nth-child(1) {  background-color:#3300cc }
+	  div.sub:nth-child(2) {  background-color:#3333cc }
+	  div.sub:nth-child(3) {  background-color:#3366cc }
+	  div.sub:nth-child(4) {  background-color:#3399cc }
+	  div.sub:nth-child(5) {  background-color:#33cccc }
+
+	  div.v-bricks	  
+	  {
+	    flow:v-flow; 
+		  border:1px solid gray; 
+		  overflow:auto; 
+	  }
+  
+      /* horizontal container - single row */
+	  div.hbox 
+	  {
+		  flow:horizontal; 
+		  height:100%%;
+	  }
+	  /* all immediate div children take full height */
+	  div.hbox > div 
+	  {
+	    height:100%%;
+		  margin:10px;
+	  }
+
+  
+		</style>
+	</head>
+	<body>
+
+		<h1>V-FLOW (columns) layout</h1>
+		<div class="v-bricks" id="3" style="height:100%%">
+		  <div class="sub">#1</div>
+		  <div class="sub">#2</div>
+		  <div class="sub">#3</div>
+		  <div class="sub">#4</div>
+		  <div class="sub">#5</div>
+		</div>
+  
+	</body>
+</html>

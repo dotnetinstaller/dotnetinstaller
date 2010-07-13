@@ -1,0 +1,32 @@
+<caption>Formatting and text shortcuts:</caption>
+<ul>
+	<li><kbd>CTRL-B</kbd> - apply &lt;strong&gt; span to selection;</li>
+	<li><kbd>CTRL-I</kbd> - apply &lt;em&gt; span to selection;</li>
+	<li><kbd>CTRL-U</kbd> - apply &lt;u&gt; span to selection;</li>
+  <li><kbd>CTRL-D</kbd> - apply &lt;code&gt; span to selection;</li>
+	<li><kbd>ENTER</kbd> - break paragraph into two;</li>  
+	<li><kbd>SHIFT-ENTER</kbd> - insert &lt;br&gt;;</li>    
+	<li><kbd>DELETE</kbd> - delete character on the right or remove selection. See also <a href=#table-shortcuts>table actions</a> below;</li>    
+	<li><kbd>BACKSPACE</kbd> - delete character on the left or remove selection. If selection is a table cell selection then cells will be merged into single cell;</li>    
+	<li><kbd>DELETE</kbd> - delete character on the right or remove selection. If selection is a table cell selection then those cells will be removed from the table;</li>    
+	<li><kbd>CTRL-DELETE</kbd> - if selection: remove foreground spans (&lt;strong&gt;, &lt;em&gt;, etc.), if no selection - remove word on the right;</li>
+	<li><kbd>CTRL-BACKSPACE</kbd> - if selection: remove background spans (&lt;a&gt;, etc.), if no selection - remove word on the left;</li>
+</ul>
+<caption>Paragraphs, lists and blockquotes:</caption>
+<ul>
+	<li><kbd>CTRL-NUMPAD+</kbd> - indent +, either wrap selected paragraphs in &lt;blockquote&gt; or as sub list;</li>
+	<li><kbd>CTRL-NUMPAD-</kbd> - indent -, either unwrap selected paragraphs from &lt;blockquote&gt; or move list items level up;</li>
+	<li><kbd>CTRL-NUMPAD.</kbd> - wrap selected paragraphs to &lt;ul&gt;;</li>  
+	<li><kbd>CTRL-NUMPAD0</kbd> - wrap selected paragraphs to &lt;ol&gt;;</li>  
+	<li><kbd>CTRL-NUMPAD1</kbd> - <kbd>CTRL-NUMPAD6</kbd> - convert selected paragraphs to &lt;H1&gt;-&lt;H6&gt;;</li>  
+  <li><kbd>CTRL-NUMPAD7</kbd> - convert selected blocks to &lt;P&gt;</li>  
+</ul>
+<caption>Table/cell specific:</caption>
+<ul #table-shortcuts>
+	<li><kbd>CTRL-1</kbd> - split cell(s) by rows;</li>
+	<li><kbd>CTRL-2</kbd> - split cell(s) by columns;</li>
+	<li><kbd>CTRL-3</kbd> - insert column before current;</li>
+	<li><kbd>CTRL-4</kbd> - insert column after current;</li>
+	<li><kbd>DELETE</kbd> - delete cells. If whole row(s) or column(s) are selected then thye will be deleted. Otherwise cells will be merged into one and cleared;</li>    
+	<li><kbd>BACKSPACE</kbd> - merge cells. Merge selected cells into single cell;</li>    
+ </ul>

@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <style>
+      
+      ul { flow: horizontal-flow; 
+           padding:4px; border-spacing:4px; border:2px solid black; }
+      li { display:block; border: 2px solid salmon; background: seashell; }
+      
+      ul.case1 > li { height:*; }
+      ul.case2 > li { margin-top:*; }
+      ul.case3 > li { margin-bottom:*; }
+      ul.case4 > li { margin-top:*; margin-bottom:*; }
+      
+      p.comment { font-size:70%; }
+        
+    </style>
+  </head>
+<body>
+  <h1>flow:horizontal-flow</h1>
+ 
+  All list items here have <code>height:*</code> and so they span the whole height of the row. 
+  If height of such row element is not set (as in this sample) then it will be equal to tallest element in the row.
+  
+  <p>Row will wrap: if sum of flexes in the row > 1* (100%%) or if <code>clear:left|right|both</code> used or if not enough horizontal space in the row.</p>
+  
+  <ul .case1>
+    <li style="width:100px" > width:100px </li>
+    <li style="width:150px" > width:150px</li>
+    <li style="width:1*"    > flexible width:1* flexible width:1* </li>
+    <li style="width:2*"    > flexible width:2* flexible width:2* flexible width:2* </li>
+  </ul>
+  
+  All list items here have <code>height:auto</code> and <code>margin-top:*</code> so they will be 
+  alligned vertically to the <b>bottom</b> of the row.
+  <ul .case2>
+    <li style="width:100px" > width:100px </li>
+    <li style="width:150px" > width:150px</li>
+    <li style="width:1*"    > flexible width:1* flexible width:1* </li>
+    <li style="width:2*"    > flexible width:2* flexible width:2* flexible width:2* </li>
+  </ul>
+
+  All list items here have <code>height:auto</code> and <code>margin-bottom:*</code> so they will be 
+  alligned vertically to the <b>top</b> of the row. 
+  <ul .case3>
+    <li style="width:100px" > width:100px </li>
+    <li style="width:150px" > width:150px</li>
+    <li style="width:1*"    > flexible width:1* flexible width:1* </li>
+    <li style="width:2*"    > flexible width:2* flexible width:2* flexible width:2* </li>
+  </ul>
+  
+  All list items here have <code>height:auto</code> and both <code>margin-top/bottom:*</code> so they will be 
+  alligned vertically to the <b>middle</b> of the row. 
+  <ul .case4>
+    <li style="width:100px" > width:100px </li>
+    <li style="width:150px" > width:150px</li>    
+    <li style="width:1*"    > flexible width:1* flexible width:1* </li>
+    <li style="width:2*"    > flexible width:2* flexible width:2* flexible width:2* </li>
+  </ul>
+
+  <p .comment>Resize the window to wrap text in elements in multiple lines to see effects of vertical alignment.</p>
+  
+</body>
+</html>

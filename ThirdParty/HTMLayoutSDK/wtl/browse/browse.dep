@@ -1,0 +1,248 @@
+# Microsoft Developer Studio Generated Dependency File, included by browse.mak
+
+.\browse.cpp : \
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	"..\..\include\htmlite.h"\
+	".\aboutdlg.h"\
+	".\HtmlBar.h"\
+	".\htmlview.h"\
+	".\mainfrm.h"\
+	
+
+.\browse.rc : \
+	".\res\browse.exe.manifest"\
+	".\res\browse.ico"\
+	".\res\empty.htm"\
+	".\res\toolbar.bmp"\
+	{$(INCLUDE)}"atlres.h"\
+	
+
+.\stdafx.cpp : \
+	"..\..\..\..\libs\wtl71\include\atlapp.h"\
+	"..\..\..\..\libs\wtl71\include\atlctrls.h"\
+	"..\..\..\..\libs\wtl71\include\atlctrlw.h"\
+	"..\..\..\..\libs\wtl71\include\atlctrlx.h"\
+	"..\..\..\..\libs\wtl71\include\atldlgs.h"\
+	"..\..\..\..\libs\wtl71\include\atlframe.h"\
+	"..\..\..\..\libs\wtl71\include\atlgdi.h"\
+	"..\..\..\..\libs\wtl71\include\atlmisc.h"\
+	"..\..\..\..\libs\wtl71\include\atluser.h"\
+	"..\..\..\..\libs\wtl71\include\atlwinx.h"\
+	"..\..\..\..\sdk\include\basetsd.h"\
+	"..\..\..\..\sdk\include\guiddef.h"\
+	"..\..\..\..\sdk\include\propidl.h"\
+	"..\..\..\..\sdk\include\reason.h"\
+	"..\..\..\..\sdk\include\shldisp.h"\
+	"..\..\..\..\sdk\include\shobjidl.h"\
+	"..\..\..\..\sdk\include\shtypes.h"\
+	"..\..\..\..\sdk\include\specstrings.h"\
+	"..\..\..\..\sdk\include\stralign.h"\
+	"..\..\..\..\sdk\include\tvout.h"\
+	"..\..\..\..\sdk\include\winefs.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_controls.hpp"\
+	"..\..\include\htmlayout_dialog.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	"..\..\include\htmlayout_dom.hpp"\
+	"..\..\include\htmlayout_notifications.hpp"\
+	"..\..\include\htmlayout_queue.h"\
+	"..\..\include\htmlayout_value.hpp"\
+	"..\..\include\json-aux.h"\
+	"..\..\include\json-value.h"\
+	"..\..\include\wtl_htmlayout.h"\
+	"..\..\include\wtl_htmlayouthost.h"\
+	"..\..\include\wtl_htmlayoutvalues.h"\
+	"..\..\include\wtl_htmlpopup.h"\
+	"..\..\include\wtl_value.h"\
+	".\stdafx.h"\
+	{$(INCLUDE)}"atlres.h"\
+	
+
+..\..\include\behaviors\behavior_accesskeys.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_actions.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_clock.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_collapsible_by_icon.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_command.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_editable_select.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_expandable_list.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_form.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_grid.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_path.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_popup.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_scroller.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_select_checkmark.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_shellicon.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_splitter.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_tabs.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\behavior_virtual_grid.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	
+
+..\..\include\behaviors\data_source_behavior.cpp : \
+	"..\..\include\behaviors\behavior_aux.h"\
+	"..\..\include\behaviors\notifications.h"\
+	"..\..\include\htmlayout.h"\
+	"..\..\include\htmlayout_aux.h"\
+	"..\..\include\htmlayout_behavior.h"\
+	"..\..\include\htmlayout_behavior.hpp"\
+	"..\..\include\htmlayout_dom.h"\
+	

@@ -1,0 +1,195 @@
+<html>
+  <head>
+    <style>
+    
+      div.container
+      {
+        flow:horizontal-flow;
+        width:*;
+        margin: 10px;
+        padding:10px;
+        border-spacing:10px;
+        border: 1px dashed silver;
+      }
+      
+      div#mono-color > div
+      {
+        border-color:gray;
+      }
+      div#mono-color > div:hover // hit testing test
+      {
+        border-color:black;
+        background-color: yellow;
+      }
+      
+      div#var-colors > div
+      {
+        border-color:red gold green blue;
+      }
+      div#fill-no-borders > div
+      {
+        border-style:none;
+        background-color: gold gold red red;
+      }
+      div#fill-borders > div
+      {
+        border-color:gray;
+        background-color: gold gold red red;
+      }
+      
+      div.case1
+      {
+        width:10%;
+        height:60px;
+        padding: 10px;
+        border:1px solid;
+        border-radius:7px;
+      }
+      div.case2
+      {
+        width:10%;
+        height:60px;
+        padding: 10px;
+        border:3px solid;
+        border-radius:10%;
+      }      
+      
+      div.case3
+      {
+        width:10%;
+        height:60px;
+        padding: 10px;
+        border:3px solid;
+        border-radius:20% / height(20%);
+      }      
+      
+      div.case4
+      {
+        width:10%;
+        height:60px;
+        padding: 10px;
+        border:3px solid;
+        border-radius:20%;
+        border-bottom-style:none;
+      } 
+
+      div#mono-color > div.case4,
+      div#var-colors > div.case4 
+      {
+        border-bottom-color:transparent; /* it looks better this way */
+      }
+     
+      div.case5
+      {
+        width:10%;
+        height:60px;
+        padding: 10px;
+        border:3px solid;
+        border-radius:20% 50% 0 0;
+        border-bottom-style:none;
+      }      
+
+      div.case6
+      {
+        width:10%;
+        height:60px;
+        padding: 10px;
+        border:3px solid;
+        border-radius:20% 50% 10% 75%;
+        border-width: 1px 3px 6px 12px;
+      }      
+      div.case7
+      {
+        width:10%;
+        height:60px;
+        padding: 10px;
+        border:3px solid;
+        border-radius:50% / height(50%);
+        border-width: 3px;
+      }      
+      div.case8
+      {
+        width:10%;
+        height:60px;
+        padding: 10px;
+        border:3px solid;
+        border-radius:50% 50% 0 0 / 50% 50% 0 0;
+        border-width: 3px;
+      }      
+      div.case9
+      {
+        width:10%;
+        height:60px;
+        padding: 10px;
+        border:20px solid;
+        border-radius:10%; 
+      }  
+      
+      div.case10
+      {
+        width:10%;
+        height:60px;
+        padding: 10px;
+        border:30px solid;
+        border-radius: 60px/20px;
+      }
+      
+      
+    </style>
+  </head>
+<body>
+  <H1>border-radius css attribute support</H1>
+  <p>No fill, same color for all borders. Mouse hover test shall obey actual shape.</p>
+  <div .container #mono-color>
+    <div .case1> case 1 </div>
+    <div .case2> case 2 </div>
+    <div .case3> case 3 </div>
+    <div .case4> case 4 </div>
+    <div .case5> case 5 </div>
+    <div .case6> case 6 </div>
+    <div .case7> case 7 </div>
+    <div .case8> case 8 </div>
+    <div .case9> case 9 </div>
+    <div .case10> case 10 </div>
+  </div>
+  <p>No fill, different colors of borders.</p>
+  <div .container #var-colors>
+    <div .case1> case 1 </div>
+    <div .case2> case 2 </div>
+    <div .case3> case 3 </div>
+    <div .case4> case 4 </div>
+    <div .case5> case 5 </div>
+    <div .case6> case 6 </div>
+    <div .case7> case 7 </div>
+    <div .case8> case 8 </div>
+    <div .case9> case 9 </div>
+    <div .case10> case 10 </div>
+  </div>
+  <p>Just fill without borders.</p>
+  <div .container #fill-no-borders>
+    <div .case1> case 1 </div>
+    <div .case2> case 2 </div>
+    <div .case3> case 3 </div>
+    <div .case4> case 4 </div>
+    <div .case5> case 5 </div>
+    <div .case6> case 6 </div>
+    <div .case7> case 7 </div>
+    <div .case8> case 8 </div>
+    <div .case9> case 9 </div>
+    <div .case10> case 10 </div>
+  </div>
+  <p>Fill and borders.</p>
+  <div .container #fill-borders>
+    <div .case1> case 1 </div>
+    <div .case2> case 2 </div>
+    <div .case3> case 3 </div>
+    <div .case4> case 4 </div>
+    <div .case5> case 5 </div>
+    <div .case6> case 6 </div>
+    <div .case7> case 7 </div>
+    <div .case8> case 8 </div>
+    <div .case9> case 9 </div>
+    <div .case10> case 10 </div>
+  </div>
+</body>
+</html>

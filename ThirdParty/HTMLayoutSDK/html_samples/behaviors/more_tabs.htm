@@ -1,0 +1,116 @@
+<html>
+<head><style>
+
+html{ background-color:#C4C2C3; }
+
+.tabs 
+{ 
+  behavior:tabs;
+  width:100%%;
+  height:100%%;
+}
+
+.tabs .strip
+{ 
+  flow:horizontal;
+  font: 8.5pt Tahoma;
+  padding-top:3px;
+  padding-left:20px;
+  background-image: url(more_tabs/stripback.png);
+  background-position:0px 0px 0px 0px; /*top right bottom left  offsets - we will stretch image in full*/
+  background-repeat:expand stretch-middle; /* h-smile specific */
+}
+
+.tabs .strip [panel] /* tab in normal state */
+{ 
+  padding: 4px 8px;
+  color:#333365;
+  max-width:auto; /* take only as much as really needed */
+}
+
+.tabs .strip [panel]:hover 
+{ 
+  color:#a55f00;
+}
+
+.tabs .strip [panel][selected] /* selected tab */
+{ 
+  background-color: gold;
+  background-image: url(more_tabs/tabback.png);
+  background-position:2px 2px 0px 2px; /*top right bottom left offsets*/
+  background-repeat:expand stretch-middle stretch-left stretch-top stretch-right;
+  color:#a55f00;
+}
+
+.tabs:focus .strip
+{
+	foreground-image: url(more_tabs/focusled.png);
+	foreground-position:6px 50%; 
+	foreground-repeat:no-repeat;
+}
+
+
+.tabs > [name] /* panel */
+{ 
+  height:100%%;
+  display: none;
+  padding: 10px;
+  border:1px solid #888;
+}
+
+.tabs > [name][selected] /* selected panel */
+{ 
+  display:block;
+  background-color:#ffffff;
+  background-image: url(more_tabs/toolbarback.png);
+  background-position:60px 8px 0px 8px; /*top right bottom left offsets - we will stretch image in full*/
+  background-repeat:expand; /* h-smile specific */
+  
+}
+
+
+
+</style></head>
+<body>
+   <div class="tabs">
+      <div class="strip"> <!-- our tab strip, can be placed on any side of tab container. -->
+         <div panel="panel-id1" selected="true" accesskey="S"><u>S</u>heet</div>
+         <div panel="panel-id2" accesskey="I"><u>I</u>nsert</div>
+		     <div panel="panel-id3" accesskey="P"><u>P</u>age Layout</div>
+      </div>
+      <div name="panel-id1" selected="true"> first panel content<br/> 
+        You can use alt-s, alt-i and alt-p to switch tabs.
+      </div>
+      <div name="panel-id2"><img src="more_tabs/logo.png"> 
+      <img src="../goodies/progress.gif"> second panel content</div>
+	  <div name="panel-id3"> third panel content, sample of form elements:
+	  		<TABLE cellpadding="1" cellspacing="4" width="100%">
+				<TR>
+					<TD width=25%>Your name</FONT></TD>
+					<TD><INPUT name="text1" type="text" 
+					  style="WIDTH: 134px; 
+							 font-size: 10pt;
+							 font-family:'Century Gothic', Tahoma, Arial;" size="17" maxlength=50></TD>
+				</TR>
+				<TR>
+					<TD>Age</FONT></TD>
+					<TD><INPUT name="text2" type="number" value="1" size="6" step="1"></TD>
+				</TR>
+				<TR>
+					<TD>Date of birth</FONT></TD>
+					<TD><INPUT name="date3" type="date" style="WIDTH: 134px; HEIGHT: 22px"></TD>
+				</TR>
+				<TR>
+					<TD>How did you find your way in the world?</FONT></TD>
+					<TD><TEXTAREA name="TEXTAREA1" rows="3" cols="40" style="font:10pt monospace"></TEXTAREA></TD>
+				</TR>
+				<TR>
+					<TD>Country:</FONT></TD>
+					<TD><SELECT name="country" size=1><OPTION>Canada</OPTION><OPTION>US</OPTION></SELECT> hi <INPUT name="text10" size="17" maxlength=50></TD>
+				</TR>
+		    </TABLE>
+  
+	  </div>
+   </div>
+</body>   
+</html>

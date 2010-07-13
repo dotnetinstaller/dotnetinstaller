@@ -1,0 +1,55 @@
+<html>
+<head>
+  <style>
+  
+    div.grid
+    {
+      flow: horizontal;
+      margin:20px;
+      border-spacing:15px;
+    }    
+    div.cell 
+    {
+      size:50px;
+      //border:1px solid black;
+      position:relative;
+    }
+    div.cell > picture
+    {
+      position:absolute;
+      behavior:button; 
+      background-color:gold;
+      border-radius: 10%;
+      left:0px;
+      top:0px;
+      right:0px;
+      bottom:0px;
+    }
+    
+    div.cell > picture:hover 
+    {
+      left:-10px;
+      top:-10px;
+      right:-10px;
+      bottom:-10px;
+      background-color:red;
+      transition: top(timing-function:back-out, duration:0.4s, timing-function-out:cubic-in)
+                  left(timing-function:back-out, duration:0.4s, timing-function-out:cubic-in)
+                  bottom(timing-function:back-out, duration:0.4s, timing-function-out:cubic-in) 
+                  right(timing-function:back-out, duration:0.4s, timing-function-out:cubic-in) 
+                  background-color(timing-function:linear, duration:0.4s);
+    }
+  
+  </style>  
+</head>
+<body>
+  <h1>Negative top/left/right/bottom animation</h1>
+  <p>Hover one of the cells</p>
+  <div .grid>
+    <div .cell><picture /></div>
+    <div .cell><picture /></div>
+    <div .cell><picture /></div>
+  </div>
+
+</body>
+</html>

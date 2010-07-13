@@ -1,0 +1,103 @@
+<html>
+<head>
+  <script type="text/tiscript"></script>  
+  <style>
+    select > popup
+    {
+      overflow:scroll;
+      foreground-image:url(gripper.png);
+      foreground-repeat:no-repeat;
+      foreground-position:100% 100%;
+      foreground-image-cursor:s-resize;
+      height:64px;
+      max-height:max-intrinsic;
+      min-height:32px;
+      behavior: ~ sizer; // the sizer
+      -resize: vertical; // resizing only vertically, see behavior_sizer.cpp
+    }
+    
+    #one-more-sizer 
+    {
+      color:black;
+      width:54px;
+      height:54px;
+      background: gold;
+      border:1px solid red;
+      behavior:dropdown;
+    }
+    #one-more-sizer:hover 
+    {
+      background:yellow;
+    }
+    #one-more-sizer:active:not(:owns-popup) 
+    {
+      background:orange;
+    }
+    #one-more-sizer > popup
+    {
+      behavior: sizer; 
+      foreground-image:url(gripper.png);
+      foreground-repeat:no-repeat;
+      foreground-position:100% 100%;
+      foreground-image-cursor:nw-resize; 
+      background: white;
+      border:1px solid orange;
+      min-height:54px;
+      vertical-align:middle;
+      text-align:center;
+    }
+
+    #button-popup-sizer
+    {
+      behavior:popup-menu;
+    }
+    
+    #button-popup-sizer > popup
+    {
+      behavior: sizer; 
+      foreground-image:url(gripper.png);
+      foreground-repeat:no-repeat;
+      foreground-position:100% 100%;
+      foreground-image-cursor:nw-resize; 
+      background: white;
+      border:1px solid orange;
+      min-height:54px;
+      vertical-align:middle;
+      text-align:center;
+    }
+
+    
+  </style>  
+<head>
+<body>
+<h1>Demo of behavior::sizer, popup element resizing</h1>
+<select>
+  <option>First</option>
+  <option>Second</option>
+  <option>Third</option>
+  <option>Fourth</option>
+  <option>Fifth</option>
+  <option>Sixth</option>
+  <option>Seventh</option>
+  <option>Eight</option>
+  <option>Ninth</option>
+  <option>Tenth</option>
+</select>
+<hr/>
+<div #one-more-sizer >
+  Click me!
+  <popup> 
+    Resize me!
+  </popup>
+</div>
+
+<button #button-popup-sizer >
+  Click me!
+  <popup> 
+    Resize me!
+  </popup>
+</button>
+
+
+</body>
+</html>

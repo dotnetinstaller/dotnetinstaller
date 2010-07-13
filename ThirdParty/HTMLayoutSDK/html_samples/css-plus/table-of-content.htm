@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>TOC demo</title>
+<style>
+  #toc 
+  {
+    padding:1em;
+    margin:1em;
+    border:1px solid gray;
+  }
+  #toc span.spring 
+  { 
+    display:inline-block; 
+    width:100%%;
+    height:1.1em;
+    border-bottom:1px dotted gray;
+    overflow:hidden;
+  }
+  #toc span.pageno 
+  { 
+    display:inline-block;
+    width:100%%;
+  }
+</style>
+</head>
+<body>
+
+<h3>This sample demonstrates use of %% as inline "springs".</h3>
+
+<div id="toc">
+  <ol>
+    <li>Associative Containers
+    <ol>
+      <li><a href="#">Associative Container</a><span class="pageno"><span class="spring"/>#</span></li>
+      <li><a href="#">Simple Associative Container</a><span class="pageno"><span class="spring"/>#</span></li>
+      <li><a href="#">Pair Associative Container</a><span class="pageno"><span class="spring"/>#</span></li>
+      <li><a href="#">Sorted Associative Container</a><span class="pageno"><span class="spring"/>#</span></li>
+      <li><a href="#">Hashed Associative Container</a><span class="pageno"><span class="spring"/>##</span></li>
+      <li><a href="#">Hash Function</a><span class="pageno"><span class="spring"/>##</span>
+          <ol>
+          <li><a href="#">Theory</a><span class="pageno"><span class="spring"/>##</span>
+          <li><a href="#">Implementations</a><span class="pageno"><span class="spring"/>##</span>
+          </ol>
+      </li>
+      <li><a href="#">Unique Associative Container</a><span class="pageno"><span class="spring"/>##</span></li>
+      <li><a href="#">Multiple Associative Container</a><span class="pageno"><span class="spring"/>##</span></li>
+      <li><a href="#">Unique Sorted Associative Container</a><span class="pageno"><span class="spring"/>##</span></li>
+      <li><a href="#">Multiple Sorted Associative Container</a><span class="pageno"><span class="spring"/>##</span></li>
+      <li><a href="#">Unique Hashed Associative Container</a><span class="pageno"><span class="spring"/>###</span></li>
+      <li><a href="#">Multiple Hashed Associative Container</a><span class="pageno"><span class="spring"/>###</span></li>
+    </ol>
+    </li>
+  </ol>
+</div>
+
+</body>
+</html>

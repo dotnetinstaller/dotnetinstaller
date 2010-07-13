@@ -1,0 +1,92 @@
+<html>
+<head><style>
+.tabs 
+{
+  font:system;
+  behavior:tabs;
+  height:*;
+  width:*;
+  overflow:hidden;
+}
+
+.tabs > .strip /* the tab strip */
+{
+  flow: horizontal;
+  width:*;
+  padding: 4px 10px 0 10px;
+  background-color: window window threedface threedface;
+  border-bottom:1px solid threedshadow;  
+}
+
+.tabs > .strip > [panel] /* the tab having panel attribute, passive by default */
+{
+  padding: 3px 8px;
+  height: *; /* span the whole row */
+  max-width: auto; /* not wider than max-intrinsic  */
+  background-color: window;
+  border-radius: 12px 12px 0 0;
+  border-style:solid;
+  border-color:threedshadow;
+  border-width:1px 1px 0 1px;
+  margin:0 -1px;
+  cursor:pointer;
+}
+
+.tabs > .strip > [panel]:nth-child(1) { background-color:bisque; }
+.tabs > .strip > [panel]:nth-child(2) { background-color:lavender; }
+.tabs > .strip > [panel]:nth-child(3) { background-color:lemonchiffon; }
+.tabs > .strip > [panel]:nth-child(4) { background-color:mistyrose; }
+
+.tabs > .strip > [panel]:hover /* passive tab */
+{
+  //border-top-color: orange;
+  color:blueviolet;
+}
+.tabs > .strip > [panel]:current  /*active tab*/
+{
+  margin:-2px -2px -1px -2px;
+  padding: 4px 10px 5px 10px; 
+  background-color-bottom-right: window;
+  background-color-bottom-left: window;
+  position:relative;
+}
+
+.tabs > .strip > [panel]:current:hover /*active tab*/
+{
+  //color:red;
+}
+
+.tabs:tab-focus > .strip > [panel]:current > * /* outline active tab content if we've gotten focus by tab*/
+{
+  outline: 1px dotted invert;
+}
+
+.tabs > [name] { display:none; }
+.tabs > [name]:expanded // current panel
+{ 
+  padding:4px;
+  display:block; 
+  width:*;
+  height:*;
+  border:1px solid threedshadow;  
+  border-top-style:none;  
+}
+
+</style></head>
+
+<body>
+   <p>Rounded tabs.</p>
+   <div .tabs>
+      <div .strip> <!-- our tab strip, can be placed on any side of tab container. -->
+         <div panel="panel-id1" selected>tab1 caption</div>
+         <div panel="panel-id2">tab2 caption</div>
+         <div panel="panel-id3">tab3 caption</div>
+         <div panel="panel-id4">tab4 caption</div>
+      </div>
+      <div name="panel-id1" selected> first panel content </div>
+      <div name="panel-id2" > second panel content </div>
+      <div name="panel-id3" > third panel content <!--<img src="res:activity.gif">--> </div>      
+      <div name="panel-id4" > fourth panel content <!--<img src="res:activity.gif">--> </div>      
+   </div>
+</body>   
+</html>   

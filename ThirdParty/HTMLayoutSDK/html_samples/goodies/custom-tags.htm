@@ -1,0 +1,34 @@
+<html>
+<head>
+  <style>
+    panel 
+    {
+      border: 1px solid black;
+      background-color: yellow gold orange gold; 
+    }
+    note 
+    {
+      padding-left: 28px;
+      background-image:url(note-icon.png);
+      background-repeat:no-repeat;
+      background-position:left center;
+      min-height:24px;
+    }
+  </style>
+</head>
+<body>
+  <panel>
+    &lt;panel&gt; demo. This text must be rendered on gradient background
+  </panel>
+  <p>
+  &lt;marked&gt; demo. Test of marked text. <marked>This text shall have yellow background</marked>. But this is not.
+  </p>
+  <data>
+    This thing shall not be visible at all.
+  </data>
+  <note> 
+    All custom tags/elements used here are defined in wtl/browse/browse.cpp
+  </note>
+</body>
+</html>
+

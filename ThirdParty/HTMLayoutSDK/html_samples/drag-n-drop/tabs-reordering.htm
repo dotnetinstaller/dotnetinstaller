@@ -1,0 +1,144 @@
+<html>
+<head><style>
+
+.tabs 
+{
+  font:system;
+  behavior:tabs;
+  height:100%%;
+  width:100%%;
+  overflow:hidden;
+}
+
+.tabs > .strip /* tab strip */
+{
+  flow: horizontal;
+  margin-bottom:-1px;
+  padding: 2px 4px 0 8px;
+}
+
+.tabs .strip [panel] /* all tabs, passive by default */
+{
+  padding: 3px 8px;
+  margin-bottom:1px;
+  height: 100%%;
+  max-width: auto; /* not wider than max-intrinsic  */
+  background-image:url(theme:tab-item-normal);
+  background-repeat:stretch;
+}
+.tabs .strip [panel]:hover /* passive tab */
+{
+  background-image:url(theme:tab-item-hover);
+  //transition:blend;
+}
+
+.tabs .strip [panel]:moving,  /* moving tab*/
+.tabs .strip [panel]:current  /*active tab*/
+{
+  background-image:url(theme:tab-item-selected);
+  margin:-2px -2px -1px -2px;
+  padding: 4px 10px 5px 10px; 
+  position:relative;
+}
+.tabs .strip [panel]:current:hover /*active tab*/
+{
+  background-image:url(theme:tab-item-selected);
+  transition:none;
+}
+
+.tabs:focus .strip [panel]:current /*active tab*/
+{
+  //background-image:url(theme:tab-item-focused);
+}
+
+.tabs:tab-focus .strip [panel]:current > * /* outline active tab content if we've gotten focus by tab*/
+{
+  outline: 1px dotted invert;
+}
+
+
+.tabs > [name] { display:none; }
+
+.tabs > [name]:expanded 
+{ 
+  background-image:url(theme:tab-panel);
+  background-repeat:stretch;
+  padding:4px;
+  display:block; 
+  height:100%%;
+}
+
+/* tabs drag-n-drop support */
+
+.tabs .strip 
+{
+  accept-drop: selector( div[panel] ); /* accept drop of div[panel] */ 
+  outline-color: green; /* color of insertion marker */
+  outline-width: 4px;
+}
+
+.tabs .strip div[panel]
+{
+  draggable: only-move;
+}
+
+.tabs .strip div[panel]:drop-marker
+{
+  //visibilty:hidden;
+  //display:block;
+  color:red;
+}
+
+
+div#scrollable
+{
+  //border:1px solid;
+  overflow:auto;
+  height:*;
+}
+
+</style></head>
+
+<body>
+
+   <p>Tabs with reordering, drag tabs to reorder them.</p>
+   <div class="tabs">
+      <div class="strip"> <!-- our tab strip, can be placed on any side of tab container. -->
+         <div panel="panel-id1" selected>tab1 caption</div>
+         <div panel="panel-id2">tab2 caption</div>
+         <div panel="panel-id3">tab3 caption</div>         
+      </div>
+      <div name="panel-id1" selected> 
+        <div #scrollable>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>          
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>          
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>          
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>          
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>          
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>
+          <p>test</p>          
+        </div>
+      </div>
+      <div name="panel-id2" > second panel content </div>
+      <div name="panel-id3" > third panel content </div>      
+   </div>
+   
+</body>   
+</html>   

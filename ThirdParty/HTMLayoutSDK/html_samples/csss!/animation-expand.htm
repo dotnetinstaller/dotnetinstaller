@@ -1,0 +1,118 @@
+<html>
+<head>
+  <style>
+  
+    @const ANIMATION_STEP_MS: 8;
+      
+    div.playground
+    {
+      width:25%;
+      height:*; 
+      overflow:hidden;
+      background-color: white;
+	    style-set: "v-animate-on-caption-click"; // see below
+    }
+	   
+    div.playground > caption
+    {
+      background:orange;
+    }
+    div.playground > caption:hover
+    {
+      background:gold;
+      transition:blend;
+    }
+    
+    div.playground > div.expandable
+    {
+      border:1px solid black;
+      overflow:hidden;
+    }
+    
+    div.playground > div.expandable:animating,
+    div.playground > div.expandable:expanded
+    {
+      background-color:floralwhite floralwhite bisque bisque;
+    }
+
+	  @set v-animate-on-caption-click
+    {	
+      :root > caption
+      {
+        active-on!: panel = self.next(), // next element (div)
+        panel:expanded ? (panel:collapsed = true) # (panel:expanded = true),
+        panel.start-animation();
+      }
+    
+		:root > div /* normally all divs inside are collapsed - not visible */
+		{
+		  width:100%%;
+		  visibility:collapse;
+		  overflow:hidden;
+		}
+    
+    :root > div:animating, 
+		:root > div:expanded 
+		{
+		  height:100%%; 
+		  visibility:visible;
+		}
+
+		:root > div:expanded
+    {
+      animation-start!: self::height = 1%% ;
+      animation-end!:   self::height = 100%% ;
+      animation-step!:  self::height < 100%% ? 
+        (
+          delta = limit( (100%% - self::height) * 0.15, 1%%, 8%% ),
+          self::height = self::height + delta, 
+          self::height < 50%% ? self::opacity = float(self::height) / 50.0, 
+          return @ANIMATION_STEP_MS
+        );
+    }
+		
+    :root > div:collapsed
+		{
+		  animation-start!: self::height = 100%% ;
+		  animation-end!:   self::height = 0%%, self::opacity = 1.0;
+		  animation-step!:  self::height > 0%% ? 
+				(
+				   delta = limit( self::height * 0.15, 1%%, 8%% ),
+				   self::height = self::height - delta, 
+				   self::height < 50%% ? self::opacity = float(self::height) / 50.0, 
+				   return @ANIMATION_STEP_MS
+				);
+		}
+    
+	}
+	
+	
+	
+    
+  </style>  
+<head>
+<body style="flow:horizontal">
+  <div .playground> 
+    <caption>Caption 1</caption>
+    <div .expandable>
+      Panel content 1
+      <p>test test test test test test test test test test test test test test test test test test test test test test test test test test test test</p>
+    </div>
+    <caption>Caption 2</caption>
+    <div .expandable>
+      Panel content 2
+      <p>test test test test test test test test test test test test test test test test test test test test test test test test test test test test</p>
+    </div>
+    <caption>Caption 3</caption>
+    <div .expandable>
+      Panel content 3
+      <p>test test test test test test test test test test test test test test test test test test test test test test test test test test test test</p>
+    </div>
+  </div>
+  <div style="padding:20px">
+    <h1>Example of simple expand/collapse animation</h1>
+    <p>This sample rely on flex units computations.</p>
+    <p>Clcik on one of captions to start animation.</p>
+  </div>
+</body>
+</html>

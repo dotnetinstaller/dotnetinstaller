@@ -1,0 +1,26 @@
+HKCR
+{
+	AxHTMLayout.Elements.1 = s 'Elements Class'
+	{
+		CLSID = s '{BB9B507A-1F92-4C43-A2ED-A0B0570200BC}'
+	}
+	AxHTMLayout.Elements = s 'Elements Class'
+	{
+		CLSID = s '{BB9B507A-1F92-4C43-A2ED-A0B0570200BC}'
+		CurVer = s 'AxHTMLayout.Elements.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {BB9B507A-1F92-4C43-A2ED-A0B0570200BC} = s 'Elements Class'
+		{
+			ProgID = s 'AxHTMLayout.Elements.1'
+			VersionIndependentProgID = s 'AxHTMLayout.Elements'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{22A83438-4B36-4CEC-9AF7-C0001674E2A8}'
+		}
+	}
+}

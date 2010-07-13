@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <style>
+    [for]
+    {
+      hover-on!  : $1(#< self.for >).highlight = true;
+      hover-off! : $1(#< self.for >).highlight = null;
+      active-on! : $1(#< self.for >):focus = true;
+      cursor:pointer;
+    }
+    input[highlight]
+    {
+      outline: 4px glow blue 1px;
+    }
+    </style>
+  </head>
+<body>
+  <table border="1" width="100%" #test>
+    <tr>
+      <td><label for="first">Label #1</label></td>
+      <td><input type="text" id="first" /></td></tr>
+    <tr>
+      <td for="second">Cell as a label</td>
+      <td><input type="text" id="second" /></td></tr>
+    <tr for="third">
+      <td>Whole row as a label</td>
+      <td><input type="text" id="third" /></td></tr>
+  </table>
+  
+  <label for="fourth">Label #4</label><input type="text" id="fourth" />
+  
+</body>
+</html>

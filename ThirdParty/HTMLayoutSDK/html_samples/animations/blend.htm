@@ -1,0 +1,94 @@
+<html>
+	<head>
+		<title>Title and popup windows</title>
+	<style type="text/css"> 
+  
+  body 
+  { 
+    margin:0;
+    padding:10px;
+    background-color:#c7c5c6; 
+    background-image:url(images/transp.png); 
+    background-repeat:no-repeat; 
+  }
+  
+  img 
+  { 
+    width:16px; 
+    height:16px; 
+    foreground-image:url(images/led-green.png);
+  }
+
+  img:hover
+  { 
+    foreground-image:url(images/led-red.png);
+    transition: blend;
+  }
+  
+  /* styles for our popup element */
+  
+  #test { behavior:dropdown; }
+  #test popup
+  { 
+    padding:4px;
+	background-color:white #c7c5c6 #c7c5c6 #c7c5c6;
+    border-left: 1px solid gray;
+	border-top: 1px solid gray;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+	text-align:center;
+  }
+
+  #test popup img
+  { 
+	foreground-image:url(images/led-yellow.png);
+	transition: blend;
+  }
+  
+  #test popup img:hover
+  { 
+	foreground-image:url(images/led-blue.png);
+	transition: blend;
+  }
+  
+	</style>
+	</head>
+<body>
+
+  <div>
+  <img href="sliding-bar.htm"><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><br>
+  <img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><br>
+  <img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><br>
+  <img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><br>
+  <img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><br>
+  <img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><br>
+  <img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><br>
+  <img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img><img>
+  </div>
+  <div id="test" style="border:1px solid black; max-width:auto">Click here to see popup
+	  <popup>
+		  <img><img><img><img><img><img><img><img><img><img><br>
+		  <img><img><img><img><img><img><img><img><img><img><br>
+		  <img><img><img><img><img><img><img><img><img><img><br>
+		  <img><img><img><img><img><img><img><img><img><img><br>
+		  <img><img><img><img><img><img><img><img><img><img><br>
+		  <img><img><img><img><img><img><img><img><img><img><br>
+		  <img><img><img><img><img><img><img><img><img><img><br>
+		  <img><img><img><img><img><img><img><img><img><img><br>
+		  <img><img><img><img><img><img><img><img><img><img><br>
+		  <img><img><img><img><img><img><img><img><img><img><br>
+		  <img><img><img><img><img><img><img><img><img><img><br>
+		  <img><img><img><img><img><img><img><img><img><img><br>
+		  <img><img><img><img><img><img><img><img><img><img><br>
+		  <img><img><img><img><img><img><img><img><img><img>
+	  </popup>
+  </div>
+  
+  Test cases:
+  <ol>
+      <li>Move mouse over leds - you should see dissolving track in main window and on popup</li>
+	  <li>Clicking outside of popup, it disappears. This shall not left tracks  of dissolving leds.</li>
+	  <li>Scrolling main window by mouse shall retain proper positions of tracks.</li>
+  </ol>
+</body>
+</html>

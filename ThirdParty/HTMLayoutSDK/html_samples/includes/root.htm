@@ -1,0 +1,36 @@
+<html>
+  <head>
+  <style>
+    div 
+    { 
+     border:1px dotted red; 
+     background-color:#FFF0F0;
+     padding:10px;
+     margin:20px;
+    }
+  </style>
+  </head>
+<body>
+  <h1>Demo of client side includes.</h1>
+  Merged content of chunk1.htm:
+  <div>   
+  <include src="chunk1.htm" />
+  </div>
+  Merged content of chunk2.htm:
+  <div>   
+  <include src="chunk2.htm" />
+  </div>
+  Error message should appear here (content of the include tag):
+  <div>   
+  <include src="chunk3.htm">
+    <b>chunk3.htm was not provided intentionally!</b>
+  </include>
+  </div>
+  Here will be another error message. No cyclic references please!:
+  <div>   
+  <include src="root.htm" />
+  </div>
+</body>
+</html>
+	
+	

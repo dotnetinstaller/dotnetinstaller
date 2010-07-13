@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <style>
+      body { background:#7d8f7a; padding: 20px; }
+
+      div { width:25%%; height:25%%; }
+      p.outline { 
+        margin:*; font:36pt Arial; 
+        color:khaki;
+        border:1px solid; 
+      }
+     
+      .outline:hover 
+      {
+        outline:8px glow lightyellow 2px; 
+        //transition:blend;
+      }
+      
+      img.glow { margin:16px 0; }
+      img.glow:hover 
+      {
+        foreground-image-transformation: contrast-brightness-gamma(0.5,.7, .8);
+        outline:10px glow lightyellow 3px; 
+        transition:blend;
+      }
+    </style>
+  </head>
+<body>
+  <p>
+    test<img src="round-button.png" .glow #test />
+    <img src="round-button.png" .glow />
+    <img src="round-button.png" .glow /><br>
+    test<img src="round-button.png" .glow />
+    test<img src="round-button.png" .glow />
+    test<img src="round-button.png" .glow /><br>
+    test<img src="round-button.png" .glow />
+    test<img src="round-button.png" .glow />
+    test<img src="round-button.png" .glow />
+  </p>
+  </div>
+  <div>
+    <p .outline>Cool!</p>
+  </div>
+ 
+</body>
+</html>

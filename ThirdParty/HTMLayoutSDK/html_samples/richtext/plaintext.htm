@@ -1,0 +1,102 @@
+<html>
+<head>
+  <style>
+  
+    @const COLOR_BASE: threedface;
+    @const COLOR_SHADOW: threedshadow;
+    @const COLOR_LIGHT: threedhighlight;
+    @const BORDER: 1px solid @COLOR_SHADOW;
+    @const BUTTON_BACK_NORMAL: url(theme:toolbar-button-normal) stretch;	
+    @const BUTTON_BACK_HOVER: url(theme:toolbar-button-hover) stretch;
+    @const BUTTON_BACK_ACTIVE: url(theme:toolbar-button-pressed) stretch;
+    @const BUTTON_BACK_CHECKED: url(theme:toolbar-button-checked) stretch;
+	  @const BUTTON_BACK_CHECKED_HOVER: url(theme:toolbar-button-checked-hover) stretch;
+    @const BUTTON_BACK_DISABLED: url(theme:toolbar-button-disabled) stretch;
+            
+    html { behavior: ~ actions; }
+            
+    widget.toolbar
+    {
+      flow:horizontal;
+      height:24px;
+      background-color: threedface;
+      border-bottom:@BORDER;
+      padding:2px;
+    }
+        
+    widget.tb-button
+    {
+      //prototype: ToolbarButton;
+      font-family:tahoma arial;
+      behavior: clickable;
+      padding:3px;
+      width:20px;
+      height:*;
+      text-align:center;
+      vertical-align:middle;
+      background: @BUTTON_BACK_NORMAL;
+    }
+   
+    widget.tb-button:disabled
+    {
+      background: @BUTTON_BACK_DISABLED;
+      color:threedshadow;
+    }    
+    widget.tb-button:disabled img
+    {
+      foreground-image-transformation: contrast-brightness-gamma(0.15,0.75,1.0);
+    }    
+      
+    widget.tb-button:hover:not(:disabled)         { background: @BUTTON_BACK_HOVER; }    
+    widget.tb-button:active:not(:disabled)        { background: @BUTTON_BACK_ACTIVE; padding:4px 2px 2px 4px; }    
+    widget.tb-button:checked:not(:disabled)       { background: @BUTTON_BACK_CHECKED; }    
+    widget.tb-button:checked:hover:not(:disabled) { background: @BUTTON_BACK_CHECKED_HOVER; }    
+    
+    widget.tb-button.h:not(:disabled) { color:threedshadow; }    
+    widget.tb-button.h:not(:disabled) b { color:windowtext; }    
+
+    widget.toolbar > hr
+    {
+      width:0;
+      height:*;
+      margin: 0 2px;
+      border: 1px solid;
+      border-color: @COLOR_SHADOW @COLOR_LIGHT @COLOR_LIGHT @COLOR_SHADOW;
+    }    
+  
+    plaintext
+    {
+      font: 10pt monospace;
+      height:*;
+    }
+    
+    plaintext#first
+    {
+      overflow-y:scroll;
+      height:max-intrinsic;
+      max-height:50%;
+    }
+    
+  </style>
+ 
+</head>
+<body>
+<h1>Demo of behavior:plaintext.</h1>
+  <widget .toolbar>
+    <widget .tb-button command=richtext:cut   title="Cut">	 <img src="res:edit-cut.png" /></widget>
+    <widget .tb-button command=richtext:copy  title="Copy">	 <img src="res:edit-copy.png" /></widget>
+    <widget .tb-button command=richtext:paste title="Paste"> <img src="res:edit-paste.png" /></widget>
+    <hr/>
+    <widget .tb-button command=richtext:undo  title="Undo">	 <img src="res:edit-undo.png" /></widget>
+    <widget .tb-button command=richtext:redo  title="Redo">  <img src="res:edit-redo.png" /></widget>
+  </widget>
+  <plaintext name="plain-text" toolbar="widget.toolbar" #first>
+    <b>Hello world</b>
+  </plaintext>
+
+  <plaintext readonly name="plain-text" toolbar="widget.toolbar" #second>
+    &lt;b>Hello readonly world&lt;/b>
+  </plaintext>
+
+</body>
+</html>

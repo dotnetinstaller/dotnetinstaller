@@ -1,0 +1,114 @@
+<html>
+<head>
+<style>
+  .tabs 
+  {
+    font:system;
+    behavior:tabs;
+    height:100%%;
+    width:100%%;
+    /*overflow:hidden;*/
+  }
+
+  .tabs > .strip /* tab strip */
+  {
+    flow: horizontal;
+    margin-bottom:-1px;
+    padding: 2px 4px 0 8px;
+  }
+
+  .tabs .strip [panel] /* all tabs, passive by default */
+  {
+    padding: 3px 8px;
+    margin-bottom:1px;
+    height: 100%%;
+    max-width: auto; /* not wider than max-intrinsic  */
+    background-image:url(theme:tab-item-normal);
+    background-repeat:stretch;
+  }
+  .tabs .strip [panel]:hover /* passive tab */
+  {
+    background-image:url(theme:tab-item-hover);
+    transition:blend;
+  }
+  .tabs .strip [panel]:current  /*active tab*/
+  {
+    background-image:url(theme:tab-item-selected);
+    margin:-2px -2px -1px -2px;
+    padding: 4px 10px 5px 10px; 
+    position:relative;
+  }
+  .tabs .strip [panel]:current:hover /*active tab*/
+  {
+    background-image:url(theme:tab-item-selected);
+    transition:none;
+  }
+
+  .tabs:focus > .strip > [panel]:current /*active tab*/
+  {
+    background-image:url(theme:tab-item-focused);
+  }
+
+  .tabs:tab-focus > .strip > [panel]:current > * /* outline active tab content if we've gotten focus by tab*/
+  {
+    outline: 1px dotted invert;
+  }
+
+
+  .tabs > [name] { display:none; }
+
+  .tabs > [name]:expanded 
+  { 
+    background-image:url(theme:tab-panel);
+    background-repeat:stretch;
+    padding:4px;
+    display:block; 
+    height:100%%;
+  }
+
+  /* second, light tabs */
+
+  #second.tabs > .strip /* tab strip */
+  {
+    margin-bottom:0px;
+    padding: 4px 10px -1px 10px;
+    background-color: window window threedface threedface;
+    border-bottom:1px solid threedshadow;  
+  }
+
+  #second.tabs > [name]:expanded /* current, presented tab */
+  { 
+    background-image:none;
+    padding:4px;
+    display:block; 
+    height:100%%;
+  }
+   
+</style>
+</head>
+<body>
+    <div .tabs>
+        <div .strip role="page-tab-list"> <!-- our tab strip, can be placed on any side of tab container. -->
+            <div panel="panel-one"  selected  role="page-tab">First panel</div>
+            <div panel="panel-two"            role="page-tab">Second panel</div>
+        </div>
+        <div name="panel-one" selected style="overflow:auto"> 
+            First panel content
+                <div .tabs>
+                    <div .strip role="page-tab-list"> 
+                        <div panel="panel-three" selected role="page-tab">Subpanel-1</div>
+                        <div panel="panel-fourth"         role="page-tab">Subpanel-2</div>
+                    </div>
+                    <div name="panel-three" selected >
+                        Hello, subpaneled world!
+                    </div>
+                    <div name="panel-fourth">
+                        unnecessary panel
+                    </div>
+                </div>
+        </div>
+        <div name="panel-two" >Show me the bug</div>
+    </div>
+</body>
+
+</html>

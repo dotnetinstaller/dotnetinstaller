@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <style>
+      
+      td.number
+      {
+        width:max-intrinsic;
+        behavior:number;
+        text-align:right;
+        value-changed!: 
+          total = 0, 
+          $(td.number) -> @(el) total = total + el:value,
+          $1(td#total):value = total;
+      }
+      td.number[invalid] 
+      {
+        color:red;
+      }
+      td#total 
+      {
+        text-align:right;
+        font-weight:bold;
+      }
+      span.comment { color:green; }
+    </style>
+  </head>
+<body>
+  <p>Edit numbers in the right column and the "total:" field will tell you their sum.</p>
+  <table border=1>
+    <tr><td>number #1</td><td .number>0</td></tr>
+    <tr><td>number #2</td><td .number>0</td></tr>
+    <tr><td>number #3</td><td .number>0</td></tr>
+    <tr><td>number #4</td><td .number>0</td></tr>
+    <tr><td>number #5</td><td .number>0</td></tr>
+    <tr><td>number #6</td><td .number>0</td></tr>
+    <tr><td>number #7</td><td .number>0</td></tr>
+    <tr><td>number #8</td><td .number>0</td></tr>
+    <tr><td>number #9</td><td .number>0</td></tr>
+    <tr><td>number #10</td><td .number>0</td></tr>
+    <tr><td>total:</td><td #total>0</td></tr>
+  </table>
+  <p>This sample demonstrates use of functions in CSSS!. Magick is done by the following rule:</p>
+  <pre>
+   value-changed!: 
+    total = 0, 
+    $(td.number) -> @(el) total = total + el:value,
+    $1(td#total):value = total;
+  </pre>
+<p>Declare variable <code>total</code> with initial value 0.</p>
+<p>Declare anonymous function <code>@(el)</code> with single parameter <code>el</code> and body of single statement:</p>
+<pre> total = total + el:value</pre>
+<p><code>$(td.number) '->' function</code> - call function on the right <em>for each</em> element of collection
+on the left that is a set of elements satisfying <code>$(td.number)</code>.</p>
+<p>Set text of <code>td#total</code> equal to the <code>total</code>.</p>
+  
+</body>
+</html>

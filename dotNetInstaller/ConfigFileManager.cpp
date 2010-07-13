@@ -1,8 +1,6 @@
 #include "StdAfx.h"
 #include "ConfigFileManager.h"
 #include "dotNetInstallerDlg.h"
-#include "DniMessageBox.h"
-#include "InstallerCommandLineInfo.h"
 #include <Version/Version.h>
 
 ConfigFileManager::ConfigFileManager()

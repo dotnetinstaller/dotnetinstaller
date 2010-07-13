@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title></title>
+		<style>
+		  table#test { width:*; height:*; overflow:auto; }
+		  table#test > tr { height:1.4em; }
+			table#test > tr > td { overflow-x: hidden; border:1px solid blue; vertical-align: top; }
+			
+			table#test > tr > td:nth-child(1) { width: 20%; min-width:4em; }
+			table#test > tr > td:nth-child(2) { width: 200px; }
+			table#test > tr > td:nth-child(3) { width: *; min-width:4em; }
+			table#test > tr > td:nth-child(4) { width: *; min-width:4em; }
+			
+			table#test > tr > td[rowspan="5"] { background-color: bisque; }
+			table#test > tr > td[rowspan="3"] { background-color: antiquewhite; }
+			table#test > tr > td[rowspan="2"] { background-color: cornsilk; }
+			
+		</style>
+  </head>
+<body>
+	<table #test fixedlayout>
+	  <tr>
+		  <td rowspan="5">1</td>
+			<td rowspan="2">something</td>
+			<td>anything</td>
+			<td>somewhere</td>
+		</tr>
+		<tr>
+			<td>anything</td>
+			<td>somewhere</td>
+		</tr>
+		<tr>
+			<td rowspan="3">something</td>
+			<td>anything</td>
+			<td>somewhere</td>
+		</tr>
+		<tr>
+			<td rowspan="2">anything</td>
+			<td>somewhere</td>
+		</tr>
+		<tr>
+			<td>somewhere</td>
+		</tr>
+		<tr>
+      <td rowspan="5">2</td>		
+			<td rowspan="2">something</td>
+			<td>anything</td>
+			<td>somewhere</td>
+		</tr>
+		<tr>
+			<td>anything</td>
+			<td>somewhere</td>
+		</tr>
+		<tr>
+			<td rowspan="3">something</td>
+			<td>anything</td>
+			<td>somewhere</td>
+		</tr>
+		<tr>
+			<td rowspan="2">anything</td>
+			<td>somewhere</td>
+		</tr>
+		<tr>
+			<td>somewhere</td>
+		</tr>
+	</table>
+</body>
+</html>

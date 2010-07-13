@@ -1,0 +1,49 @@
+  table#grid 
+  { 
+    border:1px solid #bdbccc; 
+    overflow: auto;
+    width:100%%;
+    height:100%%;
+    behavior:grid;
+  }
+
+  table#grid th 
+  { 
+    color: white;
+    font-family:"Century Gothic","Verdana"; 
+	  font-size:14pt; 
+    border:none;
+    padding:4px; 
+    background-color:#DDD; 
+  }
+
+  table#grid th:hover 
+  { 
+    color: #ffe598;
+  }
+
+  table#grid tr:current /* current row */ 
+  { 
+    background-color:#bdbccc; 
+    color:white;
+  } 
+
+  table#grid td 
+  { 
+    padding:2px; 
+    font-family:"Verdana"; 
+    font-size:9pt;  
+  }
+
+  table#grid td:nth-child(1) { font-weight:bold; text-align:center; width:10%%; } /* first column */
+  table#grid td:nth-child(2) { border-left:1px solid #bdbccc; color:#8380A0; width:10%%; } /* second column */
+  table#grid td:nth-child(3) /* last column */
+  { 
+     text-align:left;
+     overflow:hidden;        /* three line below - ellipsis */
+     text-overflow:ellipsis;
+     white-space:nowrap;
+     width:80%;
+     border-left:1px solid #bdbccc;
+  } 
+  

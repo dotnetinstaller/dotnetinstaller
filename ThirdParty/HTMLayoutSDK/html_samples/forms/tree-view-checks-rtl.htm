@@ -1,0 +1,178 @@
+<HTML>
+	<HEAD>
+		<TITLE></TITLE>
+		<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<STYLE>
+	BODY { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+	P { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+	
+  div { height:*; }
+  
+	#select-with-checks
+	{
+	  width:80%%; /* for this demo purposes */
+    height:100%%; /* for this demo purposes */
+    behavior:select select-checkmark;
+    overflow:auto;
+	}
+	
+  #select-with-checks options
+  {
+    margin:0;
+    margin-left:16px;
+    padding:0;
+    foreground-image:url(theme:tree-view-glyph-closed);
+    foreground-repeat: no-repeat;
+    foreground-position-left: -13px;  
+    foreground-position-top: 3px;  
+  }
+
+  #select-with-checks options:rtl
+  {
+    margin:0;
+    margin-right:16px;
+    foreground-position-right: -13px; 
+    foreground-position-left: auto;  
+  }
+  
+  #select-with-checks options:expanded
+  {
+    foreground-image:url(theme:tree-view-glyph-open);
+  }  
+  
+  /*  
+      "caption" - visual portion of listitem
+      behavior should change value of checkmark attribute 
+      caption here has two icons - checkmark and item icon (as a background image)
+   */
+  
+  #select-with-checks caption
+  {
+    margin:0;
+    padding:1px 2px 2px 32px; /* space for two icons */
+        
+    foreground-image:url(theme:check-normal);
+    foreground-repeat: no-repeat;
+    foreground-position-left: 0px;
+    foreground-position-top: 50%;
+    background-color:transparent; color:windowtext; 
+    foreground-image-cursor: pointer;
+  }
+    
+  #select-with-checks caption:rtl
+  {
+    padding:1px 32px 2px 2px; /* space for two icons */
+    foreground-position-right: 0px;
+    foreground-position-left: auto;
+  }
+  
+  #select-with-checks options:has-children > * // all options with more than one child (that is caption)
+  {
+    display: list-item;
+    list-style-type: tree-line;
+    list-marker-color:red;
+    list-marker-size:1px;
+  }  
+  
+  #select-with-checks option[check="mixed"] > caption,
+  #select-with-checks options[check="mixed"] > caption
+  {
+    foreground-image:url(theme:check-mixed-normal);
+  }
+  #select-with-checks option[check="on"] > caption,
+  #select-with-checks options[check="on"] > caption
+  {
+    foreground-image:url(theme:check-checked-normal);
+  }
+    
+  #select-with-checks :current > caption
+  { 
+    background-color:highlight; color:highlighttext; 
+  }
+    
+  #select-with-checks options > caption
+  {
+    /* put icon as a background image */
+    background-image:url(images/icon-folder.png);
+    background-repeat: no-repeat;
+    background-position-left:16px;
+    background-position-top:0px;
+  }
+  
+  #select-with-checks options > caption:rtl
+  {
+    background-position-left:auto;
+    background-position-right:16px;
+  }
+  
+  #select-with-checks option
+  {
+    margin:0 0 0 16px;
+    padding:0;
+    background-color:transparent; color:windowtext; 
+  }
+  #select-with-checks option:rtl
+  {
+    margin:0 16px 0 0;
+  }
+  
+  /* caption of terminal node */
+  #select-with-checks option > caption
+  {
+    background-image:url(images/icon-file.png);
+    background-repeat: no-repeat;
+    background-position-left:16px;
+    background-position-top:0px;
+  }
+
+  #select-with-checks option > caption:rtl
+  {
+    background-position-left:auto;
+    background-position-right:16px;
+  }
+  
+	</STYLE>
+	</HEAD>
+	<BODY style="flow:horizontal">
+    <div div="ltr">
+      <h2>LTR tree with checks.</h2> 
+      <widget type="select" id="select-with-checks">
+        <OPTIONS expanded><caption>Canada</caption>
+            <OPTIONS expanded><caption>British Columbia</caption>
+              <OPTION check="on"><caption >Vancouver</caption></OPTION>
+              <OPTION><caption>Whistler</caption></OPTION>
+              <OPTION><caption>Hope</caption></OPTION>
+            </OPTIONS>
+            <OPTION><caption>Alberta</caption></OPTION>
+            <OPTION><caption>Manitoba</caption></OPTION>
+        </OPTIONS>
+        <OPTIONS expanded><caption>USA</caption>
+            <OPTION><caption>Washington</caption></OPTION>
+            <OPTION><caption>Oregon</caption></OPTION>
+            <OPTION><caption>California</caption></OPTION> 
+        </OPTIONS>
+        <OPTION><caption>Monaco</caption></OPTION>      
+      </widget>
+    </div>
+    <div dir="rtl">
+      <h2>RTL tree with checks.</h2> 
+      <widget type="select" id="select-with-checks">
+        <OPTIONS expanded><caption>Canada</caption>
+            <OPTIONS expanded><caption>British Columbia</caption>
+              <OPTION check="on"><caption >Vancouver</caption></OPTION>
+              <OPTION><caption>Whistler</caption></OPTION>
+              <OPTION><caption>Hope</caption></OPTION>
+            </OPTIONS>
+            <OPTION><caption>Alberta</caption></OPTION>
+            <OPTION><caption>Manitoba</caption></OPTION>
+        </OPTIONS>
+        <OPTIONS expanded #test><caption>USA</caption>
+            <OPTION><caption>Washington</caption></OPTION>
+            <OPTION><caption>Oregon</caption></OPTION>
+            <OPTION><caption>California</caption></OPTION> 
+        </OPTIONS>
+        <OPTION><caption #test>Monaco</caption></OPTION>      
+      </widget>
+    </div>
+  </BODY>
+</HTML>

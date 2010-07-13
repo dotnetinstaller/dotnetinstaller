@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <style>
+  #sandbox 
+  {
+    background-image:url(images/slider-back.png);
+    background-repeat:expand;
+    background-position:10 10 10 10;
+    
+    width:50%;
+    height:50%;
+    margin:1*;
+  }
+  #sandbox>div
+  {
+    width:*;
+    height:*;
+    
+    background-image:url(images/slider.png);
+    background-repeat:expand;
+    background-position:10 10 10 10;
+    background-offset:0;
+    assigned!: self.start-animation();
+    animation-step!: self::background-offset-right > self.box-padding-width()? return cancel, 
+                     self::background-offset-right = self::background-offset-right + 2px, return 5;
+  }
+ 
+  #sandbox>div>div
+  {
+    width:*;
+    margin-top:*;
+    height:*;
+    background-image:url(images/fore.png);
+    background-repeat:expand;
+    background-position:0 10 10 10;
+  }
+ 
+    </style>
+  </head>
+<body>
+  F5 to restart animation.
+  <div #sandbox>
+    <div><div>value:X</div></div>
+  </div>
+</body>
+</html>

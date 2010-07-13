@@ -1,0 +1,61 @@
+# Microsoft Developer Studio Generated Dependency File, included by mfclite.mak
+
+.\mfclite.cpp : \
+	"..\include\behaviors\notifications.h"\
+	"..\include\htmlayout.h"\
+	"..\include\htmlayout_aux.h"\
+	"..\include\htmlayout_behavior.h"\
+	"..\include\htmlayout_behavior.hpp"\
+	"..\include\htmlayout_controls.hpp"\
+	"..\include\htmlayout_dialog.hpp"\
+	"..\include\htmlayout_dom.h"\
+	"..\include\htmlayout_dom.hpp"\
+	"..\include\htmlayout_notifications.hpp"\
+	"..\include\htmlayout_queue.h"\
+	"..\include\htmlayout_value.hpp"\
+	"..\include\htmlite.h"\
+	"..\include\json-aux.h"\
+	"..\include\json-value.h"\
+	".\mfclite.h"\
+	".\mfcliteDlg.h"\
+	
+
+.\mfclite.rc : \
+	".\res\main.htm"\
+	".\res\mfclite.ico"\
+	".\res\mfclite.rc2"\
+	
+
+.\mfcliteDlg.cpp : \
+	"..\include\behaviors\notifications.h"\
+	"..\include\htmlayout.h"\
+	"..\include\htmlayout_aux.h"\
+	"..\include\htmlayout_behavior.h"\
+	"..\include\htmlayout_behavior.hpp"\
+	"..\include\htmlayout_controls.hpp"\
+	"..\include\htmlayout_dialog.hpp"\
+	"..\include\htmlayout_dom.h"\
+	"..\include\htmlayout_dom.hpp"\
+	"..\include\htmlayout_notifications.hpp"\
+	"..\include\htmlayout_queue.h"\
+	"..\include\htmlayout_value.hpp"\
+	"..\include\htmlite.h"\
+	"..\include\json-aux.h"\
+	"..\include\json-value.h"\
+	".\mfclite.h"\
+	".\mfcliteDlg.h"\
+	
+
+.\StdAfx.cpp : \
+	"..\..\..\sdk\include\basetsd.h"\
+	"..\..\..\sdk\include\guiddef.h"\
+	"..\..\..\sdk\include\propidl.h"\
+	"..\..\..\sdk\include\reason.h"\
+	"..\..\..\sdk\include\shldisp.h"\
+	"..\..\..\sdk\include\shobjidl.h"\
+	"..\..\..\sdk\include\shtypes.h"\
+	"..\..\..\sdk\include\specstrings.h"\
+	"..\..\..\sdk\include\stralign.h"\
+	"..\..\..\sdk\include\tvout.h"\
+	".\StdAfx.h"\
+	

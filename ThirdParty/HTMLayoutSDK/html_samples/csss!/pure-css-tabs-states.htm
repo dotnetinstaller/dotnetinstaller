@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <style>
+
+/*
+  div.tab-strip span[current]
+  {
+    assigned!:  self:current = true,
+                $1(div.panels>div:nth-child(< self:index >)):expanded = true );
+  }
+  another way of doing this is to move condition in the code (self.current?):
+*/
+
+  div.tab-strip span
+  {
+    assigned! : self.current ? /* if there is 'current' attribute defined do next block as a whole: */
+                  ( self:current = true,
+                    $1(div.panels>div:nth-child(< self:index >)):expanded = true );
+                    
+    active-on! :  $1(div.tab-strip span:current):current = false,
+                  $1(div.panels>div:expanded):expanded = false,
+                  self:current = true,
+                  $1(div.panels>div:nth-child(< self:index >)):expanded = true;
+  }
+  div.tab-strip span:current { background: yellow; border:1px solid; border-bottom:none; } 
+  div.panels > div { display: none; } 
+  div.panels > div:expanded { display: block; background: yellow; border:1px solid; height:200px; } 
+      
+    </style>
+  </head>
+<body>
+  <div class="tab-strip">
+    <span #i1 >First tab</span>
+    <span #i2 current>Second tab</span>
+    <span #i3 >Third tab</span>
+  </div> 
+  <div class="panels">
+    <div>
+      First panel.
+    </div> 
+    <div>
+      Second panel.
+    </div> 
+    <div>
+      Third panel.
+    </div> 
+  </div> 
+</body>
+</html>

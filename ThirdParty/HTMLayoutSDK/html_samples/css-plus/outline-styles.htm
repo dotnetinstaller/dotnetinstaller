@@ -1,0 +1,132 @@
+<HTML>
+	<HEAD>
+		<TITLE>Tree view lines styling</TITLE>
+	<STYLE>
+    h1 
+    {
+      font-size: 14pt;
+    }
+    h2
+    {
+      font-size: 12pt;
+      text-align:right; 
+    }
+    
+    p.block { width:max-intrinsic; margin: 20px; border:1px solid; background-color:white;}
+    p.trans-block { width:max-intrinsic; margin: 20px; background-color:transparent;}
+    p.white-block { width:max-intrinsic; margin: 20px; background-color:white;}
+    
+    .dotted-outline
+    {
+      outline-offset:0px;
+      outline-color:red;
+      outline-width:3px;
+      outline-style:dotted;
+    }
+    .dashed-outline
+    {
+      outline-offset:0px;
+      outline-color:blue;
+      outline-width:3px;
+      outline-style:dashed;
+    }
+  
+    ul.tree-lines > li
+    {
+      display: list-item;
+      list-style-type: tree-line;
+      outline-color:green;
+      outline-width:3px;
+      outline-style:dashed;
+      padding:2px;
+    }
+    
+    .glow-outline
+    {
+      outline-color:dodgerblue;
+      outline-style:glow;
+    }
+
+    .shadow-outline
+    {
+      outline-color:silver;
+      outline-style:glow;
+      outline-shift:3px;
+    }
+
+        
+	</STYLE>
+	</HEAD>
+	<BODY>
+	<h1>Plain outlines:</h1>
+  
+  <p .block .dotted-outline style="outline-width:1px;">
+    Outline 1px, dotted
+  </p> 
+  <p .block .dotted-outline style="outline-width:2px;">
+    Outline 2px, dotted
+  </p> 
+  <p .block .dotted-outline style="outline-width:3px;">
+    Outline 3px, dotted
+  </p> 
+
+  <p .block .dashed-outline style="outline-width:3px;">
+    Outline 3px, dashed
+  </p> 
+  <p .block .dashed-outline style="outline-width:4px;">
+    Outline 4px, dashed
+  </p> 
+  <p .block .dashed-outline style="outline-width:5px;">
+    Outline 5px, dashed
+  </p> 
+<h1>Glow outlines:</h1>
+  <p .white-block .glow-outline style="outline-width:5px; outline-offset:0px">
+    Outline width:5px, offset:0px, glow
+  </p> 
+  <p .white-block .glow-outline style="outline-width:3px; outline-offset:2px">
+    Outline width:3px, offset:2px, glow
+  </p> 
+  <p .white-block .glow-outline style="outline-width:1px; outline-offset:4px">
+    Outline width:1px, offset:4px glow
+  </p> 
+  
+  <p .trans-block .glow-outline style="outline-width:1px; outline-offset:3px; color:white">
+    Outline width:1px, offset:3px, glow, no solid background
+  </p> 
+
+<h1>Shadow (glow with shift) outlines:</h1>
+  <p .block .shadow-outline style="outline-width:5px; outline-offset:0px">
+    Outline width:5px, offset:0px, glow
+  </p> 
+  <p .block .shadow-outline style="outline-width:3px; outline-offset:2px">
+    Outline width:3px, offset:2px, glow
+  </p> 
+  <p .block .shadow-outline style="outline-width:1px; outline-offset:3px">
+    Outline width:1px, offset:3px glow
+  </p> 
+  
+  <p .trans-block .shadow-outline style="outline-width:2px; outline-offset:0px;">
+    Outline width:2px, offset:0px, glow, no solid background
+  </p> 
+
+  
+  <h1>Outlines of list-style-type:tree-line elements:</h1>
+  <div style="flow:horizontal">
+    <h2>LTR:</h2>
+    <ul .tree-lines #ltr>
+      <li>First</li>
+      <li>Second<br/>(spans two lines)</li>
+      <li>Third</li>
+      <li>Fourth</li>
+    </ul> 
+    <h2>RTL:</h2>
+    <ul .tree-lines dir="rtl" #rtl>
+      <li>First</li>
+      <li>Second<br/><span dir=ltr>(spans two lines)</span></li>
+      <li>Third</li>
+      <li>Fourth</li>
+    </ul>
+  </div>
+	</BODY>
+  
+</HTML>

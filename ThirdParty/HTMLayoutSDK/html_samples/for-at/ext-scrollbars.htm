@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <style>
+      div#container
+      {
+        flow:horizontal;
+        border-spacing:20px; // to create gap for the demo purposes. 
+        width:*;
+        height:*;
+      }
+      div#container > div.scrollable
+      {
+        overflow:hidden-scroll;
+        width:*;
+        height:*;
+      }
+      div#container > div.scrollable:focus
+      {
+        background-color:yellow; 
+      }
+      div#container > widget[type="vscrollbar"]
+      {
+        height:*;
+      }
+    </style>
+  </head>
+<body>
+  Click on the scrollbar should not steal focus from the scrollable.
+  <div #container>
+    <div .scrollable>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+      <p>Veni, vidi, vici!</p>
+    </div>
+    <widget type="vscrollbar" for="div.scrollable" at="div#container" />
+  </div>
+</body>
+</html>

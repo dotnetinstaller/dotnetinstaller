@@ -1,0 +1,113 @@
+<html>
+<head>
+  <style>
+  
+    hr.gripper 
+    { 
+      behavior: gripper; 
+      width:8px; 
+      height:*;
+      background-image: url(theme:rebar-v-gripper);
+      background-repeat:stretch;
+      paddding:0;
+      margin:2px;
+      border:none;
+    }
+
+    div.rebar  
+    {
+      flow:h-flow;
+      accept-drop:selector( div.toolbar );
+      drop:insert;
+      background-image: url(theme:rebar-band);
+      background-repeat:stretch;
+      border-top:1px solid threeddarkshadow;
+      border-left:1px solid threeddarkshadow;
+      border-right:1px solid threedhighlight;
+      border-bottom:1px solid threedhighlight;
+
+    }
+    div.toolbar  
+    {
+      flow:horizontal;
+      border-top:1px solid threedhighlight;
+      border-left:1px solid threedhighlight;
+      border-right:1px solid threeddarkshadow;
+      border-bottom:1px solid threeddarkshadow;
+      width:max-intrinsic;
+    }
+
+    div.toolbar > widget.button
+    {
+      behavior:clickable;
+      margin:2px;
+      min-width:26px;
+      min-height:26px;
+      height:*;
+      text-align:center;
+      vertical-align:middle;
+      background-image: url(theme:toolbar-button-normal);
+      background-repeat:stretch;
+    } 
+    div.toolbar > widget.button:hover
+    {
+      background-image: url(theme:toolbar-button-hover);
+    }
+    div.toolbar > widget.button:active
+    {
+      background-image: url(theme:toolbar-button-pressed);
+    }
+    div.toolbar:moving
+    {
+      background-color:threedface;
+      //opacity:0.5;
+    }
+    div.toolbar:drop-marker
+    {
+      visibility:visible;
+      opacity:0.15;
+    }
+    div.toolbar:drop-marker > widget.button,
+    div.toolbar:drop-marker > hr.gripper
+    {
+      background-image: none;
+    }
+   
+  </style>  
+<head>
+<body>
+  <h1>Demo of drag-n-drop by using gripper.</h1>
+  <p>MOUSE_DOWN on the gripper shall start DD.</p>  
+  <div .rebar>
+    <div .toolbar #no1>
+      <hr .gripper />
+      <widget .button>1</widget>
+      <widget .button>2</widget>
+      <widget .button>3</widget>
+    </div>
+    <div .toolbar #no2>
+      <hr .gripper />
+      <widget .button>4</widget>
+      <widget .button>5</widget>
+      <widget .button>6</widget>
+      <widget .button>7</widget>
+    </div>
+    <div .toolbar #no3>
+      <hr .gripper />
+      <widget .button>8</widget>
+      <widget .button>9</widget>
+      <widget .button>A</widget>
+      <widget .button>B</widget>
+      <widget .button>C</widget>
+      <widget .button>D</widget>
+      <widget .button>E</widget>
+      <widget .button>F</widget>
+    </div>
+    <div .toolbar #no4>
+      <hr .gripper />
+      <widget .button>Z</widget>
+    </div>
+    
+  </div>
+</body>
+</html>

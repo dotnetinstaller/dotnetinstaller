@@ -1,0 +1,272 @@
+<html>
+<head>
+<style> 
+
+  html { background-color: #fff #e9e8f3 #e9e8f3 #fff; }
+
+  table 
+  { 
+    border:1px solid #bdbccc; 
+    background-color: #fff;
+    overflow: auto;
+    width:100%%;
+    height:100%%;
+    behavior:grid;
+  }
+  table th 
+  { 
+    color: black;
+    font-family:"Century Gothic","Verdana"; 
+	  font-size:10pt; 
+    border:none;
+    padding:4px; 
+    background-color:#DDD; 
+  }
+  table th:hover 
+  { 
+	  color: #ffe598;
+    background-color:#888; 
+    transition:blend;
+  }
+  
+  table tr:nth-child(even) { background-color:#F4F3F9; } /* each even row */
+  
+  table tr:current /* current row */ 
+  { 
+    background-color:#bdbccc; 
+    color:white;
+  } 
+  
+  table td 
+  { 
+    behavior:path;          //
+    overflow-x:hidden;      // these three must be used together.
+    white-space:nowrap;     // 
+    text-overflow:ellipsis; // and this is here for the sole purpose - to show tooltip if string is too long
+    padding:2px; 
+    font-family:"Verdana"; 
+	  font-size:9pt;  
+  }
+  
+  _service > popup 
+  {
+    font-family:"Verdana";
+	  font-size:9pt;
+  }
+  
+  table tr:checked /* checked row */ 
+  { 
+    color:red;
+  } 
+    
+</style>
+</head>
+
+<body>
+Each cell in the table has behavior:path applied so it should show ellipsis in the middle if there is not enough space.<br/>
+Mouse hover should show tooltip on long items.<br/>
+Multiselect grid, CTRL and SHIFT combinations, Ctrl-A<br/>
+<table fixedrows="1" cellspacing="0" style="margin:20px" multiple>
+  <tr><th>File name</th></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\abs</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\back</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\css-plus</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\cssmap.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\filelist.txt</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\flows</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\grid</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\HTML32.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\index.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\sort-of-frames</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\stress</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\tooltips</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\abs\abs.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\abs\abspos.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\abs\abs_fix.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\abs\images</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\abs\menus.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\abs\rel_abs.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\abs\images\back.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\abs\images\menu-back.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\blend.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\h-sliding-bar.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\sliding-bar.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\sliding-list.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\2.gif</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\4.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\5.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\7.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\cds</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\led-blue.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\led-green.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\led-red.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\led-yellow.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\leds.xar</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\list-back.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\outlook</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\cds\darkside.jpg</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\cds\delicate.jpg</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\cds\finalcut.jpg</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\outlook\calendar.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\outlook\contacts.gif</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\outlook\folder.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\outlook\mail.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\outlook\notes.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\outlook\tab-hover.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\animations\images\outlook\tab.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\back\alpha-back.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\back\alpha-back.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\back\backdemo.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\back\pageback.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\back\tableback.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\accesskeys.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\clock-images</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\colorpopup</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\colorpopup.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\commands.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\dropdown.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\editable-select.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\hyperlinks.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\list-item-icon-minus.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\list-item-icon-plus.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\live-clock.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\more_tabs</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\more_tabs.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\path-behavior.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\select-buddy.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\splitters-and-trees.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\splitters.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\stone-light.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\stone.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\treeview.css</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\treeview.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\clock-images\clock-back.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\clock-images\clock-fore.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\colorpopup\colors-active.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\colorpopup\colors-hover.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\colorpopup\colors-normal.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\more_tabs\focusled.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\more_tabs\logo.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\more_tabs\stripback.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\more_tabs\tabback.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\behaviors\more_tabs\toolbarback.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\css-plus\back-fore.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\css-plus\button-back-active.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\css-plus\button-back-hover.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\css-plus\button-back.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\css-plus\button-fore.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\css-plus\color-transform.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\css-plus\color-transform.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\css-plus\icon.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\css-plus\table-of-content.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\css-plus\theme-images.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\index.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\bold.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\copy.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\cut.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\insert-anchor.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\insert-img.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\insert-link.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\insert-rule.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\insert-table.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\italic.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\new.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\open.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\paste.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\redo.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\save.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\search.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\spell.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\toptab.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\underline.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\editor\images\undo.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\flows\columns.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\flows\h-flow.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\flows\text-fragment.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\flows\v-flow.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\basiccontrols.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\buttons.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\custom-dropdown-selects.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\dropdown-selects.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\edits.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\form.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\images</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\listview.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\multiselect.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\progress.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\scrollbars.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\selects.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\slider.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\table-select.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\tabs.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\textarea.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\tree-view-checks.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\images\button-back-active.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\images\button-back-hover.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\images\button-back.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\images\icon-file.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\images\icon-folder.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\images\progress-back.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\forms\images\progress-body.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\backgrounds</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\backgrounds.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\custom-control-border.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\iframe.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\overflows.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\selectors.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\sidebars</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\sidebars.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\tabindex_navigation.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\backgrounds\cellback.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\backgrounds\expandable.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\backgrounds\pageback.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\backgrounds\proto.xar</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\backgrounds\smile.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\backgrounds\stretchable.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\backgrounds\tableback.png</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\sidebars\dashed-line.GIF</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\sidebars\left-arrow.GIF</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\generic\sidebars\right-arrow.GIF</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\animated-cursor.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\animatedgifs.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\artcur5.ani</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\floppy.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\gifs.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\heylook.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\progress.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\smiley</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\test.gif</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\smiley\aola.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\smiley\apple.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\smiley\banned.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\smiley\bugalert.gif</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\goodies\smiley\hi.gif</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\grid\header-hover.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\grid\header.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\grid\scrollable-table.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\sort-of-frames\help.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\stress\complex_tables.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\stress\grid-1000.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\stress\grid-1000.htm.jsp</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\stress\grid-fixed-1000.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\stress\select-10000.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\stress\select-10000.htm.jsp</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\stress\table-10000.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\stress\table-10000.htm.jsp</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\stress\table-fixed-10000.htm</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\tooltips\attn.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\tooltips\corner.png</td></tr>
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\tooltips\month.htm</td></tr>  
+  <tr><td>C:\h-smile\htmlayoutsdk\html_samples\tooltips\titles.htm</td></tr>
+</table>
+</body>
+
+</html>

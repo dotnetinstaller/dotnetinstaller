@@ -1,0 +1,27 @@
+<html>
+<head>
+  <style>
+    a#master 
+    { 
+      border:1px solid;
+      hover-on!: $(p.slave a):hover = true; 
+      hover-off!: $(p.slave a):hover = false; 
+    }
+  </style>  
+<head>
+<body>
+  Hover element on the bottom to highlight all links here:  
+  <p class="slave">
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent fermentum. 
+    Maecenas vulputate malesuada erat. <a href="#">Nulla quam quam</a>, porttitor nec, suscipit at, interdum in, pede. 
+    Vestibulum dui enim, porta sed, suscipit sed, eleifend vitae, tortor. 
+    Ut imperdiet lacinia ligula. 
+    Aenean dolor. Morbi mi turpis, suscipit ac, feugiat ac, tincidunt ut, leo. 
+    Ut tellus sem, tristique ac, consequat vitae, condimentum et, urna. 
+    Mauris egestas eros ac tellus. <a href="#">Class aptent taciti sociosqu</a> ad litora torquent per conubia nostra, per inceptos himenaeos. 
+    Integer fringilla mi. <a href="#">Quisque vel eros</a>. Morbi mi turpis, consectetuer nec, dictum lobortis, facilisis sit amet, libero. 
+    Praesent fermentum, dolor vel porttitor venenatis, dui lacus dignissim mauris, et lobortis nibh tortor et pede.  
+  </p> 
+  <a id="master">Hover this</a> to highlight links above.  
+</body>
+</html>

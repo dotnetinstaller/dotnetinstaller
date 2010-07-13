@@ -1,0 +1,51 @@
+<html #test>
+<head>
+  <style>
+    @const WIDTH_EXPR: calc( 50% + 40px);
+  
+    body { margin:0; padding:0; width:100%; height:100%; }
+    div { margin:6px; }
+    div#base
+    {
+      border:1px solid red;
+      width: 50%;
+    }
+    div#test1
+    {
+      border:1px solid black;
+      width: @WIDTH_EXPR;
+    }
+    input#test2
+    {
+      width: calc( 200px + self:value * 10px );
+    }
+    div#test3
+    {
+      border:1px solid green;
+      width: calc( max-intrinsic-width() +  system-scrollbar-width() );
+    }
+    
+  </style>  
+</head>
+<body #test>
+  <H1>CSS <code>calc()</code> function test. Extended operations.</H1>
+  <div #base>Reference: <code>width: 50%;</code></div>  
+  <div #test1><code>width: @WIDTH_EXPR;</code> that is <code>calc( 50% + 40px)</code></div>
+  <div><input type="number" #test2 value=1 min=1 max=10 step=1 /> - <code>width</code> is dependent from the value. (MOUSE WHEEL over the element)</div>
+  <div #test3><code>width: calc( max-intrinsic-width() +  system-scrollbar-width() );</code></div>  
+
+  List of various metrics that are accessible as functions inside the calc():  
+  <ul>
+     <li>min-intrinsic-width()</li>
+     <li>max-intrinsic-width()</li>
+     <li>intrinsic-height()</li>
+     <li>system-scrollbar-height()</li>
+     <li>system-scrollbar-width()</li>
+     <li>system-border-width()</li>
+     <li>system-small-icon-height()</li>
+     <li>system-small-icon-width()</li>
+  </ul>
+   
+  
+</body>
+</html>

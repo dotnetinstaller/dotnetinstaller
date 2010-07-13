@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <style>
+    html { background: url(images/sand.gif) repeat; }
+    div { background-color:red; }
+    div.op25 { opacity :0.25; }
+    div.op50 { opacity :0.50; }
+    div.op75 { opacity :0.75; }
+    div.op100 { opacity:1.00; }
+    body { padding:11px; border:1px solid red;}
+    </style>
+  </head>
+  <meta id="id_meta"></meta>
+<body>
+  <h1>opacity:</h1>
+  <div class=op25> 0.25</div>
+  <div class=op50> 0.50</div>
+  <div class=op75> 0.75</div>
+  <div class=op100>1.00</div>
+  <h1>color opacity rgba(r,g,b,opacity)</h1>  
+  <div style="background-color:rgba(255,0,0,0.25)"> 0.25</div>
+  <div style="background-color:rgba(255,0,0,0.50)"> 0.50</div>
+  <div style="background-color:rgba(255,0,0,0.75)"> 0.75</div>
+  <div style="background-color:rgba(255,0,0,1.0)">1.00</div>
+  <h1>gradient color opacity rgba(r,g,b,opacity)</h1>  
+  <div style="background-color:rgb(255,0,0) rgba(255,0,0,0.15) rgba(255,0,0,0.15) rgb(255,0,0)">grad</div>
+    
+</body>       
+</html>

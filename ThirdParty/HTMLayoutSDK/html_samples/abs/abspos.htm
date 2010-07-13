@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<title>Negative margins and collapsing test case</title>
+		<style type="text/css"> 
+		body { 
+		    font-family: Verdana, Arial;
+		    font-size: 10pt;
+			margin: 0; 
+			padding: 0; 
+			width: 100%; 
+			height: 100%; 
+			background-color: white; 
+			color: black; 
+		}
+		.outline 
+    {
+		/*position:absolute;
+		top:10px;
+		left:10px;*/
+		width:100px;
+		height:100px;
+    margin:20px;
+		border:1px solid red;
+		overflow:auto;
+		}
+    
+		.outline1 
+    {
+		position:absolute;
+		top:10px;
+		left:10px;
+		width:50px;
+		height:50px;
+		border:1px solid green;
+		overflow:auto;
+		}
+    
+		
+	</style>
+	</head>
+	<body>
+		<div class="outline">
+      <p>Hello Hello Hello Hello
+      <p>Hello Hello Hello Hello
+      <p>Hello Hello Hello Hello
+      <p>Hello Hello Hello Hello
+      <p>Hello Hello Hello Hello
+      <p>Hello Hello Hello Hello
+      <p>Hello Hello Hello Hello
+      <p>Hello Hello Hello Hello
+      <div class="outline1">
+        12
+      </div>
+		</div>
+    <!--
+		<select id="Text1" NAME="Text1" size=1>
+		<option value="one">111</option>
+		<option value="two">222</option>
+		</select> -->
+	</body>
+</html>

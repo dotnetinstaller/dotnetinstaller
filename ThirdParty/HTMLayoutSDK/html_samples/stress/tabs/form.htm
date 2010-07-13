@@ -1,0 +1,168 @@
+﻿<HTML>
+	<HEAD>
+		<TITLE></TITLE>
+		<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<META name="GENERATOR" content="BLOCKNOTE.NET">
+		<BASEFONT face="Verdana" size="2">
+			<STYLE>
+  BODY { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+	P { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+	DIV { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+	TD { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+	#TheForm { background-color: white white threedlight threedlight; }
+  #TheLegend { color:maroon }
+  
+  :disabled { color: graytext; }
+  
+  
+  SPAN[type="progress"]
+  {
+    width:100px;
+    height:20px;
+    display:inline-block;
+    background-image:url(theme:h-progress-back);
+    background-repeat:stretch;
+    foreground-image:url(theme:h-progress-chunk);
+    foreground-repeat:no-repeat;
+  }
+  
+  input[type="currency"][negative] { color:blue; }
+  input[type="currency"][invalid] { color:red; }
+
+  input[type="decimal"][negative] { color:blue; }
+  input[type="decimal"][invalid] { color:red; }
+
+  /* indication of empty state, see also 'novalue' attribute below */  
+  input:empty { color:orange; }
+  select:empty > caption { color:orange; }
+  
+	</STYLE>
+	</HEAD>
+	<BODY>
+    <p>Ctrl-A <a accesskey="^A" href="http://terrainformatica.com">test link</a></p>
+    <fieldset id="TheForm">
+		<legend id="TheLegend">GetDlgItemValues function demo form</legend>
+		<TABLE cellpadding="1" cellspacing="4" width="100%">
+			<TR>
+				<TD width=25%>Your name</TD>
+				<TD><INPUT name="YourName" type="text" novalue="(no value!)" filter="a~zA~Z "
+				  style="WIDTH: 134px; 
+				         font-size: 10pt;
+						 font-family:'Century Gothic', Tahoma, Arial; 
+						 background-color:window; color:saddlebrown" size="17" maxlength=20></TD>
+			</TR>
+			<TR>
+				<TD width=25%>Your password</TD>
+				<TD><INPUT name="YourPassword" type="password" size="17" maxlength=17 novalue="(no value!)"></TD>
+			</TR>
+			<TR>
+				<TD>Age</TD>
+				<TD><INPUT name="Age" type="number" value="1" size="6" step=1 minvalue=-9 maxvalue=100></TD>
+			</TR>
+			<TR>
+				<TD>Weight</TD>
+				<TD><INPUT name="Weight" type="decimal" value="1000" /> Kg</TD>
+			</TR>
+			<TR>
+				<TD>Weight</TD>
+				<TD><INPUT name="Weight" type="decimal" 
+                   format="grouping:3; fdigits:4; leading-zero:false; decimal-sep:','; grouping-sep:'_'; negative-sign:false" />
+                  (custom format) </TD>
+			</TR>
+            
+			<TR>
+				<TD>Currency</TD>
+				<TD><INPUT name="Weight" type="currency" /> negative - blue, invalid - red, see CSS. </TD>
+			</TR>
+            
+			<TR>
+				<TD>Date of birth</TD>
+				<TD><INPUT name="DateOfBirth" type="date" </TD>
+			</TR>
+			<TR>
+				<TD>How did you find your way in the world?</TD>
+				<TD>
+				<TEXTAREA name="Textarea" rows="4" cols="40" maxlength="1024" style="font:10pt monospace">
+This is sample text line #1
+This is sample text line #2
+This is sample text line #3
+This is sample text line #4
+				</TEXTAREA></TD>
+			</TR>
+			<TR>
+				<TD colspan="2">Color of Eyes: <INPUT type="radio" name="color" accesskey="^1"/> Blue(ctrl-1) <INPUT type="radio" name="color" accesskey="^2"/> 
+					Green(ctrl-2) <INPUT type="radio" name="color" accesskey="^3" />Red(ctrl-3) <INPUT type="radio" name="color" accesskey="^4"> Cyan(ctrl-4)</TD>
+			</TR>
+			<TR>
+				<TD>Alignment:</TD>
+				<TD><SELECT name="Alignment" size=1 novalue="(no value!)"> 
+					<OPTION value="left">Left</OPTION><OPTION value="right">Right</OPTION><OPTION value="center">Center</OPTION></SELECT> notes <INPUT name="text10" size="17" maxlength=50></TD>
+			</TR>
+			<TR>
+				<TD>Button:</TD>
+				<TD><input type="button" value="Foo Button" name="FooButton"></TD>
+			</TR>
+			<TR>
+				<TD>Another button:</TD>
+				<TD><button name="FooButton1">Foo Button 1</button></TD>
+			</TR>
+		
+		</TABLE>
+		</fieldset>
+		
+    <fieldset disabled>
+		<legend id="TheLegend">This field set is disabled in the whole</legend>
+		<TABLE cellpadding="1" cellspacing="4" width="100%">
+			<TR>
+				<TD width=25%>Your name</TD>
+				<TD><INPUT name="YourName" type="text" 
+				  style="WIDTH: 134px; 
+				         font-size: 10pt;
+						 font-family:'Century Gothic', Tahoma, Arial; 
+						 background-color:window; color:saddlebrown" size="17" maxlength=50></TD>
+			</TR>
+			<TR>
+				<TD>Age</TD>
+				<TD><INPUT name="Age" type="number" value="1" size="6" step=1 minvalue=0 maxvalue=100></TD>
+			</TR>
+			<TR>
+				<TD>Date of birth</TD>
+				<TD><INPUT name="DateOfBirth" type="date" </TD>
+			</TR>
+			<TR>
+				<TD>How did you find your way in the world?</TD>
+				<TD>
+				<TEXTAREA name="Textarea" rows="3" cols="40" style="font:10pt monospace">(Behavior is under construction)
+				        This is sample text line #1
+						This is sample text line #2
+						This is sample text line #3
+						This is sample text line #4
+				</TEXTAREA></TD>
+			</TR>
+			<TR>
+				<TD colspan="2">Color of Eyes: <INPUT type="radio" name="color" accesskey="^1"/> Blue(ctrl-1) <INPUT type="radio" name="color" accesskey="^2"/> 
+					Green(ctrl-2) <INPUT type="radio" name="color" accesskey="^3" />Red(ctrl-3) <INPUT type="radio" name="color" accesskey="^4"> Cyan(ctrl-4)</TD>
+			</TR>
+			<TR>
+				<TD>Alignment:</TD>
+				<TD><SELECT name="Alignment" size=1> 
+					<OPTION value="left">Left</OPTION><OPTION value="right">Right</OPTION><OPTION value="center">Center</OPTION></SELECT> notes <INPUT name="text10" size="17" maxlength=50></TD>
+			</TR>
+			<TR>
+				<TD>Alignment (list):</TD>
+				<TD><SELECT name="Alignment" size=2> 
+					<OPTION value="left">Left</OPTION><OPTION value="right">Right</OPTION><OPTION value="center">Center</OPTION></SELECT> notes <INPUT name="text10" size="17" maxlength=50></TD>
+			</TR>
+			<TR>
+				<TD>Button:</TD>
+				<TD><input type="button" value="Foo Button" name="FooButton"></TD>
+			</TR>
+		
+		</TABLE>
+		</fieldset>
+		
+		
+		
+	</BODY>
+	</BASEFONT>
+</HTML>

@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "printex", "printex.vcproj", "{1F5216CA-D22A-4E2E-93BD-81AB2F3F87D1}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+		ReleaseRetail = ReleaseRetail
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{1F5216CA-D22A-4E2E-93BD-81AB2F3F87D1}.Debug.ActiveCfg = Debug|Win32
+		{1F5216CA-D22A-4E2E-93BD-81AB2F3F87D1}.Debug.Build.0 = Debug|Win32
+		{1F5216CA-D22A-4E2E-93BD-81AB2F3F87D1}.Release.ActiveCfg = Release|Win32
+		{1F5216CA-D22A-4E2E-93BD-81AB2F3F87D1}.Release.Build.0 = Release|Win32
+		{1F5216CA-D22A-4E2E-93BD-81AB2F3F87D1}.ReleaseRetail.ActiveCfg = ReleaseRetail|Win32
+		{1F5216CA-D22A-4E2E-93BD-81AB2F3F87D1}.ReleaseRetail.Build.0 = ReleaseRetail|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

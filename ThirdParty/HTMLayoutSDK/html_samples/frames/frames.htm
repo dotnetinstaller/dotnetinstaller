@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>a simple frameset document</title>
+<style>
+frame { border:1px solid black; }
+div.static { border:1px solid black; background-color:cornsilk; }
+
+/* that spinning thing - indicator that frame is loading */
+frame:busy { 
+  foreground-image:url(res:activity.gif);
+  foreground-repeat: no-repeat;
+  foreground-position: 2px 2px;
+}
+
+frameset[history] 
+{
+  context-menu:selector(menu.popup);
+}
+
+</style>
+
+  <menu.popup>
+      <li>First</li>
+      <li>Second</li>
+      <li>Third</li>
+  </menu>
+
+</head>
+<body>
+<h1>FRAMESET/FRAME sample.</h1>
+<p>Note that frameset and frame are normal dom block elements and may appear anywhere on the page where block element is suitable.<br>
+Correspondent behavior:frame-set and behavior:frame can be applied to any block element.</p>
+<note>Outer frameset has @history - maintains history stack. Use ALT+LEFT/RIGHT for navigation on the stack.</note>
+<frameset cols="2*,8*" history> <!-- this top level frameset maintains history -->
+  <frameset rows="100,*">
+      <!--<frame src="frame1.htm" name="left-top" />-->
+      <div class="static">This is static content defined directly inside frameset</div>
+      <frame src="frame2.htm" name="left-bottom"/>
+  </frameset>
+  <frame src="frame3.htm" name="content" />
+</frameset>
+</body>
+</html>

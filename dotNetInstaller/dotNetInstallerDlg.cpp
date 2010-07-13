@@ -3,14 +3,10 @@
 #include "dotNetInstallerDlg.h"
 #include "InstallComponentDlg.h"
 #include "ExtractCabDlg.h"
-#include "DniMessageBox.h"
 #include "ExtractCabProcessor.h"
 #include "DownloadDialog.h"
-#include "InstallerCommandLineInfo.h"
 #include "BrowseCtrl.h"
 #include "ControlValue.h"
-#include "SplashWnd.h"
-#include "DisableWnd.h"
 #include <Version/Version.h>
 
 CdotNetInstallerDlg::CdotNetInstallerDlg(CWnd* pParent /*=NULL*/)

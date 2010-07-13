@@ -1,0 +1,37 @@
+<html>
+<head>
+<style>
+    @import url(COMMON-STYLES.HTML);
+
+     div[for-step] { display:none; }
+     body[step="1"] > div[for-step="1"] { display:block; }
+     body[step="2"] > div[for-step="2"] { display:block; }
+     body[step="3"] > div[for-step="3"] { display:block; }
+
+</style>
+</head>
+<body step="1">
+
+<div class=content for-step="1">
+Step No.1
+<input type="text" value="hello world">
+</div>
+
+<div class=content for-step="2">
+Step No.2
+  <input type="text" value="hello Solar System">
+</div>
+
+<div class=content for-step="3">
+Step No.3
+  <input type="text" value="hello Universe">
+</div>
+
+<div id="command-bar">
+   <span id="cmd-step1" class="text-button" title="Step #1">Step1</span>
+   <span id="cmd-step2" class="text-button" title="Step #2">Step2</span>
+   <span id="cmd-step3" class="text-button" title="Step #3">Step3</span>
+</div>
+
+</body>
+</html>

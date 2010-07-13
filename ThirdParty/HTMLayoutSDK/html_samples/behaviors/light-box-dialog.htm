@@ -1,0 +1,43 @@
+<html>
+<head>
+  <style>
+    form.light-box-dialog
+    {
+      behavior: light-box-dialog;
+      display:none;
+      width:50%;
+      height:50%;
+      margin:*;
+      /*border:1px solid black;
+        background-color: white;*/
+      background: url(dialog-back.png) expand;
+      background-position:26 26 26 26;
+      padding:28px;
+    }
+    div.shim /* background shim, spans whole view */
+    {
+      position: fixed;
+      top:0;
+      right:0;
+      bottom:0;
+      left:0;
+      background-color: rgba(0,0,0,0.5);
+    }
+    p.button-bar { margin-bottom:0; margin-top:*; border-top:1px solid #444; padding:4px; text-align:right; }    
+    
+    button#test-dlg 
+    {
+      click!: $1(form.light-box-dialog).show();     /* call our custom show() method */
+    }
+  </style>  
+</head>
+<body>
+  <p>Some inputs for the demo purposes: <input type="text" value="hello world"/> <button>Some button</button></p>
+  <button #test-dlg>Show dialog</button>
+  <form.light-box-dialog>
+    <p>Some text here....<p>
+    <p>Inputs on the dialog: <input type="text" value="hello universe"/></p>
+    <p .button-bar ><button role="ok-button">OK</button><button role="cancel-button">Cancel</button></p>
+  </form>
+</body>
+</html>

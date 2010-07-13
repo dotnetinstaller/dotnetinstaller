@@ -1,0 +1,59 @@
+<html>
+<head>
+  <style>
+    body 
+	{ 
+		flow:grid; // this is it
+		border-spacing:4px;
+		width:*;
+		height:*; // body spans the whole root area (everything that left from paddings and margins)
+	}
+    div { border: 1px solid black; padding:4px; }
+    #top-bar 
+	{ 
+		left:1#; // "north" - top row, spans three columns
+		right:3#; 
+		top:1#;
+	}
+    #bottom-bar 
+	{ 
+		left:1#; // "south" - bottom row, spans three columns 
+		right:3#; 
+		top:3#; 
+	}
+    #left-bar 
+	{ 
+		left:1#; // "west" - sidebar, cell at r2:c1
+		right:1#; 
+		top:2#; 
+		bottom:2#; 
+		height:*; // "spring"
+		width:100px; 
+		border: 1px dotted blue;
+		padding-top:*; // flex top/bottom to position content vertically in the middle
+		padding-bottom:*;
+	}    
+    #right-bar 
+	{ 
+		left:3#;  // "east" - sidebar, cell at r2:c3
+		top:2#; 
+		height:*; width:100px; border: 1px dotted red; 
+	}  
+    #content 
+	{ 
+		left:2#; // "center"
+		top:2#; 
+		width:*; height:*; 
+	}
+  </style>  
+<head>
+<body>
+
+<div id="top-bar">Top</div>
+<div id="bottom-bar">Bottom</div>
+<div id="left-bar">Left</div>
+<div id="right-bar">Right</div>
+<div id="content">Content</div>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+
+.treeview  { width: 50%; list-style-type: none; border: 1px solid darkkhaki; }
+.treeview  li { padding: 1px 0px 1px 17px; }
+.treeview  ul { margin-left:18px; }
+
+/* inside treeview container, all li elements with existing 
+'state' attribute will be collapsible  */
+.treeview  li[state]
+{
+	behavior:collapsible-by-icon;
+	/* 
+		Toggle 'state' to 'open' and 'close'.
+		Sensitive area for collapsible items is first descendant 
+		element having 'icon' class,
+		see implementation: 
+	*/
+	padding-left:0px;
+}
+/* all ul's inside open list item are visible */
+.treeview li[state=open] > ul { 
+	list-style-type: none; 
+	/*background-color: white;*/
+	color: black; 
+	display:block;
+	border-left: 1px dashed darkkhaki;
+	border-bottom: 1px dashed darkkhaki;
+	border-top: 1px dashed darkkhaki;
+	margin-bottom: 4px;
+}
+/* all ul's inside closed list item are non-visible */
+.treeview li[state=close] > ul { display:none; }
+
+/* all images inside li with 'state' and with class 'icon' */
+.treeview li[state] img.icon
+{
+	width:13px;
+	height:13px;
+	margin:2px;
+	vertical-align:middle;
+	cursor:pointer;
+}
+/* icon image shows list-item-minus.png for open li*/
+.treeview li[state=open] img.icon { background-image:url(list-item-icon-minus.png) }
+/* for closed li icon image shows list-item-plus.png */
+.treeview li[state=close] img.icon { background-image:url(list-item-icon-plus.png) }

@@ -1,0 +1,109 @@
+<html>
+  <head>
+    <style>
+    
+    /* These subclasses are applied to a horizontally-collapsible panel. */
+
+    .expandable
+    {
+        height:                 100%%;
+        width:                  200px;
+        overflow:               hidden;
+        background-color:       red yellow yellow red;
+    }
+    .expandable .content
+    {
+      width:                  200px;
+      height:                 100%%;
+    }
+
+    .expandable:expanded
+    {
+        assigned!:              self::width = 0px, self.start-animation();
+        animation-end!:         self::width = 200px;
+        animation-step!:        self::width < 200px ? (self::width = self::width + 10px, return 8);
+    }
+
+    .expandable:collapsed
+    {
+        assigned!:              self::width = 200px, self.start-animation();
+        animation-end!:         self::width = 0px; 
+        animation-step!:        self::width > 0px ? (self::width = self::width - 10px, return 8);
+    }
+
+    /* Script CSSS!, which hides panel up.  */
+    .hidepanel
+    {
+        /* Event handler: */
+        click!:         panel = $1(.expandable),
+                        !panel:collapsed ? panel:collapsed = true;
+    }
+
+    /* Script CSSS!, which shows panel.  */
+    .showpanel
+    {
+        /* Event handler: */
+        click!:         panel = $1(.expandable), 
+                        panel:collapsed? panel:expanded = true;   
+    }
+    
+    table 
+    {
+      width:*;
+      height:*;
+      overflow:auto;
+    }    
+    </style>
+  </head>
+<body>
+  <button .hidepanel>Hide</button>
+  <button .showpanel>Show</button>
+  <div .expandable>
+     <div .content>
+       Text --------
+       <table>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>20</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>40</td><td>2</td><td>3</td></tr>
+       </table>
+     </div>
+  </div>
+</body>
+</html>

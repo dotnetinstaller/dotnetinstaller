@@ -1,0 +1,46 @@
+<html>
+<head>
+  <style>
+  table
+      {
+        assigned! : 
+          $1( td ):current = true; // first td is :current by default
+        
+        focus-on! : 
+          $1( td:current )? self.assigned(); 
+      
+        key-on! : !key-code('LEFT','RIGHT','UP','DOWN' )? return, // return with nothing if key is neither VK_LEFT, VK_RIGHT, VK_UP nor VK_DOWN
+                  cur = self.$1(td:current), !cur? return,  // return with nothing, no current item. 
+                  // cur here contains td:current
+                  ridx = cur.parent():index,
+                  cidx = cur:index,
+                  key-code() == 'LEFT'?  ( cidx = cidx - 1, cidx < 1? cidx = cur.parent().children() ), 
+                  key-code() == 'RIGHT'? ( cidx = cidx + 1, cidx > cur.parent().children()? cidx = 1 ), 
+                  key-code() == 'UP'?    ( ridx = ridx - 1, ridx < 1? ridx = cur.parent().parent().children() ), 
+                  key-code() == 'DOWN'?  ( ridx = ridx + 1, ridx > cur.parent().parent().children()? ridx = 1 ),
+                  cur:current = false,   // is not current anymore
+                  self.$1(tr:nth-child(< ridx >) > td:nth-child(< cidx >) ):current = true, 
+                  return cancel; // return 'cancel' value - further processing is not required as we've handled the key.
+      }
+  table td 
+  { 
+    border:1px solid blue;
+    padding:20px; 
+    active-on!: $1(td:current):current = false, self:current = true;
+  }
+  table td:current { background-color:yellow; }
+  table:focus td:current { background-color:orange; color:red; }
+  </style>  
+<head>
+<body>
+  <h1>Demo of keyboard handling in CSSS!</h1>
+  Click on the table and press arrow keys.
+  <table>
+    <tr><td>1</td><td>2</td><td>3</td></tr>
+    <tr><td>4</td><td>5</td><td>6</td></tr>
+    <tr><td>7</td><td>7</td><td>9</td></tr>
+    <tr><td>10</td><td>11</td><td>12</td></tr>
+  </table>
+
+</body>
+</html>

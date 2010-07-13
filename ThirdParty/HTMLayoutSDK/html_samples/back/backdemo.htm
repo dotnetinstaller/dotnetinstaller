@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title></title>
+		<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+<style>
+HTML
+{
+  background-repeat: expand;
+  background-image: url(pageback.png);
+  background-position: 22px 22px 22px 22px;
+}
+BODY 
+{ 
+  padding:22px; font:system; width:100%%; height:100%%; 
+}
+.table-back 
+{
+  background-repeat: expand;
+  background-image: url(tableback.png);
+  background-position: 7px 7px 7px 7px;
+  border-spacing:-9px;
+}
+.cell-back 
+{
+  background-repeat: expand;
+  background-image: url(pageback.png);
+  background-position: 22px 22px 22px 22px;
+}
+
+widget,
+input {
+  background-image:none;
+  background-color:ivory;
+  border:1px solid saddlebrown;
+}
+
+
+</style>
+</head>
+<BODY>
+
+background tests!
+
+<TABLE HEIGHT=100% WIDTH=75% ALIGN=center BORDER=0 CELLPADDING=22 class=table-back>
+	<TR height=48>
+		<TD colspan=2 align=center class=cell-back>This is table with backgrounds</TD>
+	</TR>
+	<TR>
+		<TD class=cell-back width=100>bellow is example of "spring" controls</TD>
+		<TD class=cell-back>
+		  hierarchical &lt;select&gt; (a.k.a tree view) :
+        <widget type="select" name="chemistry-h" style="width:100%%;height:100%%">
+          <OPTIONS expanded>Alkaline Metals
+              <OPTION value="Li">Lithium (Li)</OPTION>
+              <OPTION value="Na">Sodium (Na)</OPTION>
+              <OPTION value="K">Potassium (K)</OPTION>
+          </OPTIONS>
+          <OPTIONS expanded>Halogens
+              <OPTION value="F">Fluorine <font style="color:blue">(F)</font></OPTION>
+              <OPTION value="Cl">Chlorine <font style="color:red">(Cl)</font></OPTION>
+              <OPTION value="Br">Bromine <font style="color:green">(Br)</font></OPTION> 
+          </OPTIONS>
+        </widget>
+		</TD>
+	</TR>
+	<TR >
+		<TD height=48 colspan=2 align=center class=cell-back>
+		
+			<TABLE WIDTH=100% ALIGN=center BORDER=0 CELLSPACING=0 CELLPADDING=4>
+				<TR>
+					<TD>input(70%%):<INPUT id=text1 name=text1 type="text" style="width:70%%" size=5> 
+					input(30%%):<INPUT id=text11 name=text11 type="text" style="width:30%%" size=5>
+					input(40px):<INPUT type="text" style="width:40px;" size=3></TD>
+				</TR>
+				<TR>
+					<TD nowrap>From:<INPUT id=text1 name=text1 type="text" style="width:100%%; min-width:10px"></TD>
+				</TR>
+				<TR>
+					<TD nowrap>To:<INPUT id=text1 name=text1 type="text" style="width:100%%; min-width:10px"></TD>
+				</TR>
+				<TR>
+					<TD nowrap>Subject:<INPUT id=text1 name=text1 type="text" style="width:100%%; min-width:10px"></TD>
+				</TR>
+			</TABLE>
+			
+		</TD>
+	</TR>
+</TABLE>
+
+</BODY>
+</HTML>

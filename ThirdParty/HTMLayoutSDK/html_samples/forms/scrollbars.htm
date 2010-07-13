@@ -1,0 +1,64 @@
+<HTML>
+	<HEAD>
+		<TITLE></TITLE>
+		<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<META name="GENERATOR" content="BLOCKNOTE.NET">
+		<STYLE>
+      HTML { background-color:threedface; }
+      BODY { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+      P { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+      DIV { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+      
+      .content 
+      { 
+        background:expand url(theme:edit-normal); 
+        padding:3px;
+      }
+      div.with-scrollbars 
+      {
+        width:50%;
+        height:50%;
+        flow:grid;
+        border-spacing:3px;
+      }
+      div.with-scrollbars > div.content
+      {
+        width:*;
+        height:*;
+        top:1#;
+        left:1#;
+      }
+      div.with-scrollbars > widget[type="vscrollbar"]
+      {
+        top:1#;
+        left:2#;
+        height:*;
+      }
+      div.with-scrollbars > widget[type="hscrollbar"]
+      {
+        top:2#;
+        left:1#;
+        width:*;
+      }
+      
+	</STYLE>
+	</HEAD>
+	<BODY>
+      <h1>scrollbars</h1>
+      <p>Scrollbars here are separate input widgets</p>
+      
+      <div .with-scrollbars>
+        <div .content>content area</div>
+        <widget type="vscrollbar" />
+        <widget type="hscrollbar" />
+      </div>
+<!--      
+      <table border=1 style="width:50%;height:50%; margin:0;">
+        <tr><td class="content" width=100%% height=100%%>content area</td><td><widget type="vscrollbar" /></td></tr>
+        <tr><td><widget type="hscrollbar" /></td><td> </td></tr>
+      </table>
+-->      
+      
+	</BODY>
+	</BASEFONT>
+</HTML>

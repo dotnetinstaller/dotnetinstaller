@@ -1,0 +1,101 @@
+<html>
+	<head>
+		<title>Simple Tree View</title>
+<style type="text/css"> 
+	body { 
+		font-family:Verdana; font-size:10pt; 
+		width:100%%; height:100%%;  
+		background-color: threedface;
+		padding:10px;
+		margin:0;
+	}
+	.hcontainer { 
+		width:100%%; height:100%%;  
+		flow:horizontal;
+		overflow:hidden;
+	}
+	
+	.vcontainer { 
+		width:100%%; height:100%%;  
+		overflow:hidden;
+	}
+		
+	.hfixed 
+	{
+	  height:100%%; 
+	  width:100px;	  
+	  border:1px solid threedface;
+	  background-color:window;
+	}
+	
+	.hspring 
+	{
+	  height:100%%; 
+	  width:100%%;	  
+	  border:1px solid threedface;
+	  background-color:window;
+	}
+	
+	.hsplitter 
+	{
+	  height:100%%; 
+	  width:4px;	  
+	  border:1px solid threedshadow;
+	  background-color:threedshadow;
+	  behavior:splitter;
+	  cursor:w-resize;
+	  margin: 6px 0;
+	}
+	.hsplitter:hover
+	{
+	  background-color:threedface;
+	  border-top:1px solid threedhighlight;
+	  border-left:1px solid threedhighlight;
+	  border-right:1px solid threeddarkshadow;
+	  border-bottom:1px solid threeddarkshadow;
+	}
+	
+	.vsplitter 
+	{
+	  height:4px; 
+	  width:100%%;	  
+	  border:1px solid threedshadow;
+	  background-color:threedshadow;
+	  behavior:splitter;
+	  cursor:n-resize;
+	  margin: 0 6px; 
+	}
+	.vsplitter:hover
+	{
+	  background-color:threedface;
+	  border-top:1px solid threedhighlight;
+	  border-left:1px solid threedhighlight;
+	  border-right:1px solid threeddarkshadow;
+	  border-bottom:1px solid threeddarkshadow;
+	}
+	
+
+</style>
+	</head>
+	<body class="vcontainer">
+	<div class="hcontainer">	
+		<div class="hfixed">
+		fixed:
+		<widget type=treeview clientedge width=100%% height=100%%></widget>
+		</div>
+		<hr class="hsplitter">
+		<div class="hspring">spring
+		<widget type=treeview clientedge width=100%% height=100%%></widget>
+		</div>
+	</div>
+	<hr class="vsplitter" />
+	<div class="hcontainer">	
+		<div class="hspring">spring:
+		<widget type=treeview clientedge width=100%% height=100%%></widget>
+		</div>
+		<hr class="hsplitter">
+		<div class="hfixed">fixed:
+		<widget type=treeview clientedge width=100%% height=100%%></widget></div>
+	</div>
+	</body>
+</html>

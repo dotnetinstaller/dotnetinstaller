@@ -1,0 +1,29 @@
+<html>
+<head>
+  <style>
+    select > popup  { max-height:150px; height:min-intrinsic; }
+  </style>  
+<head>
+<body>
+Select with dropdown tree-view:
+<select>
+  <options expanded >My Computer
+   <options expanded #test>C:\
+    <option >Documents and Settings</option>
+    <option >Temp</option>
+    <option >Windows</option>
+   </options>
+   <options expanded>D:\
+    <option >h-smile</option>
+    <option >c-smile</option>
+    <option >Sciter</option>
+   </options>
+   <options>E:\
+    <option >photos</option>
+    <option >backup</option>
+   </options>
+  </options>
+</select>. Note that popup has max-height:150px set for the demo purposes.
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+﻿<HTML>
+	<HEAD>
+		<TITLE></TITLE>
+		<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<META name="GENERATOR" content="pnotepad.org">
+	<STYLE>
+	body { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+	p { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+  
+  #supercombo
+  {
+    padding:1px;
+  }
+  #supercombo > caption 
+  {
+    flow:horizontal;
+    width:*;
+  }
+  #supercombo > div[buttons] 
+  {
+    flow:horizontal;
+    width:*;
+  }
+  #supercombo widget[type="button"]
+  {
+    width:*;
+  }
+  #supercombo > popup 
+  {
+    border:3px solid threedshadow;
+    padding:3px;
+    flow:horizontal; 
+    width:100%%;
+  }
+  #supercombo > popup > option
+  {
+    width:*;
+    text-align:center;
+  }
+  
+	</STYLE>
+	</HEAD>
+<body>
+<p>Example of custom dropdown select element.</p>
+<p>Such select can have additional buttons and other elements.</p>
+<p>Button having <em>role="dropdown"</em> will play a role of dropdown button.</p>
+
+<p>Custom select must have exactly three elements. First must be &lt;caption&gt; and last element 
+will serve as a popup element</p>
+
+<select id="supercombo" type="select-dropdown" style="width:200px">
+  <caption>choose</caption>
+  <div buttons>
+    <widget type="button" id="dosomethingelse">do something</widget>
+    <widget type="button" role="dropdown">show popup</widget> 
+            <!-- role="dropdown" is the key point here -->
+  </div>
+  <popup>
+       <option>eins</option>
+       <option>zwei</option>
+       <option>drei</option>
+       <option>раз</option>
+       <option>два</option>
+       <option>три</option>
+  </popup>
+</select>
+</body>
+</html>

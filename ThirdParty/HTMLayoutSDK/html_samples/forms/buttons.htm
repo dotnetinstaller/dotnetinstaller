@@ -1,0 +1,179 @@
+<HTML>
+	<HEAD>
+		<TITLE></TITLE>
+		<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<META name="GENERATOR" content="BLOCKNOTE.NET">
+		<BASEFONT face="Verdana" size="2">
+			<STYLE>
+     BODY { FONT:system; background-color:#cfcfcf; }
+	#TheForm { background-color: white threedlight threedlight white }
+  #TheLegend { color:maroon }
+  
+  button[type="checkbox"].label-left
+  {
+    padding:4px system-small-icon-width 4px 4px ; 
+    background-position:100% 50%;  
+  }
+	
+	/* checkbox button with mixed state */
+
+	button[type="checkbox"][mixed],
+  button[type="checkbox"][mixed]:checked
+	{ 
+		background-image:url(theme:check-mixed-normal);  
+	}
+	button[type="checkbox"][mixed]:hover,
+  button[type="checkbox"][mixed]:checked:hover
+	{ 
+		background-image:url(theme:check-mixed-hover);  
+		color:orange;
+	}
+	button[type="checkbox"][mixed]:hover:active,
+  button[type="checkbox"][mixed]:checked:hover:active
+	{ 
+		background-image:url(theme:check-mixed-pressed);  
+	}
+	button[type="checkbox"][mixed]:disabled,
+  button[type="checkbox"][mixed]:checked:disabled
+	{ 
+		background-image:url(theme:check-mixed-disabled);  
+	}
+
+  /* Windows style focus rect
+  button[type="checkbox"]:focus 
+  {
+    outline: none;
+  }
+  
+  button[type="checkbox"]:focus > :first-child
+  {
+    outline: 1px dotted 2px;
+  }
+  */ 
+	
+	.custom-button {
+	  background-image: url(images/button-back.png);
+		background-repeat: expand stretch-top stretch-left stretch-right stretch-bottom stretch-middle; /* h-smile specific */
+		background-position: 4px 4px 4px 4px;		
+    behavior:button;
+    transition:blend;
+		color: #0c2e5a;
+	  width: 65px;
+		height: 24px;
+	  text-align:center;
+	  margin:2px;
+    padding:2px;
+	}
+	.custom-button:hover 
+	{
+		background-image: url(images/button-back-hover.png);
+		color: #000;
+	}
+	.custom-button:active 
+	{
+		background-image: url(images/button-back-active.png);
+    //padding:3px 1px 1px 3px;
+	}
+	.custom-button:tab-focus
+  {
+    outline-style: dotted;
+    outline-color: white;
+    outline-width: 2px;
+    outline-offset: -4px;
+  }
+  
+	.custom-button-flat {
+    behavior:button;
+    transition:blend;
+		color: black;
+	  width: 65px;
+		height: 24px;
+	  text-align:center;
+	  margin:2px;
+    padding:2px;
+    border:4px solid white;
+    background-color: threedshadow;
+    background-image: none;
+	}
+	.custom-button-flat:hover 
+	{
+    background-color: threedhighlight;
+	}
+	.custom-button-flat:active 
+	{
+		background-color: threedlightshadow;
+	}
+	.custom-button-flat:tab-focus
+  {
+    outline-style: dashed;
+    outline-width: 4px;
+    outline-offset: -4px;
+  }
+
+	
+	</STYLE>
+	</HEAD>
+	<BODY>
+	
+          <p>Text buttons: 
+          <INPUT type="button" name="b1" value="Blue">&nbsp;
+          <INPUT type="button" name="b2" value="Green">&nbsp; 
+          <INPUT type="button" name="b3" value="Red">&nbsp; 
+					</p>                         
+          <p>&lt;button&gt;s: 
+          <BUTTON name="b4">Blue<br>color</BUTTON>&nbsp;
+          <BUTTON name="b5">Green<br>color</BUTTON>&nbsp; 
+          <BUTTON name="b6">Red<br>color</BUTTON>&nbsp; 
+		  </p>                         
+
+          <p>Radio buttons: 
+          <INPUT type="radio" name="color">Blue&nbsp;
+          <INPUT type="radio" name="color">Green&nbsp; 
+          <INPUT type="radio" name="color">Red&nbsp; 
+          <INPUT type="radio" name="color">Undefined
+					</p>
+          <p>Check boxes: 
+          <INPUT type="checkbox" name="cb">C++&nbsp;
+          <INPUT type="checkbox" name="cb">D&nbsp; 
+          <INPUT type="checkbox" name="cb">JavaScript&nbsp; 
+          <INPUT type="checkbox" name="cb">TIScript&nbsp; 
+					</p>
+          <p>&lt;button type=checkbox&gt;:</p> 
+          <BUTTON type="checkbox" name="cb" checked>C++</BUTTON>&nbsp; 
+          <BUTTON type="checkbox" name="cb" mixed>D</BUTTON>&nbsp;  
+          <BUTTON type="checkbox" name="cb">JavaScript</BUTTON>&nbsp;  
+          <BUTTON type="checkbox" name="cb">TIScript</BUTTON>&nbsp;
+           <p>&lt;button type=checkbox&gt;, label on the left:</p> 
+          <BUTTON type="checkbox" name="cb" checked .label-left>C++</BUTTON>&nbsp; 
+          <BUTTON type="checkbox" name="cb" mixed .label-left>D</BUTTON>&nbsp;  
+          <BUTTON type="checkbox" name="cb" .label-left>JavaScript</BUTTON>&nbsp;  
+          <BUTTON type="checkbox" name="cb" .label-left>TIScript</BUTTON>&nbsp;
+
+          
+ 		  </p>
+          <p>Custom &lt;button&gt;s: 
+          <BUTTON class="custom-button" name="b7" title="Blue">Blue<br>color</BUTTON>&nbsp;
+          <BUTTON class="custom-button" name="b8" title="Green">Green<br>color</BUTTON>&nbsp; 
+          <BUTTON class="custom-button" name="b9" title="Red">Red<br>color</BUTTON>&nbsp; 
+		  </p>                         
+ 		  </p>
+          <p>Cells in this table declared as buttons:   
+          <table cellspacing="4px">
+          <tr>
+            <td class="custom-button" name="b10" title="Blue">Blue<br>color</td>
+            <td class="custom-button" name="b11" title="Green">Green<br>color</td> 
+            <td class="custom-button" name="b12" title="Red">Red<br>color</td> 
+          <tr>
+          </table>
+		  </p>                         
+ 		  </p>
+          <p>Custom flat &lt;button&gt;s: 
+          <BUTTON class="custom-button-flat" name="b13" title="Blue" style="color:blue">Blue<br>color</BUTTON>&nbsp;
+          <BUTTON class="custom-button-flat" name="b14" title="Green" style="color:green">Green<br>color</BUTTON>&nbsp; 
+          <BUTTON class="custom-button-flat" name="b15" title="Red" style="color:red">Red<br>color</BUTTON>&nbsp; 
+		  </p>                         
+					
+					
+	</BODY>
+	</BASEFONT>
+</HTML>

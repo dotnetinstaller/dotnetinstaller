@@ -1,13 +1,10 @@
 #include "stdafx.h"
 #include "dotNetInstaller.h"
 #include "dotNetInstallerDlg.h"
-#include "InstallerCommandLineInfo.h"
-#include "DniMessageBox.h"
 #include "ConfigFileManager.h"
 #include <Version/Version.h>
 #include "ExtractCabProcessor.h"
 #include "ExtractCabDlg.h"
-#include "SplashWnd.h"
 
 BEGIN_MESSAGE_MAP(CdotNetInstallerApp, CWinApp)
 	ON_COMMAND(ID_HELP, CWinApp::OnHelp)

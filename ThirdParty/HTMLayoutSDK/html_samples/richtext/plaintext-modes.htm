@@ -1,0 +1,39 @@
+<html>
+<head>
+  <style>
+  
+    plaintext
+    {
+      font: 10pt monospace;
+    }
+    
+    plaintext#first
+    {
+      overflow-x:auto;
+      overflow-y:none;
+      width:max-intrinsic;
+      height:min-intrinsic;
+      max-width:50%;
+    }
+    plaintext#second
+    {
+      overflow-x:none; /* wrap of long words */
+      overflow-y:auto;
+      height:*;
+      width:50%;
+    }
+  </style>
+ 
+</head>
+<body>
+  <h1>&lt;plaintext&gt; modes</h1>
+  <h2>Bottomless and sideless</h2>
+  <plaintext #first>
+    Hello world
+  </plaintext>
+  <h2>Wraps long words</h2>
+  <plaintext #second>
+    Hello world
+  </plaintext>
+</body>
+</html>

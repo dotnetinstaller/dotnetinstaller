@@ -1,0 +1,58 @@
+<html>
+	<head>
+		<title>Simple Tree View</title>
+<style type="text/css"> 
+	body { 
+		font-family:Verdana; font-size:10pt; 
+		width:100%%; height:100%%;  
+		background-color: burlywood;
+		padding:0;
+		margin:0;
+	}
+	.hcontainer { 
+		width:100%%; height:100%%;  
+		flow:horizontal;
+        behavior:frame-set;
+        border-spacing: 4px; /* width of splitter */
+	}
+	
+	.vcontainer { 
+		width:100%%; height:100%%;  
+		flow:vertical;
+        behavior:frame-set;
+        border-spacing: 4px; /* width of splitter */
+	}
+		
+	.hfixed 
+	{
+	  height:100%%; 
+      margin:0;
+	  width:100px;	  
+	  border:1px solid threedface;
+	  background-color:window;
+	}
+		
+	.hspring 
+	{
+	  height:100%%; 
+	  width:100%%;	
+    margin:0;  
+	  border:1px solid threedface;
+	  background-color:window;
+	}
+
+
+</style>
+	</head>
+	<body class="vcontainer">
+	<div class="hcontainer">	
+		<div class="hfixed">fixed1</div>
+        <div class="hspring">spring</div>
+		<div class="hspring" style="min-width:200px">spring, min-width:200px</div>
+	</div>
+	<div class="hcontainer" style="min-height:64px">	
+		<div class="hspring">spring (min-height:64px)</div>
+		<div class="hfixed">fixed</div>
+	</div>
+	</body>
+</html>

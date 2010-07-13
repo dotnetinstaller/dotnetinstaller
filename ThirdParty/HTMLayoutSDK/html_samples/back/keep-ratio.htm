@@ -1,0 +1,38 @@
+<html>
+<head>
+  <style>
+    .thumb-small 
+    {
+      width:200px;
+      height:200px;
+      border:1px solid red;
+      foreground-repeat:stretch keep-ratio;
+      foreground-position: 50% 50%;
+      background-color: cornsilk;
+    }
+    .thumb-big 
+    {
+      width:400px;
+      height:400px;
+      border:1px solid red;
+      foreground-repeat:stretch keep-ratio;
+      foreground-position: 50% 50%;
+      background-color: cornsilk;
+    }
+    label 
+    {
+      display:inline-block;
+      width:20em;
+      min-width:max-intrinsic;
+      text-align:right;
+    }
+    h1 { font-size:16pt; text-align:center;}
+  </style>  
+<head>
+<body>
+  <h1>Demo of foreground-repeat:stretch keep-ratio</h1>
+  <label>Original(300x113):</label><img src="georgia-straight.jpg" /><br/>
+  <label>stretch/keep-ratio (200x200):</label><img .thumb-small src="georgia-straight.jpg" /><br/>
+  <label>stretch/keep-ratio (400x400):</label><img .thumb-big src="georgia-straight.jpg" />
+</body>
+</html>

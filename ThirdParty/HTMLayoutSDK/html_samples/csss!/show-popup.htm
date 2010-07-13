@@ -1,0 +1,111 @@
+<html>
+<head>
+  <style>
+  
+    popup#our,
+    popup#our2
+    {
+      background-color: white;
+      border:1px solid red;
+      width:100px;
+      height:100px;
+      cursor:pointer;
+    }
+    div#anchor,
+    div#anchor2
+    {
+      border:1px solid black;
+      width:50px;
+      height:50px;
+      cursor:pointer;
+    }
+  </style>  
+  <style #actions>
+    div#anchor
+    {
+      behavior: button; 
+      click!: anchor-point = $1(select#anchor-point):value,
+              popup-point = $1(select#popup-point):value,
+              self.show-popup( $1(popup#our), anchor-point, popup-point );
+    }
+    div#anchor2
+    {
+      behavior: button; 
+      click!: popup-pos = $1(select#popup-auto):value,
+              self.show-popup( $1(popup#our2), popup-pos );
+    }
+    
+    popup#our, 
+    popup#our2
+    {
+       active-off!: self:popup = false;
+    }
+    
+    popup#our2 
+    {
+      background-color: orange white white orange;
+    }
+
+    popup#our2:popup
+    {     
+      assigned!: self.on-the-right = self.x-parent() > 0 ? true # null;
+                 //self.on-the-right = $1(div#anchor2).x-view() < self.x-view() ? true # null; - if it is not a parent...
+    }
+    popup#our2[on-the-right]
+    {
+      background-color: white orange orange white;
+    }
+    
+
+    
+  </style>    
+<head>
+<body>
+
+   popup point (see num keypad):
+   <select #popup-point>
+     <option value=1>1 - left/bottom</option>   
+     <option value=2>2 - middle/bottom</option>   
+     <option value=3>3 - right/bottom</option>   
+     <option value=4>4 - left/middle</option>   
+     <option value=5>5 - middle/middle</option>   
+     <option value=6>6 - right/middle</option>   
+     <option value=7>7 - left/top</option>   
+     <option value=8 selected>8 - middle/top</option>   
+     <option value=9>9 - right/top</option>   
+   </select> is on anchor point:
+   <select #anchor-point>
+     <option value=1>1 - left/bottom</option>   
+     <option value=2 selected>2 - middle/bottom</option>   
+     <option value=3>3 - right/bottom</option>   
+     <option value=4>4 - left/middle</option>   
+     <option value=5>5 - middle/middle</option>   
+     <option value=6>6 - right/middle</option>   
+     <option value=7>7 - left/top</option>   
+     <option value=8>8 - middle/top</option>   
+     <option value=9>9 - right/top</option>   
+   </select>
+   <p>Choose position above and click on the anchor:</p>
+    <div#anchor> 
+      anchor
+    </div>
+    <popup#our>
+      popup
+    </popup>
+    
+   Popup with auto positioning: 
+   <select #popup-auto>
+     <option value=20>20 - on the left</option>   
+     <option value=22>22 - on the right</option>   
+     <option value=8>8 - on the top</option>   
+     <option value=2>2 - on the bottom</option>    
+   </select>. If it will be no space then engine will try to replace popup on opposite side.
+    <div#anchor2> 
+      anchor
+    </div>
+    <popup#our2>
+      popup
+    </popup>
+
+</body>
+</html>

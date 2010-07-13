@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+	
+	  p#test
+	  {
+      color:white;
+      width:max-intrinsic;
+      margin:* * 2px *;
+	  }
+    p#test > span { font-size:24pt; display: inline-block; width:max-intrinsic;   }
+	  p#test > span:hover { color:red; }
+    p#test > img
+    {
+      border:2px solid;
+      border-color:#DDD #777 #777 #DDD;
+    }
+    p#test > img:hover
+    {
+      foreground-image-transformation: contrast-brightness-gamma(0.5,0.5,1.8);
+    }
+	  
+    /* note: reflection area is bottom padding zone: */
+	  div#reflection
+	  {
+      border:1px solid black;
+      height:*;
+      padding:68px 68px 106px 68px;
+      background: url( images/back.png ) expand;
+      background-position: 0 0 124 0;
+      
+      behavior:reflection;
+      -reflection-opacity-start: 0.4;
+      -reflection-opacity-end: 0.0;
+      -reflection-blur-radius: 3;
+	  }
+	
+	</style>
+    <script type="text/tiscript"></script>
+  </head>
+<body>
+  <h1>behavior:reflection demo</h1>
+  <div #reflection>
+    <p #test><span>Hello World!</span> <img src="images/img.jpg"> <input type=text value="input"/></p>
+  <div>
+
+</body>
+</html>

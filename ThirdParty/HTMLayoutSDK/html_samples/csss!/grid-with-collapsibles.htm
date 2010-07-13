@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <style>
+      table 
+      { 
+        behavior:grid column-resizer;
+        overflow:auto;
+        width:*; height:*; 
+        border-spacing:0;
+        background-color:white;
+      }
+      table td { white-space:nowrap; padding:1px 3px; }
+      table tr.header { background-color:silver silver black black; color:white; }
+      table tr.header td { border:1px solid; border-color: silver black black silver; }
+      table td:nth-child(1) { min-width:100px; width:200px;}
+      table td:nth-child(2) { min-width:50px; width:200px; }
+      table td:nth-child(3) { min-width:50px; width:*; }
+      tr:current { color:red; }
+      
+      tr.exe { background-color:#AAA; cursor:pointer; }
+      tr.exe > td:nth-child(1) { padding-left:16px; foreground-image:url(stock:arrow-down); foreground-position:1px 50%; foreground-repeat:no-repeat; }
+      tr.exe[collapsed] > td:nth-child(1) { foreground-image:url(stock:arrow-right); }   
+
+      tr.dll > td:nth-child(1) { padding-left:48px; }
+      tr.dll[collapsed] { display:none; }
+      
+      /* behavioral styles */
+
+      tr.exe 
+      {
+        double-click! : self.collapsed = self.collapsed? null # true, // flip-flop collapsed attribute
+                        $( tr.dll[process="< self.process >"] ).collapsed = self.collapsed; 
+                                      // expand/collapse all tr.dll rows having the same process name
+      }
+      
+      tr.exe > td:nth-child(1)
+      {
+        active-on!: is-on-icon() ? (self.parent().double-click(), return cancel);
+      }
+      
+      table
+      {
+        assigned! : 
+          self:focus = true,
+          $1( tr.exe ):current = true; // first row is :current by default
+      
+        key-on! : !key-code('LEFT','RIGHT')? return, // return with nothing if key is neither VK_LEFT nor VK_RIGHT
+                 
+                  cur = self.$1(tr.dll:current), 
+                  cur = cur? self.$1(tr.exe[process="< cur.process >"]) # 
+                             self.$1(tr.exe:current),
+                  !cur? return,  // return with nothing, no current item. 
+                  // cur here contains tr.exe that we need to collapse/expand
+                  key-code() == 'LEFT'?  // VK_LEFT?
+                    (
+                      self.$1(tr:current):current = false, // remove current one
+                      cur:current = true,                  // set this one as a new current
+                      self.$(tr[process="< cur.process >"]).collapsed = true // collapse all of them in the group
+                    ), 
+                  key-code() == 'RIGHT'? // VK_RIGHT?
+                      self.$(tr[process="< cur.process >"]).collapsed = null, // expand all of them in the group
+                  return cancel; // return 'cancel' value - further processing is not required as we've handled the key.
+      }
+      
+      a#expand-all
+      {
+        click! : $( tr.dll, tr.exe ).collapsed = null; 
+      }
+      a#collapse-all
+      {
+        click! :  $( tr.dll, tr.exe ).collapsed = true, // add to all of them [collapsed="true"]
+                  cur_dll = $1( tr.dll:current ), // Sanity check, if we are hiding current row...
+                  cur_dll? 
+                  (
+                    cur_dll:current = false, 
+                    $1( tr.exe[process="< cur_dll.process >"] ):current = true // make its owner tr.exe as a current
+                  );  
+      }
+      
+      /* sort column on header cell click: */
+      tr.header > td:nth-child(1)
+      {
+        foreground-position:100% 50%; foreground-repeat:no-repeat;
+        active-on! :
+          self.parent().$1( td[sorted] ).sorted = null,   // remove @sorted from previous td of the row, if any
+          self.sorted = "asc",                            // set @sorted="asc" on this element
+          ncolumn = self:index,                           // store ncolumn for future use in the comparator
+          is_less = @(row1, row2)                         // comparator function per se
+            row1.process < row2.process ? true #
+            row1.process > row2.process ? false #
+            row1:index < row2:index,
+          $(table>tr:not(.header)).sort(is_less);         // do the sort.
+      }
+      tr.header > td[sorted="asc"]:nth-child(1)
+      {
+        foreground-image: url(stock:arrow-down);
+        active-on! :
+          self.sorted = "desc",
+          ncolumn = self:index,
+          is_less = @(row1, row2) 
+            row2.process < row1.process ? true #
+            row2.process > row1.process ? false #
+            row1:index < row2:index,
+          $(table>tr:not(.header)).sort(is_less);
+      }
+      tr.header > td[sorted="desc"]:nth-child(1)
+      {
+        foreground-image: url(stock:arrow-up);      
+      }
+      
+      
+    </style>
+  </head>
+<body>
+  <a #expand-all href=#>Expand All</a> <a #collapse-all href=#>Collapse All</a>
+  <table fixedrows=1 fixedlayout #test>
+    <tr .header ><td>Process</td><td>Signature</td><td>Trusted</td></tr>
+    <tr .exe process="browse.exe"><td>browse.exe</td><td>Terra Informatica</td><td>Ah!</td></tr>
+      <tr .dll process="browse.exe"><td>htmlayout.dll 1</td><td>Terra Informatica</td><td>Sure!</td></tr>
+      <tr .dll process="browse.exe"><td>htmlayout.dll 2</td><td>Terra Informatica</td><td>Sure!</td></tr>      
+      <tr .dll process="browse.exe"><td>htmlayout.dll 3</td><td>Terra Informatica</td><td>Sure!</td></tr>
+      <tr .dll process="browse.exe"><td>htmlayout.dll 4</td><td>Terra Informatica</td><td>Sure!</td></tr>      
+      <tr .dll process="browse.exe"><td>htmlayout.dll 5</td><td>Terra Informatica</td><td>Sure!</td></tr>      
+      <tr .dll process="browse.exe"><td>htmlayout.dll 6</td><td>Terra Informatica</td><td>Sure!</td></tr>            
+    <tr .exe process="iexplore.exe"><td>iexplore.exe</td><td>Microsoft Corporation</td><td>Fine!</td></tr>
+      <tr .dll process="iexplore.exe"><td>mshtml.dll 1</td><td>Microsoft Corporation</td><td>Sure!</td></tr>
+      <tr .dll process="iexplore.exe"><td>mshtml.dll 2</td><td>Microsoft Corporation</td><td>Sure!</td></tr>
+      <tr .dll process="iexplore.exe"><td>mshtml.dll 3</td><td>Microsoft Corporation</td><td>Sure!</td></tr>
+      <tr .dll process="iexplore.exe"><td>mshtml.dll 4</td><td>Microsoft Corporation</td><td>Sure!</td></tr>
+      <tr .dll process="iexplore.exe"><td>mshtml.dll 5</td><td>Microsoft Corporation</td><td>Sure!</td></tr>
+      <tr .dll process="iexplore.exe"><td>mshtml.dll 6</td><td>Microsoft Corporation</td><td>Sure!</td></tr>
+      <tr .dll process="iexplore.exe"><td>mshtml.dll 7</td><td>Microsoft Corporation</td><td>Sure!</td></tr>
+      <tr .dll process="iexplore.exe"><td>mshtml.dll 8</td><td>Microsoft Corporation</td><td>Sure!</td></tr>
+      <tr .dll process="iexplore.exe"><td>mshtml.dll 9</td><td>Microsoft Corporation</td><td>Sure!</td></tr>
+    <tr .exe process="blocknote.exe"><td>blocknote.exe</td><td>Terra Informatica</td><td>Oh!</td></tr>
+      <tr .dll process="blocknote.exe"><td>htmengine.dll 1</td><td>Terra Informatica</td><td>Sure!</td></tr>
+      <tr .dll process="blocknote.exe"><td>htmengine.dll 2</td><td>Terra Informatica</td><td>Sure!</td></tr>      
+      <tr .dll process="blocknote.exe"><td>htmengine.dll 3</td><td>Terra Informatica</td><td>Sure!</td></tr>
+      <tr .dll process="blocknote.exe"><td>htmengine.dll 4</td><td>Terra Informatica</td><td>Sure!</td></tr>      
+      <tr .dll process="blocknote.exe"><td>htmengine.dll 5</td><td>Terra Informatica</td><td>Sure!</td></tr>      
+      <tr .dll process="blocknote.exe"><td>htmengine.dll 6</td><td>Terra Informatica</td><td>Sure!</td></tr>            
+      
+  </table>
+</body>
+</html>

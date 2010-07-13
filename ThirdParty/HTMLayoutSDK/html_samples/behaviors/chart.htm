@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<title>Chart demo</title>
+<style type="text/css"> 
+	body { 
+		font-family:Verdana; font-size:10pt; 
+		width:100%%; height:100%%;  
+		background-image: url(stone.png);
+		padding:10px;
+		margin:0;
+    text-align:center;
+	}
+
+	.chart 
+  {
+	   behavior:chart;
+	   color:black; /* our behavior will use it for "hands" */
+	   width:50%;
+	   height:50%;
+     margin:*;
+     
+	   //background-color: white white yellow yellow;
+     padding:15px;
+     border:2px solid gray;
+	}	
+</style>
+<script #data type="application/json" >
+// behavior:chart accepts array of value/color pairs 
+[
+  { value: 0.7, color:#ff000080 } // note that colors are 0x80 (50%) transparent
+  { value: 0.4, color:#ffaf0080 }  
+  { value: 1.0, color:#00a00080 }
+  { value: 0.8, color:#0040ff80 }
+  { value: 0.5, color:#4000ff80 }
+]
+</script>
+
+	</head>
+	<body>
+		<h1>Chart canvas demo</h1>
+		<widget class="chart" data="script#data"/> 
+	</body>
+</html>

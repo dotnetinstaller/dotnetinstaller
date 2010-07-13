@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <style>
+    html 
+    {
+      background: ivory;
+    }
+    body 
+    {  
+      /* the template, sic! */
+      flow: "a c"  
+            "b c"; 
+      border-spacing: 8px;
+    }
+    dl#selector   { float: "a"; 
+                    height:*; 
+                    width:15em; 
+                    border:1px solid darkgray; 
+                    overflow:auto;
+                    padding:4px;
+                    background-color: window; }
+                              
+    dl#selector > dt       { font-weight:bold; 
+                             behavior:hyperlink; /* whole dt here behaves as a hyperlink */
+                             -target:"sandbox"; 
+                             cursor:pointer; text-align:right; }
+    dl#selector > dt:hover { color: blue; }
+    dl#selector > dd       { font-size:75%; padding:0; text-align:right; margin-bottom:1em; }
+    
+    div#legend    { float: "b"; 
+                    height:min-intrinsic; 
+                    font-size: 7.5pt; }
+                    
+    frame#sandbox { float: "c"; 
+                    background-color: window; 
+                    border:1px solid darkgray; 
+                    width:*;
+                    height:*;}
+    
+    </style>
+  </head>
+<body>
+  <dl #selector>
+    <dt href="content/flow-horizontal.htm">flow:horizontal</dt>
+        <dd>single row layout</dd>
+    <dt href="content/flow-vertical.htm">flow:vertical</dt>
+        <dd>single column layout. That is default layout manager in CSS.</dd>
+    <dt href="content/flow-horizontal-flow.htm">flow:horizontal-flow</dt>
+        <dd>multiple rows layout, a.k.a. brickwork</dd>
+    <dt href="content/flow-vertical-flow.htm">flow:vertical-flow</dt>
+        <dd>multiple columns layout</dd>
+    <dt href="content/flow-template.htm">flow:"template"</dt>
+        <dd>grid alike layout with template</dd>
+    <dt href="content/flow-and-floats.htm">flow and float</dt>
+        <dd>Interaction of the flow and flats</dd>
+        
+  </dl>
+  <div #legend>
+    <p>This collection of documents demonstartes use of <code>flow</code>/<code>flex</code> in htmlayout.</p>
+    <p>Prepared by:<br/>Andrew Fedoniouk, Terra Informatica</p>
+    <p>This file by itself demonstreates use of <code>flow:"template"</code>.</p>
+  </div>
+  <frame #sandbox src="content/default.htm" />
+</body>
+</html>

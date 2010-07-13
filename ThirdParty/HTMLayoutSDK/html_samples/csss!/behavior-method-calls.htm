@@ -1,0 +1,64 @@
+<html>
+<head>
+  <style>
+  
+    table.popup
+    {
+      display:none;
+      background:white;
+      border:1px solid red;
+    }
+    table.popup td
+    {
+      width:1.4em;
+      border:1px solid black;
+      text-align:center;
+      cursor:pointer;
+    }
+    table.popup td:hover { background: yellow; }
+    table.popup td:active { background: orange; }
+  </style>  
+  <style #actions>
+    table.popup td 
+    { 
+      behavior:clickable; // will generate clicks
+      click!: $1(input#test).appendText( self:value );
+    } 
+    table.popup td#backspace 
+    { 
+      click!: inp = $1(input#test),
+              inp.setSelection( inp:value.length - 1,inp:value.length ),
+              inp.insertText("");
+    } 
+    button#to-first
+    {
+      click!: inp = $1(input#test),
+              inp.setSelection(0,0),
+              inp:focus = true;
+              
+    }
+    button#to-last
+    {
+      click!: inp = $1(input#test),
+              inp.setSelection(inp:value.length,inp:value.length),
+              inp:focus = true;
+              
+    }
+    input#test
+    {
+      active-off!: self.show-popup( $1(table.popup), 3 /*anchor point - right-bottom*/, 9 /* to popup point right-top */ );
+    }
+  </style>    
+<head>
+<body>
+
+  <input #test type=text value="hello" /> <button #to-first>|&lt;</button><button #to-last>&gt;|</button>
+  <p>Click on the input to see popup</p>
+  <table.popup>
+    <tr><td>1</td><td>2</td><td>3</td></tr>
+    <tr><td>4</td><td>5</td><td>6</td></tr>
+    <tr><td>7</td><td>8</td><td>9</td></tr>
+    <tr><td>0</td><td colspan=2 #backspace>&lt;-</td></tr>
+  </table>
+</body>
+</html>

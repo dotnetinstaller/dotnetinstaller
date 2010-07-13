@@ -1,0 +1,98 @@
+<HTML>
+	<HEAD>
+		<TITLE></TITLE>
+		<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<META name="GENERATOR" content="BLOCKNOTE.NET">
+	<STYLE>
+	body { font:10pt verdana; }
+
+	#elements 
+  {
+		width:50%;
+    height:*;
+	}
+	#elements th
+	{
+	  background-color: threedlightshadow;
+	}
+	#elements td
+	{
+	  border:1px solid threedface;
+	}
+  
+	#elements td:nth-child(1) /* first column */
+	{
+	  font-weight:bold;
+    color:red;
+    width:20px;
+	}
+  
+	#elements tr:current td
+	{
+	  background-color: highlight;
+    color: highlighttext;
+	}
+  
+  /* second table styles */
+  
+	#data 
+  {
+		width:50%%;
+    height:*;
+  }
+  
+  #data th
+	{
+	  background-color: threedhighlight threedhighlight threedlightshadow threedlightshadow;
+    border:1px solid threedlightshadow;
+    padding:4px;
+	}
+  #data td
+	{
+    border:1px solid threedlightshadow;
+    padding:4px;
+	}
+  #data tr:nth-child(even) /* every even row */
+	{
+      background-color: mintcream;
+	}
+  
+	#data tr:current td /* current row */
+	{
+	  background-color: highlight;
+      color: highlighttext;
+	}
+   
+	</STYLE>
+	</HEAD>
+	<BODY>
+	<p>This demo shows select behavior using &lt;tr&gt; elements instead of &lt;option&gt;</p>
+  <p>To declare any element to be an &lt;option&gt; inside select you need to define <em>role="option"</em> attribute in it.</p>
+			<widget type="select" id="elements" name="elements">
+         <table border=0 width=100%%>
+          <tr><th colspan=2>Alkaline Metals</th></tr>         
+          <tr role="option" value=1 selected> <td>Li</td> <td>Lithium</td> </tr>
+          <tr role="option" value=2>          <td>Na</td> <td>Sodium</td> </tr>
+          <tr role="option" value=3>          <td>K</td>  <td>Potassium</td> </tr>          
+          <tr><th colspan=2>Halogens</th></tr>      
+          <tr role="option" value=4 >         <td>F</td>  <td>Fluorine</td> </tr>
+          <tr role="option" value=5>          <td>Na</td> <td>Chlorine</td> </tr>
+          <tr role="option" value=6>          <td>Br</td> <td>Bromine</td> </tr>          
+         </table>
+			</widget>
+      
+			<widget type="select" id="data"  name="data">
+         <table border=1 width=100%% cellspacing=-1px> <!-- cell border collapsing hack-->
+          <tr><th>Sign</th><th>Description</th></tr>
+          <tr role="option" value=1> <td>Li</td> <td>Lithium</td> </tr>
+          <tr role="option" value=2> <td>Na</td> <td>Sodium</td> </tr>
+          <tr role="option" value=3> <td>K</td>  <td>Potassium</td> </tr>          
+          <tr role="option" value=4> <td>F</td>  <td>Fluorine</td> </tr>
+          <tr role="option" value=5> <td>Na</td> <td>Chlorine</td> </tr>
+          <tr role="option" value=6> <td>Br</td> <td>Bromine</td> </tr>          
+         </table>
+			</widget>
+      
+      
+	</BODY>
+</HTML>

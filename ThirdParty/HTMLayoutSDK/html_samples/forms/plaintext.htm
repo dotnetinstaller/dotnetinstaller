@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <style>
+    plaintext#first 
+    {
+      overflow:auto;
+      height:min-intrinsic; /* takes space as much as needed*/
+      max-height:50%; /* but not greater than 50% of the body*/
+    }
+    plaintext#second 
+    {
+      overflow-x:auto;
+      height:*; /* takes the rest*/
+    }
+    </style>
+  </head>
+<body>
+  <p>"Auto height" plaintext input</p>
+  <plaintext #first>
+first line
+second line
+third line    
+  </plaintext>
+  <p>Scrollable plaintext input</p>  
+  <plaintext #second>
+first line
+second line
+third line    
+  </plaintext>
+</body>
+</html>

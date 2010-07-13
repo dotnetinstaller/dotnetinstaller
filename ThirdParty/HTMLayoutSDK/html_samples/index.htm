@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>HTMLayout. %% units description</title>
+	
+		<style media="all"> 
+	/* general stuff */ 
+	body { font-family:verdana,arial,sans-serif; font-size:10pt; }
+	a[href] { color:red; }
+	h1 { text-align:center; }
+	h2 { font-size: 14pt; }
+	em { font-weight:bold; color:red; }
+	.tdfixed { PADDING: 2px; MARGIN: 7px; font-size: 10pt; text-align:center; vertical-align:top; background-color:tan }
+	.tdpercent { PADDING: 2px; MARGIN: 7px; font-size: 10pt; text-align:center; vertical-align:top; background-color:gold }
+	.comment { font-size:8.5pt; color:silver; }
+		</style>
+		
+	</head>
+	
+	<body>
+	    <h1>H-SMILE&nbsp;%% length units</h1>
+		<p>In short, %% units are "percentage from free space".</p>
+		<p>%% units are applicable to border, padding, margin, width and height CSS 
+			attributes only. H-SMILE will effectively compute them for all blocks in 
+			'normal' flow. Thus width:100%% of floated block will not be interpreted at all 
+			(will be treated as undefined).</p>
+		<h2>Formal definition of %% length units computation:</h2>
+		<BLOCKQUOTE>When allotting space among element attributes competing for space along 
+			axis, H-SMILE engine allot all values for attributes having other than %% lengths 
+			first, then divide up remaining available space among %% lengths. Each %% 
+			length receives a portion of the available free space that computed as a 
+			percentage from total sum of all %% units along axis. If total sum of all %% 
+			lengths along axis is less then 100 then 100%% value is used as a total sum of 
+			all %% units. Thus, if 100 pixels of space are available after the user agent 
+			allots pixel and percentage space, and the competing relative lengths are 10%%, 
+			20%%, and 70%%, the 10%% will be alloted to 10 pixels, the 20%% will be alloted 
+			20 pixels, and the 70%% will be alloted 70 pixels. If 100 pixels of space are 
+			available, and the competing relative lengths are 10%%, 20%%, and 30%%, the 
+			10%% will be alloted to 10 pixels, the 20%% will be alloted 20 pixels, the 30%% 
+			will be alloted 30 pixels, and remaining 40 pixels will be left undistributed. </BLOCKQUOTE>
+		<h2>Example:</h2>
+		<P>In the example below I am using HTML table to model layout which could be done 
+			by %% units without need to use tables. Some %% use cases cannot be reproduced 
+			even by HTML tables.</P>
+		<P>Imagine that four blocks below declared in CSS as:</P>
+		<TABLE cellSpacing="7" cellPadding="2" width="100%" border="0">
+			<TR>
+				<TD class="tdfixed" width="100">width:100px
+					<br>
+					<IMG height="1" src="spacer.gif" width="100"> 
+					<!-- the ugly "strut" needed to force the cell to have needed size--></TD>
+				<TD class="tdpercent" width="30%">width:30%%</TD>
+				<TD class="tdpercent" width="70%">width:70%%</TD>
+				<TD class="tdfixed" width="150">width:150px
+					<br>
+					<IMG height="1" src="spacer.gif" width="150"> 
+					<!-- the ugly "strut" needed to force the cell to have needed size--></TD>
+			</TR>
+		</TABLE>
+		<P>Below is the same layout but with %% units use. Could be viewed properly only in H-SMILE 
+			engine so far:</P>
+		<div style="flow: horizontal">
+			<div class="tdfixed" style="WIDTH: 100px;">width:100px</div>
+			<div class="tdpercent" style="WIDTH: 30%%;">width:30%%</div>
+			<div class="tdpercent" style="WIDTH: 70%%;">width:70%%</div>
+			<div class="tdfixed" style="WIDTH: 150px;">width:150px</div>
+		</div>
+		<p class=comment>Two "tables" above have same structure and dimensions of "cells" in H-SMILE engine.</p>
+		<p>And following example is just one DIV having left and right border set to 30%% and 
+			70%% respectively.</p>
+		<div style="BORDER-RIGHT: tan 70%% solid; 
+					BORDER-BOTTOM: tan 4px solid;
+					BORDER-LEFT: tan 30%% solid; 
+					BORDER-TOP: tan 4px solid; 
+					PADDING: 1em; 
+					BACKGROUND: gold; WIDTH: 50%;">
+<pre #test>border-left:solid tan 30%%;
+border-right:solid tan 70%%;
+border-top:solid tan 4px;
+border-bottom:solid tan 4px;
+width:50%;
+background: gold</pre>
+		</div>
+		<p class=comment>DIV above takes all available width of its container in H-SMILE engine.</p>
+		<p>To see examples of %% units alive download 
+		<a href="http://terrainformatica.com/htmlayout/v3/HTMLayoutSDK.zip">HTMLayoutSDK.zip</a>
+		 - H-SMILE engine and its demo application with samples.</p>
+		<P>How to use it:</P>
+		<OL>
+			<LI>
+			Unzip the archive somewhere on disk drive of your Windows PC .
+			<LI>
+				Start wtl_browse.exe and open html files in samples folder of the 
+				distribution by using menu: File/Open of the application.</LI></OL>
+		<P>Samples explanation:</P>
+		<UL>
+			<LI>
+				<code>samples/percent_percent_units.htm</code>
+			- copy of this file.
+			<LI>
+				<code>samples/editor/index.htm</code>
+			- mockup of UI of sample application. %% units are used there to position 
+			elements horizontally and vertically.
+			<LI>
+				<code>samples/sidebars.htm</code>
+			- typical web page layout esciso.
+			<LI>
+				<CODE class="sample">samples/backgrounds.htm</CODE> - sample of backgrounds supported by 
+				H-SMILE engine. Gradient backgrounds and extended tiling demos.</LI></UL>
+		<hr>
+		<P>Andrew Fedoniouk.<BR>
+			Terra Informatica Software, Inc.<BR>
+			<A href="http://terrainformatica.com">http://terrainformatica.com</A><BR>
+			British Columbia, Canada.<br>
+			2004-06-23</P>
+		<P>&nbsp;</P>
+	</body>
+</html>

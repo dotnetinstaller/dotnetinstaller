@@ -1,0 +1,55 @@
+<html>
+<head>
+  <style>
+    ul {
+            padding:0;
+            border-spacing:4px;
+            flow: "a a a"
+                  "b c e"
+                  "d c e"
+                  "d c f";
+            width:*;
+            height:*;
+            padding:4px; border:2px solid black;
+         }
+    li {  display:block;
+          border: 2px solid salmon; background: seashell; }
+
+    li:nth-child(1) { float:"a"; }
+    li:nth-child(2) { float:"b"; 
+                      width:150px; 
+                      height:max-intrinsic; }
+    li:nth-child(3) { float:"c"; 
+                      width:*; height:*; } /* flexes, a.k.a. shrink-to-fit */
+    li:nth-child(4) { float:"d"; 
+                      width:150px; 
+                      height:*; } 
+    li:nth-child(5) { float:"e"; 
+                      width:150px; 
+                      height:*; } 
+    li:nth-child(6) { float:"f"; 
+                      width:150px; 
+                      height:150px; }
+  
+  </style>  
+</head>
+<body>
+ <h1>flow:"template"</h1>
+ All elements replaced according to the template below.
+ <ul>
+    <li> "a", width:auto (that is 1*), height:auto(that is max-intrinsic) </li>
+    <li> "b", width:150px, height:max-intrinsic </li>
+    <li> "c", width:*, height:* (a.k.a. shrink-to-fit) </li>
+    <li> "d", width:150px, height:* </li>
+    <li> "e", width:150px, height:* </li>
+    <li> "f", width:150, height:150px</li>
+ </ul> 
+ Template is:
+<pre>
+ flow: "a a a"
+       "b c e"
+       "d c e"
+       "d c f";
+</pre>
+</body>
+</html>

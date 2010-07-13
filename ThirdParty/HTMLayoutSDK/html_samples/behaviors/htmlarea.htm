@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <style>
+      div.htmlarea
+      {
+        behavior:htmlarea;
+        context-menu:selector(menu#for-htmlarea);
+        cursor:text;
+        border:1px dotted;
+      }
+    </style>
+    <menu.context #for-htmlarea>
+      <li	command="htmlarea:copy"
+        style="foreground-image:url(res:edit-copy.png)"
+        >Copy<span class="accesskey">Ctrl+C</span></li>
+      <li	command="htmlarea:selectall"
+        >Select All<span class="accesskey">Ctrl+A</span></li>
+    </menu>
+  </head>
+<body>
+  behavior htmlarea, select-and-copy elements:
+  <div .htmlarea>
+<h3>The standard Lorem Ipsum passage, used since the 1500s</h3>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+nisi ut aliquip ex ea commodo consequat. 
+Duis aute irure dolor in reprehenderit in voluptate velit 
+esse cillum dolore eu fugiat nulla pariatur. 
+Excepteur sint occaecat cupidatat non proident, sunt in culpa 
+qui officia deserunt mollit anim id est laborum.
+  </div>
+</body>
+</html>

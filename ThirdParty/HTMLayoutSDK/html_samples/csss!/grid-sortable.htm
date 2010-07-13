@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <style>
+      table 
+      { 
+        behavior:grid column-resizer;
+        overflow:auto;
+        width:*; height:*; 
+        border-spacing:0;
+        background-color:white;
+        border:1px solid silver;
+      }
+      table td { white-space:nowrap; padding:2px 3px; border:1px solid; border-color: transparent silver silver transparent;}
+      table tr.header { background-color:silver silver black black; color:white;  }
+      table tr.header td { border-color: silver black black silver; foreground-position:100% 50%; foreground-repeat:no-repeat;}
+      table tr.header td:hover { border-bottom-color: orange; }
+      table td:nth-child(1) { min-width:100px; width:200px;}
+      table td:nth-child(2) { min-width:50px; width:200px; }
+      table td:nth-child(3) { min-width:50px; width:*; }
+      tr:current { color:red; }
+     
+      /* behavioral styles */
+      
+      /* sort column on header cell click: */
+      tr.header > td
+      {
+        active-on! :
+          self.parent().$1( td[sorted] ).sorted = null,   // remove @sorted from previous td of the row, if any
+          self.sorted = "asc",                            // set @sorted="asc" on this element
+          ncolumn = self:index,                           // store ncolumn for future use in the comparator
+          is_less = @(row1, row2)                      // comparator function per se
+            row1.child(ncolumn):value.toLower() < row2.child(ncolumn):value.toLower() ? true #
+            row1.child(ncolumn):value.toLower() > row2.child(ncolumn):value.toLower() ? false #
+            row1:index < row2:index,
+          self.$1p(table).$(tr:not(.header)).sort(is_less);      // do the sort.
+      }
+      tr.header > td[sorted="asc"]
+      {
+        foreground-image: url(stock:arrow-down);
+        
+        active-on! :
+          self.sorted = "desc",
+          ncolumn = self:index,
+          is_less = @(row1, row2) 
+            row2.child(ncolumn):value.toLower() < row1.child(ncolumn):value.toLower() ? true #
+            row2.child(ncolumn):value.toLower() > row1.child(ncolumn):value.toLower() ? false #
+            row1:index < row2:index,
+          self.$1p(table).$(tr:not(.header)).sort(is_less);
+      }
+      tr.header > td[sorted="desc"]
+      {
+        foreground-image: url(stock:arrow-up);      
+      }
+
+    
+    </style>
+  </head>
+<body>
+  Sortable grid with column resizing.
+  <table fixedrows=1 fixedlayout >
+    <tr .header ><td>Process</td><td>Signature</td><td>Code</td></tr>
+    <tr ><td>browse.exe</td><td>Terra Informatica 3</td><td>f</td></tr>
+    <tr ><td>browse.exe</td><td>Terra Informatica 2</td><td>e</td></tr>
+    <tr ><td>browse.exe</td><td>Terra Informatica 1</td><td>d</td></tr>
+    <tr ><td>IExplore.exe</td><td>Microsoft 3</td><td>C</td></tr>
+    <tr ><td>IExplore.exe</td><td>Microsoft 2</td><td>b</td></tr>
+    <tr ><td>IExplore.exe</td><td>Microsoft 1</td><td>A</td></tr>    
+  </table>
+  Sortable grid with column resizing.
+  <table fixedrows=1 fixedlayout >
+    <tr .header ><td>Process</td><td>Signature</td><td>Code</td></tr>
+    <tr ><td>browse.exe</td><td>Terra Informatica 3</td><td>f</td></tr>
+    <tr ><td>browse.exe</td><td>Terra Informatica 2</td><td>e</td></tr>
+    <tr ><td>browse.exe</td><td>Terra Informatica 1</td><td>d</td></tr>
+    <tr ><td>IExplore.exe</td><td>Microsoft 3</td><td>C</td></tr>
+    <tr ><td>IExplore.exe</td><td>Microsoft 2</td><td>b</td></tr>
+    <tr ><td>IExplore.exe</td><td>Microsoft 1</td><td>A</td></tr>    
+  </table>
+ 
+</body>
+</html>

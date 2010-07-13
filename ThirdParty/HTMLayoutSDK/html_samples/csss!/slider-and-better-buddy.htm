@@ -1,0 +1,25 @@
+<html>
+<head>
+  <style>
+    widget#bottles
+    {
+      height:200px; 
+      margin:*;
+      assigned! : 
+          self.value-changed(); /* call when-value-changed event handler as a function */ 
+      value-changed! : 
+          $1(code#bottles-value):value = 
+            self:value == 0 ?  "are no bottles" #
+            self:value == 1 ?  "is a single bottle" #
+                               "are " + self:value + " bottles";
+    }
+    caption { text-align:center; }
+  </style>  
+<head>
+<body>
+    <div style="width:200px"> 
+      <widget id="bottles" type="vslider" min=0 max=99 value=0 />
+      <caption>There <code id="bottles-value" /> on the wall</caption>
+    </div>
+</body>
+</html>

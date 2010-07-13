@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "LanguageSelectorDialog.h"
-#include "DniMessageBox.h"
 #include "DownloadStatus.h"
 
 IMPLEMENT_DYNAMIC(CLanguageSelectorDialog, CDialog)

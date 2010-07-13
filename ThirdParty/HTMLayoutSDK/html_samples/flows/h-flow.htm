@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>h-flow demonstartion</title>
+		<style>
+      body { font-family: Verdana, Arial, sins-serif;	font-size: 10pt; width:100%%; height:100%% }
+	  
+	  h1 { font:10pt bold Verdana; }
+
+      div.sub  
+	  { 
+	    color:white;
+      width:64px; 
+      height:48px; 
+      border:1px solid brown; 
+      margin:20px; 
+	  }
+	  
+	  div.sub:nth-child(1) {  background-color:#3300cc }
+	  div.sub:nth-child(2) {  background-color:#3333cc }
+	  div.sub:nth-child(3) {  background-color:#3366cc }
+	  div.sub:nth-child(4) {  background-color:#3399cc }
+	  div.sub:nth-child(5) {  background-color:#33cccc }
+	  
+      div.h-bricks  
+	  { 
+	    flow:h-flow; 
+      border:1px solid black; 
+      overflow:auto; 
+	  }
+	  
+	  div.v-bricks	  
+	  {
+	    flow:v-flow; 
+      border:1px solid gray; 
+      overflow:auto; 
+	  }
+	  
+    div#two > div.sub 
+	  { 
+      width:100%%; 
+      min-width:64px; 
+    } 
+    div#two > div.sub:nth-child(even) 
+    {
+      clear:right; /* two div.sub's in the row */
+    }
+	  
+    div#two > div.sub:last-child 
+	  { 
+	    width:100%%; 
+      clear:left; /* last div spans full row */
+    } 
+	  
+	  div.hbox 
+	  {
+		flow:horizontal; 
+		height:100%%;
+	  }
+	  /* all immediate div children spans full height */
+	  div.hbox > div 
+	  {
+	    height:100%%;
+		margin:10px;
+	  }
+	  	  
+	  
+		</style>
+	</head>
+	<body>
+	
+	<div class="hbox">
+		<div>
+			<h1>H-FLOW layout with fixed width blocks</h1>
+			<div class="h-bricks" id="1" style="height:100%%">
+			  <div class="sub">#1</div>
+			  <div class="sub">#2</div>
+			  <div class="sub">#3</div>
+			  <div class="sub">#4</div>
+			  <div class="sub">#5</div>
+			</div>
+	    </div>
+		<div>
+			<h1>H-FLOW layout with spring width blocks.</h1>
+			As width of each block declared as 50%% then here will be only two blocks in each row.
+			Last block has width:100%% (a.k.a. auto) set.
+			<div class="h-bricks" id="two" style="height:100%%">
+			  <div class="sub">#1</div>
+			  <div class="sub">#2</div>
+			  <div class="sub">#3</div>
+			  <div class="sub">#4</div>
+			  <div class="sub">#5</div>
+			</div>
+		</div>
+	</div>
+	</body>
+</html>

@@ -1,0 +1,65 @@
+<html>
+<head>
+  <style>
+    select { width:*; height:10em;}
+    select.source > option 
+    {
+      draggable:copy-move; // either copy or move
+    } 
+    
+    select.source > option:moving 
+    {
+      opacity:.5;
+      background:orange;
+    }
+    select.source > option:copying 
+    {
+      opacity:.5;
+      background:lime;
+    }
+    
+    select.drop
+    {
+      accept-drop: selector(select.source > option);
+      outline-color: orange;
+    }
+    select.drop.insert
+    {
+      drop:insert;
+    }
+    select.drop.append
+    {
+      drop:append;
+    }
+    select.drop.prepend
+    {
+      drop:prepend;
+    }
+   
+  </style>  
+<head>
+<body>
+  <h1>Drag-n-drop demo. Various types of drop targets.</h1>
+  <p>Leftmost &lt;select&gt; is <i>draggable:copy-move</i> so it supports move and copy opearations. Press <tt>CTRL</tt> while dragging to switch mode.</p>
+  <div style="flow:horizontal">
+    <p>Source:<br/>
+      <select size=10 .source>
+        <option>Item 1</option>
+        <option>Item 2</option>
+        <option>Item 3</option>
+        <option>Item 4</option>
+        <option>Item 5</option>
+        <option>Item 6</option>
+        <option>Item 7</option>
+        <option>Item 8</option>        
+        <option>Item 9</option>        
+      </select></p>
+    <p>drop:insert<br/>
+      <select size=10 class="drop insert"></select></p>
+    <p>drop:append<br/>
+      <select size=10 .drop .append></select></p>
+    <p>drop:prepend<br/>
+      <select size=10 .drop .prepend></select></p>
+  </div>
+</body>
+</html>

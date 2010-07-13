@@ -1,0 +1,32 @@
+<html>
+<head>
+  <style>
+    body {
+            flow: "a a"
+                  "c b";
+            width:*;
+            height:*;
+            border-spacing:8px;
+         }
+    p.header    { float:"a"; margin:0; border:2px solid green;  }
+    div.sidebar { float:"b"; border:2px solid blue; width:25%; height:*; padding:4px; }
+    div.content { float:"c"; border:2px solid red; width:*; height:*; padding:4px; }
+    img.floats-right { float:right; }
+    
+  </style>  
+</head>
+<body>
+  <p .header>This sample shows interaction of the <code>flow</code> and <code>float</code>.</p>
+  <div .sidebar>
+    Sidebar, width:25%
+  </div>
+  <div .content>
+    <img .floats-right src="images/sunset.jpg "/>The image on the right has <code #test>float:right</code> style. 
+    <p>Element replaced in <code>flow</code>'ed establishes "float root".</p>
+    And the Lorem Ipsum passage for the demo purposes:
+    <include src="lorem-ipsum.htm">
+      Hey! Where is my lorem-ipsum.htm?
+    </include>
+  </div>
+</body>
+</html>

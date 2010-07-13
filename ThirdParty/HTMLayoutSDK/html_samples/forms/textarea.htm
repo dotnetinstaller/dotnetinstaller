@@ -1,0 +1,78 @@
+<html>
+	<head>
+		<title>Editor widgets</title>
+<style type="text/css"> 
+
+	body        { font-family:Verdana; font-size:10pt; width:100%%; height:100%%;  padding:10px; margin:0; }
+	.hcontainer { width:100%%; height:100%%; flow:horizontal;	}
+	
+	.vcontainer { width:100%%; height:100%%;  }
+	.hfixed 	  { height:100%%; width:100px;	}
+	.hspring    { height:100%%; width:100%%;	}
+	
+	.hsplitter 	{ behavior:splitter; height:100%%; width:6px; cursor:w-resize; margin:0; border:none; background-color: threedlight; }
+	.hsplitter:hover { background-color: threedface; }
+	
+	.vsplitter  { behavior:splitter; height:6px; width:100%%;	cursor:n-resize; margin:0; border:none; background-color: threedlight; }
+	.vsplitter:hover { background-color: threedface; }
+	
+	.header 	  { padding:6px; font-size: 11pt;	font-family:'Century Gothic', Tahoma, Arial; }
+  
+  widget[type="textarea"] 
+  { 
+    height:100%%; 
+    font:10pt monospace; 
+  } 
+  
+  widget[type="textarea"].with-line-numbers 
+  {
+    white-space:pre;
+    overflow-x: auto;
+    overflow-y: scroll;
+    color: burlywood;
+  }
+  widget[type="textarea"].with-line-numbers > text 
+  {
+    margin-left: 48px;
+    border-left: 1px solid threedface;
+    padding-left: 4px;
+    display: list-item;
+    list-style-type: decimal;
+    color: windowtext;
+  }
+  widget[type="textarea"].with-paragraph-marks 
+  {
+    white-space:prewrap; /* preserve white space but allow wrap */
+    overflow-x: auto;
+    overflow-y: scroll;
+    color: burlywood;
+  }
+  widget[type="textarea"].with-paragraph-marks  > text 
+  {
+    margin-left: 24px;
+    display: list-item;
+    list-style-type: circle;
+    color: windowtext;
+  }
+  
+		
+</style>
+	</head>
+	<body class="hcontainer">
+		<div class="hfixed">Text editing <a href=#>widgets</a> in HTMLayout</div>
+	<hr class="hsplitter">
+		<div class="vcontainer">
+			<div style="height:50%%">
+				<caption class="header">textarea #1, with-line-numbers</caption>
+				<widget name="first" type="textarea" class="with-line-numbers" >
+Editable content. Sample.
+				</widget>
+			</div>
+		<hr class="vsplitter">
+			<div style="height:50%%">
+				<caption class="header">textarea #2, with-paragraph-markers</caption>
+				<widget name="second" style="font:10pt Verdana" type="textarea" class="with-paragraph-marks"></widget>
+			</div>
+		</div>
+	</body>
+</html>

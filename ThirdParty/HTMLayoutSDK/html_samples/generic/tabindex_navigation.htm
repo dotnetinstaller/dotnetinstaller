@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>Navigation</title>
+		<style type="text/css"> 
+html { height:100%; width:100%; margin: 0; padding: 0; border:none; }		
+body { height:100%; width:100%; font:10pt Verdana; margin: 0; padding: 0; border:none; vertical-align:middle; }
+.scrollable { 
+	margin: 10px; 
+	padding: 5px; 
+	border: dashed black 4px;
+	color: black; 
+	overflow: auto; 
+	width:50%%;
+	height:50%%;
+}
+a:focus { background-color: yellow;  }
+	</style>
+	</head>
+	<body>
+		<!--<center>Click on hyperlink (to set focus) and press TAB</center>-->
+		<div class="scrollable">
+			<div><a href="http://www.gov.alphacentaurus">Alpha Centaurus</a></div>
+			<div><a href="http://www.gov.betaeridani">Beta Eridani</a></div>
+			<div><a href="http://www.gov.andromedae">Andromedae</a></div>
+			<div class="scrollable">
+				<div><a href="http://www.gov.alpha.andromedae">Alpha Andromedae</a></div>
+				<div><a href="http://www.gov.beta.andromedae">Beta Andromedae</a></div>
+				<div><a href="http://www.gov.gamma.andromedae">Gamma Andromedae</a></div>
+				<div><a href="http://www.gov.upsilon.andromedae">Upsilon Andromedae</a></div>
+				<div class="scrollable">
+					<div><a href="http://www.gov.a.upsilon.andromedae">First Planet of Upsilon Andromedae</a></div>
+					<div><a href="http://www.gov.b.upsilon.andromedae">Second Planet of Upsilon Andromedae</a></div>
+					<div><a href="http://www.gov.c.upsilon.andromedae">Third Planet of Upsilon Andromedae</a></div>
+				</div>
+			</div>
+			<div><a href="http://www.gov.betelgeise">Betelgeise</a></div>
+			<div><a href="http://www.gov.barnard">Barnard's star</a></div>
+		</div>
+	</body>
+</html>

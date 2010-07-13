@@ -1,0 +1,37 @@
+<html>
+<head>
+  <script type="text/tiscript"></script>  
+  <style>
+    richtext
+    {
+      overflow:scroll;
+      foreground-image:url(gripper.png);
+      foreground-repeat:no-repeat;
+      foreground-position:100% 100%;
+      min-height:100px;
+      margin: 10px 0;
+      
+      behavior: ~ sizer; // adding sizer to the list of behaviors
+    }
+    
+    richtext#first
+    {
+      foreground-image-cursor:nw-resize;  
+    }
+    richtext#second
+    {
+      -resize: vertical; // resizing only vertically, see behavior_sizer.cpp
+      foreground-image-cursor:s-resize;
+    }
+  </style>  
+<head>
+<body>
+<h1>Demo of behavior::sizer</h1>
+<richtext #first>
+  Can be resized in <b>both</b> directions.
+</richtext>
+<richtext #second>
+  Can be resized <b>only</b> vertically.
+</richtext>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<html>
+	<head>
+		<title>Color popup demo</title>
+<style type="text/css"> 
+	body { 
+		font-family:Verdana; font-size:10pt; 
+		width:100%%; height:100%%;  
+		background-color: window;
+		padding:10px;
+		margin:0;
+	}
+
+	.color-chooser {
+		width:54px;
+		height:53px;
+		background-image:url(colorpopup/colors-normal.png);
+		behavior:dropdown;
+	}
+	
+	.color-chooser:hover 
+	{
+		background-image:url(colorpopup/colors-hover.png);
+	}
+	.color-chooser:active:not(:owns-popup) 
+	{
+		background-image:url(colorpopup/colors-active.png);
+	}
+  
+	.color-chooser .popup 
+	{
+    background-color: window;
+    padding: 4px;
+	  margin-top:4px; /* distance from the owner */
+    border: 1px solid threedshadow;
+    text-align:left;
+	  display:none; 	/* normally it is invisible behavior 'dropdown' will take care about it*/
+    behavior:popup;
+	}
+  
+	.color-chooser .popup td /* cell of the color table */
+	{
+      width:10px; height:10px;
+      border: 2px transparent solid;
+	}
+
+	.color-chooser .popup td:hover 
+	{
+      outline: 2px solid orange 2px;
+	}
+
+	.color-chooser.case2 .popup 
+	{
+    behavior:none;
+	}
+        
+	
+</style>
+	</head>
+	<body>
+	<center>Color chooser. Popup demo</center>
+  Test input <input type="text" />  
+  
+  <h2>Case #1: popup element has behavior popup applied.</h2>
+	<div class="color-chooser" id="background-color">
+	    <table class="popup" width=100% cellspacing=0>
+        <tr>
+          <td bgcolor=#003300> </td> <td bgcolor=#003333> </td> <td bgcolor=#003366> </td> <td bgcolor=#003399> </td> <td bgcolor=#0033cc> </td> <td bgcolor=#0033ff> </td>
+          <td bgcolor=#009900> </td> <td bgcolor=#009933> </td> <td bgcolor=#009966> </td> <td bgcolor=#009999> </td> <td bgcolor=#0099cc> </td> <td bgcolor=#0099ff> </td>
+          <td bgcolor=#00ff00> </td> <td bgcolor=#00ff33> </td> <td bgcolor=#00ff66> </td> <td bgcolor=#00ff99> </td> <td bgcolor=#00ffcc> </td> <td bgcolor=#00ffff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#333300> </td> <td bgcolor=#333333> </td> <td bgcolor=#333366> </td> <td bgcolor=#333399> </td> <td bgcolor=#3333cc> </td> <td bgcolor=#3333ff> </td>
+          <td bgcolor=#339900> </td> <td bgcolor=#339933> </td> <td bgcolor=#339966> </td> <td bgcolor=#339999> </td> <td bgcolor=#3399cc> </td> <td bgcolor=#3399ff> </td>
+          <td bgcolor=#33ff00> </td> <td bgcolor=#33ff33> </td> <td bgcolor=#33ff66> </td> <td bgcolor=#33ff99> </td> <td bgcolor=#33ffcc> </td> <td bgcolor=#33ffff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#663300> </td> <td bgcolor=#663333> </td> <td bgcolor=#663366> </td> <td bgcolor=#663399> </td> <td bgcolor=#6633cc> </td> <td bgcolor=#6633ff> </td>
+          <td bgcolor=#669900> </td> <td bgcolor=#669933> </td> <td bgcolor=#669966> </td> <td bgcolor=#669999> </td> <td bgcolor=#6699cc> </td> <td bgcolor=#6699ff> </td>
+          <td bgcolor=#66ff00> </td> <td bgcolor=#66ff33> </td> <td bgcolor=#66ff66> </td> <td bgcolor=#66ff99> </td> <td bgcolor=#66ffcc> </td> <td bgcolor=#66ffff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#993300> </td> <td bgcolor=#993333> </td> <td bgcolor=#993366> </td> <td bgcolor=#993399> </td> <td bgcolor=#9933cc> </td> <td bgcolor=#9933ff> </td>
+          <td bgcolor=#999900> </td> <td bgcolor=#999933> </td> <td bgcolor=#999966> </td> <td bgcolor=#999999> </td> <td bgcolor=#9999cc> </td> <td bgcolor=#9999ff> </td>
+          <td bgcolor=#99ff00> </td> <td bgcolor=#99ff33> </td> <td bgcolor=#99ff66> </td> <td bgcolor=#99ff99> </td> <td bgcolor=#99ffcc> </td> <td bgcolor=#99ffff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#cc3300> </td> <td bgcolor=#cc3333> </td> <td bgcolor=#cc3366> </td> <td bgcolor=#cc3399> </td> <td bgcolor=#cc33cc> </td> <td bgcolor=#cc33ff> </td>
+          <td bgcolor=#cc9900> </td> <td bgcolor=#cc9933> </td> <td bgcolor=#cc9966> </td> <td bgcolor=#cc9999> </td> <td bgcolor=#cc99cc> </td> <td bgcolor=#cc99ff> </td>
+          <td bgcolor=#ccf020> </td> <td bgcolor=#ccff33> </td> <td bgcolor=#ccff66> </td> <td bgcolor=#ccff99> </td> <td bgcolor=#ccffcc> </td> <td bgcolor=#ccffff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#ff3300> </td> <td bgcolor=#ff3333> </td> <td bgcolor=#ff3366> </td> <td bgcolor=#ff3399> </td> <td bgcolor=#ff33cc> </td> <td bgcolor=#ff33ff> </td>
+          <td bgcolor=#ff9900> </td> <td bgcolor=#ff9933> </td> <td bgcolor=#ff9966> </td> <td bgcolor=#ff9999> </td> <td bgcolor=#ff99cc> </td> <td bgcolor=#ff99ff> </td>
+          <td bgcolor=#ffff00> </td> <td bgcolor=#ffff33> </td> <td bgcolor=#ffff66> </td> <td bgcolor=#ffff99> </td> <td bgcolor=#ffffcc> </td> <td bgcolor=#ffffff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#ff0000> </td> <td bgcolor=#ff0033> </td> <td bgcolor=#ff0066> </td> <td bgcolor=#ff0099> </td> <td bgcolor=#ff00cc> </td> <td bgcolor=#ff00ff> </td>
+          <td bgcolor=#ff6600> </td> <td bgcolor=#ff6633> </td> <td bgcolor=#ff6666> </td> <td bgcolor=#ff6699> </td> <td bgcolor=#ff66cc> </td> <td bgcolor=#ff66ff> </td>
+          <td bgcolor=#ffc020> </td> <td bgcolor=#ffcc33> </td> <td bgcolor=#ffcc66> </td> <td bgcolor=#ffcc99> </td> <td bgcolor=#ffcccc> </td> <td bgcolor=#ffccff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#cc0000> </td> <td bgcolor=#cc0033> </td> <td bgcolor=#cc0066> </td> <td bgcolor=#cc0099> </td> <td bgcolor=#cc00cc> </td> <td bgcolor=#cc00ff> </td>
+          <td bgcolor=#cc6600> </td> <td bgcolor=#cc6633> </td> <td bgcolor=#cc6666> </td> <td bgcolor=#cc6699> </td> <td bgcolor=#cc66cc> </td> <td bgcolor=#cc66ff> </td>
+          <td bgcolor=#cccc00> </td> <td bgcolor=#cccc33> </td> <td bgcolor=#cccc66> </td> <td bgcolor=#cccc99> </td> <td bgcolor=#cccccc> </td> <td bgcolor=#ccccff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#990000> </td> <td bgcolor=#990033> </td> <td bgcolor=#990066> </td> <td bgcolor=#990099> </td> <td bgcolor=#9900cc> </td> <td bgcolor=#9900ff> </td>
+          <td bgcolor=#996600> </td> <td bgcolor=#996633> </td> <td bgcolor=#996666> </td> <td bgcolor=#996699> </td> <td bgcolor=#9966cc> </td> <td bgcolor=#9966ff> </td>
+          <td bgcolor=#99cc00> </td> <td bgcolor=#99cc33> </td> <td bgcolor=#99cc66> </td> <td bgcolor=#99cc99> </td> <td bgcolor=#99cccc> </td> <td bgcolor=#99ccff> </td>
+        </tr>        
+        <tr>
+          <td bgcolor=#660000> </td> <td bgcolor=#660033> </td> <td bgcolor=#660066> </td> <td bgcolor=#660099> </td> <td bgcolor=#6600cc> </td> <td bgcolor=#6600ff> </td>
+          <td bgcolor=#666600> </td> <td bgcolor=#666633> </td> <td bgcolor=#666666> </td> <td bgcolor=#666699> </td> <td bgcolor=#6666cc> </td> <td bgcolor=#6666ff> </td>
+          <td bgcolor=#66cc00> </td> <td bgcolor=#66cc33> </td> <td bgcolor=#66cc66> </td> <td bgcolor=#66cc99> </td> <td bgcolor=#66cccc> </td> <td bgcolor=#66ccff> </td>
+        </tr>        
+        <tr>
+          <td bgcolor=#330000> </td> <td bgcolor=#330033> </td> <td bgcolor=#330066> </td> <td bgcolor=#330099> </td> <td bgcolor=#3300cc> </td> <td bgcolor=#3300ff> </td>
+          <td bgcolor=#336600> </td> <td bgcolor=#336633> </td> <td bgcolor=#336666> </td> <td bgcolor=#336699> </td> <td bgcolor=#3366cc> </td> <td bgcolor=#3366ff> </td>
+          <td bgcolor=#33cc00> </td> <td bgcolor=#33cc33> </td> <td bgcolor=#33cc66> </td> <td bgcolor=#33cc99> </td> <td bgcolor=#33cccc> </td> <td bgcolor=#33ccff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#000000> </td> <td bgcolor=#000033> </td> <td bgcolor=#000066> </td> <td bgcolor=#000099> </td> <td bgcolor=#0000cc> </td> <td bgcolor=#0000ff> </td>
+          <td bgcolor=#006600> </td> <td bgcolor=#006633> </td> <td bgcolor=#006666> </td> <td bgcolor=#006699> </td> <td bgcolor=#0066cc> </td> <td bgcolor=#0066ff> </td>
+          <td bgcolor=#00cc00> </td> <td bgcolor=#00cc33> </td> <td bgcolor=#00cc66> </td> <td bgcolor=#00cc99> </td> <td bgcolor=#00cccc> </td> <td bgcolor=#00ccff> </td>
+        </tr>
+        <tr>
+          <td colspan=18><a href="cmd:morecolors">more colors</a> Test input <input type="text" /> <button>test</button> </td>
+        </tr>
+      </table>
+	</div>
+  <h2>Case #2: popup element without behavior popup.</h2>  
+  MOUSE_UP on the popup shall not close the popup
+	<div class="color-chooser case2" id="background-color">
+	    <table class="popup" width=100% cellspacing=0>
+        <tr>
+          <td bgcolor=#003300> </td> <td bgcolor=#003333> </td> <td bgcolor=#003366> </td> <td bgcolor=#003399> </td> <td bgcolor=#0033cc> </td> <td bgcolor=#0033ff> </td>
+          <td bgcolor=#009900> </td> <td bgcolor=#009933> </td> <td bgcolor=#009966> </td> <td bgcolor=#009999> </td> <td bgcolor=#0099cc> </td> <td bgcolor=#0099ff> </td>
+          <td bgcolor=#00ff00> </td> <td bgcolor=#00ff33> </td> <td bgcolor=#00ff66> </td> <td bgcolor=#00ff99> </td> <td bgcolor=#00ffcc> </td> <td bgcolor=#00ffff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#333300> </td> <td bgcolor=#333333> </td> <td bgcolor=#333366> </td> <td bgcolor=#333399> </td> <td bgcolor=#3333cc> </td> <td bgcolor=#3333ff> </td>
+          <td bgcolor=#339900> </td> <td bgcolor=#339933> </td> <td bgcolor=#339966> </td> <td bgcolor=#339999> </td> <td bgcolor=#3399cc> </td> <td bgcolor=#3399ff> </td>
+          <td bgcolor=#33ff00> </td> <td bgcolor=#33ff33> </td> <td bgcolor=#33ff66> </td> <td bgcolor=#33ff99> </td> <td bgcolor=#33ffcc> </td> <td bgcolor=#33ffff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#663300> </td> <td bgcolor=#663333> </td> <td bgcolor=#663366> </td> <td bgcolor=#663399> </td> <td bgcolor=#6633cc> </td> <td bgcolor=#6633ff> </td>
+          <td bgcolor=#669900> </td> <td bgcolor=#669933> </td> <td bgcolor=#669966> </td> <td bgcolor=#669999> </td> <td bgcolor=#6699cc> </td> <td bgcolor=#6699ff> </td>
+          <td bgcolor=#66ff00> </td> <td bgcolor=#66ff33> </td> <td bgcolor=#66ff66> </td> <td bgcolor=#66ff99> </td> <td bgcolor=#66ffcc> </td> <td bgcolor=#66ffff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#993300> </td> <td bgcolor=#993333> </td> <td bgcolor=#993366> </td> <td bgcolor=#993399> </td> <td bgcolor=#9933cc> </td> <td bgcolor=#9933ff> </td>
+          <td bgcolor=#999900> </td> <td bgcolor=#999933> </td> <td bgcolor=#999966> </td> <td bgcolor=#999999> </td> <td bgcolor=#9999cc> </td> <td bgcolor=#9999ff> </td>
+          <td bgcolor=#99ff00> </td> <td bgcolor=#99ff33> </td> <td bgcolor=#99ff66> </td> <td bgcolor=#99ff99> </td> <td bgcolor=#99ffcc> </td> <td bgcolor=#99ffff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#cc3300> </td> <td bgcolor=#cc3333> </td> <td bgcolor=#cc3366> </td> <td bgcolor=#cc3399> </td> <td bgcolor=#cc33cc> </td> <td bgcolor=#cc33ff> </td>
+          <td bgcolor=#cc9900> </td> <td bgcolor=#cc9933> </td> <td bgcolor=#cc9966> </td> <td bgcolor=#cc9999> </td> <td bgcolor=#cc99cc> </td> <td bgcolor=#cc99ff> </td>
+          <td bgcolor=#ccf020> </td> <td bgcolor=#ccff33> </td> <td bgcolor=#ccff66> </td> <td bgcolor=#ccff99> </td> <td bgcolor=#ccffcc> </td> <td bgcolor=#ccffff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#ff3300> </td> <td bgcolor=#ff3333> </td> <td bgcolor=#ff3366> </td> <td bgcolor=#ff3399> </td> <td bgcolor=#ff33cc> </td> <td bgcolor=#ff33ff> </td>
+          <td bgcolor=#ff9900> </td> <td bgcolor=#ff9933> </td> <td bgcolor=#ff9966> </td> <td bgcolor=#ff9999> </td> <td bgcolor=#ff99cc> </td> <td bgcolor=#ff99ff> </td>
+          <td bgcolor=#ffff00> </td> <td bgcolor=#ffff33> </td> <td bgcolor=#ffff66> </td> <td bgcolor=#ffff99> </td> <td bgcolor=#ffffcc> </td> <td bgcolor=#ffffff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#ff0000> </td> <td bgcolor=#ff0033> </td> <td bgcolor=#ff0066> </td> <td bgcolor=#ff0099> </td> <td bgcolor=#ff00cc> </td> <td bgcolor=#ff00ff> </td>
+          <td bgcolor=#ff6600> </td> <td bgcolor=#ff6633> </td> <td bgcolor=#ff6666> </td> <td bgcolor=#ff6699> </td> <td bgcolor=#ff66cc> </td> <td bgcolor=#ff66ff> </td>
+          <td bgcolor=#ffc020> </td> <td bgcolor=#ffcc33> </td> <td bgcolor=#ffcc66> </td> <td bgcolor=#ffcc99> </td> <td bgcolor=#ffcccc> </td> <td bgcolor=#ffccff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#cc0000> </td> <td bgcolor=#cc0033> </td> <td bgcolor=#cc0066> </td> <td bgcolor=#cc0099> </td> <td bgcolor=#cc00cc> </td> <td bgcolor=#cc00ff> </td>
+          <td bgcolor=#cc6600> </td> <td bgcolor=#cc6633> </td> <td bgcolor=#cc6666> </td> <td bgcolor=#cc6699> </td> <td bgcolor=#cc66cc> </td> <td bgcolor=#cc66ff> </td>
+          <td bgcolor=#cccc00> </td> <td bgcolor=#cccc33> </td> <td bgcolor=#cccc66> </td> <td bgcolor=#cccc99> </td> <td bgcolor=#cccccc> </td> <td bgcolor=#ccccff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#990000> </td> <td bgcolor=#990033> </td> <td bgcolor=#990066> </td> <td bgcolor=#990099> </td> <td bgcolor=#9900cc> </td> <td bgcolor=#9900ff> </td>
+          <td bgcolor=#996600> </td> <td bgcolor=#996633> </td> <td bgcolor=#996666> </td> <td bgcolor=#996699> </td> <td bgcolor=#9966cc> </td> <td bgcolor=#9966ff> </td>
+          <td bgcolor=#99cc00> </td> <td bgcolor=#99cc33> </td> <td bgcolor=#99cc66> </td> <td bgcolor=#99cc99> </td> <td bgcolor=#99cccc> </td> <td bgcolor=#99ccff> </td>
+        </tr>        
+        <tr>
+          <td bgcolor=#660000> </td> <td bgcolor=#660033> </td> <td bgcolor=#660066> </td> <td bgcolor=#660099> </td> <td bgcolor=#6600cc> </td> <td bgcolor=#6600ff> </td>
+          <td bgcolor=#666600> </td> <td bgcolor=#666633> </td> <td bgcolor=#666666> </td> <td bgcolor=#666699> </td> <td bgcolor=#6666cc> </td> <td bgcolor=#6666ff> </td>
+          <td bgcolor=#66cc00> </td> <td bgcolor=#66cc33> </td> <td bgcolor=#66cc66> </td> <td bgcolor=#66cc99> </td> <td bgcolor=#66cccc> </td> <td bgcolor=#66ccff> </td>
+        </tr>        
+        <tr>
+          <td bgcolor=#330000> </td> <td bgcolor=#330033> </td> <td bgcolor=#330066> </td> <td bgcolor=#330099> </td> <td bgcolor=#3300cc> </td> <td bgcolor=#3300ff> </td>
+          <td bgcolor=#336600> </td> <td bgcolor=#336633> </td> <td bgcolor=#336666> </td> <td bgcolor=#336699> </td> <td bgcolor=#3366cc> </td> <td bgcolor=#3366ff> </td>
+          <td bgcolor=#33cc00> </td> <td bgcolor=#33cc33> </td> <td bgcolor=#33cc66> </td> <td bgcolor=#33cc99> </td> <td bgcolor=#33cccc> </td> <td bgcolor=#33ccff> </td>
+        </tr>
+        <tr>
+          <td bgcolor=#000000> </td> <td bgcolor=#000033> </td> <td bgcolor=#000066> </td> <td bgcolor=#000099> </td> <td bgcolor=#0000cc> </td> <td bgcolor=#0000ff> </td>
+          <td bgcolor=#006600> </td> <td bgcolor=#006633> </td> <td bgcolor=#006666> </td> <td bgcolor=#006699> </td> <td bgcolor=#0066cc> </td> <td bgcolor=#0066ff> </td>
+          <td bgcolor=#00cc00> </td> <td bgcolor=#00cc33> </td> <td bgcolor=#00cc66> </td> <td bgcolor=#00cc99> </td> <td bgcolor=#00cccc> </td> <td bgcolor=#00ccff> </td>
+        </tr>
+        <tr>
+          <td colspan=18><a href="cmd:morecolors">more colors</a> Test input <input type="text" /> <button>test</button> </td>
+        </tr>
+      </table>
+      
+      
+	</div>
+  
+  
+
+	</body>
+</html>

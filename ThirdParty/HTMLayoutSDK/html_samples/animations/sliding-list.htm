@@ -1,0 +1,161 @@
+<html>
+	<head>
+	<title>Expandable List Behavior Demo</title>
+<style type="text/css"> 
+	body { 
+	  font-family:"Century Gothic","Tahoma"; 
+	  font-size:10pt; 
+	  padding: 10px;
+	  width:100%%; height:100%%;  
+	  background-color: #e9e8f3;
+	}
+
+	.thelist 
+	{
+	  overflow:auto; 
+	  height:100%%; 
+	  width:100%%;	  
+	  margin:0;
+	  border:1px solid #bdbccc;
+	  padding:2px;
+	  background-image:url(images/list-back.png);
+	  background-repeat:no-repeat;
+	  background-position:100% 100%;
+	  background-color: #fff;
+	  overflow:auto;
+	}
+	
+	#expandable { behavior:expandable-list; }
+	#collapsible { behavior:collapsible-list; }
+	
+	.thelist > li 
+	{
+	   color:black;
+	   padding: 4px;
+	   transition:slide; /* sliding! */
+	} 
+
+  .thelist > li > .caption
+	{
+	  padding-left:4px;
+	} 
+
+  .thelist > li > .caption:hover
+	{
+	  transition:blend;
+	  background-color: #e9e8f3;
+	} 
+	
+  .thelist > li:current > .caption
+	{
+	  background-color: #bdbccc;
+	}
+	
+	.thelist > li > .details 
+	{
+    visibility:collapse;	 /* hidden by default */  
+	  background-color: #e9e8f3 #bdbccc #bdbccc #e9e8f3;
+	  border:1px solid #bdbccc;
+	  padding-top:4px;
+	  padding-bottom:4px;
+	  font-size:80%;
+	}
+
+	.details td:nth-child(1) /* first column */
+	{
+		width:60px;
+  }
+	.details td:nth-child(2) /* second column */
+	{
+		color:#777687;
+		width:90px;
+    }
+	
+	
+	
+	.thelist > li:expanded > .details 
+	{
+    visibility:visible;	/* it is visible in expanded item */  
+	}
+	
+
+</style>
+	</head>
+	<body>
+	    <h3>Expandable list sample</h3>
+		<ul class="thelist" id="expandable">
+			<li default><div class="caption"><strong>Pink Floyd</strong>: Dark Side o the Moon</div>
+				<div class="details">
+				   <table width=100%>
+				   <!--<tr><td rowspan=4><img src="images/cds/darkside.jpg"></td></tr>-->
+           <tr><td rowspan=4><img src="../goodies/progress.gif"></td></tr>
+           
+				   <tr><td>Release date:</td><td>March 24th, 1973</td></tr>
+				   <tr><td>Comment:</td><td>The album according to Roger Waters is about madness.</td></tr> 
+				   <tr><td>Playing Time:</td><td>42:52</td></tr> 
+				   </table>
+				</div>
+			</li>
+			<li><div class="caption"><strong>Pink Floyd</strong>: Delicate Sounds of Thunder</div>
+				<div class="details">
+				   <table width=100%>
+				   <tr><td rowspan=4><img src="images/cds/delicate.jpg"></td></tr>
+				   <tr><td>Release date:</td><td>November 21st, 1988</td></tr>
+				   <tr><td>Comment:</td><td>This is just simply a live album documenting their 1987-1988 world tour.</td></tr> 
+				   <tr><td>Playing Time:</td><td>104:11</td></tr> 
+				   </table>
+				</div>
+			</li>
+			<li><div class="caption"><strong>Pink Floyd</strong>: The Final Cut</div>
+				<div class="details">
+				   <table width=100%>
+				   <tr><td rowspan=4><img src="images/cds/finalcut.jpg"></td></tr>
+				   <tr><td>Release date:</td><td>March 21st, 1983</td></tr>
+				   <tr><td>Comment:</td><td>Roger Waters solo album under the pink floyd name.</td></tr> 
+				   <tr><td>Playing Time:</td><td>43:14</td></tr> 
+				   </table>
+				</div>
+			</li>
+			
+		</ul>
+		
+	    <h3>Collapsible list sample</h3>
+		<ul class="thelist" id="collapsible">
+			<li><div class="caption"><strong>Pink Floyd</strong>: Dark Side o the Moon</div>
+				<div class="details">
+				   <table width=100%>
+				   <tr><td rowspan=4><img src="images/cds/darkside.jpg"></td></tr>
+				   <tr><td>Release date:</td><td>March 24th, 1973</td></tr>
+				   <tr><td>Comment:</td><td>The album according to Roger Waters is about madness.</td></tr> 
+				   <tr><td>Playing Time:</td><td>42:52</td></tr> 
+                   <tr><td>Link:</td><td><a href="http://www.pinkfloyd.com/darkside.html" target="nothing">Dark Side</a></td></tr> 
+                   
+                   
+				   </table>
+				</div>
+			</li>
+			<li><div class="caption"><strong>Pink Floyd</strong>: Delicate Sounds of Thunder</div>
+				<div class="details">
+				   <table width=100%>
+				   <tr><td rowspan=4><img src="images/cds/delicate.jpg"></td></tr>
+				   <tr><td>Release date:</td><td>November 21st, 1988</td></tr>
+				   <tr><td>Comment:</td><td>This is just simply a live album documenting their 1987-1988 world tour.</td></tr> 
+				   <tr><td>Playing Time:</td><td>104:11</td></tr> 
+				   </table>
+				</div>
+			</li>
+			<li><div class="caption"><strong>Pink Floyd</strong>: The Final Cut</div>
+				<div class="details">
+				   <table width=100%>
+				   <tr><td rowspan=4><img src="images/cds/finalcut.jpg"></td></tr>
+				   <tr><td>Release date:</td><td>March 21st, 1983</td></tr>
+				   <tr><td>Comment:</td><td>Roger Waters solo album under the pink floyd name.</td></tr> 
+				   <tr><td>Playing Time:</td><td>43:14</td></tr> 
+				   </table>
+				</div>
+			</li>
+			
+		</ul>
+		
+	</body>
+</html>

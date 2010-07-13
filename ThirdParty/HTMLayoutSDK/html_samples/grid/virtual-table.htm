@@ -1,0 +1,70 @@
+<html>
+<head>
+<style> 
+
+  div.virtual-grid
+  {
+    flow:horizontal;
+    behavior: virtual-grid;
+    overflow:hidden;
+    background: window;        
+    width:*;
+    height:min-intrinsic;
+    //font-family:"MS Gothic"; for CJK languages
+  }
+  div.virtual-grid > table
+  {
+    width:*;
+    height:min-intrinsic;
+  }
+  
+  div.virtual-grid > table td
+  {
+    overflow:hidden;
+    height:min-intrinsic;
+    white-space:nowrap;
+  }
+  
+  div.virtual-grid > table tr:current
+  {
+    background-color:blue;
+  }
+    
+  body 
+  {
+    /* for sample purposes make our body as a data source */
+    behavior: sample-data-source; 
+  }
+    
+</style>
+</head>
+
+<body>
+
+Test of virtual table:
+
+<div class="virtual-grid">
+  <table border=1 fixedrows=1 fixedlayout #test>
+    <tr><th>Character<th>Entity<th>Description</th></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+    <tr><td>.<td> <td></td></tr>
+  </table>
+  <widget type="vscrollbar" />
+</div>
+
+</body>
+
+</html>

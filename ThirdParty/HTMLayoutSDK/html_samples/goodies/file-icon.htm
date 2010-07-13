@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <style>
+      select.file-list > option
+      {
+        behavior:file-icon;
+        padding:2px 2px 2px 20px;
+        foreground-repeat: no-repeat;
+        foreground-position: 2px 50%;
+      }
+      
+      widget.file-list.large
+      {
+        width:50%;
+        height:*;
+        flow:h-flow;
+        border-spacing:3px;
+      }
+      widget.file-list.large > option
+      {
+        behavior:file-icon; -icon-size:"large"; // use large icons
+        padding:32px 2px 2px 2px;
+        foreground-repeat: no-repeat;
+        foreground-position: 50% 2px;
+        width:max-intrinsic;
+      }
+    </style>
+  </head>
+<body>
+  <h1>behavior:file-icon sample</h1>
+  <p>behavior:file-icon Windows Shell services to retrieve and draw icon associated with the file or extension.</p>
+  <p>To get file name behavior:file-icon is using value of <code>filename</code> attribute. 
+     If there is no such attribute then it uses <b>text of the DOM element</b> as a file name.</p>
+  <p>&lt;select&gt; with &lt;option&gt;s using behavior:file-icon:</p>
+  <p>text as a file name:  
+  <select .file-list size=5>
+    <option>c:\windows\notepad.exe</option>
+    <option>c:\windows\regedit.exe</option>
+    <option>c:\windows\system.ini</option>
+    <option>c:\windows\explorer.exe</option>
+    <option>c:\windows\explorer.scf</option>
+  </select> and with attribute filename:
+  <select .file-list size=5>
+    <option filename="c:\windows\notepad.exe" >notepad.exe</option>
+    <option filename="c:\windows\regedit.exe" >regedit.exe</option>
+    <option filename="c:\windows\system.ini"  >system.ini</option>
+    <option filename="c:\windows\explorer.exe">explorer.exe</option>
+    <option filename="c:\windows\explorer.scf">explorer.scf</option>
+  </select>         
+  <p>Use -icon-size:"large" CSS attribute or icon-size="large" DOM attribute if you need to use large icons:</p>
+  <widget type="select" .file-list .large >
+    <option filename="c:\windows\notepad.exe" >notepad.exe</option>
+    <option filename="c:\windows\regedit.exe" >regedit.exe</option>
+    <option filename="c:\windows\system.ini"  >system.ini</option>
+    <option filename="c:\windows\explorer.exe">explorer.exe</option>
+    <option filename="c:\windows\explorer.scf">explorer.scf</option>
+  </widget>         
+
+</body>
+</html>

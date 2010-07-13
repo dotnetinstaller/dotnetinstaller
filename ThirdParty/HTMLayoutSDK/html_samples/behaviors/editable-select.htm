@@ -1,0 +1,93 @@
+<HTML>
+	<HEAD>
+		<TITLE></TITLE>
+		<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<META name="GENERATOR" content="BLOCKNOTE.NET">
+	<STYLE>
+	BODY { FONT-FAMILY:Tahoma; FONT-SIZE:8.5pt }
+  
+  #editable-select 
+  {
+    behavior:editable-select;
+		width:50%;height:100%%;    
+  }
+	#editable-select widget 
+  {
+		width:100%%;height:100%%;
+	}
+
+	#editable-select[editable] widget
+  {
+  	behavior:none; /* remove select behavior when editable */
+	}
+
+	#editable-select widget option
+  {
+    border:1px solid transparent;
+	}
+  
+	#editable-select[editable] widget option
+  {
+		behavior:edit;
+    foreground-image:none;
+	}
+  
+  #editable-select widget option:focus
+  {
+    border:1px solid blue;  
+  }
+  
+  #editable-select button 
+  {
+    color:blue;
+    transition: none;
+    text-decoration:underline;
+    padding:2px;
+    background-image:none;
+  }
+  #editable-select button:hover 
+  {
+    text-decoration:none;
+    color:red;
+    background-image:none;
+  }
+  #editable-select button:active 
+  {
+    background-image:none;
+  }
+  
+  #editable-select button[action="add-new"]
+  {
+    margin-left:20px;
+  }
+  
+  #editable-select command-bar
+  {
+    text-align:right;
+  }
+  #editable-select button[action="cancel"]
+  {
+    display:none;
+  }
+  #editable-select[editable] button[action="cancel"]
+  {
+    display:inline-block;
+  }
+  
+  
+	</STYLE>
+	</HEAD>
+	<BODY>
+  	Select multiple with check marks:
+    <div id="editable-select">
+			<widget type="select" name="colors" multiple="checks">
+				<OPTION VALUE=1 >Red</OPTION>
+        <OPTION VALUE=2 >Green</OPTION>
+        <OPTION VALUE=3 >Blue</OPTION>
+			</widget>
+      <text class="command-bar"><button action="cancel">Cancel</button>
+            <button action="edit-list">Modify</button></text>
+    </div>
+    
+	</BODY>
+</HTML>

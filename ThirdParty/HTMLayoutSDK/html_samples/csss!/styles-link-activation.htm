@@ -1,0 +1,25 @@
+<html>
+<head>
+  <style src="styles/a.css" #style-set-a disabled />  
+  <style src="styles/b.css" #style-set-b />  
+  <style>  
+    button#activate-a
+    {
+      click!: style-set = $1(#style-set-a),
+      style-set:disabled = !self:value;
+    }
+    button#activate-b
+    {
+      click!: style-set = $1(#style-set-b),
+      style-set:disabled = !self:value;
+    }
+  </style>
+</head>
+<body>
+  <button #activate-a type="checkbox">styles/a.css (yellow back)</button>
+  <button #activate-b type="checkbox" checked>styles/b.css (red text, gold back)</button>
+  <div #test>
+    Test
+  </div>
+</body>
+</html>

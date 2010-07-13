@@ -1,0 +1,264 @@
+<html>
+<head>
+<style>
+
+html 
+{
+  background-color: white white cornsilk cornsilk;
+}
+
+table 
+{ 
+  //background: linen;
+  overflow:auto; 
+  width:*;
+  height:*;
+  behavior:sortable-grid column-resizer;
+  border:1px solid rosybrown;
+}
+
+@media print {
+    table {overflow:none; }
+}
+
+table th 
+{
+  height:1.3em;
+  background-color: rosybrown;
+  color:white;
+}
+
+table th:checked 
+{ 
+  foreground-image: url(stock:arrow-down); 
+  foreground-repeat: no-repeat;   
+  foreground-position-top: 50%;   
+  foreground-position-right: 5px;   
+}
+table th:nth-child(1)
+{
+  width:1*;
+} 
+table th:nth-child(2)
+{
+  width:2*;
+} 
+
+table td 
+{
+  border:1px solid rosybrown;
+  white-space:nowrap;
+  height:1.3em;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+table tr:current 
+{
+  background-color: peachpuff;
+}
+
+</style>
+</head>
+<body>
+
+<p>Sortable grid sample. Click on column header will reorder table.</p>
+
+<table fixedrows="1" fixedlayout>
+<tr><th>Country</th><th>Capital</th></tr>
+<tr><td>Afghanistan</td><td>Kabul</td></tr>
+<tr><td>Albania</td><td>Tirane</td></tr>
+<tr><td>Algeria</td><td>Algiers</td></tr>
+<tr><td>Andorra</td><td>Andorra la Vella</td></tr>
+<tr><td>Angola</td><td>Luanda</td></tr>
+<tr><td>Antigua and Barbuda</td><td>Saint John's</td></tr>
+<tr><td>Argentina</td><td>Buenos Aires</td></tr>
+<tr><td>Armenia</td><td>Yerevan</td></tr>
+<tr><td>Australia</td><td>Canberra</td></tr>
+<tr><td>Austria</td><td>Vienna</td></tr>
+<tr><td>Azerbaijan</td><td>Baku</td></tr>
+<tr><td>The Bahamas</td><td>Nassau</td></tr>
+<tr><td>Bahrain</td><td>Manama</td></tr>
+<tr><td>Bangladesh</td><td>Dhaka</td></tr>
+<tr><td>Barbados</td><td>Bridgetown</td></tr>
+<tr><td>Belarus</td><td>Minsk</td></tr>
+<tr><td>Belgium</td><td>Brussels</td></tr>
+<tr><td>Belize</td><td>Belmopan</td></tr>
+<tr><td>Benin</td><td>Porto-Novo</td></tr>
+<tr><td>Bhutan</td><td>Thimphu</td></tr>
+<tr><td>Bolivia</td><td>La Paz (administrative) Sucre (judicial)</td></tr>
+<tr><td>Bosnia and Herzegovina</td><td>Sarajevo</td></tr>
+<tr><td>Botswana</td><td>Gaborone</td></tr>
+<tr><td>Brazil</td><td>Brasilia</td></tr>
+<tr><td>Brunei</td><td>Bandar Seri Begawan</td></tr>
+<tr><td>Bulgaria</td><td>Sofia</td></tr>
+<tr><td>Burkina Faso</td><td>Ouagadougou</td></tr>
+<tr><td>Burundi</td><td>Bujumbura</td></tr>
+<tr><td>Cambodia</td><td>Phnom Penh</td></tr>
+<tr><td>Cameroon</td><td>Yaounde</td></tr>
+<tr><td>Canada</td><td>Ottawa</td></tr>
+<tr><td>Cape Verde</td><td>Praia</td></tr>
+<tr><td>Central African Republic</td><td>Bangui</td></tr>
+<tr><td>Chad</td><td>N'Djamena</td></tr>
+<tr><td>Chile</td><td>Santiago</td></tr>
+<tr><td>China</td><td>Beijing</td></tr>
+<tr><td>Colombia</td><td>Bogota</td></tr>
+<tr><td>Comoros</td><td>Moroni</td></tr>
+<tr><td>Congo, Republic of the</td><td>Brazzaville</td></tr>
+<tr><td>Congo, Democratic Republic of the</td><td>Kinshasa</td></tr>
+<tr><td>Costa Rica</td><td>San Jose</td></tr>
+<tr><td>Cote d'Ivoire</td><td>Yamoussoukro (official) Abidjan (de facto)</td></tr>
+<tr><td>Croatia</td><td>Zagreb</td></tr>
+<tr><td>Cuba</td><td>Havana</td></tr>
+<tr><td>Cyprus</td><td>Nicosia</td></tr>
+<tr><td>Czech Republic</td><td>Prague</td></tr>
+<tr><td>Denmark</td><td>Copenhagen</td></tr>
+<tr><td>Djibouti</td><td>Djibouti</td></tr>
+<tr><td>Dominica</td><td>Roseau</td></tr>
+<tr><td>Dominican Republic</td><td>Santo Domingo</td></tr>
+<tr><td>East Timor</td><td>Dili</td></tr>
+<tr><td>Ecuador</td><td>Quito</td></tr>
+<tr><td>Egypt</td><td>Cairo</td></tr>
+<tr><td>El Salvador</td><td>San Salvador</td></tr>
+<tr><td>Equatorial Guinea</td><td>Malabo</td></tr>
+<tr><td>Eritrea</td><td>Asmara</td></tr>
+<tr><td>Estonia</td><td>Tallinn</td></tr>
+<tr><td>Ethiopia</td><td>Addis Ababa</td></tr>
+<tr><td>Fiji</td><td>Suva</td></tr>
+<tr><td>Finland</td><td>Helsinki</td></tr>
+<tr><td>France</td><td>Paris</td></tr>
+<tr><td>Gabon</td><td>Libreville</td></tr>
+<tr><td>The Gambia</td><td>Banjul</td></tr>
+<tr><td>Georgia</td><td>Tbilisi</td></tr>
+<tr><td>Germany</td><td>Berlin</td></tr>
+<tr><td>Ghana</td><td>Accra</td></tr>
+<tr><td>Greece</td><td>Athens</td></tr>
+<tr><td>Grenada</td><td>Saint George's</td></tr>
+<tr><td>Guatemala</td><td>Guatemala City</td></tr>
+<tr><td>Guinea</td><td>Conakry</td></tr>
+<tr><td>Guinea-Bissau</td><td>Bissau</td></tr>
+<tr><td>Guyana</td><td>Georgetown</td></tr>
+<tr><td>Haiti</td><td>Port-au-Prince</td></tr>
+<tr><td>Honduras</td><td>Tegucigalpa</td></tr>
+<tr><td>Hungary</td><td>Budapest</td></tr>
+<tr><td>Iceland</td><td>Reykjavik</td></tr>
+<tr><td>India</td><td>New Delhi</td></tr>
+<tr><td>Indonesia</td><td>Jakarta</td></tr>
+<tr><td>Iran</td><td>Tehran</td></tr>
+<tr><td>Iraq</td><td>Baghdad</td></tr>
+<tr><td>Ireland</td><td>Dublin</td></tr>
+<tr><td>Israel</td><td>Jerusalem</td></tr>
+<tr><td>Italy</td><td>Rome</td></tr>
+<tr><td>Jamaica</td><td>Kingston</td></tr>
+<tr><td>Japan</td><td>Tokyo</td></tr>
+<tr><td>Jordan</td><td>Amman</td></tr>
+<tr><td>Kazakhstan</td><td>Astana</td></tr>
+<tr><td>Kenya</td><td>Nairobi</td></tr>
+<tr><td>Kiribati</td><td>Tarawa</td></tr>
+<tr><td>Korea, North</td><td>Pyongyang</td></tr>
+<tr><td>Korea, South</td><td>Seoul</td></tr>
+<tr><td>Kuwait</td><td>Kuwait City</td></tr>
+<tr><td>Kyrgyzstan</td><td>Bishtek</td></tr>
+<tr><td>Laos</td><td>Vientiane</td></tr>
+<tr><td>Latvia</td><td>Riga</td></tr>
+<tr><td>Lebanon</td><td>Beirut</td></tr>
+<tr><td>Lesotho</td><td>Maseru</td></tr>
+<tr><td>Liberia</td><td>Monrovia</td></tr>
+<tr><td>Libya</td><td>Tripoli</td></tr>
+<tr><td>Liechtenstein</td><td>Vaduz</td></tr>
+<tr><td>Lithuania</td><td>Vilnius</td></tr>
+<tr><td>Luxembourg</td><td>Luxembourg</td></tr>
+<tr><td>Macedonia</td><td>Skopje</td></tr>
+<tr><td>Madagascar</td><td>Antananarivo</td></tr>
+<tr><td>Malawi</td><td>Lilongwe</td></tr>
+<tr><td>Malaysia</td><td>Kuala Lumpur</td></tr>
+<tr><td>Maldives</td><td>Male</td></tr>
+<tr><td>Mali</td><td>Bamako</td></tr>
+<tr><td>Malta</td><td>Valletta</td></tr>
+<tr><td>Marshall Islands</td><td>Majuro</td></tr>
+<tr><td>Mauritania</td><td>Nouakchott</td></tr>
+<tr><td>Mauritius</td><td>Port Louis</td></tr>
+<tr><td>Mexico</td><td>Mexico City</td></tr>
+<tr><td>Federated States of Micronesia</td><td>Palikir</td></tr>
+<tr><td>Moldova</td><td>Chisinau</td></tr>
+<tr><td>Monaco</td><td>Monaco</td></tr>
+<tr><td>Mongolia</td><td>Ulaanbaatar</td></tr>
+<tr><td>Morocco</td><td>Rabat</td></tr>
+<tr><td>Mozambique</td><td>Maputo</td></tr>
+<tr><td>Myanmar (Burma)</td><td>Rangoon but moving to Pyinmana</td></tr>
+<tr><td>Namibia</td><td>Windhoek</td></tr>
+<tr><td>Nauru</td><td>no official capital; government offices in Yaren District</td></tr>
+<tr><td>Nepal</td><td>Kathmandu</td></tr>
+<tr><td>Netherlands</td><td>Amsterdam</td></tr>
+<tr><td>New Zealand</td><td>Wellington</td></tr>
+<tr><td>Nicaragua</td><td>Managua</td></tr>
+<tr><td>Niger</td><td>Niamey</td></tr>
+<tr><td>Nigeria</td><td>Abuja</td></tr>
+<tr><td>Norway</td><td>Oslo</td></tr>
+<tr><td>Oman</td><td>Muscat</td></tr>
+<tr><td>Pakistan</td><td>Islamabad</td></tr>
+<tr><td>Palau</td><td>Koror</td></tr>
+<tr><td>Panama</td><td>Panama City</td></tr>
+<tr><td>Papua New Guinea</td><td>Port Moresby</td></tr>
+<tr><td>Paraguay</td><td>Asuncion</td></tr>
+<tr><td>Peru</td><td>Lima</td></tr>
+<tr><td>Philippines</td><td>Manila</td></tr>
+<tr><td>Poland</td><td>Warsaw</td></tr>
+<tr><td>Portugal</td><td>Lisbon</td></tr>
+<tr><td>Qatar</td><td>Doha</td></tr>
+<tr><td>Romania</td><td>Bucharest</td></tr>
+<tr><td>Russia</td><td>Moscow</td></tr>
+<tr><td>Rwanda</td><td>Kigali</td></tr>
+<tr><td>Saint Kitts and Nevis</td><td>Basseterre</td></tr>
+<tr><td>Saint Lucia</td><td>Castries</td></tr>
+<tr><td>Saint Vincent and the Grenadines</td><td>Kingstown</td></tr>
+<tr><td>Samoa</td><td>Apia</td></tr>
+<tr><td>San Marino</td><td>San Marino</td></tr>
+<tr><td>Sao Tome and Principe</td><td>Sao Tome</td></tr>
+<tr><td>Saudi Arabia</td><td>Riyadh</td></tr>
+<tr><td>Senegal</td><td>Dakar</td></tr>
+<tr><td>Serbia and Montenegro</td><td>Belgrade</td></tr>
+<tr><td>Seychelles</td><td>Victoria</td></tr>
+<tr><td>Sierra Leone</td><td>Freetown</td></tr>
+<tr><td>Singapore</td><td>Singapore</td></tr>
+<tr><td>Slovakia</td><td>Bratislava</td></tr>
+<tr><td>Slovenia</td><td>Ljubljana</td></tr>
+<tr><td>Solomon Islands</td><td>Honiara</td></tr>
+<tr><td>Somalia</td><td>Mogadishu</td></tr>
+<tr><td>South Africa</td><td>Pretoria (administrative) Cape Town (legislative) Bloemfontein (judiciary)</td></tr>
+<tr><td>Spain</td><td>Madrid</td></tr>
+<tr><td>Sri Lanka</td><td>Colombo</td></tr>
+<tr><td>Sudan</td><td>Khartoum</td></tr>
+<tr><td>Suriname</td><td>Paramaribo</td></tr>
+<tr><td>Swaziland</td><td>Mbabana</td></tr>
+<tr><td>Sweden</td><td>Stockholm</td></tr>
+<tr><td>Switzerland</td><td>Bern</td></tr>
+<tr><td>Syria</td><td>Damascus</td></tr>
+<tr><td>Taiwan</td><td>Taipei</td></tr>
+<tr><td>Tajikistan</td><td>Dushanbe</td></tr>
+<tr><td>Tanzania</td><td>Dar es Salaam</td></tr>
+<tr><td>Thailand</td><td>Bangkok</td></tr>
+<tr><td>Togo</td><td>Lome</td></tr>
+<tr><td>Tonga</td><td>Nuku'alofa</td></tr>
+<tr><td>Trinidad and Tobago</td><td>Port-of-Spain</td></tr>
+<tr><td>Tunisia</td><td>Tunis</td></tr>
+<tr><td>Turkey</td><td>Ankara</td></tr>
+<tr><td>Turkmenistan</td><td>Ashgabat</td></tr>
+<tr><td>Tuvalu</td><td>Funafuti</td></tr>
+<tr><td>Uganda</td><td>Kampala</td></tr>
+<tr><td>Ukraine</td><td>Kiev</td></tr>
+<tr><td>United Arab Emirates</td><td>Abu Dhabi</td></tr>
+<tr><td>United Kingdom</td><td>London</td></tr>
+<tr><td>United States</td><td>Washington D.C.</td></tr>
+<tr><td>Uruguay</td><td>Montevideo</td></tr>
+<tr><td>Uzbekistan</td><td>Tashkent</td></tr>
+<tr><td>Vanuatu</td><td>Port-Vila</td></tr>
+<tr><td>Vatican City (Holy See)</td><td>Vatican City</td></tr>
+<tr><td>Venezuela</td><td>Caracas</td></tr>
+<tr><td>Vietnam</td><td>Hanoi</td></tr>
+<tr><td>Yemen</td><td>Sanaa</td></tr>
+<tr><td>Zambia</td><td>Lusaka</td></tr>
+<tr><td>Zimbabwe</td><td>Harare</td></tr>
+</table>
+</body>
+</html>

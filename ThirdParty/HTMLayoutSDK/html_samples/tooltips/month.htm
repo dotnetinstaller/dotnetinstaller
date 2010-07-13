@@ -1,0 +1,57 @@
+<html>
+<head>
+<style> 
+
+  table#month { border:none; }
+  table#month th { background-color:#DDD; border:none; }
+  table#month td { width:100%%; text-align:center; border:1px solid #CCC; }
+  table#month td.othermonth { background-color:#EEE; color:#08F; }
+  table#month td.has-details 
+  { 
+    background-image:url(corner.png); 
+    background-repeat:no-repeat; 
+    background-position:100% 100%; 
+  }
+  table#month td:hover { background-color:#FFF #FFF #ACF #ACF; }
+
+
+  /* popup block */  
+  popup 
+  {
+    font:10pt Verdana;
+  }
+  popup td:nth-child(1) /* first column in table*/
+  { 
+    text-align:right;
+    vertical-align:top;
+  }
+  popup td:nth-child(2) /* second column in table*/
+  { 
+    font-weight:bold;
+  }
+  popup em { color:red; }
+  
+  
+</style>
+</head>
+
+<body>
+
+<table id="month" border=1 width=100% height=100%>
+	<tr height=16><th colspan=7>December 2005</th></tr>
+	<tr height=16><th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th></tr>
+	<tr><td class="othermonth">27</td><td class="othermonth">28</td><td class="othermonth">29</td><td class="othermonth">30</td><td class="thismonth">1</td><td class="thismonth">2</td><td class="thismonth">3</td></tr>
+	<tr><td class="thismonth">4</td><td class="thismonth">5</td><td class="thismonth">6</td><td class="thismonth">7</td><td class="thismonth">8</td><td class="thismonth">9</td><td class="thismonth">10</td></tr>
+	<tr><td class="thismonth">11</td><td class="thismonth has-details" titleid="details-12">12</td><td class="thismonth">13</td><td class="thismonth">14</td><td class="thismonth">15</td><td class="thismonth">16</td><td class="thismonth">17</td></tr>
+	<tr><td class="thismonth">18</td><td class="thismonth">19</td><td class="thismonth">20</td><td class="thismonth">21</td><td class="thismonth">22</td><td class="thismonth">23</td><td class="thismonth">24</td></tr>
+	<tr><td class="thismonth">25</td><td class="thismonth">26</td><td class="thismonth">27</td><td class="thismonth">28</td><td class="thismonth">29</td><td class="thismonth">30</td><td class="thismonth">31</td></tr>
+</table>
+<popup id="details-12">
+  <table>
+  <tr><td>Meeting:</td><td>Alice at <em>13:00</em></td></tr>
+  <tr><td>Call:</td><td>Rabbit at <em>14:00</em><br>Discuss tortilla's problems.</td></tr>
+  </table>
+</popup>
+</body>
+
+</html>

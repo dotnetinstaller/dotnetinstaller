@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "HyperlinkStatic.h"
-#include "DniMessageBox.h"
 #include "resource.h"
 
 CHyperlinkStatic::CHyperlinkStatic()

@@ -1,0 +1,101 @@
+<html>
+	<head>
+		<title>Simple Tree View</title>
+<style type="text/css"> 
+	body { 
+		font-family:Verdana; font-size:10pt; 
+		width:100%%; height:100%%;  
+		background-color: threedface;
+		padding:10px;
+		margin:0;
+	}
+
+	#selects 
+  {
+	  flow:horizontal;
+    behavior:select-buddy;
+    height:50%;
+	}	
+  #selects > widget 
+  {
+    height:100%%;
+    width:50%%;
+  }
+  #selects > div 
+  {
+    height:100%%;
+    width:max-intrinsic;
+    vertical-align:middle;
+  }
+  #selects > div > widget
+  {
+    width:16px;
+    margin:2px;
+    text-align:center;
+  }
+  
+  /* Select with additional "buttons" */
+  #select-with-buttons 
+  {
+    behavior:select-buddy;
+    margin:10px;
+    width:50%;
+    height:100%%;
+  }
+  #select-with-buttons > widget
+  {
+    width:100%%;
+    height:100%%;
+  }
+  #select-with-buttons span /* our buttons*/
+  {
+    behavior:button;
+    display:inline-block;
+    color:blue;
+    text-decoration: underline;
+    white-space:nowrap;
+    cursor:pointer;
+  }
+  #select-with-buttons span:hover
+  {
+    color:red;
+  }
+  #select-with-buttons span:active
+  {
+    text-decoration: none;
+  }
+  
+	
+</style>
+	</head>
+	<body>
+	<p>Demo of select-buddy behavior. See behavior_select_buddy.cpp</p>
+	<div id="selects">
+    <widget type="select" multiple role="source">
+      <option>One</option>
+      <option>Two</option>
+      <option>Three</option>
+      <option>Four</option>      
+      <option>Five</option>      
+    </widget>
+    <div>
+      <widget type="button" action="move-all">&gt;&gt;</widget>
+      <widget type="button" action="move-selected">&gt;</widget>
+      <widget type="button" action="revoke-selected" style="margin-top:100%%">&lt;</widget>
+      <widget type="button" action="revoke-all">&lt;&lt;</widget>
+    </div>
+    <widget type="select" multiple role="destination"></widget>
+	</div>
+
+	<div id="select-with-buttons">
+    <widget type="select" multiple role="source">
+      <option>One</option>
+      <option>Two</option>
+      <option>Three</option>
+      <option>Four</option>      
+      <option>Five</option>      
+    </widget>
+    <span action="select-all">Select All</span>
+    <span action="clear-all" style="margin-left:100%%;">Clear All</span>
+	</body>
+</html>

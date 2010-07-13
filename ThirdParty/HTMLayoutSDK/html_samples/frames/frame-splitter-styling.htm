@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<title>Simple Tree View</title>
+<style type="text/css"> 
+
+	.hsplitter 
+	{
+	  height:100%%; 
+	  width:4px;	  
+	  border:1px solid threedshadow;
+	  background-color:threedshadow;
+	  cursor:w-resize;
+	  margin: 6px 0;
+	}
+	.hsplitter:hover
+	{
+	  background-color:threedface;
+	  border-top:1px solid threedhighlight;
+	  border-left:1px solid threedhighlight;
+	  border-right:1px solid threeddarkshadow;
+	  border-bottom:1px solid threeddarkshadow;
+	}
+  
+  frameset > div
+  {
+    background-color:peachpuff;
+  }
+
+</style>
+	</head>
+	<body>
+	<frameset cols="100px,*">	
+		<div>fixed</div>
+		<hr .hsplitter />
+		<div>spring</div>
+	</frameset>
+	</body>
+</html>

@@ -1,0 +1,175 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>TIScript, String object</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<style media="all">
+/* general stuff */
+
+html 
+{
+	background-image:url(backgrounds/pageback.png); 
+	background-position:20px 20px 20px 20px; /*left top right bottom offsets*/
+	background-repeat:expand; /* h-smile specific */
+}
+
+body 
+{ 
+	font-family:verdana,arial,sans-serif;
+	font-size:10pt;
+	overflow:auto;
+	width:100%%;
+	height:100%%;
+	border: none;
+	padding: 4px;
+	margin: 14px;
+  background-color:white;
+	
+}
+		</style>
+	</head>
+	<body>
+<H1>String object</H1><DIV align=left>
+<TABLE bgcolor=#99cccc border=0 cellspacing=1 width=100%>
+  <TR>
+    <TD colspan=2 bgcolor=#ffffff><STRONG><FONT size=4>Properties</FONT></STRONG></TD>
+  </TR>
+  <TR>
+    <TD width=117 bgcolor=#ffffff align=right><STRONG><EM>length</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle><STRONG>(integer)</STRONG> - number of characters in the string. Read-only property.</TD>
+  </TR>
+  <TR>
+    <TD colspan=2 bgcolor=#ffffff><STRONG><FONT size=4>Methods</FONT></STRONG></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>toInteger</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>([defaultValue])</STRONG> : &nbsp;integer | defaultValue | (undefined)
+<P>Tries to parse content of the string. If parsing failed then returns defaultValue if provided, or undefined value.<BR>toInteger expects string in the following format:</P>
+<BLOCKQUOTE>
+<P>[<EM>whitespace</EM>] [{<STRONG>+</STRONG> | <STRONG>–</STRONG>}] [<STRONG>0</STRONG> [{ <STRONG>x</STRONG> | <STRONG>X</STRONG> }]] [<EM>digits</EM>]</P></BLOCKQUOTE>
+</TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>toFloat</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>([defaultValue])</STRONG> : &nbsp;float | defaultValue | (undefined)
+<P>Tries to parse content of the string. If parsing failed then returns defaultValue if provided, or undefined value.<BR>toInteger expects string in the following format:</P>
+<BLOCKQUOTE>
+<P>[<EM>whitespace</EM>] [<EM>sign</EM>] [<EM>digits</EM>] [<STRONG>.</STRONG><EM>digits</EM>] [ {<STRONG>d</STRONG> | <STRONG>D</STRONG> | <STRONG>e</STRONG> | <STRONG>E</STRONG>}[<EM>sign</EM>]<EM>digits</EM>]</P></BLOCKQUOTE>
+</TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>toString</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>()</STRONG> : string
+<P>Returns string itself.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>substring</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>(start [,end])</STRONG> : string | undefined
+<P><EM>start</EM> and <EM>end </EM>are integers - zero-based indexes of first and last character. Method returns string slice consisting from characters starting from <EM>start</EM> index and up to but not included <EM>end</EM> index. If end is ommited it is interpretted as equal to <EM>length</EM>.</P>
+<P>Negative values of <EM>start</EM> or <EM>end</EM> treated as a &quot;right side indexes&quot; thus expression &quot;Script&quot;.substring(0,-1) == &quot;Script&quot; is valid.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>substr</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>(start [,length])</STRONG> : string | undefined
+<P><EM>start</EM> and <EM>length </EM>are integers. <EM>Start</EM> is zero-based index of first character and length is a number of characters in the slice.</P>
+<P>Negative value of <EM>start</EM> interpreted as a &quot;right side index&quot; thus expression &quot;Script&quot;.substr(-6) == &quot;Script&quot; is valid.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>slice</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>(start [,end])</STRONG> : string | undefined
+<P>Equivalent of <EM>substring</EM> method.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>concat</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>( [<A>string1</A>[, string2[, <A>.</A><A>.</A><A>.</A> [, <A>stringN</A>]]]] )</STRONG> : string
+<P>Returns string consisting from concatenated arguments: &nbsp;<EM>self</EM> + <EM>string1</EM> + <EM>string2</EM> + <EM>string3</EM> +<EM> </EM>…<EM> + stringN</EM>.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>charAt</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>( index )</STRONG> : string.
+<P>Returns one character string. Equivalent of substr( index, 1 ). If <EM>index</EM> is out of bounds of the string then <EM>charAt</EM> returns empty string.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>charCodeAt</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>( index )</STRONG> : integer | undefined
+<P>Returns (uni)code of character at <EM>index</EM> position.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>indexOf</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>( substring [,start] )</STRONG> : integer
+<P>Searches this string for text in <EM>substring</EM>. Returns index of <STRONG>first</STRONG> occurence of <EM>substring</EM> or -1 if not found.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>lastIndexOf</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>( substring [,start] )</STRONG> : integer
+<P>Searches this string for text in <EM>substring</EM>. Returns index of <STRONG>last</STRONG> occurence of <EM>substring</EM> or -1 if not found.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>localeCompare</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>( what )</STRONG> : integer
+<P>Compares this string with <EM>what</EM> string using lexicographic character order.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>match</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>( regexp )</STRONG> : string | array of strings | null value
+<P>Returns fragment(s) of the string which satisfy <EM>regexp</EM>.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>replace</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+( regexp, replaceBy ) : string
+<P>Returns copy of the string where all fragments satisfying <EM>regexp</EM> replaced by <EM>replaceBy</EM>.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>search</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>( regexp )</STRONG> : integer
+<P>Returns index of first occurence of string fragment satisfying <EM>regexp</EM> or -1 if not found.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>split</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>(separator[, limit])</STRONG> : string
+<P>Splits the string separated on components by <EM>separator</EM>. <EM>Separator</EM> is either regexp object or string. Returns array of strings - substrings between separators. Limit is an integer - maximum number of elements in returned array.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>fromCharCode</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>([<A>code1</A>[, code2[, <A>.</A><A>.</A><A>.</A>[, <A>codeN</A>]]]])</STRONG> : string
+<P>Static method. Returns string build from character with given integer <EM>codes.</EM></P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>toLowerCase</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>()</STRONG> : string
+<P>Returns lower case copy of the string.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>toUpperCase</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>()</STRONG> : string
+<P>Returns upper case copy of the string.</P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffff valign=top align=right><STRONG><EM>printf</EM></STRONG></TD>
+    <TD bgcolor=#fffff0 valign=middle>
+<STRONG>( format, [<A>value1</A>[, value2[, <A>.</A><A>.</A><A>.</A>[, <A>valueN</A>]]]])</STRONG> : string
+<P>Static method. Returns string formatted by the rules of <A href="http://www.cplusplus.com/ref/cstdio/printf.html" target="_blank">sprintf C/C++ function</A>.</P>
+<P>Additionaly supports two format types: %v and %V. These format types accepts any value as an argument and produces source code representation of the value suitable for later parsing by <EM>eval()</EM> method. Thus iv value is an array of values it will be printed as &quot;[element1, element2, element3... elementN]&quot; and object (instance of Object class) will be printed as &quot;{key1:value1, key2:value2,..., keyN:valueN}&quot;. %v produces one line output and %V tries to produce human readable output with line feeds and tabulations.</P></TD>
+  </TR>
+</TABLE>
+	</body>
+</html>

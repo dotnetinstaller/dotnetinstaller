@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "DownloadDialog.h"
-#include "DniMessageBox.h"
 #include "DownloadStatus.h"
 
 #define WM_USER_SETSTATUSDOWNLOAD (WM_USER+1)

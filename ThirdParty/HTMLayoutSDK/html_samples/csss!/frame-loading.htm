@@ -1,0 +1,34 @@
+<html>
+<head>
+  <style>
+    frame#view 
+    {
+      height:*;
+      width:*;
+    }
+    frame#view:busy
+    {
+      foreground-image: url(res:activity.gif); 
+      foreground-repeat:no-repeat;
+      foreground-position:top left;
+      foreground-offset: 20px;
+    }
+    select#url-to-load
+    {
+      value-changed!: $1(frame#view).load( self:value );
+    }
+    button#clear
+    {
+      click!: $1(frame#view).clear();
+    }
+  </style>  
+</head>
+<body>
+  <select #url-to-load novalue="...select URL..."> 
+    <option value="http://terrainformatica.com">Terra Home</option>
+    <option value="http://terrainformatica.com/htmlayout">HTMLayout Home</option>
+    <option value="http://terrainformatica.com/sciter">Sciter Home</option>
+  </select> <button #clear>Clear</button>
+  <frame #view />
+</body>
+</html>

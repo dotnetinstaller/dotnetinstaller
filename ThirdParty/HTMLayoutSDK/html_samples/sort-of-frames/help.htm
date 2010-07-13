@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>%% units demonstartion</title>
+		<style>
+body { font-family: Verdana, Arial, sins-serif;	font-size: 10pt; width:100%%; height:100%% }
+p { margin:0; }
+p.comment { font-size: 8.5pt; }
+
+#main /* main section: contains leftbar and rightbar */
+{ 
+	width:100%%; 
+	height:100%%; 
+	border: 1px dotted blue; 
+	flow:horizontal; 
+} 
+#leftbar 
+{ 
+	margin:6px; 
+	padding:2px;
+	width:120px; 
+	height:100%%;
+	border: 1px solid black; 
+	text-align: left;
+} 
+#content-area
+{ 
+	margin:6px; 
+	width:100%%; 
+  height:100%%; 
+	padding: 2px; /* place its content in the middle*/ 
+	border: 1px solid red; 
+  overflow: auto;
+}
+#disclaimer
+{
+	padding:2px;
+	margin: 6px;
+  text-align:center;	
+}
+		</style>
+	</head>
+	<body>
+		<h1>Demo of frames emulation</h1>
+    <p>Links on the left side will update content area by loading documents there. 
+    All styles in loaded documents will be ignored. See implementation of behavior_hyperlink.cpp</p>
+		<div id="main">
+			<div id="leftbar">
+				<p>Left sidebar content:</p>
+        <ul>
+          <li><a href="../index.htm" target="content-area">index.htm</a></li>
+          <li><a href="../html32.htm" target="content-area">html32.htm</a></li>
+        </ul>
+			</div>
+			<frame id="content-area" />
+		</div>
+		<div id="disclaimer">&copy; 2006, Terra Informatica Software, Inc.</div>
+	</body>
+</html>

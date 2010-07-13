@@ -1,0 +1,313 @@
+<HTML>
+  <HEAD>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <META name="GENERATOR" content="BLOCKNOTE.NET">
+    <META name="source">
+    <BASEFONT face="Verdana" size=2>
+    <TITLE></TITLE>
+<STYLE>
+  #t8 tr:nth-child(3n-1) { background-color:wheat; }
+  
+	body { font-family:verdana; font-size:10pt }
+    p { font-family:verdana; font-size:10pt }
+    div { font-family:verdana; font-size:10pt }
+    td { font-family:verdana; font-size:10pt }
+	code { color:midnightblue; }
+	
+	#t1 tr:nth-child(odd) { background-color:wheat; }
+	#t2 tr:nth-child(even) { background-color:wheat; }
+	#t3 tr:nth-child(3n+1) { background-color:wheat; }
+	#t4 tr:first-child { background-color:wheat; }
+	#t5 tr:last-child { background-color:wheat; } 
+	
+    #t6 tr:nth-child(-n+3) { background-color:wheat; }
+    #t7 tr:nth-last-child(-n+3) { background-color:wheat; }
+    
+  
+	BODY > P { color:green; }
+	
+	/* adjacent selector */
+	H1 + P { color:red; } 
+	
+	div.has-child-test:has-children  { color:blue; }
+	div.has-child-test div:has-child  { color:red; }
+  
+  div.has-child-of-type-test { color:blue; } 
+  div.has-child-of-type-test div:has-child-of-type(p) { color:red; } 
+  
+  div.has-child-of-type-test text:only-of-type { color:green; } 
+
+  div.important-test p { color:purple !important; }
+  div.important-test p.test { color:green; }
+  
+  div.case-insensitive-test p[class %= "test"] { color:green; }
+	
+</STYLE>
+  </HEAD>
+<BODY>
+<P>Odd child: <br><code>tr:nth-child(odd) { background-color:wheat; }</code></P>
+<TABLE id="t1" border=1 cellpadding=1 cellspacing=1 width=100%>
+  <TR>
+    <TD width=25>1</TD>
+    <TD>one</TD>
+  </TR>
+  <TR>
+    <TD>2</TD>
+    <TD>two</TD>
+  </TR>
+  <TR>
+    <TD>3</TD>
+    <TD>three</TD>
+  </TR>
+  <TR>
+    <TD>4</TD>
+    <TD>four</TD>
+  </TR>
+  <TR>
+    <TD>5</TD>
+    <TD>five</TD>
+  </TR>
+</TABLE>
+<P>Even child: <br><code>tr:nth-child(even) { background-color:wheat; }</code></P>
+<TABLE id="t2" border=1 cellpadding=1 cellspacing=1 width=100%>
+  <TR>
+    <TD width=25>1</TD>
+    <TD>one</TD>
+  </TR>
+  <TR>
+    <TD>2</TD>
+    <TD>two</TD>
+  </TR>
+  <TR>
+    <TD>3</TD>
+    <TD>three</TD>
+  </TR>
+  <TR>
+    <TD>4</TD>
+    <TD>four</TD>
+  </TR>
+  <TR>
+    <TD>5</TD>
+    <TD>five</TD>
+  </TR>
+</TABLE>
+<P>Every third child: <br><code>tr:nth-child(3n+1) { background-color:wheat; }</code></P>
+<TABLE id="t3" border=1 cellpadding=1 cellspacing=1 width=100%>
+  <TR>
+    <TD width=25>1</TD>
+    <TD>one</TD>
+  </TR>
+  <TR>
+    <TD>2</TD>
+    <TD>two</TD>
+  </TR>
+  <TR>
+    <TD>3</TD>
+    <TD>three</TD>
+  </TR>
+  <TR>
+    <TD>4</TD>
+    <TD>four</TD>
+  </TR>
+  <TR>
+    <TD>5</TD>
+    <TD>five</TD>
+  </TR>
+  <TR>
+    <TD>6</TD>
+    <TD>six</TD>
+  </TR>
+  <TR>
+    <TD>7</TD>
+    <TD>seven</TD>
+  </TR>
+  <TR>
+    <TD>8</TD>
+    <TD>eight</TD>
+  </TR>
+  <TR>
+    <TD>9</TD>
+    <TD>nine</TD>
+  </TR>
+  <TR>
+    <TD>10</TD>
+    <TD>ten</TD>
+  </TR>
+</TABLE>
+<P>First child: <br><code>tr:first-child { background-color:wheat; }</code></P>
+<TABLE id="t4" border=1 cellpadding=1 cellspacing=1 width=100%>
+  <TR>
+    <TD width=25>1</TD>
+    <TD>one</TD>
+  </TR>
+  <TR>
+    <TD>2</TD>
+    <TD>two</TD>
+  </TR>
+  <TR>
+    <TD>3</TD>
+    <TD>three</TD>
+  </TR>
+  <TR>
+    <TD>4</TD>
+    <TD>four</TD>
+  </TR>
+  <TR>
+    <TD>5</TD>
+    <TD>five</TD>
+  </TR>
+</TABLE>
+<P>Last child: <br><code>tr:last-child { background-color:wheat; }</code></P>
+<TABLE id="t5" border=1 cellpadding=1 cellspacing=1 width=100%>
+  <TR>
+    <TD width=25>1</TD>
+    <TD>one</TD>
+  </TR>
+  <TR>
+    <TD>2</TD>
+    <TD>two</TD>
+  </TR>
+  <TR>
+    <TD>3</TD>
+    <TD>three</TD>
+  </TR>
+  <TR>
+    <TD>4</TD>
+    <TD>four</TD>
+  </TR>
+  <TR>
+    <TD>5</TD>
+    <TD>five</TD>
+  </TR>
+</TABLE>
+
+<P>First 3 children: <br><code>tr:nth-child(-n+3) { background-color:wheat; }</code></P>
+<TABLE id="t6" border=1 cellpadding=1 cellspacing=1 width=100%>
+  <TR>
+    <TD width=25>1</TD>
+    <TD>one</TD>
+  </TR>
+  <TR>
+    <TD>2</TD>
+    <TD>two</TD>
+  </TR>
+  <TR>
+    <TD>3</TD>
+    <TD>three</TD>
+  </TR>
+  <TR>
+    <TD>4</TD>
+    <TD>four</TD>
+  </TR>
+  <TR>
+    <TD>5</TD>
+    <TD>five</TD>
+  </TR>
+</TABLE>
+
+<P>Last 3 children: <br><code>tr:nth-last-child(-n+3) { background-color:wheat; }</code></P>
+<TABLE id="t7" border=1 cellpadding=1 cellspacing=1 width=100%>
+  <TR>
+    <TD width=25>1</TD>
+    <TD>one</TD>
+  </TR>
+  <TR>
+    <TD>2</TD>
+    <TD>two</TD>
+  </TR>
+  <TR>
+    <TD>3</TD>
+    <TD>three</TD>
+  </TR>
+  <TR>
+    <TD>4</TD>
+    <TD>four</TD>
+  </TR>
+  <TR>
+    <TD>5</TD>
+    <TD>five</TD>
+  </TR>
+</TABLE>
+
+<P>Nth child/last in group: <br><code>tr:nth-child(3n-1) { background-color:wheat; }</code></P>
+<TABLE id="t8" border=1 cellpadding=1 cellspacing=1 width=100%>
+  <TR>
+    <TD width=25>1</TD>
+    <TD>one</TD>
+  </TR>
+  <TR>
+    <TD>2</TD>
+    <TD>two</TD>
+  </TR>
+  <TR>
+    <TD>3</TD>
+    <TD>three</TD>
+  </TR>
+  <TR>
+    <TD>4</TD>
+    <TD>four</TD>
+  </TR>
+  <TR>
+    <TD>5</TD>
+    <TD>five</TD>
+  </TR>
+  <TR>
+    <TD>6</TD>
+    <TD>six</TD>
+  </TR>
+  <TR>
+    <TD>7</TD>
+    <TD>seven</TD>
+  </TR>
+  <TR>
+    <TD>8</TD>
+    <TD>eight</TD>
+  </TR>
+  <TR>
+    <TD>9</TD>
+    <TD>nine</TD>
+  </TR>
+  <TR>
+    <TD>10</TD>
+    <TD>ten</TD>
+  </TR>
+</TABLE>
+
+
+<H1>Test of <a href="http://www.w3.org/TR/REC-CSS2/selector.html#adjacent-selectors">adjacent selector.</a></H1>
+<P>This paragraph must be red.</P>
+<P>And this must not.</P>
+
+<DIV><P>This must be black.</P></DIV>
+
+<div class="has-child-test">
+	<H2>Test of has-child and has-children</H2>
+	<P>This paragraph must be blue.</P>
+	<div>
+	  <P>And this must be red.</P>
+	</div>
+</div>
+
+<div class="has-child-of-type-test">
+	<H2>Test of has-child-of-type and only-of-type</H2>
+	<P>This paragraph must be <b>blue</b>.</P>
+	<div>
+	  <P>And this must be red.</P>
+    <text>And this must be <b>green</b>.</text>
+	</div>
+</div>
+
+
+<div class="important-test">
+  <p>This paragraph must be purple.</p>
+  <p class="test">And this must be purple too!</p>
+</div>
+
+<div class="case-insensitive-test">
+  <p class="TeSt More">This paragraph must be green.</p>
+  <p class="tEsT">And this must be green too!</p>
+</div>
+
+  
+</BODY>
+</HTML>

@@ -1,0 +1,153 @@
+<html>
+  <head>
+    <style>
+    @import "../menu/std-menu.css";
+    
+    body { flow:horizontal; }
+    
+    div.sandbox 
+    { 
+      width:3*; height:*; 
+    }
+    div.docking-station 
+    { 
+      width:120px; height:*; 
+      border-left: 1px solid red;  
+    }
+    
+    div.docking-station > caption
+    {
+      padding:2px 4px;
+      border-bottom: 1px solid red;  
+    }
+        
+    ul.dock 
+    { 
+      width:*; height:*;
+      accept-drop: selector(menu > li, ul.dock > li);
+      drop:insert;
+      border-spacing:4px;
+      margin:0;
+      padding:4px;
+    }
+    ul.dock:drop-target 
+    {
+      background-color: lightyellow;
+    }
+    ul.dock > li 
+    {  
+      width:64px;
+      height:64px;
+      background:gold;
+      border: 1px solid orange;  
+      display:block;
+      draggable:only-move; // only move
+    }
+    /*ul.dock > li:drop-marker - invisible by default
+    {
+      visibility:visible;
+      background-color:yellow;
+    }*/
+    
+    menu 
+    {
+      accept-drop: selector(menu > li, ul.dock > li); // accepts drops from the dock and from itself(to reorder menus)
+      drop:insert;
+    }
+    
+    menu > li 
+    {
+      draggable:only-move; // only move
+    }
+    
+    menu > li:moving 
+    {
+      opacity:.5;
+      background:orange;
+    }
+    menu > li:moving:drop-target 
+    {
+      opacity:1;
+      background:orange;
+    }
+    menu > li:drop-marker // make it visible to mark the drop position
+    {
+      visibility:visible;
+      background-color:lightyellow;
+    }
+    
+    
+    button[type="menu"]
+    {
+      border: 2px solid transparent;
+    }
+    button[type="menu"]:drop-target
+    {
+      border-color: red;
+    }
+    
+    ul#menu-bar 
+    {
+      margin:0;
+      background-color:scrollbar;
+      border-top:1px solid threedface;
+      border-bottom:1px solid threedface;
+      border-left:1px solid transparent;
+    }
+    
+    ul#menu-bar:focus 
+    {
+      border-left:1px solid highlight;
+    }
+
+    ul#menu-bar > li 
+    {
+      margin:0 8px;
+      background-color:threedface;
+    }
+    
+    ul#menu-bar > p.note { font-size:0.8em; margin:* 4px; color:#777;}
+    
+    </style>
+  </head>
+<body>
+  <div .sandbox>
+    <p>Drag menu item from the menu to the dock on the right:
+    <button type="menu">Button with menu
+      <menu .popup>
+        <li>First item</li>
+        <li>Second item</li>
+        <li>Third item</li>
+        <li>Fourth item</li>
+      </menu>
+    </button></p>
+    
+    <ul #menu-bar> <!-- top level - menu bar, it must match ul#menu-bar selector, see std-menu.css -->
+      <li>Group1
+        <menu class="cool">
+          <li>1.First item</li>
+          <li>1.Second item</li>
+          <li>1.Third item</li>
+          <li>1.Fourth item</li>
+        </menu>
+      </li>
+      <li>Group2
+        <menu class="cool">
+          <li>2.First item</li>
+          <li>2.Second item</li>
+          <li>2.Third item</li>
+          <li>2.Fourth item</li>
+        </menu>
+      </li>
+      <p.note>this menu bar is also drag aware.</p>
+    </ul>
+    
+  </div> 
+  <div .docking-station>
+    <caption>Dock for menu items</caption>
+    <ul .dock>
+      <li>Item to drag on menu</li>
+    </ul>
+  </div>
+</body>
+</html>

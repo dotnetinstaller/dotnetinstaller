@@ -1,0 +1,38 @@
+<html>
+<head>
+  <style>
+    button#test1
+    {
+       click!:
+        Foo = null, // forward declaration is a must for recursive calls
+        Foo = @(n)
+            (
+              debug(n), 
+              (n > 10)? return,
+              Foo(n + 1)
+            ),
+        Foo(0);
+    }  
+    button#test2
+    {
+       click!:
+        count = 0, 
+        "ABCDEFABC" -> @(c)(c == 'A'? count = count + 1),
+        debug("number of 'A's is ", count );
+    }  
+    button#test3
+    {
+       click!:
+        count = 0,  
+        0..9 -> @(i) (count = count + 1, debug(i)), // loop over the range, output will contain numbers 0...9
+        debug("count=",count);
+    }  
+  </style>  
+</head>
+<body>
+  <h1>Loops in CSSS!</h1>
+  <p>Test recursive function call: <button #test1>Go</button></p>
+  <p>Test string character enumeration: <button #test2>Go</button></p>
+  <p>Test range enumeration: <button #test3>Go</button></p>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+      div.test 
+      {
+        size: 100px;
+        border: 1px solid;
+        background-color:white;
+      }
+      
+      div#ani-container
+      {
+        overflow:hidden; 
+        height:220px; 
+        width:*;
+        background-color:gold;
+        flow:horizontal;
+      }
+      
+      div:hover 
+      {
+        size: 200px;
+      }
+
+      div#case1:hover 
+      {
+        transition: size(linear,500ms);
+      }
+      div#case2:hover 
+      {
+        transition: size(linear,500ms,none);
+      }
+      div#case3:hover 
+      {
+        transition: size(none,linear,500ms);
+      }
+      
+    </style>
+  </head>
+<body>
+  <h1>Extended transition property demo</h1>
+  <p>Suppressing direct and reversing animations:</p>
+  <div #ani-container>
+    <div .test #case1>forth &amp; back</div>
+    <div .test #case2>only forth</div>
+    <div .test #case3>only back</div>
+  </div>
+</body>
+</html>

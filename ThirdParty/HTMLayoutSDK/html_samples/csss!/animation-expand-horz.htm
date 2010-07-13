@@ -1,0 +1,123 @@
+<html>
+<head>
+  <style>
+  
+    @const ANIMATION_STEP_MS: 8;
+      
+    div.playground
+    {
+      width:100%%;
+      height:4em; 
+      overflow:hidden;
+      background-color: white;
+	    style-set: "h-animate-on-caption-click"; // see below
+      flow:horizontal;
+    }
+	   
+    div.playground > caption
+    {
+      background:orange;
+      width:min-intrinsic;
+      text-align:center;
+    }
+    div.playground > caption:hover
+    {
+      background:gold;
+      transition:blend;
+    }
+    
+    div.playground > div.expandable
+    {
+      border:1px solid black;
+      overflow:hidden;
+    }
+    
+    div.playground > div.expandable:animating,
+    div.playground > div.expandable:expanded
+    {
+      background-color:floralwhite bisque bisque floralwhite;
+    }
+
+	@set h-animate-on-caption-click
+  {	
+		:root > caption
+		{
+      height:*;
+		  active-on!: panel = self.next(), // next element (div)
+					  panel:expanded ? (panel:collapsed = true) # (panel:expanded = true),
+					  panel.start-animation();
+		}
+    
+		:root > div /* normally all divs inside are collapsed - not visible */
+		{
+      height:*;
+		  visibility:collapse;
+		  overflow:hidden;
+		}
+    :root > div > *
+    {
+      width:max-intrinsic; // to prevent wrapping 
+    }
+    
+    :root > div:animating, 
+		:root > div:expanded 
+		{
+		  width:100%%; 
+		  visibility:visible;
+		}
+
+		:root > div:expanded
+    {
+      animation-start!: self::width = 1%% ;
+      animation-end!:   self::width = 100%% ;
+      animation-step!:  self::width < 100%% ? 
+		    (
+				  delta = limit( (100%% - self::width) * 0.15, 1%%, 8%% ),
+				  self::width = self::width + delta, 
+				  self::width < 50%% ? self::opacity = float(self::width) / 50.0, 
+				  return @ANIMATION_STEP_MS
+				);
+    }
+		
+    :root > div:collapsed
+		{
+		  animation-start!: self::width = 100%% ;
+		  animation-end!:   self::width = 0%%, self::opacity = 1.0;
+		  animation-step!:  self::width > 0%% ? 
+				(
+				   delta = limit( self::width * 0.15, 1%%, 8%% ),
+				   self::width = self::width - delta, 
+				   self::width < 50%% ? self::opacity = float(self::width) / 50.0, 
+				   return @ANIMATION_STEP_MS
+				);
+		}
+    
+	}
+    
+  </style>  
+<head>
+<body>
+  <div .playground> 
+    <caption>Caption 1</caption>
+    <div .expandable>
+      Panel content 1
+      <p>test test test test test</p>
+    </div>
+    <caption>Caption 2</caption>
+    <div .expandable>
+      Panel content 2
+      <p>test test test test test</p>
+    </div>
+    <caption>Caption 3</caption>
+    <div .expandable>
+      Panel content 3
+      <p>test test test test test test</p>
+    </div>
+  </div>
+  <div style="padding:20px">
+    <h1>Example of simple expand/collapse animation</h1>
+    <p>This sample rely on flex units computations.</p>
+    <p>Clcik on one of captions to start animation.</p>
+  </div>
+</body>
+</html>

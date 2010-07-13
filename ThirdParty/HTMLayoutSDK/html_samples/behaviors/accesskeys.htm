@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>Simple Tree View</title>
+<style type="text/css"> 
+	html 
+  { 
+    behavior:accesskeys actions;
+	}
+	button { font:inherit; }
+</style>
+	</head>
+	<body>
+	<center>Test of behavior:<em>accesskeys</em>.<br/></center>
+  <p>When behavior:accesskeys applied to the root element then it will analyse each key pressed. 
+  It will try to find element having <em>accesskey</em> with the value of this key.</p>
+  <p>Press Numpad keys or these buttons:</p>
+  <TABLE border="0" cellpadding="1" cellspacing="4">
+    <TR>
+      <TD colspan="3">Press Ctrl-E:<br/><input accesskey="^E" type="text"/></TD>
+    </TR>
+    <TR>
+      <TD><button accesskey="!NUMPAD7" action="alert:7 pressed">7</button></TD>
+      <TD><button accesskey="!NUMPAD8" action="alert:8 pressed">8</button></TD>
+      <TD><button accesskey="!NUMPAD9" action="alert:9 pressed">9</button></TD>
+    </TR>
+    <TR>
+      <TD><button accesskey="!NUMPAD4" action="alert:4 pressed">4</button></TD>
+      <TD><button accesskey="!NUMPAD5" action="alert:5 pressed">5</button></TD>
+      <TD><button accesskey="!NUMPAD6" action="alert:6 pressed">6</button></TD>
+    </TR>
+    <TR>
+      <TD><button accesskey="!NUMPAD1" action="alert:1 pressed">1</button></TD>
+      <TD><button accesskey="!NUMPAD2" action="alert:2 pressed">2</button></TD>
+      <TD><button accesskey="!NUMPAD3" action="alert:3 pressed">3</button></TD>
+    </TR>
+    <TR>
+      <TD colspan="2"><button accesskey="!NUMPAD0" action="alert:0 pressed">0</button></TD>
+      <TD><button accesskey="!DECIMAL" action="alert:decimal pressed">.</button></TD>
+    </TR>
+  </TABLE>
+  <p>accesskey attribute values supported:</p>
+  <dl>
+  <dt><var>^keyname</var></dt>
+    <dd>press of CTRL + keyname </dd>
+  <dt><var>!keyname</var></dt>
+    <dd>Just keyname press (without any modifier)</dd>
+  <dt><var>keyname</var></dt>
+    <dd>press of ALT + keyname </dd>
+  </dl>  
+	</body>
+</html>

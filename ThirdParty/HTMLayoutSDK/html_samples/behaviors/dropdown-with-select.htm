@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<title>Simple Tree View</title>
+<style type="text/css"> 
+	body { 
+		font-family:Verdana; font-size:10pt; 
+		width:100%%; height:100%%;  
+		background-color: window;
+		padding:10px;
+		margin:0;
+	}
+
+	.menu-bar {
+	  flow:horizontal;
+		background-color: threedface;
+		padding: 2px 100%%; /* to center its content */
+	}	
+	
+	.menu {
+	    border: 1px solid threedshadow;
+	    text-align:center;
+	    padding:2px;
+	    margin:0 1em;
+	    width: 8em;
+		  behavior:dropdown;
+	}
+	
+	.menu .popup 
+	{
+      width: 100%%; 
+      background-color: window window threedlight window;
+      padding: 4px;
+      border: 1px solid threedshadow;
+      text-align:left;
+	    display:none; 	/* normally it is invisible
+						behavior 'dropdown' will take care about it*/
+	}
+	
+	.menu:hover 
+	{
+		background-color: threedhighlight threedhighlight inactivecaption inactivecaption;
+	}
+	.menu:active 
+	{
+		background-color: highlight highlight threedlight threedlight;
+	}
+	
+</style>
+	</head>
+	<body>
+	<center>commands:</center>
+	<div class="menu-bar">
+		<div class="menu" id="FirstCommand">Menu 1
+            <div class="popup">Select with option groups:
+            <widget type="select" name="chemistry" size="4">
+              <OPTGROUP LABEL="Alkaline Metals">
+                <OPTION selected>Lithium (Li)</OPTION>
+                <OPTION>Sodium (Na)</OPTION>
+                <OPTION>Potassium (K)</OPTION>
+              </OPTGROUP>
+              <OPTGROUP LABEL="Halogens">
+                <OPTION>Fluorine (F)</OPTION>
+                <OPTION>Chlorine (Cl)</OPTION>
+                <OPTION>Bromine (Br)</OPTION>
+              </OPTGROUP>
+            </widget>
+            </div>
+		</div>
+		<div class="menu" id="SecondCommand">Menu 2
+
+            <div class="popup">Dropdown Select here:
+            <select name="chemistry">
+              <OPTGROUP LABEL="Alkaline Metals">
+                <OPTION selected>Lithium (Li)</OPTION>
+                <OPTION>Sodium (Na)</OPTION>
+                <OPTION>Potassium (K)</OPTION>
+              </OPTGROUP>
+              <OPTGROUP LABEL="Halogens">
+                <OPTION>Fluorine (F)</OPTION>
+                <OPTION>Chlorine (Cl)</OPTION>
+                <OPTION>Bromine (Br)</OPTION>
+              </OPTGROUP>
+            </select>
+            </div>
+        
+        
+        </div>
+		<div class="menu" id="ThirdCommand">Three</div>
+		<div class="menu" id="FourthCommand">Four</div>
+	</div>
+	</body>
+</html>

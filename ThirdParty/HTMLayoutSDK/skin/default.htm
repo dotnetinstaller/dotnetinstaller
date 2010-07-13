@@ -1,0 +1,188 @@
+<html><head>
+	<style>
+	html 
+	{ 
+		font:10pt Verdana; 
+		overflow:hidden;
+		background-color:transparent;
+		background-image:url(BACK.PNG);
+		background-repeat:expand;
+		background-position:15 15 15 15;
+	}
+	body 
+	{ 
+		padding:3px;
+		margin:0;
+		width:100%%; 
+		height:100%%; 
+	}
+
+	#topbar
+	{
+		flow:horizontal;
+		margin-bottom:3px;
+	}
+
+	#topbar #caption 
+	{
+		color: #274749;
+		padding:0 4px;
+		outline:3px glow #274749;
+	}
+	#content
+	{
+		background-color:white;
+		width:100%%; 
+		height:100%%; 
+		overflow:auto;
+	}
+	#topbar widget[type="button"] 
+	{
+		width:1em;
+		height:1em;
+		background-image:none;
+		padding:1px;
+		font-family: marlett;
+		font-size:10pt;
+		color: #274749;
+		border:1px solid #B0CFD1;
+		text-align:center;
+		vertical-align:center;
+		margin:0;
+		//transition:none;
+		
+	}
+	#topbar widget[type="button"]:hover 
+	{
+		color:orange;
+		border-color:orange;
+		background-color:#B0CFD1;
+		outline:2px glow orange 4px;
+	} 
+	#topbar widget[type="button"]:active 
+	{
+		background-color:#274749;
+	} 
+
+	#topbar #minimize,
+	#topbar #maximize { margin-right:2px; } 
+
+	#topbar #icon 
+	{
+		foreground-image:url(icon.png);
+		foreground-repeat:no-repeat;
+		foreground-position:50% 50%;
+	}
+
+	#bottombar 
+	{
+		margin-top:3px;
+		flow:horizontal;
+	}
+
+	#bottombar #corner
+	{
+	    margin-top:100%%;
+		font-family: marlett;
+		font-size:10pt;
+		color: #274749;
+		width:min-intrinsic;
+	}
+
+	#bottombar #status
+	{
+		color: #274749;
+		font-size:9pt;
+	}
+
+	img:hover
+	{
+	  transition:blend;
+	  //outline: 2px dotted invert 5px;
+	  foreground-image-transformation: contrast-brightness-gamma(0.25,0.95, 1.0);
+	}
+
+    img[src="big-green-button.png"]:hover
+	{
+	  foreground-image-transformation: colorize(#7f00ff);
+	}
+
+	popup[role="tooltip"] /* tooltips */
+	{
+	  font:system;
+	}
+
+	p.with-back 
+	{
+	  padding:7px;
+		background-image:url(big-green-button.png);
+		background-repeat:stretch;
+		//background-position:10 10 10 10;
+	}
+
+	img.shell-icon 
+	{
+		width:20px;
+		height:20px;
+		behavior: file-icon;
+		vertical-align:middle;
+	}
+
+  div.semitrans 
+      { 
+        position:fixed; 
+        top:50px; 
+        bottom:50px; 
+        left:50%; 
+        right:50px; 
+        background-color: rgba(255,0,0,0.25) rgba(255,0,0,0.75) rgba(255,0,0,0.75) rgba(255,0,0,0.25);
+        border: 4px solid rgba(0,0,128,0.75);
+      } 
+
+	</style>
+</head>
+<body>
+	<div id="topbar">
+		<widget id="icon" type="button"></widget>
+		<div id="caption"></div>
+		<widget id="minimize" type="button">0</widget>
+		<widget id="maximize" type="button">1</widget>
+		<widget id="close" type="button" title="Guess what is this button doing?">r</widget>
+	</div>
+	<div id="content">
+	  Hello world! Some input: <input type="text" /> and button <button id="button-to-click">Click me!</button>. Image with alpha: <img src="big-red-button.png" />, other image without alpha: <img src="big-green-button.png" /> with <code>colorize(#7f00ff)</code> on hover
+	  <br/>
+	  Some <button type="radio">radio</button>, <button type="checkbox">checkbox</button> and <button>normal</button> buttons.
+    Progress <progress value=10 min=0 max=100>.
+	  <p .with-back>The quick brown fox jumps over the lazy dog</p>
+      <p>The quick brown fox jumps over the lazy dog</p>
+	  <p>&#1042; &#1095;&#1072;&#1097;&#1072;&#1093; &#1102;&#1075;&#1072; &#1078;&#1080;&#1083; &#1073;&#1099; &#1094;&#1080;&#1090;&#1088;&#1091;&#1089;? &#1044;&#1072;, &#1085;&#1086; &#1092;&#1072;&#1083;&#1100;&#1096;&#1080;&#1074;&#1099;&#1081; &#1101;&#1082;&#1079;&#1077;&#1084;&#1087;&#1083;&#1103;&#1088;&#1098;!</p>
+	  <p>Falsches &#220;ben von Xylophonmusik qu&#228;lt jeden gr&#246;&#223;eren Zwerg</p>
+	  <p>The quick brown fox jumps over the lazy dog</p>
+    <text style="outline:3px glow black 1px">Outline glow</text>
+
+    <option><img class="shell-icon" filename=".png" /> *.png icon</option>
+    <option><img class="shell-icon" filename=".jpg" /> *.jpg icon</option>
+    <option><img class="shell-icon" filename=".doc" /> *.doc icon</option>
+    <option><img class="shell-icon" filename=".html" /> *.html icon</option>
+    <option><img class="shell-icon" filename=".cpp" /> *.cpp icon</option>
+    <option><img class="shell-icon" filename=".h" /> *.h icon</option>
+    <option><img class="shell-icon" filename=".js" /> *.js icon</option>
+    <option><img class="shell-icon" filename=".exe" /> *.exe icon</option>
+
+    <div style="background-color:rgba(255,0,0,0.25)"> 0.25</div>
+    <div style="background-color:rgba(255,0,0,0.50)"> 0.50</div>
+    <div style="background-color:rgba(255,0,0,0.75)"> 0.75</div>
+    <div style="background-color:rgba(255,0,0,1.0)">1.00</div>
+    <div style="background-color:rgb(255,0,0) rgba(255,0,0,0.15) rgba(255,0,0,0.15) rgb(255,0,0)">grad</div>
+
+	</div>
+	<div id="bottombar">
+		<div id="status">This is the <i>status</i>...</div>
+		<div id="corner">o</div>
+	</div>
+
+  <div class="semitrans">Semitransparent</div>
+
+</body>
+</html>

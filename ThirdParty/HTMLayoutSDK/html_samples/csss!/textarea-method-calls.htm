@@ -1,0 +1,70 @@
+<html>
+<head>
+  <style #actions>
+    button#to-first
+    {
+      click!: inp = $1(textarea#test),
+              inp.setSelection(0,0),
+              inp:focus = true;
+              
+    }
+    button#to-last
+    {
+      click!: inp = $1(textarea#test),
+              inp.setSelection(inp:value.length,inp:value.length),
+              inp:focus = true;
+              
+    }
+    
+    button#copy
+    {
+       click!: inp = $1(textarea#test),
+       $1(code#num-chars):value = inp.selectionText();
+    }
+
+    button#set-sel
+    {
+       click!: inp = $1(textarea#test),
+               inp.setSelection(0,5);
+    }
+    button#get-sub
+    {
+       click!: inp = $1(textarea#test),
+               $1(code#num-chars):value = inp:value.substr(12);
+    }
+    
+    textarea#test
+    {
+      value-changed!: $1(code#num-chars):value = self:value.length; 
+    }
+    
+    textarea[maxlength]
+    {
+      value-changed!: maxlength = int(self.maxlength),
+                      text = self:value,
+                      text.length > maxlength ? 
+                        ( self:value = text.substr(0,maxlength), 
+                          self.setSelection(maxlength,maxlength) ); 
+    }
+    
+  </style>    
+<head>
+<body>
+
+  <textarea #test cols=80 rows=4>
+0123456789
+0123456789
+  </textarea>
+ <button #to-first>|&lt;</button><button #to-last>&gt;|</button> <button #copy>copy</button>
+ <button #set-sel>set selection</button>
+ <button #get-sub>get substring</button>
+ <text>Chars:<code #num-chars /></text>
+<p>Test of maxlength handling in the CSSS!</p>
+  <textarea cols=80 rows=4 maxlength=34>
+0123456789
+0123456789
+  </textarea>
+
+ 
+</body>
+</html>

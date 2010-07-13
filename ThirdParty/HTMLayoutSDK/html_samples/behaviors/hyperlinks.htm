@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>Hyperlinks demo</title>
+		<style type="text/css"> 
+		
+		html { 
+		    font:10pt Verdana;
+			margin: 0; 
+			padding: 0; 
+			background-image: url(stone.png);
+			color: gray; 
+		}
+		body { 
+			margin: 10px; 
+			width: 100%%; 
+			height: 100%%; 
+		}
+		h1 { font-size:16pt; text-align:center; }
+		#target-frame { 
+			margin:0 0 0 12px;
+			border:1px solid gray;
+			width:100%%;
+			height:100%%;
+		}
+		#left-sidebar
+		{ 
+			border-top:1px solid gray;
+			border-left:1px solid gray;
+			border-right:1px solid white;
+			border-bottom:1px solid white;
+			width:10em;
+			height:100%%;
+			list-style-type: none;
+			background-image: url(stone-light.png);
+			margin:0;
+			padding:4px;
+      vertical-align:middle;
+		}
+		#left-sidebar ul { margin:0; margin-left:1em; }
+		
+		a:link { color:black; border:1px white solid; }
+		a:hover { color:red; background-color:white; }
+		a:focus { border:1px black dashed; }
+	
+	</style>
+	</head>
+	<body>
+		<h1>Hyperlink behavior and IFRAME control demonstration</h1>
+		<div style="flow:horizontal; width:100%%; height:100%%">
+			<ul id="left-sidebar">
+				<li>
+					Samples:				
+					<ul>
+						<li><a href="treeview.htm" title="collapsible-by-icon behavior demo">treeview</a>
+						<li><a href="commands.htm" title="commands brhavior demo">commands</a>
+						<li><a href="splitters.htm" title="splitter behavior demo">splitter</a>						
+					</ul>
+					Documentation:
+					<ul>
+						<li><a href="http://www.w3.org/TR/CSS1" title="Cascading Style Sheet, level 1">CSS level 1</a>
+						<li><a href="http://www.w3.org/TR/CSS21/" title="Cascading Style Sheet, level 1 revision 1">CSS level 2</a>
+					</ul>
+					HTMEngine:
+					<ul>
+						<li><a href="http://www.terrainformatica.com/htmengine/v3/css-spec.htm" title="CSS support map">CSS map</a>
+					</ul>
+					CSS Art:
+					<ul>
+						<li><a href="http://www.meyerweb.com/eric/css/edge/complexspiral/glassy.html" title="CSS Art">The Complex Spiral</a>
+					</ul>
+				</li>
+			</ul>
+			<iframe id="target-frame" />
+		</div>
+	</body>
+</html>

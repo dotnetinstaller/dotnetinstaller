@@ -1,0 +1,199 @@
+<html>
+	<head>
+	<title>Expandable List Behavior Demo</title>
+<style type="text/css"> 
+
+  @const ANIMATION_STEP_MS: 8;
+
+	body { 
+	  font-family:"Century Gothic","Tahoma"; 
+	  font-size:10pt; 
+	  padding: 10px;
+	  width:100%%; height:100%%;  
+	  background-color: #e9e8f3;
+	}
+
+	#thebar 
+	{
+	  overflow:auto; 
+	  height:100%%; 
+	  width:200px;	  
+	  margin:0;
+    padding:0;
+	  border:1px solid #bdbccc;
+	  overflow:auto;
+	  behavior:expandable-list;
+	  overflow-y:hidden;
+    background-color: #fff #e9e8f3 #e9e8f3 #fff;
+	  style-set: "v-animate-when-current"; // see below
+	}
+	
+	#thebar > li 
+	{
+	   color:black;
+	} 
+
+	#thebar > li > .caption
+	{
+	  font-weight:bold;
+	  color:white;
+	  padding:6px;
+	  margin:-1px;
+	  padding-left:40px; /* space for icon */
+	  foreground-repeat:no-repeat; /* space for icon */
+	  foreground-position:2px 50%; /* icon */
+	  background-image:url(images/outlook/tab.png);
+	  background-repeat:expand stretch-left stretch-right stretch-middle;
+	  background-position:3px 3px 3px 3px;
+	  
+	  margin:0;
+	} 
+
+	#thebar > li > .caption:hover
+	{
+	  color: #ffe598;
+	  transition:blend;
+	  background-image:url(images/outlook/tab-hover.png);
+	} 
+	
+	#thebar > li > .content 
+	{
+	  padding:4px;
+	  font-size:80%;
+	}
+	
+	@set v-animate-when-current
+  {	
+		:root > li
+		{
+			height:min-intrinsic;
+		}
+		
+		:root > li:current
+		{
+			height:100%%; /* whole idea - it takes all available space */ 	  
+		}
+		
+		:root > li > .content /* normally li > .content inside is collapsed */
+		{
+		  visibility:collapse;
+		  overflow-y:hidden;
+		}
+   
+    :root > li:animating > .content, 
+		:root > li:expanded > .content 
+		{
+		  visibility:visible;
+		  height:100%%; 
+		}
+
+		:root > li:collapsed
+		{
+		  assigned!: 
+        self:visited
+           ? self.start-animation()
+           # (self:visited = true, self::height = null); // reuse :visited state flag to prevent initial animation.
+        
+		  animation-start!: self::height = 100%% ;
+		  animation-end!:   self::height = null, // reset values used in animation
+		                    self.child(2)::visibility = null, 
+							          self.child(2)::opacity = null; 
+		  animation-step!:  
+            self::height > 0%% ? 
+            (
+               delta = limit( self::height * 0.12, 1%%, 8%% ),
+               self::height = self::height - delta, 
+               self::height < 15%% ? self.child(2)::visibility = "collapse" #
+               self::height < 50%% ? self.child(2)::opacity = float(self::height) / 50.0, 
+               return @ANIMATION_STEP_MS
+            );
+		}
+
+		:root > li:expanded
+		{
+		  assigned!: 
+          self:visited
+            ? self.start-animation()
+            # (self:visited = true, self::height = 100%%); // to prevent initial animation.
+          animation-start!: self::height = 1%% ;
+          animation-end!:   self::height = 100%% ;
+          animation-step!:  
+            self::height < 100%% ? 
+            (
+              delta = limit( (100%% - self::height) * 0.12, 1%%, 8%% ),
+              self::height = self::height + delta, 
+              return @ANIMATION_STEP_MS
+            );
+		}
+   
+	}
+	
+	
+
+</style>
+	</head>
+	<body>
+	    <h3>Outlook bar</h3>
+		<ul id="thebar" >
+			<li default><p class="caption" style="foreground-image:url(images/outlook/mail.gif)">Mail</p>
+			  <div class="content">
+				  <ul>
+            <li>Mailbox - Guest</li>
+            <li>Inbox</li> 
+            <li>Drafts</li> 
+            <li>Outbox</li> 
+            <li>Junk E-mail</li> 
+            <li>Deleted Items</li> 
+            <li>Search Folders</li> 
+            <li>Sent Items</li> 
+				  </ul>
+			  </div>
+			</li>
+			<li><p class="caption" style="foreground-image:url(images/outlook/notes.gif)">Notes</p>
+				<div class="content">
+				  <ul>
+					<li>Imagination is frequently more important than knowledge</li>
+					<li>Result is always more important than process</li> 
+				 </ul>
+				</div>
+			</li>
+			<li><p class="caption" style="foreground-image:url(images/outlook/contacts.gif)">Contacts</p>
+				<div class="content">
+				  <ol>
+					<li>Alex</li>
+					<li>Ольга</li> 
+					<li>Michael</li> 
+					<li>Vasily - паразит</li> 
+					<li>Ivan</li> 
+					<li>Andrew</li> 
+				  </ol>
+				</div>
+			</li>
+			<li><p class="caption" style="foreground-image:url(images/outlook/calendar.gif)">Calendar</p>
+				<div class="content">
+				  <img style="behavior:clock; float:right; color:#bdbccc; border:1px dashed #bdbccc; width:100px; height:100px">
+				  And here is clock behavior in action. Time is running ...
+				</div>
+			</li>
+			<li><p class="caption" style="foreground-image:url(images/outlook/folder.gif)">Folders</p>
+				<div class="content">
+				  Well, let be some controls here:
+          <p>Select with option groups:<br>
+          <SELECT name="chemistry" size=10 style="background-image:none; border:1px solid #bdbccc">
+            <OPTGROUP LABEL="Alkaline Metals">
+                <OPTION>Lithium (Li)</OPTION>
+                <OPTION>Sodium (Na)</OPTION>
+                <OPTION>Potassium (K)</OPTION>
+            </OPTGROUP>
+            <OPTGROUP LABEL="Halogens">
+                <OPTION>Fluorine (F)</OPTION>
+                <OPTION>Chlorine (Cl)</OPTION>
+                <OPTION>Bromine (Br)</OPTION>
+            </OPTGROUP>
+          </SELECT>
+				</div>
+			</li>
+			
+		</ul>
+	</body>
+</html>

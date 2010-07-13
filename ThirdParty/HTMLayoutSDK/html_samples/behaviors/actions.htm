@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<title>Test of behavior:actions</title>
+<style type="text/css"> 
+	html 
+  { 
+    behavior:accesskeys actions;
+	}
+  button { width:max-intrinsic; }
+</style>
+	</head>
+	<body>
+	<h1>Test of behavior:<em>actions</em>.</h1>
+  <p><em>actions</em> behavior handles BUTTON_CLICK events and tries to interpret actiion contained in, well, <em>action</em> attribute.</p>
+  
+  <button #switch type="checkbox" checked
+          action="copy-state: disabled, input.dependent, !checked, #switch"
+          >Enable/disable some inputs</button>  
+  <p>
+  <input type="text" .dependent value="dependent1"><br/>
+  <input type="text" value="not dependent"><br/>
+  <input type="text" .dependent value="dependent2">
+  </p>
+  
+	</body>
+</html>

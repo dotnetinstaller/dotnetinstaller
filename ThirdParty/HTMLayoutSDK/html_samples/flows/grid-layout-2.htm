@@ -1,0 +1,58 @@
+<html>
+<head>
+  <style>
+  body 
+	{ 
+		flow:grid; // this is it
+		border-spacing:4px;
+	}
+  div { border: 1px solid black; padding:4px; }
+  
+  #top-bar 
+	{ 
+		left:1#; // "north" - top row, spans two columns
+		right:2#; 
+		top:1#;
+		height:min-intrinsic;
+	}
+  #right-bar 
+	{ 
+		left:3#;  // "east" - sidebar, spans tow rows
+		top:1#; 
+		bottom:2#; 
+		height:*; width:100px; border: 1px dotted red; 
+	}  
+  #bottom-bar 
+	{ 
+		left:2#; // "south" - bottom row, spans two columns 
+		right:3#; 
+		top:3#; 
+		height:min-intrinsic;
+	}
+  #left-bar 
+	{ 
+		left:1#; // "west" - sidebar, spans tow rows
+		top:2#; 
+		bottom:3#; 
+		height:*; 
+		width:100px; 
+		border: 1px dotted blue;
+	}    
+  #content 
+	{ 
+		left:2#; // cell in the middle
+		top:2#; 
+		width:*; height:*; 
+	}
+  </style>  
+<head>
+<body>
+
+<div id="top-bar">Top</div>
+<div id="bottom-bar">Bottom</div>
+<div id="left-bar">Left</div>
+<div id="right-bar">Right</div>
+<div id="content">Content</div>
+
+</body>
+</html>

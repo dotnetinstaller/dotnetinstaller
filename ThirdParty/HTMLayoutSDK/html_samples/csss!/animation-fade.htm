@@ -1,0 +1,30 @@
+﻿<html>
+  <head>
+    <style>
+    p#test[fade]
+    {
+      assigned!: self::opacity = 1.0, self.start-animation();
+      animation-step!: self::opacity > 0
+             ? ( self::opacity = self::opacity - 0.01, return 10) 
+             # ( self:value = self.fade, self.fade = "", return cancel );
+    }
+    p#test[fade=""]    
+    {
+      color:red;    
+      assigned!: self::opacity = 0.01, self.start-animation();
+      animation-step!: self::opacity < 1.0
+             ? ( self::opacity = self::opacity + 0.01, return 10) 
+             # ( self.fade = "", return cancel );
+    }
+    button#do 
+    {
+      transition:none;
+      click! : $1( p#test ).fade="Мир!";
+    }
+    </style>
+  </head>
+<body>
+  <button #do>Fade!</button>
+  <p #test>Hello</p>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <title></title>
+		<style>
+		  table#test 
+      { 
+        behavior: column-resizer;
+        width:*; height:*;  
+				//flow: table-fixed;
+        overflow:auto; 
+      }
+		  table#test tr { height:1.4em; }
+      
+      table#test > thead tr th { overflow-x: hidden; border:1px solid red; }
+			table#test tr td { overflow-x: hidden; border:1px solid blue; vertical-align: top; }
+			
+			table#test > thead th:nth-child(1) { width: 20%; min-width:4em; }
+			table#test > thead th:nth-child(2) { width: 200px; }
+			table#test > thead th:nth-child(3) { width: *; min-width:4em; }
+			table#test > thead th:nth-child(4) { width: *; min-width:4em; }
+			
+			table#test > tbody.first > tr > td[rowspan="5"] { background-color: bisque; }
+			table#test > tbody.first > tr > td[rowspan="3"] { background-color: antiquewhite; }
+			table#test > tbody.first > tr > td[rowspan="2"] { background-color: cornsilk; }
+
+      table#test > tbody.second > tr > td[rowspan="5"] { background-color: paleturquoise; }
+			table#test > tbody.second > tr > td[rowspan="3"] { background-color: #E0EFEF; }
+			table#test > tbody.second > tr > td[rowspan="2"] { background-color: azure; }
+			
+			table#test > tbody 
+			{
+				padding-left:40px;
+			}
+			
+			table#test td:hover { color:red; }
+      
+      table#test > caption 
+      { 
+        foreground-repeat: no-repeat;
+        foreground-position: 3px 50%;
+        foreground-image-cursor:pointer;
+        foreground-image:url(theme:tree-view-glyph-open);
+        padding-left:1.4em; 
+        height:1.4em; 
+        line-height:1.4em; 
+        active-on!: is-on-icon()? self:collapsed = !self:collapsed;
+        double-click!: !is-on-icon()? self:collapsed = !self:collapsed;
+      }
+      table#test > caption:collapsed
+      {
+        foreground-image:url(theme:tree-view-glyph-closed); 
+      }
+      
+      caption:collapsed + tbody 
+      {
+        visibility:collapse;
+      }
+			
+		</style>
+  </head>
+<body>
+	<table #test>
+    <thead>
+			<tr>
+				<th>first</th>
+				<th>second</th>
+				<th>third</th>
+				<th>fourth</th>
+			</tr>
+    </thead>
+    <caption>First group</caption>
+	  <tbody .first>
+			<tr>
+				<td rowspan="5">1</td>
+				<td rowspan="2">something</td>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="3">something</td>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="2">anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td>somewhere</td>
+			</tr>
+	  </tbody>
+    <caption>Second group</caption>
+		<tbody .second>
+			<tr>
+				<td rowspan="5">2</td>		
+				<td rowspan="2">something</td>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="3">something</td>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="2">anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="5">3</td>		
+				<td rowspan="2">something</td>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="3">something</td>
+				<td>anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td rowspan="2">anything</td>
+				<td>somewhere</td>
+			</tr>
+			<tr>
+				<td>somewhere</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
