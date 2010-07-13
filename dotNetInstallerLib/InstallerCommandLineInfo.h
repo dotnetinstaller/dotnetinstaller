@@ -20,6 +20,7 @@ public:
 	std::wstring logFile;
     std::map<std::wstring, std::wstring> componentCmdArgs;
 	std::map<std::wstring, std::wstring> controlCmdArgs;
+	std::wstring GetUsage() const;
 private:
 	
 	enum argFlags 

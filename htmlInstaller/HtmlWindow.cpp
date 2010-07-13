@@ -20,10 +20,6 @@ HtmlWindow * HtmlWindow::Self(HWND hWnd)
 	return (HtmlWindow *) ::GetWindowLongPtr(hWnd,GWLP_USERDATA); 
 }
 
-#ifdef _DEBUG
-htmlayout::debug_output_console _debug_stream;
-#endif
-
 HINSTANCE HtmlWindow::hinstance = 0;
 
 const wchar_t CLASSNAME[] = L"htmlInstaller::HtmlWindow";
@@ -64,13 +60,22 @@ void HtmlWindow::Create(int x, int y, int width, int height, const wchar_t * tit
 	Self(hwnd, this);
 	HTMLayoutSetCallback(hwnd, & callback, this);
 	
-	PBYTE pb; 
-	DWORD cb;
+	std::wstring indexhtml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), TEXT("index.html"));
+	if (DVLib::FileExists(indexhtml))
+	{
+		CHECK_BOOL(HTMLayoutLoadFile(hwnd, indexhtml.c_str()),
+			L"Error loading " << indexhtml);
+	}
+	else
+	{
+		PBYTE pb = NULL; 
+		DWORD cb = 0;
+		CHECK_BOOL(htmlayout::load_resource_data(L"index.html", pb, cb),
+			L"Error loading index.html.");
+		CHECK_BOOL(HTMLayoutLoadHtml(hwnd, pb, cb),
+			L"Error loading index.html from " << DVLib::FormatBytesW(cb) << " of resource data.");
+	}
 
-	CHECK_BOOL(htmlayout::load_resource_data(L"index.html", pb, cb),
-		L"Error loading index.html.");
-
-	HTMLayoutLoadHtml(hwnd, pb, cb);
 	htmlayout::dom::element r = GetRoot();
 	body = r.find_first("body");
 	caption = r.get_element_by_id("caption");

@@ -25,11 +25,11 @@ BOOL CdotNetInstallerApp::InitInstance()
 
 	try
 	{
-		InstallerCommandLineInfo::Instance = shared_any<InstallerCommandLineInfo *, close_delete>(new InstallerCommandLineInfo());
-		InstallerLauncher::Instance = shared_any<InstallerLauncher *, close_delete>(new InstallerLauncher());
-		InstallerLog::Instance = shared_any<InstallerLog *, close_delete>(new InstallerLog());
-		InstallerSession::Instance = shared_any<InstallerSession *, close_delete>(new InstallerSession());
-		InstallUILevelSetting::Instance = shared_any<InstallUILevelSetting *, close_delete>(new InstallUILevelSetting());
+		reset(InstallerCommandLineInfo::Instance, new InstallerCommandLineInfo());
+		reset(InstallerLauncher::Instance, new InstallerLauncher());
+		reset(InstallerLog::Instance, new InstallerLog());
+		reset(InstallerSession::Instance, new InstallerSession());
+		reset(InstallUILevelSetting::Instance, new InstallUILevelSetting());
 
 		ParseCommandLine(* get(InstallerCommandLineInfo::Instance));
 		
@@ -110,29 +110,7 @@ int CdotNetInstallerApp::ExitInstance()
 
 void CdotNetInstallerApp::DisplayHelp()
 {
-	std::wstringstream hs;
-	hs << L"Usage: " << DVLib::GetFileNameW(DVLib::GetModuleFileNameW()) << L" [args]" << std::endl;
-	hs << std::endl;
-	hs << L" /? or /help : this help screen" << std::endl;
-	hs << L" /i : install (default)" << std::endl;
-	hs << L" /x : uninstall" << std::endl;
-	hs << L" /q : force silent (no UI) mode" << std::endl;
-	hs << L" /qb : force basic UI mode" << std::endl;
-	hs << L" /nq : force full UI mode" << std::endl;
-	hs << L" /Log : enable logging" << std::endl;
-	hs << L" /LogFile [path] : specify log file" << std::endl;
-	hs << L" /ConfigFile [path] : specify configuration file" << std::endl;
-	hs << L" /ExtractCab: extract embedded components" << std::endl;
-	hs << L" /DisplayCab: display a list of embedded components" << std::endl;
-	hs << L" /DisplayConfig: display a list of configurations" << std::endl;
-	hs << L" /ComponentArgs [\"id|display_name\":\"value\" ...] : additional component args" << std::endl;
-	hs << L" /ControlArgs [\"id\":\"value\" ...] : additional control values" << std::endl;
-	hs << L" /CompleteCommandArgs [args] : additional complete command" << std::endl;
-	hs << L" /Launcher [path] : alternate launcher on reboot" << std::endl;
-	hs << L" /LauncherArgs [args] : additional launcher args on reboot" << std::endl;
-	hs << std::endl;
-	hs << L"Built by dotNetInstaller (DNI), version " << TEXT(VERSION_VALUE);		
-	DniMessageBox::Show(hs.str(), MB_OK|MB_ICONINFORMATION);
+	DniMessageBox::Show(InstallerCommandLineInfo::Instance->GetUsage(), MB_OK|MB_ICONINFORMATION);
 }
 
 void CdotNetInstallerApp::DisplayCab()

@@ -63,7 +63,9 @@
 				AdditionalDependencies="HTMLayout.lib tinyxmld_STL.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\ThirdParty\HTMLayoutSDK\lib"
+				DelayLoadDLLs="Htmlayout.dll"
 				SubSystem="2"
+				SupportUnloadOfDelayLoadedDLL="true"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -136,9 +138,11 @@
 				AdditionalDependencies="HTMLayout.lib tinyxmld_STL.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\ThirdParty\HTMLayoutSDK\lib"
+				DelayLoadDLLs="Htmlayout.dll"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				SupportUnloadOfDelayLoadedDLL="true"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -177,6 +181,10 @@
 			>
 			<File
 				RelativePath=".\ConfigFileManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\HtmLayoutDll.cpp"
 				>
 			</File>
 			<File
@@ -219,6 +227,10 @@
 			>
 			<File
 				RelativePath=".\ConfigFileManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HtmLayoutDll.h"
 				>
 			</File>
 			<File

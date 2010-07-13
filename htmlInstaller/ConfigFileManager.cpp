@@ -65,7 +65,7 @@ int ConfigFileManager::Run()
 	int cx = 640;
 	int cy = 480;
 
-	m_pInstallerWindow = new InstallerWindow();
+	m_pInstallerWindow = new InstallerWindow(); // deletes itself
 	m_pInstallerWindow->Create(
 		(mi.rcWork.left + mi.rcWork.right) / 2 - cx / 2, 
 		(mi.rcWork.top + mi.rcWork.bottom) / 2 - cy / 2, 
