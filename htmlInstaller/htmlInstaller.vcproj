@@ -184,6 +184,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ExtractCabProcessor.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\HtmLayoutDll.cpp"
 				>
 			</File>
@@ -230,11 +234,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ExtractCabProcessor.h"
+				>
+			</File>
+			<File
 				RelativePath=".\HtmLayoutDll.h"
 				>
 			</File>
 			<File
 				RelativePath=".\htmlInstaller.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HtmlWidgets.h"
 				>
 			</File>
 			<File

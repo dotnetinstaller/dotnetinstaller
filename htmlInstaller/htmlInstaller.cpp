@@ -204,3 +204,4 @@ void DisplayConfig()
 	config->Load();
 	DniMessageBox::Show(config->GetString(), MB_OK|MB_ICONINFORMATION);
 }
+

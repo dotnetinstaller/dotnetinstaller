@@ -155,8 +155,7 @@ int HtmlWindow::HitTest(int x, int y)
 }
 
 BOOL HtmlWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason)
-{
-	
+{	
 	if( type != BUTTON_CLICK)
 		return FALSE; // handling only button clicks here. 
 
@@ -185,11 +184,6 @@ BOOL HtmlWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UI
 		::PostMessage(hwnd, WM_CLOSE, 0,0); 
 		return TRUE;
 	}
-
-	// click on some other button
-	htmlayout::dom::element button = target;
-	//::MessageBoxW(button.get_element_hwnd(true) ,button.get_attribute("id"), L"Click on the button with id:", MB_OK);
-	::MessageBox(button.get_element_hwnd(true), L"test", L"Click on the button with id:", MB_OK);
 
 	return TRUE;
 }
