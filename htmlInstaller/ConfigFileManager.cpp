@@ -46,9 +46,9 @@ bool ConfigFileManager::OnLoad()
 		config.LoadFile(InstallerCommandLineInfo::Instance->configFile);
 		return true;
 	}
-	else if (NULL != DVLib::ResourceExists(AfxGetApp()->m_hInstance, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM")))
+	else if (NULL != DVLib::ResourceExists(HtmlWindow::s_hinstance, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM")))
 	{
-		config.LoadResource(AfxGetApp()->m_hInstance, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM"));
+		config.LoadResource(HtmlWindow::s_hinstance, TEXT("RES_CONFIGURATION"), TEXT("CUSTOM"));
 		return true;
 	}
 

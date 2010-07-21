@@ -13,6 +13,9 @@ LANGUAGE 9, 1
 IDI_HTMLINSTALLER			ICON         "htmlInstaller.ico"
 IDI_HTMLINSTALLER_SMALL     ICON         "small.ico"
 
+#include <Version/Version.h>
+#include <Version/Version.rc>
+
 #ifdef APSTUDIO_INVOKED
 1 TEXTINCLUDE  
 BEGIN

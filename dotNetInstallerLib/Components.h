@@ -24,7 +24,7 @@ public:
 	ComponentPtr GetComponentPtr(Component * pc) const;
 	// reference
 	const_reference operator[](size_type pos) const { return std::vector<ComponentPtr>::operator[](pos); }
-	// execute components, returns true if all succeeded
+	// synchronously execute components, returns true if all succeeded
 	int Exec(IExecuteCallback * callback);
 	virtual std::wstring GetString(int indent = 0) const;
 	// return iterator for beginning of mutable sequence

@@ -140,6 +140,24 @@ body
 	margin: 5pt 5pt 5pt 5pt;
 }
 
+#content #progress
+{
+	position: relative;
+	left: 10pt;
+	top: 20pt;
+	width: 200pt;
+	
+	behavior: progress;
+	background-repeat: stretch;
+	background-image: url(theme:h-progress-back);  
+
+	height: 1.2em;
+	padding: 3px;
+
+	foreground-repeat: stretch;
+	foreground-image: url(theme:h-progress-chunk);
+}
+
 #content #buttons
 {	
 	text-align: right;

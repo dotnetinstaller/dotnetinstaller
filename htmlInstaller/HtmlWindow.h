@@ -4,7 +4,10 @@ class HtmlWindow
 	: public htmlayout::event_handler
 	, public htmlayout::notification_handler<HtmlWindow>
 {
-public:  
+public:
+	static HINSTANCE s_hinstance;
+	static HWND s_hwnd;
+public:
 	HWND hwnd;
 	htmlayout::dom::element body;
 	htmlayout::dom::element caption;
@@ -26,5 +29,5 @@ protected:
 	virtual BOOL on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason);
 	static void Self(HWND hWnd, HtmlWindow * inst);
 	static LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-	static HINSTANCE hinstance;
+	virtual void OnMessage(UINT message, WPARAM wParam, LPARAM lParam);
 };

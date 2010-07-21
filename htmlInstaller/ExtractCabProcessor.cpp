@@ -1,18 +1,16 @@
 #include "StdAfx.h"
+#include "HtmlWidgets.h"
 #include "ExtractCabProcessor.h"
 #include "Resource.h"
 
-ExtractCabProcessor::ExtractCabProcessor(HMODULE h, const std::wstring& id, htmlayout::dom::element status)
+ExtractCabProcessor::ExtractCabProcessor(HMODULE h, const std::wstring& id, htmlayout::dom::element * status)
     : ExtractComponent(h, id)
 	, m_status(status)
 {
 
 }
 
-void ExtractCabProcessor::OnStatus(const std::wstring& status)
+void ExtractCabProcessor::OnStatus(const std::wstring& msg)
 {
-	if (m_status.is_valid())
-	{
-		m_status.set_text(status.c_str());
-	}
+	htmlayout::queue::push(new html_set_text_task(m_status, msg), HtmlWindow::s_hwnd);
 }

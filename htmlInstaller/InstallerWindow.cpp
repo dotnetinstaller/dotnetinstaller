@@ -3,10 +3,12 @@
 #include "ConfigFileManager.h"
 #include "ExtractCabProcessor.h"
 #include "HtmlWidgets.h"
+#include "Resource.h"
 
 InstallerWindow::InstallerWindow(void)
 	: m_reboot(false)
 	, m_recorded_error(0)
+	, m_recorded_progress(0)
 	, m_additional_config(false)
 {
 
@@ -52,6 +54,10 @@ void InstallerWindow::DoModal()
 	// error
 	error = r.get_element_by_id("error");
 	ClearError();
+
+	// progress
+	progress = r.get_element_by_id("progress");
+	ClearProgress();
 
 	// load xml file
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
@@ -118,7 +124,16 @@ void InstallerWindow::DoModal()
 
 bool InstallerWindow::RunDownloadConfiguration(const DownloadDialogPtr& p_Configuration)
 {
-	return false;
+	if (! p_Configuration->IsRequired())
+	{
+		LOG(L"*** Component '" << p_Configuration->component_id << L"': SKIPPING DOWNLOAD/COPY");
+		return true;
+	}
+
+	throw new std::exception("download not implemented");
+	//CDownloadDialog downloaddlg(p_Configuration, this);
+	//downloaddlg.DoModal();
+	//return downloaddlg.IsDownloadCompleted();
 }
 
 // returns true if all components have been installed
@@ -203,7 +218,7 @@ bool InstallerWindow::LoadComponentsList()
 			&& (component->required_uninstall || ! component_installed))
             opt["disabled"] = L"true";
 
-		components.insert(opt, i + 1);
+		htmlayout::queue::push(new html_insert_task(& components, opt, i + 1), HtmlWindow::s_hwnd);
     }
 
 	return all;
@@ -237,102 +252,19 @@ BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS typ
 
 void InstallerWindow::OnOK()
 {
+	EndExec();
 	::PostMessage(hwnd, WM_CLOSE, 0,0);
 }
 
 void InstallerWindow::OnInstall()
 {
-	try
-	{
-		auto_any<htmlayout::dom::element *, html_disabled> btn_install(& button_install);
-		button_install.set_attribute("disabled", L"disabled");
-		auto_any<htmlayout::dom::element *, html_disabled> btn_cancel(& button_cancel);
-		button_cancel.set_attribute("disabled", L"disabled");
-		auto_any<htmlayout::dom::element *, html_disabled> btn_skip(& button_skip);
-		button_skip.set_attribute("disabled", L"disabled");
-	
-		ClearError();
-
-		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
-		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-
-		Components components = p_configuration->GetSupportedComponents(
-			m_lcidtype, InstallerSession::Instance->sequence);
-
-		int rc = components.Exec(this);
-
-		if (rc != 0)
-		{
-			RecordError(rc);
-		}
-
-		if (m_reboot)
-		{
-			InstallerSession::Instance->EnableRunOnReboot(p_configuration->reboot_cmd);
-			DVLib::ExitWindowsSystem(EWX_REBOOT);
-			PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);
-			return;
-		}
-
-		// silent execution, 
-		if (InstallUILevelSetting::Instance->IsSilent()) 
-		{
-			OnOK();
-			return;
-		}
-
-		// failure and auto-close-on-error
-		if (rc != 0 && p_configuration->auto_close_on_error)
-		{
-			LOG(L"*** Failed to install one or more components, closing (auto_close_on_error).");
-			OnOK();
-			return;
-		}
-
-		// failure and reload-on-error
-		if (rc != 0 && p_configuration->reload_on_error)
-		{
-			LOG(L"*** Failed to install one or more components, reloading components (reload_on_error).");
-			LoadComponentsList();
-			return;
-		}
-
-		// success and possibly auto-close with a complete code if all components have been installed
-		if (rc == 0)
-		{
-			bool all = LoadComponentsList();
-			if (all || p_configuration->auto_close_if_installed) 
-			{
-				// ExecuteCompleteCode(true);
-				OnOK();
-			}
-		}
-    }
-    catch(std::exception& ex)
-    {
-		LOG(L"*** Failed to install one or more components: " << DVLib::string2wstring(ex.what()));
-		ShowError(DVLib::string2wstring(ex.what()));
-		RecordError();
-    }
-	catch(...)
-	{
-		LOG(L"*** Failed to install one or more components");
-		ShowError(TEXT("Failed to install one or more components"));
-		RecordError();
-	}
+	BeginExec();
 }
 
 void InstallerWindow::ShowError(const std::wstring& message)
 {
-	if (error.is_valid()) 
-	{
-		error.clear_style_attribute("display");
-		error.set_text(message.c_str());
-	} 
-	else 
-	{
-		DniMessageBox::Show(message, MB_OK | MB_ICONSTOP);
-	}
+	htmlayout::queue::push(new html_clear_style_attribute_task(& error, "display"), HtmlWindow::s_hwnd);
+	htmlayout::queue::push(new html_set_text_task(& error, message), HtmlWindow::s_hwnd);
 }
 
 void InstallerWindow::RecordError(int error) 
@@ -346,16 +278,36 @@ void InstallerWindow::RecordError(int error)
 void InstallerWindow::ClearError() 
 { 
 	m_recorded_error = 0; 
-	if (error.is_valid()) 
-	{
-		error.set_style_attribute("display", L"none");
-		error.set_text(L"");
-	}
+	htmlayout::queue::push(new html_set_style_attribute_task(& error, "display", L"none"), HtmlWindow::s_hwnd);
+	htmlayout::queue::push(new html_set_text_task(& error, L""), HtmlWindow::s_hwnd);
+}
+
+void InstallerWindow::SetProgressTotal(int pc)
+{
+	htmlayout::queue::push(new html_set_attribute_task(& progress, "maxvalue", DVLib::towstring(pc)), HtmlWindow::s_hwnd);
+}
+
+void InstallerWindow::ClearProgress() 
+{
+	m_recorded_progress = 0;
+	htmlayout::queue::push(new html_set_style_attribute_task(& progress, "display", L"none"), HtmlWindow::s_hwnd);
+}
+
+void InstallerWindow::SetStatus(const std::wstring& msg)
+{
+	htmlayout::queue::push(new html_set_text_task(& status, msg), HtmlWindow::s_hwnd);
+}
+
+void InstallerWindow::SetProgress(int pc) 
+{
+	m_recorded_progress = pc;
+	htmlayout::queue::push(new html_clear_style_attribute_task(& progress, "display"), HtmlWindow::s_hwnd);
+	htmlayout::queue::push(new html_set_attribute_task(& progress, "value", DVLib::towstring(pc)), HtmlWindow::s_hwnd);
 }
 
 void InstallerWindow::ResetContent()
 {
-	components.clear();
+	htmlayout::queue::push(new html_clear_task(& components), HtmlWindow::s_hwnd);
 }
 
 void InstallerWindow::SetControlValues()
@@ -369,6 +321,8 @@ void InstallerWindow::SetControlValues()
 
 void InstallerWindow::OnExecBegin()
 {
+	SetProgress(m_recorded_progress + 1);
+
 	SetControlValues();
 
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
@@ -395,33 +349,22 @@ bool InstallerWindow::OnComponentExecBegin(const ComponentPtr& component)
 		}
 	}
 
-	// m_component_dlg.LoadComponent(m_configuration, component);
 	return true;
 }
 
 bool InstallerWindow::OnComponentExecWait(const ComponentPtr& component)
 {
-	if (InstallUILevelSetting::Instance->IsAnyUI())
-	{
-		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
-		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-
-		if (p_configuration->show_progress_dialog && component->show_progress_dialog)
-		{
-			// m_component_dlg.DoModal();
-			LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): DIALOG CLOSED");
-		}
-	}
-
+	LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): FINISHED");
 	return true;
 }
 
 bool InstallerWindow::OnComponentExecSuccess(const ComponentPtr& component)
 {
-	// se è presente un messaggio di completamento installazione
+	SetProgress(m_recorded_progress + 1);
+
 	if (! component->installcompletemessage.empty())
 	{
-		DniMessageBox::Show(component->installcompletemessage, MB_OK | MB_ICONINFORMATION);
+		SetStatus(component->installcompletemessage);
 	}
 
 	// se l'installazione ha chiesto di riavviare non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
@@ -459,6 +402,7 @@ bool InstallerWindow::OnComponentExecSuccess(const ComponentPtr& component)
 bool InstallerWindow::OnComponentExecError(const ComponentPtr& component, std::exception& ex)
 {
 	LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L")' FAILED: " << DVLib::string2wstring(ex.what()));
+	SetProgress(m_recorded_progress + 1);
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
     // the component failed to install, display an error message and let the user choose to continue or not
@@ -489,7 +433,9 @@ bool InstallerWindow::OnComponentExecError(const ComponentPtr& component, std::e
 	{
 		LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): FAILED, ABORTING");
 		return false;
-	} else {
+	} 
+	else 
+	{
 		LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): FAILED, CONTINUE");
 	}
 
@@ -498,7 +444,7 @@ bool InstallerWindow::OnComponentExecError(const ComponentPtr& component, std::e
 
 void InstallerWindow::ExtractCab(const std::wstring& id, bool display_progress)
 {
-	ExtractCabProcessorPtr p_extractcab(new ExtractCabProcessor(hinstance, id, status));	
+	ExtractCabProcessorPtr p_extractcab(new ExtractCabProcessor(s_hinstance, id, & status));	
 	int cab_count = p_extractcab->GetCabCount();
 	if (cab_count == 0)
 	{
@@ -512,6 +458,97 @@ void InstallerWindow::ExtractCab(const std::wstring& id, bool display_progress)
 	p_extractcab->cab_path = p_configuration->cab_path;
 	p_extractcab->cab_cancelled_message = p_configuration->cab_cancelled_message;
 	p_extractcab->BeginExec();
-
 	p_extractcab->EndExec();
+}
+
+void InstallerWindow::OnMessage(UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+}
+
+int InstallerWindow::ExecOnThread()
+{
+	try
+	{
+		auto_any<htmlayout::dom::element *, html_disabled> btn_install(& button_install);
+		button_install.set_attribute("disabled", L"disabled");
+		auto_any<htmlayout::dom::element *, html_disabled> btn_cancel(& button_cancel);
+		button_cancel.set_attribute("disabled", L"disabled");
+		auto_any<htmlayout::dom::element *, html_disabled> btn_skip(& button_skip);
+		button_skip.set_attribute("disabled", L"disabled");
+
+		ClearError();
+		ClearProgress();
+
+		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
+		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+
+		Components components = p_configuration->GetSupportedComponents(
+			m_lcidtype, InstallerSession::Instance->sequence);
+
+		SetProgressTotal(components.size() * 2);
+
+		int rc = components.Exec(this);
+
+		if (rc != 0)
+		{
+			RecordError(rc);
+		}
+
+		if (m_reboot)
+		{
+			InstallerSession::Instance->EnableRunOnReboot(p_configuration->reboot_cmd);
+			DVLib::ExitWindowsSystem(EWX_REBOOT);
+			PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);
+			return 0;
+		}
+
+		// silent execution, 
+		if (InstallUILevelSetting::Instance->IsSilent()) 
+		{
+			OnOK();
+			return 0;
+		}
+
+		// failure and auto-close-on-error
+		if (rc != 0 && p_configuration->auto_close_on_error)
+		{
+			LOG(L"*** Failed to install one or more components, closing (auto_close_on_error).");
+			OnOK();
+			return 0;
+		}
+
+		// failure and reload-on-error
+		if (rc != 0 && p_configuration->reload_on_error)
+		{
+			LOG(L"*** Failed to install one or more components, reloading components (reload_on_error).");
+			LoadComponentsList();
+			return 0;
+		}
+
+		// success and possibly auto-close with a complete code if all components have been installed
+		if (rc == 0)
+		{
+			bool all = LoadComponentsList();
+			if (all || p_configuration->auto_close_if_installed) 
+			{
+				// ExecuteCompleteCode(true);
+				OnOK();
+			}
+		}
+    }
+    catch(std::exception& ex)
+    {
+		LOG(L"*** Failed to install one or more components: " << DVLib::string2wstring(ex.what()));
+		ShowError(DVLib::string2wstring(ex.what()));
+		RecordError();
+    }
+	catch(...)
+	{
+		LOG(L"*** Failed to install one or more components");
+		ShowError(TEXT("Failed to install one or more components"));
+		RecordError();
+	}
+
+	return 0;
 }

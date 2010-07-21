@@ -12,21 +12,27 @@ HtmlWindow::HtmlWindow()
 
 void HtmlWindow::Self(HWND hWnd, HtmlWindow * inst) 
 { 
-	::SetWindowLongPtr(hWnd,GWLP_USERDATA, LONG_PTR(inst)); 
+	::SetWindowLongPtr(hWnd, GWLP_USERDATA, LONG_PTR(inst));
+
+	if (s_hwnd == NULL)
+	{
+		s_hwnd = hWnd;
+	}
 }
 
 HtmlWindow * HtmlWindow::Self(HWND hWnd)
 { 
-	return (HtmlWindow *) ::GetWindowLongPtr(hWnd,GWLP_USERDATA); 
+	return (HtmlWindow *) ::GetWindowLongPtr(hWnd, GWLP_USERDATA); 
 }
 
-HINSTANCE HtmlWindow::hinstance = 0;
+HINSTANCE HtmlWindow::s_hinstance = 0;
+HWND HtmlWindow::s_hwnd = NULL;
 
 const wchar_t CLASSNAME[] = L"htmlInstaller::HtmlWindow";
 
 ATOM  HtmlWindow::RegisterClass(HINSTANCE hInstance)
 {
-	hinstance = hInstance;
+	s_hinstance = hInstance;
 
 	WNDCLASSEXW wcex;
 
@@ -53,7 +59,7 @@ void HtmlWindow::Create(int x, int y, int width, int height, const wchar_t * tit
 		L"Static instance already created");
 
 	UINT style = WS_POPUP | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_SIZEBOX;
-	hwnd = CreateWindowExW(WS_EX_LAYERED, CLASSNAME, NULL, style , x, y, width, height, NULL, NULL, hinstance, NULL);
+	hwnd = CreateWindowExW(WS_EX_LAYERED, CLASSNAME, NULL, style , x, y, width, height, NULL, NULL, s_hinstance, NULL);
 	CHECK_WIN32_BOOL(hwnd != NULL, 
 		L"CreateWindowExW");
 	
@@ -202,6 +208,11 @@ bool HtmlWindow::IsWindowMaximized() const
 	return wp.showCmd == SW_SHOWMAXIMIZED;
 }
 
+void HtmlWindow::OnMessage(UINT message, WPARAM wParam, LPARAM lParam)
+{
+	
+}
+
 LRESULT CALLBACK HtmlWindow::WinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	LRESULT lResult;
@@ -257,6 +268,11 @@ LRESULT CALLBACK HtmlWindow::WinProc(HWND hwnd, UINT message, WPARAM wParam, LPA
 		Self(hwnd, 0);
 		PostQuitMessage(0);
 		return 0;
+	}
+
+	if (me != NULL)
+	{
+		me->OnMessage(message, wParam, lParam);
 	}
 
 	return DefWindowProc(hwnd, message, wParam, lParam);
