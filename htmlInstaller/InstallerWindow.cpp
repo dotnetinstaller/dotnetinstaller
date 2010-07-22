@@ -8,6 +8,7 @@
 InstallerWindow::InstallerWindow(void)
 	: m_reboot(false)
 	, m_recorded_error(0)
+	, m_total_progress(0)
 	, m_recorded_progress(0)
 	, m_additional_config(false)
 {
@@ -130,10 +131,12 @@ bool InstallerWindow::RunDownloadConfiguration(const DownloadDialogPtr& p_Config
 		return true;
 	}
 
-	throw new std::exception("download not implemented");
-	//CDownloadDialog downloaddlg(p_Configuration, this);
-	//downloaddlg.DoModal();
-	//return downloaddlg.IsDownloadCompleted();
+	m_downloaddialog = p_Configuration;
+	p_Configuration->callback = this;
+
+	html_save_progress progress_saved(& progress, m_recorded_progress, m_total_progress);
+	SetProgress(0);
+	return 0 == p_Configuration->ExecOnThread();
 }
 
 // returns true if all components have been installed
@@ -252,7 +255,6 @@ BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS typ
 
 void InstallerWindow::OnOK()
 {
-	EndExec();
 	::PostMessage(hwnd, WM_CLOSE, 0,0);
 }
 
@@ -284,6 +286,7 @@ void InstallerWindow::ClearError()
 
 void InstallerWindow::SetProgressTotal(int pc)
 {
+	m_total_progress = pc;
 	htmlayout::queue::push(new html_set_attribute_task(& progress, "maxvalue", DVLib::towstring(pc)), HtmlWindow::s_hwnd);
 }
 
@@ -461,9 +464,20 @@ void InstallerWindow::ExtractCab(const std::wstring& id, bool display_progress)
 	p_extractcab->EndExec();
 }
 
-void InstallerWindow::OnMessage(UINT message, WPARAM wParam, LPARAM lParam)
+int InstallerWindow::OnMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	switch(message)
+	{
+	case WM_CLOSE:
+		if (IsExecuting()) 
+		{
+			return -1;
+		}
+		EndExec();
+		break;
+	}
 
+	return HtmlWindow::OnMessage(message, wParam, lParam);
 }
 
 int InstallerWindow::ExecOnThread()
@@ -551,4 +565,55 @@ int InstallerWindow::ExecOnThread()
 	}
 
 	return 0;
+}
+
+void InstallerWindow::Connecting(const std::wstring& host)
+{
+	CHECK_BOOL(get(m_downloaddialog) != NULL, L"Invalid download dialog");
+	std::wstring message = DVLib::FormatMessage(const_cast<wchar_t *>(m_downloaddialog->connecting_message.GetValue().c_str()), host.c_str());
+	SetStatus(message);
+}
+
+void InstallerWindow::SendingRequest(const std::wstring& host)
+{
+	CHECK_BOOL(get(m_downloaddialog) != NULL, L"Invalid download dialog");
+	std::wstring message = DVLib::FormatMessage(const_cast<wchar_t *>(m_downloaddialog->sendingrequest_message.GetValue().c_str()), host.c_str());
+	SetStatus(message);
+}
+
+void InstallerWindow::Status(ULONG progress_current, ULONG progress_max, const std::wstring& description)
+{
+	SetStatus(description);
+	SetProgressTotal(progress_max);
+	SetProgress(progress_current);
+}
+
+void InstallerWindow::DownloadComplete()
+{
+
+}
+
+void InstallerWindow::DownloadError(const std::wstring& error)
+{
+	ShowError(error);
+	RecordError();
+}
+
+bool InstallerWindow::IsDownloadCancelled() const
+{
+	return false;
+}
+
+void InstallerWindow::DownloadingFile(const std::wstring& filename)
+{
+	CHECK_BOOL(get(m_downloaddialog) != NULL, L"Invalid download dialog");
+	std::wstring message = DVLib::FormatMessage(const_cast<wchar_t *>(m_downloaddialog->downloading_message.GetValue().c_str()), filename.c_str());
+	SetStatus(message);
+}
+
+void InstallerWindow::CopyingFile(const std::wstring& filename)
+{
+	CHECK_BOOL(get(m_downloaddialog) != NULL, L"Invalid download dialog");
+	std::wstring message = DVLib::FormatMessage(const_cast<wchar_t *>(m_downloaddialog->copying_message.GetValue().c_str()), filename.c_str());
+	SetStatus(message);
 }

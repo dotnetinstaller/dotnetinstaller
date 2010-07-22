@@ -20,6 +20,7 @@ public:
 	static HtmlWindow * Self(HWND hWnd);
 	void SetCaption(const wchar_t *);
 	static ATOM RegisterClass(HINSTANCE hInstance);
+    LRESULT on_load_data(LPNMHL_LOAD_DATA pnmld);
 protected:
 	HtmlWindow();
 	int HitTest(int x, int y);
@@ -29,5 +30,6 @@ protected:
 	virtual BOOL on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason);
 	static void Self(HWND hWnd, HtmlWindow * inst);
 	static LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-	virtual void OnMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	virtual int OnMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	bool LoadResourceData(LPCWSTR uri, PBYTE& pb, DWORD& cb);
 };

@@ -76,7 +76,7 @@ void HtmlWindow::Create(int x, int y, int width, int height, const wchar_t * tit
 	{
 		PBYTE pb = NULL; 
 		DWORD cb = 0;
-		CHECK_BOOL(htmlayout::load_resource_data(L"index.html", pb, cb),
+		CHECK_BOOL(LoadResourceData(L"index.html", pb, cb),
 			L"Error loading index.html.");
 		CHECK_BOOL(HTMLayoutLoadHtml(hwnd, pb, cb),
 			L"Error loading index.html from " << DVLib::FormatBytesW(cb) << " of resource data.");
@@ -208,9 +208,9 @@ bool HtmlWindow::IsWindowMaximized() const
 	return wp.showCmd == SW_SHOWMAXIMIZED;
 }
 
-void HtmlWindow::OnMessage(UINT message, WPARAM wParam, LPARAM lParam)
+int HtmlWindow::OnMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	
+	return 0;
 }
 
 LRESULT CALLBACK HtmlWindow::WinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -234,6 +234,15 @@ LRESULT CALLBACK HtmlWindow::WinProc(HWND hwnd, UINT message, WPARAM wParam, LPA
 	// HTMLayout -
 
 	HtmlWindow * me = Self(hwnd);
+
+	if (me != NULL)
+	{
+		int mc = me->OnMessage(message, wParam, lParam);
+		if (mc != 0)
+		{
+			return mc;
+		}
+	}
 
 	switch (message) 
 	{
@@ -270,10 +279,62 @@ LRESULT CALLBACK HtmlWindow::WinProc(HWND hwnd, UINT message, WPARAM wParam, LPA
 		return 0;
 	}
 
-	if (me != NULL)
+	return DefWindowProc(hwnd, message, wParam, lParam);
+}
+
+LRESULT HtmlWindow::on_load_data(LPNMHL_LOAD_DATA pnmld)
+{
+	PBYTE pb; DWORD cb;
+	if (LoadResourceData(pnmld->uri, pb, cb))
 	{
-		me->OnMessage(message, wParam, lParam);
+		::HTMLayoutDataReady(pnmld->hdr.hwndFrom, pnmld->uri, pb,  cb);
+	}
+	return LOAD_OK;
+}
+
+bool HtmlWindow::LoadResourceData(LPCWSTR uri, PBYTE& pb, DWORD& cb)
+{
+    if (!uri || !uri[0]) 
+	{
+		return LOAD_DISCARD;
 	}
 
-	return DefWindowProc(hwnd, message, wParam, lParam);
+	std::wstring name = uri;
+	for(int i = 0; i < name.length(); i++)
+	{
+		switch(name[i])
+		{
+		case '.':
+		case '/':
+		case '\\':
+			name[i] = '_';
+			break;
+		}
+	}
+
+    HRSRC hrsrc = ::FindResourceW(0, name.c_str(), L"HTML");
+    if (! hrsrc) 
+	{
+		return false; // resource not found here - proceed with default loader
+	}
+
+    HGLOBAL hgres = ::LoadResource(0, hrsrc);
+    if (!hgres) 
+	{
+		return false;
+	}
+
+    pb = (PBYTE)::LockResource(hgres); 
+	if (!pb) 
+	{
+		return FALSE;
+	}
+
+    cb = ::SizeofResource(0, hrsrc); 
+	if (! cb) 
+	{
+		return FALSE;
+	}
+
+    return true;
 }

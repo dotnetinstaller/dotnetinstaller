@@ -221,7 +221,44 @@ namespace InstallerLib
                 ResourceUpdate.WriteFile(h, new ResourceId("CUSTOM"), new ResourceId("RES_CONFIGURATION"),
                     ResourceUtil.NEUTRALLANGID, configFilename);
 
-                // embed CABs
+                #region Embed Resources
+
+                EmbedFileCollection html_files = new EmbedFileCollection(args.apppath);
+
+                if (args.htmlFiles != null)
+                {
+                    foreach (string filename in args.htmlFiles)
+                    {
+                        string fullpath = Path.GetFullPath(filename);
+                        if (Directory.Exists(fullpath))
+                        {
+                            html_files.AddDirectory(fullpath);
+                        }
+                        else
+                        {
+                            html_files.Add(new EmbedFilePair(fullpath, Path.GetFileName(filename)));
+                        }
+                    }
+                }
+
+                IEnumerator<EmbedFilePair> html_files_enumerator = html_files.GetEnumerator();
+                while (html_files_enumerator.MoveNext())
+                {
+                    EmbedFilePair pair = html_files_enumerator.Current;
+                    String id = "";
+                    for (int i = 0; i < pair.relativepath.Length; i++)
+                    {
+                        id += Char.IsLetterOrDigit(pair.relativepath[i]) ? pair.relativepath[i] : '_';
+                    }
+                    args.WriteLine(string.Format("Embedding HTML resource \"{0}\": {1}", id, pair.fullpath));
+                    ResourceUpdate.WriteFile(h, new ResourceId("HTML"), new ResourceId(id),
+                        ResourceUtil.NEUTRALLANGID, pair.fullpath);
+                }
+
+                #endregion
+
+                #region Embed CABs
+
                 if (args.embed)
                 {
                     args.WriteLine("Embedding CABs");
@@ -245,9 +282,11 @@ namespace InstallerLib
                         ResourceUtil.NEUTRALLANGID, filesDirectory_b);
                 }
 
+                #endregion
+
                 // resource files
-                ResourceFileCollection r_files = configfile.GetResources(supportdir);
-                foreach (ResourceFilePair r_pair in r_files)
+                ResourceFileCollection resources = configfile.GetResources(supportdir);
+                foreach (ResourceFilePair r_pair in resources)
                 {
                     args.WriteLine(string.Format("Embedding resource \"{0}\": {1}", r_pair.id, r_pair.path));
                     ResourceUpdate.WriteFile(h, new ResourceId("CUSTOM"), new ResourceId(r_pair.id),

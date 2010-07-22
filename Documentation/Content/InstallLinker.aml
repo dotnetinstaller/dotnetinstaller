@@ -26,6 +26,7 @@ InstallerLinker: dotNetInstaller Packager
 /AppPath:<string>                Location of support files for embedding (short form /a)
 /Verbose[+|-]                    Verbose output (short form /v)
 /EmbedFile:<string>              Additional files to embed (short form /f)
+/EmbedHtml:<string>              Additional HTML files or folders to embed (short form /h)
 /EmbedFolder:<string>            Additional folders, including subfolders to embed (short form /r)
 /EmbedResourceSize:<int>         Max size, in bytes, of each embedded resource Default value:'131072000' (short form /z)
 /Icon:<string>                   Icon for the executable (short form /i)

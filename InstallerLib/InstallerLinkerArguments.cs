@@ -31,6 +31,8 @@ namespace InstallerLib
         public string[] embedFiles;
         [Argument(ArgumentType.MultipleUnique, HelpText = "Additional folders, including subfolders to embed", LongName = "EmbedFolder", ShortName = "r")]
         public string[] embedFolders;
+        [Argument(ArgumentType.MultipleUnique, HelpText = "Additional HTML files or folders to embed", LongName = "EmbedHtml", ShortName = "h")]
+        public string[] htmlFiles;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Max size, in bytes, of each embedded resource", LongName = "EmbedResourceSize", ShortName = "z", DefaultValue = 128 * 1024 * 1000)]
         public int embedResourceSize = 128 * 1024 * 1000;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Icon for the executable", LongName = "Icon", ShortName = "i")]

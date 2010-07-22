@@ -163,3 +163,24 @@ struct html_disabled
 		htmlayout::queue::push(new html_remove_attribute_task(p, "disabled"), HtmlWindow::s_hwnd);
     }
 };
+
+struct html_save_progress
+{
+	int m_value;
+	int m_maxvalue;
+	htmlayout::dom::element * m_p;
+
+	html_save_progress(htmlayout::dom::element * p, int value, int maxvalue)
+		: m_p(p)
+		, m_value(value)
+		, m_maxvalue(maxvalue)
+	{
+
+	}
+
+    virtual ~html_save_progress()
+    {	
+		htmlayout::queue::push(new html_set_attribute_task(m_p, "maxvalue", DVLib::towstring(m_maxvalue).c_str()), HtmlWindow::s_hwnd);
+		htmlayout::queue::push(new html_set_attribute_task(m_p, "value", DVLib::towstring(m_value).c_str()), HtmlWindow::s_hwnd);
+    }
+};

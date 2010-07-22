@@ -43,9 +43,6 @@ BEGIN
    IDC_HTMLINSTALLER   "HTMLINSTALLER"
 END
 
-INDEX HTML DISCARDABLE "Html\\index.html"
-STYLE CSS DISCARDABLE "Html\\style.css"
-
 HTMLAYOUTDLL DLL "..\\ThirdParty\\HTMLayoutSDK\\bin\\htmlayout.dll"
 
 #endif
