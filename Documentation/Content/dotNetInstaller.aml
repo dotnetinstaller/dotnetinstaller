@@ -85,15 +85,24 @@
                 configuration.xml.
               </para>
               <para>
-                Example:
+                Examples:
                 <code language="cmd">
-                  <![CDATA[setup.exe /ComponentArgs "MySetup":"INSTALLLOCATION=C:\Program Files\MySetup"]]>
+                  <![CDATA[setup.exe /ComponentArgs MySetup:"COLOR=blue SIZE=big"]]>
+                  <![CDATA[setup.exe /ComponentArgs MySetup:"COLOR=blue" /ComponentArgs MySetup:"SIZE=big"]]>
                 </code>
               </para>
               <alert class="note">
                 <para>
                   Note that if multiple components are declared with the same id the command applies to all.
                   Component arguments applied to components that don't exist are ignored.
+                </para>
+              </alert>
+              <alert class="note">
+                <para>
+                  You can optionally quote ids and values. To insert values with spaces use a double-quote.
+                  <code language="cmd">
+                    <![CDATA[setup.exe /ComponentArgs "My Setup Component":"INSTALLLOCATION=""C:\Program Files\MySetup"""]]>
+                  </code>
                 </para>
               </alert>
             </definition>

@@ -55,6 +55,27 @@ namespace dotNetInstallerUnitTests
         }
 
         [Test]
+        public void TestComponentNameArgQuotes()
+        {
+            ConfigFile configFile = new ConfigFile();
+            // setup configuration
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ComponentCmd component = new ComponentCmd();
+            setupConfiguration.Children.Add(component);
+            component.id = "cmd1";
+            component.display_name = "command 1";
+            component.command = "cmd.exe /C dir";
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
+            options.args = "/ComponentArgs \"command 1\":\"INSTALLLOCATION=\"\"C:\\Program Files\\FooBar\"\" & exit /b 123\"";
+            Assert.AreEqual(123, dotNetInstallerExeUtils.Run(options));
+            File.Delete(configFilename);
+        }
+
+        [Test]
         public void TestAllArgCmd()
         {
             ConfigFile configFile = new ConfigFile();
