@@ -47,7 +47,8 @@ void GuidUtilUnitTests::testisguid()
 		{ L"00000000", false },
 		{ L"abracadabra", false },
 		{ L"EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B", true },
-		{ L"{13709620-C279-11CE-A49E-444553540000}", true },		
+		{ L"{13709620-C279-11CE-A49E-444553540000}", true },
+		{ L"{o:\\temp\\netinstall\\msi_crash_x86.msi}", false },
 	};
 
 	for (int i = 0; i < ARRAYSIZE(data); i++)

@@ -49,6 +49,7 @@ bool DVLib::isguid(const std::wstring& guid)
 	switch(hr = ::IIDFromString(const_cast<LPOLESTR>(makeguid(guid).c_str()), & iid))
 	{
 	case E_INVALIDARG:
+	case CO_E_IIDSTRING:
 		return false;
 	case S_OK:
 		return true;
