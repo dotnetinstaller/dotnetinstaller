@@ -23,8 +23,7 @@ void HtmLayoutDll::Unload()
 		m_h = NULL;
 	}
 
-	CHECK_WIN32_BOOL(__FUnloadDelayLoadedDLL2("htmlayout.dll"),
-		L"Error unloading delay-loaded htmlayout.dll.");
+	__FUnloadDelayLoadedDLL2("htmlayout.dll");
 
 	if (! m_path.empty())
 	{

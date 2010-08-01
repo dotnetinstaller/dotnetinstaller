@@ -16,15 +16,17 @@ protected:
 		LCID oslcid, const std::vector<ConfigurationPtr>&, int level);
 public:
 	ConfigFileManager();
+	virtual ~ConfigFileManager();
 	// load configurations
 	void Load();
 	// run the configurations
-	int Run();
+	void Run();
 	// string representation of this configuration
 	std::wstring GetString() const;
 	// configuration iterators
 	std::vector<ConfigurationPtr>::const_iterator begin() const { return Configurations::begin(); }
 	std::vector<ConfigurationPtr>::const_iterator end() const { return Configurations::end(); }
+	int GetRecordedError() const { return m_pInstallerWindow->GetRecordedError(); }
 };
 
 typedef shared_any<ConfigFileManager *, close_delete> ConfigFileManagerPtr;

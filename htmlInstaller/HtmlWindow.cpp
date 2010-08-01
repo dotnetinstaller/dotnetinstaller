@@ -273,7 +273,6 @@ LRESULT CALLBACK HtmlWindow::WinProc(HWND hwnd, UINT message, WPARAM wParam, LPA
 		::DestroyWindow(hwnd);
 		return 0;
 	case WM_DESTROY:
-		delete me;
 		Self(hwnd, 0);
 		PostQuitMessage(0);
 		return 0;
@@ -300,7 +299,7 @@ bool HtmlWindow::LoadResourceData(LPCWSTR uri, PBYTE& pb, DWORD& cb)
 	}
 
 	std::wstring name = uri;
-	for(int i = 0; i < name.length(); i++)
+	for(unsigned int i = 0; i < name.length(); i++)
 	{
 		switch(name[i])
 		{

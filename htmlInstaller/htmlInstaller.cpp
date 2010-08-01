@@ -3,6 +3,7 @@
 #include "HtmlWindow.h"
 #include "ConfigFileManager.h"
 #include "HtmlayoutDll.h"
+#include "ExtractCabProcessor.h"
 #include <Version/Version.h>
 
 #define MAX_LOADSTRING 100
@@ -40,13 +41,16 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 		// Perform application initialization:
 		if (! InitInstance(hInstance, nCmdShow))
+		{
+			ExitInstance();
 			return 0;
+		}
 
 		hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_HTMLINSTALLER));
 
 		ConfigFileManagerPtr config(new ConfigFileManager());
 		config->Load();
-		int rc = config->Run();
+		config->Run();
 
 		// Main message loop:
 		while (GetMessage(&msg, NULL, 0, 0))
@@ -61,8 +65,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			}
 		}
 
+		int rc = config->GetRecordedError();
 		reset(config);
-
 		TRYLOG(L"htmlInstaller finished, return code=" << rc);
 		ExitInstance();
 		return rc;
@@ -71,6 +75,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	{
         DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
 		TRYLOG(L"Error: " << DVLib::string2wstring(ex.what()));
+		ExitInstance();
 		return -1;
 	}
 }
@@ -172,7 +177,8 @@ void DisplayHelp()
 
 void DisplayCab()
 {
-	// TODO
+	ExtractCabProcessorPtr extractcab(new ExtractCabProcessor(InstallerWindow::s_hinstance, L"", NULL));
+	DniMessageBox::Show(DVLib::join(extractcab->GetCabFiles(), L"\r\n"), MB_OK|MB_ICONINFORMATION);
 }
 
 void ExtractAllCabs()
@@ -195,7 +201,20 @@ void ExtractAllCabs()
 
 void ExtractCab(const std::wstring& id)
 {
-	// TODO
+	ExtractCabProcessorPtr p_extractcab(new ExtractCabProcessor(InstallerWindow::s_hinstance, id, NULL));	
+	int cab_count = p_extractcab->GetCabCount();
+	if (cab_count == 0)
+	{
+		LOG(L"Extracting embedded files for component '" << (id.empty() ? L"*" : id) << L"': NO FILES EMBEDDED");
+		return;
+	}
+
+	LOG(L"Extracting embedded files for component '" << (id.empty() ? L"*" : id) << L"': " << cab_count << L" CAB(s)");
+
+	p_extractcab->cab_path = DVLib::GetCurrentDirectoryW();
+	p_extractcab->cab_path.append(L"\\SupportFiles");
+	p_extractcab->BeginExec();
+	p_extractcab->EndExec();
 }
 
 void DisplayConfig()

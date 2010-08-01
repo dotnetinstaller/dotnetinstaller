@@ -8,7 +8,7 @@ public:
     ThreadComponent();
 	~ThreadComponent();
 public:
-    bool IsExecuting() const;
+	bool IsExecuting(DWORD dwTimeout = 0) const;
 	const std::wstring& GetError() const { return m_error; }
     void Exec();
 	void BeginExec();

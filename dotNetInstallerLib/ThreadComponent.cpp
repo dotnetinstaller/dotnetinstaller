@@ -14,12 +14,12 @@ ThreadComponent::~ThreadComponent()
 	WaitForCompletion();
 }
 
-bool ThreadComponent::IsExecuting() const
+bool ThreadComponent::IsExecuting(DWORD dwTimeout) const
 {
     if (get(m_pThread) == NULL)
         return false;
 
-    return (WAIT_TIMEOUT == WaitForSingleObject(m_pThread->m_hThread, 0));
+    return (WAIT_TIMEOUT == WaitForSingleObject(m_pThread->m_hThread, dwTimeout));
 }
 
 UINT ThreadComponent::ExecuteThread(LPVOID pParam)

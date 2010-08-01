@@ -8,6 +8,15 @@ ConfigFileManager::ConfigFileManager()
 {
 }
 
+ConfigFileManager::~ConfigFileManager()
+{
+	if (m_pInstallerWindow != NULL)
+	{
+		delete m_pInstallerWindow;
+		m_pInstallerWindow = NULL;
+	}
+}
+
 bool ConfigFileManager::OnVersionError(const std::wstring& version, const std::wstring& filename)
 {
 	std::wstring version_message = DVLib::FormatMessageW(
@@ -55,7 +64,7 @@ bool ConfigFileManager::OnLoad()
 	return false;
 }
 
-int ConfigFileManager::Run()
+void ConfigFileManager::Run()
 {
 	MONITORINFO mi = { 0 };
 	mi.cbSize = sizeof(mi);
@@ -75,9 +84,6 @@ int ConfigFileManager::Run()
 		L"InstallerWindow::Create");
 
 	ConfigFiles::Run();
-
-	// return dlg.GetRecordedError();
-	return 0;
 }
 
 bool ConfigFileManager::OnSelectLanguage()

@@ -273,10 +273,10 @@ int InstallerWindow::OnMessage(UINT message, WPARAM wParam, LPARAM lParam)
 	switch(message)
 	{
 	case WM_CLOSE:
-		if (IsExecuting()) 
-		{
+
+		if (IsExecuting(1000 * 3)) 
 			return -1;
-		}
+
 		EndExec();
 		InstallerUI::Terminate();
 		break;
@@ -290,11 +290,11 @@ int InstallerWindow::ExecOnThread()
 	try
 	{
 		auto_any<htmlayout::dom::element *, html_disabled> btn_install(& button_install);
-		button_install.set_attribute("disabled", L"disabled");
+		htmlayout::queue::push(new html_set_attribute_task(& button_install, "disabled", L"disabled"), HtmlWindow::s_hwnd);
 		auto_any<htmlayout::dom::element *, html_disabled> btn_cancel(& button_cancel);
-		button_cancel.set_attribute("disabled", L"disabled");
+		htmlayout::queue::push(new html_set_attribute_task(& button_cancel, "disabled", L"disabled"), HtmlWindow::s_hwnd);
 		auto_any<htmlayout::dom::element *, html_disabled> btn_skip(& button_skip);
-		button_skip.set_attribute("disabled", L"disabled");
+		htmlayout::queue::push(new html_set_attribute_task(& button_skip, "disabled", L"disabled"), HtmlWindow::s_hwnd);
 
 		ClearError();
 		ClearProgress();
@@ -308,8 +308,8 @@ int InstallerWindow::ExecOnThread()
 		SetProgressTotal(components.size() * 2);
 
 		int rc = components.Exec(this);
-
 		InstallerUI::AfterInstall(rc);
+		return 0;
     }
     catch(std::exception& ex)
     {
