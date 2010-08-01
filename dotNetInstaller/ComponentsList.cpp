@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "ComponentsList.h"
+#include "dotNetInstallerDlg.h"
 
 CComponentsList::CComponentsList()
 	: m_pConfiguration(NULL)
@@ -79,107 +80,21 @@ void CComponentsList::PreDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CCheckListBox::PreDrawItem(lpDrawItemStruct);
 }
 
-bool CComponentsList::Reload()
+void CComponentsList::AddComponent(const ComponentPtr& component, const std::wstring& description, bool checked, bool disabled)
 {
-	return Load(m_lcidtype, m_pConfiguration);
-}
-
-bool CComponentsList::Load(DVLib::LcidType lcidtype, InstallConfiguration * pConfiguration)
-{
-	bool all = true;
-
-	ResetContent();
+	int id = AddString(description.c_str());
+	SetItemDataPtr(id, get(component));
+	if (checked) SetCheck(id, 1);
+	if (disabled) Enable(id, 0);
 
 	CDC * pDC = GetDC();
 	ASSERT(pDC);
-
-	int hScrollWidth = 0;
-
-	Components components = pConfiguration->GetSupportedComponents(
-		lcidtype, InstallerSession::Instance->sequence);
-
-	for (size_t i = 0; i < components.size(); i++)
+	CSize size = pDC->GetTextExtent(component->GetDisplayName().c_str());
+	if ((size.cx > 0) && (GetHorizontalExtent() < size.cx))
 	{
-		ComponentPtr component(components[i]);
-		component->checked = true;
-        bool component_installed = component->IsInstalled();
-        
-        LOG(L"-- " << component->id << L" (" << component->GetDisplayName() << L"): " 
-			<< (component_installed ? L"INSTALLED" : L"NOT INSTALLED"));		
-
-		// component selection
-		if (component_installed && InstallerSession::Instance->sequence == SequenceInstall)
-			component->checked = false;
-		if (! component_installed && InstallerSession::Instance->sequence == SequenceUninstall)
-			component->checked = false;
-
-		if (InstallerSession::Instance->sequence == SequenceInstall)
-			all &= component_installed;
-		else if (InstallerSession::Instance->sequence == SequenceUninstall)
-			all &= (! component_installed);
-
-		std::wstring l_descr = component->GetDisplayName();
-	    l_descr += L" ";
-        l_descr += component_installed
-			? (component->status_installed.empty() ? pConfiguration->status_installed : component->status_installed)
-			: (component->status_notinstalled.empty() ? pConfiguration->status_notinstalled : component->status_notinstalled);
-
-		// show installed
-        if (InstallerSession::Instance->sequence == SequenceInstall 
-			&& ! pConfiguration->dialog_show_installed 
-			&& component_installed)
-            continue;
-
-		// show uninstalled
-        if (InstallerSession::Instance->sequence == SequenceUninstall 
-			&& ! pConfiguration->dialog_show_uninstalled
-			&& ! component_installed)
-            continue;
-
-        if (! pConfiguration->dialog_show_required)
-		{
-			if (component->required_install && InstallerSession::Instance->sequence == SequenceInstall)
-				continue;
-			else if (component->required_uninstall && InstallerSession::Instance->sequence == SequenceUninstall)
-				continue;
-		}
-
-		int id = AddString(l_descr.c_str());
-		SetItemDataPtr(id, get(component));
-
-        if (component->checked)
-        {
-			if (component->selected_install && InstallerSession::Instance->sequence == SequenceInstall)
-				SetCheck(id, 1);
-			else if (component->selected_uninstall && InstallerSession::Instance->sequence == SequenceUninstall)
-				SetCheck(id, 1);
-        }
-
-        // a component is considered installed when it has an install check which results
-        // in a clear positive; if a component doesn't have any install checks, it cannot
-        // be required (there's no way to check whether the component was installed)
-        if (InstallerSession::Instance->sequence == SequenceInstall 
-			&& (component->required_install || component_installed))
-            Enable(id, 0);
-        else if (InstallerSession::Instance->sequence == SequenceUninstall 
-			&& (component->required_uninstall || ! component_installed))
-            Enable(id, 0);
-
-		CSize size = pDC->GetTextExtent(component->GetDisplayName().c_str());
-		if ((size.cx > 0) && (hScrollWidth < size.cx))
-			hScrollWidth = size.cx;
+		SetHorizontalExtent(size.cx);
     }
-
-	if (hScrollWidth > 0 )
-	{
-		SetHorizontalExtent(hScrollWidth);
-	}
-
-	m_lcidtype = lcidtype;
-	m_pConfiguration = pConfiguration;
-
 	ReleaseDC(pDC);
-	return all;
 }
 
 void CComponentsList::OnLButtonDblClk(UINT nFlags, CPoint point)
@@ -192,7 +107,10 @@ void CComponentsList::OnLButtonDblClk(UINT nFlags, CPoint point)
 		{
 			ComponentPtr component = m_pConfiguration->GetComponentPtr((Component *) GetItemDataPtr(uiItem));
 			Exec(component);
-			Reload();
+			if (m_pExecuteCallback)
+			{
+				m_pExecuteCallback->LoadComponentsList();
+			}
 		}
 	}
 	else if (nFlags & MK_SHIFT && nFlags && MK_LBUTTON)
@@ -242,7 +160,13 @@ void CComponentsList::Exec(const ComponentPtr& component)
 	}
 }
 
-void CComponentsList::SetExecuteCallback(IExecuteCallback * pExec)
+void CComponentsList::SetExecuteCallback(CdotNetInstallerDlg * pExec)
 {
 	m_pExecuteCallback = pExec;
+}
+
+void CComponentsList::Load(DVLib::LcidType lcidtype, InstallConfiguration * pConfiguration)
+{
+	m_pConfiguration = pConfiguration;
+	m_lcidtype = lcidtype;
 }

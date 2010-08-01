@@ -52,7 +52,7 @@ void CSplashWnd::EnableSplashScreen(BOOL bEnable /*= TRUE*/)
 	m_bShowSplashWnd = bEnable;
 }
 
-BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, UINT uBitmapID, CWnd* pParentWnd /*= NULL*/)
+BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, UINT uBitmapID, HWND hParent /*= NULL*/)
 {
 	ASSERT(uTimeOut && uBitmapID);
 	
@@ -70,7 +70,7 @@ BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, UINT uBitmapID, CWnd* pParentWn
 		return FALSE;
 	}
 
-	if (! m_pSplashWnd->ShowSplashScreen(uTimeOut, pParentWnd))
+	if (! m_pSplashWnd->ShowSplashScreen(uTimeOut, hParent))
 	{
 		delete m_pSplashWnd;
 		m_pSplashWnd = NULL;
@@ -80,7 +80,7 @@ BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, UINT uBitmapID, CWnd* pParentWn
 	return TRUE;
 }
 
-BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, LPCTSTR lpszResourceID, CWnd* pParentWnd /*= NULL*/)
+BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, LPCTSTR lpszResourceID, HWND hParent /*= NULL*/)
 {
 	ASSERT(uTimeOut && lpszResourceID);
 	
@@ -97,7 +97,7 @@ BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, LPCTSTR lpszResourceID, CWnd* p
 		return FALSE;
 	}
 
-	if (! m_pSplashWnd->ShowSplashScreen(uTimeOut, pParentWnd)) {
+	if (! m_pSplashWnd->ShowSplashScreen(uTimeOut, hParent)) {
 		delete m_pSplashWnd;
 		m_pSplashWnd = NULL;
 		return FALSE;
@@ -106,7 +106,7 @@ BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, LPCTSTR lpszResourceID, CWnd* p
 	return TRUE;
 }
 
-BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, HBITMAP h, CWnd* pParentWnd)
+BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, HBITMAP h, HWND hParent)
 {
 	ASSERT(uTimeOut && h);
 	
@@ -123,7 +123,7 @@ BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, HBITMAP h, CWnd* pParentWnd)
 	m_pSplashWnd = new CSplashWnd;
 	m_pSplashWnd->m_pBitmap = pBitmap;
 
-	if (! m_pSplashWnd->ShowSplashScreen(uTimeOut, pParentWnd)) {
+	if (! m_pSplashWnd->ShowSplashScreen(uTimeOut, hParent)) {
 		delete m_pSplashWnd;
 		m_pSplashWnd = NULL;
 		return FALSE;
@@ -132,7 +132,7 @@ BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, HBITMAP h, CWnd* pParentWnd)
 	return TRUE;
 }
 
-BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, CWnd* pParentWnd)
+BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, HWND hParent)
 {
 	ASSERT(m_pBitmap);
 
@@ -143,7 +143,7 @@ BOOL CSplashWnd::ShowSplashScreen(UINT uTimeOut, CWnd* pParentWnd)
 		AfxGetApp()->LoadStandardCursor(IDC_ARROW));
 
 	if (! CreateEx(0, strWndClass, NULL, WS_POPUP | WS_VISIBLE,
-		0, 0, bm.bmWidth, bm.bmHeight, pParentWnd != NULL ? pParentWnd->GetSafeHwnd() : NULL, NULL))
+		0, 0, bm.bmWidth, bm.bmHeight, hParent, NULL))
 	{
 		TRACE0("Failed to create splash screen.\n");
 		return FALSE;

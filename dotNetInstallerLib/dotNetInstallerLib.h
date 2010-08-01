@@ -57,3 +57,4 @@
 #include "SplashWnd.h"
 #include "InstallerCommandLineInfo.h"
 #include "DisableWnd.h"
+#include "InstallerUI.h"

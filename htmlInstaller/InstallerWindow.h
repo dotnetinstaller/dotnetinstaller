@@ -2,16 +2,10 @@
 
 #include "HtmlWindow.h"
 
-class InstallerWindow : public HtmlWindow, public ThreadComponent, public IExecuteCallback, public IDownloadCallback
+class InstallerWindow : public HtmlWindow, public ThreadComponent, 
+	public InstallerUI, public IExecuteCallback, public IDownloadCallback
 {
 private:
-	int m_recorded_error;
-	int m_recorded_progress;
-	int m_total_progress;
-	bool m_reboot;
-	bool m_additional_config;
-	DVLib::LcidType m_lcidtype;
-	ConfigurationPtr m_configuration;
 	DownloadDialogPtr m_downloaddialog;
 	htmlayout::dom::element components;
 	htmlayout::dom::element button_install;
@@ -39,11 +33,16 @@ private:
 	void DownloadComplete();
 	void DownloadError(const std::wstring& message);
 	bool IsDownloadCancelled() const;
+protected:
+	void AddComponent(const ComponentPtr& component, const std::wstring& description, bool checked, bool disabled);
+	bool Run();
+	HINSTANCE GetInstance() const;
+	HWND GetHwnd() const;
+	void StartInstall();
+	void Stop();
 public:
-	bool RunInstallConfiguration(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration, bool additional_config);
 	bool RunDownloadConfiguration(const DownloadDialogPtr& p_Configuration);
 	void Create(int x, int y, int width, int height, const wchar_t * caption = 0);
-	bool LoadComponentsList();
 	void ResetContent();
 	void DoModal();
 	BOOL on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason);
@@ -51,7 +50,6 @@ public:
 public:
 	void OnInstall();
 	void OnOK();
-	void RecordError(int error = -1);
 	void ShowError(const std::wstring&);
 	void ClearError();
 	// progress

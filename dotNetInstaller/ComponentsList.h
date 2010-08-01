@@ -1,11 +1,13 @@
 #pragma once
 
+class CdotNetInstallerDlg;
+
 class CComponentsList :
 	public CCheckListBox
 {
 	DECLARE_DYNAMIC(CComponentsList);
 private:
-	IExecuteCallback * m_pExecuteCallback;
+	CdotNetInstallerDlg * m_pExecuteCallback;
 	InstallConfiguration * m_pConfiguration;
 	DVLib::LcidType m_lcidtype;
 	void Exec(const ComponentPtr& component);
@@ -16,8 +18,8 @@ protected:
 	void OnLButtonDblClk(UINT nFlags, CPoint point);
 	DECLARE_MESSAGE_MAP();
 public:
-	void SetExecuteCallback(IExecuteCallback *);
-	bool Load(DVLib::LcidType lcidtype, InstallConfiguration * pConfiguration);
-	bool Reload();
+	void SetExecuteCallback(CdotNetInstallerDlg *);
+	void Load(DVLib::LcidType lcidtype, InstallConfiguration * pConfiguration);
+	void AddComponent(const ComponentPtr& component, const std::wstring& description, bool checked, bool disabled);
 	CComponentsList();
 };

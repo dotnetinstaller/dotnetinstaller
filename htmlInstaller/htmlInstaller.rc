@@ -45,4 +45,7 @@ END
 
 HTMLAYOUTDLL DLL "..\\ThirdParty\\HTMLayoutSDK\\bin\\htmlayout.dll"
 
+INDEX_HTML HTM "html\\index.html"
+STYLE_CSS HTM "html\\style.css"
+
 #endif

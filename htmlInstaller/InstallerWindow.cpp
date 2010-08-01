@@ -5,12 +5,7 @@
 #include "HtmlWidgets.h"
 #include "Resource.h"
 
-InstallerWindow::InstallerWindow(void)
-	: m_reboot(false)
-	, m_recorded_error(0)
-	, m_total_progress(0)
-	, m_recorded_progress(0)
-	, m_additional_config(false)
+InstallerWindow::InstallerWindow()
 {
 
 }
@@ -25,21 +20,15 @@ void InstallerWindow::Create(int x, int y, int width, int height, const wchar_t 
 		L"Missing widget with id='components' in HTML");
 }
 
-bool InstallerWindow::RunInstallConfiguration(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration, bool additional_config)
+bool InstallerWindow::Run()
 {
-	m_configuration = configuration;
-	m_lcidtype = lcidtype;
-	m_additional_config = additional_config;
 	DoModal();
-	// return(IDOK == this->DoModal());
+	// return(IDOK == DoModal());
 	return true;
 }
 
 void InstallerWindow::DoModal()
 {
-	// remove the Run key if exist
-	InstallerSession::Instance->DisableRunOnReboot();
-
 	// os label
 	htmlayout::dom::element r = GetRoot();
 	htmlayout::dom::element os = r.get_element_by_id("os");
@@ -60,25 +49,11 @@ void InstallerWindow::DoModal()
 	progress = r.get_element_by_id("progress");
 	ClearProgress();
 
-	// load xml file
+	// load components
+	LoadComponents();
+
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-
-	// load components
-
-	bool all = LoadComponentsList();
-
-	if (InstallerSession::Instance->sequence == SequenceInstall && all && p_configuration->supports_uninstall)
-	{
-		LOG("All components installed, switching to uninstall.");
-		InstallerSession::Instance->sequence = SequenceUninstall;
-		all = LoadComponentsList();
-		if (all)
-		{
-			LOG("All components uninstalled, nothing to do.");
-			InstallerSession::Instance->sequence = SequenceInstall;
-		}
-	}
 
 	// labels and info
 	htmlayout::dom::element dialog_message = r.get_element_by_id("dialog_message");
@@ -121,6 +96,8 @@ void InstallerWindow::DoModal()
 
 	CHECK_WIN32_BOOL(UpdateWindow(hwnd),
 		L"UpdateWindow");
+
+	Start();
 }
 
 bool InstallerWindow::RunDownloadConfiguration(const DownloadDialogPtr& p_Configuration)
@@ -139,92 +116,15 @@ bool InstallerWindow::RunDownloadConfiguration(const DownloadDialogPtr& p_Config
 	return 0 == p_Configuration->ExecOnThread();
 }
 
-// returns true if all components have been installed
-bool InstallerWindow::LoadComponentsList()
+void InstallerWindow::AddComponent(const ComponentPtr& component, const std::wstring& description, bool checked, bool disabled)
 {
-	InstallConfiguration * pConfiguration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
-	CHECK_BOOL(pConfiguration != NULL, L"Invalid configuration");	
-
-	bool all = true;
-
-	ResetContent();
-
-	Components components_list = pConfiguration->GetSupportedComponents(
-		m_lcidtype, InstallerSession::Instance->sequence);
-
-	for (size_t i = 0; i < components_list.size(); i++)
-	{
-		ComponentPtr component(components_list[i]);
-		component->checked = true;
-        bool component_installed = component->IsInstalled();
-        
-        LOG(L"-- " << component->id << L" (" << component->GetDisplayName() << L"): " 
-			<< (component_installed ? L"INSTALLED" : L"NOT INSTALLED"));		
-
-		// component selection
-		if (component_installed && InstallerSession::Instance->sequence == SequenceInstall)
-			component->checked = false;
-		if (! component_installed && InstallerSession::Instance->sequence == SequenceUninstall)
-			component->checked = false;
-
-		if (InstallerSession::Instance->sequence == SequenceInstall)
-			all &= component_installed;
-		else if (InstallerSession::Instance->sequence == SequenceUninstall)
-			all &= (! component_installed);
-
-		std::wstring l_descr = component->GetDisplayName();
-	    l_descr += L" ";
-        l_descr += component_installed
-			? (component->status_installed.empty() ? pConfiguration->status_installed : component->status_installed)
-			: (component->status_notinstalled.empty() ? pConfiguration->status_notinstalled : component->status_notinstalled);
-
-		// show installed
-        if (InstallerSession::Instance->sequence == SequenceInstall 
-			&& ! pConfiguration->dialog_show_installed 
-			&& component_installed)
-            continue;
-
-		// show uninstalled
-        if (InstallerSession::Instance->sequence == SequenceUninstall 
-			&& ! pConfiguration->dialog_show_uninstalled
-			&& ! component_installed)
-            continue;
-
-        if (! pConfiguration->dialog_show_required)
-		{
-			if (component->required_install && InstallerSession::Instance->sequence == SequenceInstall)
-				continue;
-			else if (component->required_uninstall && InstallerSession::Instance->sequence == SequenceUninstall)
-				continue;
-		}
-
-		htmlayout::dom::element opt = htmlayout::dom::element::create("widget", l_descr.c_str());
-		opt["type"] = L"checkbox";
-		opt["id"] = component->id.GetValue().c_str();
-		opt["component_ptr"] = DVLib::towstring(get(component)).c_str();
-
-        if (component->checked)
-        {
-			if (component->selected_install && InstallerSession::Instance->sequence == SequenceInstall)
-				opt["checked"] = L"true";
-			else if (component->selected_uninstall && InstallerSession::Instance->sequence == SequenceUninstall)
-				opt["checked"] = L"true";
-        }
-
-        // a component is considered installed when it has an install check which results
-        // in a clear positive; if a component doesn't have any install checks, it cannot
-        // be required (there's no way to check whether the component was installed)
-        if (InstallerSession::Instance->sequence == SequenceInstall 
-			&& (component->required_install || component_installed))
-            opt["disabled"] = L"true";
-        else if (InstallerSession::Instance->sequence == SequenceUninstall 
-			&& (component->required_uninstall || ! component_installed))
-            opt["disabled"] = L"true";
-
-		htmlayout::queue::push(new html_insert_task(& components, opt, i + 1), HtmlWindow::s_hwnd);
-    }
-
-	return all;
+	htmlayout::dom::element opt = htmlayout::dom::element::create("widget", description.c_str());
+	opt["type"] = L"checkbox";
+	opt["id"] = component->id.GetValue().c_str();
+	opt["component_ptr"] = DVLib::towstring(get(component)).c_str();
+	if (checked) opt["checked"] = L"true";
+	if (disabled) opt["disabled"] = L"true";
+	htmlayout::queue::push(new html_insert_task(& components, opt, components.children_count() + 1), HtmlWindow::s_hwnd);
 }
 
 BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason)
@@ -255,7 +155,7 @@ BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS typ
 
 void InstallerWindow::OnOK()
 {
-	::PostMessage(hwnd, WM_CLOSE, 0,0);
+	Stop();
 }
 
 void InstallerWindow::OnInstall()
@@ -269,17 +169,9 @@ void InstallerWindow::ShowError(const std::wstring& message)
 	htmlayout::queue::push(new html_set_text_task(& error, message), HtmlWindow::s_hwnd);
 }
 
-void InstallerWindow::RecordError(int error) 
-{ 
-	if (m_recorded_error == 0) 
-	{
-		m_recorded_error = error; 
-	}
-}
-
 void InstallerWindow::ClearError() 
 { 
-	m_recorded_error = 0; 
+	InstallerUI::ClearError();
 	htmlayout::queue::push(new html_set_style_attribute_task(& error, "display", L"none"), HtmlWindow::s_hwnd);
 	htmlayout::queue::push(new html_set_text_task(& error, L""), HtmlWindow::s_hwnd);
 }
@@ -336,23 +228,7 @@ void InstallerWindow::OnExecBegin()
 
 bool InstallerWindow::OnComponentExecBegin(const ComponentPtr& component)
 {
-	// embedded cab?
-	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
-	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-
-	ExtractCab(component->id, p_configuration->show_cab_dialog && component->show_cab_dialog);
-
-	// download?
-	if (get(component->downloaddialog))
-	{
-		if (! RunDownloadConfiguration(component->downloaddialog))
-		{
-			LOG(L"*** Component '" << component->id << L" (" << component->GetDisplayName() << L"): ERROR ON DOWNLOAD");
-			THROW_EX(L"Error downloading '" << component->id << L" (" << component->GetDisplayName() << L")");
-		}
-	}
-
-	return true;
+	return InstallerUI::ComponentExecBegin(component);
 }
 
 bool InstallerWindow::OnComponentExecWait(const ComponentPtr& component)
@@ -364,85 +240,13 @@ bool InstallerWindow::OnComponentExecWait(const ComponentPtr& component)
 bool InstallerWindow::OnComponentExecSuccess(const ComponentPtr& component)
 {
 	SetProgress(m_recorded_progress + 1);
-
-	if (! component->installcompletemessage.empty())
-	{
-		SetStatus(component->installcompletemessage);
-	}
-
-	// se l'installazione ha chiesto di riavviare non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
-	if (component->IsRebootRequired())
-	{
-		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
-		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-
-		LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): REQUESTS REBOOT");
-
-		std::wstring reboot_required = component->reboot_required;
-		if (reboot_required.empty()) reboot_required = p_configuration->reboot_required;
-		
-		if (p_configuration->must_reboot_required || component->must_reboot_required)
-		{
-			LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): REQUIRES REBOOT");
-			DniMessageBox::Show(reboot_required, MB_OK | MB_ICONQUESTION);
-			m_reboot = true;
-		}
-		else if (DniMessageBox::Show(reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES)
-		{
-			m_reboot = true;
-		}
-
-		if (m_reboot)
-		{
-			LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L": CAUSED A REBOOT");
-			return false;
-		}
-	}
-
-	return true;
+	return InstallerUI::ComponentExecSuccess(component);
 }
 
 bool InstallerWindow::OnComponentExecError(const ComponentPtr& component, std::exception& ex)
 {
-	LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L")' FAILED: " << DVLib::string2wstring(ex.what()));
 	SetProgress(m_recorded_progress + 1);
-	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
-	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-    // the component failed to install, display an error message and let the user choose to continue or not
-    // unless global or component setting decides otherwise
-	std::wstring failed_exec_command_continue = component->failed_exec_command_continue;
-	if (failed_exec_command_continue.empty()) failed_exec_command_continue = p_configuration->failed_exec_command_continue;
-	std::wstring error_message = DVLib::FormatMessage(const_cast<wchar_t *>(failed_exec_command_continue.c_str()), 
-		component->GetDisplayName().c_str());
-
-    bool break_sequence = false;
-	if (error_message.empty())
-	{
-		break_sequence = ! component->default_continue_on_error;
-	}
-    else if (component->allow_continue_on_error)
-    {
-	    break_sequence = (DniMessageBox::Show(error_message, MB_YESNO, 
-			component->default_continue_on_error ? IDYES : IDNO,
-			MB_YESNO | MB_ICONEXCLAMATION) == IDNO);
-    }
-    else
-    {
-		ShowError(error_message);
-        break_sequence = true;
-    }
-
-    if (break_sequence)
-	{
-		LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): FAILED, ABORTING");
-		return false;
-	} 
-	else 
-	{
-		LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): FAILED, CONTINUE");
-	}
-
-	return true;
+	return InstallerUI::ComponentExecError(component, ex);
 }
 
 void InstallerWindow::ExtractCab(const std::wstring& id, bool display_progress)
@@ -474,6 +278,7 @@ int InstallerWindow::OnMessage(UINT message, WPARAM wParam, LPARAM lParam)
 			return -1;
 		}
 		EndExec();
+		InstallerUI::Terminate();
 		break;
 	}
 
@@ -504,52 +309,7 @@ int InstallerWindow::ExecOnThread()
 
 		int rc = components.Exec(this);
 
-		if (rc != 0)
-		{
-			RecordError(rc);
-		}
-
-		if (m_reboot)
-		{
-			InstallerSession::Instance->EnableRunOnReboot(p_configuration->reboot_cmd);
-			DVLib::ExitWindowsSystem(EWX_REBOOT);
-			PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);
-			return 0;
-		}
-
-		// silent execution, 
-		if (InstallUILevelSetting::Instance->IsSilent()) 
-		{
-			OnOK();
-			return 0;
-		}
-
-		// failure and auto-close-on-error
-		if (rc != 0 && p_configuration->auto_close_on_error)
-		{
-			LOG(L"*** Failed to install one or more components, closing (auto_close_on_error).");
-			OnOK();
-			return 0;
-		}
-
-		// failure and reload-on-error
-		if (rc != 0 && p_configuration->reload_on_error)
-		{
-			LOG(L"*** Failed to install one or more components, reloading components (reload_on_error).");
-			LoadComponentsList();
-			return 0;
-		}
-
-		// success and possibly auto-close with a complete code if all components have been installed
-		if (rc == 0)
-		{
-			bool all = LoadComponentsList();
-			if (all || p_configuration->auto_close_if_installed) 
-			{
-				// ExecuteCompleteCode(true);
-				OnOK();
-			}
-		}
+		InstallerUI::AfterInstall(rc);
     }
     catch(std::exception& ex)
     {
@@ -616,4 +376,24 @@ void InstallerWindow::CopyingFile(const std::wstring& filename)
 	CHECK_BOOL(get(m_downloaddialog) != NULL, L"Invalid download dialog");
 	std::wstring message = DVLib::FormatMessage(const_cast<wchar_t *>(m_downloaddialog->copying_message.GetValue().c_str()), filename.c_str());
 	SetStatus(message);
+}
+
+HINSTANCE InstallerWindow::GetInstance() const
+{
+	return HtmlWindow::s_hinstance;
+}
+
+HWND InstallerWindow::GetHwnd() const
+{
+	return HtmlWindow::s_hwnd;
+}
+
+void InstallerWindow::StartInstall()
+{
+	OnInstall();
+}
+
+void InstallerWindow::Stop()
+{
+	::PostMessage(hwnd, WM_CLOSE, 0,0);
 }

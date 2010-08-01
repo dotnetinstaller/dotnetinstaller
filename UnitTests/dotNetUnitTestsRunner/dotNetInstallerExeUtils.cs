@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using NUnit.Framework;
 using System.Diagnostics;
+using System.Configuration;
 
 namespace dotNetUnitTestsRunner
 {
@@ -86,13 +87,18 @@ namespace dotNetUnitTestsRunner
         {
             get
             {
-                string result = Path.Combine(Location, "dotNetInstaller.exe");
-                Assert.IsTrue(File.Exists(result));
-                return result;
+                string executable = ConfigurationManager.AppSettings["executable"];
+                if (string.IsNullOrEmpty(executable))
+                {
+                    throw new Exception("Missing executable in .config");
+                    // executable = Path.Combine(Location, "dotNetInstaller.exe");
+                }
+                Assert.IsTrue(File.Exists(executable));
+                return executable;
             }
         }
 
-        public static string Location
+        private static string Location
         {
             get
             {

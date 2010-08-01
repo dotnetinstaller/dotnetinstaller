@@ -295,6 +295,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InstallerUI.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\InstallSequence.cpp"
 				>
 			</File>
@@ -558,6 +562,10 @@
 			</File>
 			<File
 				RelativePath=".\InstallerSession.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstallerUI.h"
 				>
 			</File>
 			<File

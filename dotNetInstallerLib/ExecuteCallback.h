@@ -3,7 +3,7 @@
 class IExecuteCallback
 {
 public:
-	// executiion begins
+	// execution begins
 	virtual void OnExecBegin() = 0;
 	// component execution begins
 	virtual bool OnComponentExecBegin(const ComponentPtr&) = 0;

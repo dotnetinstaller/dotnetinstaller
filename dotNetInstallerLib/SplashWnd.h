@@ -44,9 +44,9 @@ public:
 	//
 	//             CSplashWnd::ShowSplashScreen(3000, IDB_SPLASH24, this);
 	//
-	static BOOL ShowSplashScreen(UINT uTimeOut, UINT uBitmapID, CWnd* pParentWnd = NULL);
-	static BOOL ShowSplashScreen(UINT uTimeOut, LPCTSTR lpszResourceID, CWnd* pParentWnd = NULL);
-	static BOOL ShowSplashScreen(UINT uTimeOut, HBITMAP h, CWnd* pParentWnd = NULL);
+	static BOOL ShowSplashScreen(UINT uTimeOut, UINT uBitmapID, HWND hParent = NULL);
+	static BOOL ShowSplashScreen(UINT uTimeOut, LPCTSTR lpszResourceID, HWND hParent = NULL);
+	static BOOL ShowSplashScreen(UINT uTimeOut, HBITMAP h, HWND hParent = NULL);
 
 	// -> Input:   bEnable - TRUE to enable the splash screen.
 	// -> Remarks: This member function is called to enable the splash screen
@@ -83,7 +83,7 @@ public:
 
 protected:
 
-	BOOL ShowSplashScreen(UINT uTimeOut, CWnd* pParentWnd = NULL);
+	BOOL ShowSplashScreen(UINT uTimeOut, HWND hParent = NULL);
 
 	// -> Remarks: This member function is called internally by the CSplashWnd class
 	//             to destroy the splash window once the timer has run out.
