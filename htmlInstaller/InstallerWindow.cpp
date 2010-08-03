@@ -27,7 +27,7 @@ bool InstallerWindow::Run()
 	return true;
 }
 
-void InstallerWindow::DoModal()
+void InstallerWindow::OnShow()
 {
 	// os label
 	htmlayout::dom::element r = GetRoot();
@@ -82,8 +82,10 @@ void InstallerWindow::DoModal()
 	if (button_skip.is_valid()) 
 	{
 		button_skip.set_attribute("value", p_configuration->skip_caption.GetValue().c_str());
-		// todo: show with additional config
-		button_skip.destroy();
+		if (! m_additional_config)
+		{
+			button_skip.destroy();
+		}
 	}
 
 	button_cancel = r.get_element_by_id("button_cancel");
@@ -92,12 +94,9 @@ void InstallerWindow::DoModal()
 		button_cancel.set_attribute("value", p_configuration->cancel_caption.GetValue().c_str());
 	}
 
-	ShowWindow(hwnd, 1);
+	AddUserControls();
 
-	CHECK_WIN32_BOOL(UpdateWindow(hwnd),
-		L"UpdateWindow");
-
-	Start();
+	Start();	
 }
 
 bool InstallerWindow::RunDownloadConfiguration(const DownloadDialogPtr& p_Configuration)
@@ -116,14 +115,14 @@ bool InstallerWindow::RunDownloadConfiguration(const DownloadDialogPtr& p_Config
 	return 0 == p_Configuration->ExecOnThread();
 }
 
-void InstallerWindow::AddComponent(const ComponentPtr& component, const std::wstring& description, bool checked, bool disabled)
+void InstallerWindow::AddComponent(const ComponentPtr& component)
 {
-	htmlayout::dom::element opt = htmlayout::dom::element::create("widget", description.c_str());
+	htmlayout::dom::element opt = htmlayout::dom::element::create("widget", component->description.c_str());
 	opt["type"] = L"checkbox";
 	opt["id"] = component->id.GetValue().c_str();
 	opt["component_ptr"] = DVLib::towstring(get(component)).c_str();
-	if (checked) opt["checked"] = L"true";
-	if (disabled) opt["disabled"] = L"true";
+	if (component->checked) opt["checked"] = L"true";
+	if (component->disabled) opt["disabled"] = L"true";
 	htmlayout::queue::push(new html_insert_task(& components, opt, components.children_count() + 1), HtmlWindow::s_hwnd);
 }
 
@@ -138,6 +137,11 @@ BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS typ
 	else if (type == BUTTON_CLICK && button_install == target_element)
 	{
 		OnInstall();
+		return TRUE;
+	}
+	else if (type == BUTTON_CLICK && button_skip == target_element)
+	{
+		OnOK();
 		return TRUE;
 	}
 	else 
@@ -397,3 +401,32 @@ void InstallerWindow::Stop()
 {
 	::PostMessage(hwnd, WM_CLOSE, 0,0);
 }
+
+void InstallerWindow::AddControl(const ControlLabel&)
+{
+}
+
+void InstallerWindow::AddControl(const ControlCheckBox&)
+{
+}
+
+void InstallerWindow::AddControl(const ControlEdit&)
+{
+}
+
+void InstallerWindow::AddControl(const ControlBrowse&)
+{
+}
+
+void InstallerWindow::AddControl(const ControlLicense&)
+{
+}
+
+void InstallerWindow::AddControl(const ControlHyperlink&)
+{
+}
+
+void InstallerWindow::AddControl(const ControlImage&)
+{
+}
+

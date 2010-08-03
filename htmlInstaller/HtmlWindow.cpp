@@ -6,6 +6,7 @@
 HtmlWindow::HtmlWindow() 
 	: htmlayout::event_handler(HANDLE_BEHAVIOR_EVENT)
 	, hwnd(NULL)
+	, m_modal(false)
 {
 
 }
@@ -210,6 +211,16 @@ bool HtmlWindow::IsWindowMaximized() const
 
 int HtmlWindow::OnMessage(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	switch(message)
+	{
+	case WM_SHOWWINDOW:
+		OnShow();
+		break;
+	case WM_CLOSE:
+		m_modal = false;
+		break;
+	}
+
 	return 0;
 }
 
@@ -258,7 +269,7 @@ LRESULT CALLBACK HtmlWindow::WinProc(HWND hwnd, UINT message, WPARAM wParam, LPA
 		return 0; // we have no non-client areas.
 	case WM_NCPAINT:     
 		return 0; // we have no non-client areas.
-	case WM_NCACTIVATE:  
+	case WM_NCACTIVATE: 
 		return (wParam == 0)? TRUE : FALSE; // we have no non-client areas.
 	case WM_GETMINMAXINFO:
 	{
@@ -336,4 +347,30 @@ bool HtmlWindow::LoadResourceData(LPCWSTR uri, PBYTE& pb, DWORD& cb)
 	}
 
     return true;
+}
+
+void HtmlWindow::ModalLoop()
+{
+	while(m_modal)
+	{
+		MSG msg;
+		while (GetMessage(& msg, NULL, 0, 0) && m_modal)
+		{
+			htmlayout::queue::execute();
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	}
+}
+
+void HtmlWindow::DoModal()
+{
+	m_modal = true;
+
+	ShowWindow(hwnd, 1);
+
+	CHECK_WIN32_BOOL(UpdateWindow(hwnd),
+		L"UpdateWindow");
+
+	ModalLoop();
 }

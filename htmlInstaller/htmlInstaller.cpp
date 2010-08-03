@@ -32,10 +32,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		UNREFERENCED_PARAMETER(hPrevInstance);
 		UNREFERENCED_PARAMETER(lpCmdLine);
 
- 		// TODO: Place code here.
-		MSG msg;
-		HACCEL hAccelTable;
-
 		// Initialize global strings
 		LoadString(hInstance, IDC_HTMLINSTALLER, szWindowClass, MAX_LOADSTRING);
 
@@ -46,25 +42,9 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			return 0;
 		}
 
-		hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_HTMLINSTALLER));
-
 		ConfigFileManagerPtr config(new ConfigFileManager());
 		config->Load();
 		config->Run();
-
-		// Main message loop:
-		while (GetMessage(&msg, NULL, 0, 0))
-		{
-			// execute asynchronous tasks in GUI thread.
-			htmlayout::queue::execute();
-
-			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-		}
-
 		int rc = config->GetRecordedError();
 		reset(config);
 		TRYLOG(L"htmlInstaller finished, return code=" << rc);

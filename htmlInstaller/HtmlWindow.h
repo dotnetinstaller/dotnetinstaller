@@ -21,6 +21,7 @@ public:
 	void SetCaption(const wchar_t *);
 	static ATOM RegisterClass(HINSTANCE hInstance);
     LRESULT on_load_data(LPNMHL_LOAD_DATA pnmld);
+	void DoModal();
 protected:
 	HtmlWindow();
 	int HitTest(int x, int y);
@@ -31,5 +32,9 @@ protected:
 	static void Self(HWND hWnd, HtmlWindow * inst);
 	static LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	virtual int OnMessage(UINT message, WPARAM wParam, LPARAM lParam);
+	virtual void OnShow() = 0;
 	bool LoadResourceData(LPCWSTR uri, PBYTE& pb, DWORD& cb);
+	void ModalLoop();
+private:
+	bool m_modal;
 };

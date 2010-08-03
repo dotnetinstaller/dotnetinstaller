@@ -129,44 +129,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 		m_PictureBox.SetBitmap(DVLib::LoadBitmapFromResource(AfxGetApp()->m_hInstance, L"RES_BANNER", L"CUSTOM"));
 	}
 
-	// controls
-
-	for each(const ControlPtr& control in p_configuration->controls)
-	{
-		if (! control->IsVisible())
-		{
-			LOG(L"-- Skipping " << control->GetString() << L", hidden");
-			continue;
-		}
-
-		LOG(L"-- Adding " << control->GetString());
-		switch(control->type)
-		{
-		case control_type_label:
-			AddControl(* (ControlLabel *) get(control));
-			break;
-		case control_type_checkbox:
-			AddControl(* (ControlCheckBox *) get(control));
-			break;
-		case control_type_edit:
-			AddControl(* (ControlEdit *) get(control));
-			break;
-		case control_type_browse:
-			AddControl(* (ControlBrowse *) get(control));
-			break;
-		case control_type_license:
-			AddControl(* (ControlLicense *) get(control));
-			break;
-		case control_type_hyperlink:
-			AddControl(* (ControlHyperlink *) get(control));
-			break;
-		case control_type_image:
-			AddControl(* (ControlImage *) get(control));
-			break;
-		default:
-			THROW_EX(L"Invalid control type: " << control->type);
-		}
-	}
+	AddUserControls();
 
 	Start();
 
@@ -276,9 +239,9 @@ bool CdotNetInstallerDlg::LoadComponentsList()
 	return rc;
 }
 
-void CdotNetInstallerDlg::AddComponent(const ComponentPtr& component, const std::wstring& description, bool checked, bool disabled)
+void CdotNetInstallerDlg::AddComponent(const ComponentPtr& component)
 {
-	m_ListBoxComponents.AddComponent(component, description, checked, disabled);
+	m_ListBoxComponents.AddComponent(component);
 }
 
 

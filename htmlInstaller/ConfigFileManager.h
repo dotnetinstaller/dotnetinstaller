@@ -6,6 +6,7 @@ class ConfigFileManager : private ConfigFiles
 {
 private:
 	InstallerWindow * m_pInstallerWindow;
+	void CreateInstallerWindow();
 protected:
 	bool OnVersionError(const std::wstring& version, const std::wstring& filename);
 	bool OnDownload(const ConfigurationPtr& config);

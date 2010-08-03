@@ -1,5 +1,12 @@
 #pragma once
 #include "InstallConfiguration.h"
+#include "ControlLabel.h"
+#include "ControlCheckBox.h"
+#include "ControlEdit.h"
+#include "ControlBrowse.h"
+#include "ControlLicense.h"
+#include "ControlHyperlink.h"
+#include "ControlImage.h"
 
 class InstallerUI
 {
@@ -24,8 +31,7 @@ protected:
 	virtual void RecordError(int error = -1);
 	virtual void ClearError();
 	virtual void ResetContent() = 0;
-	virtual void AddComponent(const ComponentPtr& component, 
-		const std::wstring& description, bool checked, bool disabled) = 0;
+	virtual void AddComponent(const ComponentPtr& component) = 0;
 	virtual bool LoadComponentsList();
 	virtual void ExecuteCompleteCode(bool components_installed);
 	virtual void ShowMessage(const std::wstring& message, int flags = 0);
@@ -34,6 +40,7 @@ protected:
 	virtual HWND GetHwnd() const = 0;
 	void LoadComponents();
 	void Start();
+	void AddUserControls();
 	virtual void StartInstall() = 0;
 	virtual void Stop() = 0;
 	virtual void ExtractCab(const std::wstring& id, bool display_dialog) = 0;
@@ -42,4 +49,12 @@ protected:
 	bool ComponentExecBegin(const ComponentPtr& component);
 	void Terminate();
 	void AfterInstall(int rc);
+	// user-defined controls
+	virtual void AddControl(const ControlLabel&) = 0;
+	virtual void AddControl(const ControlCheckBox&) = 0;
+	virtual void AddControl(const ControlEdit&) = 0;
+	virtual void AddControl(const ControlBrowse&) = 0;
+	virtual void AddControl(const ControlLicense&) = 0;
+	virtual void AddControl(const ControlHyperlink&) = 0;
+	virtual void AddControl(const ControlImage&) = 0;
 };

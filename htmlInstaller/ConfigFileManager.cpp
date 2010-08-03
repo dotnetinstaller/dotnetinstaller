@@ -29,6 +29,7 @@ bool ConfigFileManager::OnVersionError(const std::wstring& version, const std::w
 
 bool ConfigFileManager::OnDownload(const ConfigurationPtr& config)
 {
+	ASSERT(m_pInstallerWindow != NULL);
 	ReferenceConfiguration * p = reinterpret_cast<ReferenceConfiguration *>(get(config));
 	LOG(L"Downloading reference configuration to '" << p->filename << L"'");
 	return m_pInstallerWindow->RunDownloadConfiguration(p->downloaddialog);
@@ -36,6 +37,7 @@ bool ConfigFileManager::OnDownload(const ConfigurationPtr& config)
 
 bool ConfigFileManager::OnRunConfiguration(const ConfigurationPtr& configuration)
 {
+	CreateInstallerWindow();
 	return m_pInstallerWindow->RunInstallConfiguration(
 		lcidtype, configuration, configuration != (* this)[size() - 1]);
 }
@@ -64,8 +66,14 @@ bool ConfigFileManager::OnLoad()
 	return false;
 }
 
-void ConfigFileManager::Run()
+void ConfigFileManager::CreateInstallerWindow()
 {
+	if (m_pInstallerWindow != NULL)
+	{
+		delete m_pInstallerWindow;
+		m_pInstallerWindow = NULL;
+	}
+
 	MONITORINFO mi = { 0 };
 	mi.cbSize = sizeof(mi);
 	CHECK_WIN32_BOOL(GetMonitorInfo(MonitorFromWindow(NULL, MONITOR_DEFAULTTOPRIMARY), & mi),
@@ -82,7 +90,10 @@ void ConfigFileManager::Run()
 
 	CHECK_BOOL(m_pInstallerWindow->hwnd != NULL,
 		L"InstallerWindow::Create");
+}
 
+void ConfigFileManager::Run()
+{
 	ConfigFiles::Run();
 }
 

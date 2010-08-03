@@ -33,18 +33,26 @@ private:
 	void DownloadComplete();
 	void DownloadError(const std::wstring& message);
 	bool IsDownloadCancelled() const;
+	void OnShow();
 protected:
-	void AddComponent(const ComponentPtr& component, const std::wstring& description, bool checked, bool disabled);
+	void AddComponent(const ComponentPtr& component);
 	bool Run();
 	HINSTANCE GetInstance() const;
 	HWND GetHwnd() const;
 	void StartInstall();
 	void Stop();
+	// user-defined controls
+	void AddControl(const ControlLabel&);
+	void AddControl(const ControlCheckBox&);
+	void AddControl(const ControlEdit&);
+	void AddControl(const ControlBrowse&);
+	void AddControl(const ControlLicense&);
+	void AddControl(const ControlHyperlink&);
+	void AddControl(const ControlImage&);
 public:
 	bool RunDownloadConfiguration(const DownloadDialogPtr& p_Configuration);
 	void Create(int x, int y, int width, int height, const wchar_t * caption = 0);
 	void ResetContent();
-	void DoModal();
 	BOOL on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason);
 	int OnMessage(UINT message, WPARAM wParam, LPARAM lParam);
 public:

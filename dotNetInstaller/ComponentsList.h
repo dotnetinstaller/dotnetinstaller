@@ -20,6 +20,6 @@ protected:
 public:
 	void SetExecuteCallback(CdotNetInstallerDlg *);
 	void Load(DVLib::LcidType lcidtype, InstallConfiguration * pConfiguration);
-	void AddComponent(const ComponentPtr& component, const std::wstring& description, bool checked, bool disabled);
+	void AddComponent(const ComponentPtr& component);
 	CComponentsList();
 };

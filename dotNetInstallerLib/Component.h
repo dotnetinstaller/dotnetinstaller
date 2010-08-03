@@ -88,8 +88,6 @@ public:
 	virtual bool IsRebootRequired() const;
 	virtual bool IsExecuting() const = 0;
 	virtual bool IsInstalled() const;
-	// indica se il componente verrà eseguito o no
-	bool checked;
 	// load a component from an xml node
 	virtual void Load(TiXmlElement * node);
 	// returns true if this component is supported on this operating system/lcid
@@ -98,6 +96,10 @@ public:
 	virtual std::wstring GetString(int indent = 0) const;
 	std::wstring GetAdditionalCmd() const;
 	std::wstring GetDisplayName() const;
+	// component state
+	bool checked;
+	bool disabled;
+	std::wstring description;
 };
 
 typedef shared_any<Component *, close_delete> ComponentPtr;

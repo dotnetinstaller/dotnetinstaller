@@ -64,15 +64,15 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(currentLcidConfiguration);
             string currentLcidFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             ComponentCmd cmdCurrentLcid = new ComponentCmd();
-            Console.WriteLine("Current lcid: {0}", cmdCurrentLcid.os_filter_lcid);
-            cmdCurrentLcid.command = string.Format("cmd.exe /C dir > \"{0}\"", currentLcidFilename);
+            Console.WriteLine("Current lcid: {0}", currentLcidConfiguration.lcid_filter);
+            cmdCurrentLcid.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 0", currentLcidFilename);
             currentLcidConfiguration.Children.Add(cmdCurrentLcid);
             // empty lcid setup configuration
             SetupConfiguration emptyLcidConfiguration = new SetupConfiguration();
             configFile.Children.Add(emptyLcidConfiguration);
             string emptyLcidFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             ComponentCmd cmdEmptyLcid = new ComponentCmd();
-            cmdEmptyLcid.command = string.Format("cmd.exe /C dir > \"{0}\"", emptyLcidFilename);
+            cmdEmptyLcid.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 0", emptyLcidFilename);
             emptyLcidConfiguration.Children.Add(cmdEmptyLcid);
             // another lcid setup configuration
             SetupConfiguration anotherLcidConfiguration = new SetupConfiguration();
@@ -80,8 +80,8 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(anotherLcidConfiguration);
             string anotherLcidFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             ComponentCmd cmdAnotherLcid = new ComponentCmd();
-            Console.WriteLine("Another lcid: {0}", cmdAnotherLcid.os_filter_lcid);
-            cmdAnotherLcid.command = string.Format("cmd.exe /C dir > \"{0}\"", anotherLcidFilename);
+            Console.WriteLine("Another lcid: {0}", anotherLcidConfiguration.lcid_filter);
+            cmdAnotherLcid.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 0", anotherLcidFilename);
             anotherLcidConfiguration.Children.Add(cmdAnotherLcid);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");

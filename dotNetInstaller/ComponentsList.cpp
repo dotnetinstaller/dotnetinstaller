@@ -80,12 +80,12 @@ void CComponentsList::PreDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CCheckListBox::PreDrawItem(lpDrawItemStruct);
 }
 
-void CComponentsList::AddComponent(const ComponentPtr& component, const std::wstring& description, bool checked, bool disabled)
+void CComponentsList::AddComponent(const ComponentPtr& component)
 {
-	int id = AddString(description.c_str());
+	int id = AddString(component->description.c_str());
 	SetItemDataPtr(id, get(component));
-	if (checked) SetCheck(id, 1);
-	if (disabled) Enable(id, 0);
+	if (component->checked) SetCheck(id, 1);
+	if (component->disabled) Enable(id, 0);
 
 	CDC * pDC = GetDC();
 	ASSERT(pDC);

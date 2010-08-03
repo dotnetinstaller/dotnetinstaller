@@ -14,7 +14,7 @@ public:
 	enum { IDD = IDD_DOTNETINSTALLER_DIALOG };
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// supporto DDX/DDV
-	void AddComponent(const ComponentPtr& component, const std::wstring& description, bool checked, bool disabled);
+	void AddComponent(const ComponentPtr& component);
 	void ResetContent();
 protected:
 	HICON m_hIcon;

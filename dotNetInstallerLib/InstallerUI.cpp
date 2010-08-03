@@ -154,6 +154,8 @@ bool InstallerUI::LoadComponentsList()
 				checked = true;
         }
 
+		component->checked = checked;
+
         // a component is considered installed when it has an install check which results
         // in a clear positive; if a component doesn't have any install checks, it cannot
         // be required (there's no way to check whether the component was installed)
@@ -165,7 +167,9 @@ bool InstallerUI::LoadComponentsList()
 			&& (component->required_uninstall || ! component_installed))
             disabled = true;
 
-		AddComponent(component, description, checked, disabled);
+		component->disabled = disabled;
+
+		AddComponent(component);
     }
 
 	return all;
@@ -504,6 +508,49 @@ void InstallerUI::AfterInstall(int rc)
 		{
 			ExecuteCompleteCode(true);
 			Stop();
+		}
+	}
+}
+
+void InstallerUI::AddUserControls()
+{
+	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
+	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+
+	for each(const ControlPtr& control in p_configuration->controls)
+	{
+		if (! control->IsVisible())
+		{
+			LOG(L"-- Skipping " << control->GetString() << L", hidden");
+			continue;
+		}
+
+		LOG(L"-- Adding " << control->GetString());
+		switch(control->type)
+		{
+		case control_type_label:
+			AddControl(* (ControlLabel *) get(control));
+			break;
+		case control_type_checkbox:
+			AddControl(* (ControlCheckBox *) get(control));
+			break;
+		case control_type_edit:
+			AddControl(* (ControlEdit *) get(control));
+			break;
+		case control_type_browse:
+			AddControl(* (ControlBrowse *) get(control));
+			break;
+		case control_type_license:
+			AddControl(* (ControlLicense *) get(control));
+			break;
+		case control_type_hyperlink:
+			AddControl(* (ControlHyperlink *) get(control));
+			break;
+		case control_type_image:
+			AddControl(* (ControlImage *) get(control));
+			break;
+		default:
+			THROW_EX(L"Invalid control type: " << control->type);
 		}
 	}
 }
