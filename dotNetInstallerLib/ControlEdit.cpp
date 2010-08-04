@@ -12,7 +12,7 @@ ControlEdit::ControlEdit()
 
 void ControlEdit::Load(TiXmlElement * node)
 {
-	id = DVLib::UTF8string2wstring(node->Attribute("id"));
+	id = node->Attribute("id");
 	ControlText::Load(node);
 }
 

@@ -9,6 +9,7 @@ public:
 	XmlAttribute id;
 	XmlAttribute filter;
 	XmlAttribute button_text;
+	XmlAttribute path;
 	bool folders_only;
 	bool must_exist;
 	bool hide_readonly;

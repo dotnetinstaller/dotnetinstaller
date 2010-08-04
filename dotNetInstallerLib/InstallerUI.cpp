@@ -532,16 +532,71 @@ void InstallerUI::AddUserControls()
 			AddControl(* (ControlLabel *) get(control));
 			break;
 		case control_type_checkbox:
-			AddControl(* (ControlCheckBox *) get(control));
+			{
+				ControlCheckBox * control_checkbox = (ControlCheckBox *) get(control);
+				std::map<std::wstring, std::wstring>::iterator value;
+				if ((value = InstallerSession::Instance->AdditionalControlArgs.find(control_checkbox->id)) != 
+					InstallerSession::Instance->AdditionalControlArgs.end())
+				{
+					if (control_checkbox->checked_value == value->second) 
+					{
+						control_checkbox->checked = true;
+					}
+					else if (control_checkbox->unchecked_value == value->second) 
+					{
+						control_checkbox->checked = false;
+					}
+					else
+					{
+						THROW_EX(L"Invalid " << control_checkbox->id << L" value '" << value->second << L"', should be one of '"
+							<< control_checkbox->checked_value << L"' or '" << control_checkbox->unchecked_value << L"'");
+					}
+				}
+				
+				AddControl(* control_checkbox);
+			}
 			break;
 		case control_type_edit:
-			AddControl(* (ControlEdit *) get(control));
+			{
+				ControlEdit * control_edit = (ControlEdit *) get(control);
+				std::map<std::wstring, std::wstring>::iterator value;
+				if ((value = InstallerSession::Instance->AdditionalControlArgs.find(control_edit->id)) != 
+					InstallerSession::Instance->AdditionalControlArgs.end())
+				{
+					control_edit->text = value->second.c_str();
+				}
+
+				AddControl(* control_edit);
+			}
 			break;
 		case control_type_browse:
-			AddControl(* (ControlBrowse *) get(control));
+			{
+				ControlBrowse * control_browse = (ControlBrowse *) get(control);
+				std::map<std::wstring, std::wstring>::iterator value;
+				if ((value = InstallerSession::Instance->AdditionalControlArgs.find(control_browse->id)) != 
+					InstallerSession::Instance->AdditionalControlArgs.end())
+				{
+					control_browse->path = value->second;
+				}
+				else
+				{
+					control_browse->path = control_browse->text;
+				}
+
+				AddControl(* control_browse);
+			}
 			break;
 		case control_type_license:
-			AddControl(* (ControlLicense *) get(control));
+			{
+				ControlLicense * control_license = (ControlLicense *) get(control);
+				// extract license to temporary location
+				std::vector<char> license_buffer = DVLib::LoadResourceData<char>(NULL, control_license->resource_id, L"CUSTOM");
+				std::wstring license_file = DVLib::DirectoryCombine(InstallerSession::Instance->GetSessionTempPath(), DVLib::GetFileNameW(control_license->license_file));
+				LOG(L"Extracting license '" << control_license->resource_id << L"' to " << license_file);
+				DVLib::FileWrite(license_file, license_buffer);
+				control_license->license_file = license_file;
+				AddControl(* control_license);
+			}
 			break;
 		case control_type_hyperlink:
 			AddControl(* (ControlHyperlink *) get(control));

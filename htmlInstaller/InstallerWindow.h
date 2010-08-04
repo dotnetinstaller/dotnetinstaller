@@ -49,6 +49,8 @@ protected:
 	void AddControl(const ControlLicense&);
 	void AddControl(const ControlHyperlink&);
 	void AddControl(const ControlImage&);
+	static std::wstring GetPositionStyle(const WidgetPosition& position);
+	static std::wstring GetControlStyle(const ControlText& control);
 public:
 	bool RunDownloadConfiguration(const DownloadDialogPtr& p_Configuration);
 	void Create(int x, int y, int width, int height, const wchar_t * caption = 0);

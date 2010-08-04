@@ -365,12 +365,23 @@ void HtmlWindow::ModalLoop()
 
 void HtmlWindow::DoModal()
 {
-	m_modal = true;
+	try
+	{
+		m_modal = true;
 
-	ShowWindow(hwnd, 1);
+		ShowWindow(hwnd, 1);
 
-	CHECK_WIN32_BOOL(UpdateWindow(hwnd),
-		L"UpdateWindow");
+		CHECK_WIN32_BOOL(UpdateWindow(hwnd),
+			L"UpdateWindow");
 
-	ModalLoop();
+		ModalLoop();
+	}
+	catch(std::exception& ex)
+	{
+		// BUG? AfxMessageBox doesn't show anything when the main window vanished
+        DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
+		m_modal = false;
+		::DestroyWindow(hwnd);
+		throw ex;
+	}
 }

@@ -401,22 +401,7 @@ void CdotNetInstallerDlg::AddControl(const ControlCheckBox& checkbox)
 	p_checkbox->Create(checkbox.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX, checkbox.position.ToRect(), this, 0);
 	p_checkbox->EnableWindow(checkbox.IsEnabled());
 	p_checkbox->SetFont(CreateFont(checkbox));
-	std::map<std::wstring, std::wstring>::iterator value;
-	if ((value = InstallerSession::Instance->AdditionalControlArgs.find(checkbox.id)) != 
-		InstallerSession::Instance->AdditionalControlArgs.end())
-	{
-		if (checkbox.checked_value == value->second) p_checkbox->SetCheck(1);
-		else if (checkbox.unchecked_value == value->second) p_checkbox->SetCheck(0);
-		else 
-		{
-			THROW_EX(L"Invalid " << checkbox.id << L" value '" << value->second << L"', should be one of '"
-				<< checkbox.checked_value << L"' or '" << checkbox.unchecked_value << L"'");
-		}
-	}
-	else
-	{
-		p_checkbox->SetCheck(checkbox.checked);
-	}
+	p_checkbox->SetCheck(checkbox.checked);
 	m_custom_control_values.insert(std::pair<std::wstring, ControlValue *>(checkbox.id, p_checkbox));
 	m_custom_controls.push_back(p_checkbox);
 }
@@ -425,16 +410,7 @@ void CdotNetInstallerDlg::AddControl(const ControlEdit& edit)
 {
 	ControlValueEdit * p_edit = new ControlValueEdit(edit);
 	p_edit->Create(WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_BORDER, edit.position.ToRect(), this, 0);
-	std::map<std::wstring, std::wstring>::iterator value;
-	if ((value = InstallerSession::Instance->AdditionalControlArgs.find(edit.id)) != 
-		InstallerSession::Instance->AdditionalControlArgs.end())
-	{
-		p_edit->SetWindowText(value->second.c_str());
-	}
-	else
-	{
-		p_edit->SetWindowText(edit.text.GetValue().c_str());
-	}
+	p_edit->SetWindowText(edit.text.GetValue().c_str());
 	p_edit->EnableWindow(edit.IsEnabled());
 	p_edit->SetFont(CreateFont(edit));
 	m_custom_control_values.insert(std::pair<std::wstring, ControlValue *>(edit.id, p_edit));
@@ -474,16 +450,7 @@ void CdotNetInstallerDlg::AddControl(const ControlBrowse& browse)
 	p_browse->SetDefExt(NULL);
 	// default path
 	p_browse->SetWindowTextW(browse.text.GetValue().c_str());
-	std::map<std::wstring, std::wstring>::iterator value;
-	if ((value = InstallerSession::Instance->AdditionalControlArgs.find(browse.id)) != 
-		InstallerSession::Instance->AdditionalControlArgs.end())
-	{
-		p_browse->SetPathName(value->second.c_str());
-	}
-	else
-	{
-		p_browse->SetPathName(browse.text.GetValue().c_str());
-	}
+	p_browse->SetPathName(browse.path.GetValue().c_str());
 	// font
 	p_browse->SetFont(CreateFont(browse));
 	// open, not save as
@@ -495,11 +462,6 @@ void CdotNetInstallerDlg::AddControl(const ControlBrowse& browse)
 
 void CdotNetInstallerDlg::AddControl(const ControlLicense& license)
 {
-	// extract license to temporary location
-	std::vector<char> license_buffer = DVLib::LoadResourceData<char>(NULL, license.resource_id, L"CUSTOM");
-	std::wstring license_file = DVLib::DirectoryCombine(InstallerSession::Instance->GetSessionTempPath(), DVLib::GetFileNameW(license.license_file));
-	LOG(L"Extracting license '" << license.resource_id << L"' to " << license_file);
-	DVLib::FileWrite(license_file, license_buffer);
 	// checkbox
 	ControlValueLicense * p_checkbox = new ControlValueLicense(license);
 	CRect checkbox_rect = license.position.ToRect();
@@ -514,7 +476,7 @@ void CdotNetInstallerDlg::AddControl(const ControlLicense& license)
 	CRect link_rect = license.position.ToRect();
 	link_rect.left += 20;
 	p_link->Create(license.text.GetValue().c_str(), WS_CHILD | WS_VISIBLE | WS_TABSTOP | SS_NOPREFIX, link_rect, this, 0);
-	p_link->SetHyperlink(license_file);
+	p_link->SetHyperlink(license.license_file);
 	p_link->SetFont(CreateFont(license));
 	m_custom_controls.push_back(p_link);
 }

@@ -7,7 +7,7 @@ public:
     ControlEdit();
 public:
 	// id
-	std::wstring id;
+	XmlAttribute id;
 	void Load(TiXmlElement * node);
 	std::wstring GetString() const;
 };
