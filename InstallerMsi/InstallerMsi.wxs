@@ -52,6 +52,10 @@
               <File Id="dotNetInstaller.exe" Source="..\dotNetInstaller\$(var.Configuration)\dotNetInstaller.exe" />
               <File Id="dotNetInstaller.pdb" Source="..\dotNetInstaller\$(var.Configuration)\dotNetInstaller.pdb" />
             </Component>
+            <Component Id="htmlInstaller" Guid="4B2C6C2B-7A9E-49fe-A63B-BB2EACE39BFD">
+              <File Id="htmlInstaller.exe" Source="..\htmlInstaller\$(var.Configuration)\htmlInstaller.exe" />
+              <File Id="htmlInstaller.pdb" Source="..\htmlInstaller\$(var.Configuration)\htmlInstaller.pdb" />
+            </Component>
             <Component Id="MSLU" Guid="95984BB5-05F2-4db4-AFE7-C017411EB7AA">
               <File Id="unicows.dll" Source="..\ThirdParty\Mslu\Unicows.dll" />
             </Component>
@@ -84,6 +88,7 @@
       <ComponentRef Id="InstallerEditor" />
       <ComponentRef Id="InstallerLinker" />
       <ComponentRef Id="dotNetInstaller" />
+      <ComponentRef Id="htmlInstaller" />
       <ComponentRef Id="WhatsNew" />
       <ComponentRef Id="MSLU" />
       <ComponentRef Id="Documentation" />

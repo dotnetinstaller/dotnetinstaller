@@ -23,6 +23,7 @@
             <File Id="LicenseAgreement.Configuration.xml" Name="Configuration.xml" Source="..\Samples\LicenseAgreement\Configuration.xml" />
             <File Id="LicenseAgreement.license.txt" Name="license.txt" Source="..\Samples\LicenseAgreement\license.txt" />
             <File Id="LicenseAgreementSetup.Setup.exe" Name="Setup.exe" Source="..\Samples\LicenseAgreement\bin\$(var.Configuration)\Setup.exe" />
+            <File Id="LicenseAgreementSetup.HtmlSetup.exe" Name="HtmlSetup.exe" Source="..\Samples\LicenseAgreement\bin\$(var.Configuration)\HtmlSetup.exe" />
           </Component>
         </Directory>
         <Directory Id="CustomInputSetupFolder" Name="CustomInputSetup">
@@ -63,6 +64,7 @@
           <Directory Id="PackagedSetupPackageFolder" Name="Package">
             <Component Id="PackagedSetupPackage" Guid="D7F09438-C2B0-4C73-8A3C-BC3FB32EFC44">
               <File Id="Setup.exe" Name="Setup.exe" Source="..\Samples\PackagedSetup\bin\$(var.Configuration)\Setup.exe" />
+              <File Id="HtmlSetup.exe" Name="HtmlSetup.exe" Source="..\Samples\PackagedSetup\bin\$(var.Configuration)\HtmlSetup.exe" />
             </Component>
           </Directory>
           <Directory Id="PackagedSetupSourceFolder" Name="Source">
