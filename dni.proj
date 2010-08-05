@@ -193,12 +193,12 @@
      ToolPath="$(NUnitBinDir)" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName).xml" />
   </Target>
   <Target Name="editortests">
-    <CreateItem Include="TestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\dotNetInstaller\$(Configuration)\dotNetInstaller.exe">
-      <Output TaskParameter="Include" ItemName="TestExecutables"/>
+    <CreateItem Include="EditorTestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\dotNetInstaller\$(Configuration)\dotNetInstaller.exe">
+      <Output TaskParameter="Include" ItemName="EditorTestExecutables"/>
     </CreateItem>
     <TemplateFile Template="UnitTests\InstallerEditorUnitTests\App.config"
      OutputFilename="bin\$(Configuration)\InstallerEditorUnitTests.dll.config"
-     Tokens="@(TestExecutables)" />
+     Tokens="@(EditorTestExecutables)" />
     <NUnit Assemblies="UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\InstallerEditorUnitTests.dll"
      ToolPath="$(NUnitBinDir)" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
   </Target>
