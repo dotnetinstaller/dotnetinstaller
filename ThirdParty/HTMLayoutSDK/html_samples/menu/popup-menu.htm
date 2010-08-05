@@ -10,12 +10,20 @@
       background-color: yellow red green blue;
       color:white;
     }
-    
+   
     menu.cool li:current
     {     
       //background-color: white;    //transparent url(images/transparent.png) repeat;
       //opacity:0.5;
       background: transparent url(images/transparent.png) repeat;
+    }
+    
+    menu.office,
+    menu.office menu
+    {
+      background: url(images/menu-back-office.png) expand;
+      background-position: 0 0 0 24;
+      text-align:left;
     }
         
     /* table menu */    
@@ -90,8 +98,8 @@
 
 <h2>&lt;button type="menu" /&gt;</h2>
 
-<button type="menu">Button with menu
-  <menu>
+<button type="menu">Button with menu (custom back)
+  <menu class="office">
     <li title="hello!">First item</li>
     <li>Second item</li>
     <li>Third item

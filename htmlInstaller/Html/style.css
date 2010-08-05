@@ -169,3 +169,8 @@ input[type="button"]
 	width: 50pt;
 	height: 15pt;	
 }
+
+a[target="_blank"]
+{
+	behavior: ~ weblink;
+}

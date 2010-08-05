@@ -71,7 +71,9 @@ public:
 
     COMMAND_ID_HANDLER(ID_TEST_TRACK_POPUP, OnTestTrackPopup)
     COMMAND_ID_HANDLER(ID_TEST_SHOW_POPUP, OnTestShowPopup)
-    
+
+    COMMAND_ID_HANDLER(ID_TESTS_SWITCHTAB, OnTestSwitchTab)
+        
     COMMAND_ID_HANDLER(ID_GET_HTML, OnGetHTML)
     COMMAND_ID_HANDLER(IDC_GET_DOC_TEXT, OnGetText)
     COMMAND_ID_HANDLER(ID_SELECTION_MODE, OnSelectionMode)
@@ -543,6 +545,15 @@ public:
     return 0;
   }
 
+  LRESULT   OnTestSwitchTab(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+  {
+    htmlayout::dom::element root = htmlayout::dom::element::root_element(m_view);
+    htmlayout::dom::element tabs = root.find_first("div.tabs#test");
+    htmlayout::dom::element tab_to_switch = tabs.find_first("[panel=panel-id2][role=page-tab]");
+    tab_to_switch.send_event(ACTIVATE_CHILD);
+    return 0;
+  }
+
 
   LRESULT   DoTestTrackPopup(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
   {
@@ -565,6 +576,9 @@ public:
   {
     htmlayout::dom::element root = htmlayout::dom::element::root_element(m_view);
     htmlayout::dom::element progress = root.find_first("div#progress");
+
+    htmlayout::dom::element body = root.find_first("body");
+    bool t = body.get_state(STATE_IS_RTL);
 
     if(!progress.is_valid())
     {

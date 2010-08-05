@@ -33,6 +33,7 @@
 #ifndef STATIC_LIB
   #ifdef  HTMLAYOUT_EXPORTS
     #define HLAPI __declspec(dllexport) __stdcall
+    //#define HLAPI __stdcall
   #else
     #define HLAPI __declspec(dllimport) __stdcall
   #endif
@@ -52,6 +53,17 @@ typedef const BYTE *LPCBYTE;
 #else 
   #define JSON_VALUE VALUE
 #endif
+
+#if !defined(DEPRECATED)
+  /* obsolete API marker*/ 
+  #if defined(__GNUC__)
+    #define DEPRECATED __attribute__((deprecated))
+  #elif defined(_MSC_VER) && MSC_VER > 1200
+    #define DEPRECATED __declspec(deprecated)
+  #else
+    #define DEPRECATED
+  #endif
+#endif  
 
 
 #include "htmlayout_dom.h"
@@ -434,7 +446,7 @@ EXTERN_C LRESULT CALLBACK HTMLayoutProcW(HWND hwnd, UINT msg, WPARAM wParam, LPA
 EXTERN_C LRESULT HLAPI HTMLayoutProcND(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, BOOL* pbHandled);
 
 
-/**HTMLayout operational modes. Used by HTMLayoutSetMode() function.*/
+/**HTMLayout operational modes. See HTMLayoutSetMode() function.*/
 enum HTMLayoutModes 
 {
   HLM_LAYOUT_ONLY = 0,         /**< layout manager and renderer.*/
@@ -502,8 +514,9 @@ EXTERN_C BOOL HLAPI     HTMLayoutLoadHtmlEx(HWND hWndHTMLayout, LPCBYTE html, UI
  *
  * \param[in] hWndHTMLayout \b HWND, HTMLayout window handle.
  * \param[in] HTMLayoutMode \b int, desired \link #HTMLayoutModes operational mode \endlink.
+ *
  **/
-EXTERN_C VOID HLAPI     HTMLayoutSetMode(HWND hWndHTMLayout, int HTMLayoutMode);
+EXTERN_C VOID HLAPI  HTMLayoutSetMode(HWND hWndHTMLayout, int HTMLayoutMode);
 
 /**Set \link #HTMLAYOUT_NOTIFY() notification callback function \endlink.
  *
@@ -638,6 +651,20 @@ EXTERN_C BOOL HLAPI     HTMLayoutSetCSS(HWND hWndHTMLayout, LPCBYTE utf8, UINT n
  **/
 
 EXTERN_C BOOL HLAPI     HTMLayoutSetMediaType(HWND hWndHTMLayout, LPCWSTR mediaType);
+
+/**Set media variables of this htmlayout instance.
+ *
+ * \param[in] hWndSciter \b HWND, HTMLauout window handle.
+ * \param[in] mediaVars \b VALUE, map that contains name/value pairs - media variables to be set.
+ *
+ * For example media type can be "handheld:true", "projection:true", "screen:true", etc.
+ * By default sciter window has "screen:true" and "desktop:true"/"handheld:true" media variables.
+ *
+ * Media variables can be changed in runtime. This will cause styles of the document to be reset.
+ *
+ **/
+
+EXTERN_C BOOL HLAPI    HTMLayoutSetMediaVars(HWND hWndHTMLayout, const VALUE *mediaVars);
 
 /**Set additional http headers that will be sent with each http request by this instance of the engine.
  *

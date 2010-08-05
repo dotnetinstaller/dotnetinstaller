@@ -51,7 +51,7 @@ struct accesskeys: public behavior
         // handling IFrame in focus situation
         if( ::GetFocus() == thisHWnd) 
         {
-          dom::element super_container = dom::element::root_element( ::GetParent(thisHWnd) );
+          dom::element super_container = dom::element::root_element( ::GetParent(thisHWnd)  );
           if( super_container.is_valid() ) // yes, we have outer frame
           {
             if(process_key(super_container, keyname))

@@ -245,8 +245,6 @@
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Release/mfc_browse.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
@@ -464,6 +462,7 @@
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="stdafx.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -515,6 +514,37 @@
 			>
 			<File
 				RelativePath="..\..\include\behaviors\behavior_command.cpp"
+				>
+				<FileConfiguration
+					Name="Release Unicode|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\include\behaviors\behavior_tabs.cpp"
 				>
 				<FileConfiguration
 					Name="Release Unicode|Win32"

@@ -230,7 +230,7 @@ namespace htmlayout
 
       case WM_GETMINMAXINFO:
         {
-          LRESULT lr = DefWindowProc(hwnd, message, wParam, lParam);
+          LRESULT lr = DefWindowProcW(hwnd, message, wParam, lParam);
           MINMAXINFO* pmmi = (MINMAXINFO*)lParam;
           pmmi->ptMinTrackSize.x = ::HTMLayoutGetMinWidth(hwnd);
           RECT rc; GetWindowRect(hwnd,&rc);
@@ -249,7 +249,7 @@ namespace htmlayout
         return 0;
 
      }
-     return DefWindowProc(hwnd, message, wParam, lParam);
+     return DefWindowProcW(hwnd, message, wParam, lParam);
   }
 
 }

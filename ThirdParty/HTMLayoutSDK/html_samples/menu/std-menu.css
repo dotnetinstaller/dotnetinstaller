@@ -96,10 +96,12 @@ menu li:has-child-of-type(menu)
 }
 
 /* current menu item */
+menu li:hover:owns-popup,
 menu li:current
 { 
   background-color:highlight; 
   color:highlighttext;  
+  //border-radius:3px;
 }
 
 /* menu separator */

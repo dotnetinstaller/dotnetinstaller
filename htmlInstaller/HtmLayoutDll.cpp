@@ -27,7 +27,8 @@ void HtmLayoutDll::Unload()
 
 	if (! m_path.empty())
 	{
-		DVLib::FileDelete(m_path);
+		// DVLib::FileDelete(m_path);
+		::DeleteFile(m_path.c_str());
 		m_path.clear();
 	}
 }

@@ -4,6 +4,8 @@
 #include <math.h>
 #include <time.h>
 
+#include "mm_file.h"
+
 
 namespace htmlayout 
 {
@@ -21,9 +23,16 @@ const double PI = 3.14159265358979323846;
 struct graphin_clock: public canvas
 {
     typedef canvas super;
+
+    htmlayout::image* pimage;
+
     // ctor
-    graphin_clock():canvas(HANDLE_TIMER | HANDLE_MOUSE | HANDLE_BEHAVIOR_EVENT, DRAW_CONTENT)
+    graphin_clock():canvas(HANDLE_TIMER | HANDLE_MOUSE | HANDLE_BEHAVIOR_EVENT, DRAW_CONTENT),pimage(0)
     {
+    }
+    ~graphin_clock()
+    {
+      delete pimage;
     }
     
     virtual void attached  (HELEMENT he ) 
@@ -32,6 +41,17 @@ struct graphin_clock: public canvas
       dom::element el = he;
       if(el.visible())
         HTMLayoutSetTimer( he, 1000 ); // set one second timer      
+
+      json::string url = el.url(L"clock-images/seconds-head.png");
+      aux::wchars  url_chars = url;
+      if( url_chars.like(L"file://*") )
+        url_chars.prune(7);
+
+      aux::mm_file imf;
+      if( imf.open( url_chars.start ))
+      {
+         pimage = htmlayout::image::load( imf.bytes() );
+      }
     } 
    
     virtual void detached  (HELEMENT he ) 
@@ -136,8 +156,17 @@ struct graphin_clock: public canvas
 
        gx.line( x, y, xe, ye );
        if( hand == 2 )
+       {
          // circle on the end of seconds hand
-         gx.circle( xe, ye, 4 );
+         if(pimage)
+         {
+           int w = pimage->width();
+           int h = pimage->height();
+           gx.draw_image(pimage,xe - double(w)/2,ye - double(h)/2,w,h,0,0,w,h);
+         }
+         else // no image
+           gx.circle( xe, ye, 4 );
+       }
     }
 
     void draw_caption( HELEMENT he, graphics& gx, UINT width, UINT height, aux::wchars text )

@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -26,7 +26,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 // PNG
 //
 
-NOTE-ICON               PNG     DISCARDABLE     "res\\note-icon.png"
+NOTE-ICON               PNG                     "res\\note-icon.png"
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -45,13 +45,13 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // PNG
 //
 
-OPEN                    PNG     MOVEABLE PURE   "res\\open.png"
-BACK                    PNG     MOVEABLE PURE   "res\\back.png"
-VIEW_SOURCE             PNG     MOVEABLE PURE   "res\\view_source.png"
-FORWARD                 PNG     MOVEABLE PURE   "res\\forward.png"
-NEW_WIN                 PNG     MOVEABLE PURE   "res\\new_win.png"
-RECENT                  PNG     MOVEABLE PURE   "res\\recent.png"
-REFRESH                 PNG     MOVEABLE PURE   "res\\refresh.png"
+OPEN                    PNG                     "res\\open.png"
+BACK                    PNG                     "res\\back.png"
+VIEW_SOURCE             PNG                     "res\\view_source.png"
+FORWARD                 PNG                     "res\\forward.png"
+NEW_WIN                 PNG                     "res\\new_win.png"
+RECENT                  PNG                     "res\\recent.png"
+REFRESH                 PNG                     "res\\refresh.png"
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -59,18 +59,18 @@ REFRESH                 PNG     MOVEABLE PURE   "res\\refresh.png"
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE MOVEABLE PURE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE MOVEABLE PURE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""atlres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE MOVEABLE PURE 
+3 TEXTINCLUDE 
 BEGIN
     "CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST ""res\\\\browse.exe.manifest""\r\n"
     "\0"
@@ -84,7 +84,7 @@ END
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR MOVEABLE PURE  16, 15
+IDR_MAINFRAME TOOLBAR  16, 15
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
@@ -104,14 +104,14 @@ END
 // Bitmap
 //
 
-IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Menu
 //
 
-IDR_MAINFRAME MENU DISCARDABLE 
+IDR_MAINFRAME MENU 
 BEGIN
     POPUP "&File"
     BEGIN
@@ -147,8 +147,7 @@ BEGIN
         MENUITEM "Get Doc HTML",                ID_GET_HTML
         MENUITEM "Get Doc Text",                IDC_GET_DOC_TEXT
         MENUITEM "Update all H* elements",      ID_UPDATE_TEST
-        MENUITEM "Scroll to bottom of the document", 
-                                                ID_TEST_SCROLL_TO_BOTTOM
+        MENUITEM "Scroll to bottom of the document", ID_TEST_SCROLL_TO_BOTTOM
         MENUITEM "Scroll to last element",      ID_TEST_SCROLL_TO_ELEMENT
         MENUITEM SEPARATOR
         MENUITEM "Insert <option> in first <select>", ID_TEST_INSERT_OPTION
@@ -161,7 +160,6 @@ BEGIN
         MENUITEM "Select text in editbox",      ID_TEST_SELECT_TEXT
         MENUITEM "Get selected text",           ID_TEST_GET_SELECTED_TEXT
         MENUITEM "Replace selected text",       ID_TEST_REPLACE_SELECTED_TEXT
-
         MENUITEM "Set whole text",              ID_TEST_SET_TEXT
         MENUITEM "Move caret",                  ID_TEST_SET_CARET
         MENUITEM "Get caret position",          ID_TEST_GET_CARET_POSITION
@@ -187,6 +185,8 @@ BEGIN
             MENUITEM "PNG",                         ID_SAVE_AS_PNG
             MENUITEM "JPEG",                        ID_SAVE_AS_JPEG
         END
+        MENUITEM SEPARATOR
+        MENUITEM "Switch Tab",                  ID_TESTS_SWITCHTAB
     END
     POPUP "&Dialogs"
     BEGIN
@@ -207,21 +207,20 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "res\\browse.ico"
+IDR_MAINFRAME           ICON                    "res\\browse.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 187, 102
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ABOUTBOX DIALOG  0, 0, 187, 102
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About"
 FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,130,81,50,14
-    CTEXT           "HTMLayout Demo Application\n\n(c) Terra Informatica Software, 2004-2006",
-                    IDC_STATIC,26,49,78,46
+    CTEXT           "HTMLayout Demo Application\n\n(c) Terra Informatica Software, 2004-2006",IDC_STATIC,26,49,78,46
     ICON            IDR_MAINFRAME,IDC_STATIC,55,26,20,20
     GROUPBOX        "",IDC_STATIC,7,7,115,88
 END
@@ -233,7 +232,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO MOVEABLE PURE 
+GUIDELINES DESIGNINFO 
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -251,7 +250,7 @@ END
 // Accelerator
 //
 
-IDR_MAINFRAME ACCELERATORS MOVEABLE PURE 
+IDR_MAINFRAME ACCELERATORS 
 BEGIN
     "N",            ID_FILE_NEW_WINDOW,     VIRTKEY, CONTROL, NOINVERT
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
@@ -263,7 +262,6 @@ BEGIN
 END
 
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -286,18 +284,13 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "Comments", "\0"
-            VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "test1 Module\0"
-            VALUE "FileVersion", "1, 0, 0, 3\0"
-            VALUE "InternalName", "TEST1\0"
-            VALUE "LegalCopyright", "Copyright 2004\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "browse.exe\0"
-            VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "browse Module\0"
-            VALUE "ProductVersion", "1, 0, 0, 3\0"
-            VALUE "SpecialBuild", "\0"
+            VALUE "FileDescription", "test1 Module"
+            VALUE "FileVersion", "1, 0, 0, 3"
+            VALUE "InternalName", "TEST1"
+            VALUE "LegalCopyright", "Copyright 2004"
+            VALUE "OriginalFilename", "browse.exe"
+            VALUE "ProductName", "browse Module"
+            VALUE "ProductVersion", "1, 0, 0, 3"
         END
     END
     BLOCK "VarFileInfo"
@@ -306,29 +299,27 @@ BEGIN
     END
 END
 
-#endif    // !_MAC
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // HTML
 //
 
-TOOLBAR                 HTML    MOVEABLE PURE   "res\\toolbar.htm"
-IDR_ABOUT               HTML    DISCARDABLE     "res\\html1.htm"
-IDR_INPUT_DIALOG        HTML    DISCARDABLE     "res\\input1.htm"
+TOOLBAR                 HTML                    "res\\toolbar.htm"
+IDR_ABOUT               HTML                    "res\\html1.htm"
+IDR_INPUT_DIALOG        HTML                    "res\\input1.htm"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     IDR_MAINFRAME           "browse"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_FILE_NEW             "Create a new document\nNew"
     ID_FILE_OPEN            "Open an existing document\nOpen"
@@ -341,19 +332,19 @@ BEGIN
     ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
     ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
     ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_WINDOW_NEW           "Open another window for the active document\nNew Window"
     ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window\nArrange Icons"
@@ -363,7 +354,7 @@ BEGIN
     ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_EDIT_CLEAR           "Erase the selection\nErase"
     ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
@@ -378,13 +369,13 @@ BEGIN
     ID_EDIT_REDO            "Redo the previously undone action\nRedo"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
     ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ATL_IDS_SCSIZE          "Change the window size"
     ATL_IDS_SCMOVE          "Change the window position"
@@ -395,25 +386,25 @@ BEGIN
     ATL_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ATL_IDS_SCRESTORE       "Restore the window to normal size"
     ATL_IDS_SCTASKLIST      "Activate Task List"
     ATL_IDS_MDICHILD        "Activate this window"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ATL_IDS_IDLEMESSAGE     "Ready"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ATL_IDS_MRU_FILE        "Open this document"
     ID_FILE_OPEN_URL        "Open URL command"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_FILE_NEW_WINDOW      "Open a new window\nNew Window"
     ID_UPDATE_TEST          "Update all headers - H* elements - will set 'updated' attribute to true"
@@ -422,7 +413,7 @@ BEGIN
     ID_TEST_REMOVE_OPTION   "You shall load /html_samples/forms/select.htm for the test"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_TEST_MASTER_CSS      "Will change CSS"
     ID_FILE_RELOAD          "Reload current file"
@@ -447,7 +438,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_CAN
 // HTML
 //
 
-EMPTY                   HTML    MOVEABLE PURE   "res\\empty.htm"
+EMPTY                   HTML                    "res\\empty.htm"
 #endif    // English (Canada) resources
 /////////////////////////////////////////////////////////////////////////////
 

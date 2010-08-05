@@ -130,13 +130,13 @@ public:
   VOID SetSelectionMode()
   {
     ATLASSERT(::IsWindow(m_hWnd));
-    ::HTMLayoutSetMode(m_hWnd, HTMLayoutModes::HLM_SHOW_SELECTION);
+    ::HTMLayoutSetMode(m_hWnd, /*HTMLayoutModes::*/HLM_SHOW_SELECTION);
   }
 
   VOID SetNavigationMode()
   {
     ATLASSERT(::IsWindow(m_hWnd));
-    ::HTMLayoutSetMode(m_hWnd, HTMLayoutModes::HLM_LAYOUT_ONLY);
+    ::HTMLayoutSetMode(m_hWnd, /*HTMLayoutModes::*/HLM_LAYOUT_ONLY);
   }
 
   BOOL SelectionExist()
@@ -145,7 +145,7 @@ public:
     return ::HTMLayoutSelectionExist(m_hWnd);
   }
 
-  LPBYTE GetSelectedHtml(UINT& selectedSize)
+  LPCBYTE GetSelectedHtml(UINT& selectedSize)
   {
     ATLASSERT(::IsWindow(m_hWnd));
     return ::HTMLayoutGetSelectedHTML(m_hWnd, &selectedSize);

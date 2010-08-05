@@ -475,11 +475,14 @@ void InstallerWindow::AddControl(const ControlEdit& control)
 
 void InstallerWindow::AddControl(const ControlBrowse& control)
 {
-	// BUG: this is a file browser, it doesn't allow selection of folders
-	htmlayout::dom::element elt = htmlayout::dom::element::create("widget", control.text.GetValue().c_str());
-	elt["type"] = L"file";
+	htmlayout::dom::element elt = htmlayout::dom::element::create("widget");
+	if (control.folders_only) elt["type"] = L"folder-path";
+	else elt["type"] = L"file-path";
 	elt["id"] = control.id.GetValue().c_str();
+	if (! control.filter.empty()) elt["filter"] = control.filter.GetValue().c_str();
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
+	elt["novalue"] = control.text.GetValue().c_str();
+	// TODO: control.allow_edit, control.must_exist, control.hide_readonly
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlBrowse&>(control)).c_str();	
 	elt["style"] = (GetControlStyle(control) + GetPositionStyle(control.position)).c_str();
 	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
@@ -503,7 +506,6 @@ void InstallerWindow::AddControl(const ControlLicense& control)
 		htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
 	}
 	// hyperlink
-	// BUG: the link opens within this window, it needs to popup the default browser 
 	{
 		WidgetPosition control_position = control.position;
 		CRect link_rect = control_position.ToRect();
@@ -511,7 +513,7 @@ void InstallerWindow::AddControl(const ControlLicense& control)
 		control_position.FromRect(link_rect);
 		htmlayout::dom::element elt = htmlayout::dom::element::create("a", control.text.GetValue().c_str());
 		elt["href"] = control.license_file.GetValue().c_str();
-		// elt["target"] = L"_blank";
+		elt["target"] = L"_blank";
 		if (! control.IsEnabled()) elt["disabled"] = L"true";
 		elt["control_ptr"] = DVLib::towstring(& const_cast<ControlLicense&>(control)).c_str();	
 		elt["style"] = (GetControlStyle(control) + GetPositionStyle(control_position)).c_str();
@@ -521,10 +523,9 @@ void InstallerWindow::AddControl(const ControlLicense& control)
 
 void InstallerWindow::AddControl(const ControlHyperlink& control)
 {
-	// BUG: the link opens within this window, it needs to popup the default browser 
 	htmlayout::dom::element elt = htmlayout::dom::element::create("a", control.text.GetValue().c_str());
 	elt["href"] = control.uri.GetValue().c_str();
-	// elt["target"] = L"_blank";
+	elt["target"] = L"_blank";
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlHyperlink&>(control)).c_str();	
 	elt["style"] = (GetControlStyle(control) + GetPositionStyle(control.position)).c_str();

@@ -1,5 +1,5 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
+// Microsoft Visual C++ generated include file.
 // Used by browse.rc
 //
 #define IDD_ABOUTBOX                    100
@@ -50,6 +50,7 @@
 #define ID_TEST_SHOW_POPUP              32810
 #define ID_SAVE_AS_PNG                  32811
 #define ID_SAVE_AS_JPEG                 32812
+#define ID_TESTS_SWITCHTAB              32813
 #define ID_FILE_OPEN_URL                61403
 
 // Next default values for new objects
@@ -57,7 +58,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        253
-#define _APS_NEXT_COMMAND_VALUE         32813
+#define _APS_NEXT_COMMAND_VALUE         32814
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

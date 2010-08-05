@@ -3,8 +3,8 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 7.00.0500 */
-/* at Mon Mar 16 11:25:03 2009
+ /* File created by MIDL compiler version 6.00.0366 */
+/* at Mon Jul 05 19:04:02 2010
  */
 /* Compiler settings for .\AxHTMLayout.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -119,12 +119,14 @@ typedef struct Elements Elements;
 extern "C"{
 #endif 
 
+void * __RPC_USER MIDL_user_allocate(size_t);
+void __RPC_USER MIDL_user_free( void * ); 
 
-/* interface __MIDL_itf_AxHTMLayout_0000_0000 */
+/* interface __MIDL_itf_AxHTMLayout_0000 */
 /* [local] */ 
 
 typedef /* [public][public][public] */ 
-enum __MIDL___MIDL_itf_AxHTMLayout_0000_0000_0001
+enum __MIDL___MIDL_itf_AxHTMLayout_0000_0001
     {	ContentBox	= 0,
 	PaddingBox	= 0x10,
 	BorderBox	= 0x20,
@@ -135,7 +137,7 @@ enum __MIDL___MIDL_itf_AxHTMLayout_0000_0000_0001
     } 	ElementBoxType;
 
 typedef /* [public][public] */ 
-enum __MIDL___MIDL_itf_AxHTMLayout_0000_0000_0002
+enum __MIDL___MIDL_itf_AxHTMLayout_0000_0002
     {	RootRelative	= 0x1,
 	SelfRelative	= 0x2,
 	ContainerRelative	= 0x3,
@@ -145,8 +147,8 @@ enum __MIDL___MIDL_itf_AxHTMLayout_0000_0000_0002
 
 
 
-extern RPC_IF_HANDLE __MIDL_itf_AxHTMLayout_0000_0000_v0_0_c_ifspec;
-extern RPC_IF_HANDLE __MIDL_itf_AxHTMLayout_0000_0000_v0_0_s_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_AxHTMLayout_0000_v0_0_c_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_AxHTMLayout_0000_v0_0_s_ifspec;
 
 #ifndef __IElement_INTERFACE_DEFINED__
 #define __IElement_INTERFACE_DEFINED__
@@ -245,8 +247,7 @@ EXTERN_C const IID IID_IElement;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IElement * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
-            __RPC__deref_out  void **ppvObject);
+            /* [iid_is][out] */ void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IElement * This);
@@ -268,7 +269,7 @@ EXTERN_C const IID IID_IElement;
             IElement * This,
             /* [in] */ REFIID riid,
             /* [size_is][in] */ LPOLESTR *rgszNames,
-            /* [range][in] */ UINT cNames,
+            /* [in] */ UINT cNames,
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
@@ -386,87 +387,320 @@ EXTERN_C const IID IID_IElement;
 
 
 #define IElement_QueryInterface(This,riid,ppvObject)	\
-    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+    (This)->lpVtbl -> QueryInterface(This,riid,ppvObject)
 
 #define IElement_AddRef(This)	\
-    ( (This)->lpVtbl -> AddRef(This) ) 
+    (This)->lpVtbl -> AddRef(This)
 
 #define IElement_Release(This)	\
-    ( (This)->lpVtbl -> Release(This) ) 
+    (This)->lpVtbl -> Release(This)
 
 
 #define IElement_GetTypeInfoCount(This,pctinfo)	\
-    ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
+    (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo)
 
 #define IElement_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
-    ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
+    (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo)
 
 #define IElement_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
-    ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
+    (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)
 
 #define IElement_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
-    ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
+    (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)
 
 
 #define IElement_get_Tag(This,pVal)	\
-    ( (This)->lpVtbl -> get_Tag(This,pVal) ) 
+    (This)->lpVtbl -> get_Tag(This,pVal)
 
 #define IElement_get_Value(This,pVal)	\
-    ( (This)->lpVtbl -> get_Value(This,pVal) ) 
+    (This)->lpVtbl -> get_Value(This,pVal)
 
 #define IElement_put_Value(This,newVal)	\
-    ( (This)->lpVtbl -> put_Value(This,newVal) ) 
+    (This)->lpVtbl -> put_Value(This,newVal)
 
 #define IElement_Select(This,cssSelector,elm)	\
-    ( (This)->lpVtbl -> Select(This,cssSelector,elm) ) 
+    (This)->lpVtbl -> Select(This,cssSelector,elm)
 
 #define IElement_SelectAll(This,cssSelector,ppEls)	\
-    ( (This)->lpVtbl -> SelectAll(This,cssSelector,ppEls) ) 
+    (This)->lpVtbl -> SelectAll(This,cssSelector,ppEls)
 
 #define IElement_get_attribute(This,name,pVal)	\
-    ( (This)->lpVtbl -> get_attribute(This,name,pVal) ) 
+    (This)->lpVtbl -> get_attribute(This,name,pVal)
 
 #define IElement_put_attribute(This,name,newVal)	\
-    ( (This)->lpVtbl -> put_attribute(This,name,newVal) ) 
+    (This)->lpVtbl -> put_attribute(This,name,newVal)
 
 #define IElement_get_styleAttribute(This,name,pVal)	\
-    ( (This)->lpVtbl -> get_styleAttribute(This,name,pVal) ) 
+    (This)->lpVtbl -> get_styleAttribute(This,name,pVal)
 
 #define IElement_put_styleAttribute(This,name,newVal)	\
-    ( (This)->lpVtbl -> put_styleAttribute(This,name,newVal) ) 
+    (This)->lpVtbl -> put_styleAttribute(This,name,newVal)
 
 #define IElement_ShowPopup(This,x,y)	\
-    ( (This)->lpVtbl -> ShowPopup(This,x,y) ) 
+    (This)->lpVtbl -> ShowPopup(This,x,y)
 
 #define IElement_HidePopup(This)	\
-    ( (This)->lpVtbl -> HidePopup(This) ) 
+    (This)->lpVtbl -> HidePopup(This)
 
 #define IElement_StartTimer(This,milliseconds,timerId)	\
-    ( (This)->lpVtbl -> StartTimer(This,milliseconds,timerId) ) 
+    (This)->lpVtbl -> StartTimer(This,milliseconds,timerId)
 
 #define IElement_StopTimer(This,timerId)	\
-    ( (This)->lpVtbl -> StopTimer(This,timerId) ) 
+    (This)->lpVtbl -> StopTimer(This,timerId)
 
 #define IElement_PostControlEvent(This,eventType,reason)	\
-    ( (This)->lpVtbl -> PostControlEvent(This,eventType,reason) ) 
+    (This)->lpVtbl -> PostControlEvent(This,eventType,reason)
 
 #define IElement_SendControlEvent(This,eventType,reason,handled)	\
-    ( (This)->lpVtbl -> SendControlEvent(This,eventType,reason,handled) ) 
+    (This)->lpVtbl -> SendControlEvent(This,eventType,reason,handled)
 
 #define IElement_Position(This,x,y,ofWhat,relTo)	\
-    ( (This)->lpVtbl -> Position(This,x,y,ofWhat,relTo) ) 
+    (This)->lpVtbl -> Position(This,x,y,ofWhat,relTo)
 
 #define IElement_Dimension(This,w,h,ofWhat)	\
-    ( (This)->lpVtbl -> Dimension(This,w,h,ofWhat) ) 
+    (This)->lpVtbl -> Dimension(This,w,h,ofWhat)
 
 #define IElement_Call(This,name,params,rv)	\
-    ( (This)->lpVtbl -> Call(This,name,params,rv) ) 
+    (This)->lpVtbl -> Call(This,name,params,rv)
 
 #endif /* COBJMACROS */
 
 
 #endif 	/* C style interface */
 
+
+
+/* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE IElement_get_Tag_Proxy( 
+    IElement * This,
+    /* [retval][out] */ BSTR *pVal);
+
+
+void __RPC_STUB IElement_get_Tag_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE IElement_get_Value_Proxy( 
+    IElement * This,
+    /* [retval][out] */ VARIANT *pVal);
+
+
+void __RPC_STUB IElement_get_Value_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE IElement_put_Value_Proxy( 
+    IElement * This,
+    /* [in] */ VARIANT newVal);
+
+
+void __RPC_STUB IElement_put_Value_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IElement_Select_Proxy( 
+    IElement * This,
+    /* [in] */ BSTR cssSelector,
+    /* [retval][out] */ IElement **elm);
+
+
+void __RPC_STUB IElement_Select_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IElement_SelectAll_Proxy( 
+    IElement * This,
+    /* [in] */ BSTR cssSelector,
+    /* [retval][out] */ IElements **ppEls);
+
+
+void __RPC_STUB IElement_SelectAll_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE IElement_get_attribute_Proxy( 
+    IElement * This,
+    BSTR name,
+    /* [retval][out] */ VARIANT *pVal);
+
+
+void __RPC_STUB IElement_get_attribute_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE IElement_put_attribute_Proxy( 
+    IElement * This,
+    BSTR name,
+    /* [in] */ VARIANT newVal);
+
+
+void __RPC_STUB IElement_put_attribute_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE IElement_get_styleAttribute_Proxy( 
+    IElement * This,
+    BSTR name,
+    /* [retval][out] */ VARIANT *pVal);
+
+
+void __RPC_STUB IElement_get_styleAttribute_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE IElement_put_styleAttribute_Proxy( 
+    IElement * This,
+    BSTR name,
+    /* [in] */ VARIANT newVal);
+
+
+void __RPC_STUB IElement_put_styleAttribute_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IElement_ShowPopup_Proxy( 
+    IElement * This,
+    long x,
+    long y);
+
+
+void __RPC_STUB IElement_ShowPopup_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IElement_HidePopup_Proxy( 
+    IElement * This);
+
+
+void __RPC_STUB IElement_HidePopup_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IElement_StartTimer_Proxy( 
+    IElement * This,
+    long milliseconds,
+    long timerId);
+
+
+void __RPC_STUB IElement_StartTimer_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IElement_StopTimer_Proxy( 
+    IElement * This,
+    long timerId);
+
+
+void __RPC_STUB IElement_StopTimer_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IElement_PostControlEvent_Proxy( 
+    IElement * This,
+    long eventType,
+    /* [defaultvalue] */ long reason);
+
+
+void __RPC_STUB IElement_PostControlEvent_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IElement_SendControlEvent_Proxy( 
+    IElement * This,
+    long eventType,
+    /* [defaultvalue] */ long reason,
+    /* [retval][out] */ VARIANT_BOOL *handled);
+
+
+void __RPC_STUB IElement_SendControlEvent_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IElement_Position_Proxy( 
+    IElement * This,
+    /* [out] */ long *x,
+    /* [out] */ long *y,
+    ElementBoxType ofWhat,
+    RelativeToType relTo);
+
+
+void __RPC_STUB IElement_Position_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IElement_Dimension_Proxy( 
+    IElement * This,
+    /* [out] */ long *w,
+    /* [out] */ long *h,
+    ElementBoxType ofWhat);
+
+
+void __RPC_STUB IElement_Dimension_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [vararg][helpstring][id] */ HRESULT STDMETHODCALLTYPE IElement_Call_Proxy( 
+    IElement * This,
+    BSTR name,
+    SAFEARRAY * params,
+    /* [retval][out] */ VARIANT *rv);
+
+
+void __RPC_STUB IElement_Call_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
 
 
 
@@ -536,8 +770,7 @@ EXTERN_C const IID IID_IEngine;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IEngine * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
-            __RPC__deref_out  void **ppvObject);
+            /* [iid_is][out] */ void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IEngine * This);
@@ -559,7 +792,7 @@ EXTERN_C const IID IID_IEngine;
             IEngine * This,
             /* [in] */ REFIID riid,
             /* [size_is][in] */ LPOLESTR *rgszNames,
-            /* [range][in] */ UINT cNames,
+            /* [in] */ UINT cNames,
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
@@ -637,69 +870,214 @@ EXTERN_C const IID IID_IEngine;
 
 
 #define IEngine_QueryInterface(This,riid,ppvObject)	\
-    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+    (This)->lpVtbl -> QueryInterface(This,riid,ppvObject)
 
 #define IEngine_AddRef(This)	\
-    ( (This)->lpVtbl -> AddRef(This) ) 
+    (This)->lpVtbl -> AddRef(This)
 
 #define IEngine_Release(This)	\
-    ( (This)->lpVtbl -> Release(This) ) 
+    (This)->lpVtbl -> Release(This)
 
 
 #define IEngine_GetTypeInfoCount(This,pctinfo)	\
-    ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
+    (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo)
 
 #define IEngine_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
-    ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
+    (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo)
 
 #define IEngine_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
-    ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
+    (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)
 
 #define IEngine_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
-    ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
+    (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)
 
 
 #define IEngine_put_AutoSize(This,vbool)	\
-    ( (This)->lpVtbl -> put_AutoSize(This,vbool) ) 
+    (This)->lpVtbl -> put_AutoSize(This,vbool)
 
 #define IEngine_get_AutoSize(This,pbool)	\
-    ( (This)->lpVtbl -> get_AutoSize(This,pbool) ) 
+    (This)->lpVtbl -> get_AutoSize(This,pbool)
 
 #define IEngine_put_Enabled(This,vbool)	\
-    ( (This)->lpVtbl -> put_Enabled(This,vbool) ) 
+    (This)->lpVtbl -> put_Enabled(This,vbool)
 
 #define IEngine_get_Enabled(This,pbool)	\
-    ( (This)->lpVtbl -> get_Enabled(This,pbool) ) 
+    (This)->lpVtbl -> get_Enabled(This,pbool)
 
 #define IEngine_get_Window(This,phwnd)	\
-    ( (This)->lpVtbl -> get_Window(This,phwnd) ) 
+    (This)->lpVtbl -> get_Window(This,phwnd)
 
 #define IEngine_put_TabStop(This,vbool)	\
-    ( (This)->lpVtbl -> put_TabStop(This,vbool) ) 
+    (This)->lpVtbl -> put_TabStop(This,vbool)
 
 #define IEngine_get_TabStop(This,pbool)	\
-    ( (This)->lpVtbl -> get_TabStop(This,pbool) ) 
+    (This)->lpVtbl -> get_TabStop(This,pbool)
 
 #define IEngine_put_BorderVisible(This,vbool)	\
-    ( (This)->lpVtbl -> put_BorderVisible(This,vbool) ) 
+    (This)->lpVtbl -> put_BorderVisible(This,vbool)
 
 #define IEngine_get_BorderVisible(This,pbool)	\
-    ( (This)->lpVtbl -> get_BorderVisible(This,pbool) ) 
+    (This)->lpVtbl -> get_BorderVisible(This,pbool)
 
 #define IEngine_Load(This,url)	\
-    ( (This)->lpVtbl -> Load(This,url) ) 
+    (This)->lpVtbl -> Load(This,url)
 
 #define IEngine_LoadHtml(This,html,baseUrl)	\
-    ( (This)->lpVtbl -> LoadHtml(This,html,baseUrl) ) 
+    (This)->lpVtbl -> LoadHtml(This,html,baseUrl)
 
 #define IEngine_get_Root(This,pVal)	\
-    ( (This)->lpVtbl -> get_Root(This,pVal) ) 
+    (This)->lpVtbl -> get_Root(This,pVal)
 
 #endif /* COBJMACROS */
 
 
 #endif 	/* C style interface */
 
+
+
+/* [id][propput] */ HRESULT STDMETHODCALLTYPE IEngine_put_AutoSize_Proxy( 
+    IEngine * This,
+    /* [in] */ VARIANT_BOOL vbool);
+
+
+void __RPC_STUB IEngine_put_AutoSize_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [id][propget] */ HRESULT STDMETHODCALLTYPE IEngine_get_AutoSize_Proxy( 
+    IEngine * This,
+    /* [retval][out] */ VARIANT_BOOL *pbool);
+
+
+void __RPC_STUB IEngine_get_AutoSize_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [id][propput] */ HRESULT STDMETHODCALLTYPE IEngine_put_Enabled_Proxy( 
+    IEngine * This,
+    /* [in] */ VARIANT_BOOL vbool);
+
+
+void __RPC_STUB IEngine_put_Enabled_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [id][propget] */ HRESULT STDMETHODCALLTYPE IEngine_get_Enabled_Proxy( 
+    IEngine * This,
+    /* [retval][out] */ VARIANT_BOOL *pbool);
+
+
+void __RPC_STUB IEngine_get_Enabled_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [id][propget] */ HRESULT STDMETHODCALLTYPE IEngine_get_Window_Proxy( 
+    IEngine * This,
+    /* [retval][out] */ long *phwnd);
+
+
+void __RPC_STUB IEngine_get_Window_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [id][propput] */ HRESULT STDMETHODCALLTYPE IEngine_put_TabStop_Proxy( 
+    IEngine * This,
+    /* [in] */ VARIANT_BOOL vbool);
+
+
+void __RPC_STUB IEngine_put_TabStop_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [id][propget] */ HRESULT STDMETHODCALLTYPE IEngine_get_TabStop_Proxy( 
+    IEngine * This,
+    /* [retval][out] */ VARIANT_BOOL *pbool);
+
+
+void __RPC_STUB IEngine_get_TabStop_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [id][propput] */ HRESULT STDMETHODCALLTYPE IEngine_put_BorderVisible_Proxy( 
+    IEngine * This,
+    /* [in] */ VARIANT_BOOL vbool);
+
+
+void __RPC_STUB IEngine_put_BorderVisible_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [id][propget] */ HRESULT STDMETHODCALLTYPE IEngine_get_BorderVisible_Proxy( 
+    IEngine * This,
+    /* [retval][out] */ VARIANT_BOOL *pbool);
+
+
+void __RPC_STUB IEngine_get_BorderVisible_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IEngine_Load_Proxy( 
+    IEngine * This,
+    /* [in] */ BSTR url);
+
+
+void __RPC_STUB IEngine_Load_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IEngine_LoadHtml_Proxy( 
+    IEngine * This,
+    /* [in] */ BSTR html,
+    /* [defaultvalue][in] */ BSTR baseUrl);
+
+
+void __RPC_STUB IEngine_LoadHtml_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE IEngine_get_Root_Proxy( 
+    IEngine * This,
+    /* [retval][out] */ IElement **pVal);
+
+
+void __RPC_STUB IEngine_get_Root_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
 
 
 
@@ -754,24 +1132,24 @@ enum BehaviorEvents
 	BE_CONTEXT_MENU_REQUEST	= 0x10,
 	BE_VISIUAL_STATUS_CHANGED	= 0x11,
 	BE_HYPERLINK_CLICK	= 0x80,
-	BE_TABLE_HEADER_CLICK	= ( BE_HYPERLINK_CLICK + 1 ) ,
-	BE_TABLE_ROW_CLICK	= ( BE_TABLE_HEADER_CLICK + 1 ) ,
-	BE_TABLE_ROW_DBL_CLICK	= ( BE_TABLE_ROW_CLICK + 1 ) ,
+	BE_TABLE_HEADER_CLICK	= BE_HYPERLINK_CLICK + 1,
+	BE_TABLE_ROW_CLICK	= BE_TABLE_HEADER_CLICK + 1,
+	BE_TABLE_ROW_DBL_CLICK	= BE_TABLE_ROW_CLICK + 1,
 	BE_ELEMENT_COLLAPSED	= 0x90,
-	BE_ELEMENT_EXPANDED	= ( BE_ELEMENT_COLLAPSED + 1 ) ,
-	BE_ACTIVATE_CHILD	= ( BE_ELEMENT_EXPANDED + 1 ) ,
+	BE_ELEMENT_EXPANDED	= BE_ELEMENT_COLLAPSED + 1,
+	BE_ACTIVATE_CHILD	= BE_ELEMENT_EXPANDED + 1,
 	BE_DO_SWITCH_TAB	= BE_ACTIVATE_CHILD,
-	BE_INIT_DATA_VIEW	= ( BE_DO_SWITCH_TAB + 1 ) ,
-	BE_ROWS_DATA_REQUEST	= ( BE_INIT_DATA_VIEW + 1 ) ,
-	BE_UI_STATE_CHANGED	= ( BE_ROWS_DATA_REQUEST + 1 ) ,
-	BE_FORM_SUBMIT	= ( BE_UI_STATE_CHANGED + 1 ) ,
-	BE_FORM_RESET	= ( BE_FORM_SUBMIT + 1 ) ,
-	BE_DOCUMENT_COMPLETE	= ( BE_FORM_RESET + 1 ) ,
-	BE_HISTORY_PUSH	= ( BE_DOCUMENT_COMPLETE + 1 ) ,
-	BE_HISTORY_DROP	= ( BE_HISTORY_PUSH + 1 ) ,
-	BE_HISTORY_PRIOR	= ( BE_HISTORY_DROP + 1 ) ,
-	BE_HISTORY_NEXT	= ( BE_HISTORY_PRIOR + 1 ) ,
-	BE_HISTORY_STATE_CHANGED	= ( BE_HISTORY_NEXT + 1 ) ,
+	BE_INIT_DATA_VIEW	= BE_DO_SWITCH_TAB + 1,
+	BE_ROWS_DATA_REQUEST	= BE_INIT_DATA_VIEW + 1,
+	BE_UI_STATE_CHANGED	= BE_ROWS_DATA_REQUEST + 1,
+	BE_FORM_SUBMIT	= BE_UI_STATE_CHANGED + 1,
+	BE_FORM_RESET	= BE_FORM_SUBMIT + 1,
+	BE_DOCUMENT_COMPLETE	= BE_FORM_RESET + 1,
+	BE_HISTORY_PUSH	= BE_DOCUMENT_COMPLETE + 1,
+	BE_HISTORY_DROP	= BE_HISTORY_PUSH + 1,
+	BE_HISTORY_PRIOR	= BE_HISTORY_DROP + 1,
+	BE_HISTORY_NEXT	= BE_HISTORY_PRIOR + 1,
+	BE_HISTORY_STATE_CHANGED	= BE_HISTORY_NEXT + 1,
 	BE_FIRST_APPLICATION_EVENT_CODE	= 0x100
     } ;
 
@@ -802,8 +1180,7 @@ EXTERN_C const IID DIID__IEngineEvents;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             _IEngineEvents * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
-            __RPC__deref_out  void **ppvObject);
+            /* [iid_is][out] */ void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             _IEngineEvents * This);
@@ -825,7 +1202,7 @@ EXTERN_C const IID DIID__IEngineEvents;
             _IEngineEvents * This,
             /* [in] */ REFIID riid,
             /* [size_is][in] */ LPOLESTR *rgszNames,
-            /* [range][in] */ UINT cNames,
+            /* [in] */ UINT cNames,
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
@@ -854,26 +1231,26 @@ EXTERN_C const IID DIID__IEngineEvents;
 
 
 #define _IEngineEvents_QueryInterface(This,riid,ppvObject)	\
-    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+    (This)->lpVtbl -> QueryInterface(This,riid,ppvObject)
 
 #define _IEngineEvents_AddRef(This)	\
-    ( (This)->lpVtbl -> AddRef(This) ) 
+    (This)->lpVtbl -> AddRef(This)
 
 #define _IEngineEvents_Release(This)	\
-    ( (This)->lpVtbl -> Release(This) ) 
+    (This)->lpVtbl -> Release(This)
 
 
 #define _IEngineEvents_GetTypeInfoCount(This,pctinfo)	\
-    ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
+    (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo)
 
 #define _IEngineEvents_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
-    ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
+    (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo)
 
 #define _IEngineEvents_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
-    ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
+    (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)
 
 #define _IEngineEvents_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
-    ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
+    (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)
 
 #endif /* COBJMACROS */
 
@@ -917,8 +1294,7 @@ EXTERN_C const IID DIID__IElementEvents;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             _IElementEvents * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
-            __RPC__deref_out  void **ppvObject);
+            /* [iid_is][out] */ void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             _IElementEvents * This);
@@ -940,7 +1316,7 @@ EXTERN_C const IID DIID__IElementEvents;
             _IElementEvents * This,
             /* [in] */ REFIID riid,
             /* [size_is][in] */ LPOLESTR *rgszNames,
-            /* [range][in] */ UINT cNames,
+            /* [in] */ UINT cNames,
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
@@ -969,26 +1345,26 @@ EXTERN_C const IID DIID__IElementEvents;
 
 
 #define _IElementEvents_QueryInterface(This,riid,ppvObject)	\
-    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+    (This)->lpVtbl -> QueryInterface(This,riid,ppvObject)
 
 #define _IElementEvents_AddRef(This)	\
-    ( (This)->lpVtbl -> AddRef(This) ) 
+    (This)->lpVtbl -> AddRef(This)
 
 #define _IElementEvents_Release(This)	\
-    ( (This)->lpVtbl -> Release(This) ) 
+    (This)->lpVtbl -> Release(This)
 
 
 #define _IElementEvents_GetTypeInfoCount(This,pctinfo)	\
-    ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
+    (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo)
 
 #define _IElementEvents_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
-    ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
+    (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo)
 
 #define _IElementEvents_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
-    ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
+    (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)
 
 #define _IElementEvents_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
-    ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
+    (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)
 
 #endif /* COBJMACROS */
 
@@ -1043,8 +1419,7 @@ EXTERN_C const IID IID_IElements;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IElements * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
-            __RPC__deref_out  void **ppvObject);
+            /* [iid_is][out] */ void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IElements * This);
@@ -1066,7 +1441,7 @@ EXTERN_C const IID IID_IElements;
             IElements * This,
             /* [in] */ REFIID riid,
             /* [size_is][in] */ LPOLESTR *rgszNames,
-            /* [range][in] */ UINT cNames,
+            /* [in] */ UINT cNames,
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
@@ -1108,42 +1483,79 @@ EXTERN_C const IID IID_IElements;
 
 
 #define IElements_QueryInterface(This,riid,ppvObject)	\
-    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+    (This)->lpVtbl -> QueryInterface(This,riid,ppvObject)
 
 #define IElements_AddRef(This)	\
-    ( (This)->lpVtbl -> AddRef(This) ) 
+    (This)->lpVtbl -> AddRef(This)
 
 #define IElements_Release(This)	\
-    ( (This)->lpVtbl -> Release(This) ) 
+    (This)->lpVtbl -> Release(This)
 
 
 #define IElements_GetTypeInfoCount(This,pctinfo)	\
-    ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
+    (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo)
 
 #define IElements_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
-    ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
+    (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo)
 
 #define IElements_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
-    ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
+    (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)
 
 #define IElements_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
-    ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
+    (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)
 
 
 #define IElements_get__NewEnum(This,ppEnum)	\
-    ( (This)->lpVtbl -> get__NewEnum(This,ppEnum) ) 
+    (This)->lpVtbl -> get__NewEnum(This,ppEnum)
 
 #define IElements_get_Count(This,pVal)	\
-    ( (This)->lpVtbl -> get_Count(This,pVal) ) 
+    (This)->lpVtbl -> get_Count(This,pVal)
 
 #define IElements_get_Item(This,index,pVal)	\
-    ( (This)->lpVtbl -> get_Item(This,index,pVal) ) 
+    (This)->lpVtbl -> get_Item(This,index,pVal)
 
 #endif /* COBJMACROS */
 
 
 #endif 	/* C style interface */
 
+
+
+/* [restricted][id][propget] */ HRESULT STDMETHODCALLTYPE IElements_get__NewEnum_Proxy( 
+    IElements * This,
+    /* [retval][out] */ IUnknown **ppEnum);
+
+
+void __RPC_STUB IElements_get__NewEnum_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE IElements_get_Count_Proxy( 
+    IElements * This,
+    /* [retval][out] */ long *pVal);
+
+
+void __RPC_STUB IElements_get_Count_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [defaultcollelem][helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE IElements_get_Item_Proxy( 
+    IElements * This,
+    /* [in] */ long index,
+    /* [retval][out] */ IElement **pVal);
+
+
+void __RPC_STUB IElements_get_Item_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
 
 
 

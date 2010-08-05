@@ -32,10 +32,12 @@ class CHTMLBar :
       LRESULT OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
       {
         DefWindowProc();
+        htmlayout::debug_output_console dc;
         // HTMLayout stuff
         SetCallback(); // reroute all notifications in this instance
         LoadHtmlResource("TOOLBAR");
 
+        
         // attach this event_handler to the root node of the DOM
         // see on_key and on_event,
         htmlayout::attach_event_handler(GetRootElement(),this);
@@ -182,14 +184,14 @@ class CHTMLBar :
 
       BOOL OnLoadUrl()
       {
-        std::wstring url = m_url.text(); // it is UTF8, sic! 
+        std::wstring url = m_url.text(); 
         ::SendMessage(GetParent(),WM_HTML_NAVIGATE, WPARAM(0),LPARAM(url.c_str()));
         return TRUE;
       }
 
       LRESULT OnSearch()
       {
-        std::wstring search = m_search.text(); // it is UTF8, sic! 
+        std::wstring search = m_search.text(); 
         ::SendMessage(GetParent(),WM_HTML_NAVIGATE, WPARAM(1),LPARAM(search.c_str()));
         return TRUE;
       }

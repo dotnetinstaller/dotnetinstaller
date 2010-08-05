@@ -188,6 +188,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\HTMLayoutBehaviorWeblink.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\HtmLayoutDll.cpp"
 				>
 			</File>
@@ -239,6 +243,10 @@
 			</File>
 			<File
 				RelativePath=".\ExtractCabProcessor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HTMLayoutBehaviorWeblink.h"
 				>
 			</File>
 			<File

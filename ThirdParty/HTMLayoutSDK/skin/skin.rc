@@ -147,7 +147,7 @@ END
 // HTML
 //
 
-DEFAULT                 HTML    DISCARDABLE     "default.htm"
+DEFAULT                 HTML    DISCARDABLE     "res\\default.htm"
 #endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
 

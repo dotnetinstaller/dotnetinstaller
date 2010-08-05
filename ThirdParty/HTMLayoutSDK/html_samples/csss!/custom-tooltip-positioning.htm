@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <style>
+      p#test 
+      {
+        border:1px solid black; 
+        width: 20%;
+        hover-on!: self.start-timer(400); 
+        hover-off!: self.stop-timer(), 
+                    $1(popup#for-test):popup = false ; 
+        timer!: self:hover ? self.show-popup($1(popup#for-test),3,9), /* right-top of popup to right-bottom of self */
+                return cancel;
+      }
+      
+      popup#for-test
+      {
+        margin-top:10px; /* to offset it from anchor element */
+      }
+    
+    </style>
+  </head>
+<body>
+  Custom tooltip positioning
+  <p #test>Hover me</p>
+  
+  <popup #for-test>
+    Hand-made tooltip.
+  </popup>
+
+</body>
+</html>

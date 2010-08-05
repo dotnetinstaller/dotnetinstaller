@@ -172,14 +172,16 @@ namespace htmlayout
         if( params.cmd == BUTTON_CLICK )
         {
           const wchar_t* bname = src.get_attribute("name");
+          if(!bname)
+            return FALSE;
 
           bool positive_answer = false;
     
           return_id = 0;
           if( aux::wcseqi(bname,L"OK") )            { return_id =IDOK    ; positive_answer = true; }
           else if( aux::wcseqi(bname,L"CANCEL") )     return_id =IDCANCEL;
-          else if( aux::wcseqi(bname,L"ABORT ") )     return_id =IDABORT ;
-          else if( aux::wcseqi(bname,L"RETRY ") )   { return_id =IDRETRY ; positive_answer = true; }
+          else if( aux::wcseqi(bname,L"ABORT") )      return_id =IDABORT ;
+          else if( aux::wcseqi(bname,L"RETRY") )    { return_id =IDRETRY ; positive_answer = true; }
           else if( aux::wcseqi(bname,L"IGNORE") )     return_id =IDIGNORE;
           else if( aux::wcseqi(bname,L"YES") )      { return_id =IDYES   ; positive_answer = true; }
           else if( aux::wcseqi(bname,L"NO") )         return_id =IDNO    ;
@@ -287,9 +289,9 @@ namespace htmlayout
     inline void dialog::do_modal_loop(HWND hwnd)
     {
 #if defined(UNDER_CE)
-       HWND frm = GetWindow(hwnd, GW_OWNER);
+       HWND frm = GetWindow(hwnd,GW_OWNER);
 #else
-       HWND frm = GetAncestor(hwnd, GA_ROOTOWNER);
+       HWND frm = GetAncestor(hwnd,GA_ROOTOWNER);
 #endif
        EnableWindow(frm,FALSE);
        MSG msg;

@@ -31,9 +31,24 @@ void SetControlValuesTask::exec(htmlayout::dom::element elt)
 					value = elt.get_state(STATE_CHECKED) ? L"1" : L"";
 				}
 
-				LOG(L"--- Setting user-defined value '" << id << L"'=" << value);
+				LOG(L"--- Setting user-defined checkbox value '" << id << L"'=" << value);
 				InstallerSession::Instance->AdditionalControlArgs[id] = value;
 			}
+			else if (0 == wcscmp(type, L"text"))
+			{
+				std::wstring value = DVLib::UTF8string2wstring(elt.get_html(false));
+				LOG(L"--- Setting user-defined edit value '" << id << L"'=" << value);
+				InstallerSession::Instance->AdditionalControlArgs[id] = value;
+			}
+			else if (0 == wcscmp(type, L"file-path") || 0 == wcscmp(type, L"folder-path"))
+			{
+				std::wstring value = elt.get_value().to_string();
+				if (value.empty()) value = elt.get_attribute("novalue");
+				LOG(L"--- Setting user-defined browse value '" << id << L"'=" << value);
+				InstallerSession::Instance->AdditionalControlArgs[id] = value;
+			}
+
+			// TODO: support widget types: select, dropdown-select, textarea, htmlarea
 		}
 
 		for(unsigned int child_index = 0; child_index < m_root.children_count(); child_index++)
