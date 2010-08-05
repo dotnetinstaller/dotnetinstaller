@@ -8,6 +8,7 @@ namespace DVLib
 		{
 			CPPUNIT_TEST_SUITE( MsiUtilUnitTests );
 			CPPUNIT_TEST( testGetInstalledProducts );
+			CPPUNIT_TEST( testGetAnyInstalledProducts );
 			CPPUNIT_TEST( testGetRelatedProducts );
 			CPPUNIT_TEST( testIsProductInstalled );
 			CPPUNIT_TEST( testGetQuotedPathOrGuid );
@@ -16,6 +17,7 @@ namespace DVLib
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testGetInstalledProducts();
+			void testGetAnyInstalledProducts();
 			void testGetRelatedProducts();
 			void testIsProductInstalled();
 			void testGetQuotedPathOrGuid();

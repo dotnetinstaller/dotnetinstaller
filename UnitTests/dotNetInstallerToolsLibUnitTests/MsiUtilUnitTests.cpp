@@ -26,6 +26,31 @@ void MsiUtilUnitTests::testGetInstalledProducts()
 	}
 }
 
+void MsiUtilUnitTests::testGetAnyInstalledProducts()
+{
+	int index = 0;
+	UINT rc = 0;
+	std::vector<wchar_t> buffer;
+	buffer.resize(39);
+	while ((rc = ::MsiEnumProducts(index, & * buffer.begin())) != ERROR_NO_MORE_ITEMS)
+	{
+		try
+		{
+			CHECK_WIN32_DWORD(rc, L"MsiEnumProducts");
+
+			MsiProductInfo product(DVLib::string2guid(& * buffer.begin()));
+			std::wcout << std::endl << index << L" - " << DVLib::guid2wstring(product.product_id) 
+				<< L": " << product.GetProductName() << L" (" << product.GetLocalPackage() << L")";
+		}
+		catch(std::exception& ex)
+		{
+			std::cout << std::endl << " ERROR:" << ex.what();
+		}
+		
+		index++;
+	}
+}
+
 void MsiUtilUnitTests::testGetRelatedProducts()
 {
 	std::vector<DVLib::MsiProductInfo> relatedproducts = DVLib::MsiGetRelatedProducts(
@@ -101,15 +126,24 @@ void MsiUtilUnitTests::testGetRelatedInstalledProducts()
 	CPPUNIT_ASSERT(installedproducts.size() > 0);
 	for each(const DVLib::MsiProductInfo& product in installedproducts)
 	{
+		std::wcout << std::endl << L"-----------------------------------------------------------------------------";
 		std::wcout << std::endl << DVLib::guid2wstring(product.product_id) << L": " << product.GetProductName()
 			<< L" (" << product.GetLocalPackage() << L")";
 		try
 		{
-			std::vector<DVLib::MsiProductInfo> related_products = product.GetRelatedProducts();
-			for each(const DVLib::MsiProductInfo& related_product in related_products)
+			std::vector<GUID> upgrade_codes = product.GetUpgradeCodes();
+			for each(const GUID& upgrade_code in upgrade_codes)
 			{
-				std::wcout << std::endl << L"  * " << DVLib::guid2wstring(product.product_id) << 
-					L": " << related_product.GetProductName();
+				std::wcout << std::endl << L" * Upgrade code: " << DVLib::guid2wstring(upgrade_code);
+				std::vector<DVLib::MsiProductInfo> related_products = DVLib::MsiGetRelatedProducts(upgrade_code);
+				for each(const DVLib::MsiProductInfo& related_product in related_products)
+				{					
+					if (related_product.product_id == product.product_id)
+						continue;
+
+					std::wcout << std::endl << L"  - Related product: " << DVLib::guid2wstring(product.product_id) << 
+						L": " << related_product.GetProductName();
+				}
 			}
 		}
 		catch(std::exception& ex)
