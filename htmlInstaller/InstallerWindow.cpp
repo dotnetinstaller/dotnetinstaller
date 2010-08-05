@@ -4,6 +4,7 @@
 #include "ExtractCabProcessor.h"
 #include "HtmlWidgets.h"
 #include "Resource.h"
+#include "SetControlValuesTask.h"
 
 InstallerWindow::InstallerWindow()
 {
@@ -123,7 +124,7 @@ void InstallerWindow::AddComponent(const ComponentPtr& component)
 	opt["component_ptr"] = DVLib::towstring(get(component)).c_str();
 	if (component->checked) opt["checked"] = L"true";
 	if (component->disabled) opt["disabled"] = L"true";
-	htmlayout::queue::push(new html_insert_task(& components, opt, components.children_count() + 1), HtmlWindow::s_hwnd);
+	htmlayout::queue::push(new html_insert_task(& components, opt, components.children_count()), HtmlWindow::s_hwnd);
 }
 
 BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason)
@@ -144,7 +145,7 @@ BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS typ
 		OnOK();
 		return TRUE;
 	}
-	else 
+	else if (type == BUTTON_STATE_CHANGED || type == EDIT_VALUE_CHANGED || type == SELECT_STATE_CHANGED)
 	{
 		const wchar_t * component_ptr = target_element.get_attribute("component_ptr");
 		if (component_ptr != NULL)
@@ -210,10 +211,15 @@ void InstallerWindow::ResetContent()
 }
 
 void InstallerWindow::SetControlValues()
-{
-	// TODO: iterate through all widgets, set values
-	// LOG(L"--- Setting user-defined value '" << iter->first << L"'=" << iter->second->GetValue());
-	// InstallerSession::Instance->AdditionalControlArgs[iter->first] = iter->second->GetValue();
+{	
+	auto_any<HANDLE, close_handle> done;
+	reset(done, ::CreateEvent(NULL, FALSE, FALSE, NULL));	
+	CHECK_WIN32_BOOL(NULL != get(done),
+		L"CreateEvent");
+
+	htmlayout::queue::push(new SetControlValuesTask(body, get(done)), HtmlWindow::s_hwnd);	
+
+	::WaitForSingleObject(get(done), INFINITE);
 }
 
 // IExecuteCallback
@@ -441,7 +447,7 @@ void InstallerWindow::AddControl(const ControlLabel& control)
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlLabel&>(control)).c_str();	
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
 	elt["style"] = (GetControlStyle(control) + GetPositionStyle(control.position)).c_str();
-	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count() + 1), HtmlWindow::s_hwnd);
+	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
 }
 
 void InstallerWindow::AddControl(const ControlCheckBox& control)
@@ -453,7 +459,7 @@ void InstallerWindow::AddControl(const ControlCheckBox& control)
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlCheckBox&>(control)).c_str();	
 	elt["style"] = (GetControlStyle(control) + GetPositionStyle(control.position)).c_str();
-	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count() + 1), HtmlWindow::s_hwnd);
+	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
 }
 
 void InstallerWindow::AddControl(const ControlEdit& control)
@@ -464,7 +470,7 @@ void InstallerWindow::AddControl(const ControlEdit& control)
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlEdit&>(control)).c_str();	
 	elt["style"] = (GetControlStyle(control) + GetPositionStyle(control.position)).c_str();
-	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count() + 1), HtmlWindow::s_hwnd);
+	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
 }
 
 void InstallerWindow::AddControl(const ControlBrowse& control)
@@ -476,7 +482,7 @@ void InstallerWindow::AddControl(const ControlBrowse& control)
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlBrowse&>(control)).c_str();	
 	elt["style"] = (GetControlStyle(control) + GetPositionStyle(control.position)).c_str();
-	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count() + 1), HtmlWindow::s_hwnd);
+	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
 }
 
 void InstallerWindow::AddControl(const ControlLicense& control)
@@ -494,7 +500,7 @@ void InstallerWindow::AddControl(const ControlLicense& control)
 		if (! control.IsEnabled()) elt["disabled"] = L"true";
 		elt["control_ptr"] = DVLib::towstring(& const_cast<ControlLicense&>(control)).c_str();
 		elt["style"] = GetPositionStyle(control_position).c_str();
-		htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count() + 1), HtmlWindow::s_hwnd);
+		htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
 	}
 	// hyperlink
 	// BUG: the link opens within this window, it needs to popup the default browser 
@@ -509,7 +515,7 @@ void InstallerWindow::AddControl(const ControlLicense& control)
 		if (! control.IsEnabled()) elt["disabled"] = L"true";
 		elt["control_ptr"] = DVLib::towstring(& const_cast<ControlLicense&>(control)).c_str();	
 		elt["style"] = (GetControlStyle(control) + GetPositionStyle(control_position)).c_str();
-		htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count() + 1), HtmlWindow::s_hwnd);
+		htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
 	}
 }
 
@@ -522,7 +528,7 @@ void InstallerWindow::AddControl(const ControlHyperlink& control)
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlHyperlink&>(control)).c_str();	
 	elt["style"] = (GetControlStyle(control) + GetPositionStyle(control.position)).c_str();
-	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count() + 1), HtmlWindow::s_hwnd);
+	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
 }
 
 void InstallerWindow::AddControl(const ControlImage& control)
@@ -532,6 +538,6 @@ void InstallerWindow::AddControl(const ControlImage& control)
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlImage&>(control)).c_str();	
 	elt["style"] = GetPositionStyle(control.position).c_str();
-	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count() + 1), HtmlWindow::s_hwnd);
+	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
 }
 

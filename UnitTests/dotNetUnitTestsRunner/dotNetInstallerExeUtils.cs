@@ -81,8 +81,6 @@ namespace dotNetUnitTestsRunner
         const string configuration = "Release";
 #endif
 
-        private static string _location = null;
-
         public static string Executable
         {
             get
@@ -91,26 +89,17 @@ namespace dotNetUnitTestsRunner
                 if (string.IsNullOrEmpty(executable))
                 {
                     throw new Exception("Missing executable in .config");
-                    // executable = Path.Combine(Location, "dotNetInstaller.exe");
                 }
                 Assert.IsTrue(File.Exists(executable));
                 return executable;
             }
         }
 
-        private static string Location
+        public static string Location
         {
             get
             {
-                if (string.IsNullOrEmpty(_location))
-                {
-                    // locate dotnetinstaller.exe
-                    Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
-                    _location = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(HttpUtility.UrlDecode(uri.AbsolutePath)),
-                        string.Format(@"..\..\..\..\dotNetInstaller\{0}\", configuration)));
-                }
-
-                return _location;
+                return Path.GetDirectoryName(Executable);
             }
         }
 

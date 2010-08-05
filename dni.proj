@@ -192,13 +192,22 @@
     <NUnit Assemblies="UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\dotNetInstallerUnitTests.dll"
      ToolPath="$(NUnitBinDir)" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName).xml" />
   </Target>
+  <Target Name="editortests">
+    <CreateItem Include="TestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\dotNetInstaller\$(Configuration)\dotNetInstaller.exe">
+      <Output TaskParameter="Include" ItemName="TestExecutables"/>
+    </CreateItem>
+    <TemplateFile Template="UnitTests\InstallerEditorUnitTests\App.config"
+     OutputFilename="bin\$(Configuration)\InstallerEditorUnitTests.dll.config"
+     Tokens="@(TestExecutables)" />
+    <NUnit Assemblies="UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\InstallerEditorUnitTests.dll"
+     ToolPath="$(NUnitBinDir)" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
+  </Target>
   <Target Name="unittests" DependsOnTargets="version">
     <Message Text="Running %(CppUnitTests.Identity) ..." />
     <Exec Command="%(CppUnitTests.Identity)" />
     <MakeDir Directories="$(ReleaseDir)" />
     <CallTarget Targets="uitests" />
-    <NUnit Assemblies="UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\InstallerEditorUnitTests.dll"
-     ToolPath="$(NUnitBinDir)" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
+    <CallTarget Targets="editortests" />
   </Target>
   <Target Name="zip" DependsOnTargets="version">
     <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip;$(ReleaseDir)\UnitTests.xml;$(ReleaseDir)\*.msi">

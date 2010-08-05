@@ -204,6 +204,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SetControlValuesTask.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -259,6 +263,10 @@
 			</File>
 			<File
 				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SetControlValuesTask.h"
 				>
 			</File>
 			<File
