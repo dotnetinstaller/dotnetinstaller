@@ -15,10 +15,29 @@ void SetControlValuesTask::exec(htmlayout::dom::element elt)
 		const wchar_t * id = elt.get_attribute("id");
 		const wchar_t * type = elt.get_attribute("type");
 		const wchar_t * control_ptr = elt.get_attribute("control_ptr");
+		const wchar_t * disabled_a = elt.get_attribute("disabled");
+		bool disabled = (disabled_a != NULL && wcslen(disabled_a) > 0);
+		const wchar_t * has_value_disabled_a = elt.get_attribute("has_value_disabled");
+		bool has_value_disabled = (has_value_disabled_a != NULL && wcslen(has_value_disabled_a) > 0);
 
-		if (id != NULL && type != NULL)
+		if (id != NULL && type != NULL && (! disabled || has_value_disabled))
 		{
-			if (0 == wcscmp(type, L"checkbox"))
+			if (0 == wcscmp(type, L"checkbox") && elt.get_attribute("license") != NULL)
+			{
+				ControlLicense * p_license = reinterpret_cast<ControlLicense *>(DVLib::wstring2long(control_ptr, 16));
+				if (! InstallUILevelSetting::Instance->IsSilent())
+				{
+					if (! elt.get_state(STATE_CHECKED))
+					{
+						THROW_EX(p_license->accept_message);
+					}
+				}
+
+				std::wstring value = elt.get_state(STATE_CHECKED) ? L"1" : L"0";
+				LOG(L"--- Setting user-defined license value '" << id << L"'=" << value);
+				InstallerSession::Instance->AdditionalControlArgs[id] = value;
+			}
+			else if (0 == wcscmp(type, L"checkbox"))
 			{
 				std::wstring value;
 				if (control_ptr != NULL)
@@ -28,7 +47,7 @@ void SetControlValuesTask::exec(htmlayout::dom::element elt)
 				}
 				else
 				{
-					value = elt.get_state(STATE_CHECKED) ? L"1" : L"";
+					value = elt.get_state(STATE_CHECKED) ? L"1" : L"0";
 				}
 
 				LOG(L"--- Setting user-defined checkbox value '" << id << L"'=" << value);

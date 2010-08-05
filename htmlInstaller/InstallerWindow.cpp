@@ -446,6 +446,7 @@ void InstallerWindow::AddControl(const ControlLabel& control)
 	htmlayout::dom::element elt = htmlayout::dom::element::create("span", control.text.GetValue().c_str());
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlLabel&>(control)).c_str();	
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
+	if (control.has_value_disabled) elt["has_value_disabled"] = L"true";
 	elt["style"] = (GetControlStyle(control) + GetPositionStyle(control.position)).c_str();
 	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
 }
@@ -457,6 +458,7 @@ void InstallerWindow::AddControl(const ControlCheckBox& control)
 	elt["id"] = control.id.GetValue().c_str();
 	if (control.checked) elt["checked"] = L"true";
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
+	if (control.has_value_disabled) elt["has_value_disabled"] = L"true";
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlCheckBox&>(control)).c_str();	
 	elt["style"] = (GetControlStyle(control) + GetPositionStyle(control.position)).c_str();
 	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
@@ -468,6 +470,7 @@ void InstallerWindow::AddControl(const ControlEdit& control)
 	elt["type"] = L"text";
 	elt["id"] = control.id.GetValue().c_str();
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
+	if (control.has_value_disabled) elt["has_value_disabled"] = L"true";
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlEdit&>(control)).c_str();	
 	elt["style"] = (GetControlStyle(control) + GetPositionStyle(control.position)).c_str();
 	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
@@ -481,6 +484,7 @@ void InstallerWindow::AddControl(const ControlBrowse& control)
 	elt["id"] = control.id.GetValue().c_str();
 	if (! control.filter.empty()) elt["filter"] = control.filter.GetValue().c_str();
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
+	if (control.has_value_disabled) elt["has_value_disabled"] = L"true";
 	elt["novalue"] = control.text.GetValue().c_str();
 	// TODO: control.allow_edit, control.must_exist, control.hide_readonly
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlBrowse&>(control)).c_str();	
@@ -496,11 +500,13 @@ void InstallerWindow::AddControl(const ControlLicense& control)
 		checkbox_rect.right = checkbox_rect.left + 20;
 		WidgetPosition control_position = control.position;
 		control_position.FromRect(checkbox_rect);
-		htmlayout::dom::element elt = htmlayout::dom::element::create("widget", control.text.GetValue().c_str());
+		htmlayout::dom::element elt = htmlayout::dom::element::create("widget");
 		elt["type"] = L"checkbox";
 		elt["id"] = control.resource_id.GetValue().c_str();
 		if (control.accepted) elt["checked"] = L"true";
 		if (! control.IsEnabled()) elt["disabled"] = L"true";
+		if (control.has_value_disabled) elt["has_value_disabled"] = L"true";
+		elt["license"] = L"true";
 		elt["control_ptr"] = DVLib::towstring(& const_cast<ControlLicense&>(control)).c_str();
 		elt["style"] = GetPositionStyle(control_position).c_str();
 		htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
@@ -527,6 +533,7 @@ void InstallerWindow::AddControl(const ControlHyperlink& control)
 	elt["href"] = control.uri.GetValue().c_str();
 	elt["target"] = L"_blank";
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
+	if (control.has_value_disabled) elt["has_value_disabled"] = L"true";
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlHyperlink&>(control)).c_str();	
 	elt["style"] = (GetControlStyle(control) + GetPositionStyle(control.position)).c_str();
 	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
@@ -536,7 +543,10 @@ void InstallerWindow::AddControl(const ControlImage& control)
 {
 	htmlayout::dom::element elt = htmlayout::dom::element::create("img");
 	elt["src"] = control.resource_id.GetValue().c_str();
+	CHECK_BOOL(DVLib::ResourceExists(s_hinstance, control.resource_id.GetValue(), L"CUSTOM"),
+		L"Resource " << control.resource_id.GetValue() << " doesn't exist");
 	if (! control.IsEnabled()) elt["disabled"] = L"true";
+	if (control.has_value_disabled) elt["has_value_disabled"] = L"true";
 	elt["control_ptr"] = DVLib::towstring(& const_cast<ControlImage&>(control)).c_str();	
 	elt["style"] = GetPositionStyle(control.position).c_str();
 	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);

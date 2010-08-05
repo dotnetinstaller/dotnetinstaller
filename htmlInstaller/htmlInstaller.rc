@@ -45,6 +45,8 @@ END
 
 HTMLAYOUTDLL DLL "..\\ThirdParty\\HTMLayoutSDK\\bin\\htmlayout.dll"
 
+RES_BANNER CUSTOM "html\\banner.bmp"
+
 INDEX_HTML HTM "html\\index.html"
 STYLE_CSS HTM "html\\style.css"
 

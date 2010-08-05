@@ -323,6 +323,11 @@ bool HtmlWindow::LoadResourceData(LPCWSTR uri, PBYTE& pb, DWORD& cb)
 	}
 
     HRSRC hrsrc = ::FindResourceW(0, name.c_str(), L"HTM");
+	if (! hrsrc)
+	{
+		hrsrc = ::FindResourceW(0, name.c_str(), L"CUSTOM");
+	}
+
     if (! hrsrc) 
 	{
 		return false; // resource not found here - proceed with default loader

@@ -250,8 +250,10 @@
   <Target Name="licenseagreementsetupsample" DependsOnTargets="version">
     <MakeDir Directories="Samples\LicenseAgreement\bin\$(Configuration)" />
     <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\LicenseAgreement\bin\$(Configuration)\Setup.exe&quot; /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\LicenseAgreement\Configuration.xml /AppPath:Samples\LicenseAgreement"/>
+    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\LicenseAgreement\bin\$(Configuration)\HtmlSetup.exe&quot; /Template:htmlInstaller\$(Configuration)\htmlInstaller.exe /Configuration:Samples\LicenseAgreement\Configuration.xml /AppPath:Samples\LicenseAgreement"/>
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
     <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
+    <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\HtmlSetup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
     <Copy SourceFiles="@(LicenseAgreementSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement\%(RecursiveDir)" />
   </Target>
 </Project>
