@@ -24,16 +24,15 @@ std::vector<DVLib::MsiProductInfo> DVLib::MsiGetInstalledProducts()
 	UINT rc = 0;
 	std::vector<wchar_t> buffer;
 	buffer.resize(39);
-	while ((rc = ::MsiEnumProducts(index, & * buffer.begin())) == ERROR_SUCCESS)
+	while ((rc = ::MsiEnumProducts(index, & * buffer.begin())) != ERROR_NO_MORE_ITEMS)
 	{
-		MsiProductInfo info(DVLib::string2guid(& * buffer.begin()));
-		products.push_back(info);
-		index++;
-	}
+		if (rc == ERROR_SUCCESS)
+		{
+			MsiProductInfo info(DVLib::string2guid(& * buffer.begin()));
+			products.push_back(info);
+		}
 
-	if (rc != ERROR_NO_MORE_ITEMS)
-	{
-		CHECK_WIN32_DWORD(rc, L"MsiEnumProducts");
+		index++;
 	}
 
 	return products;
