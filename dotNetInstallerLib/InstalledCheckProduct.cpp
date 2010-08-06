@@ -29,9 +29,16 @@ bool InstalledCheckProduct::IsInstalled() const
 		if (DVLib::MsiIsProductInstalled(id_guid))
 		{
 			DVLib::MsiProductInfo pi(id_guid);
-			LOG(L"Product '" << pi.GetProductName() 
-				<< L"', id=" << id 
-				<< L", version=" << pi.GetVersionString() << L" is installed");
+			try
+			{
+				LOG(L"Product '" << pi.GetProductName() << L"', id=" << id << L", version=" << pi.GetVersionString() << L" is installed");
+			}
+			catch(std::exception& ex)
+			{
+				LOG("Warning: product id=" << DVLib::guid2wstring(pi.product_id) << L"GetProductName/Version - " 
+					<< DVLib::string2wstring(ex.what()));
+			}
+
 			products.push_back(pi);
 		}
 		else
@@ -44,11 +51,16 @@ bool InstalledCheckProduct::IsInstalled() const
 		products = DVLib::MsiGetRelatedProducts(id_guid);
 		for each(const DVLib::MsiProductInfo& pi in products)
 		{
-			LOG(L"Product '" << pi.GetProductName() 
-				<< L"', id=" << DVLib::guid2wstring(pi.product_id)
-				<< L", upgradecode=" << id 
-				<< L", version=" << pi.GetVersionString()
-				<< L" found");
+			try
+			{
+				LOG(L"Product '" << pi.GetProductName() << L"', id=" << DVLib::guid2wstring(pi.product_id)
+					<< L", upgradecode=" << id << L", version=" << pi.GetVersionString() << L" found");
+			}
+			catch(std::exception& ex)
+			{
+				LOG("Warning: product id=" << DVLib::guid2wstring(pi.product_id) << L"GetProductName/Version - " 
+					<< DVLib::string2wstring(ex.what()));
+			}
 		}
 	}
 	else
@@ -68,16 +80,34 @@ bool InstalledCheckProduct::IsInstalled() const
 		return result;
 	}
 
-	if (comparison == L"match")
+	std::vector<std::wstring> pi_propertyvalues;
+	for each(const DVLib::MsiProductInfo& pi in products)
 	{
-		for each(const DVLib::MsiProductInfo& pi in products)
+		try
 		{
 			std::wstring pi_propertyvalue = pi.GetProperty(propertyname);
 			LOG(L"Product '" << pi.GetProductName() << L"', " << propertyname << L"='" << pi_propertyvalue << L"'");
+			pi_propertyvalues.push_back(pi_propertyvalue);
+		}
+		catch(std::exception& ex)
+		{
+			LOG("Warning: product id=" << DVLib::guid2wstring(pi.product_id) << L"GetProperty(" << propertyname << L") - " 
+				<< DVLib::string2wstring(ex.what()));
+		}
+	}
+
+	if (comparison == L"match")
+	{
+		for each(const std::wstring& pi_propertyvalue in pi_propertyvalues)
+		{
 			if (propertyvalue != pi_propertyvalue)
 			{
-				LOG(L"Check value '" << propertyvalue << L"' doesn't match.");
+				LOG(L"Check value '" << propertyvalue << L"' doesn't match '" << pi_propertyvalue << L"'");
 				return false;
+			}
+			else
+			{
+				LOG(L"Check value '" << propertyvalue << L"' matches '" << pi_propertyvalue << L"'");
 			}
 		}
 
@@ -85,14 +115,16 @@ bool InstalledCheckProduct::IsInstalled() const
 	}
 	else if (comparison == L"contains")
 	{
-		for each(const DVLib::MsiProductInfo& pi in products)
+		for each(const std::wstring& pi_propertyvalue in pi_propertyvalues)
 		{
-			std::wstring pi_propertyvalue = pi.GetProperty(propertyname);
-			LOG(L"Product '" << pi.GetProductName() << L"', " << propertyname << L"='" << pi_propertyvalue << L"'");
 			if (propertyvalue == pi_propertyvalue)
 			{
-				LOG(L"Check value '" << propertyvalue << L"' found.");
+				LOG(L"Check value '" << propertyvalue << L"' found in '" << pi_propertyvalue << L"'");
 				return true;
+			}
+			else
+			{
+				LOG(L"Check value '" << propertyvalue << L"' not found in '" << pi_propertyvalue << L"'");
 			}
 		}
 
@@ -100,14 +132,16 @@ bool InstalledCheckProduct::IsInstalled() const
 	}
 	else if (comparison == L"version")
 	{
-		for each(const DVLib::MsiProductInfo& pi in products)
+		for each(const std::wstring& pi_propertyvalue in pi_propertyvalues)
 		{
-			std::wstring pi_propertyvalue = pi.GetProperty(propertyname);
-			LOG(L"Product '" << pi.GetProductName() << L"', " << propertyname << L"='" << pi_propertyvalue << L"'");
 			if (DVLib::CompareVersion(pi_propertyvalue, propertyvalue) >= 0) 
 			{
-				LOG(L"Check value '" << propertyvalue << L"' version match.");
+				LOG(L"Check value '" << propertyvalue << L"' version matches '" << pi_propertyvalue << L"'");
 				return true;
+			}
+			else
+			{
+				LOG(L"Check value '" << propertyvalue << L"' version doesn't match '" << pi_propertyvalue << L"'");
 			}
 		}
 
@@ -115,14 +149,16 @@ bool InstalledCheckProduct::IsInstalled() const
 	}
 	else if (comparison == L"version_eq")
 	{
-		for each(const DVLib::MsiProductInfo& pi in products)
+		for each(const std::wstring& pi_propertyvalue in pi_propertyvalues)
 		{
-			std::wstring pi_propertyvalue = pi.GetProperty(propertyname);
-			LOG(L"Product '" << pi.GetProductName() << L"', " << propertyname << L"='" << pi_propertyvalue << L"'");
 			if (DVLib::CompareVersion(pi_propertyvalue, propertyvalue) == 0) 
 			{
-				LOG(L"Check value '" << propertyvalue << L"' version equals.");
+				LOG(L"Check value '" << propertyvalue << L"' version is equal to '" << pi_propertyvalue << L"'");
 				return true;
+			}
+			else
+			{
+				LOG(L"Check value '" << propertyvalue << L"' version is not equal to '" << pi_propertyvalue << L"'");
 			}
 		}
 
@@ -130,14 +166,16 @@ bool InstalledCheckProduct::IsInstalled() const
 	}
 	else if (comparison == L"version_lt")
 	{
-		for each(const DVLib::MsiProductInfo& pi in products)
+		for each(const std::wstring& pi_propertyvalue in pi_propertyvalues)
 		{
-			std::wstring pi_propertyvalue = pi.GetProperty(propertyname);
-			LOG(L"Product '" << pi.GetProductName() << L"', " << propertyname << L"='" << pi_propertyvalue << L"'");
 			if (DVLib::CompareVersion(pi_propertyvalue, propertyvalue) < 0)
 			{
-				LOG(L"Check value '" << propertyvalue << L"' version lesser match.");
+				LOG(L"Check value '" << propertyvalue << L"' version lesser match with '" << pi_propertyvalue << L"'");
 				return true;
+			}
+			else
+			{
+				LOG(L"Check value '" << propertyvalue << L"' version no lesser match to '" << pi_propertyvalue << L"'");
 			}
 		}
 
@@ -145,14 +183,16 @@ bool InstalledCheckProduct::IsInstalled() const
 	}
 	else if (comparison == L"version_le")
 	{
-		for each(const DVLib::MsiProductInfo& pi in products)
+		for each(const std::wstring& pi_propertyvalue in pi_propertyvalues)
 		{
-			std::wstring pi_propertyvalue = pi.GetProperty(propertyname);
-			LOG(L"Product '" << pi.GetProductName() << L"', " << propertyname << L"='" << pi_propertyvalue << L"'");
 			if (DVLib::CompareVersion(pi_propertyvalue, propertyvalue) <= 0)
 			{
-				LOG(L"Check value '" << propertyvalue << L"' version lesser or equal match.");
+				LOG(L"Check value '" << propertyvalue << L"' version lesser or equal than '" << pi_propertyvalue << L"'");
 				return true;
+			}
+			else
+			{
+				LOG(L"Check value '" << propertyvalue << L"' version no lesser or equal match to '" << pi_propertyvalue << L"'");
 			}
 		}
 
@@ -160,14 +200,16 @@ bool InstalledCheckProduct::IsInstalled() const
 	}
 	else if (comparison == L"version_gt")
 	{
-		for each(const DVLib::MsiProductInfo& pi in products)
+		for each(const std::wstring& pi_propertyvalue in pi_propertyvalues)
 		{
-			std::wstring pi_propertyvalue = pi.GetProperty(propertyname);
-			LOG(L"Product '" << pi.GetProductName() << L"', " << propertyname << L"='" << pi_propertyvalue << L"'");
 			if (DVLib::CompareVersion(pi_propertyvalue, propertyvalue) > 0) 
 			{
-				LOG(L"Check value '" << propertyvalue << L"' version greater match.");
+				LOG(L"Check value '" << propertyvalue << L"' version greater match to '" << pi_propertyvalue << L"'");
 				return true;
+			}
+			else
+			{
+				LOG(L"Check value '" << propertyvalue << L"' version no greater match to '" << pi_propertyvalue << L"'");
 			}
 		}
 
@@ -175,14 +217,16 @@ bool InstalledCheckProduct::IsInstalled() const
 	}
 	else if (comparison == L"version_ge")
 	{
-		for each(const DVLib::MsiProductInfo& pi in products)
+		for each(const std::wstring& pi_propertyvalue in pi_propertyvalues)
 		{
-			std::wstring pi_propertyvalue = pi.GetProperty(propertyname);
-			LOG(L"Product '" << pi.GetProductName() << L"', " << propertyname << L"='" << pi_propertyvalue << L"'");
 			if (DVLib::CompareVersion(pi_propertyvalue, propertyvalue) >= 0) 
 			{
-				LOG(L"Check value '" << propertyvalue << L"' version greater or equal match.");
+				LOG(L"Check value '" << propertyvalue << L"' version greater or equal match to '" << pi_propertyvalue << L"'");
 				return true;
+			}
+			else
+			{
+				LOG(L"Check value '" << propertyvalue << L"' version no greater or equal match to '" << pi_propertyvalue << L"'");
 			}
 		}
 
