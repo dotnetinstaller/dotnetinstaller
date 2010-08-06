@@ -126,33 +126,41 @@ void InstallerWindow::AddComponent(const ComponentPtr& component)
 
 BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason)
 {
-	htmlayout::dom::element target_element = target;
-	if (type == BUTTON_CLICK && button_cancel == target_element)
+	try
 	{
-		OnOK();
-		return TRUE;
-	}
-	else if (type == BUTTON_CLICK && button_install == target_element)
-	{
-		OnInstall();
-		return TRUE;
-	}
-	else if (type == BUTTON_CLICK && button_skip == target_element)
-	{
-		OnOK();
-		return TRUE;
-	}
-	else if (type == BUTTON_STATE_CHANGED || type == EDIT_VALUE_CHANGED || type == SELECT_STATE_CHANGED)
-	{
-		const wchar_t * component_ptr = target_element.get_attribute("component_ptr");
-		if (component_ptr != NULL)
+		htmlayout::dom::element target_element = target;
+		if (type == BUTTON_CLICK && button_cancel == target_element)
 		{
-			Component * p_component = reinterpret_cast<Component *>(DVLib::wstring2long(component_ptr, 16));
-			p_component->checked = target_element.get_state(STATE_CHECKED);
+			OnOK();
+			return TRUE;
 		}
-	}
+		else if (type == BUTTON_CLICK && button_install == target_element)
+		{
+			OnInstall();
+			return TRUE;
+		}
+		else if (type == BUTTON_CLICK && button_skip == target_element)
+		{
+			OnOK();
+			return TRUE;
+		}
+		else if (type == BUTTON_STATE_CHANGED || type == EDIT_VALUE_CHANGED || type == SELECT_STATE_CHANGED)
+		{
+			const wchar_t * component_ptr = target_element.get_attribute("component_ptr");
+			if (component_ptr != NULL)
+			{
+				Component * p_component = reinterpret_cast<Component *>(DVLib::wstring2long(component_ptr, 16));
+				p_component->checked = target_element.get_state(STATE_CHECKED);
+			}
+		}
 
-	return HtmlWindow::on_event(he, target, type, reason);
+		return HtmlWindow::on_event(he, target, type, reason);
+	}
+	catch(const std::exception& ex)
+	{
+		TRYLOG(L"Error: " << DVLib::string2wstring(ex.what()));
+		DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
+	}
 }
 
 void InstallerWindow::OnOK()

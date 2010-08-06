@@ -383,7 +383,7 @@ void HtmlWindow::DoModal()
 	catch(std::exception& ex)
 	{
 		TRYLOG(L"Error: " << DVLib::string2wstring(ex.what()));
-        // BUG: DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
+        DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
 		m_modal = false;
 		::DestroyWindow(hwnd);
 		throw ex;

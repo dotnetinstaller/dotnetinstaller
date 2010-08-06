@@ -53,7 +53,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	}
 	catch(std::exception& ex)
 	{
-        // BUG? DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
+        DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
 		TRYLOG(L"Error: " << DVLib::string2wstring(ex.what()));
 		ExitInstance();
 		return -1;
