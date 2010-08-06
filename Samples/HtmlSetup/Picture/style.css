@@ -1,0 +1,176 @@
+html
+{
+	font: 10pt Verdana;
+	overflow: hidden;
+	background-color: white;
+	background-repeat: expand;
+	background-position: 15 15 15 15;	
+}
+
+body
+{
+	padding: 3px;
+	margin: 0;
+	width: 100%%;
+	height: 100%%;
+	border: solid 1px black;
+}
+
+#topbar
+{
+	flow: horizontal;
+	margin-bottom: 3px;
+}
+
+#topbar #caption
+{
+	color: #274749;
+	padding: 0 4px;
+	outline: 3px none black;
+}
+
+#content
+{
+	background-color: white;
+	width: 100%%;
+	height: 100%%;
+	overflow: auto;
+}
+
+#topbar widget[type="button"]
+{
+	width: 1em;
+	height: 1em;
+	background-image: none;
+	padding: 1px;
+	font-family: marlett;
+	font-size: 10pt;
+	color: #274749;
+	border: 1px solid #B0CFD1;
+	text-align: center;
+	vertical-align: middle;
+	margin: 0;
+}
+
+#topbar widget[type="button"]:hover 
+{
+	color:black;
+	border-color:black;
+	background-color:#B0CFD1;
+	outline:2px glow black 4px;
+} 
+
+#topbar widget[type="button"]:active 
+{
+	background-color:#274749;
+} 
+
+#topbar #minimize, #topbar #maximize
+{
+	margin-right: 2px;
+}
+
+#bottombar
+{
+	margin-top: 3px;
+	flow: horizontal;
+}
+
+#bottombar #corner
+{
+	margin-top: 100%%;
+	font-family: marlett;
+	font-size: 10pt;
+	color: #274749;
+	width: min-intrinsic;
+}
+
+#bottombar #status
+{
+	color: #274749;
+	font-size: 8pt;
+}
+
+#content
+{
+	font-size: 8pt;
+	margin: 5pt 5pt 5pt 5pt;
+}
+
+#content #components
+{
+	height: 97%%;
+	margin: 10pt 2pt 2pt 2pt;	
+	border: solid 1px silver;
+}
+
+#content #components widget
+{
+	margin: 1pt 1pt 1pt 3pt;
+	color: black;
+}
+
+#content #components widget[disabled="true"]
+{
+}
+
+#content #components widget[disabled="false"]
+{
+	font-weight: bold;
+}
+
+#content #os
+{
+	position: relative;
+	left: 10pt;
+	top: 15pt;
+	width: 100pt;
+}
+
+#content #error
+{
+	position: relative;
+	left: 10pt;
+	top: 15pt;
+	width: 200pt;
+	color: Red;
+	font-weight: bold;
+	border: solid 2px red;
+	padding: 5pt 5pt 5pt 5pt;
+	margin: 5pt 5pt 5pt 5pt;
+}
+
+#content #progress
+{
+	position: relative;
+	left: 10pt;
+	top: 20pt;
+	width: 200pt;
+	
+	behavior: progress;
+	background-repeat: stretch;
+	background-image: url(theme:h-progress-back);  
+
+	height: 1.2em;
+	padding: 3px;
+
+	foreground-repeat: stretch;
+	foreground-image: url(theme:h-progress-chunk);
+}
+
+#content #buttons
+{	
+	text-align: right;
+	margin: 2pt 2pt 2pt 2pt;	
+}
+
+input[type="button"]
+{
+	width: 50pt;
+	height: 15pt;	
+}
+
+a[target="_blank"]
+{
+	behavior: ~ weblink;
+}

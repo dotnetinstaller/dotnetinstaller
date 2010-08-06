@@ -91,6 +91,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 		Documentation\Content\dotNetInstallerLayout.aml = Documentation\Content\dotNetInstallerLayout.aml
 		Documentation\Content\DownloadComponents.aml = Documentation\Content\DownloadComponents.aml
 		Documentation\Content\GettingStarted.aml = Documentation\Content\GettingStarted.aml
+		Documentation\Content\htmlInstaller.aml = Documentation\Content\htmlInstaller.aml
 		Documentation\Content\InstalledChecks.aml = Documentation\Content\InstalledChecks.aml
 		Documentation\Content\InstallEditor.aml = Documentation\Content\InstallEditor.aml
 		Documentation\Content\InstallLinker.aml = Documentation\Content\InstallLinker.aml
@@ -422,6 +423,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BasicWorkflow", "BasicWorkf
 	ProjectSection(SolutionItems) = preProject
 		Samples\HtmlSetup\BasicWorkflow\index.html = Samples\HtmlSetup\BasicWorkflow\index.html
 		Samples\HtmlSetup\BasicWorkflow\setup.html = Samples\HtmlSetup\BasicWorkflow\setup.html
+		Samples\HtmlSetup\BasicWorkflow\style.css = Samples\HtmlSetup\BasicWorkflow\style.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Picture", "Picture", "{CB16FD2C-784F-4385-9FB4-CE0EA0081D3C}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		Samples\HtmlSetup\Picture\index.html = Samples\HtmlSetup\Picture\index.html
+		Samples\HtmlSetup\Picture\picture.jpg = Samples\HtmlSetup\Picture\picture.jpg
+		Samples\HtmlSetup\Picture\style.css = Samples\HtmlSetup\Picture\style.css
 	EndProjectSection
 EndProject
 Global
@@ -542,5 +555,6 @@ Global
 		{6A9AD5E1-624C-478F-9921-8400B3AD84A8} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 		{0ECB908D-645A-48B6-8849-A0C608C9B3D3} = {DCE563E3-05E7-456C-AC45-97173CED2F7F}
+		{CB16FD2C-784F-4385-9FB4-CE0EA0081D3C} = {DCE563E3-05E7-456C-AC45-97173CED2F7F}
 	EndGlobalSection
 EndGlobal
