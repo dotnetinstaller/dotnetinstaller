@@ -14,11 +14,6 @@ InstallerWindow::InstallerWindow()
 void InstallerWindow::Create(int x, int y, int width, int height, const wchar_t * caption)
 {
 	HtmlWindow::Create(x, y, width, height, caption);
-	htmlayout::dom::element r = GetRoot();
-
-	components = r.get_element_by_id("components");
-	CHECK_BOOL(components.is_valid(),
-		L"Missing widget with id='components' in HTML");
 }
 
 bool InstallerWindow::Run()
@@ -30,8 +25,10 @@ bool InstallerWindow::Run()
 
 void InstallerWindow::OnShow()
 {
-	// os label
 	htmlayout::dom::element r = GetRoot();
+	components = r.get_element_by_id("components");
+
+	// os label
 	htmlayout::dom::element os = r.get_element_by_id("os");
 	if (os.is_valid())
 	{
@@ -552,3 +549,10 @@ void InstallerWindow::AddControl(const ControlImage& control)
 	htmlayout::queue::push(new html_insert_task(& components, elt, components.children_count()), HtmlWindow::s_hwnd);
 }
 
+void InstallerWindow::OnDocumentComplete()
+{
+	if (get(m_configuration) != NULL)
+	{
+		OnShow();
+	}
+}

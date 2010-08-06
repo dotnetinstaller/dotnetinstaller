@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="cd7e1333-c3a2-46ce-9fce-646188b52dce" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        <application>htmlInstaller.exe</application> is a <literal>bootstrapper</literal>, a driver for
+        your setup process. Simply put, this is your <command>setup.exe</command>. It offers an HTML-based user interface, progress,
+        status, supports silent installs and enables user selection of optional components. The workflow is flexible
+        and the UI, written in HTLM, can be completely customized.
+      </para>
+    </introduction>
+    <section address="htmlengine">
+      <title>HTML Engine</title>
+      <content>
+        <para>
+          HTMLInstaller's rendering engine is <externalLink>
+            <linkText>HTMLayout</linkText>
+            <linkUri>http://www.terrainformatica.com/htmlayout/main.whtm</linkUri>
+          </externalLink>. It supports HTML, CSS, behaviors and more.
+          <list class="bullet">
+            <listItem>
+              <externalLink>
+                <linkText>Supported Tags and Attributes</linkText>
+                <linkUri>http://www.terrainformatica.com/htmlayout/tagsattributes.whtm</linkUri>
+              </externalLink>
+            </listItem>
+            <listItem>
+              <externalLink>
+                <linkText>HTMLayout-specific Tags</linkText>
+                <linkUri>http://www.terrainformatica.com/htmlayout/tags.whtm</linkUri>
+              </externalLink>
+            </listItem>
+            <listItem>
+              <externalLink>
+                <linkText>Length Units</linkText>
+                <linkUri>http://www.terrainformatica.com/htmlayout/fspu.whtm</linkUri>
+              </externalLink>
+            </listItem>
+            <listItem>
+              <externalLink>
+                <linkText>HTMLayout-specific Tags</linkText>
+                <linkUri>http://www.terrainformatica.com/htmlayout/tags.whtm</linkUri>
+              </externalLink>
+            </listItem>
+            <listItem>
+              <externalLink>
+                <linkText>Supported CSS Attributes</linkText>
+                <linkUri>http://www.terrainformatica.com/htmlayout/cssmap.whtm</linkUri>
+              </externalLink>
+            </listItem>
+            <listItem>
+              <externalLink>
+                <linkText>Supported CSS Selectors</linkText>
+                <linkUri>http://www.terrainformatica.com/htmlayout/selectors.whtm</linkUri>
+              </externalLink>
+            </listItem>
+            <listItem>
+              <externalLink>
+                <linkText>Built-In Behaviors</linkText>
+                <linkUri>http://www.terrainformatica.com/wiki/h-smile/built-in-behaviors/start</linkUri>
+              </externalLink>
+            </listItem>
+          </list>
+        </para>
+      </content>
+    </section>    
+    <section address="commandlinearguments">
+      <title>Command Line Arguments</title>
+      <content>
+        <para>
+          <definitionTable>
+            <definedTerm>/? or /help</definedTerm>
+            <definition>
+              Display a help screen.
+            </definition>
+            <definedTerm>/ConfigFile [path]</definedTerm>
+            <definition>
+              Optional configuration file name and location, defaults to configuration.xml in the
+              same location as the dotNetInstaller executable.
+            </definition>
+            <definedTerm>/i</definedTerm>
+            <definition>
+              Install components (default).
+            </definition>
+            <definedTerm>/x</definedTerm>
+            <definition>
+              Uninstall components.
+            </definition>
+            <definedTerm>/q</definedTerm>
+            <definition>
+              Forces silent UI mode, overriding the configuration's <literal>ui_mode</literal> attribute.
+            </definition>
+            <definedTerm>/qb</definedTerm>
+            <definition>
+              Forces basic UI mode, overriding the configuration's <literal>ui_mode</literal> attribute.
+              A basic UI mode shows progress dialogs but does not require any user interaction.
+            </definition>
+            <definedTerm>/nq</definedTerm>
+            <definition>
+              Forces full UI mode, overriding the configuration's <literal>ui_mode</literal> attribute.
+            </definition>
+            <definedTerm>/nosplash</definedTerm>
+            <definition>
+              Do not display splash screen.
+            </definition>
+            <definedTerm>/CompleteCommandArgs</definedTerm>
+            <definition>
+              Specify additional arguments for the <literal>complete_command</literal>.
+              For example, if your complete command is an MSI this lets you pass additional parameters.
+            </definition>
+            <definedTerm>/Log</definedTerm>
+            <definition>
+              Creates a log file during installation with information and errors useful for debugging. You can find this file in
+              the user temporary directory with the name <localUri>dotNetInstallerLog.txt</localUri> (eg.
+              <localUri>C:\Documents and Settings\YOUR_NAME\Local Settings\Temp\dotNetInstallerLog.txt</localUri>).
+              Its location and name can be specified with <system>/LogFile</system>.
+            </definition>
+            <definedTerm>/LogFile [path]</definedTerm>
+            <definition>Optional log file name and location.</definition>
+            <definedTerm>/ExtractCab</definedTerm>
+            <definition>
+              If this package contains an embedded CABs, extract all contents under a new folder called
+              SupportFiles in the current directory. When specified, all other options are ignored and no installations are run.
+            </definition>
+            <definedTerm>/DisplayCab</definedTerm>
+            <definition>
+              If this package contains an embedded CAB, display its contents.
+            </definition>
+            <definedTerm>/DisplayConfig</definedTerm>
+            <definition>
+              Display the complete list of configurations and components without checking processor architecture or lcid.
+            </definition>
+            <definedTerm>/ComponentArgs "*|id|display_name":"value"</definedTerm>
+            <definition>
+              <para>
+                Additional component parameters. This enables passing additional command-line arguments to all (<literal>*</literal>) or
+                specific components by their <literal>id</literal> and/or <literal>display_name</literal>, in this order. The value is appended
+                to both non-silent and silent command lines of <literal>msi</literal> and <literal>cmd</literal> type components.
+                The component <literal>id</literal> or <literal>display_name</literal> must match exactly the one in the
+                configuration.xml.
+              </para>
+              <para>
+                Examples:
+                <code language="cmd">
+                  <![CDATA[setup.exe /ComponentArgs MySetup:"COLOR=blue SIZE=big"]]>
+                  <![CDATA[setup.exe /ComponentArgs MySetup:"COLOR=blue" /ComponentArgs MySetup:"SIZE=big"]]>
+                </code>
+              </para>
+              <alert class="note">
+                <para>
+                  Note that if multiple components are declared with the same id the command applies to all.
+                  Component arguments applied to components that don't exist are ignored.
+                </para>
+              </alert>
+              <alert class="note">
+                <para>
+                  You can optionally quote ids and values. To insert values with spaces use a double-quote.
+                  <code language="cmd">
+                    <![CDATA[setup.exe /ComponentArgs "My Setup Component":"INSTALLLOCATION=""C:\Program Files\MySetup"""]]>
+                  </code>
+                </para>
+              </alert>
+            </definition>
+            <definedTerm>/ControlArgs "id":"value"</definedTerm>
+            <definition>
+              <para>
+                Additional user-defined control parameters. This enables overriding user control values.
+              </para>
+              <alert class="note">
+                <para>
+                  Note that if multiple user controls are declared with the same id the parameter applies to all.
+                  Control arguments applied to user controls that don't exist are ignored.
+                </para>
+              </alert>
+            </definition>
+          </definitionTable>
+        </para>
+      </content>
+    </section>
+    <section address="errorlevels">
+      <title>Return Codes</title>
+      <content>
+        <para>
+          <definitionTable>
+            <definedTerm>0</definedTerm>
+            <definition>Success.</definition>
+            <definedTerm>-1</definedTerm>
+            <definition>Any non-specific error.</definition>
+            <definedTerm>Any other non-zero value</definedTerm>
+            <definition>
+              Error code of a failed component. This is the <command>msiexec</command> return code for
+              <literal>msi</literal> components and process exit code for <literal>cmd</literal> components.
+            </definition>
+          </definitionTable>
+        </para>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

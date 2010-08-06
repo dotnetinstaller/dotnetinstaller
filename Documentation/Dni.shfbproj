@@ -79,6 +79,7 @@
     <None Include="Content\BuildingStandaloneSetupForDotNet.aml" />
     <None Include="Content\Contributing.aml" />
     <None Include="Content\dotNetInstaller.aml" />
+    <None Include="Content\htmlInstaller.aml" />
     <None Include="Content\Multilingual.aml" />
     <None Include="Content\SinglePackageTutorial.aml" />
     <None Include="Content\Checks.aml" />

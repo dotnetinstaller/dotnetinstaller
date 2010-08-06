@@ -9,6 +9,7 @@ public:
 	static HWND s_hwnd;
 public:
 	HWND hwnd;
+	std::wstring m_title;
 	htmlayout::dom::element body;
 	htmlayout::dom::element caption;
 	htmlayout::dom::element button_min;
@@ -18,9 +19,9 @@ public:
 	htmlayout::dom::element corner;
 	virtual void Create(int x, int y, int width, int height, const wchar_t * caption = 0);
 	static HtmlWindow * Self(HWND hWnd);
-	void SetCaption(const wchar_t *);
 	static ATOM RegisterClass(HINSTANCE hInstance);
     LRESULT on_load_data(LPNMHL_LOAD_DATA pnmld);
+	LRESULT on_document_complete();
 	void DoModal();
 protected:
 	HtmlWindow();
@@ -33,6 +34,7 @@ protected:
 	static LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	virtual int OnMessage(UINT message, WPARAM wParam, LPARAM lParam);
 	virtual void OnShow() = 0;
+	virtual void OnDocumentComplete() = 0;
 	bool LoadResourceData(LPCWSTR uri, PBYTE& pb, DWORD& cb);
 	void ModalLoop();
 private:

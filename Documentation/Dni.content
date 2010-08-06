@@ -35,7 +35,9 @@
   <Topic id="ec5c1920-55c4-4f57-8e18-9dd2d37350d6" visible="True" title="Install Linker">
     <Topic id="51bb945c-fd5f-48c0-a1d8-ef469a3850b9" visible="True" title="Embedding a Manifest" />
   </Topic>
-  <Topic id="59204cba-278b-4648-a149-35f864cae8cf" visible="True" title="Setup Executable">
+  <Topic id="93ca4c39-9df9-48e9-9e26-82e09a4f3dfa" visible="True" noFile="True" title="Setup Bootstrappers">
+    <Topic id="59204cba-278b-4648-a149-35f864cae8cf" visible="True" title="dotNetInstaller" />
+    <Topic id="cd7e1333-c3a2-46ce-9fce-646188b52dce" visible="True" title="htmlInstaller" />
     <Topic id="1d803485-bce5-4d08-93e6-c2935074a8ba" visible="True" title="User Interface Modes" />
   </Topic>
   <Topic id="891e4af1-557b-440f-bfdc-bc61aaeafe03" visible="True" noFile="True" title="Tutorials">

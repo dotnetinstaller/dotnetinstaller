@@ -56,6 +56,8 @@ ATOM  HtmlWindow::RegisterClass(HINSTANCE hInstance)
 
 void HtmlWindow::Create(int x, int y, int width, int height, const wchar_t * title) 
 {
+	m_title = title;
+
 	CHECK_BOOL(hwnd == NULL,
 		L"Static instance already created");
 
@@ -83,28 +85,7 @@ void HtmlWindow::Create(int x, int y, int width, int height, const wchar_t * tit
 			L"Error loading index.html from " << DVLib::FormatBytesW(cb) << " of resource data.");
 	}
 
-	htmlayout::dom::element r = GetRoot();
-	body = r.find_first("body");
-	caption = r.get_element_by_id("caption");
-	button_min = r.get_element_by_id("minimize");
-	button_max = r.get_element_by_id("maximize");
-	button_icon = r.get_element_by_id("icon");
-	button_close = r.get_element_by_id("close");
-	corner = r.get_element_by_id("corner");
 	attach_event_handler(hwnd, this);
-	SetCaption(title);
-}
-
-void HtmlWindow::SetCaption(const wchar_t * text)
-{
-	if(text)
-	{
-		::SetWindowTextW(hwnd, text);
-		if( caption.is_valid())
-		{
-			caption.set_text(text);
-		}
-	}
 }
 
 HELEMENT HtmlWindow::GetRoot()
@@ -159,6 +140,24 @@ int HtmlWindow::HitTest(int x, int y)
 		return HTRIGHT;
 
 	return HTCLIENT;
+}
+
+LRESULT HtmlWindow::on_document_complete()
+{
+	htmlayout::dom::element r = GetRoot();
+	body = r.find_first("body");
+	caption = r.get_element_by_id("caption");
+	button_min = r.get_element_by_id("minimize");
+	button_max = r.get_element_by_id("maximize");
+	button_icon = r.get_element_by_id("icon");
+	button_close = r.get_element_by_id("close");
+	corner = r.get_element_by_id("corner");
+	
+	::SetWindowTextW(hwnd, m_title.c_str());
+	if( caption.is_valid()) caption.set_text(m_title.c_str());
+
+	OnDocumentComplete();
+	return 0;
 }
 
 BOOL HtmlWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason)
@@ -383,8 +382,8 @@ void HtmlWindow::DoModal()
 	}
 	catch(std::exception& ex)
 	{
-		// BUG? AfxMessageBox doesn't show anything when the main window vanished
-        DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
+		TRYLOG(L"Error: " << DVLib::string2wstring(ex.what()));
+        // BUG: DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
 		m_modal = false;
 		::DestroyWindow(hwnd);
 		throw ex;

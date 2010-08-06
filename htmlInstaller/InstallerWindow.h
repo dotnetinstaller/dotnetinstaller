@@ -41,6 +41,7 @@ protected:
 	HWND GetHwnd() const;
 	void StartInstall();
 	void Stop();
+	void OnDocumentComplete();
 	// user-defined controls
 	void AddControl(const ControlLabel&);
 	void AddControl(const ControlCheckBox&);

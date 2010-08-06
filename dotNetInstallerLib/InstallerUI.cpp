@@ -125,6 +125,8 @@ bool InstallerUI::LoadComponentsList()
 			? (component->status_installed.empty() ? pConfiguration->status_installed : component->status_installed)
 			: (component->status_notinstalled.empty() ? pConfiguration->status_notinstalled : component->status_notinstalled);
 
+		component->description = description;
+
 		// show installed
         if (InstallerSession::Instance->sequence == SequenceInstall 
 			&& ! pConfiguration->dialog_show_installed 

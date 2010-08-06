@@ -1,0 +1,37 @@
+<html>
+ <head>
+  <style type="text/css"> 
+   @import url(style.css) screen;
+  </style>
+ </head>
+ <body>
+  <div id="topbar">
+   <div id="caption"></div>
+   <widget id="minimize" type="button">0</widget>
+   <widget id="maximize" type="button">1</widget>
+   <widget id="close" type="button">r</widget>
+  </div>
+  <div id="content">
+   <div id="breadcrumbs">
+    <a href="index.html">&lt; back</a> | Install
+   </div>
+   <div id="dialog_message">
+    The following components will be installed:
+   </div>
+   <div id="components" />
+   <div id="os" />
+   <div id="error" />
+   <widget type="progress" id="progress" />
+   <div id="buttons">
+    <input id="button_install" type="button" value="Install" />
+    <input id="button_uninstall" type="button" value="Uninstall" />
+    <input id="button_skip" type="button" value="Skip" />
+    <input id="button_cancel" type="button" value="Cancel" />
+   </div>
+  </div>
+  <div id="bottombar">
+   <div id="status">Loaded</div>
+   <div id="corner">o</div>
+  </div>
+ </body>
+</html>
