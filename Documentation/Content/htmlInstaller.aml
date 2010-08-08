@@ -63,7 +63,71 @@
           </list>
         </para>
       </content>
-    </section>    
+    </section>
+    <section address="customizehtml">
+      <title>Customizing HTML</title>
+      <content>
+        <para>
+          The following default <localUri>index.html</localUri> is embedded in the bootstrapper by default.
+          <code language="html" source="..\htmlInstaller\html\index.html" />
+        </para>
+        <para>
+          The following built-in widgets are defined by their id’s. All such widgets are optional and have well-known
+          behavior within the bootstrapper.
+          <tableDefinition>
+            <definedTerm>topbar</definedTerm>
+            <definition>The top of the window that can be clicked and dragged.</definition>
+            <definedTerm>caption</definedTerm>
+            <definition>Bootstrapper title. A title is required to allow the window to be dragged.</definition>
+            <definedTerm>minimize</definedTerm>
+            <definition>Minimizes the window when clicked.</definition>
+            <definedTerm>maximize</definedTerm>
+            <definition>Maximizes the window when clicked.</definition>
+            <definedTerm>close</definedTerm>
+            <definition>Closes the window when clicked.</definition>
+            <definedTerm>content</definedTerm>
+            <definition>
+              Includes all user controls. Form fields will be collected and are available as user-defined variables
+              during install.
+            </definition>
+            <definedTerm>os</definedTerm>
+            <definition>Operating system label.</definition>
+            <definedTerm>error</definedTerm>
+            <definition>Error messages.</definition>
+            <definedTerm>progress</definedTerm>
+            <definition>Progress bar.</definition>
+            <definedTerm>buttons</definedTerm>
+            <definition>Install, uninstall, skip and cancel buttons.</definition>
+            <definedTerm>bottombar</definedTerm>
+            <definition>Window bottom bar that can contain status and a resize grip.</definition>
+            <definedTerm>status</definedTerm>
+            <definition>Status messages.</definition>
+            <definedTerm>corner</definedTerm>
+            <definition>Resize grip that can be clicked and dragged to resize the window.</definition>
+          </tableDefinition>
+        </para>
+      </content>
+    </section>
+    <section address="embedhtml">
+      <title>Embedding Customized HTML</title>
+      <content>
+        <para>
+          You can embed customized HTML using <localUri>InstallerLinker.exe</localUri> <command>/EmbedHtml</command>
+          command-line parameter.
+          <code language="cmd">
+            <![CDATA[
+InstallerLinker.exe /Output:Setup.exe /Template:htmlInstaller.exe /Configuration:Configuration.xml /EmbedHtml:Samples\HtmlSetup\BasicWorkflow /Verbose+
+]]>
+          </code>
+        </para>
+        <alert class="note">
+          <para>
+            Note that EmbedHtml does not embed files in subfolders. The HTML source and any related images or stylesheets must be
+            present in the same directory.
+          </para>
+        </alert>
+      </content>
+    </section>
     <section address="commandlinearguments">
       <title>Command Line Arguments</title>
       <content>
