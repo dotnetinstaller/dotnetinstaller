@@ -187,6 +187,7 @@ std::wstring InstallerCommandLineInfo::GetUsage() const
 	hs << L" /q : force silent (no UI) mode" << std::endl;
 	hs << L" /qb : force basic UI mode" << std::endl;
 	hs << L" /nq : force full UI mode" << std::endl;
+	hs << L" /nosplash : do not display splash screen" << std::endl;
 	hs << L" /Log : enable logging" << std::endl;
 	hs << L" /LogFile [path] : specify log file" << std::endl;
 	hs << L" /ConfigFile [path] : specify configuration file" << std::endl;
@@ -196,8 +197,6 @@ std::wstring InstallerCommandLineInfo::GetUsage() const
 	hs << L" /ComponentArgs [\"id|display_name\":\"value\" ...] : additional component args" << std::endl;
 	hs << L" /ControlArgs [\"id\":\"value\" ...] : additional control values" << std::endl;
 	hs << L" /CompleteCommandArgs [args] : additional complete command" << std::endl;
-	hs << L" /Launcher [path] : alternate launcher on reboot" << std::endl;
-	hs << L" /LauncherArgs [args] : additional launcher args on reboot" << std::endl;
 	hs << std::endl;
 	hs << L"Built by dotNetInstaller (DNI), version " << TEXT(VERSION_VALUE);		
 	return hs.str();

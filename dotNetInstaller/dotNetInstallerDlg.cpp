@@ -253,6 +253,9 @@ void CdotNetInstallerDlg::OnBnClickedSkip()
 
 void CdotNetInstallerDlg::OnDestroy()
 {
+	// close splash screen if any
+	CSplashWnd::CloseSplashScreen();
+
 	CDialog::OnDestroy();
 
 	// destroy custom dialog controls

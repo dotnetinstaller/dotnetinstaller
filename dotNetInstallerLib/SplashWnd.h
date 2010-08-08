@@ -81,6 +81,8 @@ public:
 	//
 	static BOOL PreTranslateAppMessage(MSG* pMsg);
 
+	static void CloseSplashScreen();
+
 protected:
 
 	BOOL ShowSplashScreen(UINT uTimeOut, HWND hParent = NULL);

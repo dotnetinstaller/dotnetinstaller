@@ -180,11 +180,25 @@ BOOL CSplashWnd::PreTranslateAppMessage(MSG* pMsg)
 	return FALSE;	// message not handled
 }
 
+void CSplashWnd::CloseSplashScreen()
+{
+	if (NULL != m_pSplashWnd)
+	{
+		m_pSplashWnd->HideSplashScreen();
+	}
+}
+
 void CSplashWnd::HideSplashScreen()
 {
 	// Destroy the window, and update the mainframe.
 	DestroyWindow();
-	AfxGetMainWnd()->UpdateWindow();
+	
+	CWnd * pMainWnd = AfxGetMainWnd();
+	
+	if (pMainWnd != NULL && pMainWnd->GetSafeHwnd() != NULL)
+	{
+		pMainWnd->UpdateWindow();
+	}
 }
 
 void CSplashWnd::PostNcDestroy()
