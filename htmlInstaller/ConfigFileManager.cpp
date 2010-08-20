@@ -35,11 +35,13 @@ bool ConfigFileManager::OnDownload(const ConfigurationPtr& config)
 	return m_pInstallerWindow->RunDownloadConfiguration(p->downloaddialog);
 }
 
-bool ConfigFileManager::OnRunConfiguration(const ConfigurationPtr& configuration)
+bool ConfigFileManager::OnRunConfiguration(const ConfigurationPtr& config)
 {
-	CreateInstallerWindow();
+	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(config));
+	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+	CreateInstallerWindow(p_configuration->dialog_caption);
 	return m_pInstallerWindow->RunInstallConfiguration(
-		lcidtype, configuration, configuration != (* this)[size() - 1]);
+		lcidtype, config, config != (* this)[size() - 1]);
 }
 
 void ConfigFileManager::Load()
@@ -66,7 +68,7 @@ bool ConfigFileManager::OnLoad()
 	return false;
 }
 
-void ConfigFileManager::CreateInstallerWindow()
+void ConfigFileManager::CreateInstallerWindow(const std::wstring& title)
 {
 	if (m_pInstallerWindow != NULL)
 	{
@@ -86,7 +88,7 @@ void ConfigFileManager::CreateInstallerWindow()
 	m_pInstallerWindow->Create(
 		(mi.rcWork.left + mi.rcWork.right) / 2 - cx / 2, 
 		(mi.rcWork.top + mi.rcWork.bottom) / 2 - cy / 2, 
-		cx, cy, L"htmlInstaller" );
+		cx, cy, title.c_str());
 
 	CHECK_BOOL(m_pInstallerWindow->hwnd != NULL,
 		L"InstallerWindow::Create");
