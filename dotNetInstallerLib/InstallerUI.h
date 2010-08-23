@@ -17,13 +17,12 @@ protected:
 	bool m_reboot;
 	bool m_additional_config;
 	bool m_all;
-	DVLib::LcidType m_lcidtype;
 	ConfigurationPtr m_configuration;
 public:
 	InstallerUI();
 	virtual ~InstallerUI();
 	virtual inline int GetRecordedError() const { return m_recorded_error; }
-	virtual bool RunInstallConfiguration(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration, bool p_additional_config);
+	virtual bool RunInstallConfiguration(const ConfigurationPtr& configuration, bool p_additional_config);
 	virtual bool RunDownloadConfiguration(const DownloadDialogPtr& p_Configuration);
 	void DisplaySplash();
 protected:

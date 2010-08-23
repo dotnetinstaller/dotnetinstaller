@@ -9,7 +9,6 @@ class CComponentsList :
 private:
 	CdotNetInstallerDlg * m_pExecuteCallback;
 	InstallConfiguration * m_pConfiguration;
-	DVLib::LcidType m_lcidtype;
 	void Exec(const ComponentPtr& component);
 protected:
 	void PreDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
@@ -19,7 +18,7 @@ protected:
 	DECLARE_MESSAGE_MAP();
 public:
 	void SetExecuteCallback(CdotNetInstallerDlg *);
-	void Load(DVLib::LcidType lcidtype, InstallConfiguration * pConfiguration);
+	void Load(InstallConfiguration * pConfiguration);
 	void AddComponent(const ComponentPtr& component);
 	CComponentsList();
 };

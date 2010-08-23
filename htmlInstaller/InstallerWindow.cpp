@@ -318,7 +318,7 @@ int InstallerWindow::ExecOnThread()
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
 		Components components = p_configuration->GetSupportedComponents(
-			m_lcidtype, InstallerSession::Instance->sequence);
+			InstallerSession::Instance->lcidtype, InstallerSession::Instance->sequence);
 
 		SetProgressTotal(components.size() * 2);
 

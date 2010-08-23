@@ -210,7 +210,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
 		Components components = p_configuration->GetSupportedComponents(
-			m_lcidtype, InstallerSession::Instance->sequence);
+			InstallerSession::Instance->lcidtype, InstallerSession::Instance->sequence);
 
 		int rc = components.Exec(this);
 		InstallerUI::AfterInstall(rc);
@@ -235,7 +235,7 @@ bool CdotNetInstallerDlg::LoadComponentsList()
 	bool rc = InstallerUI::LoadComponentsList();
 	InstallConfiguration * pConfiguration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(pConfiguration != NULL, L"Invalid configuration");
-	m_ListBoxComponents.Load(m_lcidtype, pConfiguration);
+	m_ListBoxComponents.Load(pConfiguration);
 	return rc;
 }
 

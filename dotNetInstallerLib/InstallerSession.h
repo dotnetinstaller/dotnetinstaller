@@ -30,6 +30,8 @@ public:
 	std::wstring ExpandUserVariables(const std::wstring& value);
 	// sequence
 	InstallSequence sequence;
+	// lcid type
+	DVLib::LcidType lcidtype;
 	// global instance
 	static shared_any<InstallerSession *, close_delete> Instance;
 	// save session for subsequent reboot

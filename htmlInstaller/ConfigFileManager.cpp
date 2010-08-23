@@ -40,8 +40,7 @@ bool ConfigFileManager::OnRunConfiguration(const ConfigurationPtr& config)
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(config));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 	CreateInstallerWindow(p_configuration->dialog_caption);
-	return m_pInstallerWindow->RunInstallConfiguration(
-		lcidtype, config, config != (* this)[size() - 1]);
+	return m_pInstallerWindow->RunInstallConfiguration(config, config != (* this)[size() - 1]);
 }
 
 void ConfigFileManager::Load()

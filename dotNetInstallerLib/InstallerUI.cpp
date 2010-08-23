@@ -97,7 +97,7 @@ bool InstallerUI::LoadComponentsList()
 	ResetContent();
 
 	Components components_list = pConfiguration->GetSupportedComponents(
-		m_lcidtype, InstallerSession::Instance->sequence);
+		InstallerSession::Instance->lcidtype, InstallerSession::Instance->sequence);
 
 	for (size_t i = 0; i < components_list.size(); i++)
 	{
@@ -242,13 +242,12 @@ void InstallerUI::ShowMessage(const std::wstring& message, int flags)
 	DniMessageBox::Show(message, flags);
 }
 
-bool InstallerUI::RunInstallConfiguration(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration, bool p_additional_config)
+bool InstallerUI::RunInstallConfiguration(const ConfigurationPtr& configuration, bool p_additional_config)
 {
 	// remove the Run key if exist
 	InstallerSession::Instance->DisableRunOnReboot();
 
 	m_configuration = configuration;
-	m_lcidtype = lcidtype;
 	m_additional_config = p_additional_config;
 
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));

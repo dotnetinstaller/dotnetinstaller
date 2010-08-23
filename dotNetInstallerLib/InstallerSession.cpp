@@ -12,6 +12,7 @@ InstallerSession::InstallerSession()
 	: languageid(0)
 	, guid(DVLib::GenerateGUIDStringW())
 	, sequence(SequenceInstall)
+	, lcidtype(DVLib::LcidUserExe)
 {
 
 }
@@ -99,6 +100,8 @@ std::wstring InstallerSession::ExpandPathVariables(const std::wstring& path)
 				value = DVLib::GetModuleFileNameW();
 			else if (name == L"STARTFILENAME")
 				value = DVLib::GetFileNameW(DVLib::GetModuleFileNameW());
+			else if (name == L"OSLANGID")
+				value = DVLib::towstring(DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype));
 			else
 			{
 				THROW_EX(L"Invalid variable #" << name << L" in '" << path << L"'");

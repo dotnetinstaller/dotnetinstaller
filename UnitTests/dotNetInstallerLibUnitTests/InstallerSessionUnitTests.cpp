@@ -25,6 +25,8 @@ void InstallerSessionUnitTests::testExpandPathVariables()
 		InstallerSession::Instance->ExpandPathVariables(L"#UILEVEL"));
 	CPPUNIT_ASSERT(DVLib::towstring(InstallerSession::Instance->languageid) == 
 		InstallerSession::Instance->ExpandPathVariables(L"#LANGID"));
+	CPPUNIT_ASSERT(DVLib::towstring(DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype)) == 
+		InstallerSession::Instance->ExpandPathVariables(L"#OSLANGID"));
 	CPPUNIT_ASSERT(L"" == InstallerSession::Instance->ExpandPathVariables(L"#LANGUAGE"));
 }
 

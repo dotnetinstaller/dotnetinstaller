@@ -60,13 +60,16 @@
             </definition>
             <definedTerm>#LANGID</definedTerm>
             <definition>
-              User-selected configuration language ID when the language selector is enabled. 
-              This may be 0 if the configuration doesn't have a language defined.
+              User or auto-selected configuration language ID. This may be 0 if the configuration doesn't have a language defined.
+            </definition>
+            <definedTerm>#OSLANGID</definedTerm>
+            <definition>
+              Operating system language ID.
             </definition>
             <definedTerm>#LANGUAGE</definedTerm>
             <definition>
-              User-selected configuration language string when the language selector is enabled. 
-              This may be blank if the configuration doesn't have a language defined.
+              User or auto-selected configuration language string. This may be blank if the configuration doesn't have
+              a language defined.
             </definition>
             <definedTerm>#STARTPATH</definedTerm>
             <definition>

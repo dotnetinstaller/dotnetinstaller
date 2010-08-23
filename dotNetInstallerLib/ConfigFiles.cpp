@@ -75,6 +75,9 @@ void ConfigFiles::Load()
 		}
 	}
 
+	LOG("Lcid type: " << DVLib::lcidtype2wstring(InstallerSession::Instance->lcidtype));
+	InstallerSession::Instance->lcidtype = config.lcidtype;
+
 	if (OnSelectLanguage())
 	{
 		// specific locale has been chosen

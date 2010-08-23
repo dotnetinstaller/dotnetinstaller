@@ -5,7 +5,6 @@
 CComponentsList::CComponentsList()
 	: m_pConfiguration(NULL)
 	, m_pExecuteCallback(NULL)
-	, m_lcidtype(DVLib::LcidUserExe)
 {
 
 }
@@ -165,8 +164,7 @@ void CComponentsList::SetExecuteCallback(CdotNetInstallerDlg * pExec)
 	m_pExecuteCallback = pExec;
 }
 
-void CComponentsList::Load(DVLib::LcidType lcidtype, InstallConfiguration * pConfiguration)
+void CComponentsList::Load(InstallConfiguration * pConfiguration)
 {
 	m_pConfiguration = pConfiguration;
-	m_lcidtype = lcidtype;
 }

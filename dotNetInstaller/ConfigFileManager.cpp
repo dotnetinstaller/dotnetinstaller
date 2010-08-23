@@ -27,7 +27,7 @@ bool ConfigFileManager::OnDownload(const ConfigurationPtr& config)
 
 bool ConfigFileManager::OnRunConfiguration(const ConfigurationPtr& configuration)
 {
-	return dlg.RunInstallConfiguration(lcidtype, configuration, configuration != (* this)[size() - 1]);
+	return dlg.RunInstallConfiguration(configuration, configuration != (* this)[size() - 1]);
 }
 
 void ConfigFileManager::Load()
