@@ -244,8 +244,6 @@ void InstallerUI::ShowMessage(const std::wstring& message, int flags)
 
 bool InstallerUI::RunInstallConfiguration(DVLib::LcidType lcidtype, const ConfigurationPtr& configuration, bool p_additional_config)
 {
-	DisplaySplash();
-
 	// remove the Run key if exist
 	InstallerSession::Instance->DisableRunOnReboot();
 
@@ -303,6 +301,8 @@ void InstallerUI::DisplaySplash()
 
 void InstallerUI::Start()
 {
+	DisplaySplash();
+
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
