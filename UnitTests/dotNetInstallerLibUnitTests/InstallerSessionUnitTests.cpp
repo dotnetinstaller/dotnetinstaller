@@ -13,6 +13,9 @@ void InstallerSessionUnitTests::testExpandPathVariables()
 	CPPUNIT_ASSERT(DVLib::GetWindowsDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#WINDOWSPATH"));
 	CPPUNIT_ASSERT(DVLib::GetSystemWindowsDirectory() == InstallerSession::Instance->ExpandPathVariables(L"#SYSTEMWINDOWSPATH"));
 	CPPUNIT_ASSERT(DVLib::GetTemporaryDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#TEMPPATH"));
+	CPPUNIT_ASSERT(DVLib::GetModuleDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#STARTPATH"));
+	CPPUNIT_ASSERT(DVLib::GetModuleFileNameW() == InstallerSession::Instance->ExpandPathVariables(L"#STARTEXE"));
+	CPPUNIT_ASSERT(DVLib::GetFileNameW(DVLib::GetModuleFileNameW()) == InstallerSession::Instance->ExpandPathVariables(L"#STARTFILENAME"));
 	CPPUNIT_ASSERT(DVLib::towstring(::GetCurrentProcessId()) == InstallerSession::Instance->ExpandPathVariables(L"#PID"));
 	CPPUNIT_ASSERT(DVLib::GetTemporaryDirectoryW() + DVLib::GetTemporaryDirectoryW() == 
 		InstallerSession::Instance->ExpandPathVariables(L"#TEMPPATH#TEMPPATH"));

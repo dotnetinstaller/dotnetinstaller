@@ -93,6 +93,12 @@ std::wstring InstallerSession::ExpandPathVariables(const std::wstring& path)
 				value = DVLib::towstring(languageid);
 			else if (name == L"LANGUAGE")
 				value = language;
+			else if (name == L"STARTPATH")
+				value = DVLib::GetModuleDirectoryW();
+			else if (name == L"STARTEXE")
+				value = DVLib::GetModuleFileNameW();
+			else if (name == L"STARTFILENAME")
+				value = DVLib::GetFileNameW(DVLib::GetModuleFileNameW());
 			else
 			{
 				THROW_EX(L"Invalid variable #" << name << L" in '" << path << L"'");

@@ -60,13 +60,25 @@
             </definition>
             <definedTerm>#LANGID</definedTerm>
             <definition>
-              Selected configuration language ID. This may be blank if the configuration doesn't have a language
-              defined.
+              User-selected configuration language ID when the language selector is enabled. 
+              This may be 0 if the configuration doesn't have a language defined.
             </definition>
             <definedTerm>#LANGUAGE</definedTerm>
             <definition>
-              Selected configuration language string. This may be blank if the configuration doesn't have a language
-              defined.
+              User-selected configuration language string when the language selector is enabled. 
+              This may be blank if the configuration doesn't have a language defined.
+            </definition>
+            <definedTerm>#STARTPATH</definedTerm>
+            <definition>
+              Directory from which the bootstrapper was launched.
+            </definition>
+            <definedTerm>#STARTEXE</definedTerm>
+            <definition>
+              Full path, including the file name, of the launched bootstrapper.
+            </definition>
+            <definedTerm>#STARTFILENAME</definedTerm>
+            <definition>
+              File name, without path, of the launched bootstrapper.
             </definition>
           </definitionTable>
         </para>
