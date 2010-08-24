@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -167,21 +168,28 @@ namespace InstallerLib
         /// <param name="args"></param>
         public void CheckFilesExist(InstallerLinkerArguments args)
         {
-            int filesMissing = 0;
+            List<String> filesMissing = new List<string>();
             foreach (EmbedFilePair file in _files)
             {
                 args.WriteLine(string.Format(" {0} ({1})", file.fullpath, file.relativepath));
                 if (!File.Exists(file.fullpath))
                 {
-                    args.WriteError(string.Format("Embedded file '{0}' does not exist", file.fullpath));
-                    filesMissing++;
+                    string fullpath = Path.GetFullPath(file.fullpath);
+                    args.WriteError(string.Format("Embedded file '{0}' does not exist", fullpath));
+                    filesMissing.Add(fullpath);
                 }
             }
 
-            if (filesMissing > 0)
+            if (filesMissing.Count > 0)
             {
-                throw new Exception(string.Format("Missing {0} embedded file(s)",
-                    filesMissing));
+                StringBuilder sb = new StringBuilder();
+                int max = 5;
+                sb.AppendLine(string.Format("Missing {0} embedded file(s)", filesMissing.Count));
+                for (int i = 0; i < max && i < filesMissing.Count; i++)
+                    sb.AppendLine(filesMissing[i]);
+                if (filesMissing.Count > max)
+                    sb.AppendLine("...");
+                throw new Exception(sb.ToString());
             }
         }
 

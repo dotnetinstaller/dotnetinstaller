@@ -186,8 +186,17 @@ namespace InstallerLib
         /// <param name="p_FileName">target filename</param>
         public void SaveAs(string p_FileName)
         {
-            GetXml(null).Save(p_FileName);
+            WriteTo(p_FileName);
             m_filename = p_FileName;
+        }
+
+        /// <summary>
+        /// Write configuration to a file.
+        /// </summary>
+        /// <param name="p_FileName">target filename</param>
+        public void WriteTo(string p_FileName)
+        {
+            GetXml(null).Save(p_FileName);
         }
 
         /// <summary>

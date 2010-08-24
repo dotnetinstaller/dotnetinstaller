@@ -100,6 +100,7 @@ namespace InstallerEditor
         private RegistryKey m_makeExeRegistry;
         private MenuItem mnAddImageControl;
         private RegistryKey m_settingsRegistry;
+        private FileSystemWatcher m_configFileWatcher;
 
         public MainForm()
         {
@@ -924,6 +925,8 @@ namespace InstallerEditor
                     }
                 }
 
+                MonitorChanges(filename);
+
                 m_TreeNodeConfigFile = new TreeNodeConfigFile(l_File);
                 m_TreeNodeConfigFile.IsDirty = !l_File.editor.IsCurrent();
                 m_TreeNodeConfigFile.CreateChildNodes();
@@ -944,6 +947,8 @@ namespace InstallerEditor
 
         private bool CloseConfiguration()
         {
+            MonitorChanges(null);
+
             if (m_TreeNodeConfigFile != null)
             {
                 if (m_TreeNodeConfigFile.IsDirty)
@@ -969,6 +974,58 @@ namespace InstallerEditor
             return true;
         }
 
+        private void MonitorChanges(string filename)
+        {
+            if (m_configFileWatcher != null)
+            {
+                m_configFileWatcher.EnableRaisingEvents = false;
+                m_configFileWatcher = null;
+            }
+
+            if (!string.IsNullOrEmpty(filename))
+            {
+                m_configFileWatcher = new FileSystemWatcher();
+                m_configFileWatcher.Path = Path.GetDirectoryName(filename);
+                m_configFileWatcher.Changed += new FileSystemEventHandler(MonitorChanges_Changed);
+                m_configFileWatcher.EnableRaisingEvents = true;
+            }
+        }
+
+        private void ReopenConfiguration(string configFile)
+        {
+            if (!String.IsNullOrEmpty(configFile))
+            {
+                CloseConfiguration();
+                OpenConfiguration(configFile);
+            }
+        }
+
+        private delegate void DelegateReopenConfiguration(string configFile);
+
+
+        private void MonitorChanges_Changed(object sender, FileSystemEventArgs e)
+        {
+            if (e.FullPath == m_TreeNodeConfigFile.Instance.filename)
+            {
+                switch (e.ChangeType)
+                {
+                    case WatcherChangeTypes.Changed:
+                        m_configFileWatcher.EnableRaisingEvents = false;
+                        if (MessageBox.Show("File '" + e.FullPath + "' has changed. Reload?", "File Changed",
+                            MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            configurationTree.Invoke(new DelegateReopenConfiguration(ReopenConfiguration),
+                                new object[] { e.FullPath });
+                        }
+                        else
+                        {
+                            m_configFileWatcher.EnableRaisingEvents = true;
+                        }
+                        break;
+                }
+            }
+        }
+
         private bool SaveConfiguration()
         {
             if (m_TreeNodeConfigFile != null)
@@ -981,6 +1038,7 @@ namespace InstallerEditor
                     if (l_dg.ShowDialog(this) == DialogResult.OK)
                     {
                         m_TreeNodeConfigFile.Instance.SaveAs(l_dg.FileName);
+                        MonitorChanges(l_dg.FileName);
                     }
                     else
                     {
@@ -989,7 +1047,9 @@ namespace InstallerEditor
                 }
                 else
                 {
+                    MonitorChanges(null);
                     m_TreeNodeConfigFile.Instance.Save();
+                    MonitorChanges(m_TreeNodeConfigFile.Instance.filename);
                 }
             }
 
@@ -1571,6 +1631,11 @@ namespace InstallerEditor
         {
             try
             {
+                if (m_TreeNodeConfigFile == null || m_TreeNodeConfigFile.Instance == null)
+                {
+                    throw new ApplicationException("Missing configuration");
+                }
+
                 MakeExe l_frmMakeExe = new MakeExe();
                 l_frmMakeExe.TemplateFile = (string) m_makeExeRegistry.GetValue("TemplateFile", string.Empty);
                 l_frmMakeExe.BannerBitmapFile = (string) m_makeExeRegistry.GetValue("BannerBitmapFile", string.Empty);
@@ -1579,13 +1644,17 @@ namespace InstallerEditor
                 l_frmMakeExe.SplashBitmapFile = (string)m_makeExeRegistry.GetValue("SplashBitmapFile", string.Empty);
                 l_frmMakeExe.ManifestFile = (string)m_makeExeRegistry.GetValue("ManifestFile", string.Empty);
                 l_frmMakeExe.Embed = ((int) m_makeExeRegistry.GetValue("Embed", 1) != 0);
+                l_frmMakeExe.ConfigFile = Path.GetTempFileName();
 
-                if (m_TreeNodeConfigFile != null && m_TreeNodeConfigFile.Instance != null)
+                try
                 {
-                    l_frmMakeExe.Configuration = m_TreeNodeConfigFile.Instance.filename;
+                    m_TreeNodeConfigFile.Instance.WriteTo(l_frmMakeExe.ConfigFile);
+                    l_frmMakeExe.ShowDialog(this);
                 }
-
-                l_frmMakeExe.ShowDialog(this);
+                finally
+                {
+                    File.Delete(l_frmMakeExe.ConfigFile);
+                }
 
                 m_makeExeRegistry.SetValue("TemplateFile", l_frmMakeExe.TemplateFile);
                 m_makeExeRegistry.SetValue("BannerBitmapFile", l_frmMakeExe.BannerBitmapFile);

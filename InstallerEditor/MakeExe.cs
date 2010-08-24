@@ -15,9 +15,6 @@ namespace InstallerEditor
         private System.Windows.Forms.TextBox txtBannerBitmap;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btBrowseBannerBitmap;
-        private System.Windows.Forms.Button btBrowseConfiguration;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtConfiguration;
         private System.Windows.Forms.Button btCancel;
         private System.Windows.Forms.Button btMake;
         private System.Windows.Forms.Label label3;
@@ -33,6 +30,7 @@ namespace InstallerEditor
         private TextBox txtManifest;
         private Button btBrowseManifest;
         private Label label6;
+        private string m_ConfigFile;
 
         /// <summary>
         /// Required designer variable.
@@ -78,9 +76,6 @@ namespace InstallerEditor
             this.txtBannerBitmap = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btBrowseBannerBitmap = new System.Windows.Forms.Button();
-            this.btBrowseConfiguration = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtConfiguration = new System.Windows.Forms.TextBox();
             this.btBrowseTemplateFile = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.txtTemplateFile = new System.Windows.Forms.TextBox();
@@ -100,7 +95,7 @@ namespace InstallerEditor
             // 
             this.btCancel.AccessibleName = "btCancel";
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(308, 245);
+            this.btCancel.Location = new System.Drawing.Point(308, 210);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 0;
@@ -109,7 +104,7 @@ namespace InstallerEditor
             // btMake
             // 
             this.btMake.AccessibleName = "btMake";
-            this.btMake.Location = new System.Drawing.Point(220, 245);
+            this.btMake.Location = new System.Drawing.Point(220, 210);
             this.btMake.Name = "btMake";
             this.btMake.Size = new System.Drawing.Size(75, 23);
             this.btMake.TabIndex = 8;
@@ -119,14 +114,14 @@ namespace InstallerEditor
             // txtBannerBitmap
             // 
             this.txtBannerBitmap.AccessibleName = "txtBannerBitmap";
-            this.txtBannerBitmap.Location = new System.Drawing.Point(10, 101);
+            this.txtBannerBitmap.Location = new System.Drawing.Point(10, 66);
             this.txtBannerBitmap.Name = "txtBannerBitmap";
             this.txtBannerBitmap.Size = new System.Drawing.Size(344, 20);
             this.txtBannerBitmap.TabIndex = 11;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(9, 85);
+            this.label1.Location = new System.Drawing.Point(9, 50);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(240, 16);
             this.label1.TabIndex = 3;
@@ -134,37 +129,12 @@ namespace InstallerEditor
             // 
             // btBrowseBannerBitmap
             // 
-            this.btBrowseBannerBitmap.Location = new System.Drawing.Point(357, 101);
+            this.btBrowseBannerBitmap.Location = new System.Drawing.Point(357, 66);
             this.btBrowseBannerBitmap.Name = "btBrowseBannerBitmap";
             this.btBrowseBannerBitmap.Size = new System.Drawing.Size(24, 20);
             this.btBrowseBannerBitmap.TabIndex = 3;
             this.btBrowseBannerBitmap.Text = "...";
             this.btBrowseBannerBitmap.Click += new System.EventHandler(this.btBrowseBannerBitmap_Click);
-            // 
-            // btBrowseConfiguration
-            // 
-            this.btBrowseConfiguration.Location = new System.Drawing.Point(357, 64);
-            this.btBrowseConfiguration.Name = "btBrowseConfiguration";
-            this.btBrowseConfiguration.Size = new System.Drawing.Size(24, 20);
-            this.btBrowseConfiguration.TabIndex = 2;
-            this.btBrowseConfiguration.Text = "...";
-            this.btBrowseConfiguration.Click += new System.EventHandler(this.btBrowseConfiguration_Click);
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(9, 48);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(240, 16);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Configuration";
-            // 
-            // txtConfiguration
-            // 
-            this.txtConfiguration.AccessibleName = "txtConfiguration";
-            this.txtConfiguration.Location = new System.Drawing.Point(10, 64);
-            this.txtConfiguration.Name = "txtConfiguration";
-            this.txtConfiguration.Size = new System.Drawing.Size(344, 20);
-            this.txtConfiguration.TabIndex = 10;
             // 
             // btBrowseTemplateFile
             // 
@@ -198,7 +168,7 @@ namespace InstallerEditor
             this.chkEmbed.AutoSize = true;
             this.chkEmbed.Checked = true;
             this.chkEmbed.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkEmbed.Location = new System.Drawing.Point(9, 245);
+            this.chkEmbed.Location = new System.Drawing.Point(9, 210);
             this.chkEmbed.Name = "chkEmbed";
             this.chkEmbed.Size = new System.Drawing.Size(131, 17);
             this.chkEmbed.TabIndex = 7;
@@ -208,14 +178,14 @@ namespace InstallerEditor
             // txtIcon
             // 
             this.txtIcon.AccessibleName = "txtIcon";
-            this.txtIcon.Location = new System.Drawing.Point(10, 175);
+            this.txtIcon.Location = new System.Drawing.Point(10, 140);
             this.txtIcon.Name = "txtIcon";
             this.txtIcon.Size = new System.Drawing.Size(344, 20);
             this.txtIcon.TabIndex = 13;
             // 
             // btBrowseIcon
             // 
-            this.btBrowseIcon.Location = new System.Drawing.Point(357, 175);
+            this.btBrowseIcon.Location = new System.Drawing.Point(357, 140);
             this.btBrowseIcon.Name = "btBrowseIcon";
             this.btBrowseIcon.Size = new System.Drawing.Size(24, 20);
             this.btBrowseIcon.TabIndex = 5;
@@ -224,7 +194,7 @@ namespace InstallerEditor
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(9, 159);
+            this.label4.Location = new System.Drawing.Point(9, 124);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(240, 16);
             this.label4.TabIndex = 13;
@@ -233,14 +203,14 @@ namespace InstallerEditor
             // txtSplashBitmap
             // 
             this.txtSplashBitmap.AccessibleName = "txtSplashBitmap";
-            this.txtSplashBitmap.Location = new System.Drawing.Point(10, 138);
+            this.txtSplashBitmap.Location = new System.Drawing.Point(10, 103);
             this.txtSplashBitmap.Name = "txtSplashBitmap";
             this.txtSplashBitmap.Size = new System.Drawing.Size(344, 20);
             this.txtSplashBitmap.TabIndex = 12;
             // 
             // btBrowseSplashBitmap
             // 
-            this.btBrowseSplashBitmap.Location = new System.Drawing.Point(357, 138);
+            this.btBrowseSplashBitmap.Location = new System.Drawing.Point(357, 103);
             this.btBrowseSplashBitmap.Name = "btBrowseSplashBitmap";
             this.btBrowseSplashBitmap.Size = new System.Drawing.Size(24, 20);
             this.btBrowseSplashBitmap.TabIndex = 4;
@@ -249,7 +219,7 @@ namespace InstallerEditor
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(9, 122);
+            this.label5.Location = new System.Drawing.Point(9, 87);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(240, 16);
             this.label5.TabIndex = 16;
@@ -258,14 +228,14 @@ namespace InstallerEditor
             // txtManifest
             // 
             this.txtManifest.AccessibleName = "txtManifest";
-            this.txtManifest.Location = new System.Drawing.Point(10, 212);
+            this.txtManifest.Location = new System.Drawing.Point(10, 177);
             this.txtManifest.Name = "txtManifest";
             this.txtManifest.Size = new System.Drawing.Size(344, 20);
             this.txtManifest.TabIndex = 14;
             // 
             // btBrowseManifest
             // 
-            this.btBrowseManifest.Location = new System.Drawing.Point(357, 212);
+            this.btBrowseManifest.Location = new System.Drawing.Point(357, 177);
             this.btBrowseManifest.Name = "btBrowseManifest";
             this.btBrowseManifest.Size = new System.Drawing.Size(24, 20);
             this.btBrowseManifest.TabIndex = 6;
@@ -274,7 +244,7 @@ namespace InstallerEditor
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(9, 196);
+            this.label6.Location = new System.Drawing.Point(9, 161);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(240, 16);
             this.label6.TabIndex = 19;
@@ -285,7 +255,7 @@ namespace InstallerEditor
             this.AccessibleName = "createExe";
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.CancelButton = this.btCancel;
-            this.ClientSize = new System.Drawing.Size(393, 281);
+            this.ClientSize = new System.Drawing.Size(393, 245);
             this.Controls.Add(this.txtManifest);
             this.Controls.Add(this.btBrowseManifest);
             this.Controls.Add(this.label6);
@@ -298,10 +268,7 @@ namespace InstallerEditor
             this.Controls.Add(this.btBrowseTemplateFile);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtTemplateFile);
-            this.Controls.Add(this.txtConfiguration);
             this.Controls.Add(this.txtBannerBitmap);
-            this.Controls.Add(this.btBrowseConfiguration);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.btBrowseBannerBitmap);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btMake);
@@ -323,10 +290,11 @@ namespace InstallerEditor
         {
             try
             {
-                if (System.IO.File.Exists(txtTemplateFile.Text) == false)
-                    throw new ApplicationException("Template not valid");
-                if (System.IO.File.Exists(txtConfiguration.Text) == false)
-                    throw new ApplicationException("Configuration not valid");
+                if (! System.IO.File.Exists(txtTemplateFile.Text))
+                    throw new ApplicationException("Template file '" + txtTemplateFile.Text + "' is missing");
+
+                if (! System.IO.File.Exists(ConfigFile))
+                    throw new ApplicationException("Configuration file '" + ConfigFile + " ' is missing");
 
                 SaveFileDialog l_dg = new SaveFileDialog();
                 l_dg.FileName = m_OutputFileName;
@@ -337,7 +305,7 @@ namespace InstallerEditor
                     InstallerLinkerArguments args = new InstallerLinkerArguments();
                     args.banner = txtBannerBitmap.Text;
                     args.icon = txtIcon.Text;
-                    args.config = txtConfiguration.Text;
+                    args.config = ConfigFile;
                     args.output = l_dg.FileName;
                     args.template = txtTemplateFile.Text;
                     args.embed = chkEmbed.Checked;
@@ -380,10 +348,10 @@ namespace InstallerEditor
             set { txtIcon.Text = value; }
         }
 
-        public string Configuration
+        public string ConfigFile
         {
-            get { return txtConfiguration.Text; }
-            set { txtConfiguration.Text = value; }
+            get { return m_ConfigFile; }
+            set { m_ConfigFile = value; }
         }
 
         public string SplashBitmapFile
@@ -427,21 +395,6 @@ namespace InstallerEditor
                 l_dg.Filter = "Bitmap File (*.bmp)|*.bmp|All Files(*.*)|*.*";
                 if (l_dg.ShowDialog(this) == DialogResult.OK)
                     txtBannerBitmap.Text = l_dg.FileName;
-            }
-            catch (Exception err)
-            {
-                AppUtility.ShowError(this, err);
-            }
-        }
-
-        private void btBrowseConfiguration_Click(object sender, System.EventArgs e)
-        {
-            try
-            {
-                OpenFileDialog l_dg = new OpenFileDialog();
-                l_dg.Filter = "XML File (*.xml)|*.xml|All Files(*.*)|*.*";
-                if (l_dg.ShowDialog(this) == DialogResult.OK)
-                    txtConfiguration.Text = l_dg.FileName;
             }
             catch (Exception err)
             {
