@@ -60,16 +60,18 @@
             </definition>
             <definedTerm>#LANGID</definedTerm>
             <definition>
-              User or auto-selected configuration language ID. This may be 0 if the configuration doesn't have a language defined.
+              Current configuration language ID. This may be user-selected in a language selector and will default to the 
+              operating system language ID if the configuration doesn't specify a value.
             </definition>
             <definedTerm>#OSLANGID</definedTerm>
             <definition>
-              Operating system language ID.
+              Operating system language ID. See
+              <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="1aa2140c-f65d-4aac-83a4-b86a3a554525" />
+              for more information about various options for how this value is obtained.              
             </definition>
             <definedTerm>#LANGUAGE</definedTerm>
             <definition>
-              User or auto-selected configuration language string. This may be blank if the configuration doesn't have
-              a language defined.
+              Current configuration language string. This may be blank if the configuration doesn't specify a language defined.
             </definition>
             <definedTerm>#STARTPATH</definedTerm>
             <definition>
@@ -104,11 +106,11 @@
           For example <literal>@[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CommonFilesDir,DefaultValue]</literal>.
           The key doesn't have to exist and you don't have to specify a default value, which is assumed blank. Multiple key paths
           may be separated by <literal>|</literal>, the first value found will be used. The default value will be used if no value
-          could be retrieved from registry. The key value within the registry path is optional, make sure to terminate a path without 
+          could be retrieved from registry. The key value within the registry path is optional, make sure to terminate a path without
           a value with a backslash.
         </para>
         <para>
-          Registry variable substitution supports both 32-bit and 64-bit registry views. dotNetInstaller is a 32-bit application 
+          Registry variable substitution supports both 32-bit and 64-bit registry views. dotNetInstaller is a 32-bit application
           and by default accesses the 32-bit registry view on a 64-bit operating system. To access the 64-bit registry view, set
           options to <literal>WOW64_64</literal>. For example <literal>@[HKEY_LOCAL_MACHINE:WOW64_64\SOFTWARE\64BitApplication\Name,DefaultValue]</literal>.
           For more information see <externalLink>

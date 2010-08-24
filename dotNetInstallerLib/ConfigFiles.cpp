@@ -81,7 +81,12 @@ void ConfigFiles::Load()
 	if (OnSelectLanguage())
 	{
 		// specific locale has been chosen
-		LOG(L"Locale chosen: " << InstallerSession::Instance->languageid);
+		LOG(L"User selected language id: " << InstallerSession::Instance->languageid);
+	}
+	else
+	{
+		InstallerSession::Instance->languageid = DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype);
+		LOG(L"Operating system language id: " << InstallerSession::Instance->languageid);
 	}
 
 	// download reference configurations

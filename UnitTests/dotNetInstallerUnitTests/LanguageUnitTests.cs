@@ -95,5 +95,72 @@ namespace dotNetInstallerUnitTests
             File.Delete(currentLcidFilename);
             File.Delete(emptyLcidFilename);
         }
+
+        [Test]
+        public void TestOsLangID()
+        {
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration configuration = new SetupConfiguration();
+            configFile.Children.Add(configuration);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C exit /b #OSLANGID";
+            configuration.Children.Add(cmd);
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            Assert.AreEqual(CultureInfo.CurrentCulture.LCID, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+        }
+
+        [Test]
+        public void TestConfigNoLangID()
+        {
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration configuration = new SetupConfiguration();
+            configFile.Children.Add(configuration);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C exit /b #LANGID";
+            configuration.Children.Add(cmd);
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            Assert.AreEqual(CultureInfo.CurrentCulture.LCID, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+        }
+
+        [Test]
+        public void TestConfigLangID()
+        {
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration configuration = new SetupConfiguration();
+            configFile.Children.Add(configuration);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C exit /b #LANGID";
+            configuration.language_id = "1234";
+            configuration.Children.Add(cmd);
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            Assert.AreEqual(1234, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+        }
+
+        [Test]
+        public void TestConfigLanguage()
+        {
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration configuration = new SetupConfiguration();
+            configFile.Children.Add(configuration);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C exit /b #LANGUAGE";
+            configuration.language_id = "1234";
+            configuration.language = "3456";
+            configuration.Children.Add(cmd);
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            Assert.AreEqual(3456, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+        }
     }
 }

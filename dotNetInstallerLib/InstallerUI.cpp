@@ -253,6 +253,15 @@ bool InstallerUI::RunInstallConfiguration(const ConfigurationPtr& configuration,
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
+	// set language for this configuration
+	InstallerSession::Instance->languageid = p_configuration->language_id.GetValue().empty()
+		? DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype)
+		: p_configuration->language_id.GetLongValue();
+
+	InstallerSession::Instance->language = p_configuration->language;
+
+	LOG("Configuration language id: " << InstallerSession::Instance->languageid << L" " << InstallerSession::Instance->language);
+
 	// check sequences
 	if (! p_configuration->supports_uninstall && ! p_configuration->supports_install)
 	{
