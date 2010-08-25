@@ -513,3 +513,26 @@ std::wstring DVLib::os2wstring(OperatingSystem os)
 
 	THROW_EX(L"Unsupported operating system, os=" << (int) os);
 }
+
+std::wstring DVLib::GetISOLocale(LCID lcid)
+{
+	std::wstringstream ss;
+	ss << GetLocale(lcid, LOCALE_SISO639LANGNAME);
+	ss << L"-";
+	ss << GetLocale(lcid, LOCALE_SISO3166CTRYNAME);
+	return ss.str();
+}
+
+std::wstring DVLib::GetLocale(LCID lcid, int format)
+{
+	int size = 0;
+	CHECK_WIN32_BOOL((size = ::GetLocaleInfoW(lcid, format, NULL, 0)) > 0,
+		L"GetLocaleInfoW");
+	std::wstring locale;
+	locale.resize(size);
+	CHECK_WIN32_BOOL(::GetLocaleInfoW(lcid, format, & * locale.begin(), locale.size()) > 0,
+		L"GetLocaleInfoW");
+	locale.resize(size - 1);
+	return locale;
+}
+

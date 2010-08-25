@@ -69,6 +69,12 @@
               <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="1aa2140c-f65d-4aac-83a4-b86a3a554525" />
               for more information about various options for how this value is obtained.              
             </definition>
+            <definedTerm>#OSLOCALE</definedTerm>
+            <definition>
+              Operating system ISO locale, such as <literal>en-US</literal>. See
+              <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="1aa2140c-f65d-4aac-83a4-b86a3a554525" />
+              for more information about various options for how this value is obtained.
+            </definition>
             <definedTerm>#LANGUAGE</definedTerm>
             <definition>
               Current configuration language string. This may be blank if the configuration doesn't specify a language defined.

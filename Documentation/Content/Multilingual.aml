@@ -108,7 +108,8 @@
       <content>
         <para>
           dotNetInstaller offers several language substitution variables that represent the language selection,
-          including <literal>#OSLANGID</literal>, <literal>#LANGID</literal> and <literal>#LANGUAGE</literal>. See 
+          including <literal>#OSLANGID</literal>, <literal>#OSLOCALE</literal>, <literal>#LANGID</literal> and 
+          <literal>#LANGUAGE</literal>. See 
           <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="4d997108-25a8-4158-8072-c47bf49324bb" />
           for more information.
         </para>

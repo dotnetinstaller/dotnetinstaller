@@ -141,6 +141,8 @@ namespace DVLib
 		OperatingSystem l, OperatingSystem r);
 	// get the operating system LCID
 	LCID GetOperatingSystemLCID(LcidType lcidtype);
+	std::wstring GetLocale(LCID lcid, int format = LOCALE_SISO639LANGNAME);
+	std::wstring GetISOLocale(LCID lcid);
 	// does the filter match a system LCID
 	bool IsOperatingSystemLCID(LcidType lcidtype, const std::wstring& lcid);
 	// does the filter match the operating system LCID
