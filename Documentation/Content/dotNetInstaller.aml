@@ -48,6 +48,11 @@
             <definition>
               Do not display splash screen.
             </definition>
+            <definedTerm>/noreboot</definedTerm>
+            <definition>
+              Do not actually reboot Windows even if a reboot was required by a component or the user chooses to reboot
+              when prompted.
+            </definition>
             <definedTerm>/CompleteCommandArgs</definedTerm>
             <definition>
               Specify additional arguments for the <literal>complete_command</literal>.
@@ -164,6 +169,8 @@
             <definition>
               User pressed <ui>Cancel</ui> in the main dialog.
             </definition>
+            <definedTerm>3010</definedTerm>
+            <definition>A reboot was required.</definition>
             <definedTerm>Any other non-zero value</definedTerm>
             <definition>
               Error code of a failed component. This is the <command>msiexec</command> return code for

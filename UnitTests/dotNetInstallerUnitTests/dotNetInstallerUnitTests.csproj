@@ -58,6 +58,7 @@
     <Compile Include="LoggingUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExitCodeUnitTests.cs" />
+    <Compile Include="RebootUnitTests.cs" />
     <Compile Include="SelectionUnitTests.cs" />
     <Compile Include="UILevelUnitTests.cs" />
     <Compile Include="UninstallUnitTests.cs" />

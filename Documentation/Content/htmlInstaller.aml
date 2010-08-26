@@ -167,6 +167,11 @@ InstallerLinker.exe /Output:Setup.exe /Template:htmlInstaller.exe /Configuration
             <definition>
               Do not display splash screen.
             </definition>
+            <definedTerm>/noreboot</definedTerm>
+            <definition>
+              Do not actually reboot Windows even if a reboot was required by a component or the user chooses to reboot
+              when prompted.
+            </definition>
             <definedTerm>/CompleteCommandArgs</definedTerm>
             <definition>
               Specify additional arguments for the <literal>complete_command</literal>.
@@ -249,6 +254,8 @@ InstallerLinker.exe /Output:Setup.exe /Template:htmlInstaller.exe /Configuration
             <definedTerm>0</definedTerm>
             <definition>Success.</definition>
             <definedTerm>-1</definedTerm>
+            <definedTerm>3010</definedTerm>
+            <definition>A reboot was required.</definition>
             <definition>Any non-specific error.</definition>
             <definedTerm>Any other non-zero value</definedTerm>
             <definition>

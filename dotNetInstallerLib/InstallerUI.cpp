@@ -481,9 +481,19 @@ void InstallerUI::AfterInstall(int rc)
 
 	if (m_reboot)
 	{
+		RecordError(ERROR_SUCCESS_REBOOT_REQUIRED);
 		InstallerSession::Instance->EnableRunOnReboot(p_configuration->reboot_cmd);
-		DVLib::ExitWindowsSystem(EWX_REBOOT);
+		if (! InstallerCommandLineInfo::Instance->NoReboot())
+		{
+			LOG(L"Exiting with " << m_recorded_error << " and rebooting Windows.");
+			DVLib::ExitWindowsSystem(EWX_REBOOT);
+		}
+		else
+		{
+			LOG(L"Exiting with " << m_recorded_error << " and skipping required reboot, /noreboot was specified.");
+		}
 		PostQuitMessage(ERROR_SUCCESS_REBOOT_REQUIRED);
+		Stop();
 		return;
 	}
 

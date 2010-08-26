@@ -7,6 +7,7 @@ using System.Reflection;
 using NUnit.Framework;
 using System.Diagnostics;
 using System.Configuration;
+using Microsoft.Win32;
 
 namespace dotNetUnitTestsRunner
 {
@@ -21,6 +22,7 @@ namespace dotNetUnitTestsRunner
             public bool reboot = false;
             public bool uninstall = false;
             public string args;
+            public bool noreboot = true;
 
             public RunOptions()
             {
@@ -52,6 +54,7 @@ namespace dotNetUnitTestsRunner
 
                     if (quiet) result += " /q";
                     if (reboot) result += " /reboot";
+                    if (noreboot) result += " /noreboot";
                     if (log)
                     {
                         result += " /Log";
@@ -138,6 +141,14 @@ namespace dotNetUnitTestsRunner
             p.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
             p.Start();
             return p;
+        }
+
+        public static void DisableRunOnReboot()
+        {
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true))
+            {
+                key.DeleteValue(Path.GetFileName(Executable), false);
+            }
         }
     }
 }

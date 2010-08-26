@@ -75,6 +75,24 @@ void OsUtilUnitTests::testIsOperatingSystemLCIDValue()
 		L"123,456"));
 }
 
+void OsUtilUnitTests::testGetLocale()
+{
+	std::wstring oslanguage = DVLib::GetLocale(DVLib::GetOperatingSystemLCID(LcidSystem), LOCALE_SISO639LANGNAME); // ISO language name
+	CPPUNIT_ASSERT(oslanguage.length() > 0);
+	CPPUNIT_ASSERT(oslanguage.length() == wcslen(oslanguage.c_str()));
+	std::wstring osregion = DVLib::GetLocale(DVLib::GetOperatingSystemLCID(LcidSystem), LOCALE_SISO3166CTRYNAME); // ISO country name
+	CPPUNIT_ASSERT(osregion.length() > 0);
+	CPPUNIT_ASSERT(osregion.length() == wcslen(osregion.c_str()));
+	std::wcout << std::endl << L"Locale: " << oslanguage << L"-" << osregion;
+	CPPUNIT_ASSERT(DVLib::GetLocale(MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US)) == L"en");
+	CPPUNIT_ASSERT(DVLib::GetLocale(MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US), LOCALE_SISO3166CTRYNAME) == L"US");
+}
+
+void OsUtilUnitTests::testGetISOLocale()
+{
+	CPPUNIT_ASSERT(DVLib::GetISOLocale(MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US)) == L"en-US");
+}
+
 void OsUtilUnitTests::testCompareVersion()
 {
 	struct TestData

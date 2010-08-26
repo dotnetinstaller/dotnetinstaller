@@ -14,6 +14,7 @@ InstallerCommandLineInfo::InstallerCommandLineInfo()
 	, m_displayHelp(false)
 	, m_lastArgFlag(unknown)
 	, m_reboot(false)
+	, m_noreboot(false)
 	, m_displayConfig(false)
 	, m_displaySplash(true)
 {
@@ -106,6 +107,10 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		else if (_wcsicmp(pszParam, TEXT("reboot")) == 0)
 		{
             m_reboot = true;
+		}
+		else if (_wcsicmp(pszParam, TEXT("noreboot")) == 0)
+		{
+            m_noreboot = true;
 		}
 		else if (_wcsicmp(pszParam, TEXT("nosplash")) == 0)
 		{

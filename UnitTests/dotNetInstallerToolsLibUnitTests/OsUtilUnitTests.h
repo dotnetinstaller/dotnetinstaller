@@ -13,6 +13,8 @@ namespace DVLib
 			CPPUNIT_TEST( testIsInOperatingSystemInRange );
 			CPPUNIT_TEST( testGetOperatingSystemLCID );
 			CPPUNIT_TEST( testIsOperatingSystemLCID );
+			CPPUNIT_TEST( testGetLocale );
+			CPPUNIT_TEST( testGetISOLocale );
 			CPPUNIT_TEST( testIsOperatingSystemLCIDValue );
 			CPPUNIT_TEST( testCompareVersion );
 			CPPUNIT_TEST( testGetProcessorArchitecture );
@@ -33,6 +35,8 @@ namespace DVLib
 			void testGetOperatingSystemLCID();
 			void testIsOperatingSystemLCID();
 			void testIsOperatingSystemLCIDValue();
+			void testGetLocale();
+			void testGetISOLocale();
 			void testCompareVersion();
 			void testGetProcessorArchitecture();
 			void testProcessorArchitectureToFromString();

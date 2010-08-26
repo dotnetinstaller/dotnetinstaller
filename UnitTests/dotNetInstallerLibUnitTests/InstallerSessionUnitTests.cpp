@@ -28,6 +28,9 @@ void InstallerSessionUnitTests::testExpandPathVariables()
 	CPPUNIT_ASSERT(DVLib::towstring(DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype)) == 
 		InstallerSession::Instance->ExpandPathVariables(L"#OSLANGID"));
 	CPPUNIT_ASSERT(L"" == InstallerSession::Instance->ExpandPathVariables(L"#LANGUAGE"));
+	CPPUNIT_ASSERT(DVLib::GetISOLocale(DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype)) ==
+		InstallerSession::Instance->ExpandPathVariables(L"#OSLOCALE"));
+
 }
 
 void InstallerSessionUnitTests::testExpandPathVariablesBackslashes()
