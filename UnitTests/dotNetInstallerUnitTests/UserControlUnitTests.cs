@@ -271,6 +271,50 @@ namespace dotNetInstallerUnitTests
         }
 
         [Test]
+        public void TestUserControlBrowseBackslashStripped()
+        {
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ControlBrowse browse = new ControlBrowse();
+            browse.Text = @"42\";
+            browse.Id = "browse1";
+            setupConfiguration.Children.Add(browse);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C if \"[browse1]\"==\"42\" ( exit /b 0 ) else ( exit /b 1 )";
+            setupConfiguration.Children.Add(cmd);
+            // save config file
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // execute dotNetInstaller
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+        }
+
+        [Test]
+        public void TestUserControlBrowseDrive()
+        {
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ControlBrowse browse = new ControlBrowse();
+            browse.Text = @"C:\";
+            browse.Id = "browse1";
+            setupConfiguration.Children.Add(browse);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C if \"[browse1]\"==\"C:\\\" ( exit /b 0 ) else ( exit /b 1 )";
+            setupConfiguration.Children.Add(cmd);
+            // save config file
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // execute dotNetInstaller
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+        }
+
+        [Test]
         public void TestUserControlImage()
         {
             ConfigFile configFile = new ConfigFile();
