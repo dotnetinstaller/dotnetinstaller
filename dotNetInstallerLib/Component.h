@@ -99,6 +99,7 @@ public:
 	// component state
 	bool checked;
 	bool disabled;
+	bool installed;
 	std::wstring description;
 };
 

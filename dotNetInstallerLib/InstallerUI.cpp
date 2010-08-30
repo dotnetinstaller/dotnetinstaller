@@ -103,25 +103,25 @@ bool InstallerUI::LoadComponentsList()
 	{
 		ComponentPtr component(components_list[i]);
 		component->checked = true;
-        bool component_installed = component->IsInstalled();
+        component->installed = component->IsInstalled();
         
         LOG(L"-- " << component->id << L" (" << component->GetDisplayName() << L"): " 
-			<< (component_installed ? L"INSTALLED" : L"NOT INSTALLED"));		
+			<< (component->installed ? L"INSTALLED" : L"NOT INSTALLED"));		
 
 		// component selection
-		if (component_installed && InstallerSession::Instance->sequence == SequenceInstall)
+		if (component->installed && InstallerSession::Instance->sequence == SequenceInstall)
 			component->checked = false;
-		if (! component_installed && InstallerSession::Instance->sequence == SequenceUninstall)
+		if (! component->installed && InstallerSession::Instance->sequence == SequenceUninstall)
 			component->checked = false;
 
 		if (InstallerSession::Instance->sequence == SequenceInstall)
-			all &= component_installed;
+			all &= component->installed;
 		else if (InstallerSession::Instance->sequence == SequenceUninstall)
-			all &= (! component_installed);
+			all &= (! component->installed);
 
 		std::wstring description = component->GetDisplayName();
 	    description += L" ";
-        description += component_installed
+        description += component->installed
 			? (component->status_installed.empty() ? pConfiguration->status_installed : component->status_installed)
 			: (component->status_notinstalled.empty() ? pConfiguration->status_notinstalled : component->status_notinstalled);
 
@@ -130,13 +130,13 @@ bool InstallerUI::LoadComponentsList()
 		// show installed
         if (InstallerSession::Instance->sequence == SequenceInstall 
 			&& ! pConfiguration->dialog_show_installed 
-			&& component_installed)
+			&& component->installed)
             continue;
 
 		// show uninstalled
         if (InstallerSession::Instance->sequence == SequenceUninstall 
 			&& ! pConfiguration->dialog_show_uninstalled
-			&& ! component_installed)
+			&& ! component->installed)
             continue;
 
         if (! pConfiguration->dialog_show_required)
@@ -163,10 +163,10 @@ bool InstallerUI::LoadComponentsList()
         // be required (there's no way to check whether the component was installed)
 		bool disabled = false;
         if (InstallerSession::Instance->sequence == SequenceInstall 
-			&& (component->required_install || component_installed))
+			&& (component->required_install || component->installed))
             disabled = true;
         else if (InstallerSession::Instance->sequence == SequenceUninstall 
-			&& (component->required_uninstall || ! component_installed))
+			&& (component->required_uninstall || ! component->installed))
             disabled = true;
 
 		component->disabled = disabled;

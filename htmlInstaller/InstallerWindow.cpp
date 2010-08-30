@@ -121,6 +121,7 @@ void InstallerWindow::AddComponent(const ComponentPtr& component)
 	opt["component_ptr"] = DVLib::towstring(get(component)).c_str();
 	if (component->checked) opt["checked"] = L"true";
 	if (component->disabled) opt["disabled"] = L"true";
+	opt["installed"] = (component->installed ? L"true" : L"false");
 	htmlayout::queue::push(new html_insert_task(& components, opt, components.children_count()), HtmlWindow::s_hwnd);
 }
 
@@ -160,6 +161,7 @@ BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS typ
 	{
 		TRYLOG(L"Error: " << DVLib::string2wstring(ex.what()));
 		DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
+		return TRUE;
 	}
 }
 

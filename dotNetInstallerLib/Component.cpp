@@ -30,6 +30,7 @@ Component::Component(component_type t)
 	, os_filter_max(DVLib::winNone)
 	, show_progress_dialog(true)
 	, show_cab_dialog(true)
+	, installed(false)
 {
 
 }
