@@ -63,6 +63,7 @@ void SetControlValuesTask::exec(htmlayout::dom::element elt)
 			{
 				std::wstring value = elt.get_value().to_string();
 				if (value.empty()) value = elt.get_attribute("novalue");
+				value = DVLib::StripPathTerminator(value);
 				LOG(L"--- Setting user-defined browse value '" << id << L"'=" << value);
 				InstallerSession::Instance->AdditionalControlArgs[id] = value;
 			}

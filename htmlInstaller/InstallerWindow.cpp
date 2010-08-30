@@ -122,6 +122,7 @@ void InstallerWindow::AddComponent(const ComponentPtr& component)
 	if (component->checked) opt["checked"] = L"true";
 	if (component->disabled) opt["disabled"] = L"true";
 	opt["installed"] = (component->installed ? L"true" : L"false");
+	opt["required"] = (component->IsRequired() ? L"true" : L"false");
 	htmlayout::queue::push(new html_insert_task(& components, opt, components.children_count()), HtmlWindow::s_hwnd);
 }
 
@@ -266,7 +267,7 @@ bool InstallerWindow::OnComponentExecError(const ComponentPtr& component, std::e
 	return InstallerUI::ComponentExecError(component, ex);
 }
 
-void InstallerWindow::ExtractCab(const std::wstring& id, bool display_progress)
+void InstallerWindow::ExtractCab(const std::wstring& id, bool /* display_progress */)
 {
 	ExtractCabProcessorPtr p_extractcab(new ExtractCabProcessor(s_hinstance, id, & status));	
 	int cab_count = p_extractcab->GetCabCount();

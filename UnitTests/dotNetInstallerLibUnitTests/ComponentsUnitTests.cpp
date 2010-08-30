@@ -151,3 +151,14 @@ void ComponentsUnitTests::testLoadUninstallSequence()
 	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceUninstall)[0]->id == component2->id);
 	CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceUninstall)[1]->id == component1->id);
 }
+
+void ComponentsUnitTests::testSequenceInstalled()
+{
+	// a component with no install checks follows sequence
+	InstallSequenceState state;
+	InstallerSession::Instance->sequence = SequenceInstall;
+	CmdComponent cmd;
+	CPPUNIT_ASSERT(! cmd.IsInstalled());
+	InstallerSession::Instance->sequence = SequenceUninstall;
+	CPPUNIT_ASSERT(cmd.IsInstalled());
+}

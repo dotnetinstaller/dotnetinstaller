@@ -9,22 +9,23 @@ HTMLayoutBehaviorWeblink::HTMLayoutBehaviorWeblink()
 
 }
 
-void HTMLayoutBehaviorWeblink::attached(HELEMENT he) 
+void HTMLayoutBehaviorWeblink::attached(HELEMENT) 
+{
+
+}
+
+void HTMLayoutBehaviorWeblink::detached(HELEMENT) 
 {
 }
 
-void HTMLayoutBehaviorWeblink::detached(HELEMENT he) 
-{
-}
-
-BOOL HTMLayoutBehaviorWeblink::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason)
+BOOL HTMLayoutBehaviorWeblink::on_event(HELEMENT he, HELEMENT /* target */, BEHAVIOR_EVENTS type, UINT_PTR /* reason */)
 {
 	dom::element e = he;
 
 	switch( type )
 	{
 	case HYPERLINK_CLICK:
-	case HYPERLINK_CLICK | HANDLED:
+	// case HYPERLINK_CLICK | HANDLED:
 		DVLib::ShellCmd(e.get_attribute("href"));
 		return true;
 	}

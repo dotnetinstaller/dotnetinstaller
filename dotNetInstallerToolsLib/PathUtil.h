@@ -16,6 +16,8 @@ namespace DVLib
 	std::wstring GetModuleFileNameW(HINSTANCE h = NULL);
 	// combine two directory paths
 	std::wstring DirectoryCombine(const std::wstring& dir, const std::wstring& file);
+	// strip trailing backslash except for drive:
+	std::wstring StripPathTerminator(const std::wstring& path);
 	// get the location of the temporary directory
 	std::string GetTemporaryDirectoryA();
 	std::wstring GetTemporaryDirectoryW();

@@ -2,7 +2,12 @@
 
 #include "StdAfxCommon.h"
 
+#pragma warning(push)
+#pragma warning(disable:4995) // name was marked as #pragma deprecated
+#pragma warning(disable:4996) // this function or variable may be unsafe
 #include "htmlayout.h"
+#pragma warning(pop)
+
 #include <windowsx.h>
 
 #include <ThirdParty/TinyXml/include/Xml.h>

@@ -141,9 +141,7 @@ bool InstallerUI::LoadComponentsList()
 
         if (! pConfiguration->dialog_show_required)
 		{
-			if (component->required_install && InstallerSession::Instance->sequence == SequenceInstall)
-				continue;
-			else if (component->required_uninstall && InstallerSession::Instance->sequence == SequenceUninstall)
+			if (component->IsRequired())
 				continue;
 		}
 

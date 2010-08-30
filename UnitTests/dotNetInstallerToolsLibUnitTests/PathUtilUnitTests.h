@@ -17,6 +17,7 @@ namespace DVLib
 			CPPUNIT_TEST( testGetSystemDirectory );
 			CPPUNIT_TEST( testGetWindowsDirectory );
 			CPPUNIT_TEST( testGetSystemWindowsDirectory );
+			CPPUNIT_TEST( testStripPathTerminator );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testGetFileDirectory();
@@ -29,6 +30,7 @@ namespace DVLib
 			void testGetSystemDirectory();
 			void testGetWindowsDirectory();
 			void testGetSystemWindowsDirectory();
+			void testStripPathTerminator();
 		};
 	}
 }

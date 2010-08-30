@@ -160,7 +160,7 @@ LRESULT HtmlWindow::on_document_complete()
 	return 0;
 }
 
-BOOL HtmlWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason)
+BOOL HtmlWindow::on_event(HELEMENT /* he */, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR /* reason */)
 {	
 	if( type != BUTTON_CLICK)
 		return FALSE; // handling only button clicks here. 
@@ -208,7 +208,7 @@ bool HtmlWindow::IsWindowMaximized() const
 	return wp.showCmd == SW_SHOWMAXIMIZED;
 }
 
-int HtmlWindow::OnMessage(UINT message, WPARAM wParam, LPARAM lParam)
+int HtmlWindow::OnMessage(UINT message, WPARAM /* wParam */, LPARAM /* lParam */)
 {
 	switch(message)
 	{

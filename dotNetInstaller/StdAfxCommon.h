@@ -40,6 +40,11 @@
 #include <time.h>
 #include <tchar.h>
 
+#pragma warning(push)
+#pragma warning(disable:4995) // name was marked as #pragma deprecated
+#include <shlwapi.h>
+#pragma warning(pop)
+
 #include <ostream>
 #include <string>
 #include <vector>

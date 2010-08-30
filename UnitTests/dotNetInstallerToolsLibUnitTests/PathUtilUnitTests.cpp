@@ -161,3 +161,32 @@ void PathUtilUnitTests::testGetSystemWindowsDirectory()
 	CPPUNIT_ASSERT(directory.length() > 0);
 	CPPUNIT_ASSERT(DVLib::DirectoryExists(directory));
 }
+
+void PathUtilUnitTests::testStripPathTerminator()
+{
+	struct TestData
+	{
+		LPCWSTR path;
+		LPCWSTR stripped_path;
+	};
+
+	TestData testdata[] = 
+	{
+		{ L"", L"" },
+		{ L"x", L"x" },
+		{ L"C:", L"C:\\" },
+		{ L"C:\\", L"C:\\" },
+		{ L"C:\\temp", L"C:\\temp" },
+		{ L"C:\\temp\\", L"C:\\temp" },
+		{ L"C:\\temp\\file", L"C:\\temp\\file" },
+		{ L"C:\\temp\\file\\", L"C:\\temp\\file" },
+		{ L"C:\\temp\\path\\file", L"C:\\temp\\path\\file" },
+	};
+
+	for (int i = 0; i < ARRAYSIZE(testdata); i++)
+	{
+		std::wstring stripped_path = DVLib::StripPathTerminator(testdata[i].path);
+		std::wcout << std::endl << testdata[i].path << L" => " << stripped_path;
+		CPPUNIT_ASSERT(stripped_path == testdata[i].stripped_path);
+	}
+}

@@ -39,10 +39,30 @@ Component::~Component(void)
 {
 }
 
+bool Component::IsRequired() const
+{
+	if (required_install && InstallerSession::Instance->sequence == SequenceInstall)
+		return true;
+	else if (required_uninstall && InstallerSession::Instance->sequence == SequenceUninstall)
+		return true;
+	else 
+		return false;
+}
+
 bool Component::IsInstalled() const
 {
 	if (installedchecks.size() == 0)
-		return false;
+	{
+		switch(InstallerSession::Instance->sequence)
+		{
+		case SequenceUninstall:
+			return true;
+		case SequenceInstall:
+			return false;
+		default:
+			THROW_EX(L"Unsupported install sequence: " << InstallerSession::Instance->sequence);
+		}
+	}
 
 	bool installed = true;
 	

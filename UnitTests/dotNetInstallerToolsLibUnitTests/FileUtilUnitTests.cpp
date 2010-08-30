@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 #include "FileUtilUnitTests.h"
-#include <shlwapi.h>
 
 using namespace DVLib::UnitTests;
 

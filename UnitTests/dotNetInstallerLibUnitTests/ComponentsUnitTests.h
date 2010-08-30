@@ -15,6 +15,7 @@ namespace DVLib
 			CPPUNIT_TEST( testExecWithCallback );
 			CPPUNIT_TEST( testExecWithError );
 			CPPUNIT_TEST( testLoadUninstallSequence );
+			CPPUNIT_TEST( testSequenceInstalled );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testAdd();
@@ -26,6 +27,7 @@ namespace DVLib
 			void testExecWithCallback();
 			void testExecWithError();
 			void testLoadUninstallSequence();
+			void testSequenceInstalled();
 		};
 	}
 }

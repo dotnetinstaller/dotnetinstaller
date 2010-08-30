@@ -4,8 +4,6 @@
 #include "ExceptionMacros.h"
 #include "ErrorUtil.h"
 
-#include <shlwapi.h>
-
 std::string DVLib::GetFileDirectoryA(const std::string& path)
 {
 	if (DVLib::startswith(path, "file://"))
@@ -161,4 +159,11 @@ std::wstring DVLib::GetSystemWindowsDirectoryW()
 	CHECK_WIN32_BOOL(::GetSystemWindowsDirectoryW(td, MAX_PATH),
 		L"GetSystemWindowsDirectoryW");
 	return td;
+}
+
+std::wstring DVLib::StripPathTerminator(const std::wstring& path)
+{
+	std::wstring result = DVLib::trimright(path, L" \t\n\r\\/");
+	if (result.length() == 2 && result[1] == L':') result += L"\\";
+	return result;
 }

@@ -20,10 +20,7 @@ ControlValueBrowse::ControlValueBrowse(const ControlBrowse& control)
 
 std::wstring ControlValueBrowse::GetValue() const
 {
-	std::wstring value = (LPCTSTR) CBrowseCtrl::GetPathName();
-	value = DVLib::trimright(value, L" \t\n\r\\/");
-	if (value.length() == 2 && value[1] == L':') value += L"\\";
-	return value;
+	return DVLib::StripPathTerminator((LPCTSTR) CBrowseCtrl::GetPathName());
 }
 
 ControlValueEdit::ControlValueEdit(const ControlEdit& control)
