@@ -131,19 +131,14 @@ BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS typ
 	try
 	{
 		htmlayout::dom::element target_element = target;
-		if (type == BUTTON_CLICK && button_cancel == target_element)
+		if (type == BUTTON_CLICK && (button_cancel == target_element || button_skip == target_element))
 		{
 			OnOK();
 			return TRUE;
 		}
-		else if (type == BUTTON_CLICK && button_install == target_element)
+		else if (type == BUTTON_CLICK && (button_install == target_element || button_uninstall == target_element))
 		{
 			OnInstall();
-			return TRUE;
-		}
-		else if (type == BUTTON_CLICK && button_skip == target_element)
-		{
-			OnOK();
 			return TRUE;
 		}
 		else if (type == BUTTON_STATE_CHANGED || type == EDIT_VALUE_CHANGED || type == SELECT_STATE_CHANGED)
