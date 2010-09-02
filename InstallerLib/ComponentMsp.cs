@@ -18,8 +18,9 @@ namespace InstallerLib
         }
 
         private string m_patch;
-        [Description("Specifies a full or a relative path to the msp patch patch.")]
+        [Description("Path to the MSP patch (/p <patch>).")]
         [Category("Msp")]
+        [Required]
         public string patch
         {
             get { return m_patch; }
@@ -27,7 +28,7 @@ namespace InstallerLib
         }
 
         private string m_package;
-        [Description("Specifies a full or a relative path to the administrative installation package.")]
+        [Description("Path to the administrative installation package (/a <package>).")]
         [Category("Msp")]
         public string package
         {
@@ -36,7 +37,7 @@ namespace InstallerLib
         }
 
         private string m_cmdparameters;
-        [Description("Optional command line parameters for the msiexec program.")]
+        [Description("Optional command-line parameters for the msiexec.exe program.")]
         [Category("Msp")]
         public string cmdparameters
         {
@@ -63,7 +64,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_patch;
-        [Description("Specifies the uninstall patch or patch code GUID.")]
+        [Description("Uninstall patch or patch code GUID.")]
         [Category("Msp")]
         public string uninstall_patch
         {
@@ -72,7 +73,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_package;
-        [Description("Specifies a full or a relative path to the product for which the patch is uninstall or an existing product GUID.")]
+        [Description("Path to the product for which the patch is uninstall or an existing product GUID.")]
         [Category("Msp")]
         public string uninstall_package
         {
@@ -81,7 +82,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_cmdparameters = "/qb-";
-        [Description("Optional command line parameters for the msiexec program on uninstall. May contain quotes. See MSDN for the command line you can use with Windows Installer.")]
+        [Description("Optional command-line parameters for the msiexec program on uninstall. See MSDN for the command-line you can use with Windows Installer.")]
         [Category("Msp")]
         public string uninstall_cmdparameters
         {
@@ -90,7 +91,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_cmdparameters_basic = "/qb-";
-        [Description("Optional command line parameters for the msiexec program on uninstall when running in basic UI mode.")]
+        [Description("Optional command-line parameters for the msiexec program on uninstall when running in basic UI mode.")]
         [Category("Msp")]
         public string uninstall_cmdparameters_basic
         {
@@ -99,7 +100,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_cmdparameters_silent = "/qn";
-        [Description("Optional command line parameters for the msiexec program on uninstall when running in silent UI mode.")]
+        [Description("Optional command-line parameters for the msiexec program on uninstall when running in silent UI mode.")]
         [Category("Msp")]
         public string uninstall_cmdparameters_silent
         {
@@ -108,7 +109,7 @@ namespace InstallerLib
         }
 
         private string m_reinstall = "ALL";
-        [Description("Optional value for the REINSTALL property. Without REINSTALL, only the local cached copy of the MSI database is patchd.")]
+        [Description("Optional value for the REINSTALL property. Without REINSTALL, only the local cached copy of the MSI database is patched.")]
         [Category("Msp")]
         public string reinstall
         {
@@ -117,7 +118,7 @@ namespace InstallerLib
         }
 
         private string m_reinstallmode = "omus";
-        [Description("Optional value for the REINSTALLMODE property. Without REINSTALLMODE, only the local cached copy of the MSI database is patchd.")]
+        [Description("Optional value for the REINSTALLMODE property. Without REINSTALLMODE, only the local cached copy of the MSI database is patched.")]
         [Category("Msp")]
         public string reinstallmode
         {

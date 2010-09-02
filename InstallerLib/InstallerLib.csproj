@@ -102,6 +102,8 @@
     <Compile Include="OperatingSystem.cs" />
     <Compile Include="ProcessorArchitectureFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Required.cs" />
+    <Compile Include="RequiredPropertyDescriptor.cs" />
     <Compile Include="ResourceFileCollection.cs" />
     <Compile Include="ResourceUpdate.cs" />
     <Compile Include="SetupConfiguration.cs" />

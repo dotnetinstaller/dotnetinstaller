@@ -18,6 +18,7 @@ namespace InstallerLib
         private string m_uri = "http://dotnetinstaller.codeplex.com";
         [Description("An url or a local file.")]
         [Category("Hyperlink")]
+        [Required]
         public string Uri
         {
             get { return m_uri; }

@@ -17,8 +17,9 @@ namespace InstallerLib
         #region Commands
 
         private string m_command;
-        [Description("Specifies the command to execute when installing this component. Can contain \" char and path constant (see Help->Path Constant). (REQUIRED)")]
+        [Description("Command to execute when installing this component. May contain quotes and other special characters.")]
         [Category("Install")]
+        [Required]
         public string command
         {
             get { return m_command; }
@@ -26,7 +27,7 @@ namespace InstallerLib
         }
 
         private string m_command_silent;
-        [Description("Specifies the command to execute on silent install. Defaults to command when blank. (OPTIONAL)")]
+        [Description("Command to execute during silent install. Defaults to 'command' when blank.")]
         [Category("Install")]
         public string command_silent
         {
@@ -35,7 +36,7 @@ namespace InstallerLib
         }
 
         private string m_command_basic;
-        [Description("Specifies the command to execute on basic UI install. Defaults to command when blank. (OPTIONAL)")]
+        [Description("Command to execute during basic UI install. Defaults to 'command' when blank.")]
         [Category("Install")]
         public string command_basic
         {
@@ -44,7 +45,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_command;
-        [Description("Specifies the command to execute when uninstalling this component.")]
+        [Description("Command to execute when uninstalling this component.")]
         [Category("Uninstall")]
         public string uninstall_command
         {
@@ -53,7 +54,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_command_silent;
-        [Description("Specifies the command to execute on silent uninstall. Defaults to uninstall_command when blank.")]
+        [Description("Command to execute on silent uninstall. Defaults to 'uninstall_command' when blank.")]
         [Category("Uninstall")]
         public string uninstall_command_silent
         {
@@ -62,7 +63,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_command_basic;
-        [Description("Specifies the command to execute on basic UI uninstall. Defaults to uninstall_command when blank.")]
+        [Description("Command to execute on basic UI uninstall. Defaults to 'uninstall_command' when blank.")]
         [Category("Uninstall")]
         public string uninstall_command_basic
         {
@@ -84,7 +85,7 @@ namespace InstallerLib
         }
 
         private string m_returncodes_reboot;
-        [Description("Comma-separated error codes that indicate that a reboot is requred.")]
+        [Description("Comma-separated return codes that indicate that a reboot is requred.")]
         [Category("Return Codes")]
         public string returncodes_reboot
         {

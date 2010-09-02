@@ -18,6 +18,7 @@ namespace InstallerLib
         private string m_resource_id = "RES_IMAGE";
         [Description("A unique resource ID.")]
         [Category("Image")]
+        [Required]
         public string ResourceId
         {
             get { return m_resource_id; }
@@ -27,6 +28,7 @@ namespace InstallerLib
         private string m_image_file = @"#APPPATH\image.bmp";
         [Description("Image file.")]
         [Category("Image")]
+        [Required]
         public string ImageFile
         {
             get { return m_image_file; }
@@ -43,6 +45,7 @@ namespace InstallerLib
         private bool m_center = false;
         [Description("Center the image. If the image is larger than the control, it will be clipped. If it is smaller than the control, the empty space around the image will be filled by the color of the pixel in the upper left corner of the bitmap.")]
         [Category("Image")]
+        [Required]
         public bool Center
         {
             get { return m_center; }

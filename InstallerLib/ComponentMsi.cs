@@ -18,8 +18,9 @@ namespace InstallerLib
         }
 
         private string m_package;
-        [Description("Specifies a full or a relative path to the msi package or an existing product GUID.")]
+        [Description("Path to the msi package or an existing product GUID.")]
         [Category("Msi")]
+        [Required]
         public string package
         {
             get { return m_package; }
@@ -27,7 +28,7 @@ namespace InstallerLib
         }
 
         private string m_cmdparameters;
-        [Description("Optional command line parameters for the msiexec program. May contain quotes. See MSDN for the command line you can use with Windows Installer.")]
+        [Description("Optional command-line parameters for the msiexec.exe program. May contain quotes. See MSDN for the command line you can use with Windows Installer.")]
         [Category("Msi")]
         public string cmdparameters
         {
@@ -36,7 +37,7 @@ namespace InstallerLib
         }
 
         private string m_cmdparameters_basic = "/qb-";
-        [Description("Optional command line parameters for the msiexec program when running in basic UI mode.")]
+        [Description("Optional command-line parameters for the msiexec program when running in basic UI mode.")]
         [Category("Msi")]
         public string cmdparameters_basic
         {
@@ -45,7 +46,7 @@ namespace InstallerLib
         }
 
         private string m_cmdparameters_silent = "/qn";
-        [Description("Optional command line parameters for the msiexec program when running in silent UI mode.")]
+        [Description("Optional command-line parameters for the msiexec program when running in silent UI mode.")]
         [Category("Msi")]
         public string cmdparameters_silent
         {
@@ -54,7 +55,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_package;
-        [Description("Specifies a full or a relative path to the msi package or an existing product GUID for uninstall.")]
+        [Description("Path to the msi package or an existing product GUID for uninstall.")]
         [Category("Msi")]
         public string uninstall_package
         {
@@ -63,7 +64,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_cmdparameters = "/qb-";
-        [Description("Optional command line parameters for the msiexec program on uninstall. May contain quotes. See MSDN for the command line you can use with Windows Installer.")]
+        [Description("Optional command-line parameters for the msiexec program on uninstall. May contain quotes and other special characters. See MSDN for the command line you can use with Windows Installer.")]
         [Category("Msi")]
         public string uninstall_cmdparameters
         {

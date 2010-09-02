@@ -39,6 +39,7 @@ namespace InstallerLib
         private string m_font_name = "MS Shell Dlg";
         [Description("Font face name.")]
         [Category("Text")]
+        [Required]
         public string FontName
         {
             get { return m_font_name; }
@@ -48,6 +49,7 @@ namespace InstallerLib
         private int m_font_size = 9;
         [Description("Font point size.")]
         [Category("Text")]
+        [Required]
         public int FontSize
         {
             get { return m_font_size; }

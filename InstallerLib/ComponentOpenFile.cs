@@ -18,8 +18,9 @@ namespace InstallerLib
         #region File
 
         private string m_file;
-        [Description("Specifies the file to open when installing or uninstalling this component. Can contain \" char and path constant (see Help->Path Constant). Can be for example a internet link. (REQUIRED)")]
+        [Description("File to open when installing or uninstalling this component. May be a file with an association or an internet URL.")]
         [Category("Open File")]
+        [Required]
         public string file
         {
             get { return m_file; }

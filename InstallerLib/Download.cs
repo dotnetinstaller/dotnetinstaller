@@ -25,7 +25,8 @@ namespace InstallerLib
         }
 
         private string m_componentname;
-        [Description("The description of the file to download. (REQUIRED)")]
+        [Description("Description of the file to download.")]
+        [Required]
         public string componentname
         {
             get { return m_componentname; }
@@ -33,7 +34,8 @@ namespace InstallerLib
         }
 
         private string m_sourceurl;
-        [Description("The complete source path of the file to download. For example 'http://www.yourwebsite.com/SetupX/Setup.exe' . Must be URL with http:// or ftp:// protocol (REQUIRED)")]
+        [Description("Complete source path of the file to download. For example 'http://www.yourwebsite.com/SetupX/Setup.exe'. Must be URL with http:// or ftp:// protocol.")]
+        [Required]
         public string sourceurl
         {
             get { return m_sourceurl; }
@@ -41,7 +43,7 @@ namespace InstallerLib
         }
 
         private string m_sourcepath;
-        [Description("The local source path of the file. This optional location is checked for whether the file exists before attempting a web-based download.")]
+        [Description("Local source path of the file. This optional location is checked for whether the file exists before attempting a web-based download.")]
         public string sourcepath
         {
             get { return m_sourcepath; }
@@ -49,7 +51,8 @@ namespace InstallerLib
         }
 
         private string m_destinationpath;
-        [Description("The complete destination path where the application downloads the file. Using #TEMPPATH is recommended. (REQUIRED)")]
+        [Description("Complete destination path where the application downloads the file. Using #TEMPPATH is recommended.")]
+        [Required]
         public string destinationpath
         {
             get { return m_destinationpath; }
@@ -57,7 +60,7 @@ namespace InstallerLib
         }
 
         private string m_destinationfilename;
-        [Description("The destination filename or blank to keep the original filename. (OPTIONAL)")]
+        [Description("The destination filename or blank to keep the original filename.")]
         public string destinationfilename
         {
             get { return m_destinationfilename; }
@@ -67,6 +70,7 @@ namespace InstallerLib
         // bypass download if the file already exists locally
         private bool m_alwaysdownload = true;
         [Description("If true, always download the file; if false, only download if the file does not exist locally.")]
+        [Required]
         public bool alwaysdownload
         {
             get { return m_alwaysdownload; }
@@ -76,6 +80,7 @@ namespace InstallerLib
         // clear cache
         private bool m_clear_cache = false;
         [Description("If true, attempt to clear the download cache before downloading the file.")]
+        [Required]
         public bool clear_cache
         {
             get { return m_clear_cache; }

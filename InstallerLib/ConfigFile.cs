@@ -48,8 +48,9 @@ namespace InstallerLib
         }
 
         private InstallUILevel m_ui_level = InstallUILevel.full;
-        [Description("Set the install-time UI level. Default to silent or basic UI installation.")]
+        [Description("Install-time UI level. Default to 'silent' or 'basic' UI installation.")]
         [Category("UI")]
+        [Required]
         public InstallUILevel ui_level
         {
             get { return m_ui_level; }
@@ -76,7 +77,7 @@ namespace InstallerLib
 
         // message for not matching the OS filter
         private string m_configuration_no_match_message;
-        [Description("An error message for the case that the operating system, processor architecture or lcid does not match the operating system filter of any configuration. (OPTIONAL)")]
+        [Description("An error message for the case that the operating system, processor architecture or LCID does not match the operating system filter of any configuration.")]
         [Category("Messages")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string configuration_no_match_message
@@ -95,8 +96,9 @@ namespace InstallerLib
         }
 
         private LcidType m_lcidtype = LcidType.UserExe;
-        [Description(@"Choose between using LCID from system32\user.exe, GetUserDefaultLCID or system GetSystemDefaultLCID.")]
+        [Description(@"Choose between using LCID from 'system32\user.exe', 'GetUserDefaultLCID' or system 'GetSystemDefaultLCID'.")]
         [Category("Locale")]
+        [Required]
         public LcidType lcidtype
         {
             get { return m_lcidtype; }
@@ -108,6 +110,7 @@ namespace InstallerLib
         [Description("Show a language selector instead of automatically choosing the language based on the operating system's and user locale.")]
         [DefaultValue(false)]
         [Category("Locale")]
+        [Required]
         public bool show_language_selector
         {
             get { return m_show_language_selector; }
@@ -124,7 +127,7 @@ namespace InstallerLib
         }
 
         private string m_language_selector_ok = "OK";
-        [Description("Language selector OK button text.")]
+        [Description("Text of the 'OK' button in the language selector.")]
         [Category("Locale")]
         public string language_selector_ok
         {
@@ -133,7 +136,7 @@ namespace InstallerLib
         }
 
         private string m_language_selector_cancel = "Cancel";
-        [Description("Language selector cancel button text.")]
+        [Description("Text of the 'Cancel' button in the language selector.")]
         [Category("Locale")]
         public string language_selector_cancel
         {
@@ -143,9 +146,10 @@ namespace InstallerLib
 
         // auto-enabled logging options
         private bool m_log_enabled = false;
-        [Description("Always enable logging; you can also enable logging with /Log on the dotNetInstaller commandline")]
+        [Description("Always enable logging. You can also enable logging at runtime by specifying '/Log /LogFile <file>' on the dotNetInstaller command-line.")]
         [DefaultValue(false)]
         [Category("Logging")]
+        [Required]
         public bool log_enabled
         {
             get { return m_log_enabled; }
@@ -153,7 +157,7 @@ namespace InstallerLib
         }
 
         private string m_log_file = @"#TEMPPATH\dotNetInstallerLog.txt";
-        [Description("Log filename used for the dotNetInstaller log; msi package logs are named after the msi package and a .log extension")]
+        [Description("Path to the log file.")]
         [DefaultValue("#TEMPPATH\\dotNetInstallerLog.txt")]
         [Category("Logging")]
         public string log_file

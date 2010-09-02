@@ -18,7 +18,8 @@ namespace InstallerLib
 
         #region Attributes
         private string m_name;
-        [Description("The name of the file attribute (REQUIRED)")]
+        [Description("The name of the file attribute.")]
+        [Required]
         public string name
         {
             get { return m_name; }
@@ -26,7 +27,7 @@ namespace InstallerLib
         }
 
         private string m_value = null;
-        [Description("The value of the file attribute (OPTIONAL)")]
+        [Description("The value of the file attribute.")]
         public string value
         {
             get { return m_value; }

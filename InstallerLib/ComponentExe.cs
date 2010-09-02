@@ -24,8 +24,9 @@ namespace InstallerLib
         #region Commands
 
         private string m_executable;
-        [Description("Specifies the executable to run when installing this component.")]
+        [Description("Executable to run when installing this component.")]
         [Category("Install")]
+        [Required]
         public string executable
         {
             get { return m_executable; }
@@ -33,7 +34,7 @@ namespace InstallerLib
         }
 
         private string m_executable_silent;
-        [Description("Specifies the executable to run on silent install. Defaults to executable when blank.")]
+        [Description("Executable to run on silent install. Defaults to 'executable' when blank.")]
         [Category("Install")]
         public string executable_silent
         {
@@ -42,7 +43,7 @@ namespace InstallerLib
         }
 
         private string m_executable_basic;
-        [Description("Specifies the executable to run on basic UI install. Defaults to executable when blank.")]
+        [Description("Executable to run on basic UI install. Defaults to 'executable' when blank.")]
         [Category("Install")]
         public string executable_basic
         {
@@ -51,7 +52,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_executable;
-        [Description("Specifies the executable to run when uninstalling this component.")]
+        [Description("Executable to run when uninstalling this component.")]
         [Category("Uninstall")]
         public string uninstall_executable
         {
@@ -60,7 +61,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_executable_silent;
-        [Description("Specifies the executable to run on silent uninstall. Defaults to uninstall_executable when blank.")]
+        [Description("Executable to run on silent uninstall. Defaults to 'uninstall_executable' when blank.")]
         [Category("Uninstall")]
         public string uninstall_executable_silent
         {
@@ -69,7 +70,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_executable_basic;
-        [Description("Specifies the executable to run on basic UI uninstall. Defaults to uninstall_executable when blank.")]
+        [Description("Executable to run on basic UI uninstall. Defaults to 'uninstall_executable' when blank.")]
         [Category("Uninstall")]
         public string uninstall_executable_basic
         {
@@ -78,7 +79,7 @@ namespace InstallerLib
         }
 
         private ResponseFileFormat m_responsefile_format = ResponseFileFormat.none;
-        [Description("Specifies response file format. Ini and text response files are processed.")]
+        [Description("Response file format. Ini and text response files are pre-processed.")]
         [Category("Response File")]
         public ResponseFileFormat responsefile_format
         {
@@ -87,7 +88,7 @@ namespace InstallerLib
         }
 
         private string m_responsefile_source;
-        [Description("Specifies an optional response file source.")]
+        [Description("Optional response file source (the response file extracted by the bootstrapper).")]
         [Category("Install")]
         public string responsefile_source
         {
@@ -96,7 +97,7 @@ namespace InstallerLib
         }
 
         private string m_responsefile_target;
-        [Description("Specifies an optional response file output.")]
+        [Description("Optional response file target (the processed response file created by the bootstrapper).")]
         [Category("Install")]
         public string responsefile_target
         {
@@ -105,7 +106,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_responsefile_source;
-        [Description("Specifies an optional response file for uninstallation.")]
+        [Description("Optional response file source (the response file extracted by the bootstrapper) for uninstallation.")]
         [Category("Uninstall")]
         public string uninstall_responsefile_source
         {
@@ -114,7 +115,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_responsefile_target;
-        [Description("Specifies an optional response file output for uninstallation.")]
+        [Description("Optional response file target (the processed response file created by the bootstrapper) for uninstallation.")]
         [Category("Uninstall")]
         public string uninstall_responsefile_target
         {

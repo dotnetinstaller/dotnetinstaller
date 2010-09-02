@@ -18,7 +18,7 @@ namespace InstallerLib
         #region Configuration Properties
 
         private string m_os_filter;
-        [Description("A filter to install this configuration only on all operating system equal or not equal the value(s) specified. Separate multiple operating system ids with comma (',') and use not symbol ('!') for NOT logic (eg. '44,!45' ).")]
+        [Description("Filter to install this configuration only on all operating systems equal or not equal to the value(s) specified. Separate multiple operating system ids with comma (',') and use not symbol ('!') for NOT logic (eg. '44,!45' ).")]
         [Category("Operating System")]
         public string os_filter
         {
@@ -28,7 +28,7 @@ namespace InstallerLib
 
         private OperatingSystem m_os_filter_min;
         [Category("Operating System")]
-        [Description("A filter to run this setup only on all operating system id greater or equal than the id specified. For example to run this setup only in Windows 2000 or later write '45'. (OPTIONAL)")]
+        [Description("Filter to run this setup only on all operating systems greater or equal than the id value specified. For example to run this setup only on Windows 2000 or later choose 'win2000'.")]
         public OperatingSystem os_filter_min
         {
             get { return m_os_filter_min; }
@@ -37,7 +37,7 @@ namespace InstallerLib
 
         private OperatingSystem m_os_filter_max;
         [Category("Operating System")]
-        [Description("A filter to run this setup only on all operating system id smaller or equal than the id specified. For example to run this setup preceding Windows 2000 write '44'. (OPTIONAL)")]
+        [Description("Filter to run this setup only on all operating systems smaller or equal than the id value specified. For example to run this setup preceding Windows 2000 choose 'winNT4Max'.")]
         public OperatingSystem os_filter_max
         {
             get { return m_os_filter_max; }
@@ -46,7 +46,7 @@ namespace InstallerLib
 
         // filter for processor architecture
         private string m_processor_architecture_filter;
-        [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Separate by commas, can use the NOT sign ('!') to exclude. (eg. 'x86,x64' or '!x86'). (OPTIONAL)")]
+        [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Separate by commas and use the NOT sign ('!') to exclude. (eg. 'x86,x64' or '!x86').")]
         [Category("Operating System")]
         public string processor_architecture_filter
         {
@@ -55,7 +55,7 @@ namespace InstallerLib
         }
 
         private string m_lcid_filter = string.Empty;
-        [Description("A filter to install this configuration only on all operating system language equals or not equals than the LCID specified (see Help->LCID Table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (eg. '1044,1033,!1038' ). You can also filter a specified component. (OPTIONAL)")]
+        [Description("Filter to install this configuration only on all operating system languages equal or not equal than the LCID specified. Separate multiple LCID values with a comma (',') and use not symbol ('!') for NOT logic (eg. '1044,1033,!1038').")]
         [Category("Language")]
         public string lcid_filter
         {
@@ -64,7 +64,7 @@ namespace InstallerLib
         }
 
         private string m_language = string.Empty;
-        [Description("An optional string that appears in the language selector for this configuration.")]
+        [Description("Optional string that appears in the language selector for this configuration.")]
         [Category("Language")]
         public string language
         {
@@ -72,7 +72,7 @@ namespace InstallerLib
             set { m_language = value; }
         }
 
-        private string m_language_id = "";
+        private string m_language_id = string.Empty;
         [Description("The actual language ID chosen by the language dialog selector.")]
         [Category("Language")]
         public string language_id
@@ -82,16 +82,18 @@ namespace InstallerLib
         }
 
         private string m_type;
-        [Description("Type of the configuration. Can be 'install' or 'reference'. (REQUIRED)")]
+        [Description("Type of the configuration. Can be 'install' or 'reference'.")]
         [Category("Configuration")]
+        [Required]
         public string type
         {
             get { return m_type; }
         }
 
         private bool m_supports_install = true;
-        [Description("If true configuration supports install mode.")]
+        [Description("If 'true' configuration supports install sequence.")]
         [Category("Runtime")]
+        [Required]
         public bool supports_install
         {
             get { return m_supports_install; }
@@ -99,8 +101,9 @@ namespace InstallerLib
         }
 
         private bool m_supports_uninstall = true;
-        [Description("If true configuration supports uninstall mode.")]
+        [Description("If 'true' configuration supports uninstall sequence.")]
         [Category("Runtime")]
+        [Required]
         public bool supports_uninstall
         {
             get { return m_supports_uninstall; }

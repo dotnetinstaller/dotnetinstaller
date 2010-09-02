@@ -18,6 +18,7 @@ namespace InstallerLib
         private bool m_checked = false;
         [Description("Default check state of the checkbox.")]
         [Category("Checkbox")]
+        [Required]
         public bool Checked
         {
             get { return m_checked; }
@@ -27,6 +28,7 @@ namespace InstallerLib
         private string m_id = string.Empty;
         [Description("Control identity used to fetch user-defined value.")]
         [Category("Checkbox")]
+        [Required]
         public string Id
         {
             get { return m_id; }

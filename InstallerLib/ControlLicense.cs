@@ -20,6 +20,7 @@ namespace InstallerLib
         private string m_resource_id = "RES_LICENSE";
         [Description("Resource id.")]
         [Category("License")]
+        [Required]
         public string ResourceId
         {
             get { return m_resource_id; }
@@ -29,6 +30,7 @@ namespace InstallerLib
         private bool m_accepted = false;
         [Description("Default accepted state of the license agreement checkbox.")]
         [Category("License")]
+        [Required]
         public bool Accepted
         {
             get { return m_accepted; }
@@ -38,6 +40,7 @@ namespace InstallerLib
         private string m_accept_message = @"You must accept the license agreement.";
         [Description("Message displayed when a user attempts to install without accepting the license agreement.")]
         [Category("License")]
+        [Required]
         public string AcceptMessage
         {
             get { return m_accept_message; }
@@ -47,6 +50,7 @@ namespace InstallerLib
         private string m_license_file = @"#APPPATH\license.txt";
         [Description("License file.")]
         [Category("License")]
+        [Required]
         public string LicenseFile
         {
             get { return m_license_file; }

@@ -18,6 +18,7 @@ namespace InstallerLib
         private string m_id = string.Empty;
         [Description("Control identity used to fetch user-selected value.")]
         [Category("Browse")]
+        [Required]
         public string Id
         {
             get { return m_id; }
@@ -27,6 +28,7 @@ namespace InstallerLib
         private string m_filter = "All Files (*.*)|*.*";
         [Description("Browse filter.")]
         [Category("Browse")]
+        [Required]
         public string Filter
         {
             get { return m_filter; }
@@ -45,6 +47,7 @@ namespace InstallerLib
         private bool m_folders_only = true;
         [Description("Browse folders only (no files).")]
         [Category("Browse")]
+        [Required]
         public bool FoldersOnly
         {
             get { return m_folders_only; }
@@ -54,6 +57,7 @@ namespace InstallerLib
         private bool m_must_exist = false;
         [Description("Selected file or folder must exist.")]
         [Category("Browse")]
+        [Required]
         public bool MustExist
         {
             get { return m_must_exist; }
@@ -63,6 +67,7 @@ namespace InstallerLib
         private bool m_allow_edit = true;
         [Description("Allows user to type in the editbox.")]
         [Category("Browse")]
+        [Required]
         public bool AllowEdit
         {
             get { return m_allow_edit; }
@@ -72,6 +77,7 @@ namespace InstallerLib
         private bool m_hide_readonly = false;
         [Description("Hide read-only folders and files.")]
         [Category("Browse")]
+        [Required]
         public bool HideReadOnly
         {
             get { return m_hide_readonly; }

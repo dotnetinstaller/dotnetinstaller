@@ -39,7 +39,8 @@ namespace InstallerLib
         }
 
         private string m_sourcefilepath;
-        [Description("The complete path where the file is located. Is recommended to use the APPPATH path: '#APPPATH\\Setup.msi'. Can contains path constants (see Help->Path Constant). (REQUIRED)")]
+        [Description("Complete path where the file is located (eg. '#APPPATH\\Setup.msi').")]
+        [Required]
         public string sourcefilepath
         {
             get
@@ -54,7 +55,8 @@ namespace InstallerLib
         }
 
         private string m_targetfilepath;
-        [Description("The relative path under #CABPATH where the file is going to be extracted. (REQUIRED)")]
+        [Description("Relative path under #CABPATH where the file is going to be extracted.")]
+        [Required]
         public string targetfilepath
         {
             get

@@ -46,6 +46,7 @@ namespace InstallerLib
 
         private InstalledCheckProductType m_id_type;
         [Description("Type of id, product id or upgrade code.")]
+        [Required]
         public InstalledCheckProductType id_type
         {
             get { return m_id_type; }
@@ -54,6 +55,7 @@ namespace InstallerLib
 
         private Guid m_id;
         [Description("Installed product's product id or upgrade code.")]
+        [Required]
         public Guid id
         {
             get { return m_id; }
@@ -62,6 +64,7 @@ namespace InstallerLib
 
         private string m_propertyname;
         [Description("The installed product's property name, for example 'VersionString'.")]
+        [Required]
         public string propertyname
         {
             get { return m_propertyname; }
@@ -78,6 +81,7 @@ namespace InstallerLib
 
         private installcheckproduct_comparison m_comparison;
         [Description("Comparison mode.")]
+        [Required]
         public installcheckproduct_comparison comparison
         {
             get { return m_comparison; }
@@ -86,6 +90,7 @@ namespace InstallerLib
 
         private bool m_defaultvalue = false;
         [Description("The default check value for comparison operators 'match', 'version' and 'contains' when the product is not installed.")]
+        [Required]
         public bool defaultvalue
         {
             get { return m_defaultvalue; }

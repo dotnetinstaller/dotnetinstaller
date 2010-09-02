@@ -51,8 +51,9 @@ namespace InstallerLib
             return processed;
         }
 
-        private string m_referencefile; // tag: configfile/@filename;
-        [Description("The configuration file where the application can find the configuration. Usually this is the destination directory of the downloaded component. Can contains path constant (see Help->Path Constant). (REQUIRED)")]
+        private string m_referencefile;
+        [Description("The configuration file where the application can find the configuration. Usually this is the destination directory of the downloaded component.")]
+        [Required]
         public string referencefile
         {
             get { return m_referencefile; }

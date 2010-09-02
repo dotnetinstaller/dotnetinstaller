@@ -67,6 +67,7 @@ namespace InstallerLib
         private DefaultButton m_dialog_default_button = DefaultButton.cancel;
         [Description("Default button.")]
         [Category("Main Dialog")]
+        [Required]
         public DefaultButton dialog_default_button
         {
             get { return m_dialog_default_button; }
@@ -74,7 +75,7 @@ namespace InstallerLib
         }
 
         private Rectangle m_dialog_position;
-        [Description("Position of the main dialog. (OPTIONAL)")]
+        [Description("Position of the main dialog. By default the dialog appears in the center of the screen.")]
         [Category("Main Dialog Layout")]
         public Rectangle dialog_position
         {
@@ -83,7 +84,7 @@ namespace InstallerLib
         }
 
         private Rectangle m_dialog_components_list_position;
-        [Description("Position of the components list within the main dialog. (OPTIONAL)")]
+        [Description("Position of the components list within the main dialog.")]
         [Category("Main Dialog Layout")]
         public Rectangle dialog_components_list_position
         {
@@ -92,7 +93,7 @@ namespace InstallerLib
         }
 
         private string m_dialog_caption;
-        [Description("Main dialog title. (REQUIRED)")]
+        [Description("Main dialog title.")]
         [Category("Main Dialog")]
         public string dialog_caption
         {
@@ -101,7 +102,7 @@ namespace InstallerLib
         }
 
         private string m_dialog_message;
-        [Description("Main message of the main dialog during install. (REQUIRED)")]
+        [Description("Main message of the main dialog during install.")]
         [Category("Main Dialog")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string dialog_message
@@ -111,7 +112,7 @@ namespace InstallerLib
         }
 
         private string m_dialog_message_uninstall;
-        [Description("Main message of the main dialog during uninstall. (REQUIRED)")]
+        [Description("Main message of the main dialog during uninstall.")]
         [Category("Main Dialog")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string dialog_message_uninstall
@@ -121,7 +122,7 @@ namespace InstallerLib
         }
 
         private Rectangle m_dialog_message_position;
-        [Description("Position of the main dialog message. (OPTIONAL)")]
+        [Description("Position of the main dialog message.")]
         [Category("Main Dialog Layout")]
         public Rectangle dialog_message_position
         {
@@ -130,7 +131,7 @@ namespace InstallerLib
         }
 
         private string m_dialog_bitmap;
-        [Description("Bitmap file used in the left panel of the main dialog. If this file doesn't exist or this attribute is empty the application load the bitmap from the .exe resource. Can contains path constant (see Help->Path Constant). (OPTIONAL)")]
+        [Description("Bitmap file used in the left panel of the main dialog.")]
         [Category("Main Dialog")]
         public string dialog_bitmap
         {
@@ -139,7 +140,7 @@ namespace InstallerLib
         }
 
         private Rectangle m_dialog_bitmap_position;
-        [Description("Position of the main dialog bitmap. (OPTIONAL)")]
+        [Description("Position of the main dialog bitmap.")]
         [Category("Main Dialog Layout")]
         public Rectangle dialog_bitmap_position
         {
@@ -148,7 +149,7 @@ namespace InstallerLib
         }
 
         private string m_skip_caption;
-        [Description("Caption of the Skip button. (REQUIRED)")]
+        [Description("Caption of the Skip button.")]
         [Category("Main Dialog")]
         public string skip_caption
         {
@@ -157,7 +158,7 @@ namespace InstallerLib
         }
 
         private string m_install_caption;
-        [Description("Caption of the Install button. (REQUIRED)")]
+        [Description("Caption of the Install button.")]
         [Category("Main Dialog")]
         public string install_caption
         {
@@ -166,7 +167,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_caption;
-        [Description("Caption of the Uninstall button. (REQUIRED)")]
+        [Description("Caption of the Uninstall button.")]
         [Category("Main Dialog")]
         public string uninstall_caption
         {
@@ -175,7 +176,7 @@ namespace InstallerLib
         }
 
         private string m_cancel_caption;
-        [Description("Caption of the Cancel button. (REQUIRED)")]
+        [Description("Caption of the Cancel button.")]
         [Category("Main Dialog")]
         public string cancel_caption
         {
@@ -184,7 +185,7 @@ namespace InstallerLib
         }
 
         private string m_status_installed;
-        [Description("The string used for indicating an installed component. (OPTIONAL)")]
+        [Description("String used for indicating an installed component.")]
         [Category("Components")]
         public string status_installed
         {
@@ -193,7 +194,7 @@ namespace InstallerLib
         }
 
         private string m_status_notinstalled;
-        [Description("The string used for indicating a not installed component. (OPTIONAL)")]
+        [Description("String used for indicating a component that has not been installed.")]
         [Category("Components")]
         public string status_notinstalled
         {
@@ -202,7 +203,7 @@ namespace InstallerLib
         }
 
         private string m_failed_exec_command_continue;
-        [Description("The message to display when a component failed to install. The user is then asked whether installation can continue using this message. May contain one '%s' replaced by the description of the component. (OPTIONAL)")]
+        [Description("Message to display when a component failed to install. The user is then asked whether installation can continue using this message. May contain one '%s' replaced by the description of the component.")]
         [Category("Messages")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string failed_exec_command_continue
@@ -212,7 +213,7 @@ namespace InstallerLib
         }
 
         private string m_installation_none;
-        [Description("No pre-requisite components required message. (REQUIRED)")]
+        [Description("Message to display when there're no components to install.")]
         [Category("Messages")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string installation_none
@@ -222,7 +223,7 @@ namespace InstallerLib
         }
 
         private string m_uninstallation_none;
-        [Description("Nothing to uninstall message.")]
+        [Description("Message to display when there're no components to uninstall.")]
         [Category("Messages")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string uninstallation_none
@@ -232,7 +233,7 @@ namespace InstallerLib
         }
 
         private string m_installation_completed;
-        [Description("Installation completed message. (REQUIRED)")]
+        [Description("Message to display when installation is complete.")]
         [Category("Messages")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string installation_completed
@@ -242,7 +243,7 @@ namespace InstallerLib
         }
 
         private string m_uninstallation_completed;
-        [Description("Uninstallation completed message.")]
+        [Description("Message to display when uninstallation is complete.")]
         [Category("Messages")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string uninstallation_completed
@@ -252,7 +253,7 @@ namespace InstallerLib
         }
 
         private string m_installing_component_wait;
-        [Description("The message used when installing a component. Must contain one '%s' string where the application put the description of the component. (REQUIRED)")]
+        [Description("Message displayed when installing a component. Must contain one '%s' which will be replaced by the component description.")]
         [Category("Components")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string installing_component_wait
@@ -262,7 +263,7 @@ namespace InstallerLib
         }
 
         private string m_uninstalling_component_wait;
-        [Description("The message used when uninstalling a component. Must contain one '%s' string where the application put the description of the component.")]
+        [Description("Message displayed when uninstalling a component. Must contain one '%s' which will be replaced by the component description.")]
         [Category("Components")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string uninstalling_component_wait
@@ -272,7 +273,7 @@ namespace InstallerLib
         }
 
         private string m_reboot_required;
-        [Description("The message used when a component signaled the installer that it requires a reboot. (REQUIRED)")]
+        [Description("Message used when a component signaled the installer that it requires a reboot.")]
         [Category("Messages")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string reboot_required
@@ -282,8 +283,9 @@ namespace InstallerLib
         }
 
         private bool m_must_reboot_required = false;
-        [Description("Global setting for reboot behavior. When true, installation won't continue after any component required a reboot. (REQUIRED)")]
+        [Description("Global setting for reboot behavior. When 'true', installation won't continue after any component required a reboot.")]
         [Category("Components")]
+        [Required]
         public bool must_reboot_required
         {
             get { return m_must_reboot_required; }
@@ -291,7 +293,7 @@ namespace InstallerLib
         }
 
         private string m_dialog_otherinfo_caption;
-        [Description("Caption of the link at the bottom of the main dialog that open the link specified in the dialog_otherinfo_link attribute. If empty the link is hidden. (OPTIONAL)")]
+        [Description("Caption of the link at the bottom of the main dialog that open the link specified in the 'dialog_otherinfo_link' attribute. The link is hidden if this value is blank.")]
         [Category("Main Dialog")]
         public string dialog_otherinfo_caption
         {
@@ -300,7 +302,7 @@ namespace InstallerLib
         }
 
         private string m_dialog_otherinfo_link;
-        [Description("Command to execute when the user click on the link at the bottom of the main installation dialog. Can be any valid command that can be used with ShellExecute API. Must be defined the dialog_otherinfo_caption attribute. Can contains path constant (see Help->Path Constant). (OPTIONAL)")]
+        [Description("Command to execute when the user click on the link at the bottom of the main installation dialog. Can be any valid command that can be used with ShellExecute API. A value for 'dialog_otherinfo_caption' is also required when this value is specified.")]
         [Category("Main Dialog")]
         public string dialog_otherinfo_link
         {
@@ -309,7 +311,7 @@ namespace InstallerLib
         }
 
         private Rectangle m_dialog_otherinfo_link_position;
-        [Description("Position of the link at the bottom of the main dialog that open the link specified in the dialog_otherinfo_link attribute. (OPTIONAL)")]
+        [Description("Position of the link at the bottom of the main dialog that open the link specified in the value of 'dialog_otherinfo_link'.")]
         [Category("Main Dialog Layout")]
         public Rectangle dialog_otherinfo_link_position
         {
@@ -318,8 +320,9 @@ namespace InstallerLib
         }
 
         private bool m_dialog_show_installed = true;
-        [Description("If true, show installed components during install. Installed components are greyed out and automatically de-selected.")]
+        [Description("Show installed components during install. Installed components are greyed out and automatically de-selected.")]
         [Category("Main Dialog")]
+        [Required]
         public bool dialog_show_installed
         {
             get { return m_dialog_show_installed; }
@@ -327,8 +330,9 @@ namespace InstallerLib
         }
 
         private bool m_dialog_show_uninstalled = true;
-        [Description("If true, show uninstalled components during uninstall. Uninstalled components are greyed out and automatically de-selected.")]
+        [Description("Show uninstalled components during uninstall. Uninstalled components are greyed out and automatically de-selected.")]
         [Category("Main Dialog")]
+        [Required]
         public bool dialog_show_uninstalled
         {
             get { return m_dialog_show_uninstalled; }
@@ -336,8 +340,9 @@ namespace InstallerLib
         }
 
         private bool m_dialog_show_required = true;
-        [Description("If true, show required components. Required components are greyed out and automatically selected when not installed.")]
+        [Description("Show required components. Required components are greyed out and automatically selected when not installed.")]
         [Category("Main Dialog")]
+        [Required]
         public bool dialog_show_required
         {
             get { return m_dialog_show_required; }
@@ -345,8 +350,9 @@ namespace InstallerLib
         }
 
         private bool m_wait_for_complete_command = true;
-        [Description("Wait for the complete_command to finish. Set to false to detach the complete command.")]
+        [Description("Wait for the 'complete_command' to finish. Set to 'false' to detach the complete command and terminate the bootstrapper.")]
         [Category("Runtime")]
+        [Required]
         public bool wait_for_complete_command
         {
             get { return m_wait_for_complete_command; }
@@ -354,7 +360,7 @@ namespace InstallerLib
         }
 
         private string m_complete_command;
-        [Description("Complete command (executed when all components are installed correctly), can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed. (OPTIONAL)")]
+        [Description("Command executed when all components are installed correctly. Can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file.")]
         [Category("Runtime")]
         public string complete_command
         {
@@ -363,7 +369,7 @@ namespace InstallerLib
         }
 
         private string m_complete_command_silent;
-        [Description("Silent complete command (executed when all components are installed correctly on a silent install), can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed. (OPTIONAL)")]
+        [Description("Command executed when all components are installed correctly during a silent install. Can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file.")]
         [Category("Runtime")]
         public string complete_command_silent
         {
@@ -372,7 +378,7 @@ namespace InstallerLib
         }
 
         private string m_complete_command_basic;
-        [Description("Basic UI complete command (executed when all components are installed correctly on a basic UI install), can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file. If empty no command is executed. (OPTIONAL)")]
+        [Description("Command executed when all components are installed correctly during a basic UI install. Can be any executable, document or web page valid for ShellExecute API. Usually is a readme file, a web page or a startup file.")]
         [Category("Runtime")]
         public string complete_command_basic
         {
@@ -381,8 +387,9 @@ namespace InstallerLib
         }
 
         private bool m_auto_close_if_installed = true;
-        [Description("If true auto close the dialog (display installation_completed message and execute the complete_command) if all the components are already installed. (REQUIRED)")]
+        [Description("Auto-close the dialog (display 'installation_completed' message and execute the 'complete_command') if all the components are already installed.")]
         [Category("Runtime")]
+        [Required]
         public bool auto_close_if_installed
         {
             get { return m_auto_close_if_installed; }
@@ -390,8 +397,9 @@ namespace InstallerLib
         }
 
         private bool m_auto_close_on_error = false;
-        [Description("If true auto close the dialog when a component fails to install and the user chooses not to continue. If false, the component conditions will be re-evaluated and the updated list of components will be shown. (REQUIRED)")]
+        [Description("Auto-close the dialog when a component fails to install and the user chooses not to continue with other components. If 'false' the component conditions will be re-evaluated and the updated list of components will be shown.")]
         [Category("Runtime")]
+        [Required]
         public bool auto_close_on_error
         {
             get { return m_auto_close_on_error; }
@@ -401,15 +409,15 @@ namespace InstallerLib
         private bool m_reload_on_error = true;
         [Description("Reload the components list on error, re-evaluating installed checks.")]
         [Category("Runtime")]
+        [Required]
         public bool reload_on_error
         {
             get { return m_reload_on_error; }
             set { m_reload_on_error = value; }
         }
 
-        // message and caption to show during CAB extraction
         private string m_cab_dialog_message;
-        [Description("CAB dialog message, this dialog shows when extracting an embedded CAB file")]
+        [Description("CAB dialog message, this dialog shows when extracting an embedded CAB file.")]
         [Category("Self-Extracting CAB")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string cab_dialog_message
@@ -419,7 +427,7 @@ namespace InstallerLib
         }
 
         private string m_cab_cancelled_message;
-        [Description("CAB cancelled message, this error shows if extraction operation has been aborted")]
+        [Description("CAB cancelled message, this error shows if extraction operation has been aborted.")]
         [Category("Self-Extracting CAB")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string cab_cancelled_message
@@ -429,7 +437,7 @@ namespace InstallerLib
         }
 
         private string m_cab_dialog_caption;
-        [Description("CAB dialog caption, this dialog shows when extracting an embedded CAB file")]
+        [Description("CAB dialog caption, this dialog shows when extracting an embedded CAB file.")]
         [Category("Self-Extracting CAB")]
         public string cab_dialog_caption
         {
@@ -439,7 +447,7 @@ namespace InstallerLib
 
         // path to use during CAB extraction
         private string m_cab_path;
-        [Description("CAB path used when extracting an embedded CAB file")]
+        [Description("CAB path used when extracting an embedded CAB file.")]
         [DefaultValue("#TEMPPATH/#GUID")]
         [Category("Self-Extracting CAB")]
         public string cab_path
@@ -449,7 +457,7 @@ namespace InstallerLib
         }
 
         private bool m_cab_path_autodelete = true;
-        [Description("Auto-Delete CAB path and all its subfolders upon installer completion")]
+        [Description("Auto-delete CAB path and all its subfolders upon installer completion.")]
         [Category("Self-Extracting CAB")]
         public bool cab_path_autodelete
         {
@@ -458,7 +466,7 @@ namespace InstallerLib
         }
 
         private Rectangle m_dialog_osinfo_position;
-        [Description("Position of the main dialog osinfo. (OPTIONAL)")]
+        [Description("Position of the main dialog operating system information.")]
         [Category("Main Dialog Layout")]
         public Rectangle dialog_osinfo_position
         {
@@ -467,7 +475,7 @@ namespace InstallerLib
         }
 
         private Rectangle m_dialog_install_button_position;
-        [Description("Position of the main dialog Install button. (OPTIONAL)")]
+        [Description("Position of the main dialog 'Install' button.")]
         [Category("Main Dialog Layout")]
         public Rectangle dialog_install_button_position
         {
@@ -476,7 +484,7 @@ namespace InstallerLib
         }
 
         private Rectangle m_dialog_cancel_button_position;
-        [Description("Position of the main dialog Cancel button. (OPTIONAL)")]
+        [Description("Position of the main dialog 'Cancel' button.")]
         [Category("Main Dialog Layout")]
         public Rectangle dialog_cancel_button_position
         {
@@ -485,7 +493,7 @@ namespace InstallerLib
         }
 
         private Rectangle m_dialog_skip_button_position;
-        [Description("Position of the main dialog Skip button. (OPTIONAL)")]
+        [Description("Position of the main dialog 'Skip' button.")]
         [Category("Main Dialog Layout")]
         public Rectangle dialog_skip_button_position
         {
@@ -494,8 +502,9 @@ namespace InstallerLib
         }
 
         private bool m_auto_start = false;
-        [Description("If true auto start the installation of this setup configuration.")]
+        [Description("Auto-start the installation of this setup configuration.")]
         [Category("Runtime")]
+        [Required]
         public bool auto_start
         {
             get { return m_auto_start; }
@@ -503,8 +512,9 @@ namespace InstallerLib
         }
 
         private bool m_auto_continue_on_reboot = false;
-        [Description("If true auto start the installation of this setup configuration after a required reboot.")]
+        [Description("Auto-start the installation of this setup configuration after a required reboot.")]
         [Category("Runtime")]
+        [Required]
         public bool auto_continue_on_reboot
         {
             get { return m_auto_continue_on_reboot; }
@@ -512,7 +522,7 @@ namespace InstallerLib
         }
 
         private string m_reboot_cmd;
-        [Description("Additional command line options to include in the command line after a required reboot.")]
+        [Description("Additional command-line options to include in the command after a required reboot.")]
         [Category("Runtime")]
         public string reboot_cmd
         {
@@ -523,6 +533,7 @@ namespace InstallerLib
         private bool m_show_progress_dialog = true;
         [Description("Show progress dialogs.")]
         [Category("Runtime")]
+        [Required]
         public bool show_progress_dialog
         {
             get { return m_show_progress_dialog; }
@@ -532,6 +543,7 @@ namespace InstallerLib
         private bool m_show_cab_dialog = true;
         [Description("Show CAB extraction dialogs.")]
         [Category("Self-Extracting CAB")]
+        [Required]
         public bool show_cab_dialog
         {
             get { return m_show_cab_dialog; }

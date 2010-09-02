@@ -44,7 +44,7 @@ namespace InstallerLib
         }
 
         private string m_dialog_message;
-        [Description("The initial message that appears in the download dialog before the user presses the 'Start' button.")]
+        [Description("Initial message that appears in the download dialog before the user presses the 'Start' button.")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string dialog_message
         {
@@ -53,7 +53,8 @@ namespace InstallerLib
         }
 
         private bool m_autostartdownload = true;
-        [Description("True to start the download without user interaction, false to require the user to press the 'Start' button.")]
+        [Description("Set to 'true' to start the download without user interaction, 'false' to require the user to press the 'Start' button.")]
+        [Required]
         public bool autostartdownload
         {
             get { return m_autostartdownload; }

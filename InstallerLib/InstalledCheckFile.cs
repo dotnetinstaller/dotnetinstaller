@@ -32,7 +32,8 @@ namespace InstallerLib
         }
 
         private string m_filename;
-        [Description("Specifies the file to search, if the application cannot find the specified file then the component must be installed. This attribute can contain path constant (see Help->Path Constant). (REQUIRED)")]
+        [Description("File to search. If the application cannot find the specified file then the component must be installed.")]
+        [Required]
         public string filename
         {
             get { return m_filename; }
@@ -40,7 +41,7 @@ namespace InstallerLib
         }
 
         private string m_fileversion;
-        [Description("The version of the file, can be used to perform version check based on comparison attribute. If empty the application check only for the presence of the file. (OPTIONAL)")]
+        [Description("Optional version of the file. Can be used to perform version check based on comparison attribute. If empty the application check only for the presence of the file.")]
         public string fileversion
         {
             get { return m_fileversion; }
@@ -48,7 +49,8 @@ namespace InstallerLib
         }
 
         private installcheckfile_comparison m_comparison;
-        [Description("Comparison mode, can be 'match', 'version', 'exists', etc. (REQUIRED)")]
+        [Description("Comparison mode, can be 'match', 'version', 'exists', etc.")]
+        [Required]
         public installcheckfile_comparison comparison
         {
             get { return m_comparison; }
@@ -56,7 +58,8 @@ namespace InstallerLib
         }
 
         private bool m_defaultvalue = false;
-        [Description("The default check value for comparison operators other than 'exists' when the file doesn't exist. (REQUIRED)")]
+        [Description("Default check value for comparison operators other than 'exists' when the file doesn't exist.")]
+        [Required]
         public bool defaultvalue
         {
             get { return m_defaultvalue; }

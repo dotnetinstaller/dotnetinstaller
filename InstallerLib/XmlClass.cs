@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace InstallerLib
 {
     /// <summary>
     /// An xml entity that can be stored.
     /// </summary>
-    public abstract class XmlClass
+    public abstract class XmlClass : ICustomTypeDescriptor
     {
         public XmlClass()
         {
@@ -269,6 +270,88 @@ namespace InstallerLib
             {
                 return false;
             }
+        }
+
+        #endregion
+
+        #region ICustomTypeDescriptor Members
+
+        public AttributeCollection GetAttributes()
+        {
+            return TypeDescriptor.GetAttributes(this, true);
+        }
+
+        public string GetClassName()
+        {
+            return TypeDescriptor.GetClassName(this, true);
+        }
+
+        public string GetComponentName()
+        {
+            return TypeDescriptor.GetComponentName(this, true);
+        }
+
+        public TypeConverter GetConverter()
+        {
+            return TypeDescriptor.GetConverter(this, true);
+        }
+
+        public EventDescriptor GetDefaultEvent()
+        {
+            return TypeDescriptor.GetDefaultEvent(this, true);
+        }
+
+        public PropertyDescriptor GetDefaultProperty()
+        {
+            return TypeDescriptor.GetDefaultProperty(this, true);
+        }
+
+        public object GetEditor(Type editorBaseType)
+        {
+            return TypeDescriptor.GetEditor(this, editorBaseType, true);
+        }
+
+        public EventDescriptorCollection GetEvents(Attribute[] attributes)
+        {
+            return TypeDescriptor.GetEvents(this, attributes, true);
+        }
+
+        public EventDescriptorCollection GetEvents()
+        {
+            return TypeDescriptor.GetEvents(this, true);
+        }
+
+        public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
+        {
+            PropertyDescriptorCollection coll = new PropertyDescriptorCollection(null);
+            PropertyDescriptorCollection baseProperties = TypeDescriptor.GetProperties(this, attributes, true);
+            foreach (PropertyDescriptor pd in baseProperties)
+            {
+                coll.Add(pd.Attributes.Contains(Required.Yes) 
+                    ? new RequiredPropertyDescriptor(pd)
+                    : pd);
+            }
+
+            return coll;
+        }
+
+        public PropertyDescriptorCollection GetProperties()
+        {
+            PropertyDescriptorCollection coll = new PropertyDescriptorCollection(null);
+            PropertyDescriptorCollection baseProperties = TypeDescriptor.GetProperties(this, true);
+            foreach (PropertyDescriptor pd in baseProperties)
+            {
+                coll.Add(pd.Attributes.Contains(Required.Yes)
+                    ? new RequiredPropertyDescriptor(pd)
+                    : pd);
+            }
+
+            return coll;
+        }
+
+        public object GetPropertyOwner(PropertyDescriptor pd)
+        {
+            return this;
         }
 
         #endregion

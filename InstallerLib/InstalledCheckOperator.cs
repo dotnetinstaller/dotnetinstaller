@@ -32,7 +32,8 @@ namespace InstallerLib
         }
 
         private InstalledCheckOperatorType m_type = InstalledCheckOperatorType.And;
-        [Description("Type of the check operator. (REQUIRED)")]
+        [Description("Type of the check operator.")]
+        [Required]
         public InstalledCheckOperatorType type
         {
             get { return m_type; }
@@ -40,7 +41,8 @@ namespace InstallerLib
         }
 
         private string m_description = "Installed Check Operator";
-        [Description("Description of the check operator. (REQUIRED)")]
+        [Description("Description of the check operator.")]
+        [Required]
         public string description
         {
             get { return m_description; }

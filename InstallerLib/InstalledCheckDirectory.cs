@@ -14,7 +14,8 @@ namespace InstallerLib
         }
 
         private string m_path;
-        [Description("Specifies the path to search, if the application cannot find the specified path then the component must be installed. This attribute can contain path constants. (REQUIRED)")]
+        [Description("Path to search. If the application cannot find the specified path then the component must be installed.")]
+        [Required]
         public string path
         {
             get { return m_path; }

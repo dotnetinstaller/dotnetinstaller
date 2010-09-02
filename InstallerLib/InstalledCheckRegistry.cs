@@ -40,7 +40,7 @@ namespace InstallerLib
         }
 
         private string m_path;
-        [Description("Specifies the registry path to search for the registry value specified, must be a path under HKEY_LOCAL_MACHINE like 'SOFTWARE\\MyCompany'. (REQUIRED)")]
+        [Description("Registry path to search for the value specified under 'rootkey'.")]
         public string path
         {
             get { return m_path; }
@@ -48,7 +48,7 @@ namespace InstallerLib
         }
 
         private string m_fieldname;
-        [Description("The registry field name in the specified path, for example 'Installed'. (REQUIRED)")]
+        [Description("Registry field name in the specified path under 'rootkey\\path'. Specify a blank field name for the default field.")]
         public string fieldname
         {
             get { return m_fieldname; }
@@ -56,7 +56,7 @@ namespace InstallerLib
         }
 
         private string m_fieldvalue;
-        [Description("The registry value used to check if the component is installed, this value is converted based on the value type specified. (REQUIRED)")]
+        [Description("Registry value used to check if the component is installed. This value is converted based on the value type specified.")]
         public string fieldvalue
         {
             get { return m_fieldvalue; }
@@ -64,7 +64,8 @@ namespace InstallerLib
         }
 
         private bool m_defaultvalue = false;
-        [Description("The default check value for comparison operators other than 'exists' when the registry key doesn't exist. (REQUIRED)")]
+        [Description("Default check value for comparison operators other than 'exists' when the registry key doesn't exist.")]
+        [Required]
         public bool defaultvalue
         {
             get { return m_defaultvalue; }
@@ -72,7 +73,8 @@ namespace InstallerLib
         }
 
         private installcheck_registrytype m_fieldtype;
-        [Description("Specifies the type of the registry field, can be 'REG_DWORD' (for numeric value) or 'REG_SZ' (for string value) or 'REG_MULTI_SZ' (for multi line strings). (REQUIRED)")]
+        [Description("Type of the registry field, can be 'REG_DWORD' (for numeric value), 'REG_SZ' (for string value) or 'REG_MULTI_SZ' (for multi line strings).")]
+        [Required]
         public installcheck_registrytype fieldtype
         {
             get { return m_fieldtype; }
@@ -80,7 +82,8 @@ namespace InstallerLib
         }
 
         private installcheckregistry_comparison m_comparison;
-        [Description("Comparison mode; one of 'match', 'version', 'exists', etc. (REQUIRED)")]
+        [Description("Comparison mode; one of 'match', 'version', 'exists', etc.")]
+        [Required]
         public installcheckregistry_comparison comparison
         {
             get { return m_comparison; }
@@ -88,7 +91,8 @@ namespace InstallerLib
         }
 
         private installcheck_rootkey m_rootkey;
-        [Description("Root key, from which to begin the registry search from. (REQUIRED)")]
+        [Description("Root key, from which to begin the registry search from.")]
+        [Required]
         public installcheck_rootkey rootkey
         {
             get { return m_rootkey; }
@@ -97,6 +101,7 @@ namespace InstallerLib
 
         private installcheck_wowoption m_wowoption;
         [Description("Alternate registry view options. WOW64_64 and WOW64_32 maps to KEY_WOW64_64KEY (64 bit registry view for both 32 bit and 64 bit applications) and KEY_WOW64_32KEY (32 bit registry view for both 32 bit and 64 bit applications) respectively. NONE defaults to 32 bit registry view for 32 bit applications and to 64 bit registry view for 64 bit applications.")]
+        [Required]
         public installcheck_wowoption wowoption
         {
             get { return m_wowoption; }

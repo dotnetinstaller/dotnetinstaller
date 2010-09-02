@@ -79,6 +79,7 @@ namespace InstallerLib
 
         private ControlType m_type = ControlType.undefined;
         [Description("Control type.")]
+        [Required]
         public ControlType type
         {
             get
@@ -99,6 +100,7 @@ namespace InstallerLib
         private bool m_enabled = true;
         [Description("Default enabled state.")]
         [Category("Layout")]
+        [Required]
         public bool Enabled
         {
             get { return m_enabled; }
@@ -106,8 +108,9 @@ namespace InstallerLib
         }
 
         private bool m_has_value_disabled = false;
-        [Description("When true, collect value even if the control is disabled.")]
+        [Description("When 'true', collect value even if the control is disabled.")]
         [Category("Value")]
+        [Required]
         public bool HasValueDisabled
         {
             get { return m_has_value_disabled; }
@@ -117,6 +120,7 @@ namespace InstallerLib
         private bool m_display_install = true;
         [Description("Display control on install.")]
         [Category("Layout")]
+        [Required]
         public bool DisplayInstall
         {
             get { return m_display_install; }
@@ -126,6 +130,7 @@ namespace InstallerLib
         private bool m_display_uninstall = true;
         [Description("Display control on uninstall.")]
         [Category("Layout")]
+        [Required]
         public bool DisplayUninstall
         {
             get { return m_display_uninstall; }
@@ -133,8 +138,9 @@ namespace InstallerLib
         }
 
         private ControlCheckType m_check = ControlCheckType.enabled;
-        [Description("Defines how to apply a nested installed check (enable, display or both).")]
+        [Description("Defines how to apply a nested installed check ('enable', 'display' or 'both').")]
         [Category("Layout")]
+        [Required]
         public ControlCheckType Check
         {
             get { return m_check; }

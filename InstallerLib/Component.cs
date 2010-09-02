@@ -28,15 +28,16 @@ namespace InstallerLib
         #region Attributes
 
         private string m_type;
-        [Description("The type of the component; can be 'cmd' for executing generic command line installation or 'msi' for installing Windows Installer MSI package or 'openfile' to open a file. (REQUIRED)")]
+        [Description("Type of the component; can be 'cmd' for executing generic command line installation or 'msi' for installing Windows Installer MSI package or 'openfile' to open a file.")]
         [Category("Component")]
+        [Required]
         public string type
         {
             get { return m_type; }
         }
 
         private string m_os_filter;
-        [Description("A filter to install this component only on all operating system equal or not equal the value(s) specified. Separate multiple operating system ids with comma (',') and use not symbol ('!') for NOT logic (es. '44,!45' ).")]
+        [Description("Filter to install this component only on all operating systems equal or not equal to the id value(s) specified. Separate multiple operating system ids with comma (',') and use not symbol ('!') for NOT logic (es. '44,!45' ).")]
         [Category("Operating System")]
         public string os_filter
         {
@@ -45,7 +46,7 @@ namespace InstallerLib
         }
 
         private OperatingSystem m_os_filter_min;
-        [Description("A filter to install this component only on all operating system id greater or equal than the id specified. For example to install a component only in Windows 2000 or later use win2000. (OPTIONAL)")]
+        [Description("Filter to install this component only on all operating systems greater or equal to the id value specified. For example to install a component only in Windows 2000 or later use 'win2000'.")]
         [Category("Operating System")]        
         public OperatingSystem os_filter_min
         {
@@ -54,7 +55,7 @@ namespace InstallerLib
         }
 
         private OperatingSystem m_os_filter_max;
-        [Description("A filter to install this component only on all operating system id smaller or equal than the id specified. For example to install a component preceding Windows 2000 use winNT4sp6a. (OPTIONAL)")]
+        [Description("Filter to install this component only on all operating systems smaller or equal to the id value specified. For example to install a component preceding Windows 2000 use 'winNT4sp6a'.")]
         [Category("Operating System")]
         public OperatingSystem os_filter_max
         {
@@ -63,7 +64,7 @@ namespace InstallerLib
         }
 
         private string m_os_filter_lcid;
-        [Description("A filter to install this component only on all operating system language equals or not equals than the LCID specified (see Help->LCID table). Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (es. '1044,1033,!1038' ). You can also filter all the configuration element. (OPTIONAL)")]
+        [Description("Filter to install this component only on all operating system languages equal or not equal to the LCID specified. Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (eg. '1044,1033,!1038' ).")]
         [Category("Operating System")]
         public string os_filter_lcid
         {
@@ -71,8 +72,8 @@ namespace InstallerLib
             set { m_os_filter_lcid = value; }
         }
 
-        private string m_installcompletemessage; //se vuoto non viene visualizzato nessun messagio al termine del download
-        [Description("The message used when a component is successfully installed. To disable this message leave this property empty. (OPTIONAL)")]
+        private string m_installcompletemessage;
+        [Description("Message used after a component is successfully installed. To disable this message leave this property empty.")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [Category("Install")]
         public string installcompletemessage
@@ -82,7 +83,7 @@ namespace InstallerLib
         }
 
         private string m_uninstallcompletemessage;
-        [Description("The message used when a component is successfully uninstalled. (OPTIONAL)")]
+        [Description("Message used after a component is been successfully uninstalled.")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [Category("Uninstall")]
         public string uninstallcompletemessage
@@ -92,8 +93,9 @@ namespace InstallerLib
         }
 
         private bool m_mustreboot = false;
-        [Description("Indicates whether to reboot automatically after this component is installed or uninstalled successfully. Normally if the system must be restarted, the component tells this setup (with special return code) to stop and restart the system. This forces a reboot without prompting. (REQUIRED)")]
+        [Description("Indicates whether to reboot automatically after this component is installed or uninstalled successfully. Normally if the system must be restarted, the component tells this setup (with special return code) to stop and restart the system. Setting this option to 'true' forces a reboot without prompting.")]
         [Category("Runtime")]
+        [Required]
         public bool mustreboot
         {
             get { return m_mustreboot; }
@@ -101,7 +103,7 @@ namespace InstallerLib
         }
 
         private string m_failed_exec_command_continue;
-        [Description("The message to display when a component failed to install. The user is then asked whether installation can continue using this message. May contain one '%s' replaced by the description of the component. (OPTIONAL)")]
+        [Description("Message to display after a component failed to install. The user is then asked whether installation can continue using this message. May contain one '%s' replaced by the description of the component.")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [Category("Runtime")]
         public string failed_exec_command_continue
@@ -111,7 +113,7 @@ namespace InstallerLib
         }
 
         private string m_reboot_required;
-        [Description("The message used when this component signaled the installer that it requires a reboot. (OPTIONAL)")]
+        [Description("Message used when this component signaled the installer that it requires a reboot.")]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [Category("Runtime")]
         public string reboot_required
@@ -121,8 +123,9 @@ namespace InstallerLib
         }
 
         private bool m_must_reboot_required = false;
-        [Description("Component setting for reboot behavior. When true, installation won't continue after this component required a reboot. (REQUIRED)")]
+        [Description("Component setting for reboot behavior. When 'true', installation won't continue after this component required a reboot.")]
         [Category("Runtime")]
+        [Required]
         public bool must_reboot_required
         {
             get { return m_must_reboot_required; }
@@ -130,8 +133,9 @@ namespace InstallerLib
         }
 
         private bool m_allow_continue_on_error = true;
-        [Description("If true, the user will be prompted to continue when a component fails to install.")]
+        [Description("Set to 'true' to prompt the user to continue when a component fails to install.")]
         [Category("Runtime")]
+        [Required]
         public bool allow_continue_on_error
         {
             get { return m_allow_continue_on_error; }
@@ -141,6 +145,7 @@ namespace InstallerLib
         private bool m_default_continue_on_error = false;
         [Description("The default value of whether to continue when a component fails to install.")]
         [Category("Runtime")]
+        [Required]
         public bool default_continue_on_error
         {
             get { return m_default_continue_on_error; }
@@ -148,8 +153,9 @@ namespace InstallerLib
         }
 
         private string m_id;
-        [Description("Component identity. This value should be unique. (REQUIRED)")]
+        [Description("Component identity. This value should be unique.")]
         [Category("Component")]
+        [Required]
         public string id
         {
             get { return m_id; }
@@ -157,8 +163,9 @@ namespace InstallerLib
         }
 
         private string m_display_name;
-        [Description("Display name of this component. This value is used also in some message to replace the %s string. (REQUIRED)")]
+        [Description("Component display name. This value is used in some message to replace the '%s' string.")]
         [Category("Component")]
+        [Required]
         public string display_name
         {
             get { return m_display_name; }
@@ -166,7 +173,7 @@ namespace InstallerLib
         }
 
         private string m_uninstall_display_name;
-        [Description("Optional display name of this component during uninstall.")]
+        [Description("Optional display name of this component during uninstall. Defaults to 'display_name' when blank.")]
         [Category("Component")]
         public string uninstall_display_name
         {
@@ -177,6 +184,7 @@ namespace InstallerLib
         private bool m_required_install = false;
         [Description("Indicates whether the component is required for a successful installation.")]
         [Category("Component")]
+        [Required]
         public bool required_install
         {
             get { return m_required_install; }
@@ -186,6 +194,7 @@ namespace InstallerLib
         private bool m_required_uninstall = false;
         [Description("Indicates whether the component is required for a successful uninstallation.")]
         [Category("Component")]
+        [Required]
         public bool required_uninstall
         {
             get { return m_required_uninstall; }
@@ -195,6 +204,7 @@ namespace InstallerLib
         private bool m_selected_install = true;
         [Description("Indicates whether the component is selected by default during install.")]
         [Category("Component")]
+        [Required]
         public bool selected_install
         {
             get { return m_selected_install; }
@@ -204,6 +214,7 @@ namespace InstallerLib
         private bool m_selected_uninstall = true;
         [Description("Indicates whether the component is selected by default during uninstall.")]
         [Category("Component")]
+        [Required]
         public bool selected_uninstall
         {
             get { return m_selected_uninstall; }
@@ -211,7 +222,7 @@ namespace InstallerLib
         }
 
         private string m_note;
-        [Description("Note, not used by the setup. (OPTIONAL)")]
+        [Description("Store any additional free-formed information in this field, not used by the setup.")]
         [Category("Component")]
         public string note
         {
@@ -221,7 +232,7 @@ namespace InstallerLib
 
         // message for not matching the processor architecture filter
         private string m_processor_architecture_filter;
-        [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Seperate by commas, can use the NOT sign ('!') to exclude. (es. 'x86,x64' or '!x86'). (OPTIONAL)")]
+        [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Separate by commas, can use the NOT sign ('!') to exclude values. (eg. 'x86,x64' or '!x86').")]
         [Category("Filters")]
         public string processor_architecture_filter
         {
@@ -230,7 +241,7 @@ namespace InstallerLib
         }
 
         private string m_status_installed;
-        [Description("The string used for indicating that this component is installed. (OPTIONAL)")]
+        [Description("String used to indicate that this component is installed.")]
         [Category("Component")]
         public string status_installed
         {
@@ -239,7 +250,7 @@ namespace InstallerLib
         }
 
         private string m_status_notinstalled;
-        [Description("The string used for indicating that this component is not installed. (OPTIONAL)")]
+        [Description("String used to indicate that this component is not installed.")]
         [Category("Component")]
         public string status_notinstalled
         {
@@ -248,8 +259,9 @@ namespace InstallerLib
         }
 
         private bool m_supports_install = true;
-        [Description("Indicates whether the component supports the install sequence. (REQUIRED)")]
+        [Description("Indicates whether the component supports the install sequence.")]
         [Category("Install")]
+        [Required]
         public bool supports_install
         {
             get { return m_supports_install; }
@@ -257,8 +269,9 @@ namespace InstallerLib
         }
 
         private bool m_supports_uninstall = false;
-        [Description("Indicates whether the component supports the uninstall sequence. (REQUIRED)")]
+        [Description("Indicates whether the component supports the uninstall sequence.")]
         [Category("Uninstall")]
+        [Required]
         public bool supports_uninstall
         {
             get { return m_supports_uninstall; }
@@ -266,8 +279,9 @@ namespace InstallerLib
         }
 
         private bool m_show_progress_dialog = true;
-        [Description("Show progress dialogs.")]
+        [Description("Set to 'true' to show the progress dialogs.")]
         [Category("Component")]
+        [Required]
         public bool show_progress_dialog
         {
             get { return m_show_progress_dialog; }
@@ -275,8 +289,9 @@ namespace InstallerLib
         }
 
         private bool m_show_cab_dialog = true;
-        [Description("Show CAB extraction dialogs.")]
+        [Description("Set to 'true' to show the CAB extraction dialogs.")]
         [Category("Component")]
+        [Required]
         public bool show_cab_dialog
         {
             get { return m_show_cab_dialog; }

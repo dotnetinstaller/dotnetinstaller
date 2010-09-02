@@ -18,6 +18,7 @@ namespace InstallerLib
         private string m_id = string.Empty;
         [Description("Control identity used to fetch user-defined value.")]
         [Category("Edit")]
+        [Required]
         public string Id
         {
             get { return m_id; }

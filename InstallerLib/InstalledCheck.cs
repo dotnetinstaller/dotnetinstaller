@@ -17,15 +17,17 @@ namespace InstallerLib
 
         #region Attributes
 
-        private string m_type; //can be check_registry_value or check_file
-        [Description("Type of the check, can be 'check_registry_value' to check for a specific value in the registry or 'check_file' to check for a specific file. (REQUIRED)")]
+        private string m_type;
+        [Description("Type of the check, can be 'check_registry_value' to check for a specific value in the registry, 'check_file' to check for a specific file, etc.")]
+        [Required]
         public string type
         {
             get { return m_type; }
         }
 
         private string m_description = "Installed Check";
-        [Description("Description of the check. (REQUIRED)")]
+        [Description("Description of the check.")]
+        [Required]
         public string description
         {
             get { return m_description; }

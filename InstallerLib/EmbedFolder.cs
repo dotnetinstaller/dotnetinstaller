@@ -39,7 +39,8 @@ namespace InstallerLib
         }
 
         private string m_sourcefolderpath;
-        [Description("The complete or relative path where the file is located. Can contains path constants (see Help->Path Constant). (REQUIRED)")]
+        [Description("Complete path where the folder is located.")]
+        [Required]
         public string sourcefolderpath
         {
             get
@@ -54,7 +55,8 @@ namespace InstallerLib
         }
 
         private string m_targetfolderpath;
-        [Description("The relative path under #CABPATH where the file is going to be extracted. (REQUIRED)")]
+        [Description("Relative path under #CABPATH where the folder is going to be extracted.")]
+        [Required]
         public string targetfolderpath
         {
             get
