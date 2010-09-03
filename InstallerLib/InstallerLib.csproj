@@ -76,6 +76,7 @@
     <Compile Include="ControlLabel.cs" />
     <Compile Include="ControlLicense.cs" />
     <Compile Include="ControlText.cs" />
+    <Compile Include="DocumentationSection.cs" />
     <Compile Include="Editor.cs" />
     <Compile Include="EmbedFile.cs" />
     <Compile Include="ComponentMsi.cs">

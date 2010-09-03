@@ -4,9 +4,7 @@ using System.Collections.Generic;
 
 namespace InstallerLib
 {
-    /// <summary>
-    /// A component of type "openfile" that launches a document.
-    /// </summary>
+    [Description("A component of type 'openfile' launches a file or document using a Windows shell extension.")]
     public class ComponentOpenFile : Component
     {
         public ComponentOpenFile()

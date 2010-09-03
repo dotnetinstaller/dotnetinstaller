@@ -5,9 +5,7 @@ using System.Collections.Generic;
 
 namespace InstallerLib
 {
-    /// <summary>
-    /// A component of type "msi" that executes a Windows Installer package.
-    /// </summary>
+    [Description("A component of type 'msi' executes a Windows Installer package using the 'msiexec.exe' command.")]
     public class ComponentMsi : Component
     {
         public ComponentMsi()
@@ -18,7 +16,7 @@ namespace InstallerLib
         }
 
         private string m_package;
-        [Description("Path to the msi package or an existing product GUID.")]
+        [Description("Path to the msi package or an existing product GUID. Package GUIDs enable scenarios of reinstalling a previously cached MSI.")]
         [Category("Msi")]
         [Required]
         public string package

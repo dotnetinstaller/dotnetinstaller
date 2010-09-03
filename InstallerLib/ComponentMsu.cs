@@ -5,9 +5,7 @@ using System.Collections.Generic;
 
 namespace InstallerLib
 {
-    /// <summary>
-    /// A component of type "msu" that executes a Windows update package.
-    /// </summary>
+    [Description("A component of type 'msu' that executes a Windows Update package using the 'wusa.exe' command.")]
     public class ComponentMsu : Component
     {
         public ComponentMsu()
@@ -27,7 +25,7 @@ namespace InstallerLib
         }
 
         private string m_cmdparameters = "/norestart";
-        [Description("Command-line parameters for the 'wusa.exe' program. See MSDN for the command line you can use with 'wusa.exe'.")]
+        [Description("Command-line parameters for the 'wusa.exe' program (eg. '/norestart'). See MSDN for the command line you can use with 'wusa.exe'.")]
         public string cmdparameters
         {
             get { return m_cmdparameters; }
@@ -35,7 +33,7 @@ namespace InstallerLib
         }
 
         private string m_cmdparameters_basic = "/quiet /norestart";
-        [Description("Command-line parameters for the 'wusa.exe' program when running a basic UI mode. Defaults to 'cmdparameters' if blank. See MSDN for the command line you can use with 'wusa.exe'.")]
+        [Description("Command-line parameters for the 'wusa.exe' program when running a basic UI mode (eg. '/quiet /norestart'). Defaults to 'cmdparameters' if blank. See MSDN for the command line you can use with 'wusa.exe'.")]
         public string cmdparameters_basic
         {
             get { return m_cmdparameters_basic; }
@@ -43,7 +41,7 @@ namespace InstallerLib
         }
 
         private string m_cmdparameters_silent = "/quiet /norestart";
-        [Description("Specifies the command line parameters for the 'wusa.exe' program when running a silent install. Defaults to 'cmdparameters' if blank. See MSDN for the command line you can use with 'wusa.exe'.")]
+        [Description("Specifies the command line parameters for the 'wusa.exe' program when running a silent install (eg. '/quiet /norestart'). Defaults to 'cmdparameters' if blank. See MSDN for the command line you can use with 'wusa.exe'.")]
         public string cmdparameters_silent
         {
             get { return m_cmdparameters_silent; }

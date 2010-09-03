@@ -5,9 +5,16 @@ using System.Collections.Generic;
 
 namespace InstallerLib
 {
-    /// <summary>
-    /// A component of type "msp" that executes a Windows Installer patch/patch.
-    /// </summary>
+    [Description(
+        "<para>" +
+         "An application that has been installed using the Microsoft Windows Installer can be upgraded by reinstalling an updated installation package (.msi file), or by applying a Windows Installer patch (an .msp file) to the application. " + 
+         "A Windows Installer patch (.msp file) is a self-contained package that contains the updates to the application and describes which versions of the application can receive the patch. For more information see <externalLink>" + 
+         "<linkUri>http://msdn.microsoft.com/en-us/library/aa370578(VS.85).aspx</linkUri>" + 
+         "<linkText>Patching in MSDN</linkText></externalLink>." + 
+        "</para>" + 
+        "<para>" + 
+         "A component of type <literal>msp</literal> executes a Windows Installer patch using the <command>msiexec.exe</command> command." + 
+        "</para>")]
     public class ComponentMsp : Component
     {
         public ComponentMsp()
@@ -18,7 +25,9 @@ namespace InstallerLib
         }
 
         private string m_patch;
-        [Description("Path to the MSP patch (/p <patch>).")]
+        [Description(
+            "Full or relative path to an MSI package to be patched for administrative install. " +
+            " When specified during installation, generates an 'msiexec /p patch /a package' command-line.")]
         [Category("Msp")]
         [Required]
         public string patch

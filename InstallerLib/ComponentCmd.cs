@@ -3,9 +3,7 @@ using System.ComponentModel;
 
 namespace InstallerLib
 {
-    /// <summary>
-    /// A component of type "cmd" that executes a command.
-    /// </summary>
+    [Description("A component of type 'cmd' executes a user-defined command.")]
     public class ComponentCmd : Component
     {
         public ComponentCmd()
@@ -17,7 +15,7 @@ namespace InstallerLib
         #region Commands
 
         private string m_command;
-        [Description("Command to execute when installing this component. May contain quotes and other special characters.")]
+        [Description("Command to execute when installing this component. Use 'cmd.exe' to execute typical commands (eg. 'cmd.exe /C copy x.txt y.txt').")]
         [Category("Install")]
         [Required]
         public string command

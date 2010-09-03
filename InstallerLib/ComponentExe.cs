@@ -10,9 +10,50 @@ namespace InstallerLib
         ini
     }
 
-    /// <summary>
-    /// A component of type "exe" that runs an executable installer with a response file.
-    /// </summary>
+    [Description(
+      "<para>" +
+        "A component of type <literal>exe</literal> executes a packaged setup executable with an optional response file. " +
+        "A reponse file may be in either <newTerm>text</newTerm> or <newTerm>ini</newTerm> format and allows the installer " +
+        "to perform path or user-defined property replacements." +
+      "</para>" +
+      "<para>" +
+        "For example, you may want to supply <literal>#CABPATH</literal> and a user-defined destination " +
+        "<literal>[INSTALLLOCATION]</literal> within a setup.ini response file similar to this one." +
+        "<code langauge=\"ini\">" +
+          "<![CDATA[" +
+"[Options]\r\n" +
+"SourcePath=#CABPATH\r\n" +
+"TargetPath=[INSTALLLOCATION]\r\n" +
+          "]]>" +
+        "</code>" +
+        "dotNetInstaller will process this file defined by <newTerm>responsefile_source</newTerm> before running the setup executable " +
+        "and write its output to <newTerm>responsefile_target</newTerm>." +
+        "<code langauge=\"ini\">" +
+          "<![CDATA[\r\n" +
+"[Options]\r\n" +
+"SourcePath=C:\\temp\\cabs\r\n" +
+"TargetPath=C:\\Program Files\\MySampleSetup\r\n" +
+          "]]>" +
+        "</code>" +
+        "You can supply the value of <newTerm>responsefile_target</newTerm> in <newTerm>exeparameters</newTerm>." +
+      "</para>")]
+    [DocumentationSection("Response File Formats",
+         "<para>" +
+          "<tableDefinition>" +
+           "<definedTerm>none</definedTerm>" +
+           "<definition>" +
+             "Do not process response file, copy." +
+            "</definition>" +
+            "<definedTerm>text</definedTerm>" +
+            "<definition>" +
+             "The response file is text in ANSI format." +
+            "</definition>" +
+            "<definedTerm>ini</definedTerm>" +
+            "<definition>" +
+             "The response file is an ANSI .ini file. Only ini values are processed for variables." +
+            "</definition>" +
+          "</tableDefinition>" +
+        "</para>")]
     public class ComponentExe : Component
     {
         public ComponentExe()
@@ -200,7 +241,10 @@ namespace InstallerLib
         }
 
         private string m_install_directory;
-        [Description("Optional install directory that will be created if it doesn't exist.")]
+        [Description(
+              "Optional directory created by the bootstrapper before processing the response file and executing the " +
+              "component command. When specified, the directory is created on installation when it doesn't exist. " +
+              "This supports typical packaged setup programs that require the destination folder to exist prior to installation.")]
         [Category("Install")]
         public string install_directory
         {

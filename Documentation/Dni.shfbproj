@@ -55,6 +55,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
   </PropertyGroup>
   <ItemGroup>
+    <None Include="Content\Generated\ComponentExe.aml" />
+    <None Include="Content\Generated\ComponentOpenFile.aml" />
+    <None Include="Content\Generated\ComponentCmd.aml" />
+    <None Include="Content\Generated\ComponentMsp.aml" />
+    <None Include="Content\Generated\ComponentMsu.aml" />
+    <None Include="Content\Generated\ComponentMsi.aml" />
     <None Include="Content\ComponentsExe.aml" />
     <None Include="Content\ConfigurationAttributes.aml" />
     <None Include="Content\UIMisc.aml" />
@@ -67,9 +73,6 @@
     <None Include="Content\ComponentRules.aml" />
     <None Include="Content\ComponentsOpenFile.aml" />
     <None Include="Content\ComponentsCmd.aml" />
-    <None Include="Content\ComponentsMsu.aml" />
-    <None Include="Content\ComponentsMsi.aml" />
-    <None Include="Content\ComponentsMsp.aml" />
     <None Include="Content\ComponentsReboot.aml" />
     <None Include="Content\DownloadComponents.aml" />
     <None Include="Content\UIModes.aml" />
@@ -98,6 +101,7 @@
     <ContentLayout Include="DNI.content" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Generated\" />
     <Folder Include="Images\" />
     <Folder Include="Content\" />
   </ItemGroup>

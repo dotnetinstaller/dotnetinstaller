@@ -107,6 +107,7 @@
   <Target Name="clean">
     <MSBuild Projects="Dni.sln" Targets="Clean" />
     <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Clean" />
+    <DeleteTree Directories="Documentation\Content\Generated" />
     <DeleteTree Directories="$(ReleaseDir)" />
     <DeleteTree Directories=".\**\obj;.\**\$(Configuration)" Recursive="true" ContinueOnError="true" />
     <Delete Files="Version\Version.h;Version\Version.wxi;Version\GlobalAssemblyInfo.cs" />
@@ -167,7 +168,11 @@
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ReferenceSetup" />
     <Copy SourceFiles="@(ReferenceSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ReferenceSetup\%(RecursiveDir)" />
   </Target>
+  <Target Name="doclib" DependsOnTargets="version">
+    <Exec Command="InstallerDocLib\bin\$(Configuration)\InstallerDocLib.exe /Output:&quot;Documentation\Content\Generated&quot;"/>
+  </Target>
   <Target Name="doc" DependsOnTargets="version">
+    <CallTarget Targets="doclib" />
     <Error Condition="'$(DXROOT)'==''" Text="Missing Sandcastle, DXROOT environment variable not set, install from http://www.codeplex.com/Sandcastle" />
     <Error Condition="'$(SHFBROOT)'==''" Text="Missing Sandcastle Builder, SHFBROOT environment variable not set, install from http://www.codeplex.com/SHFB" />
     <Delete Files="Documentation\$(Configuration)\dotNetInstaller.chm" />
