@@ -5,6 +5,7 @@
 
 ConfigFileManager::ConfigFileManager()
 	: m_pInstallerWindow(NULL)
+	, m_pDownloadWindow(NULL)
 {
 }
 
@@ -14,6 +15,12 @@ ConfigFileManager::~ConfigFileManager()
 	{
 		delete m_pInstallerWindow;
 		m_pInstallerWindow = NULL;
+	}
+
+	if (m_pDownloadWindow != NULL)
+	{
+		delete m_pDownloadWindow;
+		m_pDownloadWindow = NULL;
 	}
 }
 
@@ -29,10 +36,10 @@ bool ConfigFileManager::OnVersionError(const std::wstring& version, const std::w
 
 bool ConfigFileManager::OnDownload(const ConfigurationPtr& config)
 {
-	ASSERT(m_pInstallerWindow != NULL);
-	ReferenceConfiguration * p = reinterpret_cast<ReferenceConfiguration *>(get(config));
-	LOG(L"Downloading reference configuration to '" << p->filename << L"'");
-	return m_pInstallerWindow->RunDownloadConfiguration(p->downloaddialog);
+	ReferenceConfiguration * p_configuration = reinterpret_cast<ReferenceConfiguration *>(get(config));
+	LOG(L"Downloading reference configuration to '" << p_configuration->filename << L"'");
+	CreateDownloadWindow(p_configuration->downloaddialog);
+	return m_pDownloadWindow->Run();
 }
 
 bool ConfigFileManager::OnRunConfiguration(const ConfigurationPtr& config)
@@ -91,6 +98,32 @@ void ConfigFileManager::CreateInstallerWindow(const std::wstring& title)
 
 	CHECK_BOOL(m_pInstallerWindow->hwnd != NULL,
 		L"InstallerWindow::Create");
+}
+
+void ConfigFileManager::CreateDownloadWindow(const DownloadDialogPtr& dialog)
+{
+	if (m_pDownloadWindow != NULL)
+	{
+		delete m_pDownloadWindow;
+		m_pDownloadWindow = NULL;
+	}
+
+	MONITORINFO mi = { 0 };
+	mi.cbSize = sizeof(mi);
+	CHECK_WIN32_BOOL(GetMonitorInfo(MonitorFromWindow(NULL, MONITOR_DEFAULTTOPRIMARY), & mi),
+		L"GetMonitorInfo");
+
+	int cx = 550;
+	int cy = 250;
+
+	m_pDownloadWindow = new DownloadWindow(dialog); // deletes itself
+	m_pDownloadWindow->Create(
+		(mi.rcWork.left + mi.rcWork.right) / 2 - cx / 2, 
+		(mi.rcWork.top + mi.rcWork.bottom) / 2 - cy / 2, 
+		cx, cy, dialog->caption.GetValue().c_str());
+
+	CHECK_BOOL(m_pDownloadWindow->hwnd != NULL,
+		L"DownloadWindow::Create");
 }
 
 void ConfigFileManager::Run()

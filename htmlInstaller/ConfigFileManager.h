@@ -1,12 +1,15 @@
 #pragma once
 
 #include "InstallerWindow.h"
+#include "DownloadWindow.h"
 
 class ConfigFileManager : private ConfigFiles
 {
 private:
+	DownloadWindow * m_pDownloadWindow;
 	InstallerWindow * m_pInstallerWindow;
 	void CreateInstallerWindow(const std::wstring& title);
+	void CreateDownloadWindow(const DownloadDialogPtr& p_Configuration);
 protected:
 	bool OnVersionError(const std::wstring& version, const std::wstring& filename);
 	bool OnDownload(const ConfigurationPtr& config);

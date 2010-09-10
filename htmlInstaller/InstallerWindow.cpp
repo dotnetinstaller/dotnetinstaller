@@ -5,6 +5,7 @@
 #include "HtmlWidgets.h"
 #include "Resource.h"
 #include "SetControlValuesTask.h"
+#include "DownloadWindow.h"
 
 InstallerWindow::InstallerWindow()
 {
@@ -13,7 +14,7 @@ InstallerWindow::InstallerWindow()
 
 void InstallerWindow::Create(int x, int y, int width, int height, const wchar_t * caption)
 {
-	HtmlWindow::Create(x, y, width, height, caption);
+	HtmlWindow::Create(L"index.html", x, y, width, height, caption);
 }
 
 bool InstallerWindow::Run()
@@ -368,6 +369,7 @@ void InstallerWindow::DownloadComplete()
 
 void InstallerWindow::DownloadError(const std::wstring& error)
 {
+	SetStatus(L"");
 	ShowError(error);
 	RecordError();
 }

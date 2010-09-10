@@ -56,7 +56,9 @@ void ThreadComponent::Exec()
 
 void ThreadComponent::BeginExec()
 {
-    m_pThread = ThreadPtr(AfxBeginThread(ExecuteThread, this, THREAD_PRIORITY_NORMAL, 0, CREATE_SUSPENDED));
+	ASSERT(NULL == get(m_pThread));
+
+    reset(m_pThread, AfxBeginThread(ExecuteThread, this, THREAD_PRIORITY_NORMAL, 0, CREATE_SUSPENDED));
 
 	CHECK_WIN32_BOOL(get(m_pThread) != NULL,
 		L"AfxBeginThread");

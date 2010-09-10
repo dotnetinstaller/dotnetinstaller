@@ -17,7 +17,7 @@ public:
 	htmlayout::dom::element button_icon;
 	htmlayout::dom::element button_close;
 	htmlayout::dom::element corner;
-	virtual void Create(int x, int y, int width, int height, const wchar_t * caption = 0);
+	virtual void Create(const wchar_t * filename, int x, int y, int width, int height, const wchar_t * caption = 0);
 	static HtmlWindow * Self(HWND hWnd);
 	static ATOM RegisterClass(HINSTANCE hInstance);
     LRESULT on_load_data(LPNMHL_LOAD_DATA pnmld);

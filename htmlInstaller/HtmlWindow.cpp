@@ -15,7 +15,7 @@ void HtmlWindow::Self(HWND hWnd, HtmlWindow * inst)
 { 
 	::SetWindowLongPtr(hWnd, GWLP_USERDATA, LONG_PTR(inst));
 
-	if (s_hwnd == NULL)
+	if (s_hwnd == NULL || hWnd == NULL)
 	{
 		s_hwnd = hWnd;
 	}
@@ -54,7 +54,7 @@ ATOM  HtmlWindow::RegisterClass(HINSTANCE hInstance)
 	return RegisterClassExW(&wcex);
 }
 
-void HtmlWindow::Create(int x, int y, int width, int height, const wchar_t * title) 
+void HtmlWindow::Create(const wchar_t * filename, int x, int y, int width, int height, const wchar_t * title) 
 {
 	m_title = title;
 
@@ -69,7 +69,7 @@ void HtmlWindow::Create(int x, int y, int width, int height, const wchar_t * tit
 	Self(hwnd, this);
 	HTMLayoutSetCallback(hwnd, & callback, this);
 	
-	std::wstring indexhtml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), TEXT("index.html"));
+	std::wstring indexhtml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), filename);
 	if (DVLib::FileExists(indexhtml))
 	{
 		CHECK_BOOL(HTMLayoutLoadFile(hwnd, indexhtml.c_str()),
@@ -79,7 +79,7 @@ void HtmlWindow::Create(int x, int y, int width, int height, const wchar_t * tit
 	{
 		PBYTE pb = NULL; 
 		DWORD cb = 0;
-		CHECK_BOOL(LoadResourceData(L"index.html", pb, cb),
+		CHECK_BOOL(LoadResourceData(filename, pb, cb),
 			L"Error loading index.html.");
 		CHECK_BOOL(HTMLayoutLoadHtml(hwnd, pb, cb),
 			L"Error loading index.html from " << DVLib::FormatBytesW(cb) << " of resource data.");

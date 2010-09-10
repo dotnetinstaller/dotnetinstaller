@@ -184,6 +184,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DownloadWindow.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ExtractCabProcessor.cpp"
 				>
 			</File>
@@ -239,6 +243,10 @@
 			>
 			<File
 				RelativePath=".\ConfigFileManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DownloadWindow.h"
 				>
 			</File>
 			<File
@@ -307,6 +315,10 @@
 		<Filter
 			Name="Html"
 			>
+			<File
+				RelativePath=".\Html\download.html"
+				>
+			</File>
 			<File
 				RelativePath=".\Html\index.html"
 				>

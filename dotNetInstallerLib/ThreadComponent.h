@@ -6,7 +6,7 @@ class ThreadComponent
 {
 public:
     ThreadComponent();
-	~ThreadComponent();
+	virtual ~ThreadComponent();
 public:
 	bool IsExecuting(DWORD dwTimeout = 0) const;
 	const std::wstring& GetError() const { return m_error; }

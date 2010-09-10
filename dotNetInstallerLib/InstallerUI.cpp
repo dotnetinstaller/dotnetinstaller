@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "InstallerUI.h"
+#include "ReferenceConfiguration.h"
 #include "InstallUILevel.h"
 #include "InstallerSession.h"
 #include "InstallerLog.h"
@@ -284,7 +285,7 @@ bool InstallerUI::RunDownloadConfiguration(const DownloadDialogPtr& p_Configurat
 		LOG(L"*** Component '" << p_Configuration->component_id << L"': SKIPPING DOWNLOAD/COPY");
 	}
 
-	THROW("RunDownloadConfiguration not implemented");
+	return Run();
 }
 
 void InstallerUI::DisplaySplash()
