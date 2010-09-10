@@ -72,6 +72,11 @@
           <code language="html" source="..\htmlInstaller\html\index.html" />
         </para>
         <para>
+          In addition, reference configurations that are downloaded display a download dialog with the following default
+          source for <localUri>download.html</localUri>.
+          <code language="html" source="..\htmlInstaller\html\download.html" />
+        </para>
+        <para>
           The following built-in widgets are defined by their id’s. All such widgets are optional and have well-known
           behavior within the bootstrapper.
           <tableDefinition>
@@ -113,7 +118,8 @@
       <content>
         <para>
           You can embed customized HTML using <localUri>InstallerLinker.exe</localUri> <command>/EmbedHtml</command>
-          command-line parameter.
+          command-line parameter. Embed an <localUri>index.html</localUri> to customize the main window and
+          <localUri>download.html</localUri> to customize the reference configuration download window.
           <code language="cmd">
             <![CDATA[
 InstallerLinker.exe /Output:Setup.exe /Template:htmlInstaller.exe /Configuration:Configuration.xml /EmbedHtml:Samples\HtmlSetup\BasicWorkflow /Verbose+
