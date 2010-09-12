@@ -3,7 +3,7 @@
   <developerHowToDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        dotNetInstaller was written by a dozen developers. Some have contributed large features and others small patches.
+        dotNetInstaller was written by a dozen developers. Some have contributed large features and other small patches.
         You're encouraged and invited to make dotNetInstaller better.
       </para>
       <para>

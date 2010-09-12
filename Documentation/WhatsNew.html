@@ -63,7 +63,7 @@
                     example links in component wizard use <code>example.com</code> instead of <code>yourwebsite.com</code>,
                     which is a real site.</li>
             </ul>
-        </li>
+       </li>
         <li><strong>Bugs</strong>:
             <ul>
                 <li><a href="http://dotnetinstaller.codeplex.com/workitem/6758">#6758</a>: MSI components
@@ -78,7 +78,7 @@
                     with no installed checks is not installed if <code>/x</code> is specified on the
                     command line.</li>
             </ul>
-        </li>
+       </li>
     </ul>
     <h3>
         1.10 (7/12/2010)</h3>
@@ -133,13 +133,13 @@
                     with a question to continue and the value of <code>default_continue_on_error</code>
                     is used to make the decision to continue or abort.</li>
             </ul>
-        </li>
+       </li>
         <li><strong>Misc</strong>:
             <ul>
                 <li>Added application compatibility entries for Windows Vista and Windows 7 in the default
                     dotNetInstaller.exe.manifest.</li>
             </ul>
-        </li>
+       </li>
         <li><strong>Bugs</strong>:
             <ul>
                 <li>Bug: user-defined controls that contain a hyperlink, such as license agreement,
@@ -147,7 +147,7 @@
                 <li>Bug: <code>mustreboot</code> component option is broken.</li>
                 <li>Bug: Windows XP 64-bit incorrectly identified as Windows 2003 Server R2.</li>
             </ul>
-        </li>
+       </li>
     </ul>
     <h3>
         1.9 (4/5/2010)</h3>
@@ -182,7 +182,7 @@
                     installed checks. The <code>value_exists</code> operator allows one to check whether
                     the default registry key value is set.</li>
             </ul>
-        </li>
+       </li>
         <li><strong>Misc</strong>:
             <ul>
                 <li><code>/DisplayCab</code> truncates the files list for each cub at two items; rest
@@ -196,7 +196,7 @@
                 <li>Implemented work-around for "not enough storage space" system error while embedding
                     large CABs.</li>
             </ul>
-        </li>
+       </li>
         <li><strong>Bugs</strong>:
             <ul>
                 <li>MSI components ignore <code>uninstall_cmdparameters</code>, <code>uninstall_cmdparameters_silent</code>
@@ -212,7 +212,7 @@
                 <li>Registry install checks with the <code>exists</code> operator for a blank field
                     value fail with a "The system cannot find the file specified." error.</li>
             </ul>
-        </li>
+       </li>
     </ul>
     <h3>
         1.8 (1/20/2010)</h3>
@@ -261,7 +261,7 @@
                 <li>InstallerEditor: added "Edit" menu with identical contents as the right click popup
                     on the currently selected configuration node.</li>
             </ul>
-        </li>
+       </li>
         <li><strong>Bugs</strong>:
             <ul>
                 <li>Bug: error creating temporary directory on Windows 95/98/ME.</li>
@@ -282,12 +282,12 @@
                 <li>Bug: InstallerEditor's Make Exe dialog is closed when the user presses Cancel when
                     prompted for a target .exe file name.</li>
             </ul>
-        </li>
+       </li>
         <li><strong>Misc</strong>:
             <ul>
                 <li>Added 3rd party licensing information to documentation.</li>
             </ul>
-        </li>
+       </li>
     </ul>
     <h3>
         1.7 (9/30/2009)</h3>
@@ -361,7 +361,7 @@
                     complete command or to execute it synchronously and wait for the program to finish.
                     Default is true.</li>
             </ul>
-        </li>
+       </li>
         <li><strong>Bugs</strong>:
             <ul>
                 <li>Bug: wrong error when missing configuration.xml (invalid schema version vs. missing
@@ -372,14 +372,14 @@
                 <li>Bug: silent install failures pop up error dialogs that don't auto-close.</li>
                 <li>Bug: EmbedFolder components broken when configuration is (re)saved with InstallerEditor.</li>
             </ul>
-        </li>
+       </li>
         <li><strong>Misc</strong>:
             <ul>
                 <li>Refactored the dotNetInstaller bootstrapper into a dotNetInstallerLib C++ library
                     and a GUI driver.</li>
                 <li>Extended unit test coverage across C# and C++ installer and support tools libraries.</li>
             </ul>
-        </li>
+       </li>
     </ul>
     <h3>
         1.6 (6/29/2009)</h3>
@@ -402,21 +402,21 @@
         <li>dotNetInstaller: embedded CABs are now segmented into 32-megabyte chunks. This reduces
             the minimum required memory for installers containing embedded CABs to about 48Mb,
             reduces paging and improves performance during extraction of large embedded CABs.
-            Added editor and linker support for Windows Vista/XP 64. </li>
-        <li>Added OS filter identifiers for Windows Server 2008. </li>
+            Added editor and linker support for Windows Vista/XP 64.</li>
+        <li>Added OS filter identifiers for Windows Server 2008.</li>
         <li>Added <code>InstalledCheckOperator</code> of 'And', 'Or' and 'Not' types that combine
             results from one or more <code>InstalledCheck</code> and <code>InstalledCheckOperator</code>
-            elements. </li>
+            elements.</li>
         <li>dotNetInstaller: Added <code>/componentArgs "component description":"parameters"</code>
             to dotNetInstaller.exe command line. This enables passing additional parameters
-            to specific components declared in configuration.xml. </li>
+            to specific components declared in configuration.xml.</li>
         <li>InstallerEditor: added support for configuration file XML comments and a text box
             where the developer can edit a comment, saved as an xml comment above the selected
-            node. </li>
+            node.</li>
         <li>InstallerEditor: configuration tree now supports deletion of nodes with the keyboard
-            Delete key and will popup the Add menu with the Insert key. </li>
-        <li>InstallerEditor: components can be dragged and dropped between nodes. </li>
-        <li>InstallerEditor: the About box can be closed with the Escape key. </li>
+            Delete key and will popup the Add menu with the Insert key.</li>
+        <li>InstallerEditor: components can be dragged and dropped between nodes.</li>
+        <li>InstallerEditor: the About box can be closed with the Escape key.</li>
         <li>InstallerEditor: added Expand All, Collapse All, Move, Move Up and Move Down context
             menu items.</li>
         <li>InstallerEditor: Shift+Up and Shift+Down arrows move components up and down.</li>
@@ -424,7 +424,7 @@
             button messages.</li>
         <li>InstallerEditor: added shortcuts to open a configuration file (Ctrl+O), create a
             new configuration file (Ctrl+N), save the current configuration (Ctrl+S), generate
-            an exe (F10), exit (Alt+F4) and refresh (F5). </li>
+            an exe (F10), exit (Alt+F4) and refresh (F5).</li>
         <li>InstallerEditor: user no longer prompted for a configuration file name on New.</li>
         <li>InstallerEditor: the New and Open menu items are always enabled.</li>
         <li>InstallerEditor: added a status strip that reports general information, including
@@ -441,7 +441,7 @@
         <li>DotNetInstaller: warns and offers the user to abort if configuration was not generated
             with a matching version of InstallerEditor.</li>
         <li>DotNetInstaller: merged functionality of the Advanced component selector into the
-            main window, removed the Advanced button. </li>
+            main window, removed the Advanced button.</li>
         <li>Added <code>dialog_show_required</code>: when false, required components are hidden.</li>
         <li>Added <code>dialog_show_installed</code>: when false, installed components are hidden.</li>
         <li>Added <code>must_reboot_required</code>: globally and per-component. Setting this
@@ -449,9 +449,9 @@
         <li>Added <code>failed_exec_command_continue</code> per-component extending the global
             setting that defines the message to show when a component fails to install.</li>
         <li>Added optional <code>reboot_required</code>: a message that can be configured per
-            component, extending the global setting. </li>
+            component, extending the global setting.</li>
         <li>Added <code>auto_close_on_error</code>: changes behavior on component error, now
-            optionally closing the bootstrapper. </li>
+            optionally closing the bootstrapper.</li>
         <li>Added a set of options that enable resizing of the main installer dialog elements:
             dialog_position <code>dialog_components_list_position</code>, <code>dialog_message_position</code>,
             <code>dialog_bitmap_position</code>, <code>dialog_otherinfo_link_position</code>,
@@ -478,14 +478,14 @@
         <li>dotNetInstaller process exit code is now 0 on success, MSI return code on an MSI
             component failure, process exit code on a non-zero cmd component return, -2 on cancel
             from main dialog and -1 on any other error. Check <code>%ERRORLEVEL%</code> in batch
-            scripts. </li>
+            scripts.</li>
         <li>Silent install support was extended to a full UI, basic UI and no UI mode, silent
             install no longer pops up progress dialogs, while basic UI install does without
             requiring user interaction. All UI modes are enabled via configuration and can be
             overriden from command line with /q (silent), /qb (basic UI) and /nq (full UI).</li>
         <li>Hidden folders and files are no longer embedded.</li>
         <li>Added <code>installation_none</code>, displayed instead of <code>installation_complete</code>
-            when no components were required. </li>
+            when no components were required.</li>
         <li>Bug: cancel has no effect on the download dialog before download starts.</li>
         <li>Bug: download dialog will no longer appear when download is not required.</li>
         <li>Bug: command-line parameters are not preserved on reboot.</li>
@@ -570,123 +570,122 @@
         <li>dotNetInstaller can now recognize Windows Vista (Thanks to Rennie Petersen)</li>
         <li>Included .NET 2 components on the InstallerEditor templates (Thanks to Rennie Petersen)</li>
         <li>Added OS filter functionality. You can now specify on which OS your setup will be
-            running. </li>
+            running.</li>
         <li>In the complete_command you can now use environment variables (e.g. %Temp%)</li>
         <li>A template for german language is available in the InstallerEditor\templates\ folder
-            (Thanks to Rainer Halanek for the translation) </li>
-        <li>Converted the projects to Visual Studio 2005 format. </li>
-        <li>InstallerEditor runs now on top of .NET Framework 2.0. </li>
-        <li>For a registry search the root key is now selectable. (Thanks to Steve) </li>
+            (Thanks to Rainer Halanek for the translation)</li>
+        <li>Converted the projects to Visual Studio 2005 format.</li>
+        <li>InstallerEditor runs now on top of .NET Framework 2.0.</li>
+        <li>For a registry search the root key is now selectable. (Thanks to Steve)</li>
         <li>For a registry search you can check if a registry field for a registry key exists.
-            (Thanks to Steve) </li>
+            (Thanks to Steve)</li>
         <li>For a registry search you can check if a registry value contains a string. (Thanks
-            to James Muchmore) </li>
+            to James Muchmore)</li>
         <li>For a registry search you can now check multiline string values (REG_MULTI_SZ).
-            (Thanks to James Muchmore) </li>
+            (Thanks to James Muchmore)</li>
         <li>Removed the old "Component Wizard" command of the InstallerEditor, now replaced
-            by the wizard that read from the template file (components.xml) </li>
+            by the wizard that read from the template file (components.xml)</li>
         <li>Added to subversion a "Samples" folder with the structure of the SupportFiles folder
-            and one sample application </li>
+            and one sample application</li>
     </ul>
     <h3>
         1.2.2.0 (8/3/2004)</h3>
     <ul>
-        <li>New article section: <a href="#Samples">Samples</a>. </li>
-        <li>Changed the timeout of the download to 20 seconds. </li>
+        <li>New article section: <a href="#Samples">Samples</a>.</li>
+        <li>Changed the timeout of the download to 20 seconds.</li>
         <li>Fixed a bug when loading configuration file from the resources, used by the "Build
-            Exe" features. </li>
-        <li>Added Win2000 Sp4 at "Component Wizard" list. </li>
-        <li>Added Win2000 Sp3 as requirements for Jet 4 Sp8. </li>
+            Exe" features.</li>
+        <li>Added Win2000 Sp4 at "Component Wizard" list.</li>
+        <li>Added Win2000 Sp3 as requirements for Jet 4 Sp8.</li>
         <li>Changed the samples with the service pack 4 of Win 2000 and used the auto download
-            features with the Web Setup Sample. </li>
-        <li>Updated Sample directory in the zip file. </li>
+            features with the Web Setup Sample.</li>
+        <li>Updated Sample directory in the zip file.</li>
         <li>Fixed a bug when reading and writing unicode strings using RegQueryValueEx and RegSetValueEx
-            (used for the autorun fetures and registry features) </li>
+            (used for the autorun fetures and registry features)</li>
         <li>Changed utility function FileExistsCustom using GetFileAttributes. This seems to
-            be the best way to check if a file exist. </li>
+            be the best way to check if a file exist.</li>
         <li>Added a new Component Wizard to InstallerEditor (Component Wizard 2) with the Italian
             version of the Components and an easier customization. The wizard use a resource
             file (components.xml) to populate the available components so you can add you custom
             component using this file. This change has no impact on the final configuration
-            file. </li>
+            file.</li>
         <li>Added NT4 Sp6 High Encryption, NT4 Sp6 Standard Encryption and MDAC 2.8 Italian
-            to the directory of SupportFiles. </li>
+            to the directory of SupportFiles.</li>
         <li>The configuration XML structure is the same as the previous release, you can use
-            the same configuration files. </li>
+            the same configuration files.</li>
     </ul>
     <h3>
         1.2.0.0 (6/24/2004)</h3>
     <ul>
         <li>New article sections: "Multilanguage features", "1.1.0.2 to 1.2.0.0 changes of XML
-            file", "Deploy dotNetInstaller" and "System Requirements Notes". </li>
+            file", "Deploy dotNetInstaller" and "System Requirements Notes".</li>
         <li>Improved dotNetInstaller userinterface for a better interaction and a more customizable
-            setup for advanced users. </li>
+            setup for advanced users.</li>
         <li>Changed structure of XML configuration file for new features, you can use the Installer
-            Editor to update your old configuration files. </li>
+            Editor to update your old configuration files.</li>
         <li>Before using the TEMP directory check if the directory exist and if not exist try
-            to create it (see GetTempPath function on MSDN help). </li>
+            to create it (see GetTempPath function on MSDN help).</li>
         <li>Added a progress bar control when installing components, thanks to Peter Mares for
             <a href="http://www.codeproject.com/miscctrl/kcbusyprogress.asp">A new progress bar
-                for all occassions..."</a> </li>
+                for all occassions..."</a></li>
         <li>Now the editor can use a list of template files to customize the language of the
-            intstaller. </li>
+            intstaller.</li>
         <li>Added a customizable link at the bottom of the main dialog, thanks to Franz Wong
             for <a href="http://www.codeguru.com/Cpp/controls/staticctrl/article.php/c5801/">Simple
-                Hyperlink Static Control</a>. </li>
+                Hyperlink Static Control</a>.</li>
         <li>Added full UTF-8 support fot the configuration file, the editor and the installer.
-        </li>
+       </li>
         <li>Now dotNetInstaller is compiled using UNICODE for full compatibility with non english
             language. For Win 9x and ME now you must distribuite with dotNetInstaller.exe the
             Microsoft Layer for Unicode, unicows.dll.</li>
         <li>Now I use TinyXml to parse XML file for best compatibility on UTF-8 and XML standards.
-        </li>
-        <li>Added enum for Windows Xp Sp2 (winXPsp2 = 82). </li>
+       </li>
+        <li>Added enum for Windows Xp Sp2 (winXPsp2 = 82).</li>
         <li>Added "/log" command line parameters for dotNetInstaller to enable a basic log file
-            during installation. </li>
+            during installation.</li>
         <li>Now using auto_close_if_installed attribute and complete_command you can close automatically
             dotNetInstaller when all the components are installed and execute an optional commands.
-        </li>
+       </li>
         <li>Updated the structure of the SupportFiles directory and added MDAC 2.8, Jet4 Sp8.
-        </li>
-        <li>Removed Y2K Update for Windows 98 in the list of requirements components. </li>
+       </li>
+        <li>Removed Y2K Update for Windows 98 in the list of requirements components.</li>
         <li>Improved InstallerEditor and added wizard for MDAC 2.8, Internet Explorer 6Sp1,
-            Jet 4 Sp8 and NT4 Sp6a. </li>
+            Jet 4 Sp8 and NT4 Sp6a.</li>
         <li>Changed some steps of the tutorials to add unicows.dll and to zip the web setup.
-        </li>
-        <li>Fixed command line parameters for MDAC installation quiet mode. </li>
+       </li>
+        <li>Fixed command line parameters for MDAC installation quiet mode.</li>
         <li>Changed the tutorials for 'How to create a Web Setup to install .NET Framework and
-            your msi setup'. </li>
+            your msi setup'.</li>
     </ul>
     <h3>
         1.1.0.2 (1/6/2004)</h3>
     <ul>
-        <li>Removed SourceCode control from the projects. </li>
+        <li>Removed SourceCode control from the projects.</li>
     </ul>
     <h3>
         1.1.0.2 (1/2/2004)</h3>
     <ul>
-        <li>Added ability to download required components from the web. </li>
-        <li>Added #TEMPPATH path variable. </li>
-        <li>Editor to create and modify XML configuration file. </li>
-        <li>Many changes to the XML structure, old files are not compatible. </li>
-        <li>Fixed a bug on the function that read the operating system LCID and others small
-            bugs fixing. </li>
+        <li>Added ability to download required components from the web.</li>
+        <li>Added #TEMPPATH path variable.</li>
+        <li>Editor to create and modify XML configuration file.</li>
+        <li>Many changes to the XML structure, old files are not compatible.</li>
+        <li>Fixed a bug on the function that reads the operating system LCID.</li>
     </ul>
     <h3>
         1.0.8.0 (11/5/2003)</h3>
     <ul>
-        <li>Added #WINDOWSPATH path constant. </li>
+        <li>Added #WINDOWSPATH path constant.</li>
     </ul>
     <h3>
         1.0.7.0 (9/28/2003)</h3>
     <ul>
         <li>Bug fixed on MDAC and JET components configuration file (registry check to REG_SZ
-            and language support for JET). </li>
+            and language support for JET).</li>
     </ul>
     <h3>
         1.0.7.0 (9/27/2003)</h3>
     <ul>
-        <li>First public release. </li>
+        <li>First public release.</li>
     </ul>
 </body>
 </html>

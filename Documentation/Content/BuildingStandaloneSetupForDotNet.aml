@@ -36,7 +36,7 @@
         <step>
           <content>
             <para>
-              Copy your msi package (that you can create with Visual Studio .NET, InstallShield or others installation tool)
+              Copy your msi package (that you can create with Visual Studio .NET, InstallShield or other installation tool)
               under the <localUri>c:\MyRelease\</localUri>.
             </para>
           </content>

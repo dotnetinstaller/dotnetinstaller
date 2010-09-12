@@ -22,7 +22,7 @@ There are three types of variables:
 		cancel_caption = "Close"
 		dialog_caption = "##APPLICATION_NAME Installer"
 		dialog_message = "In order to install ##APPLICATION_NAME you must first install these components:"
-		failed_exec_command_continue = "Failed to install %s. Continue with others components?"
+		failed_exec_command_continue = "Failed to install %s. Continue with other components?"
 		skip_caption = "Skip" 
 		install_caption = "Install"
 		uninstall_caption = "Uninstall"
