@@ -19,7 +19,7 @@ namespace InstallerLib
         public Download(string p_DownloadPath)
         {
             m_componentname = "Download File";
-            m_sourceurl = "http://www.yourwebsite.com/SetupX/Setup.exe";
+            m_sourceurl = "http://www.example.com/Setup/Setup.exe";
             m_destinationpath = "#TEMPPATH\\" + p_DownloadPath;
             m_destinationfilename = "";
         }
@@ -34,7 +34,7 @@ namespace InstallerLib
         }
 
         private string m_sourceurl;
-        [Description("Complete source path of the file to download. For example 'http://www.yourwebsite.com/SetupX/Setup.exe'. Must be URL with http:// or ftp:// protocol.")]
+        [Description("Complete source path of the file to download. For example 'http://www.example.com/SetupX/Setup.exe'. Must be URL with http:// or ftp:// protocol.")]
         [Required]
         public string sourceurl
         {

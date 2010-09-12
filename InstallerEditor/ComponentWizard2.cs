@@ -266,7 +266,7 @@ namespace InstallerEditor
 			public override Component[] CreateComponent(string p_WebSetupPath, string StandardPath)
 			{
 				m_RawXml = m_RawXml.Replace("#APPPATH\\SupportFiles", StandardPath);
-				m_RawXml = m_RawXml.Replace("http://www.YOURWEBSITE.com/MyApp/SupportFiles", p_WebSetupPath);
+				m_RawXml = m_RawXml.Replace("http://www.example.com/MyApp/SupportFiles", p_WebSetupPath);
 
 				System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
 				doc.LoadXml(m_RawXml);
