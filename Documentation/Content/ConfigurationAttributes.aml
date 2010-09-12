@@ -37,18 +37,59 @@
       <content>
         <para>
           The following attributes are reserved by the Windows shell. Their names are translated and presented in the language
-          of the operating system.
+          of the operating system. For more information see
+          <externalLink>
+            <linkText>VERSIONINFO Resource on MSDN</linkText>
+            <linkUri>http://msdn.microsoft.com/en-us/library/aa381058(VS.85).aspx</linkUri>.
+          </externalLink>
           <tableDefinition>
-            <definedTerm>ProductName</definedTerm>
-            <definition>Product name.</definition>
-            <definedTerm>FileDescription</definedTerm>
-            <definition>File description.</definition>
+            <definedTerm>Comments</definedTerm>
+            <definition>
+              Additional information that should be displayed for diagnostic purposes.
+            </definition>
             <definedTerm>CompanyName</definedTerm>
-            <definition>Name of the manufacturer.</definition>
+            <definition>
+              Company that produced the file.
+            </definition>
+            <definedTerm>FileDescription</definedTerm>
+            <definition>
+              File description to be presented to users.
+            </definition>
+            <definedTerm>FileVersion</definedTerm>
+            <definition>
+              Version number of the file.
+            </definition>
+            <definedTerm>InternalName</definedTerm>
+            <definition>
+              Internal name of the file, if one exists—for example, a module name if the file is a dynamic-link library.
+              If the file has no internal name, this string should be the original filename, without extension.
+            </definition>
             <definedTerm>LegalCopyright</definedTerm>
-            <definition>Copyright notice.</definition>
+            <definition>
+              Copyright notices that apply to the file. This should include the full text of all notices,
+              legal symbols, copyright dates, and so on.
+            </definition>
+            <definedTerm>LegalTrademarks</definedTerm>
+            <definition>
+              Trademarks and registered trademarks that apply to the file. This should include the full text
+              of all notices, legal symbols, trademark numbers, and so on.
+            </definition>
+            <definedTerm>OriginalFilename</definedTerm>
+            <definition>
+              Original name of the file, not including a path. This information enables an application to
+              determine whether a file has been renamed by a user. The format of the name depends on the file system
+              for which the file was created.
+            </definition>
+            <definedTerm>ProductName</definedTerm>
+            <definition>
+              Name of the product with which the file is distributed.
+            </definition>
+            <definedTerm>ProductVersion</definedTerm>
+            <definition>
+              Version of the product with which the file is distributed.
+            </definition>
           </tableDefinition>
-          You can also define additional attributes with the name of your choosing. These have no special meaning 
+          You can also define additional attributes with the name of your choosing. These have no special meaning
           for the operating system and don't appear along the reserved attributes in the properties screens. They
           are embedded with the executable and may be used by proprietary software.
         </para>

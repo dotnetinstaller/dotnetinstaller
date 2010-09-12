@@ -62,7 +62,10 @@ namespace InstallerLib
             }
 
             if (!string.IsNullOrEmpty(configfile.fileversion))
+            {
                 rc.FileVersion = configfile.fileversion;
+                stringFileInfo["FileVersion"] = configfile.fileversion;
+            }
 
             foreach (FileAttribute attr in configfile.fileattributes)
             {
