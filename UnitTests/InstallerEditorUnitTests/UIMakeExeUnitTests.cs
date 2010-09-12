@@ -41,7 +41,8 @@ namespace InstallerEditorUnitTests
                     Window mainWindow = installerEditor.GetWindow(string.Format("Installer Editor - {0}", configFileName), InitializeOption.NoCache);
                     // create exe dialog
                     UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Create Exe...").Click();
-                    Window createExeWindow = mainWindow.ModalWindow("createExe");
+                    Window createExeWindow = mainWindow.ModalWindow("Create Executable");
+                    Console.WriteLine(dotNetInstallerExeUtils.Executable);
                     UIAutomation.Find<TextBox>(createExeWindow, "txtTemplateFile").Text = dotNetInstallerExeUtils.Executable;
                     UIAutomation.Find<Button>(createExeWindow, "btMake").Click();
                     // make opens a Save As dialog

@@ -93,7 +93,7 @@ namespace dotNetUnitTestsRunner
                 {
                     throw new Exception("Missing executable in .config");
                 }
-                Assert.IsTrue(File.Exists(executable));
+                Assert.IsTrue(File.Exists(executable), string.Format("Executable '{0}' doesn't exist.", executable));
                 return executable;
             }
         }

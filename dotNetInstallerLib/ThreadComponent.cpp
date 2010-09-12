@@ -56,8 +56,6 @@ void ThreadComponent::Exec()
 
 void ThreadComponent::BeginExec()
 {
-	ASSERT(NULL == get(m_pThread));
-
     reset(m_pThread, AfxBeginThread(ExecuteThread, this, THREAD_PRIORITY_NORMAL, 0, CREATE_SUSPENDED));
 
 	CHECK_WIN32_BOOL(get(m_pThread) != NULL,
@@ -72,4 +70,5 @@ void ThreadComponent::EndExec()
 	WaitForCompletion();
 	CHECK_BOOL(m_error.empty(), m_error);
 	CHECK_BOOL(m_rc == 0, L"Component failed with error code: " << m_rc);
+	reset(m_pThread);
 }

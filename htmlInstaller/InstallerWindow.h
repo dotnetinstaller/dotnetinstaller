@@ -6,6 +6,8 @@ class InstallerWindow : public HtmlWindow, public ThreadComponent,
 	public InstallerUI, public IExecuteCallback, public IDownloadCallback
 {
 private:
+	bool m_download_started;
+	bool m_download_cancelled;
 	DownloadDialogPtr m_downloaddialog;
 	htmlayout::dom::element components;
 	htmlayout::dom::element button_install;
@@ -61,6 +63,7 @@ public:
 public:
 	void OnInstall();
 	void OnOK();
+	void OnCancel();
 	void ShowError(const std::wstring&);
 	void ClearError();
 	// progress

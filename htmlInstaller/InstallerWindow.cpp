@@ -8,6 +8,8 @@
 #include "DownloadWindow.h"
 
 InstallerWindow::InstallerWindow()
+	: m_download_started(false)
+	, m_download_cancelled(false)
 {
 
 }
@@ -132,9 +134,14 @@ BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS typ
 	try
 	{
 		htmlayout::dom::element target_element = target;
-		if (type == BUTTON_CLICK && (button_cancel == target_element || button_skip == target_element))
+		if (type == BUTTON_CLICK && button_skip == target_element)
 		{
 			OnOK();
+			return TRUE;
+		}
+		else if (type == BUTTON_CLICK && button_cancel == target_element)
+		{
+			OnCancel();
 			return TRUE;
 		}
 		else if (type == BUTTON_CLICK && (button_install == target_element || button_uninstall == target_element))
@@ -163,9 +170,24 @@ BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS typ
 }
 
 void InstallerWindow::OnOK()
-{
+{	
 	Stop();
 }
+
+void InstallerWindow::OnCancel()
+{
+	RecordError(-2);
+
+	if (m_download_started)
+	{
+		m_download_cancelled = true;
+	}
+	else
+	{
+		Stop();
+	}
+}
+
 
 void InstallerWindow::OnInstall()
 {
@@ -305,8 +327,6 @@ int InstallerWindow::ExecOnThread()
 	{
 		auto_any<htmlayout::dom::element *, html_disabled> btn_install(& button_install);
 		htmlayout::queue::push(new html_set_attribute_task(& button_install, "disabled", L"disabled"), HtmlWindow::s_hwnd);
-		auto_any<htmlayout::dom::element *, html_disabled> btn_cancel(& button_cancel);
-		htmlayout::queue::push(new html_set_attribute_task(& button_cancel, "disabled", L"disabled"), HtmlWindow::s_hwnd);
 		auto_any<htmlayout::dom::element *, html_disabled> btn_skip(& button_skip);
 		htmlayout::queue::push(new html_set_attribute_task(& button_skip, "disabled", L"disabled"), HtmlWindow::s_hwnd);
 
@@ -364,7 +384,7 @@ void InstallerWindow::Status(ULONG progress_current, ULONG progress_max, const s
 
 void InstallerWindow::DownloadComplete()
 {
-
+	m_download_started = false;
 }
 
 void InstallerWindow::DownloadError(const std::wstring& error)
@@ -372,15 +392,17 @@ void InstallerWindow::DownloadError(const std::wstring& error)
 	SetStatus(L"");
 	ShowError(error);
 	RecordError();
+	m_download_started = false;
 }
 
 bool InstallerWindow::IsDownloadCancelled() const
 {
-	return false;
+	return m_download_cancelled;
 }
 
 void InstallerWindow::DownloadingFile(const std::wstring& filename)
 {
+	m_download_started = true;
 	CHECK_BOOL(get(m_downloaddialog) != NULL, L"Invalid download dialog");
 	std::wstring message = DVLib::FormatMessage(const_cast<wchar_t *>(m_downloaddialog->downloading_message.GetValue().c_str()), filename.c_str());
 	SetStatus(message);
@@ -388,6 +410,7 @@ void InstallerWindow::DownloadingFile(const std::wstring& filename)
 
 void InstallerWindow::CopyingFile(const std::wstring& filename)
 {
+	m_download_started = true;
 	CHECK_BOOL(get(m_downloaddialog) != NULL, L"Invalid download dialog");
 	std::wstring message = DVLib::FormatMessage(const_cast<wchar_t *>(m_downloaddialog->copying_message.GetValue().c_str()), filename.c_str());
 	SetStatus(message);
