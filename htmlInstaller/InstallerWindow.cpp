@@ -126,7 +126,7 @@ void InstallerWindow::AddComponent(const ComponentPtr& component)
 	if (component->disabled) opt["disabled"] = L"true";
 	opt["installed"] = (component->installed ? L"true" : L"false");
 	opt["required"] = (component->IsRequired() ? L"true" : L"false");
-	htmlayout::queue::push(new html_insert_task(& components, opt, components.children_count()), HtmlWindow::s_hwnd);
+	htmlayout::queue::push(new html_insert_task(& components, opt, html_insert_task::last), HtmlWindow::s_hwnd);
 }
 
 BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason)

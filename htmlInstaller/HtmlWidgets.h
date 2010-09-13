@@ -124,6 +124,7 @@ struct html_insert_task : public widget_task
 {
 	htmlayout::dom::element m_widget;
 	unsigned int m_index;
+	static const int last = -1;
 
 	html_insert_task(htmlayout::dom::element * p, 
 		htmlayout::dom::element widget, unsigned int index)
@@ -136,7 +137,14 @@ struct html_insert_task : public widget_task
 
 	virtual void exec_valid()
 	{
-		m_p->insert(m_widget, m_index);
+		int index = m_index;
+		
+		if (m_index == last)
+		{
+			index = m_p->children_count();
+		}
+
+		m_p->insert(m_widget, index);
 	}
 };
 
