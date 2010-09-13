@@ -202,6 +202,7 @@ void InstallerWindow::ShowError(const std::wstring& message)
 
 void InstallerWindow::ClearError() 
 { 
+	m_download_cancelled = false;
 	InstallerUI::ClearError();
 	htmlayout::queue::push(new html_set_style_attribute_task(& error, "display", L"none"), HtmlWindow::s_hwnd);
 	htmlayout::queue::push(new html_set_text_task(& error, L""), HtmlWindow::s_hwnd);
@@ -393,6 +394,7 @@ void InstallerWindow::DownloadError(const std::wstring& error)
 	ShowError(error);
 	RecordError();
 	m_download_started = false;
+	m_download_cancelled = false;
 }
 
 bool InstallerWindow::IsDownloadCancelled() const

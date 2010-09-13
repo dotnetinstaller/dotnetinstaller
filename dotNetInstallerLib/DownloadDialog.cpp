@@ -60,7 +60,9 @@ int DownloadDialog::ExecOnThread()
 			for (size_t i = 0; i < downloadfiles.size(); i++)
 			{
 				if (callback && callback->IsDownloadCancelled())
+				{
 					return -2;
+				}
 
 				downloadfiles[i]->Exec(callback);
 			}
