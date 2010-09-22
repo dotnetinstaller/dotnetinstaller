@@ -5,6 +5,7 @@ class ControlLicense : public ControlText
 {
 public:
     ControlLicense();
+	~ControlLicense();
 public:
 	XmlAttribute resource_id;
 	XmlAttribute license_file;

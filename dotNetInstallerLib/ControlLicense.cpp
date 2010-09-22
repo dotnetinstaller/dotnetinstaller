@@ -25,3 +25,12 @@ std::wstring ControlLicense::GetString() const
 	ss << L"'license' control, " << ControlText::GetString();
 	return ss.str();
 }
+
+ControlLicense::~ControlLicense()
+{
+	if (! license_file.empty() && DVLib::FileExists(license_file))
+	{
+		LOG("Deleting '" << license_file << L"'");
+		DVLib::FileDelete(license_file);
+	}
+}

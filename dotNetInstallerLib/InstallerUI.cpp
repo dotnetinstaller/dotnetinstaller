@@ -445,15 +445,13 @@ void InstallerUI::Terminate()
 {
 	try
 	{
-        // delete temporary directory
-        // even if a reboot is required, the temporary folder is gone; next run will re-extract components
+        // delete CAB path
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-        std::wstring cabpath = (! p_configuration->cab_path.empty()) ? p_configuration->cab_path : InstallerSession::Instance->GetSessionTempPath(true);
-		cabpath = InstallerSession::Instance->ExpandVariables(cabpath);
+        std::wstring cabpath = InstallerSession::Instance->GetSessionCabPath(true);
 		if (p_configuration->cab_path_autodelete && ! cabpath.empty() && DVLib::DirectoryExists(cabpath))
         {
-		    LOG(L"Deleting temporary folder: " << cabpath);
+		    LOG(L"Deleting CAB folder: " << cabpath);
 			DVLib::DirectoryDelete(cabpath);
         }
 	}
@@ -610,7 +608,7 @@ void InstallerUI::AddUserControls()
 				ControlLicense * control_license = (ControlLicense *) get(control);
 				// extract license to temporary location
 				std::vector<char> license_buffer = DVLib::LoadResourceData<char>(NULL, control_license->resource_id, L"CUSTOM");
-				std::wstring license_file = DVLib::DirectoryCombine(InstallerSession::Instance->GetSessionTempPath(), DVLib::GetFileNameW(control_license->license_file));
+				std::wstring license_file = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), InstallerSession::Instance->guid + L"_" + DVLib::GetFileNameW(control_license->license_file));
 				LOG(L"Extracting license '" << control_license->resource_id << L"' to " << license_file);
 				DVLib::FileWrite(license_file, license_buffer);
 				control_license->license_file = license_file;

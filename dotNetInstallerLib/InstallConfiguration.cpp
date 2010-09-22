@@ -48,7 +48,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
 
     // defines where to extract files and auto-delete options
     cab_path = node->Attribute("cab_path");
-	InstallerSession::Instance->SessionCABPath = cab_path.GetValue();
+	InstallerSession::Instance->cabpath = cab_path.GetValue();
     cab_path_autodelete = XmlAttribute(node->Attribute("cab_path_autodelete")).GetBoolValue(true);
     // positions within the dialog
     dialog_position.FromString(DVLib::UTF8string2wstring(node->Attribute("dialog_position")));

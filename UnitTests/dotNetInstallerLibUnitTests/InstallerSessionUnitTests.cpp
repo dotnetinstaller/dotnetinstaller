@@ -7,7 +7,7 @@ using namespace DVLib::UnitTests;
 
 void InstallerSessionUnitTests::testExpandPathVariables()
 {
-	CPPUNIT_ASSERT(InstallerSession::Instance->GetSessionTempPath() == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH"));
+	CPPUNIT_ASSERT(InstallerSession::Instance->GetSessionCabPath() == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH"));
 	CPPUNIT_ASSERT(DVLib::GetModuleDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#APPPATH"));
 	CPPUNIT_ASSERT(DVLib::GetSystemDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#SYSTEMPATH"));
 	CPPUNIT_ASSERT(DVLib::GetWindowsDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#WINDOWSPATH"));
@@ -40,26 +40,26 @@ void InstallerSessionUnitTests::testExpandPathVariablesBackslashes()
 	std::wstring path_with_bs = path_without_bs + L"\\";
 	// without
 	std::wcout << std::endl << L"Path: " << path_without_bs;
-	InstallerSession::Instance->SessionCABPath = path_without_bs;
+	InstallerSession::Instance->cabpath = path_without_bs;
 	std::wstring path_without_bs_subdir = DVLib::DirectoryCombine(path_without_bs, L"s1\\s2");
 	std::wcout << std::endl << L"Subdir: " << path_without_bs_subdir;
 	std::wstring path_without_bs_expanded = InstallerSession::Instance->ExpandPathVariables(L"#CABPATH\\s1\\s2");
 	std::wcout << std::endl << L"Expanded: " << path_without_bs_expanded;
 	CPPUNIT_ASSERT(path_without_bs_subdir == path_without_bs_expanded);
 	// more without combinations
-	InstallerSession::Instance->SessionCABPath = path_without_bs;
+	InstallerSession::Instance->cabpath = path_without_bs;
 	CPPUNIT_ASSERT(path_without_bs == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH"));
 	CPPUNIT_ASSERT(path_with_bs == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH\\"));
 	// with
 	std::wcout << std::endl << L"Path: " << path_with_bs;
-	InstallerSession::Instance->SessionCABPath = path_with_bs;
+	InstallerSession::Instance->cabpath = path_with_bs;
 	std::wstring path_with_bs_subdir = DVLib::DirectoryCombine(path_with_bs, L"s1\\s2");
 	std::wcout << std::endl << L"Subdir: " << path_with_bs_subdir;
 	std::wstring path_with_bs_expanded = InstallerSession::Instance->ExpandPathVariables(L"#CABPATH\\s1\\s2");
 	std::wcout << std::endl << L"Expanded: " << path_with_bs_expanded;
 	CPPUNIT_ASSERT(path_with_bs_subdir == path_with_bs_expanded);
 	// more with combinations
-	InstallerSession::Instance->SessionCABPath = path_with_bs;
+	InstallerSession::Instance->cabpath = path_with_bs;
 	CPPUNIT_ASSERT(path_with_bs == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH"));
 	CPPUNIT_ASSERT(path_with_bs == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH\\"));
 }

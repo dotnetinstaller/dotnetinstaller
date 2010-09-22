@@ -48,7 +48,7 @@ int ExtractComponent::GetCabCount() const
 
 void ExtractComponent::ResolvePaths()
 {
-	resolved_cab_path = cab_path.empty() ? InstallerSession::Instance->GetSessionTempPath() : cab_path; 
+	resolved_cab_path = cab_path.empty() ? InstallerSession::Instance->GetSessionCabPath() : cab_path; 
 	resolved_cab_path = InstallerSession::Instance->ExpandVariables(resolved_cab_path);	
 	LOG(L"Resolved CAB path '" << resolved_cab_path << L"' for component '" << (component_id.empty() ? L"*" : component_id) << L"'");
 	DVLib::DirectoryCreate(resolved_cab_path);

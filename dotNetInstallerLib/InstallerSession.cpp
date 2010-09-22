@@ -17,15 +17,15 @@ InstallerSession::InstallerSession()
 
 }
 
-std::wstring InstallerSession::GetSessionTempPath(bool returnonly)
+std::wstring InstallerSession::GetSessionCabPath(bool returnonly)
 {
-	if (m_tempDirectory.empty() && ! returnonly)
+	if (cabpath.empty() && ! returnonly)
     {
-		m_tempDirectory = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), guid);
-		DVLib::DirectoryCreate(m_tempDirectory);
+		cabpath = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), guid);
+		DVLib::DirectoryCreate(cabpath);
     }
 
-    return m_tempDirectory;
+    return ExpandVariables(cabpath);
 }
 
 std::wstring InstallerSession::ExpandVariables(const std::wstring& value)
@@ -73,7 +73,7 @@ std::wstring InstallerSession::ExpandPathVariables(const std::wstring& path)
 			std::wstring name = s.substr(i + 1, j - i - 1);
 			std::wstring value;
 			if (name == L"CABPATH")
-				value = SessionCABPath.empty() ? GetSessionTempPath() : SessionCABPath;
+				value = GetSessionCabPath();
 			else if (name == L"APPPATH")
 				value = DVLib::GetModuleDirectoryW();
 			else if (name == L"SYSTEMPATH")
