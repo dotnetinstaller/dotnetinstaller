@@ -274,7 +274,7 @@ public:
     {
         #ifdef SMART_ANY_PTS
         // You better not be applying operator-> to a handle!
-        static detail::static_assert<!detail::is_handle<T>::value> const cannot_dereference_a_handle;
+        static detail::static_assert_macro<!detail::is_handle<T>::value> const cannot_dereference_a_handle;
         #endif
         assert( m_held.valid() );
         return safe_types::to_pointer( m_held.m_t );
@@ -284,8 +284,8 @@ public:
     // if this shared_any is managing an array, we can use operator[] to index it
     typename detail::deref<T>::type operator[]( int i ) const
     {
-        static detail::static_assert<!detail::is_handle<T>::value> const cannot_dereference_a_handle;
-        static detail::static_assert<!detail::is_delete<close_policy>::value> const accessed_like_an_array_but_not_deleted_like_an_array;
+        static detail::static_assert_macro<!detail::is_handle<T>::value> const cannot_dereference_a_handle;
+        static detail::static_assert_macro<!detail::is_delete<close_policy>::value> const accessed_like_an_array_but_not_deleted_like_an_array;
         assert( m_held.valid() );
         return m_held.m_t[ i ];
     }
@@ -295,7 +295,7 @@ public:
     // foo & f = *pfoo;
     reference_type operator*() const
     {
-        static detail::static_assert<!detail::is_handle<T>::value> const cannot_dereference_a_handle;
+        static detail::static_assert_macro<!detail::is_handle<T>::value> const cannot_dereference_a_handle;
         assert( m_held.valid() );
         return safe_types::to_reference( m_held.m_t );
     }
