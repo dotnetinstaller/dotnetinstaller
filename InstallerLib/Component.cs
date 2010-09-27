@@ -159,7 +159,7 @@ namespace InstallerLib
         public string id
         {
             get { return m_id; }
-            set { m_id = value; OnIdChanged(); }
+            set { m_id = value; OnDisplayChanged(); }
         }
 
         private string m_display_name;
@@ -169,7 +169,7 @@ namespace InstallerLib
         public string display_name
         {
             get { return m_display_name; }
-            set { m_display_name = value; OnDisplayNameChanged(); }
+            set { m_display_name = value; OnDisplayChanged(); }
         }
 
         private string m_uninstall_display_name;
@@ -178,7 +178,7 @@ namespace InstallerLib
         public string uninstall_display_name
         {
             get { return m_uninstall_display_name; }
-            set { m_uninstall_display_name = value; OnDisplayNameChanged(); }
+            set { m_uninstall_display_name = value; OnDisplayChanged(); }
         }
 
         private bool m_required_install = false;
@@ -302,25 +302,15 @@ namespace InstallerLib
 
         #region Events
 
-        protected void OnDisplayNameChanged()
+        protected void OnDisplayChanged()
         {
-            if (DisplayNameChanged != null)
+            if (DisplayChanged != null)
             {
-                DisplayNameChanged(this, EventArgs.Empty);
+                DisplayChanged(this, EventArgs.Empty);
             }
         }
 
-        public event EventHandler DisplayNameChanged;
-
-        protected void OnIdChanged()
-        {
-            if (IdChanged != null)
-            {
-                IdChanged(this, EventArgs.Empty);
-            }
-        }
-
-        public event EventHandler IdChanged;
+        public event EventHandler DisplayChanged;
 
         #endregion
 

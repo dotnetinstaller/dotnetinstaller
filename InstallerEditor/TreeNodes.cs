@@ -387,7 +387,7 @@ namespace InstallerEditor
             }
             set
             {
-                value.IdChanged += new EventHandler(OnIdChanged);
+                value.DisplayChanged += new EventHandler(OnDisplayChanged);
                 base.Instance = value;
             }
         }
@@ -402,7 +402,7 @@ namespace InstallerEditor
             }
         }
 
-        private void OnIdChanged(object sender, EventArgs e)
+        private void OnDisplayChanged(object sender, EventArgs e)
         {
             Text = XmlNodeText;
         }
