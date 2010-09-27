@@ -49,7 +49,7 @@ ATOM  HtmlWindow::RegisterClass(HINSTANCE hInstance)
 	wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
 	wcex.lpszMenuName   = 0;
 	wcex.lpszClassName  = CLASSNAME;
-	wcex.hIconSm        = LoadIcon(wcex.hInstance, (LPCTSTR) IDI_HTMLINSTALLER_SMALL);
+	wcex.hIconSm        = LoadIcon(wcex.hInstance, (LPCTSTR) IDI_HTMLINSTALLER);
 
 	return RegisterClassExW(&wcex);
 }

@@ -73,6 +73,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AdditionalManifestFiles="$(ProjectDir)$(TargetFileName).manifest"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -150,6 +151,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AdditionalManifestFiles="$(ProjectDir)$(TargetFileName).manifest"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -328,6 +330,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\htmlInstaller.exe.manifest"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
