@@ -11,7 +11,6 @@ LANGUAGE 9, 1
 #pragma code_page(1252)
 
 IDI_HTMLINSTALLER			ICON         "htmlInstaller.ico"
-IDI_HTMLINSTALLER_SMALL     ICON         "small.ico"
 
 #include <Version/Version.h>
 #include <Version/Version.rc>

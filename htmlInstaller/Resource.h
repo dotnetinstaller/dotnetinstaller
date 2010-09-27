@@ -1,6 +1,7 @@
 //{{NO_DEPENDENCIES}}
 
 #define IDS_APP_TITLE				103
-#define IDI_HTMLINSTALLER			104
-#define IDI_HTMLINSTALLER_SMALL		105
 #define IDC_HTMLINSTALLER			106
+
+// InstallerLinker updates resource ID 128 for icon
+#define IDI_HTMLINSTALLER			128

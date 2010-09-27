@@ -3,7 +3,10 @@
 // Used by dotNetInstaller.rc
 //
 #define IDD_DOTNETINSTALLER_DIALOG      102
+
+// InstallerLinker updates resource ID 128 for icon
 #define IDR_MAINFRAME                   128
+
 #define IDD_DIALOGINSTALL               131
 #define IDD_DOWNLOAD_DIALOG             132
 #define IDC_CUSTOM_HAND                 147
