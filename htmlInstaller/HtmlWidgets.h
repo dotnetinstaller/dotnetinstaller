@@ -124,7 +124,7 @@ struct html_insert_task : public widget_task
 {
 	htmlayout::dom::element m_widget;
 	unsigned int m_index;
-	static const int last = -1;
+	static const unsigned int last = 0xFFFF;
 
 	html_insert_task(htmlayout::dom::element * p, 
 		htmlayout::dom::element widget, unsigned int index)
