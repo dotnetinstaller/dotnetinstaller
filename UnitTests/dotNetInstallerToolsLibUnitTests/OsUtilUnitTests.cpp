@@ -197,8 +197,8 @@ void OsUtilUnitTests::testoscode2os()
 		L"winXP", L"winXPsp1", L"winXPsp2", L"winXPsp3", L"winXPMax",
 		L"winServer2003", L"winServer2003R2", L"winServer2003sp1", L"winServer2003R2sp1", L"winServer2003sp2", L"winServer2003R2sp2", L"winServer2003Max",
 		L"winVista", L"winVistaSp1", L"winVistaSp2", L"winVistaMax",
-		L"winServer2008", L"winServer2008R2", L"winServer2008Max",
-		L"win7", L"win7Max",
+		L"winServer2008", L"winServer2008sp2", L"winServer2008R2", L"winServer2008Max",
+		L"win7", L"win7sp1", L"win7Max",
 	};
 
 	for (int i = 0; i < ARRAYSIZE(KnownOperatingSystems); i++)
@@ -226,8 +226,8 @@ void OsUtilUnitTests::testos2wstring()
 		winXP, winXPsp1, winXPsp2, winXPsp3, winXPMax,
 		winServer2003, winServer2003R2, winServer2003sp1, winServer2003R2sp1, winServer2003sp2, winServer2003R2sp2, winServer2003Max,
 		winVista, winVistaSp1, winVistaSp2, winVistaMax,
-		winServer2008, winServer2008R2, winServer2008Max,
-		win7, win7Max,
+		winServer2008, winServer2008sp2, winServer2008R2, winServer2008Max,
+		win7, win7sp1, win7Max,
 	};
 
 	for (int i = 0; i < ARRAYSIZE(KnownOperatingSystems); i++)

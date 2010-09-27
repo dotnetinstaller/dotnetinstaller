@@ -62,10 +62,10 @@ std::wstring InstallerSession::ExpandPathVariables(const std::wstring& path)
 {
 	std::wstring s(path);
 	std::wstring::size_type i = 0, j = 0;	
-	while ((i = s.find(L"#", i)) != s.npos && j != s.npos)
+	while ((i = s.find(L"#", i)) != s.npos && j != s.size())
 	{
 		j = i + 1;
-		while(j != s.npos && isalpha(s[j]))
+		while(j != s.size() && isalpha(s[j]))
 			j++;
 
 		if (i + 1 != j)
@@ -110,7 +110,7 @@ std::wstring InstallerSession::ExpandPathVariables(const std::wstring& path)
 			}
 
 			// don't introduce double-backslashes for paths, bug 4378
-			if (j != s.npos)
+			if (j != s.size())
 			{
 				switch(s[j])
 				{

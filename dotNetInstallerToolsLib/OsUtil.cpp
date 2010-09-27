@@ -32,6 +32,9 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 			if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 1 && osvi.wProductType == VER_NT_WORKSTATION)
 			{
 				os = win7;
+
+				if (osvi.wServicePackMajor >= 1)
+					os = win7sp1;
 			}
 			// Windows Server 2008 R2
 			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 1 && osvi.wProductType != VER_NT_WORKSTATION)
@@ -42,6 +45,9 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType != VER_NT_WORKSTATION)
 			{
 				os = winServer2008;
+
+				if (osvi.wServicePackMajor >= 2)
+					os = winServer2008sp2;
 			}
 			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType == VER_NT_WORKSTATION)
 			{

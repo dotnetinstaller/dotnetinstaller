@@ -51,10 +51,12 @@ namespace InstallerLib
         winVistaMax = 109,
 
         winServer2008 = 110,
-        winServer2008R2 = 111,
+        winServer2008sp2 = 111,
+        winServer2008R2 = 112,
         winServer2008Max = 119,
 
         win7 = 120,
+        win7sp1 = 121,
         win7Max = 129,
     }
 }

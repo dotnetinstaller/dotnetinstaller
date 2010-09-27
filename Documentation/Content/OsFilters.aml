@@ -151,6 +151,10 @@
               <entry>winServer2008</entry>
             </row>
             <row>
+	          <entry>Windows Server 2008 Service Pack 2</entry>
+	          <entry>winServer2008sp2</entry>
+            </row>
+            <row>
               <entry>Windows Server 2008 R2</entry>
               <entry>winServer2008R2</entry>
             </row>
@@ -158,13 +162,17 @@
               <entry>Windows 7</entry>
               <entry>win7</entry>
             </row>
+            <row>
+	          <entry>Windows 7 Service Pack 1</entry>
+	          <entry>win7sp1</entry>
+            </row>
           </table>
         </para>
         <alert class="note">
           <para>
-            Because it's not always knownn what the last version of an operating system is going to be, there exists a 
+            Because it's not always known what the last version of an operating system is going to be, there exists a 
             <literal>max</literal> identifier for every series. For example, use <literal>win7Max</literal> in 
-            <literal>os_filter_max</literal> value to install on Windows 7 and not on the operating system after that.
+            <literal>os_filter_max</literal> value to install on Windows 7 and not on any operating system after that.
           </para>
         </alert>
       </content>
