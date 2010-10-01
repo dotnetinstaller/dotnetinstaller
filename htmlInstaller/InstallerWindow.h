@@ -54,11 +54,14 @@ protected:
 	void AddControl(const ControlImage&);
 	static std::wstring GetPositionStyle(const WidgetPosition& position);
 	static std::wstring GetControlStyle(const ControlText& control);
+	void RunComponent(const ComponentPtr& component);
 public:
 	bool RunDownloadConfiguration(const DownloadDialogPtr& p_Configuration);
 	void Create(int x, int y, int width, int height, const wchar_t * caption = 0);
 	void ResetContent();
 	BOOL on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS type, UINT_PTR reason);
+	BOOL on_mouse(HELEMENT he, HELEMENT target, UINT event_type, POINT pt, UINT mouseButtons, UINT keyboardStates);
+	BOOL on_mouse_click(HELEMENT he, HELEMENT target, UINT event_type, POINT pt, UINT mouseButtons, UINT keyboardStates);
 	int OnMessage(UINT message, WPARAM wParam, LPARAM lParam);
 public:
 	void OnInstall();

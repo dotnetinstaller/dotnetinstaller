@@ -169,6 +169,96 @@ BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS typ
 	}
 }
 
+BOOL InstallerWindow::on_mouse_click(HELEMENT /* he */, HELEMENT target, UINT /* event_type */, 
+	POINT pt, UINT /* mouseButtons */, UINT keyboardStates)
+{
+	if (keyboardStates != 0)
+	{
+		htmlayout::dom::element target_element = target;
+		if (target_element.is_valid())
+		{
+			htmlayout::dom::element component_element = target_element.find_element(GetHwnd(), pt);
+			if (component_element.is_valid())
+			{
+				if (component_element.get_ctl_type() != CTL_CHECKBOX)
+					component_element = component_element.parent();
+
+				if (component_element.is_valid() && component_element.get_ctl_type() == CTL_CHECKBOX)
+				{
+					const wchar_t * component_ptr = component_element.get_attribute("component_ptr");
+					if (component_ptr != NULL)
+					{
+						Component * p_component = reinterpret_cast<Component *>(DVLib::wstring2long(component_ptr, 16));
+
+						if ((keyboardStates & SHIFT_KEY_PRESSED) > 0)
+						{
+							p_component->checked = ! component_element.get_state(STATE_CHECKED);
+							if (p_component->checked)
+							{
+								component_element["checked"] = L"true";
+								component_element.set_state(STATE_CHECKED, 0);
+							}
+							else
+							{
+								component_element.remove_attribute("checked");
+								component_element.set_state(0, STATE_CHECKED);	
+							}
+						}
+						else if ((keyboardStates & CONTROL_KEY_PRESSED) > 0)
+						{
+							/* TODO: detach this
+							InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
+							CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");							
+							RunComponent(p_configuration->components.GetComponentPtr(p_component));
+							*/
+						}
+
+						return TRUE;
+					}
+				}
+			}
+		}
+	}
+
+	return FALSE;
+}
+
+void InstallerWindow::RunComponent(const ComponentPtr& component)
+{
+	try
+	{
+		LOG(L"--- Component '" << component->id << L"' (" << component->GetDisplayName() << L"): EXECUTING");
+		if (! OnComponentExecBegin(component))
+			return;
+
+		component->Exec();
+		component->Wait();
+
+		LOG(L"*** Component '" << component->id << L"' (" << component->GetDisplayName() << L"): SUCCESS");
+
+		if (! OnComponentExecSuccess(component))
+			return;
+	}
+	catch(std::exception& ex)
+	{
+		LOG(L"*** Component '" << component->id << L"' (" << component->GetDisplayName() << L"): ERROR - " 
+			<< DVLib::string2wstring(ex.what()));
+
+		DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
+	}
+}
+
+BOOL InstallerWindow::on_mouse(HELEMENT he, HELEMENT target, UINT event_type, POINT pt, UINT mouseButtons, UINT keyboardStates)
+{
+	switch(event_type)
+	{
+	case MOUSE_CLICK:
+		return on_mouse_click(he, target, event_type, pt, mouseButtons, keyboardStates);
+	}
+
+	return FALSE;
+}
+
 void InstallerWindow::OnOK()
 {	
 	Stop();
