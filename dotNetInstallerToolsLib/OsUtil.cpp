@@ -60,7 +60,7 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 			}
 			// Windows Server 2003 versions
 			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && 
-				osvi.wProductType != VER_NT_WORKSTATION && GetSystemMetrics(89 /* SM_SERVERR2 */) != 0)
+				osvi.wProductType != VER_NT_WORKSTATION && GetSystemMetrics(89 /* SM_SERVERR2 */) == 0)
 			{
 				os = winServer2003;
 
@@ -70,7 +70,7 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 					os = winServer2003sp2;
 			}
 			else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && 
-				osvi.wProductType != VER_NT_WORKSTATION && GetSystemMetrics(89 /* SM_SERVERR2 */) == 0)
+				osvi.wProductType != VER_NT_WORKSTATION && GetSystemMetrics(89 /* SM_SERVERR2 */) != 0)
 			{
 				os = winServer2003R2;
 
