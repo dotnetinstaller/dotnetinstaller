@@ -170,7 +170,13 @@ BOOL InstallerWindow::on_event(HELEMENT he, HELEMENT target, BEHAVIOR_EVENTS typ
 	}
 }
 
-BOOL InstallerWindow::on_mouse_click(HELEMENT /* he */, HELEMENT target, UINT /* event_type */, 
+BOOL InstallerWindow::on_mouse_click(HELEMENT /* he */, HELEMENT /* target */,
+	POINT /* pt */, UINT /* mouseButtons */, UINT /* keyboardStates */)
+{
+	return FALSE;
+}
+
+BOOL InstallerWindow::on_mouse_dclick(HELEMENT /* he */, HELEMENT target,
 	POINT pt, UINT /* mouseButtons */, UINT keyboardStates)
 {
 	if (keyboardStates != 0)
@@ -284,7 +290,9 @@ BOOL InstallerWindow::on_mouse(HELEMENT he, HELEMENT target, UINT event_type, PO
 	switch(event_type)
 	{
 	case MOUSE_CLICK:
-		return on_mouse_click(he, target, event_type, pt, mouseButtons, keyboardStates);
+		return on_mouse_click(he, target, pt, mouseButtons, keyboardStates);
+	case MOUSE_DCLICK:
+		return on_mouse_dclick(he, target, pt, mouseButtons, keyboardStates);
 	}
 
 	return FALSE;
