@@ -10,6 +10,7 @@
 InstallerWindow::InstallerWindow()
 	: m_download_started(false)
 	, m_download_cancelled(false)
+	, m_running_component(NULL)
 {
 
 }
@@ -206,11 +207,20 @@ BOOL InstallerWindow::on_mouse_click(HELEMENT /* he */, HELEMENT target, UINT /*
 						}
 						else if ((keyboardStates & CONTROL_KEY_PRESSED) > 0)
 						{
-							/* TODO: detach this
-							InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
-							CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");							
-							RunComponent(p_configuration->components.GetComponentPtr(p_component));
-							*/
+							// doesn't have to be thread-safe, running on UI thread
+
+							if (m_running_component == NULL)
+							{
+								m_running_component = p_component;
+
+								reset(m_pThread, AfxBeginThread(RunComponentOnThread, this, THREAD_PRIORITY_NORMAL, 0, CREATE_SUSPENDED));
+
+								CHECK_WIN32_BOOL(get(m_pThread) != NULL,
+									L"AfxBeginThread");
+
+								m_pThread->m_bAutoDelete = false;
+								m_pThread->ResumeThread();
+							}
 						}
 
 						return TRUE;
@@ -221,6 +231,27 @@ BOOL InstallerWindow::on_mouse_click(HELEMENT /* he */, HELEMENT target, UINT /*
 	}
 
 	return FALSE;
+}
+
+UINT InstallerWindow::RunComponentOnThread(LPVOID pParam)
+{
+	InstallerWindow * p_window = (InstallerWindow *) pParam;
+
+	try
+	{
+		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(p_window->m_configuration));
+		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");	
+
+		p_window->RunComponent(p_configuration->components.GetComponentPtr(p_window->m_running_component));
+	}
+	catch(std::exception& ex)
+	{
+		p_window->m_error = DVLib::string2wstring(ex.what());
+		p_window->m_rc = -1;
+	}
+
+	p_window->m_running_component = NULL;
+	return 0;
 }
 
 void InstallerWindow::RunComponent(const ComponentPtr& component)
@@ -355,6 +386,7 @@ void InstallerWindow::OnExecBegin()
 
 bool InstallerWindow::OnComponentExecBegin(const ComponentPtr& component)
 {
+	m_running_component = get(component);
 	return InstallerUI::ComponentExecBegin(component);
 }
 
@@ -366,12 +398,14 @@ bool InstallerWindow::OnComponentExecWait(const ComponentPtr& component)
 
 bool InstallerWindow::OnComponentExecSuccess(const ComponentPtr& component)
 {
+	m_running_component = NULL;
 	SetProgress(m_recorded_progress + 1);
 	return InstallerUI::ComponentExecSuccess(component);
 }
 
 bool InstallerWindow::OnComponentExecError(const ComponentPtr& component, std::exception& ex)
 {
+	m_running_component = NULL;
 	SetProgress(m_recorded_progress + 1);
 	return InstallerUI::ComponentExecError(component, ex);
 }

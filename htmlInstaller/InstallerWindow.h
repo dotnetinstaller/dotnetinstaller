@@ -36,6 +36,7 @@ private:
 	void DownloadError(const std::wstring& message);
 	bool IsDownloadCancelled() const;
 	void OnShow();
+	Component * m_running_component;
 protected:
 	void AddComponent(const ComponentPtr& component);
 	bool Run();
@@ -55,6 +56,7 @@ protected:
 	static std::wstring GetPositionStyle(const WidgetPosition& position);
 	static std::wstring GetControlStyle(const ControlText& control);
 	void RunComponent(const ComponentPtr& component);
+	static UINT RunComponentOnThread(LPVOID pParam);
 public:
 	bool RunDownloadConfiguration(const DownloadDialogPtr& p_Configuration);
 	void Create(int x, int y, int width, int height, const wchar_t * caption = 0);

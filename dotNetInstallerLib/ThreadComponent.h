@@ -14,11 +14,11 @@ public:
 	void BeginExec();
 	void EndExec();
 protected:
-    virtual int ExecOnThread() = 0;
-private:
     ThreadPtr m_pThread;
     std::wstring m_error;
 	int m_rc;
+    virtual int ExecOnThread() = 0;
+private:
     static UINT ExecuteThread(LPVOID pParam);
 	int GetExitCode() const { return m_rc; }
 	void WaitForCompletion();
