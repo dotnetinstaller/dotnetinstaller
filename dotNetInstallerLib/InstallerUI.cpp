@@ -116,7 +116,7 @@ bool InstallerUI::LoadComponentsList()
 			component->checked = false;
 
 		if (InstallerSession::Instance->sequence == SequenceInstall)
-			all &= component->installed;
+			all &= (component->installed || (!component->required_install));
 		else if (InstallerSession::Instance->sequence == SequenceUninstall)
 			all &= (! component->installed);
 

@@ -4,7 +4,7 @@
     <introduction>
       <para>
         dotNetInstaller supports both install and uninstall sequences. By default, it behaves like all installers
-        choosing the install sequence unless all components have been installed. It is also possible to force the uninstall sequence
+        choosing the install sequence unless all required components have been installed. It is also possible to force the uninstall sequence
         with the <literal>/x</literal> command-line switch.
       </para>
     </introduction>

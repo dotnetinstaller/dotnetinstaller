@@ -198,5 +198,40 @@ namespace dotNetInstallerUnitTests
                 File.Delete(configFilename);
             }
         }
+
+        [Test]
+        public void TestUninstallAutoWithOptionalComponent()
+        {
+            // a component that's already installed
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ComponentCmd cmd = new ComponentCmd();
+            setupConfiguration.Children.Add(cmd);
+            cmd.id = "cmd1";
+            cmd.command = "cmd.exe /C exit /b 1"; // would fail if ran
+            cmd.uninstall_command = "cmd.exe /C exit /b 0";
+            cmd.supports_install = true;
+            cmd.supports_uninstall = true;
+            InstalledCheckFile check = new InstalledCheckFile();
+            cmd.Children.Add(check);
+            check.comparison = installcheckfile_comparison.exists;
+            check.filename = dotNetInstallerExeUtils.Executable;
+            // a second component that is optional
+            ComponentCmd cmd2 = new ComponentCmd();
+            setupConfiguration.Children.Add(cmd2);
+            cmd2.id = "cmd2";
+            cmd2.command = "cmd.exe /C exit /b 1"; // would fail if ran
+            cmd2.uninstall_command = "cmd.exe /C exit /b 1"; // would fail if ran
+            cmd2.supports_install = true;
+            cmd2.required_install = false;
+            cmd2.supports_uninstall = false;
+            cmd2.Children.Add(check);
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // will fallback to uninstall since all required components are installed
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
+        }
     }
 }
