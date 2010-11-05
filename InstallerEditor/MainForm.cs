@@ -1420,8 +1420,12 @@ namespace InstallerEditor
                 return;
             }
 
-            m_settingsRegistry.SetValue("WindowState", WindowState.ToString());
-            m_settingsRegistry.SetValue("Bounds", XmlRectangle.ToString(Bounds));
+            if (WindowState != FormWindowState.Minimized)
+            {
+                m_settingsRegistry.SetValue("WindowState", WindowState.ToString());
+                m_settingsRegistry.SetValue("Bounds", XmlRectangle.ToString(Bounds));
+            }
+
             m_settingsRegistry.SetValue("ConfigurationTreeWidth", configurationTree.Width);
             m_settingsRegistry.SetValue("CommentsDistance", mainSplitContainer.SplitterDistance);
         }
@@ -1549,10 +1553,21 @@ namespace InstallerEditor
 
                 RefreshTemplateFilesMenu();
 
-                Bounds = XmlRectangle.FromString((string)m_settingsRegistry.GetValue("Bounds", XmlRectangle.ToString(Bounds)));
-                WindowState = (FormWindowState)Enum.Parse(typeof(FormWindowState), (string)m_settingsRegistry.GetValue("WindowState", WindowState.ToString()));
-                configurationTree.Width = (int)m_settingsRegistry.GetValue("ConfigurationTreeWidth", configurationTree.Width);
-                mainSplitContainer.SplitterDistance = (int)m_settingsRegistry.GetValue("CommentsDistance", mainSplitContainer.SplitterDistance);
+                // window state, don't start minimized
+                FormWindowState windowState = (FormWindowState)Enum.Parse(typeof(FormWindowState), (string)m_settingsRegistry.GetValue("WindowState", WindowState.ToString()));
+                if (windowState != FormWindowState.Minimized)
+                {
+                    WindowState = windowState;
+                    // bounds are invalid for a minimized window
+                    Rectangle bounds = XmlRectangle.FromString((string)m_settingsRegistry.GetValue("Bounds", XmlRectangle.ToString(Bounds)));
+                    if (!bounds.IsEmpty) Bounds = bounds;
+                }
+                // configuration tree width
+                int configurationTreeWidth = (int)m_settingsRegistry.GetValue("ConfigurationTreeWidth", configurationTree.Width);
+                if (configurationTreeWidth >= 0) configurationTree.Width = configurationTreeWidth;
+                // comments splitter distance
+                int commentsDistance = (int)m_settingsRegistry.GetValue("CommentsDistance", mainSplitContainer.SplitterDistance);
+                if (commentsDistance >= 0) mainSplitContainer.SplitterDistance = commentsDistance;
             }
             catch (Exception err)
             {
