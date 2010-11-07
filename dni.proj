@@ -176,7 +176,7 @@
     <Error Condition="'$(DXROOT)'==''" Text="Missing Sandcastle, DXROOT environment variable not set, install from http://www.codeplex.com/Sandcastle" />
     <Error Condition="'$(SHFBROOT)'==''" Text="Missing Sandcastle Builder, SHFBROOT environment variable not set, install from http://www.codeplex.com/SHFB" />
     <Delete Files="Documentation\$(Configuration)\dotNetInstaller.chm" />
-    <MSBuild Projects="Documentation\Dni.shfbproj" Properties="Configuration=$(Configuration)" />
+    <Exec Command="%FrameworkDir%\v3.5\msbuild.exe Documentation\Dni.shfbproj /p:Configuration=$(Configuration)" />
     <Error Condition="Exists('Documentation\$(Configuration)\LastBuild.log')" Text="Documentation build failed, check Documentation\$(Configuration)\LastBuild.log" />
     <TemplateFile Template="Documentation\WhatsNew.html" OutputFilename="$(Configuration)\WhatsNew.html" Tokens="@(AssemblyInfoTokens)" />
   </Target>
