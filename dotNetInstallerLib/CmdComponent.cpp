@@ -82,8 +82,8 @@ void CmdComponent::Wait(DWORD tt)
 			L"Error executing component '" << id << "' (" << GetDisplayName() << L"), return code is not in '" << returncodes_success 
 			<< L"': " << DVLib::FormatMessage(L"0x%x", exitcode));
 
-		LOG(L"Component '" << id << "' (" << GetDisplayName() << L") return code '" << exitcode 
-			<< L", defined as success in '" << returncodes_success << L".");
+		LOG(L"Component '" << id << "' (" << GetDisplayName() << L") return code " << exitcode 
+			<< L", defined as success in '" << returncodes_success << L"'.");
 	}
 }
 
