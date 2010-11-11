@@ -68,7 +68,8 @@ void MsuComponent::Wait(DWORD tt)
 
 	// a non-zero error code represents failure
 	CHECK_BOOL(exitcode == ERROR_SUCCESS || exitcode == ERROR_SUCCESS_REBOOT_REQUIRED,
-		L"Error executing '" << id << "' (" << GetDisplayName() << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
+		L"Error executing '" << id << "' (" << GetDisplayName() << L"): " 
+		<< exitcode << DVLib::FormatMessage(L" (0x%x)", exitcode));
 }
 
 bool MsuComponent::IsRebootRequired() const

@@ -65,8 +65,9 @@ void CmdComponent::Wait(DWORD tt)
 	// check for reboot
 	if (! returncodes_reboot.empty() && IsReturnCode(exitcode, returncodes_reboot))
 	{
-		LOG(L"Component '" << id << "' return code '" << exitcode 
-			<< L", defined as reboot required in '" << returncodes_reboot << L".");
+		LOG(L"Component '" << id << "' return code " << exitcode 
+			<< DVLib::FormatMessage(L" (0x%x)", exitcode)
+			<< L", defined as reboot required in '" << returncodes_reboot << L"'.");
 		return;
 	}
 
@@ -74,15 +75,18 @@ void CmdComponent::Wait(DWORD tt)
 	if (returncodes_success.empty())
 	{
 		CHECK_BOOL(ERROR_SUCCESS == exitcode,
-			L"Error executing '" << id << "' (" << GetDisplayName() << L"): " << DVLib::FormatMessage(L"0x%x", exitcode));
+			L"Error executing '" << id << "' (" << GetDisplayName() << L"): " << exitcode <<
+			DVLib::FormatMessage(L" (0x%x)", exitcode));
 	}
 	else
 	{
 		CHECK_BOOL(IsReturnCode(exitcode, returncodes_success),
-			L"Error executing component '" << id << "' (" << GetDisplayName() << L"), return code is not in '" << returncodes_success 
-			<< L"': " << DVLib::FormatMessage(L"0x%x", exitcode));
+			L"Error executing component '" << id << "' (" << GetDisplayName() << L"), return code "
+			<< exitcode << DVLib::FormatMessage(L" (0x%x)", exitcode)
+			<< L" is not in '" << returncodes_success << L"'");
 
 		LOG(L"Component '" << id << "' (" << GetDisplayName() << L") return code " << exitcode 
+			<< DVLib::FormatMessage(L" (0x%x)", exitcode)
 			<< L", defined as success in '" << returncodes_success << L"'.");
 	}
 }
