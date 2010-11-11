@@ -22,7 +22,7 @@ public:
 	static ATOM RegisterClass(HINSTANCE hInstance);
     LRESULT on_load_data(LPNMHL_LOAD_DATA pnmld);
 	LRESULT on_document_complete();
-	void DoModal();
+	void DoModal(int cmd);
 protected:
 	HtmlWindow();
 	int HitTest(int x, int y);

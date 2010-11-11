@@ -22,7 +22,10 @@ void InstallerWindow::Create(int x, int y, int width, int height, const wchar_t 
 
 bool InstallerWindow::Run()
 {
-	DoModal();
+	DoModal(InstallUILevelSetting::Instance->IsAnyUI() 
+		? SW_SHOWNORMAL 
+		: SW_HIDE);
+
 	// return(IDOK == DoModal());
 	return true;
 }

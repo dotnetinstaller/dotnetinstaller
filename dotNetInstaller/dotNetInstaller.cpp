@@ -97,7 +97,7 @@ BOOL CdotNetInstallerApp::InitInstance()
 
 int CdotNetInstallerApp::ExitInstance() 
 {
-	TRYLOG(L"dotNetInstaller finished, return code=" << m_rc);
+	TRYLOG(L"dotNetInstaller finished, return code: " << m_rc << DVLib::FormatMessage(L" (0x%x)", m_rc));
 	reset(InstallerCommandLineInfo::Instance);
 	reset(InstallerLauncher::Instance);
 	reset(InstallerLog::Instance);

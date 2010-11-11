@@ -367,13 +367,20 @@ void HtmlWindow::ModalLoop()
 	}
 }
 
-void HtmlWindow::DoModal()
+void HtmlWindow::DoModal(int cmd)
 {
 	try
 	{
 		m_modal = true;
 
-		ShowWindow(hwnd, 1);
+		ShowWindow(hwnd, cmd);
+
+		if (cmd == SW_HIDE) 
+		{
+			// silent mode
+			// TODO: should this be a user-defined message?
+			PostMessage(hwnd, WM_SHOWWINDOW, 0, 0);
+		}
 
 		CHECK_WIN32_BOOL(UpdateWindow(hwnd),
 			L"UpdateWindow");

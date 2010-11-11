@@ -31,7 +31,9 @@ bool DownloadWindow::Run()
 
 	Start();
 
-	DoModal();
+	DoModal(InstallUILevelSetting::Instance->IsAnyUI() 
+		? SW_SHOWNORMAL 
+		: SW_HIDE);
 
 	return m_recorded_error == 0;
 }

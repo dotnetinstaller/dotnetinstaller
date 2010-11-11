@@ -99,6 +99,8 @@ BOOL CHtmlInstallerApp::InitInstance()
 
 int CHtmlInstallerApp::ExitInstance() 
 {
+	TRYLOG(L"htmlInstaller finished, return code: " << m_rc << DVLib::FormatMessage(L" (0x%x)", m_rc));
+
 	reset(HtmLayoutDll::Instance);
 	reset(InstallerCommandLineInfo::Instance);
 	reset(InstallerLauncher::Instance);
