@@ -7,7 +7,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE 9, 1
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 #pragma code_page(1252)
 
 IDI_HTMLINSTALLER			ICON         "htmlInstaller.ico"
