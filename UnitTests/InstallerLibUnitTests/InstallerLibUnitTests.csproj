@@ -14,6 +14,10 @@
     <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -120,6 +124,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\..\Samples\ExeSetup\Configuration.xml">
       <Link>Samples\ExeSetup\Configuration.xml</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\Samples\Invalid\NoMatchingOSFilter.xml">
+      <Link>Samples\Invalid\NoMatchingOSFilter.xml</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\Samples\LicenseAgreement\Configuration.xml">
+      <Link>Samples\LicenseAgreement\Configuration.xml</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\Samples\MultipleConfig\Configuration.xml">
+      <Link>Samples\MultipleConfig\Configuration.xml</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\Samples\MultipleSetup\Configuration.xml">
+      <Link>Samples\MultipleSetup\Configuration.xml</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\Samples\PatchSetup\Configuration.xml">
+      <Link>Samples\PatchSetup\Configuration.xml</Link>
     </EmbeddedResource>
     <Content Include="Manifests\asInvoker.manifest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -15,6 +15,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestNoComponents()
         {
+            Console.WriteLine("TestNoComponents");
+
             // a configuration with no components, complete command is executed
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -32,11 +34,14 @@ namespace dotNetInstallerUnitTests
             File.Delete(configFilename);
             Assert.IsTrue(File.Exists(markerFilename + ".silent"));
             File.Delete(markerFilename);
+            File.Delete(markerFilename + ".silent");
         }
 
         [Test]
         public void TestFailingComponent()
         {
+            Console.WriteLine("TestFailingComponent");
+
             // a configuration with a component that fails, complete command is not executed
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -48,6 +53,7 @@ namespace dotNetInstallerUnitTests
             ComponentCmd component = new ComponentCmd();
             setupConfiguration.Children.Add(component);
             component.command = "cmd.exe /C exit /b 123";
+            component.required_install = true;
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
@@ -61,6 +67,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestWaitForCompleteCommand()
         {
+            Console.WriteLine("TestWaitForCompleteCommand");
+
             ConfigFile configFile = new ConfigFile();
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -81,6 +89,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestDontWaitForCompleteCommand()
         {
+            Console.WriteLine("TestDontWaitForCompleteCommand");
+
             ConfigFile configFile = new ConfigFile();
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             SetupConfiguration setupConfiguration = new SetupConfiguration();

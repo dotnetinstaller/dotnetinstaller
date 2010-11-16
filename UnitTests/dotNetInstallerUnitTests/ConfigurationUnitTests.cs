@@ -16,6 +16,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestInvalidVersionContinues()
         {
+            Console.WriteLine("TestInvalidVersionContinues");
+
             // a configuration with a mismatched version
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();

@@ -5,6 +5,10 @@
 	Name="CabLib"
 	ProjectGUID="{96A9878C-7B75-41F7-AA11-7268672C16DD}"
 	RootNamespace="CabLib_x32"
+	SccProjectName="SAK"
+	SccAuxPath="SAK"
+	SccLocalPath="SAK"
+	SccProvider="SAK"
 	Keyword="ManagedCProj"
 	>
 	<Platforms>

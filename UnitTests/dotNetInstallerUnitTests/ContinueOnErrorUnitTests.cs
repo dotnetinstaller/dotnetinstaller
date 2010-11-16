@@ -15,6 +15,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestContinueOnError()
         {
+            Console.WriteLine("TestContinueOnError");
+
             ConfigFile configFile = new ConfigFile();
             string markerFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             string markerFilename1 = string.Format("{0}.1", markerFilename);
@@ -24,9 +26,11 @@ namespace dotNetInstallerUnitTests
             ComponentCmd cmd1 = new ComponentCmd();
             setupConfiguration.Children.Add(cmd1);
             cmd1.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 1", markerFilename1);
+            cmd1.required_install = true;
             ComponentCmd cmd2 = new ComponentCmd();
             setupConfiguration.Children.Add(cmd2);
             cmd2.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 2", markerFilename2);
+            cmd2.required_install = true;
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
@@ -60,6 +64,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestContinueOnErrorNoMessage()
         {
+            Console.WriteLine("TestContinueOnErrorNoMessage");
+
             // test that with all failed_exec_command_continue blanked, 
             // user is never asked a question in full UI mode (not blocked)
             ConfigFile configFile = new ConfigFile();
@@ -72,12 +78,16 @@ namespace dotNetInstallerUnitTests
             setupConfiguration.auto_start = true;
             // running in full UI mode, installation is expected to fail, auto-close
             setupConfiguration.auto_close_on_error = true;
+            setupConfiguration.installation_none = string.Empty;
+            setupConfiguration.installation_completed = string.Empty;
             ComponentCmd cmd1 = new ComponentCmd();
             setupConfiguration.Children.Add(cmd1);
             cmd1.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 1", markerFilename1);
+            cmd1.required_install = true;
             ComponentCmd cmd2 = new ComponentCmd();
             setupConfiguration.Children.Add(cmd2);
             cmd2.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 2", markerFilename2);
+            cmd2.required_install = true;
             // continue on error by default -> continues on the first and the second component, returns the last error code
             cmd1.default_continue_on_error = true;
             cmd2.default_continue_on_error = true;

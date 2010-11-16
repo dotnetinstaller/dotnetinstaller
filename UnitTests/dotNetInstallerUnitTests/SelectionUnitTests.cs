@@ -14,6 +14,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestDefaultSelectionInstall()
         {
+            Console.WriteLine("TestDefaultSelectionInstall");
+
             ConfigFile configFile = new ConfigFile();
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -22,11 +24,13 @@ namespace dotNetInstallerUnitTests
             ComponentCmd component1 = new ComponentCmd();
             setupConfiguration.Children.Add(component1);
             component1.command = "cmd.exe /C exit /b 57";
+            component1.required_install = true;
             component1.selected_install = false;
             // dummy component 2
             ComponentCmd component2 = new ComponentCmd();
             setupConfiguration.Children.Add(component2);
             component2.command = "cmd.exe /C exit /b 42";
+            component2.required_install = true;
             component2.selected_install = true;
             // second component is selected and runs, not the first one
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -45,6 +49,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestDefaultSelectionUninstall()
         {
+            Console.WriteLine("TestDefaultSelectionUninstall");
+
             InstalledCheckFile existsCheck = new InstalledCheckFile();
             existsCheck.filename = dotNetInstallerExeUtils.Executable;
             existsCheck.comparison = installcheckfile_comparison.exists;

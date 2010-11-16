@@ -27,11 +27,13 @@ namespace dotNetInstallerUnitTests
             cmdCurrentLcid.os_filter_lcid = CultureInfo.CurrentCulture.LCID.ToString();
             Console.WriteLine("Current lcid: {0}", cmdCurrentLcid.os_filter_lcid);
             cmdCurrentLcid.command = string.Format("cmd.exe /C dir > \"{0}\"", currentLcidFilename);
+            cmdCurrentLcid.required_install = true;
             setupConfiguration.Children.Add(cmdCurrentLcid);
             // empty lcid
             string emptyLcidFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             ComponentCmd cmdEmptyLcid = new ComponentCmd();
             cmdEmptyLcid.command = string.Format("cmd.exe /C dir > \"{0}\"", emptyLcidFilename);
+            cmdEmptyLcid.required_install = true;
             setupConfiguration.Children.Add(cmdEmptyLcid);
             // another lcid
             string anotherLcidFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
@@ -39,6 +41,7 @@ namespace dotNetInstallerUnitTests
             cmdAnotherLcid.os_filter_lcid = (CultureInfo.CurrentCulture.LCID + 1).ToString();
             Console.WriteLine("Another lcid: {0}", cmdAnotherLcid.os_filter_lcid);
             cmdAnotherLcid.command = string.Format("cmd.exe /C dir > \"{0}\"", anotherLcidFilename);
+            cmdAnotherLcid.required_install = true;
             setupConfiguration.Children.Add(cmdAnotherLcid);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -51,6 +54,7 @@ namespace dotNetInstallerUnitTests
             Assert.IsFalse(File.Exists(anotherLcidFilename));
             File.Delete(currentLcidFilename);
             File.Delete(emptyLcidFilename);
+            File.Delete(configFilename);
         }
 
         [Test]
@@ -66,6 +70,7 @@ namespace dotNetInstallerUnitTests
             ComponentCmd cmdCurrentLcid = new ComponentCmd();
             Console.WriteLine("Current lcid: {0}", currentLcidConfiguration.lcid_filter);
             cmdCurrentLcid.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 0", currentLcidFilename);
+            cmdCurrentLcid.required_install = true;
             currentLcidConfiguration.Children.Add(cmdCurrentLcid);
             // empty lcid setup configuration
             SetupConfiguration emptyLcidConfiguration = new SetupConfiguration();
@@ -73,6 +78,7 @@ namespace dotNetInstallerUnitTests
             string emptyLcidFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             ComponentCmd cmdEmptyLcid = new ComponentCmd();
             cmdEmptyLcid.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 0", emptyLcidFilename);
+            cmdEmptyLcid.required_install = true;
             emptyLcidConfiguration.Children.Add(cmdEmptyLcid);
             // another lcid setup configuration
             SetupConfiguration anotherLcidConfiguration = new SetupConfiguration();
@@ -82,6 +88,7 @@ namespace dotNetInstallerUnitTests
             ComponentCmd cmdAnotherLcid = new ComponentCmd();
             Console.WriteLine("Another lcid: {0}", anotherLcidConfiguration.lcid_filter);
             cmdAnotherLcid.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 0", anotherLcidFilename);
+            cmdAnotherLcid.required_install = true;
             anotherLcidConfiguration.Children.Add(cmdAnotherLcid);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -94,6 +101,7 @@ namespace dotNetInstallerUnitTests
             Assert.IsFalse(File.Exists(anotherLcidFilename));
             File.Delete(currentLcidFilename);
             File.Delete(emptyLcidFilename);
+            File.Delete(configFilename);
         }
 
         [Test]
@@ -104,6 +112,7 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(configuration);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b #OSLANGID";
+            cmd.required_install = true;
             configuration.Children.Add(cmd);
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
@@ -120,6 +129,7 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(configuration);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b #LANGID";
+            cmd.required_install = true;
             configuration.Children.Add(cmd);
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
@@ -136,6 +146,7 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(configuration);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b #LANGID";
+            cmd.required_install = true;
             configuration.language_id = "1234";
             configuration.Children.Add(cmd);
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -153,6 +164,7 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(configuration);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b #LANGUAGE";
+            cmd.required_install = true;
             configuration.language_id = "1234";
             configuration.language = "3456";
             configuration.Children.Add(cmd);

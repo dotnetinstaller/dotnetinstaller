@@ -5,6 +5,10 @@
 	Name="dotNetInstallerLib"
 	ProjectGUID="{04DC59CF-750E-431F-A834-FB60BE03545C}"
 	RootNamespace="dotNetInstallerLib"
+	SccProjectName="SAK"
+	SccAuxPath="SAK"
+	SccLocalPath="SAK"
+	SccProvider="SAK"
 	Keyword="Win32Proj"
 	>
 	<Platforms>

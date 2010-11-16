@@ -14,6 +14,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestNoLogging()
         {
+            Console.WriteLine("TestNoLogging");
+
             if (File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile))
                 File.Delete(dotNetInstallerExeUtils.RunOptions.DefaultLogFile);
             ConfigFile configFile = new ConfigFile();
@@ -33,6 +35,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestLogConfigSpecified()
         {
+            Console.WriteLine("TestLogConfigSpecified");
+
             if (File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile))
                 File.Delete(dotNetInstallerExeUtils.RunOptions.DefaultLogFile);
             ConfigFile configFile = new ConfigFile();
@@ -52,11 +56,14 @@ namespace dotNetInstallerUnitTests
             File.Delete(configFilename);
             Assert.IsFalse(File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile));
             Assert.IsTrue(File.Exists(configFile.log_file));
+            File.Delete(configFile.log_file);
         }
 
         [Test]
         public void TestLogCommandLineOverwritesConfigFile()
         {
+            Console.WriteLine("TestLogCommandLineOverwritesConfigFile");
+
             if (File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile))
                 File.Delete(dotNetInstallerExeUtils.RunOptions.DefaultLogFile);
             ConfigFile configFile = new ConfigFile();
@@ -76,11 +83,14 @@ namespace dotNetInstallerUnitTests
             File.Delete(configFilename);
             Assert.IsTrue(File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile));
             Assert.IsFalse(File.Exists(configFile.log_file));
+            File.Delete(configFile.log_file);
         }
 
         [Test]
         public void TestLogAcceptsPathVariables()
         {
+            Console.WriteLine("TestLogAcceptsPathVariables");
+
             string resolved_logfile = Path.Combine(Path.GetTempPath(), "TestLogAcceptsPathVariables.log");
             if (File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile))
                 File.Delete(dotNetInstallerExeUtils.RunOptions.DefaultLogFile);
@@ -101,6 +111,7 @@ namespace dotNetInstallerUnitTests
             File.Delete(configFilename);
             Assert.IsTrue(File.Exists(resolved_logfile), string.Format("Missing {0}", resolved_logfile));
             Assert.IsFalse(File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile));
+            File.Delete(resolved_logfile);
         }
     }
 }

@@ -114,7 +114,7 @@
         <step>
           <content>
             <para>
-              Open a command prompt and build the project.
+              Open an elevated command prompt and build the project.
               <code language="cmd">
                 <![CDATA[build all]]>
               </code>

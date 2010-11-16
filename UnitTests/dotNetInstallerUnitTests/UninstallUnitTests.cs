@@ -14,6 +14,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestSupportsNone()
         {
+            Console.WriteLine("TestSupportsNone");
+
             // a configuration with no components
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -32,6 +34,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestSupportsInstall()
         {
+            Console.WriteLine("TestSupportsInstall");
+
             // a configuration with no components
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -54,6 +58,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestSupportsUninstall()
         {
+            Console.WriteLine("TestSupportsUninstall");
+
             // a configuration with no components
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -76,12 +82,15 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUninstallSwitch()
         {
+            Console.WriteLine("TestUninstallSwitch");
+
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
             ComponentCmd cmd = new ComponentCmd();
             setupConfiguration.Children.Add(cmd);
             cmd.command = "cmd.exe /C exit /b 1"; // would fail if ran
+            cmd.required_install = true;
             cmd.uninstall_command = "cmd.exe /C exit /b 0";
             cmd.supports_install = true;
             cmd.supports_uninstall = true;
@@ -100,6 +109,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUninstallAuto()
         {
+            Console.WriteLine("TestUninstallAuto");
+
             // a component that's already installed
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -129,11 +140,14 @@ namespace dotNetInstallerUnitTests
             configFile.SaveAs(configFilename);
             // will fallback to uninstall since all components are installed
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
         }
 
         [Test]
         public void TestUninstallMsiSilentMode()
         {
+            Console.WriteLine("TestUninstallMsiSilentMode");
+
             InstallUILevel[] testUILevels = { InstallUILevel.basic, InstallUILevel.silent };
             foreach (InstallUILevel uilevel in testUILevels)
             {
@@ -168,6 +182,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUninstallMspSilentMode()
         {
+            Console.WriteLine("TestUninstallMspSilentMode");
+
             InstallUILevel[] testUILevels = { InstallUILevel.basic, InstallUILevel.silent };
             foreach (InstallUILevel uilevel in testUILevels)
             {
@@ -202,6 +218,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUninstallAutoWithOptionalComponent()
         {
+            Console.WriteLine("TestUninstallAutoWithOptionalComponent");
+
             // a component that's already installed
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -232,6 +250,7 @@ namespace dotNetInstallerUnitTests
             configFile.SaveAs(configFilename);
             // will fallback to uninstall since all required components are installed
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
         }
     }
 }

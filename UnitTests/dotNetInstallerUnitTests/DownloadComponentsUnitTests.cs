@@ -16,6 +16,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestDownloadConfiguration()
         {
+            Console.WriteLine("TestDownloadConfiguration");
+
             // a configuration with a single component that contains two download components
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -23,6 +25,7 @@ namespace dotNetInstallerUnitTests
             ComponentCmd component1 = new ComponentCmd();
             setupConfiguration.Children.Add(component1);
             component1.command = "cmd.exe /C exit /b 0";
+            component1.required_install = true;
             DownloadDialog component1downloaddialog = new DownloadDialog(
                 string.Format("{0} Download Dialog", component1.id));
             component1.Children.Add(component1downloaddialog);
@@ -54,6 +57,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestNoDownloadWhenSourceFileExsts()
         {
+            Console.WriteLine("TestNoDownloadWhenSourceFileExsts");
+
             // a configuration where the source file exists, no download dialog should show
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -61,6 +66,7 @@ namespace dotNetInstallerUnitTests
             ComponentCmd cmd = new ComponentCmd();
             setupConfiguration.Children.Add(cmd);
             cmd.command = "cmd.exe /C exit /b 0";
+            cmd.required_install = true;
             DownloadDialog cmddownloaddialog = new DownloadDialog(
                 string.Format("{0} Download Dialog", cmd.id));
             cmd.Children.Add(cmddownloaddialog);

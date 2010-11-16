@@ -16,6 +16,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlCheckbox()
         {
+            Console.WriteLine("TestUserControlCheckbox");
+
             // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -29,6 +31,7 @@ namespace dotNetInstallerUnitTests
             setupConfiguration.Children.Add(checkbox);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [checkbox1]";
+            cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -49,6 +52,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlCheckboxInstallCheck()
         {
+            Console.WriteLine("TestUserControlCheckboxInstallCheck");
+
             // a configuration with a checkbox control which has an installed check that disables it
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -68,6 +73,7 @@ namespace dotNetInstallerUnitTests
             // command that depends on the value of checkbox1
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [checkbox1]5";
+            cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -88,6 +94,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlEdit()
         {
+            Console.WriteLine("TestUserControlEdit");
+
             // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -98,6 +106,7 @@ namespace dotNetInstallerUnitTests
             setupConfiguration.Children.Add(edit);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [edit1]";
+            cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -111,6 +120,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlEditInstalledCheckBoth()
         {
+            Console.WriteLine("TestUserControlEditInstalledCheckBoth");
+
             // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -127,6 +138,7 @@ namespace dotNetInstallerUnitTests
             edit.Children.Add(check);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [edit1]5";
+            cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -140,6 +152,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlEditInstalledCheckHasValueDisabled()
         {
+            Console.WriteLine("TestUserControlEditInstalledCheckHasValueDisabled");
+
             // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -157,6 +171,7 @@ namespace dotNetInstallerUnitTests
             edit.Children.Add(check);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [edit1]5";
+            cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -170,6 +185,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlEditInstalledCheckHasNoValueDisabled()
         {
+            Console.WriteLine("TestUserControlEditInstalledCheckHasNoValueDisabled");
+
             // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -187,6 +204,7 @@ namespace dotNetInstallerUnitTests
             edit.Children.Add(check);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [edit1]5";
+            cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -200,6 +218,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlEditInstalledCheckDisplay()
         {
+            Console.WriteLine("TestUserControlEditInstalledCheckDisplay");
+
             // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -216,6 +236,7 @@ namespace dotNetInstallerUnitTests
             edit.Children.Add(check);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [edit1]5";
+            cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -229,6 +250,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlHyperlink()
         {
+            Console.WriteLine("TestUserControlHyperlink");
+
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -251,6 +274,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlBrowse()
         {
+            Console.WriteLine("TestUserControlBrowse");
+
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -260,6 +285,7 @@ namespace dotNetInstallerUnitTests
             setupConfiguration.Children.Add(browse);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [browse1]";
+            cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -273,6 +299,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlBrowseBackslashStripped()
         {
+            Console.WriteLine("TestUserControlBrowseBackslashStripped");
+
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -295,6 +323,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlBrowseDrive()
         {
+            Console.WriteLine("TestUserControlBrowseDrive");
+
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -317,6 +347,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlImage()
         {
+            Console.WriteLine("TestUserControlImage");
+
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -339,6 +371,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlLicense()
         {
+            Console.WriteLine("TestUserControlLicense");
+
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             // a configuration with a license agreement control
             ConfigFile configFile = new ConfigFile();
@@ -351,6 +385,7 @@ namespace dotNetInstallerUnitTests
             setupConfiguration.Children.Add(license);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [MY_RES_LICENSE]";
+            cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
             Console.WriteLine("Writing '{0}'", configFilename);
@@ -372,12 +407,15 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestNoUserControl()
         {
+            Console.WriteLine("TestNoUserControl");
+
             // a configuration wthout a user control, value is blank
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [doesntexist]5[doesntexist]";
+            cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -391,6 +429,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlCheckboxControlArgs()
         {
+            Console.WriteLine("TestUserControlCheckboxControlArgs");
+
             // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -404,6 +444,7 @@ namespace dotNetInstallerUnitTests
             setupConfiguration.Children.Add(checkbox);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [checkbox1]";
+            cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -427,6 +468,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlEditControlArgs()
         {
+            Console.WriteLine("TestUserControlEditControlArgs");
+
             // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -437,6 +480,7 @@ namespace dotNetInstallerUnitTests
             setupConfiguration.Children.Add(edit);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [edit1]";
+            cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -454,6 +498,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestUserControlBrowseControlArgs()
         {
+            Console.WriteLine("TestUserControlBrowseControlArgs");
+
             // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -464,6 +510,7 @@ namespace dotNetInstallerUnitTests
             setupConfiguration.Children.Add(browse);
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [browse1]";
+            cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");

@@ -15,16 +15,20 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestAutoStart()
         {
+            Console.WriteLine("TestAutoStart");
+
             ConfigFile configFile = new ConfigFile();
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             setupConfiguration.auto_start = true;
             setupConfiguration.installation_completed = string.Empty;
+            setupConfiguration.installation_none = string.Empty;
             configFile.Children.Add(setupConfiguration);
             // dummy component
             ComponentCmd component = new ComponentCmd();
             setupConfiguration.Children.Add(component);
             component.command = "cmd.exe /C exit /b 0";
+            component.installcompletemessage = string.Empty;
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
@@ -38,6 +42,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestNoAutoStart()
         {
+            Console.WriteLine("TestNoAutoStart");
+
             ConfigFile configFile = new ConfigFile();
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -64,17 +70,21 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestAutoContinueOnReboot()
         {
+            Console.WriteLine("TestAutoContinueOnReboot");
+
             ConfigFile configFile = new ConfigFile();
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             setupConfiguration.auto_start = false;
             setupConfiguration.auto_continue_on_reboot = true;
             setupConfiguration.installation_completed = string.Empty;
+            setupConfiguration.installation_none = string.Empty;
             configFile.Children.Add(setupConfiguration);
             // dummy component
             ComponentCmd component = new ComponentCmd();
             setupConfiguration.Children.Add(component);
             component.command = "cmd.exe /C exit /b 0";
+            component.installcompletemessage = string.Empty;
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
@@ -88,6 +98,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestNoAutoContinueOnReboot()
         {
+            Console.WriteLine("TestNoAutoContinueOnReboot");
+
             ConfigFile configFile = new ConfigFile();
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();

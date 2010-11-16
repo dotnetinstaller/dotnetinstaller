@@ -5,6 +5,10 @@
 	Name="Cab"
 	ProjectGUID="{6A9AD5E1-624C-478F-9921-8400B3AD84A8}"
 	RootNamespace="Cab"
+	SccProjectName="SAK"
+	SccAuxPath="SAK"
+	SccLocalPath="SAK"
+	SccProvider="SAK"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -229,11 +233,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\File.hpp"
+				RelativePath=".\Cabinet\File.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Cabinet\File.hpp"
+				RelativePath=".\File.hpp"
 				>
 			</File>
 			<File

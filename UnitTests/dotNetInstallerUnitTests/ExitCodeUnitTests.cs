@@ -14,6 +14,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestNoComponentsSuccess()
         {
+            Console.WriteLine("TestNoComponentsSuccess");
+
             // a configuration with no components
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -30,6 +32,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestMissingConfigFile()
         {
+            Console.WriteLine("TestMissingConfigFile");
+
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Assert.AreEqual(-1, dotNetInstallerExeUtils.Run(configFilename));
         }
@@ -37,6 +41,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestBadConfigFile()
         {
+            Console.WriteLine("TestBadConfigFile");
+
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             File.WriteAllText(configFilename, "bogus xml");
             Assert.AreEqual(-1, dotNetInstallerExeUtils.Run(configFilename));

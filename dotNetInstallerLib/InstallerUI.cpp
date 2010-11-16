@@ -521,10 +521,14 @@ void InstallerUI::AfterInstall(int rc)
 	if (rc == 0)
 	{
 		bool all = LoadComponentsList();
-		if (all || p_configuration->auto_close_if_installed) 
+		if (all)
 		{
 			ExecuteCompleteCode(true);
-			Stop();
+
+			if (p_configuration->auto_close_if_installed)
+			{
+				Stop();
+			}
 		}
 	}
 }

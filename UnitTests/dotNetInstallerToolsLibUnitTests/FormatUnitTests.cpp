@@ -87,9 +87,9 @@ void FormatUnitTests::testFormatBytes()
 
 void FormatUnitTests::testFormatDateTime()
 {
-	CPPUNIT_ASSERT("1969-12-31 19:00:00" == DVLib::FormatDateTimeA(0));
+	CPPUNIT_ASSERT(DVLib::FormatDateTimeA(0).find_first_of("1969-12-31") == 0);
 	CPPUNIT_ASSERT("1969" == DVLib::FormatDateTimeA(0, "%Y"));
-	CPPUNIT_ASSERT(L"1969-12-31 19:00:00" == DVLib::FormatDateTimeW(0));
+	CPPUNIT_ASSERT(DVLib::FormatDateTimeW(0).find_first_of(L"1969-12-31") == 0);
 	CPPUNIT_ASSERT(L"1969" == DVLib::FormatDateTimeW(0, L"%Y"));
 }
 

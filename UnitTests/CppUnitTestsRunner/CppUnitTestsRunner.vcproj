@@ -5,6 +5,10 @@
 	Name="CppUnitTestsRunner"
 	ProjectGUID="{6542C25E-A71E-401E-A818-71910821444C}"
 	RootNamespace="CppUnitTestsRunner"
+	SccProjectName="SAK"
+	SccAuxPath="SAK"
+	SccLocalPath="SAK"
+	SccProvider="SAK"
 	Keyword="Win32Proj"
 	>
 	<Platforms>

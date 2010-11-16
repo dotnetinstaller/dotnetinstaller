@@ -14,6 +14,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestCabPathAutoDeleteFalse()
         {
+            Console.WriteLine("TestCabPathAutoDeleteFalse");
+
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -34,6 +36,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestCabPathAutoDeleteTrue()
         {
+            Console.WriteLine("TestCabPathAutoDeleteTrue");
+
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -54,6 +58,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestExtractCab()
         {
+            Console.WriteLine("TestExtractCab");
+
             // create a self-extracting bootstrapper
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -84,6 +90,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestExtractCabPerComponent()
         {
+            Console.WriteLine("TestExtractCabPerComponent");
+
             InstallerLinkerArguments args = new InstallerLinkerArguments();
             args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", args.config);
@@ -119,6 +127,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestExtractAndRunCabPerComponent()
         {
+            Console.WriteLine("TestExtractAndRunCabPerComponent");
+
             InstallerLinkerArguments args = new InstallerLinkerArguments();
             args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", args.config);
@@ -134,6 +144,7 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(setupConfiguration);
             ComponentCmd component = new ComponentCmd();
             component.command = "cmd.exe /C copy \"#CABPATH\\component\\before.xml\" \"#CABPATH\\component\\after.xml\"";
+            component.required_install = true;
             setupConfiguration.Children.Add(component);
             EmbedFile embedfile = new EmbedFile();
             embedfile.sourcefilepath = args.config;
@@ -154,12 +165,15 @@ namespace dotNetInstallerUnitTests
             Assert.IsTrue(File.Exists(Path.Combine(Path.GetTempPath(), @"testExtractAndRunCabPerComponent\component\after.xml")));
             File.Delete(args.config);
             File.Delete(args.output);
-            Directory.Delete(extractedComponentPath, true);
+            Directory.Delete(setupConfiguration.cab_path, true);
+            File.Delete(logfile);
         }
 
         [Test]
         public void TestDisplayCab()
         {
+            Console.WriteLine("TestDisplayCab");
+
             // create a self-extracting bootstrapper
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -185,6 +199,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestExtractCabTwoComponentsSameName()
         {
+            Console.WriteLine("TestExtractCabTwoComponentsSameName");
+
             InstallerLinkerArguments args = new InstallerLinkerArguments();
             args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", args.config);

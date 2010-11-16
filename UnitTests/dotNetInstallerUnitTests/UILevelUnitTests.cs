@@ -14,6 +14,8 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void TestSilentMode()
         {
+            Console.WriteLine("TestSilentMode");
+
             InstallUILevel[] testUILevels = { InstallUILevel.basic, InstallUILevel.silent };
             foreach (InstallUILevel uilevel in testUILevels)
             {

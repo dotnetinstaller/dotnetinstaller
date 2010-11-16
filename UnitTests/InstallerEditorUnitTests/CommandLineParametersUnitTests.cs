@@ -44,6 +44,8 @@ namespace InstallerEditorUnitTests
         [Test]
         public void TestRunFileDoesntExist()
         {
+            //TODO: High: ok button on error window is not automatically clicked on windows 7 ultimate x64
+
             InstallerEditorExeUtils.RunOptions options = new InstallerEditorExeUtils.RunOptions();
             options.args = Guid.NewGuid().ToString();
             ProcessStartInfo pi = new ProcessStartInfo(InstallerEditorExeUtils.Executable, options.CommandLineArgs);
@@ -93,6 +95,8 @@ namespace InstallerEditorUnitTests
         [Test]
         public void TestRunFileIsADirectory()
         {
+            //TODO: High: ok button on error window is not automatically clicked on windows 7 ultimate x64
+
             InstallerEditorExeUtils.RunOptions options = new InstallerEditorExeUtils.RunOptions();
             options.args = Environment.SystemDirectory;
             ProcessStartInfo pi = new ProcessStartInfo(InstallerEditorExeUtils.Executable, options.CommandLineArgs);

@@ -180,6 +180,7 @@ namespace InstallerLibUnitTests
             xmlConfigFile.Load(configFilename);
             configFile.LoadXml(xmlConfigFile);
             Assert.AreEqual(previousConfigurationCount, configFile.ConfigurationCount);
+            File.Delete(configFilename);
         }
     }
 }
