@@ -181,7 +181,7 @@ namespace InstallerLib
             set { m_uninstall_display_name = value; OnDisplayChanged(); }
         }
 
-        private bool m_required_install = false;
+        private bool m_required_install = true;
         [Description("Indicates whether the component is required for a successful installation.")]
         [Category("Component")]
         [Required]
@@ -191,7 +191,7 @@ namespace InstallerLib
             set { m_required_install = value; }
         }
 
-        private bool m_required_uninstall = false;
+        private bool m_required_uninstall = true;
         [Description("Indicates whether the component is required for a successful uninstallation.")]
         [Category("Component")]
         [Required]

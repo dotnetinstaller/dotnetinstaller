@@ -38,6 +38,61 @@ namespace dotNetInstallerUnitTests
         }
 
         [Test]
+        public void TestComponentWithoutCheck()
+        {
+            // a configuration with an optional component, complete command is executed
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            string markerFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            setupConfiguration.supports_uninstall = false; // otherwise would automatically switch to uninstall
+            setupConfiguration.complete_command = string.Format("cmd.exe /C dir > \"{0}.ui\"", markerFilename);
+            setupConfiguration.complete_command_basic = string.Format("cmd.exe /C dir > \"{0}.basic\"", markerFilename);
+            setupConfiguration.complete_command_silent = string.Format("cmd.exe /C dir > \"{0}.silent\"", markerFilename);
+            configFile.Children.Add(setupConfiguration);
+            // required component that will run, but has no installed check
+            ComponentCmd cmd1 = new ComponentCmd();
+            setupConfiguration.Children.Add(cmd1);
+            cmd1.command = "cmd.exe /C exit /b 0";
+            // save config file
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // execute dotNetInstaller
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+            Assert.IsFalse(File.Exists(markerFilename + ".silent"));
+            File.Delete(markerFilename);
+        }
+
+        [Test]
+        public void TestOptionalComponentWithoutCheck()
+        {
+            // a configuration with an optional component, complete command is executed
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            string markerFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            setupConfiguration.supports_uninstall = false; // otherwise would automatically switch to uninstall
+            setupConfiguration.complete_command = string.Format("cmd.exe /C dir > \"{0}.ui\"", markerFilename);
+            setupConfiguration.complete_command_basic = string.Format("cmd.exe /C dir > \"{0}.basic\"", markerFilename);
+            setupConfiguration.complete_command_silent = string.Format("cmd.exe /C dir > \"{0}.silent\"", markerFilename);
+            configFile.Children.Add(setupConfiguration);
+            // required component that will run, but has no installed check
+            ComponentCmd cmd1 = new ComponentCmd();
+            setupConfiguration.Children.Add(cmd1);
+            cmd1.required_install = false;
+            cmd1.command = "cmd.exe /C exit /b 0";
+            // save config file
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            // execute dotNetInstaller
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
+            File.Delete(configFilename);
+            Assert.IsTrue(File.Exists(markerFilename + ".silent"));
+            File.Delete(markerFilename);
+        }
+
+        [Test]
         public void TestFailingComponent()
         {
             Console.WriteLine("TestFailingComponent");

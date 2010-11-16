@@ -494,13 +494,6 @@ void InstallerUI::AfterInstall(int rc)
 		return;
 	}
 
-	// silent execution, 
-	if (InstallUILevelSetting::Instance->IsSilent()) 
-	{
-		Stop();
-		return;
-	}
-
 	// failure and auto-close-on-error
 	if (rc != 0 && p_configuration->auto_close_on_error)
 	{
@@ -510,7 +503,7 @@ void InstallerUI::AfterInstall(int rc)
 	}
 
 	// failure and reload-on-error
-	if (rc != 0 && p_configuration->reload_on_error)
+	if (rc != 0 && p_configuration->reload_on_error && ! InstallUILevelSetting::Instance->IsSilent())
 	{
 		LOG(L"*** Failed to install one or more components, reloading components (reload_on_error).");
 		LoadComponentsList();
@@ -524,12 +517,23 @@ void InstallerUI::AfterInstall(int rc)
 		if (all)
 		{
 			ExecuteCompleteCode(true);
-
 			if (p_configuration->auto_close_if_installed)
 			{
 				Stop();
 			}
 		}
+		else
+		{
+			LOG("Skipping complete command, not all components reported installed.");
+		}
+	}
+
+	// silent execution, close on anything else 
+	if (InstallUILevelSetting::Instance->IsSilent()) 
+	{
+		LOG("Silent install, closing.");
+		Stop();
+		return;
 	}
 }
 
