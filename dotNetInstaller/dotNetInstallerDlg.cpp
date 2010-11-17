@@ -45,93 +45,110 @@ bool CdotNetInstallerDlg::Run()
 
 BOOL CdotNetInstallerDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
-
-	// set components list callback for double-click execution
-	m_ListBoxComponents.SetExecuteCallback(this);
-
-	// Impostare l'icona per questa finestra di dialogo. Il framework non esegue questa operazione automaticamente
-	//  se la finestra principale dell'applicazione non è una finestra di dialogo.
-	SetIcon(m_hIcon, TRUE);			// Impostare icona grande.
-	SetIcon(m_hIcon, FALSE);		// Impostare icona piccola.
-
-	// determinating operating system
-    m_lblOperatingSystem.SetWindowText(
-		(DVLib::GetOperatingSystemVersionString() + L" (" + 
-		DVLib::pa2wstring(DVLib::GetProcessorArchitecture()) + L")").c_str());
-
-	// hide the "Skip" button if there are no additional configurations
-	if (!m_additional_config)
+	try
 	{
-		m_btnSkip.ShowWindow(SW_HIDE);
+		CDialog::OnInitDialog();
+
+		// set components list callback for double-click execution
+		m_ListBoxComponents.SetExecuteCallback(this);
+
+		// Impostare l'icona per questa finestra di dialogo. Il framework non esegue questa operazione automaticamente
+		//  se la finestra principale dell'applicazione non è una finestra di dialogo.
+		SetIcon(m_hIcon, TRUE);			// Impostare icona grande.
+		SetIcon(m_hIcon, FALSE);		// Impostare icona piccola.
+
+		// determinating operating system
+		m_lblOperatingSystem.SetWindowText(
+			(DVLib::GetOperatingSystemVersionString() + L" (" + 
+			DVLib::pa2wstring(DVLib::GetProcessorArchitecture()) + L")").c_str());
+
+		// hide the "Skip" button if there are no additional configurations
+		if (!m_additional_config)
+		{
+			m_btnSkip.ShowWindow(SW_HIDE);
+		}
+
+		// load components
+		LoadComponents();
+
+		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
+		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+
+		SetWindowText(p_configuration->dialog_caption.GetValue().c_str());
+		AfxGetApp()->m_pszAppName = _tcsdup(p_configuration->dialog_caption.GetValue().c_str());
+
+		m_btnCancel.SetWindowText(p_configuration->cancel_caption.GetValue().c_str());
+		m_btnSkip.SetWindowText(p_configuration->skip_caption.GetValue().c_str());
+
+		switch(InstallerSession::Instance->sequence)
+		{
+		case SequenceInstall:
+			m_btnInstall.SetWindowText(p_configuration->install_caption.GetValue().c_str());
+			m_lblMessage.SetWindowText(p_configuration->dialog_message.GetValue().c_str());
+			break;
+		case SequenceUninstall:
+			m_btnInstall.SetWindowText(p_configuration->uninstall_caption.GetValue().c_str());
+			m_lblMessage.SetWindowText(p_configuration->dialog_message_uninstall.GetValue().c_str());
+			break;
+		}
+
+		MoveWindow(* this, p_configuration->dialog_position);
+		MoveWindow(m_ListBoxComponents, p_configuration->dialog_components_list_position);
+		MoveWindow(m_lblMessage, p_configuration->dialog_message_position);
+		MoveWindow(m_PictureBox, p_configuration->dialog_bitmap_position);
+		MoveWindow(m_InfoLink, p_configuration->dialog_otherinfo_link_position);
+		MoveWindow(m_lblOperatingSystem, p_configuration->dialog_osinfo_position);
+		MoveWindow(m_btnInstall, p_configuration->dialog_install_button_position);
+		MoveWindow(m_btnCancel, p_configuration->dialog_cancel_button_position);
+		MoveWindow(m_btnSkip, p_configuration->dialog_skip_button_position);
+
+		switch(DialogButton::wstring2button(p_configuration->dialog_default_button.GetValue()))
+		{
+		case DialogButton::dialog_default_button_cancel:
+			SetDefaultButton(IDCANCEL);
+			break;
+		case DialogButton::dialog_default_button_install:
+			SetDefaultButton(IDC_INSTALL);
+			break;
+		case DialogButton::dialog_default_button_skip:
+			SetDefaultButton(IDC_SKIP);
+			break;
+		default:
+			THROW_EX("Unsupported dialog_default_button: " << p_configuration->dialog_default_button.GetValue());
+		}
+
+		m_InfoLink.SetCaption(p_configuration->dialog_otherinfo_caption);
+		m_InfoLink.SetHyperlink(p_configuration->dialog_otherinfo_link);
+		if (p_configuration->dialog_otherinfo_caption.empty())
+			m_InfoLink.ShowWindow(SW_HIDE);
+
+		if (! p_configuration->dialog_bitmap.empty() && DVLib::FileExists(p_configuration->dialog_bitmap))
+		{
+			m_PictureBox.SetBitmap(DVLib::LoadBitmapFromFile(p_configuration->dialog_bitmap));
+		}
+		else if (DVLib::ResourceExists(AfxGetApp()->m_hInstance, L"RES_BANNER", L"CUSTOM"))
+		{
+			m_PictureBox.SetBitmap(DVLib::LoadBitmapFromResource(AfxGetApp()->m_hInstance, L"RES_BANNER", L"CUSTOM"));
+		}
+
+		AddUserControls();
+
+		Start();
 	}
-
-	// load components
-	LoadComponents();
-
-	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
-	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-
-	SetWindowText(p_configuration->dialog_caption.GetValue().c_str());
-    AfxGetApp()->m_pszAppName = _tcsdup(p_configuration->dialog_caption.GetValue().c_str());
-
-	m_btnCancel.SetWindowText(p_configuration->cancel_caption.GetValue().c_str());
-	m_btnSkip.SetWindowText(p_configuration->skip_caption.GetValue().c_str());
-
-	switch(InstallerSession::Instance->sequence)
+    catch(std::exception& ex)
+    {
+		LOG(L"*** Failed to initialize UI: " << DVLib::string2wstring(ex.what()));
+		DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
+		RecordError();
+		Stop();
+    }
+	catch(...)
 	{
-	case SequenceInstall:
-		m_btnInstall.SetWindowText(p_configuration->install_caption.GetValue().c_str());
-		m_lblMessage.SetWindowText(p_configuration->dialog_message.GetValue().c_str());
-		break;
-	case SequenceUninstall:
-		m_btnInstall.SetWindowText(p_configuration->uninstall_caption.GetValue().c_str());
-		m_lblMessage.SetWindowText(p_configuration->dialog_message_uninstall.GetValue().c_str());
-		break;
+		LOG(L"*** Failed to initialize UI");
+		DniMessageBox::Show(TEXT("Failed to initialize UI"), MB_OK|MB_ICONSTOP);
+		RecordError();
+		Stop();
 	}
-
-    MoveWindow(* this, p_configuration->dialog_position);
-    MoveWindow(m_ListBoxComponents, p_configuration->dialog_components_list_position);
-    MoveWindow(m_lblMessage, p_configuration->dialog_message_position);
-    MoveWindow(m_PictureBox, p_configuration->dialog_bitmap_position);
-    MoveWindow(m_InfoLink, p_configuration->dialog_otherinfo_link_position);
-    MoveWindow(m_lblOperatingSystem, p_configuration->dialog_osinfo_position);
-    MoveWindow(m_btnInstall, p_configuration->dialog_install_button_position);
-    MoveWindow(m_btnCancel, p_configuration->dialog_cancel_button_position);
-    MoveWindow(m_btnSkip, p_configuration->dialog_skip_button_position);
-
-	switch(DialogButton::wstring2button(p_configuration->dialog_default_button.GetValue()))
-	{
-	case DialogButton::dialog_default_button_cancel:
-		SetDefaultButton(IDCANCEL);
-		break;
-	case DialogButton::dialog_default_button_install:
-		SetDefaultButton(IDC_INSTALL);
-		break;
-	case DialogButton::dialog_default_button_skip:
-		SetDefaultButton(IDC_SKIP);
-		break;
-	default:
-		THROW_EX("Unsupported dialog_default_button: " << p_configuration->dialog_default_button.GetValue());
-	}
-
-	m_InfoLink.SetCaption(p_configuration->dialog_otherinfo_caption);
-	m_InfoLink.SetHyperlink(p_configuration->dialog_otherinfo_link);
-	if (p_configuration->dialog_otherinfo_caption.empty())
-		m_InfoLink.ShowWindow(SW_HIDE);
-
-	if (! p_configuration->dialog_bitmap.empty() && DVLib::FileExists(p_configuration->dialog_bitmap))
-	{
-		m_PictureBox.SetBitmap(DVLib::LoadBitmapFromFile(p_configuration->dialog_bitmap));
-	}
-	else if (DVLib::ResourceExists(AfxGetApp()->m_hInstance, L"RES_BANNER", L"CUSTOM"))
-	{
-		m_PictureBox.SetBitmap(DVLib::LoadBitmapFromResource(AfxGetApp()->m_hInstance, L"RES_BANNER", L"CUSTOM"));
-	}
-
-	AddUserControls();
-
-	Start();
 
 	return FALSE; // don't set focus on the first control
 }
