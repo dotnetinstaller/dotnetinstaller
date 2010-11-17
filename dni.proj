@@ -197,7 +197,7 @@
      OutputFilename="bin\$(Configuration)\dotNetInstallerUnitTests.dll.config"
      Tokens="@(TestExecutables)" />
     <NUnit Assemblies="UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\dotNetInstallerUnitTests.dll"
-     ToolPath="$(NUnitBinDir)" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName).xml" />
+     ToolPath="$(NUnitBinDir)" Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName).xml" />
   </Target>
   <Target Name="editortests">
     <CreateItem Include="EditorTestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\dotNetInstaller\$(Configuration)\dotNetInstaller.exe">
@@ -207,7 +207,7 @@
      OutputFilename="bin\$(Configuration)\InstallerEditorUnitTests.dll.config"
      Tokens="@(EditorTestExecutables)" />
     <NUnit Assemblies="UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\InstallerEditorUnitTests.dll"
-     ToolPath="$(NUnitBinDir)" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
+     ToolPath="$(NUnitBinDir)" Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
   </Target>
   <Target Name="unittests" DependsOnTargets="version">
     <Message Text="Running %(CppUnitTests.Identity) ..." />
