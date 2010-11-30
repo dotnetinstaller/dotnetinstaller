@@ -25,7 +25,7 @@ std::wstring DVLib::guid2wstring(REFGUID rguid)
 	int len = 0;
 
 	CHECK_WIN32_BOOL(0 != (len = ::StringFromGUID2(rguid, static_cast<LPOLESTR>(
-		& * progid.begin()), progid.size())),  _T("::StringFromCLSID"));
+		& * progid.begin()), progid.size())),  _T("::StringFromGUID2"));
 
 	progid.resize(len - 1);
     return progid;
@@ -36,7 +36,7 @@ IID DVLib::string2guid(const std::wstring& guid)
 	IID iid = { 0 };
 
 	CHECK_HR(::IIDFromString(const_cast<LPOLESTR>(makeguid(guid).c_str()), & iid),
-        _T("Error in ::IIDFromString"));
+        L"Error in ::IIDFromString('" << guid << L"')");
 
     return iid;
 }
@@ -54,7 +54,7 @@ bool DVLib::isguid(const std::wstring& guid)
 	case S_OK:
 		return true;
 	default:
-		CHECK_HR(hr, _T("Error in ::IIDFromString"));
+		CHECK_HR(hr, L"Error in ::IIDFromString('" << guid << L"')");
 	}
 
     return false;
