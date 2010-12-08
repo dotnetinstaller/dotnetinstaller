@@ -116,9 +116,20 @@
             <para>
               Open an elevated command prompt and build the project.
               <code language="cmd">
-                <![CDATA[build all]]>
+                <![CDATA[build.cmd all]]>
               </code>
               This should succeed without errors.
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Optionally use Team Foundation Server (TFS) and Team Explorer to establish source control bindings for example, by following the guide here:
+              <externalLink>
+                <linkText>http://codeplex.codeplex.com/wikipage?title=Using TFS and Team Explorer with CodePlex</linkText>
+                <linkUri>http://codeplex.codeplex.com/wikipage?title=Using%20TFS%20and%20Team%20Explorer%20with%20CodePlex</linkUri>
+              </externalLink>
             </para>
           </content>
         </step>
