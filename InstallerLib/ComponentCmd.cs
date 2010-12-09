@@ -69,6 +69,16 @@ namespace InstallerLib
             set { m_uninstall_command_basic = value; }
         }
 
+        private bool m_disable_wow64_fs_redirection = false;
+        [Description("Indicates whether to disable wow64 file system redirection on x64 systems. Setting this option to 'true' forces the command to execute in the native x64 environment.")]
+        [Category("Runtime")]
+        [Required]
+        public bool disable_wow64_fs_redirection
+        {
+            get { return m_disable_wow64_fs_redirection; }
+            set { m_disable_wow64_fs_redirection = value; }
+        }
+
         #endregion
 
         #region Return Codes
@@ -103,6 +113,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("uninstall_command_basic", m_uninstall_command_basic);
             e.XmlWriter.WriteAttributeString("returncodes_success", m_returncodes_success);
             e.XmlWriter.WriteAttributeString("returncodes_reboot", m_returncodes_reboot);
+            e.XmlWriter.WriteAttributeString("disable_wow64_fs_redirection", m_disable_wow64_fs_redirection.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -116,6 +127,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "uninstall_command_basic", ref m_uninstall_command_basic);
             ReadAttributeValue(e, "returncodes_success", ref m_returncodes_success);
             ReadAttributeValue(e, "returncodes_reboot", ref m_returncodes_reboot);
+            ReadAttributeValue(e, "disable_wow64_fs_redirection", ref m_disable_wow64_fs_redirection);
             base.OnXmlReadTag(e);
         }
     }

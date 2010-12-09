@@ -107,6 +107,8 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	// progress options
 	show_progress_dialog = XmlAttribute(node->Attribute("show_progress_dialog")).GetBoolValue(true);
 	show_cab_dialog = XmlAttribute(node->Attribute("show_cab_dialog")).GetBoolValue(true);
+    disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
+    disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
 	// components
 	TiXmlNode * child = NULL;
 	while ( (child = node->IterateChildren("component", child)) != NULL)

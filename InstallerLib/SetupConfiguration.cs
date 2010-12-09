@@ -550,6 +550,16 @@ namespace InstallerLib
             set { m_show_cab_dialog = value; }
         }
 
+        private bool m_disable_wow64_fs_redirection = false;
+        [Description("Indicates whether to disable wow64 file system redirection on x64 systems. Setting this option to 'true' forces the command to execute in the native x64 environment.")]
+        [Category("Runtime")]
+        [Required]
+        public bool disable_wow64_fs_redirection
+        {
+            get { return m_disable_wow64_fs_redirection; }
+            set { m_disable_wow64_fs_redirection = value; }
+        }
+
         #endregion
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
@@ -621,6 +631,7 @@ namespace InstallerLib
             // dialog options
             e.XmlWriter.WriteAttributeString("show_progress_dialog", m_show_progress_dialog.ToString());
             e.XmlWriter.WriteAttributeString("show_cab_dialog", m_show_cab_dialog.ToString());
+            e.XmlWriter.WriteAttributeString("disable_wow64_fs_redirection", m_disable_wow64_fs_redirection.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -686,6 +697,7 @@ namespace InstallerLib
             // dialog options
             ReadAttributeValue(e, "show_progress_dialog", ref m_show_progress_dialog);
             ReadAttributeValue(e, "show_cab_dialog", ref m_show_cab_dialog);
+            ReadAttributeValue(e, "disable_wow64_fs_redirection", ref m_disable_wow64_fs_redirection);
             base.OnXmlReadTag(e);
         }
     }

@@ -9,6 +9,8 @@ public:
     OpenFileComponent();
 public:
 	XmlAttribute file; //file to open. Can be a web link or a standard file
+	// wow64 fs redirection
+	bool disable_wow64_fs_redirection; 
 	void Exec();
 	bool IsExecuting() const;
 	void Load(TiXmlElement * node);

@@ -356,6 +356,7 @@ std::wstring DVLib::pa2wstring(WORD pa)
 
 bool DVLib::IsWow64()
 {
+#ifdef _X86_
     BOOL bIsWow64 = FALSE;
 
 	typedef BOOL (WINAPI * LPFN_ISWOW64PROCESS)(HANDLE, PBOOL);
@@ -368,18 +369,21 @@ bool DVLib::IsWow64()
     }
 
 	return bIsWow64 ? true : false;
+#else
+	return false;
+#endif
 }
 
 bool GetNativeSystemInfo(LPSYSTEM_INFO p)
 {
 	typedef void (WINAPI * LPFN_GETSYSTEMINFO)(LPSYSTEM_INFO);
-    LPFN_GETSYSTEMINFO pGetNativeSystemInfo = (LPFN_GETSYSTEMINFO) GetProcAddress(
+    LPFN_GETSYSTEMINFO fnGetNativeSystemInfo = (LPFN_GETSYSTEMINFO) GetProcAddress(
         GetModuleHandle(TEXT("kernel32.dll")), "GetNativeSystemInfo");
 
-    if (NULL == pGetNativeSystemInfo)
+    if (NULL == fnGetNativeSystemInfo)
 		return false;
 
-	pGetNativeSystemInfo(p);
+	fnGetNativeSystemInfo(p);
 	return true;
 }
 
@@ -433,6 +437,64 @@ bool DVLib::IsProcessorArchitecture(WORD pa, const std::wstring& pa_list)
 
 	return false;
 }
+
+
+bool DVLib::Wow64DisableWow64FsRedirection(void **old_value)
+{
+
+#ifdef _X86_
+	
+	typedef BOOL (WINAPI * LPFN_WOW64DISABLEWOW64FSREDIRECTION)(PVOID *);
+	
+	LPFN_WOW64DISABLEWOW64FSREDIRECTION fnWow64DisableWow64FsRedirection =
+		(LPFN_WOW64DISABLEWOW64FSREDIRECTION)GetProcAddress(
+			GetModuleHandle(TEXT("kernel32.dll")), "Wow64DisableWow64FsRedirection");
+
+	if ( IsWow64() && fnWow64DisableWow64FsRedirection )
+	{
+		return fnWow64DisableWow64FsRedirection(old_value);
+	}
+	else
+	{
+		// ignore call
+		*old_value = NULL;
+		return true;
+	}
+#else
+	// Dummy for AMD64, IA64
+	*old_value = NULL;
+	return true;
+#endif
+
+}
+
+bool DVLib::Wow64RevertWow64FsRedirection(void *old_value)
+{
+
+#ifdef _X86_
+
+	typedef BOOL (WINAPI * LPFN_WOW64REVERTWOW64FSREDIRECTION)(PVOID);
+
+	LPFN_WOW64REVERTWOW64FSREDIRECTION fnWow64RevertWow64FsRedirection =
+		(LPFN_WOW64REVERTWOW64FSREDIRECTION)GetProcAddress(
+			GetModuleHandle(TEXT("kernel32.dll")),"Wow64RevertWow64FsRedirection");
+
+	if ( IsWow64() && fnWow64RevertWow64FsRedirection )
+	{
+		return fnWow64RevertWow64FsRedirection(old_value);
+	}
+	else
+	{
+		// ignore call
+		return true;
+	}
+#else
+	// Dummy for AMD64, IA64
+	return true;
+#endif
+
+}
+
 
 void DVLib::ExitWindowsSystem(DWORD ulFlags, DWORD ulReason)
 {

@@ -12,6 +12,8 @@ public:
 	XmlAttribute uninstall_command;
     XmlAttribute uninstall_command_silent;
 	XmlAttribute uninstall_command_basic;
+	// wow64 fs redirection
+	bool disable_wow64_fs_redirection; 
 	// return codes
 	XmlAttribute returncodes_success;
 	XmlAttribute returncodes_reboot;

@@ -8,6 +8,7 @@
 #include "ResponseFileIni.h"
 #include "ResponseFileText.h"
 #include "ResponseFileNone.h"
+#include "Wow64NativeFS.h"
 
 ExeComponent::ExeComponent()
 	: ProcessComponent(component_type_exe)
@@ -109,7 +110,16 @@ void ExeComponent::Exec()
 
 	CHECK_BOOL(! l_command.empty(), L"Component command is empty");
 
-	DVLib::RunCmd(l_command, & m_process_info);
+	if (disable_wow64_fs_redirection)
+	{
+		auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
+		DVLib::RunCmd(l_command, & m_process_info);
+	}
+	else
+	{
+		DVLib::RunCmd(l_command, & m_process_info);
+	}
+	
 };
 
 void ExeComponent::Load(TiXmlElement * node)
@@ -134,6 +144,7 @@ void ExeComponent::Load(TiXmlElement * node)
 	uninstall_exeparameters_basic = node->Attribute("uninstall_exeparameters_basic");
 	returncodes_success = node->Attribute("returncodes_success");
 	returncodes_reboot = node->Attribute("returncodes_reboot");
+    disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
 	Component::Load(node);
 }
 

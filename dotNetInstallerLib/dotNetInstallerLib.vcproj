@@ -391,6 +391,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Wow64NativeFS.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\XmlAttribute.cpp"
 				>
 			</File>
@@ -638,6 +642,10 @@
 			</File>
 			<File
 				RelativePath=".\WidgetPosition.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Wow64NativeFS.h"
 				>
 			</File>
 			<File

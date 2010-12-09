@@ -164,6 +164,16 @@ namespace InstallerLib
             set { m_uninstall_responsefile_target = value; }
         }
 
+        private bool m_disable_wow64_fs_redirection = false;
+        [Description("Indicates whether to disable wow64 file system redirection on x64 systems. Setting this option to 'true' forces the application to execute in native x64 environment.")]
+        [Category("Runtime")]
+        [Required]
+        public bool disable_wow64_fs_redirection
+        {
+            get { return m_disable_wow64_fs_redirection; }
+            set { m_disable_wow64_fs_redirection = value; }
+        }
+
         #endregion
 
         #region Return Codes
@@ -276,6 +286,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("uninstall_exeparameters", m_uninstall_exeparameters);
             e.XmlWriter.WriteAttributeString("uninstall_exeparameters_basic", m_uninstall_exeparameters_basic);
             e.XmlWriter.WriteAttributeString("uninstall_exeparameters_silent", m_uninstall_exeparameters_silent);
+            e.XmlWriter.WriteAttributeString("disable_wow64_fs_redirection", m_disable_wow64_fs_redirection.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -301,6 +312,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "uninstall_exeparameters", ref m_uninstall_exeparameters);
             ReadAttributeValue(e, "uninstall_exeparameters_basic", ref m_uninstall_exeparameters_basic);
             ReadAttributeValue(e, "uninstall_exeparameters_silent", ref m_uninstall_exeparameters_silent);
+            ReadAttributeValue(e, "disable_wow64_fs_redirection", ref m_disable_wow64_fs_redirection);
             base.OnXmlReadTag(e);
         }
     }

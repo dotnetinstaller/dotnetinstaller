@@ -5,6 +5,7 @@
 #include "InstallerLog.h"
 #include "InstallConfiguration.h"
 #include "InstallerSession.h"
+#include "Wow64NativeFS.h"
 
 CmdComponent::CmdComponent()
 	: ProcessComponent(component_type_cmd)
@@ -40,7 +41,16 @@ void CmdComponent::Exec()
 	l_command = InstallerSession::Instance->ExpandUserVariables(l_command);
 
 	LOG(L"Executing: " << l_command);
-	DVLib::RunCmd(l_command, & m_process_info);
+
+	if (disable_wow64_fs_redirection)
+	{
+		auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
+		DVLib::RunCmd(l_command, & m_process_info);
+	}
+	else
+	{
+		DVLib::RunCmd(l_command, & m_process_info);
+	}
 };
 
 void CmdComponent::Load(TiXmlElement * node)
@@ -53,6 +63,7 @@ void CmdComponent::Load(TiXmlElement * node)
 	uninstall_command_basic = node->Attribute("uninstall_command_basic");	
 	returncodes_success = node->Attribute("returncodes_success");
 	returncodes_reboot = node->Attribute("returncodes_reboot");
+    disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
 	Component::Load(node);
 }
 

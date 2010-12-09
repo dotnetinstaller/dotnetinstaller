@@ -39,6 +39,8 @@ public:
 	XmlAttribute complete_command_silent;
 	// complete command on a basic UI install
 	XmlAttribute complete_command_basic;
+	// wow64 fs redirection
+	bool disable_wow64_fs_redirection; 
 	// wait for the complete command to finish
 	bool wait_for_complete_command;
 	// if true auto close the dialog (display installation_completed or installation_none message 

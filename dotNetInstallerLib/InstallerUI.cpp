@@ -7,6 +7,7 @@
 #include "InstallerCommandLineInfo.h"
 #include "DniMessageBox.h"
 #include "SplashWnd.h"
+#include "Wow64NativeFS.h"
 
 InstallerUI::InstallerUI()
 	: m_reboot(false)
@@ -226,12 +227,29 @@ void InstallerUI::ExecuteCompleteCode(bool components_installed)
 		if (p_configuration->wait_for_complete_command)
 		{
 			LOG(L"Executing complete command: " << l_complete_command);
-			dwExitCode = DVLib::ExecCmd(l_complete_command);
+
+			if (p_configuration->disable_wow64_fs_redirection)
+			{
+				auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
+				dwExitCode = DVLib::ExecCmd(l_complete_command);
+			}
+			else
+			{
+				dwExitCode = DVLib::ExecCmd(l_complete_command);
+			}
 		}
 		else
 		{
 			LOG(L"Detaching complete command: " << l_complete_command);
-			DVLib::DetachCmd(l_complete_command);
+			if (p_configuration->disable_wow64_fs_redirection)
+			{
+				auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
+				DVLib::DetachCmd(l_complete_command);
+			}
+			else
+			{
+				DVLib::DetachCmd(l_complete_command);
+			}
 		}
 	}
 }

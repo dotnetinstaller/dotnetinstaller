@@ -27,6 +27,8 @@ public:
 	XmlAttribute uninstall_exeparameters;
 	XmlAttribute uninstall_exeparameters_basic;
 	XmlAttribute uninstall_exeparameters_silent;
+	// wow64 fs redirection
+	bool disable_wow64_fs_redirection; 
 	// return codes
 	XmlAttribute returncodes_success;
 	XmlAttribute returncodes_reboot;

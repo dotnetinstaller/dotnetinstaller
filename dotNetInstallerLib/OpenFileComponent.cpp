@@ -4,6 +4,7 @@
 #include "InstallConfiguration.h"
 #include "InstallerLog.h"
 #include "InstallerSession.h"
+#include "Wow64NativeFS.h"
 
 OpenFileComponent::OpenFileComponent()
 	: Component(component_type_openfile)
@@ -16,7 +17,15 @@ void OpenFileComponent::Exec()
 	std::wstring l_file = file;
 	l_file = InstallerSession::Instance->ExpandUserVariables(l_file);
 	LOG(L"Opening: " << l_file);
-	DVLib::ShellCmd(l_file, & m_rc);
+	if (disable_wow64_fs_redirection)
+	{
+		auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
+		DVLib::ShellCmd(l_file, & m_rc); 
+	}
+	else
+	{
+		DVLib::ShellCmd(l_file, & m_rc);
+	}
 }
 
 bool OpenFileComponent::IsExecuting() const
@@ -27,6 +36,7 @@ bool OpenFileComponent::IsExecuting() const
 void OpenFileComponent::Load(TiXmlElement * node)
 {
 	file = node->Attribute("file");
+    disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
 	Component::Load(node);
 }
 

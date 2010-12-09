@@ -452,6 +452,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DownloadSetup", "DownloadSe
 		Samples\DownloadSetup\Configuration.xml = Samples\DownloadSetup\Configuration.xml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Start64", "Start64", "{7C6A69A7-33E5-44B0-AD58-FA70F5A2905D}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		Samples\Start64\Configuration.xml = Samples\Start64\Configuration.xml
+		Samples\Start64\Readme.txt = Samples\Start64\Readme.txt
+		Samples\Start64\test.cmd = Samples\Start64\test.cmd
+		Samples\Start64\test.txt = Samples\Start64\test.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 24
@@ -653,6 +665,7 @@ Global
 		{1F971F63-F0D9-4E48-BAC0-37959E44FDE0} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{18EBB4B9-ED75-43E0-881B-DAA19C621589} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{DCE563E3-05E7-456C-AC45-97173CED2F7F} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
+		{7C6A69A7-33E5-44B0-AD58-FA70F5A2905D} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{DA2F3B93-F800-4AD0-BABE-F84B0C5128E0} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{5DDA5610-5927-404B-9B03-76071159F8BE} = {AA6599BC-B3BA-4EC0-980D-5B66336A1350}
 		{49A3BD48-D506-4108-8F47-7CD7081C046C} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
