@@ -58,3 +58,4 @@
 #include "InstallerCommandLineInfo.h"
 #include "DisableWnd.h"
 #include "InstallerUI.h"
+#include "Wow64NativeFS.h"

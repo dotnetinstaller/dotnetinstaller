@@ -184,11 +184,10 @@ namespace DVLib
 	bool IsProcessorArchitecture(WORD pa, const std::wstring& pa_list);
 	// is windows-on-windows 64
 	bool IsWow64();
-	// disables file system redirection for the calling thread
-	bool Wow64DisableWow64FsRedirection(void **old_value);
-	// restores file system redirection for the calling thread
-	bool Wow64RevertWow64FsRedirection(void *old_value);
-
+	// disables file system redirection for the calling thread on x64 systems
+	bool Wow64DisableWow64FsRedirection(LPVOID * old_value);
+	// restores file system redirection for the calling thread on x64 systems
+	bool Wow64RevertWow64FsRedirection(LPVOID old_value);
 	// reboot
 	void ExitWindowsSystem(DWORD ulFlags /* = EWX_REBOOT */, DWORD ulReason = 0);
 }

@@ -3,11 +3,12 @@
 class Wow64NativeFS
 {
 private:
-	void *wow64_fs_redirection_old;
-
+	LPVOID wow64_fs_redirection_old;
+	bool disabled;
 public:
-	Wow64NativeFS(void);
-	~Wow64NativeFS(void);
+	bool IsDisabled();
+	Wow64NativeFS();
+	~Wow64NativeFS();
 };
 
 typedef shared_any<Wow64NativeFS *, close_delete> Wow64NativeFSPtr;

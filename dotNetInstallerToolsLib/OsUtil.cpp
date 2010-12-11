@@ -439,38 +439,40 @@ bool DVLib::IsProcessorArchitecture(WORD pa, const std::wstring& pa_list)
 }
 
 
-bool DVLib::Wow64DisableWow64FsRedirection(void **old_value)
+bool DVLib::Wow64DisableWow64FsRedirection(LPVOID * old_value)
 {
+	CHECK_BOOL(NULL != old_value,
+		L"Wow64DisableWow64FsRedirection: missing old_value");
 
 #ifdef _X86_
-	
 	typedef BOOL (WINAPI * LPFN_WOW64DISABLEWOW64FSREDIRECTION)(PVOID *);
 	
 	LPFN_WOW64DISABLEWOW64FSREDIRECTION fnWow64DisableWow64FsRedirection =
 		(LPFN_WOW64DISABLEWOW64FSREDIRECTION)GetProcAddress(
 			GetModuleHandle(TEXT("kernel32.dll")), "Wow64DisableWow64FsRedirection");
 
-	if ( IsWow64() && fnWow64DisableWow64FsRedirection )
+	if ( IsWow64())
 	{
-		return fnWow64DisableWow64FsRedirection(old_value);
+		CHECK_BOOL(NULL != fnWow64DisableWow64FsRedirection,
+			L"Missing Wow64DisableWow64FsRedirection");
+
+		CHECK_WIN32_BOOL(fnWow64DisableWow64FsRedirection(old_value),
+			L"Wow64DisableWow64FsRedirection");
+		
+		return true;
 	}
 	else
 	{
-		// ignore call
-		*old_value = NULL;
-		return true;
+		return false;
 	}
 #else
-	// Dummy for AMD64, IA64
-	*old_value = NULL;
-	return true;
+	// dummy for AMD64, IA64
+	return false;
 #endif
-
 }
 
-bool DVLib::Wow64RevertWow64FsRedirection(void *old_value)
+bool DVLib::Wow64RevertWow64FsRedirection(LPVOID old_value)
 {
-
 #ifdef _X86_
 
 	typedef BOOL (WINAPI * LPFN_WOW64REVERTWOW64FSREDIRECTION)(PVOID);
@@ -479,20 +481,23 @@ bool DVLib::Wow64RevertWow64FsRedirection(void *old_value)
 		(LPFN_WOW64REVERTWOW64FSREDIRECTION)GetProcAddress(
 			GetModuleHandle(TEXT("kernel32.dll")),"Wow64RevertWow64FsRedirection");
 
-	if ( IsWow64() && fnWow64RevertWow64FsRedirection )
+	if (IsWow64())
 	{
-		return fnWow64RevertWow64FsRedirection(old_value);
+		CHECK_BOOL(NULL != fnWow64RevertWow64FsRedirection,
+			L"Missing Wow64RevertWow64FsRedirection");
+
+		CHECK_WIN32_BOOL(fnWow64RevertWow64FsRedirection(old_value),
+			L"Wow64RevertWow64FsRedirection");
+
+		return true;
 	}
 	else
 	{
-		// ignore call
-		return true;
+		return false;
 	}
 #else
-	// Dummy for AMD64, IA64
-	return true;
+	return false;
 #endif
-
 }
 
 

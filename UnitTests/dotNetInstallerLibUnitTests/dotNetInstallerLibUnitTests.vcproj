@@ -331,6 +331,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Wow64NativeFSUnitTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\XmlAttributeUnitTests.cpp"
 				>
 			</File>
@@ -466,6 +470,10 @@
 			</File>
 			<File
 				RelativePath=".\ThreadComponentUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Wow64NativeFSUnitTests.h"
 				>
 			</File>
 			<File

@@ -21,6 +21,7 @@ namespace DVLib
 			CPPUNIT_TEST( testProcessorArchitectureToFromString );
 			CPPUNIT_TEST( testIsProcessorArchitecture );
 			CPPUNIT_TEST( testIsWow64 );
+			CPPUNIT_TEST( testWow64DisableWow64FsRedirection );
 			// CPPUNIT_TEST( testExistWindowsSystem );
 			CPPUNIT_TEST( testwstring2lcidtype );
 			CPPUNIT_TEST( testlcidtype2wstring );
@@ -42,6 +43,7 @@ namespace DVLib
 			void testProcessorArchitectureToFromString();
 			void testIsProcessorArchitecture();
 			void testIsWow64();
+			void testWow64DisableWow64FsRedirection();
 			void testExistWindowsSystem();
 			void testwstring2lcidtype();
 			void testlcidtype2wstring();

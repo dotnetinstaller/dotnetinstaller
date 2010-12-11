@@ -159,6 +159,24 @@ void OsUtilUnitTests::testIsWow64()
 	std::wcout << std::endl << L"Wow64: " << DVLib::towstring(DVLib::IsWow64());
 }
 
+void OsUtilUnitTests::testWow64DisableWow64FsRedirection()
+{
+	LPVOID old_value = (LPVOID) 0xDEADBEEF;
+	if (DVLib::IsWow64())
+	{
+		CPPUNIT_ASSERT(DVLib::Wow64DisableWow64FsRedirection(& old_value));
+		CPPUNIT_ASSERT(old_value == NULL);
+		CPPUNIT_ASSERT(DVLib::Wow64DisableWow64FsRedirection(& old_value));
+		CPPUNIT_ASSERT(old_value != NULL);
+		CPPUNIT_ASSERT(DVLib::Wow64RevertWow64FsRedirection(old_value));
+	}
+	else
+	{
+		CPPUNIT_ASSERT(! DVLib::Wow64DisableWow64FsRedirection(& old_value));
+		CPPUNIT_ASSERT(! DVLib::Wow64RevertWow64FsRedirection(old_value));
+	}
+}
+
 void OsUtilUnitTests::testExistWindowsSystem()
 {
 	DVLib::ExitWindowsSystem(EWX_LOGOFF);
@@ -236,3 +254,4 @@ void OsUtilUnitTests::testos2wstring()
 		CPPUNIT_ASSERT(! os_s.empty());
 	}
 }
+
