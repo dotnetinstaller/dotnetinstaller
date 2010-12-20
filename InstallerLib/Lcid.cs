@@ -11,6 +11,8 @@ namespace InstallerLib
     {
         UserExe, // System32\user.exe lcid
         System, // GetSystemDefaultLCID
-        User // GetUserDefaultLCID
+        User, // GetUserDefaultLCID
+        MuiSystem, // GetSystemDefaultUILanguage
+        MuiUser, // GetUserDefaultUILanguage
     }
 }

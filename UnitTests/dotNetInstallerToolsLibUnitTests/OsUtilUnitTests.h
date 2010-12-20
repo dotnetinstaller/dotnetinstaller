@@ -27,6 +27,8 @@ namespace DVLib
 			CPPUNIT_TEST( testlcidtype2wstring );
 			CPPUNIT_TEST( testos2wstring );
 			CPPUNIT_TEST( testoscode2os );
+			CPPUNIT_TEST( testMuiGetUserDefaultUILCID );
+			CPPUNIT_TEST( testMuiGetSystemDefaultUILCID );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testGetOperatingSystemVersion();
@@ -49,6 +51,8 @@ namespace DVLib
 			void testlcidtype2wstring();
 			void testos2wstring();
 			void testoscode2os();
+			void testMuiGetUserDefaultUILCID();
+			void testMuiGetSystemDefaultUILCID();
 		};
 	}
 }

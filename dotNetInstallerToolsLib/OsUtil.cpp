@@ -207,6 +207,10 @@ LCID DVLib::GetOperatingSystemLCID(LcidType lcidtype)
 {
 	switch(lcidtype)
 	{
+	case LcidMuiUser:
+		return MuiGetSystemDefaultUILCID();
+	case LcidMuiSystem:
+		return MuiGetUserDefaultUILCID();
 	case LcidSystem:
 		return ::GetSystemDefaultLCID();
 	case LcidUser:
@@ -609,3 +613,32 @@ std::wstring DVLib::GetLocale(LCID lcid, int format)
 	return locale;
 }
 
+LCID DVLib::MuiGetSystemDefaultUILCID()
+{
+	typedef LANGID (WINAPI * LPFN_GetSystemDefaultUILanguage)();
+
+	LPFN_GetSystemDefaultUILanguage fnGetSystemDefaultUILanguage =
+		(LPFN_GetSystemDefaultUILanguage) GetProcAddress(
+			GetModuleHandle(L"kernel32.dll"), "GetSystemDefaultUILanguage");
+
+	CHECK_BOOL(NULL != fnGetSystemDefaultUILanguage,
+		L"Missing GetSystemDefaultUILanguage");
+
+	LANGID id = fnGetSystemDefaultUILanguage();
+	return MAKELCID(id, SORT_DEFAULT);
+}
+
+LCID DVLib::MuiGetUserDefaultUILCID()
+{
+	typedef LANGID (WINAPI * LPFN_GetUserDefaultUILanguage)();
+
+	LPFN_GetUserDefaultUILanguage fnGetUserDefaultUILanguage =
+		(LPFN_GetUserDefaultUILanguage) GetProcAddress(
+			GetModuleHandle(L"kernel32.dll"), "GetUserDefaultUILanguage");
+
+	CHECK_BOOL(NULL != fnGetUserDefaultUILanguage,
+		L"Missing GetUserDefaultUILanguage");
+
+	LANGID id = fnGetUserDefaultUILanguage();
+	return MAKELCID(id, SORT_DEFAULT);
+}

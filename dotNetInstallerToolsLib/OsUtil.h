@@ -6,7 +6,9 @@ namespace DVLib
     {
         LcidUserExe = 0, // System32\user.exe lcid
         LcidSystem, // GetSystemDefaultLCID
-        LcidUser // GetUserDefaultLCID
+        LcidUser, // GetUserDefaultLCID
+		LcidMuiSystem, // GetSystemDefaultUILanguage
+		LcidMuiUser, // GetUserDefaultUILanguage		
     };
 
 	struct LcidType2wstringMapEntry
@@ -20,6 +22,8 @@ namespace DVLib
 		{ LcidUserExe, L"UserExe" },
 		{ LcidSystem, L"System" },
 		{ LcidUser, L"User" },
+		{ LcidMuiSystem, L"MuiSystem" },
+		{ LcidMuiUser, L"MuiUser" },
 	};
 
 	LcidType wstring2lcidtype(const std::wstring& name, LcidType defaultvalue = LcidUser);
@@ -190,4 +194,7 @@ namespace DVLib
 	bool Wow64RevertWow64FsRedirection(LPVOID old_value);
 	// reboot
 	void ExitWindowsSystem(DWORD ulFlags /* = EWX_REBOOT */, DWORD ulReason = 0);
+	// mui
+	LCID MuiGetSystemDefaultUILCID();
+	LCID MuiGetUserDefaultUILCID();
 }

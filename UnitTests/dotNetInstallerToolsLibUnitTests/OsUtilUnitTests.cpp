@@ -255,3 +255,14 @@ void OsUtilUnitTests::testos2wstring()
 	}
 }
 
+void OsUtilUnitTests::testMuiGetUserDefaultUILCID()
+{
+	LCID lcid = DVLib::MuiGetUserDefaultUILCID();
+	CPPUNIT_ASSERT(::GetUserDefaultUILanguage() == LANGIDFROMLCID(lcid));
+}
+
+void OsUtilUnitTests::testMuiGetSystemDefaultUILCID()
+{
+	LCID lcid = DVLib::MuiGetSystemDefaultUILCID();
+	CPPUNIT_ASSERT(::GetSystemDefaultUILanguage() == LANGIDFROMLCID(lcid));
+}

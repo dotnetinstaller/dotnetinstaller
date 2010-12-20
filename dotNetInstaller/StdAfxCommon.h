@@ -45,6 +45,8 @@
 #include <shlwapi.h>
 #pragma warning(pop)
 
+#include <winnls.h>
+
 #include <ostream>
 #include <string>
 #include <vector>

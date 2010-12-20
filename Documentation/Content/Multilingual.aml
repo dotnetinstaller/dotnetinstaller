@@ -64,6 +64,27 @@
               User default LCID using GetUserDefaultLCID. The user-defined language identifier of the operating system can be
               set by using the Regional Settings option in Control Panel.
             </definition>
+            <definedTerm>MuiSystem</definedTerm>
+            <definition>
+              System default language using GetSystemDefaultUILanguage combined with the default sort value.
+              The operating system defines the system UI language as a user interface language that can be set 
+              by an administrator in the Advanced tab of the regional and language options portion of Control Panel. 
+              See <externalLink>
+                <linkText>User Interface Language Management in MSDN</linkText>
+                <linkText>http://msdn.microsoft.com/en-us/library/dd374098(v=VS.85).aspx</linkText>
+              </externalLink> for more information.
+            </definition>
+            <definedTerm>MuiUser</definedTerm>
+            <definition>
+              User default language using GetUserDefaultUILanguage combined with the default sort value.
+              The user UI language determines the user interface language used for menus, dialog boxes, help files,
+              and so forth. It can be set by the current user in the Language tab of the regional and language options
+              portion of Control Panel.
+              See <externalLink>
+                <linkText>User Interface Language Management in MSDN</linkText>
+                <linkText>http://msdn.microsoft.com/en-us/library/dd374098(v=VS.85).aspx</linkText>
+              </externalLink> for more information.
+            </definition>
           </tableDefinition>
         </para>
       </content>

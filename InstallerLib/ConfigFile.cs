@@ -96,7 +96,7 @@ namespace InstallerLib
         }
 
         private LcidType m_lcidtype = LcidType.UserExe;
-        [Description(@"Choose between using LCID from 'system32\user.exe', 'GetUserDefaultLCID' or system 'GetSystemDefaultLCID'.")]
+        [Description(@"Method for obtainng the current user or system locale.")]
         [Category("Locale")]
         [Required]
         public LcidType lcidtype

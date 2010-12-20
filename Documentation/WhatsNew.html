@@ -52,30 +52,37 @@
                     will return a 3010 exit code when a reboot was required.</li>
                 <li><a href="http://dotnetinstaller.codeplex.com/workitem/6786">#6786</a>: Added <code>
                     /noreboot</code> to the bootstrapper to suppress actual reboot when required. Bootstrapper
-                    will simply return 3010 in this case.</li>
+                    will simply return a 3010 exit code in this case.</li>
                 <li><a href="http://dotnetinstaller.codeplex.com/workitem/7004">#7004</a>: The user-defined
                     browse control will always return paths without the trailing backslash except for
                     drive paths (eg. <code>C:\</code>).</li>
                 <li><a href="http://dotnetinstaller.codeplex.com/workitem/6730">#6730</a>: InstallerEditor
                     displays a <code>*</code> next to field names that are required and displays an
                     error if the user tries to delete the value.</li>
-                <li><a href="http://dotnetinstaller.codeplex.com/workitem/7151">#7151</a>: InstallerEditor
-                    example links in component wizard use <code>example.com</code> instead of <code>yourwebsite.com</code>,
-                    which is a real site.</li>
                 <li><a href="http://dotnetinstaller.codeplex.com/workitem/7148">#7148</a>: Added support
                     for Windows 2008 SP2 and Windows 7 SP1.</li>
                 <li><a href="http://dotnetinstaller.codeplex.com/workitem/7252">#7252</a>: Enabled Visual
                     Styles: modified default manifests with a dependency on <code>Microsoft.Windows.Common-Controls
                         6.0</code>.</li>
-	            <li><a href="http://dotnetinstaller.codeplex.com/workitem/7382">#7382</a>: Added <code>
-					disable_wow64_fs_redirection</code> at setup configuration and component level to 
-					run native x64 Windows applications (cmd, regedit, etc) from dotNetInstaller.</li>	                        
+                <li><a href="http://dotnetinstaller.codeplex.com/workitem/7382">#7382</a>: Added <code>
+                    disable_wow64_fs_redirection</code> at setup configuration and component level to
+                    run native x64 Windows applications (cmd, regedit, etc) from dotNetInstaller.</li>
+                <li><a href="http://dotnetinstaller.codeplex.com/workitem/7916">#7916</a>: Added MUI
+                    support with <code>MuiUser</code> (preferred language set for the user) and <code>MuiSystem</code>
+                    (preferred language set for the system) options in configuration <code>lcidtype</code>.</li>
+            </ul>
+        </li>
+        <li><strong>Misc</strong>:
+            <ul>
                 <li><a href="http://dotnetinstaller.codeplex.com/workitem/7575">#7575</a>: Upgraded
                     to SandCastle 1.9 documentation builder.</li>
+                <li><a href="http://dotnetinstaller.codeplex.com/workitem/7672">#7672</a>: Outputing
+                    running nunit test case name to console.</li>
                 <li><a href="http://dotnetinstaller.codeplex.com/workitem/7673">#7673</a>: Checked in
                     *.*proj files with TFS bindings and add associated vspscc files.</li>
-                <li><a href="http://dotnetinstaller.codeplex.com/workitem/7672">#7672</a>: Outputing
-                    running nunit test case name to console</li>
+                <li><a href="http://dotnetinstaller.codeplex.com/workitem/7151">#7151</a>: InstallerEditor
+                    example links in component wizard use <code>example.com</code> instead of <code>yourwebsite.com</code>,
+                    which is a real site.</li>
             </ul>
         </li>
         <li><strong>Bugs</strong>:
