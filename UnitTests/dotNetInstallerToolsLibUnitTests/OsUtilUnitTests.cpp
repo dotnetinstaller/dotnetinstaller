@@ -44,15 +44,10 @@ void OsUtilUnitTests::testIsOperatingSystemID()
 
 void OsUtilUnitTests::testGetOperatingSystemLCID()
 {
-	LCID lcid_system = DVLib::GetOperatingSystemLCID(LcidSystem);
-	LCID lcid_user = DVLib::GetOperatingSystemLCID(LcidUser);
-	LCID lcid_userexe = DVLib::GetOperatingSystemLCID(LcidUserExe);
-	std::wcout << std::endl << "system lcid: " << lcid_system;
-	std::wcout << std::endl << "user lcid: " << lcid_user;
-	std::wcout << std::endl << "userexe lcid: " << lcid_userexe;
-	CPPUNIT_ASSERT(lcid_system != 0);
-	CPPUNIT_ASSERT(lcid_system == lcid_user);
-	CPPUNIT_ASSERT(lcid_system == lcid_userexe);
+	// there're serveral ways to obtain the operating system LCID, all should produce some LCID value
+	CPPUNIT_ASSERT(0 != DVLib::GetOperatingSystemLCID(LcidSystem));
+	CPPUNIT_ASSERT(0 != DVLib::GetOperatingSystemLCID(LcidUser));
+	CPPUNIT_ASSERT(0 != DVLib::GetOperatingSystemLCID(LcidUserExe));
 }
 
 void OsUtilUnitTests::testIsOperatingSystemLCID()

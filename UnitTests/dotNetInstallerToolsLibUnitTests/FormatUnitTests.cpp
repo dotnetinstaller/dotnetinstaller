@@ -87,10 +87,14 @@ void FormatUnitTests::testFormatBytes()
 
 void FormatUnitTests::testFormatDateTime()
 {
-	CPPUNIT_ASSERT(DVLib::FormatDateTimeA(0).find_first_of("1969-12-31") == 0);
-	CPPUNIT_ASSERT("1969" == DVLib::FormatDateTimeA(0, "%Y"));
-	CPPUNIT_ASSERT(DVLib::FormatDateTimeW(0).find_first_of(L"1969-12-31") == 0);
-	CPPUNIT_ASSERT(L"1969" == DVLib::FormatDateTimeW(0, L"%Y"));
+	// set the current time-zone to UTC to make FormatDateTime predictable
+	CPPUNIT_ASSERT(ERROR_SUCCESS == _putenv_s( "TZ", "UTC" ));
+	_tzset();
+	// formatting of 0 time is the number of seconds since 1970-01-01, hence 0
+	CPPUNIT_ASSERT(DVLib::FormatDateTimeA(0) == "1970-01-01 00:00:00");
+	CPPUNIT_ASSERT("1970" == DVLib::FormatDateTimeA(0, "%Y"));
+	CPPUNIT_ASSERT(DVLib::FormatDateTimeW(0) == L"1970-01-01 00:00:00");
+	CPPUNIT_ASSERT(L"1970" == DVLib::FormatDateTimeW(0, L"%Y"));
 }
 
 void FormatUnitTests::testFormatCurrentDateTime()
