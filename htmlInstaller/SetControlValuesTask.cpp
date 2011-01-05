@@ -1,9 +1,10 @@
 #include "StdAfx.h"
 #include "SetControlValuesTask.h"
 
-SetControlValuesTask::SetControlValuesTask(const htmlayout::dom::element& root, HANDLE evt)
+SetControlValuesTask::SetControlValuesTask(const htmlayout::dom::element& root, HANDLE evt, std::wstring * perror)
 	: m_root(root)
 	, m_event(evt)
+	, m_perror(perror)
 {
 
 }
@@ -71,16 +72,27 @@ void SetControlValuesTask::exec(htmlayout::dom::element elt)
 			// TODO: support widget types: select, dropdown-select, textarea, htmlarea
 		}
 
-		for(unsigned int child_index = 0; child_index < m_root.children_count(); child_index++)
+		for(unsigned int child_index = 0; child_index < elt.children_count(); child_index++)
 		{
 			exec(elt.child(child_index));
 		}
 	}
 }
-
+	
 void SetControlValuesTask::exec()
 {
-	exec(m_root);
+	try
+	{
+		exec(m_root);
+	}
+	catch(std::exception& ex)
+	{
+		TRYLOG(L"Error: " << DVLib::string2wstring(ex.what()));
+		if (NULL != m_perror)
+		{
+			* m_perror = DVLib::string2wstring(ex.what());
+		}
+	}
 
 	CHECK_WIN32_BOOL(SetEvent(m_event),
 		L"SetEvent");

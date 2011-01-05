@@ -376,9 +376,15 @@ void InstallerWindow::SetControlValues()
 	CHECK_WIN32_BOOL(NULL != get(done),
 		L"CreateEvent");
 
-	htmlayout::queue::push(new SetControlValuesTask(body, get(done)), HtmlWindow::s_hwnd);	
+	std::wstring error;
+	htmlayout::queue::push(new SetControlValuesTask(body, get(done), & error), HtmlWindow::s_hwnd);	
 
 	::WaitForSingleObject(get(done), INFINITE);
+
+	if (! error.empty())
+	{
+		THROW_EX(error);
+	}
 }
 
 // IExecuteCallback
