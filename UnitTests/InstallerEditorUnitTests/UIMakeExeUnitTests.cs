@@ -35,7 +35,7 @@ namespace InstallerEditorUnitTests
             configFile.SaveAs(configFileName);
             try
             {
-                ProcessStartInfo pi = new ProcessStartInfo(InstallerEditorExeUtils.Executable, configFileName);
+                ProcessStartInfo pi = new ProcessStartInfo(InstallerEditorExeUtils.Executable, "\"" + configFileName + "\"");
                 using (Application installerEditor = Application.Launch(pi))
                 {
                     Window mainWindow = installerEditor.GetWindow(string.Format("Installer Editor - {0}", configFileName), InitializeOption.NoCache);
