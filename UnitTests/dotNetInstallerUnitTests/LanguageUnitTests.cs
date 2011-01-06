@@ -24,7 +24,7 @@ namespace dotNetInstallerUnitTests
             // current lcid
             string currentLcidFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             ComponentCmd cmdCurrentLcid = new ComponentCmd();
-            cmdCurrentLcid.os_filter_lcid = CultureInfo.CurrentCulture.LCID.ToString();
+            cmdCurrentLcid.os_filter_lcid = CultureInfo.CurrentUICulture.LCID.ToString();
             Console.WriteLine("Current lcid: {0}", cmdCurrentLcid.os_filter_lcid);
             cmdCurrentLcid.command = string.Format("cmd.exe /C dir > \"{0}\"", currentLcidFilename);
             cmdCurrentLcid.required_install = true;
@@ -64,7 +64,7 @@ namespace dotNetInstallerUnitTests
             ConfigFile configFile = new ConfigFile();
             // current lcid setup configuration
             SetupConfiguration currentLcidConfiguration = new SetupConfiguration();
-            currentLcidConfiguration.lcid_filter = CultureInfo.CurrentCulture.LCID.ToString(); 
+            currentLcidConfiguration.lcid_filter = CultureInfo.CurrentUICulture.LCID.ToString(); 
             configFile.Children.Add(currentLcidConfiguration);
             string currentLcidFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             ComponentCmd cmdCurrentLcid = new ComponentCmd();
@@ -117,7 +117,7 @@ namespace dotNetInstallerUnitTests
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
-            Assert.AreEqual(CultureInfo.CurrentCulture.LCID, dotNetInstallerExeUtils.Run(configFilename));
+            Assert.AreEqual(CultureInfo.CurrentUICulture.LCID, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
         }
 
@@ -134,7 +134,7 @@ namespace dotNetInstallerUnitTests
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
-            Assert.AreEqual(CultureInfo.CurrentCulture.LCID, dotNetInstallerExeUtils.Run(configFilename));
+            Assert.AreEqual(CultureInfo.CurrentUICulture.LCID, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
         }
 
