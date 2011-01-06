@@ -17,11 +17,31 @@
           with commas. For example, <literal>win2000</literal> means only to install a configuration on Windows 2000, 
           <literal>win2000,win2000sp1,winServer2008</literal> means Windows 2000, Windows 2000 SP1 or Windows 2008. You can use the 
           <literal>!</literal> sign to define a NOT operator. For example, <literal>!win2000,!win2000sp1</literal> means installing
-          on any operating system except Windows 2000 and Windows 2000 SP1.
+          on any operating system except Windows 2000 and Windows 2000 SP1. You can use the <literal>+</literal> sign to define a 
+          greater than or equal operator. For example, <literal>+winXPsp3,+win2003sp1</literal> means installing
+          on any operating system later than Windows XP SP3 and later than Windows 2003 SP1.
+        </para>
+        <para>
+          You can use the <literal>!</literal> sign to define a NOT operator. For example, <literal>!win2000,!win2000sp1</literal> 
+          means installing on any operating system except Windows 2000 and Windows 2000 SP1.
+        </para>
+        <para>
+          You can use the <literal>+</literal> sign to define a group of filters that specify the minimum OS value for each OS specified. 
+          For example, <literal>+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista</literal> means install on Windows XP with 
+          SP3 or later, Windows Server 2003 with SP2 or later, Windows Server 2003 R2 with SP2 or later and any OS later than Windows Vista.
+          Each OS in the filter is only checked against a matching OS, so +winXPsp3 is only tested against Windows XP. The exception to 
+          this is the highest OS specified it matched against all later OSs. So in the case above +winVista matches Windows Vista, 
+          Windows Server 2008 and Windows 7.
+        </para>
+        <para>
+          You can use the <literal>-</literal> sign to define a group of filters that specify the maximum OS value. For example,
+          <literal>-winVistaSp2,-winServer2008R2</literal> means installing on any operating system ealier than Windows Vista SP2 
+          or earlier than Windows Server 2008 R2. As with the <literal>+</literal> operator each OS is only matched against a 
+          matching OS.
         </para>
         <alert class="note">
           <para>
-            You cannot mix positive and negative operating system filters as it would produce an ambiguous filter. 
+            You cannot mix positive, negative, greater than or less than operating system filters as it would produce an ambiguous filter. 
             For example, <literal>!win2000sp1,winServer2008</literal> is an invalid filter and the installer will fail with an error.
           </para>
         </alert>
@@ -163,8 +183,12 @@
               <entry>win7</entry>
             </row>
             <row>
-	          <entry>Windows 7 Service Pack 1</entry>
-	          <entry>win7sp1</entry>
+	            <entry>Windows 7 Service Pack 1</entry>
+	            <entry>win7sp1</entry>
+            </row>
+            <row>
+              <entry>Windows newer than 7</entry>
+              <entry>winMax</entry>
             </row>
           </table>
         </para>
@@ -173,6 +197,10 @@
             Because it's not always known what the last version of an operating system is going to be, there exists a 
             <literal>max</literal> identifier for every series. For example, use <literal>win7Max</literal> in 
             <literal>os_filter_max</literal> value to install on Windows 7 and not on any operating system after that.
+          </para>
+          <para>
+            So that you can match against as yet unknown Windows operating system releases there exists a <literal>winMax</literal> 
+            identifier. This is set if the OS is greater than the maximum known OS, currently Windows 7 SP1.
           </para>
         </alert>
       </content>

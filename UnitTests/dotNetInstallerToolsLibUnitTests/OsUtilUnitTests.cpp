@@ -33,6 +33,109 @@ void OsUtilUnitTests::testIsInOperatingSystemInRange()
 	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::win2000sp1, L"", DVLib::winNone, DVLib::win2000sp2));
 	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::win2000sp1, L"win2000sp1", DVLib::winNone, DVLib::winNone));
 	CPPUNIT_ASSERT(! DVLib::IsInOperatingSystemInRange(DVLib::win2000sp1, L"!win2000sp1", DVLib::winNone, DVLib::winNone));	
+
+	// Validate empty filters
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winServer2003, L"winServer2003,,winServer2003R2", DVLib::winNone, DVLib::winNone));
+
+	// If current OS is newer than Windows 7 it should still install if there is a filter set
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winMax, L"+winXPsp2", DVLib::winNone, DVLib::winNone));
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winMax, L"win7,winMax", DVLib::winNone, DVLib::winNone));
+	// If current OS is newer than Windows 7 and filter is Windows 7 then it shouldn't install
+	CPPUNIT_ASSERT(!DVLib::IsInOperatingSystemInRange(DVLib::winMax, L"win7", DVLib::winNone, DVLib::winNone));
+	// If current OS is newer than Windows 7 and no range or filter is used then it should install
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winMax, L"", DVLib::winNone, DVLib::winNone));
+	// Check that the range works with the winMax value
+	CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winVista, L"", DVLib::winVista, DVLib::winMax));
+	CPPUNIT_ASSERT(!DVLib::IsInOperatingSystemInRange(DVLib::winXP, L"", DVLib::winVista, DVLib::winMax));
+
+	// Test ambiguous OS filter values
+	{
+		try
+		{
+			// Test ambiguous OS filter - combination of filter types
+			DVLib::IsInOperatingSystemInRange(DVLib::winXP, L"win2000sp1,!win2000sp2", DVLib::winNone, DVLib::winNone);
+			throw "IsInOperatingSystemInRange was expected to throw std::exception";
+		}
+		catch(std::exception& ex)
+		{
+			// Expected exception
+			std::cout << std::endl << "Expected exception: " << ex.what();
+		}
+
+		try
+		{
+			// Test ambiguous OS filter - filter and range values
+			DVLib::IsInOperatingSystemInRange(DVLib::winXP, L"win2000sp1,win2000sp2", DVLib::win7, DVLib::winNone);
+			throw "IsInOperatingSystemInRange was expected to throw std::exception";
+		}
+		catch(std::exception& ex)
+		{
+			// Expected exception
+			std::cout << std::endl << "Expected exception: " << ex.what();
+		}
+
+		try
+		{
+			// Test ambiguous OS filter - filter and range values
+			DVLib::IsInOperatingSystemInRange(DVLib::winXP, L"win2000sp1,win2000sp2", DVLib::winNone, DVLib::win7);
+			throw "IsInOperatingSystemInRange was expected to throw std::exception";
+		}
+		catch(std::exception& ex)
+		{
+			// Expected exception
+			std::cout << std::endl << "Expected exception: " << ex.what();
+		}
+	}
+
+	// Test '+' filter using "+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista". This means install on Windows XP with SP3 or later, 
+	// Windows Server 2003 with SP2 or later, Windows Server 2003 R2 with SP2 or later and any OS later than Windows Vista.
+	{
+		CPPUNIT_ASSERT(!DVLib::IsInOperatingSystemInRange(DVLib::winNT4, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+
+		CPPUNIT_ASSERT(!DVLib::IsInOperatingSystemInRange(DVLib::win2000, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+
+		CPPUNIT_ASSERT(!DVLib::IsInOperatingSystemInRange(DVLib::winXPsp2, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winXPsp3, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		
+		CPPUNIT_ASSERT(!DVLib::IsInOperatingSystemInRange(DVLib::winServer2003, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(!DVLib::IsInOperatingSystemInRange(DVLib::winServer2003sp1, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winServer2003sp2, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		
+		CPPUNIT_ASSERT(!DVLib::IsInOperatingSystemInRange(DVLib::winServer2003R2, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(!DVLib::IsInOperatingSystemInRange(DVLib::winServer2003R2sp1, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winServer2003R2sp2, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winServer2003Max, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winVista, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winVistaSp1, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winVistaSp2, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winVistaMax, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winServer2008, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winServer2008sp2, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::win7, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::win7sp1, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::win7Max, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winMax, L"+winXPsp3,+winServer2003sp2,+winServer2003R2sp2,+winVista", DVLib::winNone, DVLib::winNone));
+	}
+
+	// Test '-' filter using "-winVistaSp2,-winServer2008R2". This means only install if OS is less than Windows Vista SP2 or less Windows Server 2008 R2.
+	{
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winXP, L"-winVistaSp2,-winServer2008R2", DVLib::winNone, DVLib::winNone));
+
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winVista, L"-winVistaSp2,-winServer2008R2", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winVistaSp1, L"-winVistaSp2,-winServer2008R2", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(!DVLib::IsInOperatingSystemInRange(DVLib::winVistaSp2, L"-winVistaSp2,-winServer2008R2", DVLib::winNone, DVLib::winNone));
+
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winServer2008, L"-winVistaSp2,-winServer2008R2", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(DVLib::IsInOperatingSystemInRange(DVLib::winServer2008sp2, L"-winVistaSp2,-winServer2008R2", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(!DVLib::IsInOperatingSystemInRange(DVLib::winServer2008R2, L"-winVistaSp2,-winServer2008R2", DVLib::winNone, DVLib::winNone));
+
+		CPPUNIT_ASSERT(!DVLib::IsInOperatingSystemInRange(DVLib::win7, L"-winVistaSp2,-winServer2008R2", DVLib::winNone, DVLib::winNone));
+		CPPUNIT_ASSERT(!DVLib::IsInOperatingSystemInRange(DVLib::winMax, L"-winVistaSp2,-winServer2008R2", DVLib::winNone, DVLib::winNone));
+	}
 }
 
 void OsUtilUnitTests::testIsOperatingSystemID()
@@ -241,6 +344,7 @@ void OsUtilUnitTests::testos2wstring()
 		winVista, winVistaSp1, winVistaSp2, winVistaMax,
 		winServer2008, winServer2008sp2, winServer2008R2, winServer2008Max,
 		win7, win7sp1, win7Max,
+		winMax,
 	};
 
 	for (int i = 0; i < ARRAYSIZE(KnownOperatingSystems); i++)
@@ -260,4 +364,42 @@ void OsUtilUnitTests::testMuiGetSystemDefaultUILCID()
 {
 	LCID lcid = DVLib::MuiGetSystemDefaultUILCID();
 	CPPUNIT_ASSERT(::GetSystemDefaultUILanguage() == LANGIDFROMLCID(lcid));
+}
+
+void OsUtilUnitTests::testOperatingSystemType()
+{
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(win95) == winNone);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winME) == winNone);
+
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winNT4sp6a) == winNT4);
+
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(win2000sp4) == win2000);
+
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winXP) == winXP);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winXPsp1) == winXP);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winXPsp2) == winXP);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winXPsp3) == winXP);
+
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winServer2003) == winServer2003);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winServer2003sp1) == winServer2003);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winServer2003sp2) == winServer2003);
+
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winServer2003R2) == winServer2003R2);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winServer2003R2sp1) == winServer2003R2);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winServer2003R2sp2) == winServer2003R2);
+
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winServer2003Max) == winServer2003);
+
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winVista) == winVista);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winVistaSp1) == winVista);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winVistaSp1) == winVista);
+
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winServer2008) == winServer2008);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winServer2008sp2) == winServer2008);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winServer2008R2) == winServer2008);
+
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(win7) == win7);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(win7sp1) == win7);
+
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winMax) == winMax);
 }

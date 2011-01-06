@@ -18,7 +18,7 @@ namespace InstallerLib
         #region Configuration Properties
 
         private string m_os_filter;
-        [Description("Filter to install this configuration only on all operating systems equal or not equal to the value(s) specified. Separate multiple operating system ids with comma (',') and use not symbol ('!') for NOT logic (eg. '44,!45' ).")]
+        [Description("Filter to install this configuration only on all operating systems equal or not equal to the value(s) specified. Separate multiple operating system ids with comma (','), use not symbol ('!') for NOT logic (eg. '!winNT4Max,!win2000' ), use symbol ('+') for 'AND GREATER THAN OR EQUAL TO' logic (eg. '+winXPsp3,+winServer2003sp2') or use symbol ('-') for 'OR LESS THAN' logic (eg. '-winXPsp3,-winServer2008R2').")]
         [Category("Operating System")]
         public string os_filter
         {

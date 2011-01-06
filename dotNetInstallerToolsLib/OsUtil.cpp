@@ -28,8 +28,13 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 	{
 		// Test for the Windows NT product family.
 		case VER_PLATFORM_WIN32_NT:
+			// Newer Windows version
+			if (((osvi.dwMajorVersion == 6 && osvi.dwMinorVersion > 1) || (osvi.dwMajorVersion > 6)) && osvi.wProductType == VER_NT_WORKSTATION)
+			{
+				os = winMax;
+			}
 			// Windows 7
-			if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 1 && osvi.wProductType == VER_NT_WORKSTATION)
+			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 1 && osvi.wProductType == VER_NT_WORKSTATION)
 			{
 				os = win7;
 
@@ -177,7 +182,7 @@ std::wstring DVLib::GetOperatingSystemVersionString()
 
 bool DVLib::IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& os_filter, OperatingSystem l, OperatingSystem r)
 {
-	if (! os_filter.empty())
+	if (!os_filter.empty())
 	{
 		if (l != winNone || r != winNone)
 		{
@@ -285,21 +290,38 @@ bool DVLib::IsOperatingSystemLCIDValue(LCID lcid_in, const std::wstring& filter)
 bool DVLib::IsOperatingSystemID(OperatingSystem os_in, const std::wstring& filter)
 {
 	if (filter.empty())
+	{
 		return true;
+	}
 
 	std::vector<std::wstring> oss = DVLib::split(filter, L",");
 
+	size_t filters = 0;
 	std::vector<OperatingSystem> os_or;
 	std::vector<OperatingSystem> os_andnot;
+	std::vector<OperatingSystem> os_andge; // And greater than or equal filter
+	std::vector<OperatingSystem> os_orlt;  // Or less than filter
 
 	for (size_t i = 0; i < oss.size(); i++)
 	{
 		if (oss[i].empty())
+		{
 			continue; // tolerate an empty value
+		}
+
+		filters++; // Total number of filters (excluding empty ones)
 
 		if (oss[i][0] == L'!')
 		{
 			os_andnot.push_back(static_cast<OperatingSystem>(DVLib::oscode2os(oss[i].substr(1))));
+		}
+		else if (oss[i][0] == L'+')
+		{
+			os_andge.push_back(static_cast<OperatingSystem>(DVLib::oscode2os(oss[i].substr(1))));
+		}
+		else if (oss[i][0] == L'-')
+		{
+			os_orlt.push_back(static_cast<OperatingSystem>(DVLib::oscode2os(oss[i].substr(1))));
 		}
 		else
 		{
@@ -307,30 +329,249 @@ bool DVLib::IsOperatingSystemID(OperatingSystem os_in, const std::wstring& filte
 		}
 	}
 
-	if (os_or.size() > 0 && os_andnot.size() >0)
+	if ((os_or.size() > 0 && os_or.size() != filters) || 
+		(os_andnot.size() > 0 && os_andnot.size() != filters) || 
+		(os_andge.size() > 0 && os_andge.size() != filters) || 
+		(os_orlt.size() > 0 && os_orlt.size() != filters))
 	{
 		THROW_EX(L"Ambiguous OS filter: " << filter);
 	}
 
 	if (os_or.size() > 0)
 	{
-		for each(OperatingSystem os in os_or)
+		for each (OperatingSystem os in os_or)
 		{
 			if (os == os_in)
+			{
 				return true;
+			}
 		}
 
 		return false;
 	} 
+	else if (os_andge.size() > 0)
+	{
+		OperatingSystem max_filter = winNone;
+		bool match = false;
+
+		// The os must be greater than or equal to all the values in the filter
+		for each (OperatingSystem os in os_andge)
+		{
+			// Match the input OS then check the filter value
+			switch (OperatingSystemType(os_in))
+			{
+				case winNone:
+					THROW_EX(L"Unsupported OS filter: " << filter);
+					break;
+				case winNT4:
+					if (OperatingSystemType(os) == winNT4 && os_in >= os)
+					{
+						match = true;
+					}
+					break;
+				case win2000:
+					if (OperatingSystemType(os) == win2000 && os_in >= os)
+					{
+						match = true;
+					}
+					break;
+				case winXP:
+					if (OperatingSystemType(os) == winXP && os_in >= os)
+					{
+						match = true;
+					}
+					break;
+				case winServer2003:
+					if (OperatingSystemType(os) == winServer2003 && os_in >= os)
+					{
+						match = true;
+					}
+					break;
+				case winServer2003R2:
+					if (OperatingSystemType(os) == winServer2003R2 && os_in >= os)
+					{
+						match = true;
+					}
+					break;
+				case winVista:
+					if (OperatingSystemType(os) == winVista && os_in >= os)
+					{
+						match = true;
+					}
+					break;
+				case winServer2008:
+					if (OperatingSystemType(os) == winServer2008 && os_in >= os)
+					{
+						match = true;
+					}
+					break;
+				case win7:
+					if (OperatingSystemType(os) == win7 && os_in >= os)
+					{
+						match = true;
+					}
+					break;
+			}
+
+			// Save the maximum filter os
+			if (os > max_filter)
+			{
+				max_filter = os;
+			}
+		}
+
+		// Handle the case where the os is later than any filters
+		if (os_in >= max_filter)
+		{
+			match = true;
+		}
+
+		return match;
+	} 
+	else if (os_orlt.size() > 0)
+	{
+		OperatingSystem min_filter = winMax;
+		bool match = false;
+
+		// The os must be less than any of the values in the filter
+		for each (OperatingSystem os in os_orlt)
+		{
+			// Match the input OS then check the filter value
+			switch (OperatingSystemType(os_in))
+			{
+				case winNone:
+					THROW_EX(L"Unsupported OS filter: " << filter);
+					break;
+				case winNT4:
+					if (OperatingSystemType(os) == winNT4 && os_in < os)
+					{
+						match = true;
+					}
+					break;
+				case win2000:
+					if (OperatingSystemType(os) == win2000 && os_in < os)
+					{
+						match = true;
+					}
+					break;
+				case winXP:
+					if (OperatingSystemType(os) == winXP && os_in < os)
+					{
+						match = true;
+					}
+					break;
+				case winServer2003:
+					if (OperatingSystemType(os) == winServer2003 && os_in < os)
+					{
+						match = true;
+					}
+					break;
+				case winServer2003R2:
+					if (OperatingSystemType(os) == winServer2003R2 && os_in < os)
+					{
+						match = true;
+					}
+					break;
+				case winVista:
+					if (OperatingSystemType(os) == winVista && os_in < os)
+					{
+						match = true;
+					}
+					break;
+				case winServer2008:
+					if (OperatingSystemType(os) == winServer2008 && os_in < os)
+					{
+						match = true;
+					}
+					break;
+				case win7:
+					if (OperatingSystemType(os) == win7 && os_in < os)
+					{
+						match = true;
+					}
+					break;
+			}
+
+			// Save the minimum filter os
+			if (os < min_filter)
+			{
+				min_filter = os;
+			}
+		}
+
+		// Handle the case where the os is older than any filters
+		if (os_in < min_filter)
+		{
+			match = true;
+		}
+
+		return match;
+	} 
 	else 
 	{
-		for each(OperatingSystem os in os_andnot)
+		for each (OperatingSystem os in os_andnot)
 		{
 			if (os == os_in)
+			{
 				return false;
+			}
 		}
 
 		return true;
+	}
+}
+
+// Get the operating system type
+DVLib::OperatingSystem DVLib::OperatingSystemType(OperatingSystem os)
+{
+	if (os >= winNT4 && os <= winNT4Max)
+	{
+		return winNT4;
+	}
+	else if (os >= win2000 && os <= win2000Max)
+	{
+		return win2000;
+	}
+	else if (os >= winXP && os <= winXPMax)
+	{
+		return winXP;
+	}
+	else if (os >= winServer2003 && os <= winServer2003Max)
+	{
+		// Special case for Windows 2003 due to the R2 variants
+		if (os == winServer2003R2 || os == winServer2003R2sp1 || os == winServer2003R2sp2)
+		{
+			return winServer2003R2;
+		}
+		else if (os == winServer2003 || os == winServer2003sp1 || os == winServer2003sp2)
+		{
+			return winServer2003;
+		}
+		else
+		{
+			// If there is a new service pack this could be R2 or non-R2
+			return winServer2003;
+		}
+	}
+	else if (os >= winVista && os <= winVistaMax)
+	{
+		return winVista;
+	}
+	else if (os >= winServer2008 && os <= winServer2008Max)
+	{
+		return winServer2008;
+	}
+	else if (os >= win7 && os <= win7Max)
+	{
+		return win7;
+	}
+	else if (os > win7Max)
+	{
+		return winMax;
+	}
+	else
+	{
+		return winNone;
 	}
 }
 

@@ -83,6 +83,8 @@ namespace DVLib
 		win7 = 120,
 		win7sp1 = 121,
 		win7Max = 129,
+
+		winMax = 255, // This value should always be last
 	};
 
 	struct Os2StringMapEntry
@@ -134,7 +136,8 @@ namespace DVLib
 		{ winVistaMax, L"winVistaMax", L"Windows Vista+" },
 		{ win7, L"win7", L"Windows 7" },
 		{ win7sp1, L"win7sp1", L"Windows 7 SP1" },
-		{ win7Max, L"win7Max", L"Windows 7+" }
+		{ win7Max, L"win7Max", L"Windows 7+" },
+		{ winMax, L"winMax", L"Windows Latest" },
 	};
 
 	// operating system version
@@ -156,6 +159,7 @@ namespace DVLib
 	// does the filter match the operating system LCID
 	bool IsOperatingSystemLCIDValue(LCID lcidtype, const std::wstring& lcid);
 	bool IsOperatingSystemID(OperatingSystem os, const std::wstring& id);
+	OperatingSystem OperatingSystemType(OperatingSystem os);
 
 	struct PROCESSOR_ARCHITECTURE
 	{
