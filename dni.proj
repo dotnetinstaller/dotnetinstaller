@@ -232,6 +232,7 @@
   </ItemGroup>
   <Target Name="rewritesamples" Inputs="@(SampleXmls)" Outputs="%(SampleXmls.Identity).output">
     <Message Text="%(SampleXmls.Identity)" />
+    <Attrib Files="%(SampleXmls.Identity)" ReadOnly="False" />
     <Exec Command="InstallerConfig\bin\$(Configuration)\InstallerConfig.exe /ConfigFile:%(SampleXmls.Identity)" />
   </Target>
   <!-- rewrite the InstallerEditor/wizardcomponents.xml to current configuration format -->
