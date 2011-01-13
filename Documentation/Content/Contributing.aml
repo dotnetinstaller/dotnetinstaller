@@ -57,17 +57,6 @@
         <step>
           <content>
             <para>
-              Install
-              <externalLink>
-                <linkText>NUnit</linkText>
-                <linkUri>http://www.nunit.org/</linkUri>
-              </externalLink>.
-            </para>
-          </content>
-        </step>
-        <step>
-          <content>
-            <para>
               Install 
               <externalLink>
               	<linkText>HTML Help Workshop</linkText>
@@ -118,7 +107,7 @@
               <code language="cmd">
                 <![CDATA[build.cmd all]]>
               </code>
-              This should succeed without errors.
+              This should succeed without errors.  A log file is created in the working directory with the format "dni_%1.log", so in the above example, dni_all.log would be created.
             </para>
           </content>
         </step>
@@ -130,6 +119,17 @@
                 <linkText>http://codeplex.codeplex.com/wikipage?title=Using TFS and Team Explorer with CodePlex</linkText>
                 <linkUri>http://codeplex.codeplex.com/wikipage?title=Using%20TFS%20and%20Team%20Explorer%20with%20CodePlex</linkUri>
               </externalLink>
+            </para>
+          </content>
+        </step>
+        <step>
+          <content>
+            <para>
+              Optionally install
+              <externalLink>
+                <linkText>NUnit</linkText>
+                <linkUri>http://www.nunit.org/</linkUri>
+              </externalLink>.
             </para>
           </content>
         </step>

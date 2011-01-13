@@ -7,27 +7,7 @@ if "%~1"=="" (
  goto :EOF
 )
 
-set ProgramFilesDir=%ProgramFiles%
-if NOT "%ProgramFiles(x86)%"=="" set ProgramFilesDir=%ProgramFiles(x86)%
-
-set VisualStudioCmd=%ProgramFilesDir%\Microsoft Visual Studio 8.0\VC\vcvarsall.bat
-if EXIST "%VisualStudioCmd%" call "%VisualStudioCmd%"
-
-for /D %%n in ( "%ProgramFilesDir%\NUnit*" ) do (
- set NUnitDir=%%~n
-)
-
-if EXIST "%NUnitDir%\bin" set NUnitBinDir=%NUnitDir%\bin
-if EXIST "%NUnitDir%\bin\net-2.0" set NUnitBinDir=%NUnitDir%\bin\net-2.0
-
-if NOT EXIST "%NUnitBinDir%" echo Missing NUnit, expected in %NUnitDir%
-if NOT EXIST "%NUnitBinDir%" exit /b -1
-
-set FrameworkVersion=v2.0.50727
-set FrameworkDir=%SystemRoot%\Microsoft.NET\Framework
-
-PATH=%FrameworkDir%\%FrameworkVersion%;%NUnitDir%;%PATH%
-msbuild.exe dni.proj /t:%*
+%SystemRoot%\Microsoft.NET\Framework\v2.0.50727\msbuild.exe dni.proj /t:%* /l:FileLogger,Microsoft.Build.Engine;logfile="dni_%1.log"
 
 popd
 endlocal

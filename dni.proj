@@ -13,6 +13,10 @@
     <MajorVersion>2</MajorVersion>
     <MinorVersion>0</MinorVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <MSBuild_3_5_ExeFilePath>%SystemRoot%\Microsoft.NET\Framework\v3.5\msbuild.exe</MSBuild_3_5_ExeFilePath>
+    <NUnitToolPath>ThirdParty\NUnit\bin\net-2.0</NUnitToolPath>
+  </PropertyGroup>
   <ItemGroup>
     <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.txt" />
     <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.xml" />
@@ -176,7 +180,7 @@
     <Error Condition="'$(DXROOT)'==''" Text="Missing Sandcastle, DXROOT environment variable not set, install from http://www.codeplex.com/Sandcastle" />
     <Error Condition="'$(SHFBROOT)'==''" Text="Missing Sandcastle Builder, SHFBROOT environment variable not set, install from http://www.codeplex.com/SHFB" />
     <Delete Files="Documentation\$(Configuration)\dotNetInstaller.chm" />
-    <Exec Command="%FrameworkDir%\v3.5\msbuild.exe Documentation\Dni.shfbproj /p:Configuration=$(Configuration)" />
+    <Exec Command="$(MSBuild_3_5_ExeFilePath) Documentation\Dni.shfbproj /p:Configuration=$(Configuration)" />
     <Error Condition="Exists('Documentation\$(Configuration)\LastBuild.log')" Text="Documentation build failed, check Documentation\$(Configuration)\LastBuild.log" />
     <TemplateFile Template="Documentation\WhatsNew.html" OutputFilename="$(Configuration)\WhatsNew.html" Tokens="@(AssemblyInfoTokens)" />
   </Target>
@@ -196,8 +200,8 @@
     <TemplateFile Template="UnitTests\dotNetInstallerUnitTests\App.config"
      OutputFilename="bin\$(Configuration)\dotNetInstallerUnitTests.dll.config"
      Tokens="@(TestExecutables)" />
-    <NUnit Assemblies="UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\dotNetInstallerUnitTests.dll"
-     ToolPath="$(NUnitBinDir)" Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName).xml" />
+    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\dotNetInstallerUnitTests.dll" 
+    Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName).xml" />
   </Target>
   <Target Name="editortests">
     <CreateItem Include="EditorTestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\dotNetInstaller\$(Configuration)\dotNetInstaller.exe">
@@ -206,8 +210,8 @@
     <TemplateFile Template="UnitTests\InstallerEditorUnitTests\App.config"
      OutputFilename="bin\$(Configuration)\InstallerEditorUnitTests.dll.config"
      Tokens="@(EditorTestExecutables)" />
-    <NUnit Assemblies="UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\InstallerEditorUnitTests.dll"
-     ToolPath="$(NUnitBinDir)" Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
+    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\InstallerEditorUnitTests.dll" 
+    Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
   </Target>
   <Target Name="unittests" DependsOnTargets="version">
     <Message Text="Running %(CppUnitTests.Identity) ..." />
