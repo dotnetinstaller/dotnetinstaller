@@ -133,6 +133,12 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 
 		AddUserControls();
 
+		if (!InstallUILevelSetting::Instance->IsSilent())
+		{
+			ShowWindow(SW_SHOW);
+			UpdateWindow();
+		}
+
 		Start();
 	}
     catch(std::exception& ex)
