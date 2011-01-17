@@ -218,6 +218,10 @@
 				RelativePath=".\StringUtil.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\UACElevation.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -294,6 +298,10 @@
 			</File>
 			<File
 				RelativePath=".\Tools.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UACElevation.h"
 				>
 			</File>
 		</Filter>

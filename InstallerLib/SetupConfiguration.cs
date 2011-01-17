@@ -17,6 +17,8 @@ namespace InstallerLib
     [XmlChild(typeof(Control))]
     public class SetupConfiguration : Configuration
     {
+        private string m_application_name;
+
         public enum DefaultButton
         {
             cancel,
@@ -34,6 +36,7 @@ namespace InstallerLib
             : base("install")
         {
             m_dialog_bitmap = "#APPPATH\\banner.bmp";
+            m_application_name = p_ApplicationName;
 
             Template.Template_setupconfiguration tpl = Template.CurrentTemplate.setupConfiguration(p_ApplicationName);
 
@@ -60,6 +63,8 @@ namespace InstallerLib
             m_cab_dialog_caption = tpl.cab_dialog_caption;
             m_cab_path = tpl.cab_path;
             m_cab_path_autodelete = tpl.cab_path_autodelete;
+
+            m_administrator_required_message = tpl.administrator_required_message;
         }
 
         #region Attributes
@@ -560,6 +565,25 @@ namespace InstallerLib
             set { m_disable_wow64_fs_redirection = value; }
         }
 
+        private bool m_administrator_required = false;
+        [Description("Indicates whether this installation can only be run by an administrator.")]
+        [Category("Runtime")]
+        [Required]
+        public bool administrator_required
+        {
+            get { return m_administrator_required; }
+            set { m_administrator_required = value; }
+        }
+
+        private string m_administrator_required_message;
+        [Description("Message to display when installation is being run without administration permissions.")]
+        [Category("Messages")]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        public string administrator_required_message
+        {
+            get { return m_administrator_required_message; }
+            set { m_administrator_required_message = value; }
+        }
         #endregion
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
@@ -632,6 +656,9 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("show_progress_dialog", m_show_progress_dialog.ToString());
             e.XmlWriter.WriteAttributeString("show_cab_dialog", m_show_cab_dialog.ToString());
             e.XmlWriter.WriteAttributeString("disable_wow64_fs_redirection", m_disable_wow64_fs_redirection.ToString());
+            // administrator required
+            e.XmlWriter.WriteAttributeString("administrator_required", m_administrator_required.ToString());
+            e.XmlWriter.WriteAttributeString("administrator_required_message", m_administrator_required_message);
             base.OnXmlWriteTag(e);
         }
 
@@ -698,6 +725,14 @@ namespace InstallerLib
             ReadAttributeValue(e, "show_progress_dialog", ref m_show_progress_dialog);
             ReadAttributeValue(e, "show_cab_dialog", ref m_show_cab_dialog);
             ReadAttributeValue(e, "disable_wow64_fs_redirection", ref m_disable_wow64_fs_redirection);
+            // administrator required
+            ReadAttributeValue(e, "administrator_required", ref m_administrator_required);
+            if (!ReadAttributeValue(e, "administrator_required_message", ref m_administrator_required_message))
+            {
+                // When upgrading set default message
+                Template.Template_setupconfiguration tpl = Template.CurrentTemplate.setupConfiguration(m_application_name);
+                m_administrator_required_message = tpl.administrator_required_message;
+            }
             base.OnXmlReadTag(e);
         }
     }

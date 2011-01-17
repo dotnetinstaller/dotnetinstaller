@@ -52,10 +52,9 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 		// set components list callback for double-click execution
 		m_ListBoxComponents.SetExecuteCallback(this);
 
-		// Impostare l'icona per questa finestra di dialogo. Il framework non esegue questa operazione automaticamente
-		//  se la finestra principale dell'applicazione non è una finestra di dialogo.
-		SetIcon(m_hIcon, TRUE);			// Impostare icona grande.
-		SetIcon(m_hIcon, FALSE);		// Impostare icona piccola.
+		// Set the icon for this dialog. The framework does this automatically if the main application window is a dialog box.
+		SetIcon(m_hIcon, TRUE);			// Set large icon.
+		SetIcon(m_hIcon, FALSE);		// Set small icon.
 
 		// determinating operating system
 		m_lblOperatingSystem.SetWindowText(
@@ -131,6 +130,28 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 			m_PictureBox.SetBitmap(DVLib::LoadBitmapFromResource(AfxGetApp()->m_hInstance, L"RES_BANNER", L"CUSTOM"));
 		}
 
+		if (p_configuration->administrator_required)
+		{
+			OSVERSIONINFO osver = { sizeof(osver) };
+			if (GetVersionEx(&osver) && osver.dwMajorVersion >= 6)
+			{
+				// Running Windows Vista or later (major version >= 6).
+				try
+				{
+					// Get and display the process elevation information.
+					BOOL const fIsElevated = DVLib::IsProcessElevated();
+					LOG(L"IsProcessElevated: " << fIsElevated);
+
+					// Show the UAC shield icon on the install button if the process is not elevated.
+					m_btnInstall.SendMessage(BCM_SETSHIELD, 0, (LPARAM)!fIsElevated);
+				}
+				catch(std::exception& ex)
+				{
+					LOG(L"IsProcessElevated failed: " << DVLib::string2wstring(ex.what()));
+				}
+			}
+		}
+
 		AddUserControls();
 
 		if (!InstallUILevelSetting::Instance->IsSilent())
@@ -159,19 +180,17 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 	return FALSE; // don't set focus on the first control
 }
 
-// Se si aggiunge alla finestra di dialogo un pulsante di riduzione a icona, per trascinare l'icona sarà necessario
-//  il codice sottostante. Per le applicazioni MFC che utilizzano il modello documento/vista,
-//  questa operazione viene eseguita automaticamente dal framework.
-
+// If you add a button to the dialog box to minimize, to drag the icon you will need the code below. 
+// For MFC applications using the document model / view, this is done automatically by the framework.
 void CdotNetInstallerDlg::OnPaint() 
 {
 	if (IsIconic())
 	{
-		CPaintDC dc(this); // contesto di periferica per il disegno
+		CPaintDC dc(this); // device context for drawing
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		// Centrare l'icona nel rettangolo client.
+		// Center icon in client rectangle.
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
 		CRect rect;
@@ -179,7 +198,7 @@ void CdotNetInstallerDlg::OnPaint()
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// Disegnare l'icona
+		// Draw the icon
 		dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
@@ -188,8 +207,7 @@ void CdotNetInstallerDlg::OnPaint()
 	}
 }
 
-// Il sistema chiama questa funzione per ottenere la visualizzazione del cursore durante il trascinamento
-//  della finestra ridotta a icona.
+// The system calls this function to get the display of the cursor while dragging the window minimized.
 HCURSOR CdotNetInstallerDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
@@ -232,6 +250,41 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
+		// check whether installation can only be run by an adminstrator
+		if (p_configuration->administrator_required)
+		{
+			// Elevate the process if it is not "run as administrator".
+            if (!DVLib::IsRunAsAdmin())
+            {
+				LOG("Restarting as elevated user");
+
+				// Restart process with autostart.
+				std::wstring cmdline = InstallerSession::Instance->GetRestartCommandLine(L"/Autostart");
+				if (DVLib::RestartElevated(this->m_hWnd, cmdline))
+				{
+					// Disable logging so file is closed before new instance uses it.
+					InstallerLog::Instance->DisableLog();
+
+					// Exit as if use had clicked cancel but with error code -3 to deferentiate it.
+					RecordError(-3);
+					OnCancel();
+					return;
+				}
+				else
+				{
+                    // The user refused the elevation.
+                    // Do nothing ...
+					LOG("User refused the elevation.");
+					DniMessageBox::Show(p_configuration->administrator_required_message, MB_OK | MB_ICONSTOP);
+					InstallerUI::AfterInstall(-1);
+					return;
+				}
+            }
+		}
+
+		// remove the Run key if exist (this requires admin access)
+		InstallerSession::Instance->DisableRunOnReboot();
+
 		Components components = p_configuration->GetSupportedComponents(
 			InstallerSession::Instance->lcidtype, InstallerSession::Instance->sequence);
 
@@ -266,7 +319,6 @@ void CdotNetInstallerDlg::AddComponent(const ComponentPtr& component)
 {
 	m_ListBoxComponents.AddComponent(component);
 }
-
 
 // skip the current config section and go to the next valid one
 void CdotNetInstallerDlg::OnBnClickedSkip()

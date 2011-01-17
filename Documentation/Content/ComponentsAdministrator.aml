@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="ad06f719-056f-4d6b-98b5-582433f063d6" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>dotNetInstaller supports requiring the user to be a local administrator.</para>
+    </introduction>
+    <section address="componentoptionsadmin">
+      <title>Requiring Administrator</title>
+      <content>
+        <para>
+          If the installation requires local administrator rights the <literal>administrator_required</literal> is used.
+          <definitionTable>
+            <definedTerm>administrator_required</definedTerm>
+            <definition>
+              This option forces the bootstrapper require local administration rights when it is set to <literal>true</literal>.
+            </definition>
+            <definedTerm>administrator_required_messsage</definedTerm>
+            <definition>
+              This is the messsage displayed if <literal>administrator_required</literal> is set to <literal>true</literal>
+              and the user is not a local administrator on the system. 
+              (The default value is &quot;APPLICATION_NAME installation requires administration rights.&quot;)
+            </definition>
+          </definitionTable>
+        </para>
+        <para>
+          If <literal>administrator_required</literal> is set to <literal>true</literal> and the operating system is before 
+          Windows Vista then dotNetInstaller will display the <literal>administrator_required_message</literal> on start 
+          up if the user is not a local administrator.
+        </para>
+        <para>
+          If <literal>administrator_required</literal> is set to <literal>true</literal> and the operating system is 
+          Windows Vista or later then the dotNetInstaller will run as normal and display the shield icon on the 
+          &quot;Install&quot; button. When the user clicks &quot;Install&quot; dotNetInstaller will prompt the user to 
+          elevate. If they choose to elevate dotNetInstaller will restart itself with any command line parameters that 
+          were used to start dotNetInstaller. This ensures that dotNetInstaller will run elevated in the same way as 
+          it was originally started.
+        </para>
+        <alert class="important">
+          <para>
+            The default configuration of dotNetInstaller is to require elevation in the embeded manifest file.
+            Therefore, if you want the UAC operation described above you must embed your own manifest file with
+            <literal>requestedExecutionLevel</literal> set to <literal>asInvoker</literal>, see: 
+            <link topicType_id="1FE70836-AA7D-4515-B54B-E10C4B516E50" xlink:href="51bb945c-fd5f-48c0-a1d8-ef469a3850b9" />.
+          </para>
+        </alert>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

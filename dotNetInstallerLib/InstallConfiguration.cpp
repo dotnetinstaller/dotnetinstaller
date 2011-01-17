@@ -109,6 +109,9 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	show_cab_dialog = XmlAttribute(node->Attribute("show_cab_dialog")).GetBoolValue(true);
     disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
     disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
+	// administrator required
+    administrator_required = XmlAttribute(node->Attribute("administrator_required")).GetBoolValue(false);
+	administrator_required_message = node->Attribute("administrator_required_message");
 	// components
 	TiXmlNode * child = NULL;
 	while ( (child = node->IterateChildren("component", child)) != NULL)

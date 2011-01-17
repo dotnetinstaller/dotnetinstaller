@@ -198,3 +198,32 @@ void InstallerSessionUnitTests::testGetRebootCmd()
 		CPPUNIT_ASSERT(cmd == testdata[i].cmd);
 	}
 }
+
+void InstallerSessionUnitTests::testGetRestartCommandLine()
+{
+	struct TestData
+	{
+		LPCWSTR args;
+		LPCWSTR add;
+		std::wstring cmd;
+	};
+
+	TestData testdata[] = 
+	{
+		{ L"", L"/autostart", L" /autostart" },
+		{ L"/autostart", L"/autostart", L" /autostart" },
+		{ L"/nosplash", L"/autostart", L" /nosplash /autostart" },
+		{ L"/q", L"/autostart", L" /q /autostart" },
+		{ L"/qb", L"/autostart", L" /qb /autostart" },
+		{ L"/qb /nosplash", L"/autostart", L" /qb /nosplash /autostart" },
+		{ L"/q /nosplash", L"/autostart", L" /q /nosplash /autostart" },
+	};
+
+	for (int i = 0; i < ARRAYSIZE(testdata); i++)
+	{
+		InstallerLauncher::Instance->SetLauncherArgs(testdata[i].args);
+		std::wstring cmd = InstallerSession::Instance->GetRestartCommandLine(testdata[i].add);
+		std::wcout << std::endl << i << ": " << cmd;
+		CPPUNIT_ASSERT(cmd == testdata[i].cmd);
+	}
+}

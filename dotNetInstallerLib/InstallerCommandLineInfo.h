@@ -14,6 +14,7 @@ public:
 	bool DisplayHelp() const { return m_displayHelp; }
 	bool DisplayConfig() const { return m_displayConfig; }
 	bool Reboot() const { return m_reboot; }
+	bool Autostart() const { return m_autostart; }
 	bool NoReboot() const { return m_noreboot; }
 	bool DisplaySplash() const { return m_displaySplash; }
 public:
@@ -48,6 +49,8 @@ private:
 	bool m_displayHelp;
 	// launched via registry Run after a reboot
 	bool m_reboot;
+	// launched via UAC so autostart
+	bool m_autostart;
 	// don't reboot even if reboot is required
 	bool m_noreboot;
 	// display configuration

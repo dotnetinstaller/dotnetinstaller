@@ -14,6 +14,7 @@ namespace DVLib
 			CPPUNIT_TEST( testExpandRegistryVariable );
 			CPPUNIT_TEST( testExpandUserVariables );
 			CPPUNIT_TEST( testGetRebootCmd );
+			CPPUNIT_TEST( testGetRestartCommandLine );
 			CPPUNIT_TEST( testEnableRunOnReboot );
 			CPPUNIT_TEST( testExpandPathVariablesBackslashes );
 			CPPUNIT_TEST_SUITE_END();
@@ -26,6 +27,7 @@ namespace DVLib
 			void testExpandRegistryVariable();
 			void testEnableRunOnReboot();
 			void testGetRebootCmd();
+			void testGetRestartCommandLine();
 			void testExpandUserVariables();
 		};
 	}

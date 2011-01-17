@@ -195,6 +195,11 @@ namespace InstallerLib
             {
                 get { return bool.Parse(m_tpl.GetAttribute("setupconfiguration/@cab_path_autodelete")); }
             }
+
+            public string administrator_required_message
+            {
+                get { return m_tpl.GetAttribute("setupconfiguration/@administrator_required_message").Replace(c_APPLICATION_NAME, m_ApplicationName); }
+            }
         }
 
         public class Template_component

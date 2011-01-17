@@ -15,3 +15,4 @@
 #include "FileUtilImpl.h"
 #include "MsiUtil.h"
 #include "FunctionUtil.h"
+#include "UACElevation.h"

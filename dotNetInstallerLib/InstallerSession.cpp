@@ -246,6 +246,28 @@ std::wstring InstallerSession::GetRebootCmd(const std::wstring& add) const
 	return reboot_cmd.str();
 }
 
+// Get the command line that was used to lauch the current
+// instance and append the supplied parameters.
+std::wstring InstallerSession::GetRestartCommandLine(const std::wstring& add) const
+{
+	std::wstringstream restart_cmd;
+
+	// launcher command-line
+	restart_cmd << InstallerLauncher::Instance->GetCommandLine();
+
+	// Don't duplicate option
+	if (restart_cmd.str().find(add) == std::wstring::npos)
+	{
+		// additional switches
+		if (! add.empty())
+		{
+			restart_cmd << L" " << add;
+		}
+	}
+
+	return restart_cmd.str();
+}
+
 void InstallerSession::EnableRunOnReboot(const std::wstring& add)
 {	
 	std::wstring reboot_cmd = GetRebootCmd(add);
@@ -265,4 +287,3 @@ void InstallerSession::DisableRunOnReboot()
 		DVLib::RegistryDeleteValue(HKEY_LOCAL_MACHINE, REGISTRY_CURRENTVERSION_RUN, name);
 	}
 }
-

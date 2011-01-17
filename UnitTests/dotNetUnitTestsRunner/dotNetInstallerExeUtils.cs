@@ -20,6 +20,7 @@ namespace dotNetUnitTestsRunner
             public string logfile = DefaultLogFile;
             public bool quiet = true;
             public bool reboot = false;
+            public bool autostart = false;
             public bool uninstall = false;
             public string args;
             public bool noreboot = true;
@@ -54,6 +55,7 @@ namespace dotNetUnitTestsRunner
 
                     if (quiet) result += " /q";
                     if (reboot) result += " /reboot";
+                    if (autostart) result += " /autostart";
                     if (noreboot) result += " /noreboot";
                     if (log)
                     {

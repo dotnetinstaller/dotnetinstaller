@@ -38,6 +38,8 @@ public:
 	void DisableRunOnReboot();
 	// returns the reboot command
 	std::wstring GetRebootCmd(const std::wstring& additional) const;
+	// returns the restart command line
+	std::wstring GetRestartCommandLine(const std::wstring& additional) const;
 };
 
 

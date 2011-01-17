@@ -50,6 +50,44 @@ namespace dotNetInstallerUnitTests
         }
 
         [Test]
+        public void TestAutoStartCmdLine()
+        {
+            Console.WriteLine("TestAutoStartCmdLine");
+
+            ConfigFile configFile = new ConfigFile();
+            // setup configuration
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            setupConfiguration.auto_start = false;
+            setupConfiguration.auto_close_if_installed = true;
+            setupConfiguration.installation_completed = string.Empty;
+            setupConfiguration.installation_none = string.Empty;
+            configFile.Children.Add(setupConfiguration);
+            // marker that makes installed check succeeed after installation
+            string markerFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            // dummy component
+            ComponentCmd component = new ComponentCmd();
+            setupConfiguration.Children.Add(component);
+            component.command = string.Format("cmd.exe /C dir > \"{0}\"", markerFilename);
+            InstalledCheckFile check = new InstalledCheckFile();
+            check.filename = markerFilename;
+            check.comparison = installcheckfile_comparison.exists;
+            component.Children.Add(check);
+            // configuration
+            component.installcompletemessage = string.Empty;
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+            dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
+            options.quiet = false;
+            options.reboot = false;
+            options.autostart = true;
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(options));
+            Assert.IsTrue(File.Exists(markerFilename));
+            File.Delete(configFilename);
+            File.Delete(markerFilename);
+        }
+
+        [Test]
         public void TestNoAutoStart()
         {
             Console.WriteLine("TestNoAutoStart");

@@ -16,6 +16,7 @@
       <Topic id="installerlib.componentexe" visible="True" title="Executable Components" />
       <Topic id="d028fe32-3599-48d5-a4d2-a78e23297d24" visible="True" title="Component Rules" />
       <Topic id="edadc51b-8e65-47a0-9b94-91a6a86e78fd" visible="True" title="Requiring Reboot" />
+      <Topic id="ad06f719-056f-4d6b-98b5-582433f063d6" visible="True" title="Requiring Administrator" />
     </Topic>
     <Topic id="9cd31590-c899-40a7-897a-d5ca844c2324" visible="True" title="Checks, Operators and Filters">
       <Topic id="13ba8ef4-383f-4dd4-9588-b4ace3fcbf12" visible="True" title="Installed Checks &amp; Operators" />

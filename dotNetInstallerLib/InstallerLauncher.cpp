@@ -35,4 +35,20 @@ std::wstring InstallerLauncher::GetCmd() const
 	return cmd_s.str();
 }
 
+std::wstring InstallerLauncher::GetCommandLine() const
+{
+	std::wstringstream cmd_s;
 
+	if (__argc > 1)
+    {
+		cmd_s << L" " << DVLib::trim((::GetCommandLineW() + wcslen(__targv[0]) + 
+			(::GetCommandLineW()[0] == '\"' ? 2 : 0)));
+    }
+
+	if (! launcherArgs.empty())
+	{
+		cmd_s << L" " << launcherArgs;
+	}
+
+	return cmd_s.str();
+}

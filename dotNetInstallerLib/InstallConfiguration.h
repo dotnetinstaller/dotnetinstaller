@@ -83,6 +83,9 @@ public:
 	// progress options
 	bool show_progress_dialog;
 	bool show_cab_dialog;
+	// administrator required
+	bool administrator_required;
+	XmlAttribute administrator_required_message;
 public:
 	InstallConfiguration();
 	virtual void Load(TiXmlElement * node);

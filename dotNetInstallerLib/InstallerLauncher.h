@@ -11,6 +11,8 @@ public:
 	void SetLauncherArgs(const std::wstring args) { launcherArgs = args; }
 	// get launcher command, default is current process
 	std::wstring GetCmd() const;
+	// get launcher command line
+	std::wstring GetCommandLine() const;
 private:
 	std::wstring launcherPath;
 	std::wstring launcherArgs;

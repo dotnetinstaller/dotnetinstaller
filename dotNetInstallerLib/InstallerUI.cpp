@@ -57,6 +57,12 @@ bool InstallerUI::AutoStart(InstallConfiguration * p_configuration)
 				 << InstallSequenceUtil::towstring(InstallerSession::Instance->sequence));
 		}
 	}
+	else if (InstallerCommandLineInfo::Instance->Autostart())
+	{
+		autostart = true;
+		LOG(L"Autostart: automatically starting "
+			 << InstallSequenceUtil::towstring(InstallerSession::Instance->sequence));
+	}
 	else if (p_configuration->auto_start)
 	{
 		autostart = true;
@@ -261,15 +267,45 @@ void InstallerUI::ShowMessage(const std::wstring& message, int flags)
 
 bool InstallerUI::RunInstallConfiguration(const ConfigurationPtr& configuration, bool p_additional_config)
 {
-	// remove the Run key if exist
-	InstallerSession::Instance->DisableRunOnReboot();
-
 	m_configuration = configuration;
 	m_additional_config = p_additional_config;
 
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
+	OSVERSIONINFO osver = { sizeof(osver) };
+	if (GetVersionEx(&osver) && osver.dwMajorVersion < 6)
+	{
+		// Not running Windows Vista or later (major version >= 6) so 
+		// check whether installation can only be run by an adminstrator
+		// as we can't elevate later.
+		if (p_configuration->administrator_required)
+		{
+			try 
+			{
+				if (DVLib::IsUserInAdminGroup())
+				{
+					LOG("User is a member of the Administrators group");
+				}
+				else
+				{
+					LOG("User is not a member of the Administrators group");
+					THROW_EX(p_configuration->administrator_required_message);
+				}
+			}
+			catch(std::exception& ex)
+			{
+				LOG(L"IsUserInAdminGroup failed: " << DVLib::string2wstring(ex.what()));
+			}
+		}
+	}
+
+	if (!p_configuration->administrator_required)
+	{
+		// remove the Run key if exist (this requires admin access but leave here to retain legacy operation)
+		InstallerSession::Instance->DisableRunOnReboot();
+	}
+			
 	// set language for this configuration
 	InstallerSession::Instance->languageid = p_configuration->language_id.GetValue().empty()
 		? DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype)

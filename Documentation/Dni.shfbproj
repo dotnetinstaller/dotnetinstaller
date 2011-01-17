@@ -74,6 +74,7 @@
     <None Include="Content\ComponentsOpenFile.aml" />
     <None Include="Content\ComponentsCmd.aml" />
     <None Include="Content\ComponentsReboot.aml" />
+    <None Include="Content\ComponentsAdministrator.aml" />
     <None Include="Content\DownloadComponents.aml" />
     <None Include="Content\UIModes.aml" />
     <None Include="Content\dotNetInstallerLayout.aml" />
