@@ -313,10 +313,6 @@
 				RelativePath=".\htmlInstaller.rc"
 				>
 			</File>
-			<File
-				RelativePath=".\small.ico"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Html"

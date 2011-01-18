@@ -324,10 +324,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\InstallerCommandLineInfo.h"
-				>
-			</File>
-			<File
 				RelativePath=".\InstallStatus.h"
 				>
 			</File>

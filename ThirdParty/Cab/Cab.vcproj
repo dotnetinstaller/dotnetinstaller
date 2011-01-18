@@ -237,10 +237,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\File.hpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Cabinet\Internet.hpp"
 				>
 			</File>
@@ -262,10 +258,6 @@
 			</File>
 			<File
 				RelativePath=".\Cabinet\Trace.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Cabinet\UniqueList.hpp"
 				>
 			</File>
 		</Filter>
