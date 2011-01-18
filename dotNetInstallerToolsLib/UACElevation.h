@@ -54,9 +54,10 @@ namespace DVLib
 {
 	BOOL CreateWellKnownSid(WELL_KNOWN_SID_TYPE WellKnownSidType, PSID DomainSid, PSID pSid, DWORD *cbSid);
 
-	BOOL IsUserInAdminGroup();
-	BOOL IsRunAsAdmin();
-	BOOL IsProcessElevated();
-	bool RestartElevated(HWND hwnd, const std::wstring cmdline);
-	bool ShellElevated(HWND hwnd, const std::wstring file, const std::wstring directory, const std::wstring cmdline);
+	bool IsUserInAdminGroup();
+	bool IsRunAsAdmin();
+	bool IsProcessElevated();
+	bool RestartElevated(HWND hwnd, const std::wstring& cmdline);
+	bool ShellElevated(HWND hwnd, const std::wstring& file, const std::wstring& directory, const std::wstring& cmdline);
+	bool IsElevationSupported();
 }

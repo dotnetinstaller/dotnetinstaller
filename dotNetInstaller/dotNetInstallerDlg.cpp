@@ -132,29 +132,21 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 
 		if (p_configuration->administrator_required)
 		{
-			OSVERSIONINFO osver = { sizeof(osver) };
-			if (GetVersionEx(&osver) && osver.dwMajorVersion >= 6)
+			if (DVLib::IsElevationSupported())
 			{
 				// Running Windows Vista or later (major version >= 6).
-				try
-				{
-					// Get and display the process elevation information.
-					BOOL const fIsElevated = DVLib::IsProcessElevated();
-					LOG(L"IsProcessElevated: " << fIsElevated);
+				// Get and display the process elevation information.
+				BOOL const fIsElevated = DVLib::IsProcessElevated();
+				LOG(L"IsProcessElevated: " << fIsElevated);
 
-					// Show the UAC shield icon on the install button if the process is not elevated.
-					m_btnInstall.SendMessage(BCM_SETSHIELD, 0, (LPARAM)!fIsElevated);
-				}
-				catch(std::exception& ex)
-				{
-					LOG(L"IsProcessElevated failed: " << DVLib::string2wstring(ex.what()));
-				}
+				// Show the UAC shield icon on the install button if the process is not elevated.
+				m_btnInstall.SendMessage(BCM_SETSHIELD, 0, (LPARAM) ! fIsElevated);
 			}
 		}
 
 		AddUserControls();
 
-		if (!InstallUILevelSetting::Instance->IsSilent())
+		if (! InstallUILevelSetting::Instance->IsSilent())
 		{
 			ShowWindow(SW_SHOW);
 			UpdateWindow();

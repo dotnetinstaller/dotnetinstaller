@@ -171,7 +171,7 @@ void DVLib::RegistryDeleteKey(HKEY root, const std::wstring& key, DWORD ulFlags)
 	}
 }
 
-void DVLib::RegistrySetStringValue(HKEY root, const std::wstring& key, const std::wstring &name, const std::wstring& value, DWORD ulFlags)
+void DVLib::RegistrySetStringValue(HKEY root, const std::wstring& key, const std::wstring& name, const std::wstring& value, DWORD ulFlags)
 {
 	HKEY hkey = NULL;
 
@@ -210,7 +210,7 @@ DWORD DVLib::RegistryGetDWORDValue(HKEY root, const std::wstring& key, const std
     return value;
 }
 
-void DVLib::RegistrySetDWORDValue(HKEY root, const std::wstring& key, const std::wstring &name, DWORD value, DWORD ulFlags)
+void DVLib::RegistrySetDWORDValue(HKEY root, const std::wstring& key, const std::wstring& name, DWORD value, DWORD ulFlags)
 {
 	HKEY hkey = NULL;
 
@@ -295,7 +295,7 @@ std::vector<std::wstring> DVLib::RegistryGetMultiStringValue(HKEY root, const st
 	return result;
 }
 
-void DVLib::RegistrySetMultiStringValue(HKEY root, const std::wstring& key, const std::wstring &name, const std::vector<std::wstring>& value, DWORD ulFlags)
+void DVLib::RegistrySetMultiStringValue(HKEY root, const std::wstring& key, const std::wstring& name, const std::vector<std::wstring>& value, DWORD ulFlags)
 {
 	HKEY hkey = NULL;
 

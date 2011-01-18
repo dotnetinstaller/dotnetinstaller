@@ -17,10 +17,15 @@ void UACElevationUnitTests::testIsRunAsAdmin()
 	CPPUNIT_ASSERT(DVLib::IsRunAsAdmin());
 }
 
-void UACElevationUnitTests::testIsProcessElevated()
+void UACElevationUnitTests::testIsElevationSupported()
 {
 	OSVERSIONINFO osver = { sizeof(osver) };
-	if (GetVersionEx(&osver) && osver.dwMajorVersion >= 6)
+	CPPUNIT_ASSERT(DVLib::IsElevationSupported() == (GetVersionEx(&osver) && osver.dwMajorVersion >= 6));
+}
+
+void UACElevationUnitTests::testIsProcessElevated()
+{
+	if (DVLib::IsElevationSupported())
 	{
 		// As build is run as an admin this should return true
 		CPPUNIT_ASSERT(DVLib::IsProcessElevated());
@@ -29,8 +34,7 @@ void UACElevationUnitTests::testIsProcessElevated()
 
 void UACElevationUnitTests::testShellElevated()
 {
-	OSVERSIONINFO osver = { sizeof(osver) };
-	if (GetVersionEx(&osver) && osver.dwMajorVersion >= 6)
+	if (DVLib::IsElevationSupported())
 	{
 		CPPUNIT_ASSERT(DVLib::ShellElevated(NULL, L"cmd.exe", L"C:\\", L"/c exit 0"));
 	}
@@ -38,8 +42,7 @@ void UACElevationUnitTests::testShellElevated()
 
 void UACElevationUnitTests::testRestartElevated()
 {
-	OSVERSIONINFO osver = { sizeof(osver) };
-	if (GetVersionEx(&osver) && osver.dwMajorVersion >= 6)
+	if (DVLib::IsElevationSupported())
 	{
 		// This will restart this test elevated and run one test.
 		CPPUNIT_ASSERT(DVLib::RestartElevated(NULL, L"DVLib::UnitTests::UACElevationUnitTests::testIsProcessElevated"));

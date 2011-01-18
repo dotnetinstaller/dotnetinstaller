@@ -56,7 +56,7 @@ typedef auto_any<PSID, sid_free> auto_psid;
 //
 //   EXCEPTION: If this function fails, it throws a C++ std::exception.
 //
-BOOL DVLib::IsUserInAdminGroup()
+bool DVLib::IsUserInAdminGroup()
 {
 	BOOL fInAdminGroup = FALSE;
     HANDLE hToken = NULL;
@@ -115,7 +115,7 @@ BOOL DVLib::IsUserInAdminGroup()
 	CHECK_WIN32_BOOL(::CheckTokenMembership(hTokenToCheck, &adminSID, &fInAdminGroup),
 		L"CheckTokenMembership");
 
-    return fInAdminGroup;
+	return fInAdminGroup ? true : false;
 }
 
 // 
@@ -132,7 +132,7 @@ BOOL DVLib::IsUserInAdminGroup()
 //
 //   EXCEPTION: If this function fails, it throws a C++ std::exception.
 //
-BOOL DVLib::IsRunAsAdmin()
+bool DVLib::IsRunAsAdmin()
 {
     BOOL fIsRunAsAdmin = FALSE;
     PSID pAdministratorsGroup = NULL;
@@ -155,7 +155,7 @@ BOOL DVLib::IsRunAsAdmin()
     CHECK_WIN32_BOOL(::CheckTokenMembership(NULL, pAdministratorsGroup, &fIsRunAsAdmin),
 		L"CheckTokenMembership");
 
-	return fIsRunAsAdmin;
+	return fIsRunAsAdmin ? true : false;
 }
 
 //
@@ -184,7 +184,7 @@ BOOL DVLib::IsRunAsAdmin()
 //   process is elevated based on elevation type. Instead, we should use 
 //   TokenElevation.
 //
-BOOL DVLib::IsProcessElevated()
+bool DVLib::IsProcessElevated()
 {
     HANDLE hToken = NULL;
 
@@ -201,15 +201,21 @@ BOOL DVLib::IsProcessElevated()
     CHECK_WIN32_BOOL(::GetTokenInformation(hToken, (TOKEN_INFORMATION_CLASS)TokenElevation, &elevation, sizeof(elevation), &dwSize),
 		L"GetTokenInformation");
 
-	return 0 == elevation.TokenIsElevated ? FALSE : TRUE;
+	return 0 != elevation.TokenIsElevated;
 }
 
 #pragma endregion
 
+bool DVLib::IsElevationSupported()
+{
+	OSVERSIONINFO osver = { sizeof(osver) };
+	return GetVersionEx(&osver) && osver.dwMajorVersion >= 6;
+}
+
 //
 // Restart the current process elevated.
 //
-bool DVLib::RestartElevated(HWND hwnd, const std::wstring cmdline)
+bool DVLib::RestartElevated(HWND hwnd, const std::wstring& cmdline)
 {
 	return ShellElevated(hwnd, DVLib::GetModuleFileNameW(), DVLib::GetModuleDirectoryW(), cmdline);
 }
@@ -218,7 +224,7 @@ bool DVLib::RestartElevated(HWND hwnd, const std::wstring cmdline)
 // Run process elevated.
 // Returns true is the process was started or false if the user refused elevation.
 //
-bool DVLib::ShellElevated(HWND hwnd, const std::wstring file, const std::wstring directory, const std::wstring cmdline)
+bool DVLib::ShellElevated(HWND hwnd, const std::wstring& file, const std::wstring& directory, const std::wstring& cmdline)
 {
 	OSVERSIONINFO osver = { sizeof(osver) };
 	CHECK_BOOL(GetVersionEx(&osver) && osver.dwMajorVersion >= 6,
@@ -233,7 +239,7 @@ bool DVLib::ShellElevated(HWND hwnd, const std::wstring file, const std::wstring
 	sei.hwnd = hwnd;
 	sei.nShow = SW_NORMAL;
 
-	if (!ShellExecuteExW(&sei))
+	if (! ShellExecuteExW(&sei))
 	{
 		DWORD dwErr = ::GetLastError();
 		// The user refused the elevation

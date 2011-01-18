@@ -4,7 +4,7 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class UACElevationUnitTests : public dotNetInstallerLibUnitTestFixture
+		class UACElevationUnitTests : public CPPUNIT_NS::TestFixture
 		{
 			CPPUNIT_TEST_SUITE( UACElevationUnitTests );
 			CPPUNIT_TEST( testIsUserInAdminGroup );
@@ -12,6 +12,7 @@ namespace DVLib
 			CPPUNIT_TEST( testIsProcessElevated );
 			CPPUNIT_TEST( testShellElevated );
 			CPPUNIT_TEST( testRestartElevated );
+			CPPUNIT_TEST( testIsElevationSupported );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testIsUserInAdminGroup();
@@ -19,6 +20,7 @@ namespace DVLib
 			void testIsProcessElevated();
 			void testShellElevated();
 			void testRestartElevated();
+			void testIsElevationSupported();
 		};
 	}
 }

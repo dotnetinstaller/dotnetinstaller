@@ -6,7 +6,7 @@ namespace DVLib
 	{
 		namespace String
 		{
-			class StringUtilUnitTests :  public CPPUNIT_NS::TestFixture
+			class StringUtilUnitTests : public CPPUNIT_NS::TestFixture
 			{
 				CPPUNIT_TEST_SUITE( StringUtilUnitTests );
 				CPPUNIT_TEST( teststring2long );

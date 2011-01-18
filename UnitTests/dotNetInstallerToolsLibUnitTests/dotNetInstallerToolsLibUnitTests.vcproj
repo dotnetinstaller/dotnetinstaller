@@ -260,6 +260,10 @@
 				RelativePath=".\StringUtilUnitTests.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\UACElevationUnitTests.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -324,6 +328,10 @@
 			</File>
 			<File
 				RelativePath=".\StringUtilUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UACElevationUnitTests.h"
 				>
 			</File>
 		</Filter>

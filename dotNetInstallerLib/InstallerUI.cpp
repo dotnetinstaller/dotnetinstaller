@@ -273,29 +273,21 @@ bool InstallerUI::RunInstallConfiguration(const ConfigurationPtr& configuration,
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
-	OSVERSIONINFO osver = { sizeof(osver) };
-	if (GetVersionEx(&osver) && osver.dwMajorVersion < 6)
+	if (! DVLib::IsElevationSupported())
 	{
 		// Not running Windows Vista or later (major version >= 6) so 
 		// check whether installation can only be run by an adminstrator
 		// as we can't elevate later.
 		if (p_configuration->administrator_required)
 		{
-			try 
+			if (DVLib::IsUserInAdminGroup())
 			{
-				if (DVLib::IsUserInAdminGroup())
-				{
-					LOG("User is a member of the Administrators group");
-				}
-				else
-				{
-					LOG("User is not a member of the Administrators group");
-					THROW_EX(p_configuration->administrator_required_message);
-				}
+				LOG("User is a member of the Administrators group");
 			}
-			catch(std::exception& ex)
+			else
 			{
-				LOG(L"IsUserInAdminGroup failed: " << DVLib::string2wstring(ex.what()));
+				LOG("User is not a member of the Administrators group");
+				THROW_EX(p_configuration->administrator_required_message);
 			}
 		}
 	}

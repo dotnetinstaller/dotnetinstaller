@@ -34,11 +34,11 @@ namespace DVLib
 	// get a string value from registry
 	std::wstring RegistryGetStringValue(HKEY root, const std::wstring& key, const std::wstring& name = L"", DWORD ulFlags = 0);
 	// create a string name / value pair
-	void RegistrySetStringValue(HKEY root, const std::wstring& key, const std::wstring &name, const std::wstring& value = L"", DWORD ulFlags = 0);
+	void RegistrySetStringValue(HKEY root, const std::wstring& key, const std::wstring& name, const std::wstring& value = L"", DWORD ulFlags = 0);
 	// get a DWORD value from registry
 	DWORD RegistryGetDWORDValue(HKEY root, const std::wstring& key, const std::wstring& name = L"", DWORD ulFlags = 0);
 	// create a string name / value pair
-	void RegistrySetDWORDValue(HKEY root, const std::wstring& key, const std::wstring &name, DWORD value, DWORD ulFlags = 0);
+	void RegistrySetDWORDValue(HKEY root, const std::wstring& key, const std::wstring& name, DWORD value, DWORD ulFlags = 0);
 	// get a multi-string value from registry
 	std::vector<std::wstring> RegistryGetMultiStringValue(HKEY root, const std::wstring& key, const std::wstring& name = L"", DWORD ulFlags = 0);
 	// create a multi string name / value pair
