@@ -23,7 +23,7 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 private:
-	InstallComponentDlg m_component_dlg;
+	auto_any<InstallComponentDlg *, close_delete> m_pComponentDlg;
 	void ExtractCab(const std::wstring& id, bool display_dialog);
     void SelectComponents();
     // move a window to the coordinates defined by a rectangle with defaults

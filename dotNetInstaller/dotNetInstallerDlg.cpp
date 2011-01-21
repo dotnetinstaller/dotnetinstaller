@@ -246,7 +246,7 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		if (p_configuration->administrator_required)
 		{
 			// Elevate the process if it is not "run as administrator".
-            if (!DVLib::IsRunAsAdmin())
+            if (! DVLib::IsRunAsAdmin())
             {
 				LOG("Restarting as elevated user");
 
@@ -320,6 +320,8 @@ void CdotNetInstallerDlg::OnBnClickedSkip()
 
 void CdotNetInstallerDlg::OnDestroy()
 {
+	reset(m_pComponentDlg);
+
 	// close splash screen if any
 	CSplashWnd::CloseSplashScreen();
 
@@ -415,7 +417,8 @@ bool CdotNetInstallerDlg::RunDownloadConfiguration(const DownloadDialogPtr& p_Co
 bool CdotNetInstallerDlg::OnComponentExecBegin(const ComponentPtr& component)
 {
 	bool rc = InstallerUI::ComponentExecBegin(component);
-	m_component_dlg.LoadComponent(m_configuration, component);
+	reset(m_pComponentDlg, new InstallComponentDlg(this));
+	m_pComponentDlg->LoadComponent(m_configuration, component);
 	return rc;
 }
 
@@ -428,7 +431,7 @@ bool CdotNetInstallerDlg::OnComponentExecWait(const ComponentPtr& component)
 
 		if (p_configuration->show_progress_dialog && component->show_progress_dialog)
 		{
-			m_component_dlg.DoModal();
+			m_pComponentDlg->DoModal();
 			LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): DIALOG CLOSED");
 		}
 	}
