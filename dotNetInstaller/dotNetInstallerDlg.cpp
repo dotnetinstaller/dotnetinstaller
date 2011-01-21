@@ -136,11 +136,11 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 			{
 				// Running Windows Vista or later (major version >= 6).
 				// Get and display the process elevation information.
-				BOOL const fIsElevated = DVLib::IsProcessElevated();
-				LOG(L"IsProcessElevated: " << fIsElevated);
+				bool fIsElevated = DVLib::IsProcessElevated();
+				LOG(L"IsProcessElevated: " << (fIsElevated ? L"yes" : L"no") );
 
 				// Show the UAC shield icon on the install button if the process is not elevated.
-				m_btnInstall.SendMessage(BCM_SETSHIELD, 0, (LPARAM) ! fIsElevated);
+				m_btnInstall.SendMessage(BCM_SETSHIELD, 0, fIsElevated ? FALSE : TRUE);
 			}
 		}
 
