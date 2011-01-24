@@ -13,7 +13,8 @@
 #define BCM_SETSHIELD	(BCM_FIRST + 0x000C)
 #endif
 
-#if !defined _TOKEN_ELEVATION_TYPE
+#if !defined TOKEN_MANDATORY_POLICY_OFF // Only defined in SDK version 6.0a or later
+
 //
 // Token Information Class. Define new Token types not in VS2005 SDK.
 //
@@ -45,6 +46,7 @@ typedef enum _TOKEN_ELEVATION_TYPE {
 typedef struct _TOKEN_ELEVATION {
 	DWORD TokenIsElevated;
 } TOKEN_ELEVATION, *PTOKEN_ELEVATION;
+
 #endif
 
 #pragma endregion
