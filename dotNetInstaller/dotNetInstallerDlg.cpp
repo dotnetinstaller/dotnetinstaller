@@ -250,6 +250,10 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
             {
 				LOG("Restarting as elevated user");
 
+				// Close the logfile so that the new instance can use it.
+				// Log will be reopened it restart fails or user aborts elevation.
+				InstallerLog::Instance->CloseLog();
+
 				// Restart process with autostart.
 				std::wstring cmdline = InstallerSession::Instance->GetRestartCommandLine(L"/Autostart");
 				if (DVLib::RestartElevated(this->m_hWnd, cmdline))

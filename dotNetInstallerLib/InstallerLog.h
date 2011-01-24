@@ -11,6 +11,7 @@ public:
 	const std::wstring& GetLogFile() const { return m_logfile; }
 	void SetLogFile(const std::wstring& filename);
 	void Write(const std::wstring& message);
+	void CloseLog();
 	static shared_any<InstallerLog *, close_delete> Instance;
 private:
 	bool m_enabled;

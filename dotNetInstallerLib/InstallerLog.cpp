@@ -47,3 +47,8 @@ void InstallerLog::SetLogFile(const std::wstring& filename)
 { 
 	m_logfile = InstallerSession::Instance->ExpandVariables(filename); 
 }
+
+void InstallerLog::CloseLog()
+{ 
+	reset(m_hFile);
+}
