@@ -253,8 +253,9 @@ namespace InstallerLib
                     {
                         id += Char.IsLetterOrDigit(pair.relativepath[i]) ? pair.relativepath[i] : '_';
                     }
+
                     args.WriteLine(string.Format("Embedding HTML resource \"{0}\": {1}", id, pair.fullpath));
-                    ResourceUpdate.WriteFile(h, new ResourceId("HTM"), new ResourceId(id),
+                    ResourceUpdate.WriteFile(h, new ResourceId("HTM"), new ResourceId(id.ToUpper()),
                         ResourceUtil.NEUTRALLANGID, pair.fullpath);
                 }
 
