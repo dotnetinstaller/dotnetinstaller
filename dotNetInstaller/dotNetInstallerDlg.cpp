@@ -130,20 +130,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 			m_PictureBox.SetBitmap(DVLib::LoadBitmapFromResource(AfxGetApp()->m_hInstance, L"RES_BANNER", L"CUSTOM"));
 		}
 
-		if (p_configuration->administrator_required)
-		{
-			if (DVLib::IsElevationSupported())
-			{
-				// Running Windows Vista or later (major version >= 6).
-				// Get and display the process elevation information.
-				bool fIsElevated = DVLib::IsProcessElevated();
-				LOG(L"IsProcessElevated: " << (fIsElevated ? L"yes" : L"no") );
-
-				// Show the UAC shield icon on the install button if the process is not elevated.
-				m_btnInstall.SendMessage(BCM_SETSHIELD, 0, fIsElevated ? FALSE : TRUE);
-			}
-		}
-
+		AddElevatedControls();
 		AddUserControls();
 
 		if (! InstallUILevelSetting::Instance->IsSilent())
@@ -239,44 +226,14 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 		ClearError();
         SelectComponents();
 
+		if (RestartElevated())
+		{
+			OnCancel();
+			return;
+		}
+
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
-
-		// check whether installation can only be run by an adminstrator
-		if (p_configuration->administrator_required)
-		{
-			// Elevate the process if it is not "run as administrator".
-            if (! DVLib::IsRunAsAdmin())
-            {
-				LOG("Restarting as elevated user");
-
-				// Close the logfile so that the new instance can use it.
-				// Log will be reopened it restart fails or user aborts elevation.
-				InstallerLog::Instance->CloseLog();
-
-				// Restart process with autostart.
-				std::wstring cmdline = InstallerSession::Instance->GetRestartCommandLine(L"/Autostart");
-				if (DVLib::RestartElevated(this->m_hWnd, cmdline))
-				{
-					// Disable logging so file is closed before new instance uses it.
-					InstallerLog::Instance->DisableLog();
-
-					// Exit as if use had clicked cancel but with error code -3 to deferentiate it.
-					RecordError(-3);
-					OnCancel();
-					return;
-				}
-				else
-				{
-                    // The user refused the elevation.
-                    // Do nothing ...
-					LOG("User refused the elevation.");
-					DniMessageBox::Show(p_configuration->administrator_required_message, MB_OK | MB_ICONSTOP);
-					InstallerUI::AfterInstall(-1);
-					return;
-				}
-            }
-		}
 
 		// remove the Run key if exist (this requires admin access)
 		InstallerSession::Instance->DisableRunOnReboot();
@@ -639,4 +596,10 @@ void CdotNetInstallerDlg::StartInstall()
 	m_btnCancel.EnableWindow(FALSE);
     m_InfoLink.EnableWindow(FALSE);
 	OnBnClickedInstall();
+}
+
+void CdotNetInstallerDlg::SetElevationRequired(bool required)
+{
+	// Show the UAC shield icon on the install button if the process is not elevated.
+	m_btnInstall.SendMessage(BCM_SETSHIELD, 0, required ? TRUE : FALSE);
 }

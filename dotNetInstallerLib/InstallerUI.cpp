@@ -583,6 +583,24 @@ void InstallerUI::AfterInstall(int rc)
 	}
 }
 
+void InstallerUI::AddElevatedControls()
+{
+	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
+	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+
+	if (p_configuration->administrator_required)
+	{
+		if (DVLib::IsElevationSupported())
+		{
+			// Running Windows Vista or later (major version >= 6).
+			// Get and display the process elevation information.
+			bool fIsElevated = DVLib::IsProcessElevated();
+			LOG(L"IsProcessElevated: " << (fIsElevated ? L"yes" : L"no") );
+			SetElevationRequired(! fIsElevated);
+		}
+	}
+}
+
 void InstallerUI::AddUserControls()
 {
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
@@ -679,4 +697,41 @@ void InstallerUI::AddUserControls()
 			THROW_EX(L"Invalid control type: " << control->type);
 		}
 	}
+}
+
+bool InstallerUI::RestartElevated()
+{
+	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
+	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
+
+	// check whether installation can only be run by an adminstrator
+	if (! p_configuration->administrator_required)
+		return false;
+
+	// Elevate the process if it is not "run as administrator".
+    if (! DVLib::IsRunAsAdmin())
+    {
+		// Restart process with autostart.
+		std::wstring cmdline = InstallerSession::Instance->GetRestartCommandLine(L"/Autostart");
+		LOG("Restarting as elevated user: " << cmdline);
+
+		// Close the logfile so that the new instance can use it.
+		// Log will be reopened it restart fails or user aborts elevation.
+		InstallerLog::Instance->CloseLog();
+
+		if (DVLib::RestartElevated(GetHwnd(), cmdline))
+		{
+			// Disable logging so file is closed before new instance uses it.
+			InstallerLog::Instance->DisableLog();
+			// Exit as if use had clicked cancel but with error code -3 to deferentiate it.
+			RecordError(-3);
+			return true;
+		}
+		else
+		{
+			THROW_EX(p_configuration->administrator_required_message);
+		}
+    }
+
+	return false;
 }

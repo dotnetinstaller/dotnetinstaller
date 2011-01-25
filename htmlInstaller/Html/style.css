@@ -166,8 +166,22 @@ body
 
 input[type="button"]
 {
-	width: 50pt;
-	height: 15pt;	
+	width: 60pt;
+	height: 15pt;
+}
+
+input[type="button"][elevate="true"]
+{
+	foreground-image: url(shield.gif);
+	foreground-repeat: no-repeat;
+	foreground-position-left: 5pt;
+	foreground-position-top: 4pt;
+}
+
+input[type="button"][elevate="true"]:active
+{
+	foreground-position-left: 6pt;
+	foreground-position-top: 4.5pt;
 }
 
 a[target="_blank"]

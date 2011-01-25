@@ -31,12 +31,22 @@ void HtmLayoutDll::Unload()
 		::DeleteFile(m_path.c_str());
 		m_path.clear();
 	}
+
+	if (! m_dir.empty())
+	{
+		::RemoveDirectory(m_dir.c_str());
+		m_dir.clear();
+	}
 }
 
 void HtmLayoutDll::Extract()
 {
-	std::wstring path = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(),
-		L"htmlayout.dll");
+	std::wstring dir = L"htmlInstaller-";
+	dir += DVLib::towstring(::GetCurrentProcessId());
+	std::wstring path = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), dir);
+	DVLib::DirectoryCreate(path);
+	m_dir = path;
+	path = DVLib::DirectoryCombine(path, L"htmlayout.dll");
 
 	HRSRC res = ::FindResourceA(NULL, "HTMLAYOUTDLL", "DLL");
 	CHECK_WIN32_BOOL(res != NULL,

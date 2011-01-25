@@ -4,6 +4,7 @@ class HtmLayoutDll
 {
 private:
 	HMODULE m_h;
+	std::wstring m_dir;
 	std::wstring m_path;
 	void Load();
 	void Extract();

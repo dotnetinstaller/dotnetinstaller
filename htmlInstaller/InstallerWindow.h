@@ -37,6 +37,7 @@ private:
 	bool IsDownloadCancelled() const;
 	void OnShow();
 	Component * m_running_component;
+	void SetElevationRequired(bool required = true);
 protected:
 	void AddComponent(const ComponentPtr& component);
 	bool Run();

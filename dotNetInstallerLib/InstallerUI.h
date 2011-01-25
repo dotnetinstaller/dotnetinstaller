@@ -40,6 +40,7 @@ protected:
 	void LoadComponents();
 	void Start();
 	void AddUserControls();
+	void AddElevatedControls();
 	virtual void StartInstall() = 0;
 	virtual void Stop() = 0;
 	virtual void ExtractCab(const std::wstring& id, bool display_dialog) = 0;
@@ -56,4 +57,6 @@ protected:
 	virtual void AddControl(const ControlLicense&) = 0;
 	virtual void AddControl(const ControlHyperlink&) = 0;
 	virtual void AddControl(const ControlImage&) = 0;
+	virtual void SetElevationRequired(bool required = true) = 0;
+	bool RestartElevated();
 };

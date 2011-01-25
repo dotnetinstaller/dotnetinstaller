@@ -326,6 +326,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Html\shield.gif"
+				>
+			</File>
+			<File
 				RelativePath=".\Html\style.css"
 				>
 			</File>

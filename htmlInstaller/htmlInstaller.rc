@@ -49,5 +49,6 @@ RES_BANNER CUSTOM "html\\banner.bmp"
 INDEX_HTML HTM "html\\index.html"
 DOWNLOAD_HTML HTM "html\\download.html"
 STYLE_CSS HTM "html\\style.css"
+SHIELD_GIF HTM "html\\shield.gif"
 
 #endif

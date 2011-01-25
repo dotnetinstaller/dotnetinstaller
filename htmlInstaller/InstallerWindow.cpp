@@ -100,6 +100,7 @@ void InstallerWindow::OnShow()
 	}
 
 	AddUserControls();
+	AddElevatedControls();
 
 	Start();	
 }
@@ -478,6 +479,12 @@ int InstallerWindow::ExecOnThread()
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 		CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
+		if (RestartElevated())
+		{
+			OnCancel();
+			return 0;
+		}
+
 		Components components = p_configuration->GetSupportedComponents(
 			InstallerSession::Instance->lcidtype, InstallerSession::Instance->sequence);
 
@@ -729,4 +736,10 @@ void InstallerWindow::OnDocumentComplete()
 	{
 		OnShow();
 	}
+}
+
+void InstallerWindow::SetElevationRequired(bool required)
+{
+	auto_any<htmlayout::dom::element *, html_disabled> btn_install(& button_install);
+	htmlayout::queue::push(new html_set_attribute_task(& button_install, "elevate", required ? L"true" : L"false"), HtmlWindow::s_hwnd);
 }
