@@ -37,7 +37,7 @@ There are three types of variables:
 		cab_dialog_caption = ""
 		cab_path = "#TEMPPATH\#GUID"
 		cab_path_autodelete = "True"
-		administrator_required_message = "##APPLICATION_NAME installation requires administration rights."
+		administrator_required_message = "##APPLICATION_NAME installazione richiede i diritti di amministrazione."
 		>
 	</setupconfiguration>
 	
