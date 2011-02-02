@@ -72,21 +72,21 @@ void InstallerWindow::OnShow()
 	button_install = r.get_element_by_id("button_install");
 	if (button_install.is_valid()) 
 	{
-		button_install.set_attribute("value", p_configuration->install_caption.GetValue().c_str());
+		button_install.set_text(p_configuration->install_caption.GetValue().c_str());
 		if (InstallerSession::Instance->sequence != SequenceInstall) button_install.destroy();
 	}
 
 	button_uninstall = r.get_element_by_id("button_uninstall");
 	if (button_uninstall.is_valid()) 
 	{
-		button_uninstall.set_attribute("value", p_configuration->uninstall_caption.GetValue().c_str());
+		button_uninstall.set_text(p_configuration->uninstall_caption.GetValue().c_str());
 		if (InstallerSession::Instance->sequence != SequenceUninstall) button_uninstall.destroy();
 	}
 
 	button_skip = r.get_element_by_id("button_skip");
 	if (button_skip.is_valid()) 
 	{
-		button_skip.set_attribute("value", p_configuration->skip_caption.GetValue().c_str());
+		button_skip.set_text(p_configuration->skip_caption.GetValue().c_str());
 		if (! m_additional_config)
 		{
 			button_skip.destroy();
@@ -96,7 +96,7 @@ void InstallerWindow::OnShow()
 	button_cancel = r.get_element_by_id("button_cancel");
 	if (button_cancel.is_valid()) 
 	{
-		button_cancel.set_attribute("value", p_configuration->cancel_caption.GetValue().c_str());
+		button_cancel.set_text(p_configuration->cancel_caption.GetValue().c_str());
 	}
 
 	AddUserControls();
