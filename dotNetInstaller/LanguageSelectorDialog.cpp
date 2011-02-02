@@ -33,8 +33,19 @@ BOOL CLanguageSelectorDialog::OnInitDialog()
 	m_btnOK.SetWindowText(m_OKText.c_str());
 	SetWindowText(m_Title.c_str());
 
+	DVLib::LcidType lcidType = InstallerSession::Instance->lcidtype;
+	LCID lcid = DVLib::GetOperatingSystemLCID( lcidType );
+	int index = -1;
+
 	for each(const ConfigurationPtr& configuration in m_Configurations)
 	{
+		//  First configuration that match machine language?
+		if( -1 == index && configuration->IsSupported( lcid ) )
+		{
+			//  Remember index of first configuration to select language in list.
+			index = std::find( m_Configurations.begin(), m_Configurations.end(),
+				configuration ) - m_Configurations.begin();
+		}
 		m_listLanguages.AddString(configuration->GetLanguageString().c_str());
 		m_listLanguages.SetItemDataPtr(m_listLanguages.GetCount() - 1, 
 			static_cast<LPVOID>(get(configuration)));
@@ -45,7 +56,7 @@ BOOL CLanguageSelectorDialog::OnInitDialog()
 		THROW_EX(L"No languages are available for language selection");
 	}
 
-	m_listLanguages.SetCurSel(0);
+	m_listLanguages.SetCurSel( -1 == index ? 0 : index );
 	return TRUE;
 }
 
