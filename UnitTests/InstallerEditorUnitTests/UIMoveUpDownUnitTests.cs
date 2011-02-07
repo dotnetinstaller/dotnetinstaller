@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using NUnit.Framework;
 using dotNetUnitTestsRunner;
@@ -19,7 +20,7 @@ using White.Core.WindowsAPI;
 namespace InstallerEditorUnitTests
 {
     [TestFixture]
-    public class UIMoveUpDownUnitTests
+    public class UIMoveUpDownUnitTests : EnUsUnitTests
     {
         [Test]
         public void TestMoveUpMoveDownConfiguration()

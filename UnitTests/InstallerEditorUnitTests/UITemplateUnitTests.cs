@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using NUnit.Framework;
 using dotNetUnitTestsRunner;
@@ -25,7 +26,7 @@ using System.Net;
 namespace InstallerEditorUnitTests
 {
     [TestFixture]
-    public class UITemplateUnitTests
+    public class UITemplateUnitTests : EnUsUnitTests
     {
         [Test]
         public void TestAddSetupConfigurationLang()

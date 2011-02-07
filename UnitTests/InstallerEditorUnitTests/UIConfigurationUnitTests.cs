@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using NUnit.Framework;
 using dotNetUnitTestsRunner;
@@ -22,7 +23,7 @@ using System.Runtime.InteropServices;
 namespace InstallerEditorUnitTests
 {
     [TestFixture]
-    public class UIConfigurationUnitTests
+    public class UIConfigurationUnitTests : EnUsUnitTests
     {
         [Test]
         public void TestNewConfiguration()
@@ -312,15 +313,16 @@ namespace InstallerEditorUnitTests
                         string.Format("Installer Editor - {0}", configFileName), InitializeOption.NoCache);
                     UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Edit With Notepad").Click();
                     Thread.Sleep(1000);
-                    string windowText = string.Format("{0} - Notepad", Path.GetFileName(configFileName));
+                    string windowText = string.Format("{0} -", Path.GetFileName(configFileName));
+                    string moduleName = "NOTEPAD.EXE";
                     Console.WriteLine(windowText);
                     bool foundNotepad = false;
                     foreach (Process p in Process.GetProcesses())
                     {
-                        if (p.MainWindowTitle == windowText)
+                        if ((p.MainWindowTitle.StartsWith(windowText)) && (p.MainModule.ModuleName == moduleName))
                         {
                             Application notepad = Application.Attach(p);
-                            notepad.GetWindow(windowText, InitializeOption.NoCache).Close();
+                            notepad.GetWindow(p.MainWindowTitle, InitializeOption.NoCache).Close();
                             foundNotepad = true;
                             break;
                         }
