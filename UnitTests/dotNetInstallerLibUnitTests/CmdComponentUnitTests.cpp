@@ -74,7 +74,6 @@ void CmdComponentUnitTests::testExecUIBasic()
 	component.Wait();
 }
 
-
 void CmdComponentUnitTests::testExecXCopy()
 {
 	CmdComponent component;
@@ -184,6 +183,7 @@ void CmdComponentUnitTests::testReturnCodeRebootRequired()
 	component.Wait();
 	// component will succeed, since this is a reboot return code
 	CPPUNIT_ASSERT(component.IsRebootRequired());
+
 	// component will fail since the return code is neither a default success (0) nor a reboot error code
 	component.command = L"cmd.exe /C exit /b 1055";
 	try
@@ -197,6 +197,38 @@ void CmdComponentUnitTests::testReturnCodeRebootRequired()
 		// expected
 	}
 	CPPUNIT_ASSERT(! component.IsRebootRequired());
+
+	// Test legacy method of handling 0x84BE0BC2
+	component.command = L"cmd.exe /C exit /b -2067919934"; // 0x84BE0BC2
+	component.returncodes_reboot = L"2227047362";
+	component.Exec();
+	component.Wait();
+	// component will succeed, since this is a reboot return code
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+
+	// Test hex code
+	component.command = L"cmd.exe /C exit /b 3010"; // 0xBC2
+	component.returncodes_reboot = L"0x84BE0BC2,0x0BC2";
+	component.Exec();
+	component.Wait();
+	// component will succeed, since this is a reboot return code
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+
+	// Test hex code
+	component.command = L"cmd.exe /C exit /b -2067919934"; // 0x84BE0BC2
+	component.returncodes_reboot = L"0x84BE0BC2,0xBC2";
+	component.Exec();
+	component.Wait();
+	// component will succeed, since this is a reboot return code
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+
+	// Test hex code - E_FAIL 0x80004005
+	component.command = L"cmd.exe /C exit /b 2147500037"; // 0x80004005
+	component.returncodes_reboot = L"0x80004005";
+	component.Exec();
+	component.Wait();
+	// component will succeed, since this is a reboot return code
+	CPPUNIT_ASSERT(component.IsRebootRequired());
 }
 
 void CmdComponentUnitTests::testReturnCodeSuccess()
@@ -206,12 +238,14 @@ void CmdComponentUnitTests::testReturnCodeSuccess()
 	component.returncodes_success = L"1,3010";
 	component.command = L"cmd.exe /C exit /b 1";
 	component.Exec();
+	// component will succeed, return code in success list
 	component.Wait();
-	CPPUNIT_ASSERT(! component.IsRebootRequired());
+
 	component.command = L"cmd.exe /C exit /b 3010";
 	component.Exec();
+	// component will succeed, return code in success list
 	component.Wait();
-	CPPUNIT_ASSERT(! component.IsRebootRequired());
+
 	// component will fail since the return code is not in the success list
 	component.command = L"cmd.exe /C exit /b 0";
 	try
@@ -224,7 +258,13 @@ void CmdComponentUnitTests::testReturnCodeSuccess()
 	{
 		// expected
 	}
-	CPPUNIT_ASSERT(! component.IsRebootRequired());
+
+	// Test hex code
+	component.command = L"cmd.exe /C exit /b 3010"; // 0xBC2
+	component.returncodes_success = L"0,0X0BC2";
+	component.Exec();
+	// component will succeed, return code in success list
+	component.Wait();
 }
 
 void CmdComponentUnitTests::testMustReboot()

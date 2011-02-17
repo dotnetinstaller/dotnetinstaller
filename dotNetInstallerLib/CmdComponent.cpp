@@ -104,29 +104,42 @@ void CmdComponent::Wait(DWORD tt)
 
 bool CmdComponent::IsReturnCode(DWORD return_code, const std::wstring& possible_values)
 {
-	std::wstring return_code_s = DVLib::towstring(return_code);
 	std::vector<std::wstring> return_codes_vector = DVLib::split(possible_values, L",");
-	for each(const std::wstring& return_code in return_codes_vector)
+	for each(std::wstring return_code_s in return_codes_vector)
 	{
-		if (return_code.empty())
+		if (return_code_s.empty())
 			continue;
-		
-		if (return_code[0] == L'!')
+
+		BOOL negative_test = false;
+
+		if (return_code_s[0] == L'!')
 		{
-			std::wstring return_code_value = return_code.substr(1, return_code.length() - 1);
-			return return_code_value != return_code_s;
+			negative_test = true;
+			return_code_s = return_code_s.substr(1, return_code_s.length() - 1);
 		}
-		else if (return_code == L"none")
+
+		if (return_code_s == L"none")
 		{
 			return false;
 		}
-		else if (return_code == L"all")
+		else if (return_code_s == L"all")
 		{
 			return true;
 		}
-		else if (return_code == return_code_s)
+		else
 		{
-			return true;
+			// Convert return code string to unsigned long (dec and hex numbers supported by setting radix to 0)
+			DWORD return_code_l = DVLib::wstring2ulong(return_code_s, 0);
+
+			if (!negative_test && (return_code_l == return_code))
+			{
+				return true;
+			}
+
+			if (negative_test && (return_code_l != return_code))
+			{
+				return true;
+			}
 		}
 	}
 

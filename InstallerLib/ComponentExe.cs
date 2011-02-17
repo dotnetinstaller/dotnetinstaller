@@ -179,7 +179,7 @@ namespace InstallerLib
         #region Return Codes
 
         private string m_returncodes_success;
-        [Description("Comma-separated return codes that indicate success. By default a return value of 0 indicates success.")]
+        [Description("Comma-separated return codes that indicate success. By default a return value of 0 indicates success. To specify a hex value prefix it with '0x'. Specify 'all' to create a component that doesn't fail based on its return code and specify !value to treat all return codes except a single value as success.")]
         [Category("Return Codes")]
         public string returncodes_success
         {
@@ -188,7 +188,7 @@ namespace InstallerLib
         }
 
         private string m_returncodes_reboot;
-        [Description("Comma-separated error codes that indicate that a reboot is requred.")]
+        [Description("Comma-separated return codes that indicate that a reboot is requred. To specify a hex value prefix it with '0x'.")]
         [Category("Return Codes")]
         public string returncodes_reboot
         {

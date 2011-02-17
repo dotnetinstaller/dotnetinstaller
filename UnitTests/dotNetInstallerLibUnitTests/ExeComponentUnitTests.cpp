@@ -81,3 +81,116 @@ void ExeComponentUnitTests::testMustReboot()
 	component.mustreboot = L"True";
 	CPPUNIT_ASSERT(component.IsRebootRequired());
 }
+
+void ExeComponentUnitTests::testReturnCodeRebootRequired()
+{
+	ExeComponent component;
+	// a success value
+	component.executable = L"cmd.exe";
+	component.exeparameters = L"/C exit /b 0";
+	component.id = "execomponent";
+	component.Exec();
+	component.Wait();
+	CPPUNIT_ASSERT(! component.IsRebootRequired());
+	component.returncodes_reboot = L"0";
+	component.Exec();
+	component.Wait();
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+	component.executable = L"cmd.exe";
+	component.exeparameters = L"/C exit /b 1053";
+	component.id = "execomponent";
+	component.returncodes_reboot = L"0,1053";
+	component.Exec();
+	component.Wait();
+	// component will succeed, since this is a reboot return code
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+
+	// component will fail since the return code is neither a default success (0) nor a reboot error code
+	component.executable = L"cmd.exe";
+	component.exeparameters = L"/C exit /b 1055";
+	component.id = "execomponent";
+	try
+	{
+		component.Exec();
+		component.Wait();
+		throw "expected std::exception";
+	}
+	catch(std::exception&)
+	{
+		// expected
+	}
+	CPPUNIT_ASSERT(! component.IsRebootRequired());
+
+	// Test legacy method handling 0x84BE0BC2
+	component.executable = L"cmd.exe";
+	component.exeparameters = L"/C exit /b -2067919934"; // 0x84BE0BC2
+	component.id = "execomponent";
+	component.returncodes_reboot = L"2227047362";
+	component.Exec();
+	component.Wait();
+	// component will succeed, since this is a reboot return code
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+
+	// Test hex code
+	component.executable = L"cmd.exe";
+	component.exeparameters = L"/C exit /b 3010"; // 0xBC2
+	component.id = "execomponent";
+	component.returncodes_reboot = L"0x84BE0BC2,0xBC2";
+	component.Exec();
+	component.Wait();
+	// component will succeed, since this is a reboot return code
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+
+	// Test hex code
+	component.executable = L"cmd.exe";
+	component.exeparameters = L"/C exit /b -2067919934"; // 0x84BE0BC2
+	component.returncodes_reboot = L"0x84BE0BC2,0xBC2";
+	component.Exec();
+	component.Wait();
+	// component will succeed, since this is a reboot return code
+	CPPUNIT_ASSERT(component.IsRebootRequired());
+}
+
+void ExeComponentUnitTests::testReturnCodeSuccess()
+{
+	ExeComponent component;
+	// a success value
+	component.executable = L"cmd.exe";
+	component.exeparameters = L"/C exit /b 1";
+	component.id = "execomponent";
+	component.returncodes_success = L"1,3010";
+	component.Exec();
+	// component will succeed, return code in success list
+	component.Wait();
+
+	component.executable = L"cmd.exe";
+	component.exeparameters = L"/C exit /b 3010";
+	component.id = "execomponent";
+	component.Exec();
+	// component will succeed, return code in success list
+	component.Wait();
+
+	// component will fail since the return code is not in the success list
+	component.executable = L"cmd.exe";
+	component.exeparameters = L"/C exit /b 0";
+	component.id = "execomponent";
+	try
+	{
+		component.Exec();
+		component.Wait();
+		throw "expected std::exception";
+	}
+	catch(std::exception&)
+	{
+		// expected
+	}
+
+	// Test hex code
+	component.executable = L"cmd.exe";
+	component.exeparameters = L"/C exit /b 3010"; // 0xBC2
+	component.id = "execomponent";
+	component.returncodes_success = L"0,0x0BC2";
+	component.Exec();
+	// component will succeed, return code in success list
+	component.Wait();
+}

@@ -131,7 +131,8 @@ long DVLib::string2long(const std::string& s, int base)
 {
 	if (s.empty()) throw std::exception("Missing number");
     char *endPtr = NULL;
-	int result = strtol(s.c_str(), & endPtr, base);
+	_set_errno(0); // errno is not reset by runtime calls
+	long result = strtol(s.c_str(), & endPtr, base);
     if ( *endPtr != '\0' || (errno == ERANGE && (result == LONG_MAX || result == LONG_MIN)) )
     {
 		THROW_EX(L"Invalid number: " << string2wstring(s));
@@ -143,8 +144,35 @@ long DVLib::wstring2long(const std::wstring& s, int base)
 {
 	if (s.empty()) throw std::exception("Missing number");
     wchar_t *endPtr = NULL;
-	int result = wcstol(s.c_str(), & endPtr, base);
+	_set_errno(0); // errno is not reset by runtime calls
+	long result = wcstol(s.c_str(), & endPtr, base);
     if ( *endPtr != L'\0' || (errno == ERANGE && (result == LONG_MAX || result == LONG_MIN)) )
+    {
+		THROW_EX("Invalid number: " << s);
+    }
+    return result;
+}
+
+unsigned long DVLib::string2ulong(const std::string& s, int base)
+{
+	if (s.empty()) throw std::exception("Missing number");
+    char *endPtr = NULL;
+	_set_errno(0); // errno is not reset by runtime calls
+	unsigned long result = strtoul(s.c_str(), & endPtr, base);
+    if ( *endPtr != '\0' || (errno == ERANGE && (result == ULONG_MAX || result == 0)) )
+    {
+		THROW_EX(L"Invalid number: " << string2wstring(s));
+    }
+    return result;
+}
+
+unsigned long DVLib::wstring2ulong(const std::wstring& s, int base)
+{
+	if (s.empty()) throw std::exception("Missing number");
+    wchar_t *endPtr = NULL;
+	_set_errno(0); // errno is not reset by runtime calls
+	unsigned long result = wcstoul(s.c_str(), & endPtr, base);
+    if ( *endPtr != L'\0' || (errno == ERANGE && (result == ULONG_MAX || result == 0)) )
     {
 		THROW_EX("Invalid number: " << s);
     }

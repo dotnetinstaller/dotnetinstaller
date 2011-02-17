@@ -49,8 +49,10 @@ void StringUtilUnitTests::teststring2long(void)
 
 	TestData testData[] = 
 	{
-		{ "-2147483647", LONG_MIN + 1 , 10},
-		{ "2147483646", LONG_MAX - 1 , 10},
+		{ "-2147483647", LONG_MIN + 1, 10},
+		{ "2147483646", LONG_MAX - 1, 10},
+		{ "-2147483648", LONG_MIN, 10},
+		{ "2147483647", LONG_MAX, 10},
 		{ "0", 0, 10},
 		{ "-65", -65 , 10},
 		{ "65", 65 , 10},
@@ -60,23 +62,134 @@ void StringUtilUnitTests::teststring2long(void)
 		{ "0", 0, 2 },
 		{ "-0", 0, 2 },
 		{ "-100", -4, 2 },
-		//base 8
+		// base 8
 		{ "40", 32, 8 },
 		{ "0", 0, 8 },
 		{ "-40", -32, 8 },
-		//base 16
+		// base 16
 		{ "40", 64, 16 },
 		{ "0", 0, 16 },
 		{ "0xabcd", 43981, 16 },
+		// auto base (works with dec and hex)
+		{ "0", 0, 0},
+		{ "16", 16, 0},
+		{ "-2147483648", LONG_MIN, 0},
+		{ "2147483647", LONG_MAX, 0},
+		{ "0x0", 0, 0},
+		{ "0x10", 16, 0},
+		//{ "0x80000000", LONG_MIN, 0},
+		{ "0x7FFFFFFF", LONG_MAX, 0},
 	};
 
 	for (unsigned int i = 0; i < ARRAYSIZE(testData); i++)
 	{
-        int result = DVLib::string2long(testData[i].testIn, testData[i].base);
+        long result = DVLib::string2long(testData[i].testIn, testData[i].base);
 		std::stringstream s;
 		s << "[" << (testData[i].testIn ? testData[i].testIn : "NULL") << "] => [" << result << "] (expected: " 
 			<< testData[i].testOut << ", base: " << testData[i].base << ")";
 		CPPUNIT_ASSERT_MESSAGE(s.str().c_str(), result == testData[i].testOut);
+	}
+
+	// Test exceptions
+	TestData exceptionTestData[] = 
+	{
+		{ "-2147483649", 0, 10},
+		{ "2147483648", 0, 10},
+		{ "0x80000000", 0, 16 },
+		{ "0xF80000000", 0, 16 },
+		{ "none", 0, 10},
+	};
+
+	for (unsigned int i = 0; i < ARRAYSIZE(exceptionTestData); i++)
+	{
+		long result;
+		try
+		{
+			result = DVLib::string2long(exceptionTestData[i].testIn, exceptionTestData[i].base);
+		}
+		catch (std::exception&)
+		{
+			// expected
+			continue;
+		}
+		std::stringstream s;
+		s << "[" << exceptionTestData[i].testIn << "] => [" << result << "], base: " 
+			<< exceptionTestData[i].base << " - expected: std::exception";
+		CPPUNIT_FAIL(s.str().c_str());
+	}
+}
+
+void StringUtilUnitTests::teststring2ulong(void)
+{
+	typedef struct  
+	{
+		LPCSTR testIn;
+        unsigned long testOut;
+		int base;
+	} TestData;
+
+	TestData testData[] = 
+	{
+		{ "0", 0, 10},
+		{ "4294967295", ULONG_MAX, 10},
+		{ "0", 0, 10},
+		{ "65", 65 , 10},
+		{ "-1", ULONG_MAX, 10}, // converts signed strings to unsigned equivalent
+		{ "-16", ULONG_MAX - 15, 10},
+		// base 2
+		{ "1100100", 100, 2 },
+		{ "0", 0, 2 },
+		// base 8
+		{ "40", 32, 8 },
+		{ "0", 0, 8 },
+		// base 16
+		{ "40", 64, 16 },
+		{ "0", 0, 16 },
+		{ "0xabcd", 43981, 16 },
+		{ "0xFFFFFFFF", 4294967295, 16 },
+		// auto base (works with dec and hex)
+		{ "0", 0, 0},
+		{ "16", 16, 0},
+		{ "4294967295", ULONG_MAX, 0},
+		{ "0x0", 0, 0},
+		{ "0x10", 16, 0},
+		{ "0xFFFFFFFF", ULONG_MAX, 0},
+	};
+
+	for (unsigned int i = 0; i < ARRAYSIZE(testData); i++)
+	{
+		unsigned long result = DVLib::string2ulong(testData[i].testIn, testData[i].base);
+		std::stringstream s;
+		s << "[" << (testData[i].testIn ? testData[i].testIn : "NULL") << "] => [" << result << "] (expected: " 
+			<< testData[i].testOut << ", base: " << testData[i].base << ")";
+		CPPUNIT_ASSERT_MESSAGE(s.str().c_str(), result == testData[i].testOut);
+	}
+
+	// Test exceptions
+	TestData exceptionTestData[] = 
+	{
+		{ "4294967296", 0, 10},
+		{ "0x100000000", 0, 16 },
+		{ "0xFFFFFFFFF", 0, 16 },
+		{ "none", 0, 10},
+	};
+
+	for (unsigned int i = 0; i < ARRAYSIZE(exceptionTestData); i++)
+	{
+		unsigned long result;
+		try
+		{
+			result = DVLib::string2ulong(exceptionTestData[i].testIn, exceptionTestData[i].base);
+		}
+		catch (std::exception&)
+		{
+			// expected
+			continue;
+		}
+		std::stringstream s;
+		s << "[" << exceptionTestData[i].testIn << "] => [" << result << "], base: " 
+			<< exceptionTestData[i].base << " - expected: std::exception";
+		CPPUNIT_FAIL(s.str().c_str());
 	}
 }
 

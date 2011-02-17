@@ -25,6 +25,10 @@ namespace DVLib
     long string2long(const std::string& ss, int base = 10);
     long wstring2long(const std::wstring& ss, int base = 10);
 
+	// convert a string representation of unsigned long
+    unsigned long string2ulong(const std::string& ss, int base = 10);
+    unsigned long wstring2ulong(const std::wstring& ss, int base = 10);
+
     // perform a string replace on every instance
 	std::string replace(const std::string& s, const std::string& from, const std::string& to);
 	std::wstring replace(const std::wstring& s, const std::wstring& from, const std::wstring& to);

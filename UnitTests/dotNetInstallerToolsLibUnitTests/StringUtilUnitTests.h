@@ -10,6 +10,7 @@ namespace DVLib
 			{
 				CPPUNIT_TEST_SUITE( StringUtilUnitTests );
 				CPPUNIT_TEST( teststring2long );
+				CPPUNIT_TEST( teststring2ulong );
 				CPPUNIT_TEST( testsplitjoin );				
                 CPPUNIT_TEST( testtrim );
 				CPPUNIT_TEST( testreplace );
@@ -25,6 +26,7 @@ namespace DVLib
 				CPPUNIT_TEST_SUITE_END();
 			public:
 				void teststring2long();
+				void teststring2ulong();
 				void testsplitjoin();				
                 void testtrim();
 				void testreplace();
