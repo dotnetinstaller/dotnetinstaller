@@ -16,6 +16,7 @@ public:
 	bool Reboot() const { return m_reboot; }
 	bool Autostart() const { return m_autostart; }
 	bool NoReboot() const { return m_noreboot; }
+	bool EnableRunOnReboot() const { return m_enableRunOnReboot; }
 	bool DisplaySplash() const { return m_displaySplash; }
 public:
 	std::wstring configFile;
@@ -49,6 +50,8 @@ private:
 	bool m_displayHelp;
 	// launched via registry Run after a reboot
 	bool m_reboot;
+	// enables writing the RunOnReboot registry key
+	bool m_enableRunOnReboot;
 	// launched via UAC so autostart
 	bool m_autostart;
 	// don't reboot even if reboot is required

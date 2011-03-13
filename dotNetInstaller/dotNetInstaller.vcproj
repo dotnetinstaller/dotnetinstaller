@@ -5,10 +5,6 @@
 	Name="dotNetInstaller"
 	ProjectGUID="{F4E74CF8-37CD-4023-8B89-05EF4B34D363}"
 	RootNamespace="dotNetInstaller"
-	SccProjectName="SAK"
-	SccAuxPath="SAK"
-	SccLocalPath="SAK"
-	SccProvider="SAK"
 	Keyword="MFCProj"
 	>
 	<Platforms>

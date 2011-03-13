@@ -525,7 +525,13 @@ void InstallerUI::AfterInstall(int rc)
 	if (m_reboot)
 	{
 		RecordError(ERROR_SUCCESS_REBOOT_REQUIRED);
-		InstallerSession::Instance->EnableRunOnReboot(p_configuration->reboot_cmd);
+
+		if (InstallerCommandLineInfo::Instance->EnableRunOnReboot())
+		{
+			LOG(L"Writing RunOnReboot registry key, /noRunOnReboot was not specified.");
+			InstallerSession::Instance->EnableRunOnReboot(p_configuration->reboot_cmd);
+		}
+
 		if (! InstallerCommandLineInfo::Instance->NoReboot())
 		{
 			LOG(L"Exiting with " << m_recorded_error << " and rebooting Windows.");

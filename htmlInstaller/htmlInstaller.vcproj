@@ -5,10 +5,6 @@
 	Name="htmlInstaller"
 	ProjectGUID="{A71D6A97-B4C9-4AD3-8150-5314129C58CC}"
 	RootNamespace="htmlInstaller"
-	SccProjectName="SAK"
-	SccAuxPath="SAK"
-	SccLocalPath="SAK"
-	SccProvider="SAK"
 	Keyword="Win32Proj"
 	>
 	<Platforms>

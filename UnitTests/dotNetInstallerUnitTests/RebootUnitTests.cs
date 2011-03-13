@@ -5,6 +5,7 @@ using NUnit.Framework;
 using InstallerLib;
 using dotNetUnitTestsRunner;
 using System.IO;
+using Microsoft.Win32;
 
 namespace dotNetInstallerUnitTests
 {
@@ -59,6 +60,49 @@ namespace dotNetInstallerUnitTests
             Assert.AreEqual(42, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
             dotNetInstallerExeUtils.DisableRunOnReboot();
+        }
+
+        [Test]
+        public void TestNoRunOnReboot()
+        {
+            Console.WriteLine("TestNoRunOnReboot");
+
+            //return reboot code 3010
+            //simulate passing /noRunOnReboot to dotNetInstaller on command line
+            //ensure RunOnReboot registry key is not written
+
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ComponentCmd cmd_reboot = new ComponentCmd();
+            cmd_reboot.command = "cmd.exe /C exit /b 3010";
+            cmd_reboot.returncodes_reboot = "3010";
+            setupConfiguration.Children.Add(cmd_reboot);
+
+            string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", configFilename);
+            configFile.SaveAs(configFilename);
+
+            dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
+            options.noRunOnReboot = true;
+
+            Assert.AreEqual(3010, dotNetInstallerExeUtils.Run(options));
+
+            File.Delete(configFilename);
+
+            try
+            {
+                using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"))
+                {
+                    Assert.AreEqual(null, key.GetValue(Path.GetFileName(dotNetInstallerExeUtils.Executable)));
+                }
+            }
+            catch
+            {
+                //remove RunOnReboot registry value if AssertionException is thrown
+                dotNetInstallerExeUtils.DisableRunOnReboot();
+                throw;
+            }
         }
     }
 }

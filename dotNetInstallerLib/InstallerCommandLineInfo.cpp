@@ -16,6 +16,7 @@ InstallerCommandLineInfo::InstallerCommandLineInfo()
 	, m_reboot(false)
 	, m_autostart(false)
 	, m_noreboot(false)
+	, m_enableRunOnReboot(true)
 	, m_displayConfig(false)
 	, m_displaySplash(true)
 {
@@ -116,6 +117,10 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		else if (_wcsicmp(pszParam, TEXT("noreboot")) == 0)
 		{
             m_noreboot = true;
+		}
+		else if (_wcsicmp(pszParam, TEXT("noRunOnReboot")) == 0)
+		{
+            m_enableRunOnReboot = false;
 		}
 		else if (_wcsicmp(pszParam, TEXT("nosplash")) == 0)
 		{

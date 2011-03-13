@@ -5,10 +5,6 @@
 	Name="Cab"
 	ProjectGUID="{6A9AD5E1-624C-478F-9921-8400B3AD84A8}"
 	RootNamespace="Cab"
-	SccProjectName="SAK"
-	SccAuxPath="SAK"
-	SccLocalPath="SAK"
-	SccProvider="SAK"
 	Keyword="Win32Proj"
 	>
 	<Platforms>

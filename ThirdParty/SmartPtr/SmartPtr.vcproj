@@ -5,10 +5,6 @@
 	Name="SmartPtr"
 	ProjectGUID="{8185F399-F6DE-40B3-ADD6-42FC5F330CA8}"
 	RootNamespace="SmartPtr"
-	SccProjectName="SAK"
-	SccAuxPath="SAK"
-	SccLocalPath="SAK"
-	SccProvider="SAK"
 	Keyword="Win32Proj"
 	>
 	<Platforms>

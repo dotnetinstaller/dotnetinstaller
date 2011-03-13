@@ -5,10 +5,6 @@
 	Name="dotNetInstallerToolsLib"
 	ProjectGUID="{173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43}"
 	RootNamespace="dotNetInstallerToolsLib"
-	SccProjectName="SAK"
-	SccAuxPath="SAK"
-	SccLocalPath="SAK"
-	SccProvider="SAK"
 	Keyword="Win32Proj"
 	>
 	<Platforms>

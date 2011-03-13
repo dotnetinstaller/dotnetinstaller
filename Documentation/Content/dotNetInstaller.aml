@@ -53,6 +53,11 @@
               Do not actually reboot Windows even if a reboot was required by a component or the user chooses to reboot
               when prompted.
             </definition>
+            <definedTerm>/noRunOnReboot</definedTerm>
+            <definition>
+              Do not actually write the RunOnReboot registry key if a reboot is required by a component or the user chooses to reboot
+              when prompted.
+            </definition>
             <definedTerm>/CompleteCommandArgs</definedTerm>
             <definition>
               Specify additional arguments for the <literal>complete_command</literal>.

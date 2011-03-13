@@ -5,10 +5,6 @@
 	Name="dotNetInstallerLibUnitTests"
 	ProjectGUID="{48FFB2FD-215B-4DEE-8C38-EC1DB518477F}"
 	RootNamespace="dotNetInstallerLibUnitTests"
-	SccProjectName="SAK"
-	SccAuxPath="SAK"
-	SccLocalPath="SAK"
-	SccProvider="SAK"
 	Keyword="Win32Proj"
 	>
 	<Platforms>

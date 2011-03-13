@@ -24,6 +24,7 @@ namespace dotNetUnitTestsRunner
             public bool uninstall = false;
             public string args;
             public bool noreboot = true;
+            public bool noRunOnReboot = false;
 
             public RunOptions()
             {
@@ -57,6 +58,7 @@ namespace dotNetUnitTestsRunner
                     if (reboot) result += " /reboot";
                     if (autostart) result += " /autostart";
                     if (noreboot) result += " /noreboot";
+                    if (noRunOnReboot) result += " /noRunOnReboot";
                     if (log)
                     {
                         result += " /Log";
