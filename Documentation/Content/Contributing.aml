@@ -35,7 +35,7 @@
         </step>
         <step>
           <content>
-            <para>Install .NET Framework 3.5.</para>
+            <para>Install .NET Framework 3.5 and 4.0.</para>
           </content>
         </step>
         <step>
@@ -59,22 +59,9 @@
             <para>
               Install 
               <externalLink>
-              	<linkText>HTML Help Workshop</linkText>
-              	<linkUri>http://msdn.microsoft.com/en-us/library/ms669985.aspx</linkUri>
-              </externalLink>,
-              <externalLink>
-                <linkText>Sandcastle 2.6 (June 2010)</linkText>
-                <linkUri>http://sandcastle.codeplex.com/</linkUri>
-              </externalLink>,
-              <externalLink>
-                <linkText>Sandcastle Styles 2.6 Patch 1</linkText>
-                <linkUri>http://sandcastlestyles.codeplex.com/</linkUri>
-              </externalLink>
-              and
-              <externalLink>
-                <linkText>Sandcastle Help File Builder 1.9.1.0</linkText>
+                <linkText>Sandcastle Help File Builder 1.9.3.0</linkText>
                 <linkUri>http://shfb.codeplex.com/</linkUri>
-              </externalLink> to build the documentation.
+              </externalLink> to build the documentation. The guided installer will include Microsoft Help Workshop and SandCastle.
             </para>
           </content>
         </step>
