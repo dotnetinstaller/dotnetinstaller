@@ -81,6 +81,7 @@ void Component::Load(TiXmlElement * node)
 	uninstall_display_name = node->Attribute("uninstall_display_name");
 	if (id.empty()) id = display_name;
 	status_installed = node->Attribute("status_installed");
+	status_notinstalled = node->Attribute("status_notinstalled");
 	os_filter = node->Attribute("os_filter");
 	os_filter_min = DVLib::oscode2os(XmlAttribute(node->Attribute("os_filter_min")).GetValue());
 	os_filter_max = DVLib::oscode2os(XmlAttribute(node->Attribute("os_filter_max")).GetValue());
