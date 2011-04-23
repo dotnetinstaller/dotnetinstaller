@@ -68,17 +68,6 @@
         <step>
           <content>
             <para>
-              Install
-              <externalLink>
-                <linkText>Windows Installer XML 3.0</linkText>
-                <linkUri>http://wix.sourceforge.net/</linkUri>
-              </externalLink> to build the MSI installer.
-            </para>
-          </content>
-        </step>
-        <step>
-          <content>
-            <para>
               Check out the source code using SVN from
               <externalLink>
                 <linkText>https://dotnetinstaller.svn.codeplex.com/svn/trunk</linkText>
