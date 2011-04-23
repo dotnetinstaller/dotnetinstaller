@@ -99,10 +99,10 @@
     <CallTarget Targets="doc" />
     <CallTarget Targets="rewritesamples" />
     <CallTarget Targets="rewritewizardxmls" />
-    <CallTarget Targets="unittests" />
     <CallTarget Targets="release" />
     <CallTarget Targets="zip" />
     <CallTarget Targets="installer" />
+    <CallTarget Targets="unittests" />
     <CallTarget Targets="built" />
   </Target>
   <Target Name="built" DependsOnTargets="version">
