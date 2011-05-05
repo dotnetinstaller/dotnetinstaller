@@ -350,7 +350,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("note", m_note);
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
             e.XmlWriter.WriteAttributeString("status_installed", m_status_installed);
-            e.XmlWriter.WriteAttributeString("status_notinstalled", m_status_installed);
+            e.XmlWriter.WriteAttributeString("status_notinstalled", m_status_notinstalled);
             e.XmlWriter.WriteAttributeString("supports_install", m_supports_install.ToString());
             e.XmlWriter.WriteAttributeString("supports_uninstall", m_supports_uninstall.ToString());
             // dialog options
