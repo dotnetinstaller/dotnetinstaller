@@ -4,5 +4,9 @@
 
 #pragma once
 
+#ifndef _DEBUG
+ #include "UseMSPrivateAssemblies.h"
+#endif
+
 #using <mscorlib.dll>
 

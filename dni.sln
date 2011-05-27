@@ -464,6 +464,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Start64", "Start64", "{7C6A
 		Samples\Start64\test.txt = Samples\Start64\test.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VisualStudioCRT", "VisualStudioCRT", "{016A7130-F319-4A05-8CF3-E04F5D796268}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		ThirdParty\VisualStudioCRT\Microsoft.VC80.CRT.manifest = ThirdParty\VisualStudioCRT\Microsoft.VC80.CRT.manifest
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -592,6 +601,7 @@ Global
 		{6A9AD5E1-624C-478F-9921-8400B3AD84A8} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 		{96A9878C-7B75-41F7-AA11-7268672C16DD} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
+		{016A7130-F319-4A05-8CF3-E04F5D796268} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 		{0ECB908D-645A-48B6-8849-A0C608C9B3D3} = {DCE563E3-05E7-456C-AC45-97173CED2F7F}
 		{CB16FD2C-784F-4385-9FB4-CE0EA0081D3C} = {DCE563E3-05E7-456C-AC45-97173CED2F7F}
 	EndGlobalSection

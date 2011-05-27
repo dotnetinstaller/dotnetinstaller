@@ -75,6 +75,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"%25ProgramFiles%25\Microsoft Visual Studio 8\Common7\Tools\Bin\mt.exe" -manifest “$(ProjectDir)$(TargetFileName).manifest” -outputresource:"$(TargetPath)";#1</PostBuildEvent>
+    <PostBuildEvent>"%25ProgramFiles%25\Microsoft Visual Studio 8\Common7\Tools\Bin\mt.exe" -manifest “$(ProjectDir)$(TargetFileName).manifest” -outputresource:"$(TargetPath)";#1
+copy "$(ProjectDir)..\ThirdParty\VisualStudioCRT\*.*" "$(TargetDir)" /y
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
