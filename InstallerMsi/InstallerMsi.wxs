@@ -59,6 +59,12 @@
             <Component Id="MSLU" Guid="95984BB5-05F2-4db4-AFE7-C017411EB7AA">
               <File Id="unicows.dll" Source="..\ThirdParty\Mslu\Unicows.dll" />
             </Component>
+            <Component Id="VisualStudioCRT" Guid="82F19F42-3D97-482a-AFBF-C9E5AD854672">
+              <File Id="Microsoft.VC80.CRT.manifest" Source="..\ThirdParty\VisualStudioCRT\Microsoft.VC80.CRT.manifest" />
+              <File Id="msvcm80.dll" Source="..\ThirdParty\VisualStudioCRT\msvcm80.dll" />
+              <File Id="msvcp80.dll" Source="..\ThirdParty\VisualStudioCRT\msvcp80.dll" />
+              <File Id="msvcr80.dll" Source="..\ThirdParty\VisualStudioCRT\msvcr80.dll" />
+            </Component>
           </Directory>
           <Directory Id="doc" Name="doc">
             <Component Id="Documentation" Guid="00A1CB0D-BCE4-43a4-8AAC-7563F90B3E7C">
@@ -91,6 +97,7 @@
       <ComponentRef Id="htmlInstaller" />
       <ComponentRef Id="WhatsNew" />
       <ComponentRef Id="MSLU" />
+      <ComponentRef Id="VisualStudioCRT" />
       <ComponentRef Id="Documentation" />
       <ComponentRef Id="DotNetInstallerMenuShortcuts" />
       <Feature Id="SamplesFeature" Title="Samples" Level="1">

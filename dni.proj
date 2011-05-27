@@ -90,6 +90,10 @@
     <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
     <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
     <Binaries Include="ThirdParty\Mslu\unicows.dll" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\Microsoft.VC80.CRT.manifest" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\msvcm80.dll" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\msvcp80.dll" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\msvcr80.dll" />
   </ItemGroup>
   <Target Name="all">
     <Message Importance="high" Text="Building project ..." />
