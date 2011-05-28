@@ -74,7 +74,7 @@ namespace dotNetInstallerUnitTests
             args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
             args.template = dotNetInstallerExeUtils.Executable;
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinker.CreateInstaller(args);
+            InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, "/ExtractCab"));            
@@ -111,7 +111,7 @@ namespace dotNetInstallerUnitTests
             component.Children.Add(embedfile);
             configFile.SaveAs(args.config);
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinker.CreateInstaller(args);
+            InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, "/ExtractCab"));
@@ -152,7 +152,7 @@ namespace dotNetInstallerUnitTests
             component.Children.Add(embedfile);
             configFile.SaveAs(args.config);
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinker.CreateInstaller(args);
+            InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
             // execute dotNetInstaller
             string logfile = Path.Combine(Path.GetTempPath(), "testExtractAndRunCabPerComponent.log");
@@ -184,11 +184,11 @@ namespace dotNetInstallerUnitTests
             configFile.SaveAs(args.config);
             args.embed = true;
             args.apppath = Path.GetTempPath();
-            args.embedFiles = new string[] { Path.GetFileName(args.config) };
+            // args.embedFiles = new string[] { Path.GetFileName(args.config) };
             args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
             args.template = dotNetInstallerExeUtils.Executable;
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinker.CreateInstaller(args);
+            InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, "/DisplayCab /qb"));
@@ -226,7 +226,7 @@ namespace dotNetInstallerUnitTests
 
             configFile.SaveAs(args.config);
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinker.CreateInstaller(args);
+            InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, "/ExtractCab"));

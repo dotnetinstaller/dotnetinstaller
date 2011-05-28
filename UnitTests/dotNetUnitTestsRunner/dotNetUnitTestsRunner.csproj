@@ -54,8 +54,15 @@
     <Compile Include="dotNetInstallerExeUtils.cs" />
     <Compile Include="InstallerEditorExeUtils.cs" />
     <Compile Include="InstallerLibUtils.cs" />
+    <Compile Include="InstallerLinkerExeUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestTimerExeUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\InstallerLib\InstallerLib.csproj">
+      <Project>{E19C2177-78F8-4C52-81FE-F49E157D647F}</Project>
+      <Name>InstallerLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

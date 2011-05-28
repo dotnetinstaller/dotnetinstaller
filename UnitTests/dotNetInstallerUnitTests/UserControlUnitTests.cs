@@ -396,7 +396,7 @@ namespace dotNetInstallerUnitTests
             args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
             args.template = dotNetInstallerExeUtils.Executable;
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinker.CreateInstaller(args);
+            InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
             // execute dotNetInstaller
             Assert.AreEqual(1, dotNetInstallerExeUtils.Run(args.output, "/q"));
