@@ -5,6 +5,7 @@
 #include "InstallerLog.h"
 #include "InstallConfiguration.h"
 #include "InstallerSession.h"
+#include "Wow64NativeFS.h"
 
 MsuComponent::MsuComponent()
 	: ProcessComponent(component_type_msu)
@@ -48,7 +49,16 @@ void MsuComponent::Exec()
 	l_command = InstallerSession::Instance->ExpandUserVariables(l_command);
 
     LOG(L"Executing: " << l_command);
-	DVLib::RunCmd(l_command, &m_process_info);
+
+	if (disable_wow64_fs_redirection)
+	{
+		auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
+		DVLib::RunCmd(l_command, & m_process_info);
+	}
+	else
+	{
+		DVLib::RunCmd(l_command, & m_process_info);
+	}
 }
 
 void MsuComponent::Load(TiXmlElement * node)
@@ -57,6 +67,7 @@ void MsuComponent::Load(TiXmlElement * node)
 	cmdparameters = node->Attribute("cmdparameters");
 	cmdparameters_silent = node->Attribute("cmdparameters_silent");
 	cmdparameters_basic = node->Attribute("cmdparameters_basic");
+    disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
 	Component::Load(node);
 }
 

@@ -5,6 +5,7 @@
 #include "InstallerLog.h"
 #include "InstallConfiguration.h"
 #include "InstallerSession.h"
+#include "Wow64NativeFS.h"
 
 MsiComponent::MsiComponent()
 	: ProcessComponent(component_type_msi)
@@ -66,7 +67,16 @@ void MsiComponent::Exec()
 {
 	std::wstring command = GetCommandLine();
     LOG(L"Executing: " << command);
-	DVLib::RunCmd(command, &m_process_info);
+
+    if (disable_wow64_fs_redirection)
+	{
+		auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
+		DVLib::RunCmd(command, & m_process_info);
+	}
+	else
+	{
+		DVLib::RunCmd(command, & m_process_info);
+	}
 }
 
 void MsiComponent::Load(TiXmlElement * node)
@@ -79,6 +89,7 @@ void MsiComponent::Load(TiXmlElement * node)
 	uninstall_cmdparameters = node->Attribute("uninstall_cmdparameters");
 	uninstall_cmdparameters_silent = node->Attribute("uninstall_cmdparameters_silent");
 	uninstall_cmdparameters_basic = node->Attribute("uninstall_cmdparameters_basic");
+    disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
 	Component::Load(node);
 }
 

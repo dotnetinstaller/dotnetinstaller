@@ -15,6 +15,8 @@ public:
     XmlAttribute uninstall_cmdparameters_silent;
 	XmlAttribute uninstall_cmdparameters_basic;
 	std::wstring GetCommandLine() const;
+	// wow64 fs redirection
+	bool disable_wow64_fs_redirection; 
 	void Exec();
 	void Wait(DWORD tt = 1000);
 	void Load(TiXmlElement * node);

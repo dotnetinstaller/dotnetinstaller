@@ -19,6 +19,8 @@ public:
 	XmlAttribute reinstall;
 	XmlAttribute reinstallmode;
 	std::wstring GetCommandLine() const;
+	// wow64 fs redirection
+	bool disable_wow64_fs_redirection; 
 	void Exec();
 	void Wait(DWORD tt = 1000);
 	void Load(TiXmlElement * node);
