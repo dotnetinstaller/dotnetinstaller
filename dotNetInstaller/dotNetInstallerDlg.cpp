@@ -91,15 +91,18 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 			break;
 		}
 
-		MoveWindow(* this, p_configuration->dialog_position);
-		MoveWindow(m_ListBoxComponents, p_configuration->dialog_components_list_position);
-		MoveWindow(m_lblMessage, p_configuration->dialog_message_position);
-		MoveWindow(m_PictureBox, p_configuration->dialog_bitmap_position);
-		MoveWindow(m_InfoLink, p_configuration->dialog_otherinfo_link_position);
-		MoveWindow(m_lblOperatingSystem, p_configuration->dialog_osinfo_position);
-		MoveWindow(m_btnInstall, p_configuration->dialog_install_button_position);
-		MoveWindow(m_btnCancel, p_configuration->dialog_cancel_button_position);
-		MoveWindow(m_btnSkip, p_configuration->dialog_skip_button_position);
+		if (! InstallUILevelSetting::Instance->IsSilent())
+		{
+			MoveWindow(* this, p_configuration->dialog_position);
+			MoveWindow(m_ListBoxComponents, p_configuration->dialog_components_list_position);
+			MoveWindow(m_lblMessage, p_configuration->dialog_message_position);
+			MoveWindow(m_PictureBox, p_configuration->dialog_bitmap_position);
+			MoveWindow(m_InfoLink, p_configuration->dialog_otherinfo_link_position);
+			MoveWindow(m_lblOperatingSystem, p_configuration->dialog_osinfo_position);
+			MoveWindow(m_btnInstall, p_configuration->dialog_install_button_position);
+			MoveWindow(m_btnCancel, p_configuration->dialog_cancel_button_position);
+			MoveWindow(m_btnSkip, p_configuration->dialog_skip_button_position);
+		}
 
 		switch(DialogButton::wstring2button(p_configuration->dialog_default_button.GetValue()))
 		{
