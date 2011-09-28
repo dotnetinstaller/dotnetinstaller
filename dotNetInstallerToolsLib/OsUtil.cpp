@@ -29,9 +29,14 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 		// Test for the Windows NT product family.
 		case VER_PLATFORM_WIN32_NT:
 			// Newer Windows version
-			if (((osvi.dwMajorVersion == 6 && osvi.dwMinorVersion > 1) || (osvi.dwMajorVersion > 6)) && osvi.wProductType == VER_NT_WORKSTATION)
+			if (((osvi.dwMajorVersion == 6 && osvi.dwMinorVersion > 2) || (osvi.dwMajorVersion > 6)) && osvi.wProductType == VER_NT_WORKSTATION)
 			{
 				os = winMax;
+			}
+			// Windows 8
+			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 2 && osvi.wProductType == VER_NT_WORKSTATION)
+			{
+				os = win8;
 			}
 			// Windows 7
 			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 1 && osvi.wProductType == VER_NT_WORKSTATION)
@@ -410,6 +415,11 @@ bool DVLib::IsOperatingSystemID(OperatingSystem os_in, const std::wstring& filte
 					{
 						match = true;
 					}
+				case win8:
+					if (OperatingSystemType(os) == win8 && os_in >= os)
+					{
+						match = true;
+					}
 					break;
 			}
 
@@ -489,6 +499,11 @@ bool DVLib::IsOperatingSystemID(OperatingSystem os_in, const std::wstring& filte
 					{
 						match = true;
 					}
+				case win8:
+					if (OperatingSystemType(os) == win8 && os_in < os)
+					{
+						match = true;
+					}
 					break;
 			}
 
@@ -565,7 +580,11 @@ DVLib::OperatingSystem DVLib::OperatingSystemType(OperatingSystem os)
 	{
 		return win7;
 	}
-	else if (os > win7Max)
+	else if (os >= win8 && os <= win8Max)
+	{
+		return win8;
+	}
+	else if (os > win8Max)
 	{
 		return winMax;
 	}

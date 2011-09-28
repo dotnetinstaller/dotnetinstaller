@@ -59,6 +59,9 @@ namespace InstallerLib
         win7sp1 = 121,
         win7Max = 129,
 
+        win8 = 130,
+        win8Max = 139,
+
         winMax = 255,
     }
 }

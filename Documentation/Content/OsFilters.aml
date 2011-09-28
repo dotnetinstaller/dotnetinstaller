@@ -183,11 +183,15 @@
               <entry>win7</entry>
             </row>
             <row>
-	            <entry>Windows 7 Service Pack 1</entry>
-	            <entry>win7sp1</entry>
+	          <entry>Windows 7 Service Pack 1</entry>
+	          <entry>win7sp1</entry>
             </row>
+		    <row>
+			  <entry>Windows 8</entry>
+			  <entry>win8</entry>
+		    </row>
             <row>
-              <entry>Windows newer than 7</entry>
+              <entry>Windows newer than 8</entry>
               <entry>winMax</entry>
             </row>
           </table>
