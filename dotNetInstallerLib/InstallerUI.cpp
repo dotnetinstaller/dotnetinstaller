@@ -292,12 +292,24 @@ bool InstallerUI::RunInstallConfiguration(const ConfigurationPtr& configuration,
 		}
 	}
 
+	if (p_configuration->administrator_required && AutoStart(p_configuration))
+	{
+		if (RestartElevated())
+		{
+			LOG("AutoStart required elevated user");
+			return true;
+		}
+
+		// remove the Run key if exist
+		InstallerSession::Instance->DisableRunOnReboot();
+	}
+
 	if (!p_configuration->administrator_required)
 	{
 		// remove the Run key if exist (this requires admin access but leave here to retain legacy operation)
 		InstallerSession::Instance->DisableRunOnReboot();
 	}
-			
+
 	// set language for this configuration
 	InstallerSession::Instance->languageid = p_configuration->language_id.GetValue().empty()
 		? DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype)
