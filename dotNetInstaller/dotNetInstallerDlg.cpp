@@ -136,12 +136,6 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 		AddElevatedControls();
 		AddUserControls();
 
-		if (! InstallUILevelSetting::Instance->IsSilent())
-		{
-			ShowWindow(SW_SHOW);
-			UpdateWindow();
-		}
-
 		Start();
 	}
     catch(std::exception& ex)
@@ -595,6 +589,12 @@ void CdotNetInstallerDlg::Stop()
 
 void CdotNetInstallerDlg::StartInstall()
 {
+	if (! InstallUILevelSetting::Instance->IsSilent())
+	{
+		ShowWindow(SW_SHOW);
+		UpdateWindow();
+	}
+
 	m_btnInstall.EnableWindow(FALSE);
 	m_btnCancel.EnableWindow(FALSE);
     m_InfoLink.EnableWindow(FALSE);
