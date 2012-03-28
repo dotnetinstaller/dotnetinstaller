@@ -1,0 +1,10 @@
+Version/GlobalAssemblyInfo.cs
+Version/Version.h
+Version/Version.wxi
+bin
+obj
+Debug
+Release
+dni*.log
+Documentation/Content/Generated/
+ThirdParty/CabLib/assembly/
