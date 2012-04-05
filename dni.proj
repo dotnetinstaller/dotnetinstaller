@@ -130,10 +130,6 @@
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)" />
     <!-- Binaries -->
     <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Bin" />
-    <!-- License -->
-    <Copy SourceFiles="Documentation\License.txt" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)" />
-    <!-- What's New -->
-    <Copy SourceFiles="Documentation/$(Configuration)/WhatsNew.html" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)" />
     <!-- Documentation -->
     <Copy SourceFiles="@(Documentation)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Doc" />
     <!-- Samples -->
@@ -188,7 +184,6 @@
     <Delete Files="Documentation\$(Configuration)\dotNetInstaller.chm" />
     <Exec Command="$(MSBuild_4_0_ExeFilePath) Documentation\Dni.shfbproj /p:Configuration=$(Configuration)" />
     <Error Condition="Exists('Documentation\$(Configuration)\LastBuild.log')" Text="Documentation build failed, check Documentation\$(Configuration)\LastBuild.log" />
-    <TemplateFile Template="Documentation\WhatsNew.html" OutputFilename="$(Configuration)\WhatsNew.html" Tokens="@(AssemblyInfoTokens)" />
   </Target>
   <ItemGroup>
     <CppUnitTests Include="UnitTests\dotNetInstallerLibUnitTests\$(Configuration)\dotNetInstallerLibUnitTests.exe" />
