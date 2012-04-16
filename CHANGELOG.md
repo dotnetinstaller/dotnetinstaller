@@ -2,9 +2,10 @@ Next Release
 ============
 
 Bugs
+----
 
-* (#10280)[http://dotnetinstaller.codeplex.com/workitem/10280]: UI displayed briefly if auto_close_if_install set.
-* (#10270)[http://dotnetinstaller.codeplex.com/workitem/10270]: Run key not deleted on restart.
+* [#10280](http://dotnetinstaller.codeplex.com/workitem/10280): UI displayed briefly if auto_close_if_install set.
+* [#10270](http://dotnetinstaller.codeplex.com/workitem/10270): Run key not deleted on restart.
 
 2.0 (9/27/2011)
 ===============
@@ -12,60 +13,60 @@ Bugs
 Features
 --------
 
-* (#8318)[http://dotnetinstaller.codeplex.com/workitem/8318]: Added support for hex values in `returncodes_success` and `returncodes_reboot`. To specify a hex number start it with 0x.
-* (#7968)[http://dotnetinstaller.codeplex.com/workitem/7968]: Support elevation as a subsequent command within the bootstrapper. First UI shows un-elevated, but clicking install elevates.
-* (#8005)[http://dotnetinstaller.codeplex.com/workitem/8005]: Added a new os_filter type 'greater than' (+) and 'less than' (-).
-* (#6289)[http://dotnetinstaller.codeplex.com/workitem/6289]: Added a new setup bootstrapper, htmlInstaller, driven by an HTML-based UI engine.
-* (#6618)[http://dotnetinstaller.codeplex.com/workitem/6618]: Added `#STARTPATH`, `#STARTEXE` and `#STARTFILENAME` substitution variables.
-* (#6955)[http://dotnetinstaller.codeplex.com/workitem/6955]: Added `#OSLANGID` substitution variable, operating system language ID.
-* (#6620)[http://dotnetinstaller.codeplex.com/workitem/6620]: Added `#OSLOCALE` substitution variable, operating system ISO language and region (eg. `en-US`).
-* (#6956)[http://dotnetinstaller.codeplex.com/workitem/6956]: `#LANGID` and `#LANGUAGE` are always set to the value in the currently executing configuration. `#LANGUAGE` may be empty, while `#LANGID` will to the operating system value.
-* (#6604)[http://dotnetinstaller.codeplex.com/workitem/6604]: InstallerEditor no longer needs a configuration file to link a bootstrapper and the configuration does not need to be saved before creating an exe.
-* (#6798)[http://dotnetinstaller.codeplex.com/workitem/6798]: InstallerEditor will display file names when embed files are missing during linking.
-* (#4884)[http://dotnetinstaller.codeplex.com/workitem/4884]: InstallerEditor will notice that a configuration file has changed on disk and offer to reload it.
-* (#6786)[http://dotnetinstaller.codeplex.com/workitem/6786]: Bootstrapper will return a 3010 exit code when a reboot was required.
-* (#6786)[http://dotnetinstaller.codeplex.com/workitem/6786]: Added `/noreboot` to the bootstrapper to suppress actual reboot when required. Bootstrapper will simply return a 3010 exit code in this case.
-* (#7004)[http://dotnetinstaller.codeplex.com/workitem/7004]: The user-defined browse control will always return paths without the trailing backslash except for drive paths (eg. `C:\`).
-* (#6730)[http://dotnetinstaller.codeplex.com/workitem/6730]: InstallerEditor displays a `*` next to field names that are required and displays an error if the user tries to delete the value.
-* (#7148)[http://dotnetinstaller.codeplex.com/workitem/7148]: Added support for Windows 2008 SP2 and Windows 7 SP1.
-* (#7252)[http://dotnetinstaller.codeplex.com/workitem/7252]: Enabled Visual Styles: modified default manifests with a dependency on `Microsoft.Windows.Common-Controls 6.0`.
-* (#7382)[http://dotnetinstaller.codeplex.com/workitem/7382], (#9000)[http://dotnetinstaller.codeplex.com/workitem/9000]: Added `disable_wow64_fs_redirection` at setup configuration and component level to run native x64 Windows applications and installation packages(cmd, regedit, msi, msp, etc) from dotNetInstaller.
-* (#7916)[http://dotnetinstaller.codeplex.com/workitem/7916]: Added MUI support with `MuiUser` (preferred language set for the user) and `MuiSystem` (preferred language set for the system) options in configuration `lcidtype`.
-* (#8277)[http://dotnetinstaller.codeplex.com/workitem/8277]: Language selector dialog in dotNetInstaller will automatically select the operating system language if available.
-* (#8256)[http://dotnetinstaller.codeplex.com/workitem/8256]: Added `/noRunOnReboot` to the bootstrapper to suppress actually writing the RunOnRebootregistry key.
-* (#272583)[http://dotnetinstaller.codeplex.com/discussions/272583]: Added support for Windows 8.
+* [#8318](http://dotnetinstaller.codeplex.com/workitem/8318): Added support for hex values in `returncodes_success` and `returncodes_reboot`. To specify a hex number start it with 0x.
+* [#7968](http://dotnetinstaller.codeplex.com/workitem/7968): Support elevation as a subsequent command within the bootstrapper. First UI shows un-elevated, but clicking install elevates.
+* [#8005](http://dotnetinstaller.codeplex.com/workitem/8005): Added a new os_filter type 'greater than' (+) and 'less than' (-).
+* [#6289](http://dotnetinstaller.codeplex.com/workitem/6289): Added a new setup bootstrapper, htmlInstaller, driven by an HTML-based UI engine.
+* [#6618](http://dotnetinstaller.codeplex.com/workitem/6618): Added `#STARTPATH`, `#STARTEXE` and `#STARTFILENAME` substitution variables.
+* [#6955](http://dotnetinstaller.codeplex.com/workitem/6955): Added `#OSLANGID` substitution variable, operating system language ID.
+* [#6620](http://dotnetinstaller.codeplex.com/workitem/6620): Added `#OSLOCALE` substitution variable, operating system ISO language and region (eg. `en-US`).
+* [#6956](http://dotnetinstaller.codeplex.com/workitem/6956): `#LANGID` and `#LANGUAGE` are always set to the value in the currently executing configuration. `#LANGUAGE` may be empty, while `#LANGID` will to the operating system value.
+* [#6604](http://dotnetinstaller.codeplex.com/workitem/6604): InstallerEditor no longer needs a configuration file to link a bootstrapper and the configuration does not need to be saved before creating an exe.
+* [#6798](http://dotnetinstaller.codeplex.com/workitem/6798): InstallerEditor will display file names when embed files are missing during linking.
+* [#4884](http://dotnetinstaller.codeplex.com/workitem/4884): InstallerEditor will notice that a configuration file has changed on disk and offer to reload it.
+* [#6786](http://dotnetinstaller.codeplex.com/workitem/6786): Bootstrapper will return a 3010 exit code when a reboot was required.
+* [#6786](http://dotnetinstaller.codeplex.com/workitem/6786): Added `/noreboot` to the bootstrapper to suppress actual reboot when required. Bootstrapper will simply return a 3010 exit code in this case.
+* [#7004](http://dotnetinstaller.codeplex.com/workitem/7004): The user-defined browse control will always return paths without the trailing backslash except for drive paths (eg. `C:\`).
+* [#6730](http://dotnetinstaller.codeplex.com/workitem/6730): InstallerEditor displays a `*` next to field names that are required and displays an error if the user tries to delete the value.
+* [#7148](http://dotnetinstaller.codeplex.com/workitem/7148): Added support for Windows 2008 SP2 and Windows 7 SP1.
+* [#7252](http://dotnetinstaller.codeplex.com/workitem/7252): Enabled Visual Styles: modified default manifests with a dependency on `Microsoft.Windows.Common-Controls 6.0`.
+* [#7382](http://dotnetinstaller.codeplex.com/workitem/7382], [#9000](http://dotnetinstaller.codeplex.com/workitem/9000): Added `disable_wow64_fs_redirection` at setup configuration and component level to run native x64 Windows applications and installation packages(cmd, regedit, msi, msp, etc) from dotNetInstaller.
+* [#7916](http://dotnetinstaller.codeplex.com/workitem/7916): Added MUI support with `MuiUser` (preferred language set for the user) and `MuiSystem` (preferred language set for the system) options in configuration `lcidtype`.
+* [#8277](http://dotnetinstaller.codeplex.com/workitem/8277): Language selector dialog in dotNetInstaller will automatically select the operating system language if available.
+* [#8256](http://dotnetinstaller.codeplex.com/workitem/8256): Added `/noRunOnReboot` to the bootstrapper to suppress actually writing the RunOnRebootregistry key.
+* [#272583](http://dotnetinstaller.codeplex.com/discussions/272583): Added support for Windows 8.
 
 Misc
 ----
 
-* (#7575)[http://dotnetinstaller.codeplex.com/workitem/7575]: Upgraded to SandCastle 1.9.3.0 documentation builder.
-* (#7672)[http://dotnetinstaller.codeplex.com/workitem/7672]: Outputing running nunit test case name to console.
-* (#7673)[http://dotnetinstaller.codeplex.com/workitem/7673]: Checked in *.*proj files with TFS bindings and add associated vspscc files.
-* (#7151)[http://dotnetinstaller.codeplex.com/workitem/7151]: InstallerEditor example links in component wizard use `example.com` instead of `yourwebsite.com`, which is a real site.
-* (#8081)[http://dotnetinstaller.codeplex.com/workitem/8081]: Dni.sln build fails if a Sample Configuration.xml file is read-only.
-* (#8084)[http://dotnetinstaller.codeplex.com/workitem/8084]: Moved commands in build.cmd to dni.proj.
-* (#8126)[http://dotnetinstaller.codeplex.com/workitem/8126]: Added and using NUnit binaries in ThirdParty instead of what is installed in "Program Files".
-* (#8696)[http://dotnetinstaller.codeplex.com/workitem/8696]: Upgraded to Wix 3.5 and using binaries in ThirdParty instead of what is installed in "Program Files".
+* [#7575](http://dotnetinstaller.codeplex.com/workitem/7575): Upgraded to SandCastle 1.9.3.0 documentation builder.
+* [#7672](http://dotnetinstaller.codeplex.com/workitem/7672): Outputing running nunit test case name to console.
+* [#7673](http://dotnetinstaller.codeplex.com/workitem/7673): Checked in *.*proj files with TFS bindings and add associated vspscc files.
+* [#7151](http://dotnetinstaller.codeplex.com/workitem/7151): InstallerEditor example links in component wizard use `example.com` instead of `yourwebsite.com`, which is a real site.
+* [#8081](http://dotnetinstaller.codeplex.com/workitem/8081): Dni.sln build fails if a Sample Configuration.xml file is read-only.
+* [#8084](http://dotnetinstaller.codeplex.com/workitem/8084): Moved commands in build.cmd to dni.proj.
+* [#8126](http://dotnetinstaller.codeplex.com/workitem/8126): Added and using NUnit binaries in ThirdParty instead of what is installed in "Program Files".
+* [#8696](http://dotnetinstaller.codeplex.com/workitem/8696): Upgraded to Wix 3.5 and using binaries in ThirdParty instead of what is installed in "Program Files".
 
 Bugs
 ----
 
-* (#8143)[http://dotnetinstaller.codeplex.com/workitem/8143]: Full UI not displayed after reboot.
-* (#7493)[http://dotnetinstaller.codeplex.com/workitem/7493]: Windows Defender blocks DNI upon restart. See (#7968)[http://dotnetinstaller.codeplex.com/workitem/7968].
-* (#6758)[http://dotnetinstaller.codeplex.com/workitem/6758]: MSI components with paths equal to a length of a GUID fail to install.
-* (#6816)[http://dotnetinstaller.codeplex.com/workitem/6816]: 0x8007064a: MsiEnumProducts - The configuration data for this product is corrupt.
-* (#6352)[http://dotnetinstaller.codeplex.com/workitem/6352]: 0x80070645: MSIGetProductInfo - This action is only valid for products that are currently installed.
-* (#6788)[http://dotnetinstaller.codeplex.com/workitem/6788]: Splash screen broken in basic UI mode.
-* (#6805)[http://dotnetinstaller.codeplex.com/workitem/6805]: A component with no installed checks is not installed if `/x` is specified on the command line.
-* (#7155)[http://dotnetinstaller.codeplex.com/workitem/7155]: `ProductVersion` is not automatically written to the `OSVERSIONINFO` string table when available.
-* (#7224)[http://dotnetinstaller.codeplex.com/workitem/7224]: License file for `ControlLicense` user-defined controls is left in `%TEMP%\GUID` after installation.
-* (#7567)[http://dotnetinstaller.codeplex.com/workitem/7567]: If InstallerEditor is closed minimized it will not correctly restore its position and will not appear on the screen when restarted.
-* (#7565)[http://dotnetinstaller.codeplex.com/workitem/7565]: Dni does not automatically change into uninstall mode if an optional component is not installed.
-* (#7565)[http://dotnetinstaller.codeplex.com/workitem/7557]: Dni will incorrectly display installation_completed message if auto_close_if_installed=true and not all components installed successfully.
-* (#7578)[http://dotnetinstaller.codeplex.com/workitem/7578]: Updated documentation to indicate that an elevated command prompt is required to build the project in the development environment.
-* (#7601)[http://dotnetinstaller.codeplex.com/workitem/7601]: Complete command may not execute with optional components.
-* (#8203)[http://dotnetinstaller.codeplex.com/workitem/8203]: dotNetInstaller may hang with the component installing or extracting progress bar.
-* (#8697)[http://dotnetinstaller.codeplex.com/workitem/8697]: `status_not_installed` doesn't show when defined at the component level.
+* [#8143](http://dotnetinstaller.codeplex.com/workitem/8143): Full UI not displayed after reboot.
+* [#7493](http://dotnetinstaller.codeplex.com/workitem/7493): Windows Defender blocks DNI upon restart. See [#7968](http://dotnetinstaller.codeplex.com/workitem/7968].
+* [#6758](http://dotnetinstaller.codeplex.com/workitem/6758): MSI components with paths equal to a length of a GUID fail to install.
+* [#6816](http://dotnetinstaller.codeplex.com/workitem/6816): 0x8007064a: MsiEnumProducts - The configuration data for this product is corrupt.
+* [#6352](http://dotnetinstaller.codeplex.com/workitem/6352): 0x80070645: MSIGetProductInfo - This action is only valid for products that are currently installed.
+* [#6788](http://dotnetinstaller.codeplex.com/workitem/6788): Splash screen broken in basic UI mode.
+* [#6805](http://dotnetinstaller.codeplex.com/workitem/6805): A component with no installed checks is not installed if `/x` is specified on the command line.
+* [#7155](http://dotnetinstaller.codeplex.com/workitem/7155): `ProductVersion` is not automatically written to the `OSVERSIONINFO` string table when available.
+* [#7224](http://dotnetinstaller.codeplex.com/workitem/7224): License file for `ControlLicense` user-defined controls is left in `%TEMP%\GUID` after installation.
+* [#7567](http://dotnetinstaller.codeplex.com/workitem/7567): If InstallerEditor is closed minimized it will not correctly restore its position and will not appear on the screen when restarted.
+* [#7565](http://dotnetinstaller.codeplex.com/workitem/7565): Dni does not automatically change into uninstall mode if an optional component is not installed.
+* [#7565](http://dotnetinstaller.codeplex.com/workitem/7557): Dni will incorrectly display installation_completed message if auto_close_if_installed=true and not all components installed successfully.
+* [#7578](http://dotnetinstaller.codeplex.com/workitem/7578): Updated documentation to indicate that an elevated command prompt is required to build the project in the development environment.
+* [#7601](http://dotnetinstaller.codeplex.com/workitem/7601): Complete command may not execute with optional components.
+* [#8203](http://dotnetinstaller.codeplex.com/workitem/8203): dotNetInstaller may hang with the component installing or extracting progress bar.
+* [#8697](http://dotnetinstaller.codeplex.com/workitem/8697): `status_not_installed` doesn't show when defined at the component level.
 
 1.10 (7/12/2010)
 ================
@@ -246,7 +247,7 @@ Misc
 1.6 (6/29/2009)
 ===============
 
-* First release off (CodePlex)[http://www.codeplex.com/dotnetinstaller].
+* First release off (CodePlex](http://www.codeplex.com/dotnetinstaller].
 * New MSI installer. You can use the installer or a binary distribution package.
 * New, largely rewritten, CHM documentation.
 * Changed behavior of file embedding to explicit: disabled automatic embedding of files from `msi`, `download` and `openfile` components, set `/Embed` to `True` by default.
@@ -375,7 +376,7 @@ Misc
 * Improved dotNetInstaller userinterface for a better interaction and a more customizable setup for advanced users.
 * Changed structure of XML configuration file for new features, you can use the Installer Editor to update your old configuration files.
 * Before using the TEMP directory check if the directory exist and if not exist try to create it (see GetTempPath function on MSDN help).
-* Added a progress bar control when installing components, thanks to Peter Mares for (a new progress bar for all occassions)[http://www.codeproject.com/miscctrl/kcbusyprogress.asp].
+* Added a progress bar control when installing components, thanks to Peter Mares for (a new progress bar for all occassions](http://www.codeproject.com/miscctrl/kcbusyprogress.asp].
 * Now the editor can use a list of template files to customize the language of the intstaller.
 * Added a customizable link at the bottom of the main dialog, thanks to Franz Wong for [Simple Hyperlink Static Control](http://www.codeguru.com/Cpp/controls/staticctrl/article.php/c5801/).
 * Added full UTF-8 support fot the configuration file, the editor and the installer.
