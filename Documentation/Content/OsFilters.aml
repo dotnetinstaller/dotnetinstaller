@@ -190,6 +190,10 @@
 			  <entry>Windows 8</entry>
 			  <entry>win8</entry>
 		    </row>
+			<row>
+			  <entry>Windows 8 Server</entry>
+			  <entry>win8Server</entry>
+		    </row>
             <row>
               <entry>Windows newer than 8</entry>
               <entry>winMax</entry>

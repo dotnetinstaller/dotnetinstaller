@@ -33,6 +33,11 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 			{
 				os = winMax;
 			}
+			// Windows 8 Server
+			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 2 && osvi.wProductType != VER_NT_WORKSTATION)
+			{
+				os = win8Server;
+			}
 			// Windows 8
 			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 2 && osvi.wProductType == VER_NT_WORKSTATION)
 			{
@@ -420,6 +425,11 @@ bool DVLib::IsOperatingSystemID(OperatingSystem os_in, const std::wstring& filte
 					{
 						match = true;
 					}
+				case win8Server:
+					if (OperatingSystemType(os) == win8Server && os_in >= os)
+					{
+						match = true;
+					}
 					break;
 			}
 
@@ -504,6 +514,11 @@ bool DVLib::IsOperatingSystemID(OperatingSystem os_in, const std::wstring& filte
 					{
 						match = true;
 					}
+				case win8Server:
+					if (OperatingSystemType(os) == win8Server && os_in < os)
+					{
+						match = true;
+					}
 					break;
 			}
 
@@ -583,6 +598,10 @@ DVLib::OperatingSystem DVLib::OperatingSystemType(OperatingSystem os)
 	else if (os >= win8 && os <= win8Max)
 	{
 		return win8;
+	}
+	else if (os >= win8Server && os <= win8ServerMax)
+	{
+		return win8Server;
 	}
 	else if (os > win8Max)
 	{
