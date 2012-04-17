@@ -1,9 +1,14 @@
 Next Release
 ============
 
+Features
+--------
+
+* [#10448](http://dotnetinstaller.codeplex.com/workitem/10448): Added Windows Server 8 support.
+
+
 Bugs
 ----
-
 * [#10280](http://dotnetinstaller.codeplex.com/workitem/10280): UI displayed briefly if auto_close_if_install set.
 * [#10270](http://dotnetinstaller.codeplex.com/workitem/10270): Run key not deleted on restart.
 
