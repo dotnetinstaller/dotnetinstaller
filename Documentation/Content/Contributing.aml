@@ -9,10 +9,17 @@
       <para>
         The project is maintained on
         <externalLink>
+          <linkText>GitHub</linkText>
+          <linkUri>https://github.com/dblock/dotnetinstaller</linkUri>
+        </externalLink>, issues on 
+        <externalLink>
           <linkText>CodePlex</linkText>
           <linkUri>http://dotnetinstaller.codeplex.com/</linkUri>
-        </externalLink>. The website has a bug tracking system and a discussions forum. Please don't hesitate to post suggestions
-        or questions.
+        </externalLink>, and discussions on the
+        <externalLink>
+          <linkText>dotNetInstaller Google Group</linkText>
+          <linkUri>http://groups.google.com/group/dotnetinstaller</linkUri>
+        </externalLink>. Please don't hesitate to post suggestions or questions.
       </para>
       <para>
         Keep in mind the following rules of thumb.
@@ -30,7 +37,13 @@
       <steps class="ordered">
         <step>
           <content>
-            <para>Install a command-line Subversion (SVN) client (not TortoiseSVN Shell Extension).</para>
+            <para>
+              Install a Git client.
+              <externalLink>
+                <linkText>github:help</linkText>
+                <linkUri>http://help.github.com/</linkUri>
+              </externalLink>
+            </para>
           </content>
         </step>
         <step>
@@ -68,10 +81,10 @@
         <step>
           <content>
             <para>
-              Check out the source code using SVN from
+              Clone the source code repository from Github at
               <externalLink>
-                <linkText>https://dotnetinstaller.svn.codeplex.com/svn/trunk</linkText>
-                <linkUri>https://dotnetinstaller.svn.codeplex.com/svn/trunk</linkUri>
+                <linkText>https://github.com/dblock/dotnetinstaller.git</linkText>
+                <linkUri>https://github.com/dblock/dotnetinstaller.git</linkUri>
               </externalLink>
             </para>
           </content>
@@ -90,11 +103,8 @@
         <step>
           <content>
             <para>
-              Optionally use Team Foundation Server (TFS) and Team Explorer to establish source control bindings for example, by following the guide here:
-              <externalLink>
-                <linkText>http://codeplex.codeplex.com/wikipage?title=Using TFS and Team Explorer with CodePlex</linkText>
-                <linkUri>http://codeplex.codeplex.com/wikipage?title=Using%20TFS%20and%20Team%20Explorer%20with%20CodePlex</linkUri>
-              </externalLink>
+              If you'd like to update the dotNetInstaller source code (ex. bug fixes and features), fork the project,
+              commit changes to your local repository, push changes to your fork, and then finally make a pull request from your fork.
             </para>
           </content>
         </step>
