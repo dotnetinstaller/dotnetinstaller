@@ -38,6 +38,12 @@
  *
  *	- Added the outstanding BPM_XXXXX Messages and handlers to the control
  *
+ *	(2012-05-01)
+ *
+ *	- Fixed crash when WaitForSingleObject returns nonsignaled member when Start() and End() were called quickly in succession
+ *	  causing pointers to be deleted while a dependent thread is still running
+ *	  http://www.codeproject.com/Articles/3982/A-new-progress-bar-for-all-occassions#xx1894348xx
+ *
  ****************************************************************************/
 
 #include "stdafx.h"
@@ -417,9 +423,12 @@ void CKCBusyProgressCtrl::End()
 	{
 		if ( m_bBusyThrd )
 			m_bBusyThrd = false;
-		WaitForSingleObject(m_pThrd->m_hThread, m_nSpeed*2);
-		delete m_pThrd;
-		m_pThrd = NULL;
+
+		if ( WaitForSingleObject(m_pThrd->m_hThread, m_nSpeed*2) == WAIT_OBJECT_0 )
+        {
+			delete m_pThrd;
+			m_pThrd = NULL;
+		}
 	}
 	else
 		m_bBusyThrd = false;

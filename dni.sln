@@ -19,8 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{2F6E6EC2-78E
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
 		Documentation\Dni.content = Documentation\Dni.content
 		Documentation\Dni.shfbproj = Documentation\Dni.shfbproj
+		LICENSE = LICENSE
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{C5E3E607-AA22-4796-B113-E9A1BAA374E9}"
