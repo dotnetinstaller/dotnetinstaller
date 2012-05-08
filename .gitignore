@@ -3,7 +3,7 @@ Version/Version.h
 Version/Version.wxi
 bin
 obj
-Debug
+*Installer*/Debug
 Release
 dni*.log
 Documentation/Content/Generated/

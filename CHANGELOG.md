@@ -11,7 +11,13 @@ Bugs
 ----
 * [#10280](http://dotnetinstaller.codeplex.com/workitem/10280): UI displayed briefly if auto_close_if_install set.
 * [#10270](http://dotnetinstaller.codeplex.com/workitem/10270): Run key not deleted on restart.
-* Fixed dotNetInstaller.exe crash when WaitForSingleObject returns nonsignaled member when Start() and End() were called quickly in succession causing pointers to be deleted while a dependent thread is still running
+* (http://dotnetinstaller.codeplex.com/discussions/343238, http://dotnetinstaller.codeplex.com/discussions/218777): Fixed dotNetInstaller.exe crash when WaitForSingleObject returns nonsignaled member when Start() and End() were called quickly in succession causing pointers to be deleted while a dependent thread is still running
+
+Misc
+----
+* using Sandcastle and Sandcastle Help File Builder from ThirdParty directory
+* upgraded to Microsoft CRT v8.0.50727.6195
+
 
 2.0 (9/27/2011)
 ===============

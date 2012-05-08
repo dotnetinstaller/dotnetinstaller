@@ -9,7 +9,7 @@
 #pragma message("Using private assemblies for the MS runtimes")
 
 #ifndef __midl
-#define _SXS_ASSEMBLY_VERSION "8.0.50727.762"
+#define _SXS_ASSEMBLY_VERSION "8.0.50727.6195"
 #define _CRT_ASSEMBLY_VERSION _SXS_ASSEMBLY_VERSION
 #define _MFC_ASSEMBLY_VERSION _SXS_ASSEMBLY_VERSION
 #define _ATL_ASSEMBLY_VERSION _SXS_ASSEMBLY_VERSION
@@ -42,11 +42,11 @@ __declspec(selectany) int _forceAtlDllManifestRTM;
 // Note that there is also a MFCassem.h but this include file has the
 // manifest pragma's already in it. So we can't use it
 //
-// Three files are contrlling this crtassem.h, MFCassem.h and atlassem.h!
+// Three files are controlling this crtassem.h, MFCassem.h and atlassem.h!
 // Happily __LIBRARIES_ASSEMBLY_NAME_PREFIX is used in CRT, MFC and ATL!
 // Doing it right would need to use _MFC_ASSEMBLY_VERSION for the MFC
 // but in fact _CRT_ASSEMBLY_VERSION and _MFC_ASSEMBLY_VERSION and
-// _ATL_ASSEMBLY_VERSION arethe same (VC-2005 SP1 8.0.50727.762)
+// _ATL_ASSEMBLY_VERSION are the same (VC-2005 SP1 MFC Security Update 8.0.50727.6195)
 
 #include <crtassem.h>
 
