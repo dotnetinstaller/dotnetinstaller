@@ -232,6 +232,12 @@ void InstallerUI::ExecuteCompleteCode(bool components_installed)
 		DWORD dwExitCode = 0;
 		if (p_configuration->wait_for_complete_command)
 		{
+			//hide installer ui when executing complete command
+			if(p_configuration->hide_when_complete_command)
+			{
+				this->Hide();
+			}
+
 			LOG(L"Executing complete command: " << l_complete_command);
 
 			if (p_configuration->disable_wow64_fs_redirection)

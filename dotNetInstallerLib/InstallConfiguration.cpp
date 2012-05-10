@@ -30,6 +30,7 @@ InstallConfiguration::InstallConfiguration()
 	, auto_start(false)
 	, auto_continue_on_reboot(false)
 	, wait_for_complete_command(true)
+	, hide_when_complete_command(false)
 	, show_progress_dialog(true)
 	, show_cab_dialog(true)
 {
@@ -88,6 +89,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	complete_command_basic = node->Attribute("complete_command_basic");
 	complete_command_silent = node->Attribute("complete_command_silent");
 	wait_for_complete_command = XmlAttribute(node->Attribute("wait_for_complete_command")).GetBoolValue(true);
+	hide_when_complete_command = XmlAttribute(node->Attribute("hide_when_complete_command")).GetBoolValue(false);
 	auto_close_if_installed = XmlAttribute(node->Attribute("auto_close_if_installed")).GetBoolValue(true);
     auto_close_on_error = XmlAttribute(node->Attribute("auto_close_on_error")).GetBoolValue(false);
 	reload_on_error = XmlAttribute(node->Attribute("reload_on_error")).GetBoolValue(true);

@@ -43,6 +43,7 @@ protected:
 	void AddElevatedControls();
 	virtual void StartInstall() = 0;
 	virtual void Stop() = 0;
+	virtual void Hide() = 0;
 	virtual void ExtractCab(const std::wstring& id, bool display_dialog) = 0;
 	bool ComponentExecError(const ComponentPtr& component, std::exception& ex);
 	bool ComponentExecSuccess(const ComponentPtr& component);
