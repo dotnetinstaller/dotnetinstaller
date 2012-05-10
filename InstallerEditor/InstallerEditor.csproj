@@ -171,6 +171,8 @@
     <Content Include="xsl\wizard2config.xsl" />
     <EmbeddedResource Include="wizardcomponents.xml" />
     <None Include="bin\Release\InstallerEditor.exe" />
+    <None Include="InstallerEditor.exe.Debug.manifest" />
+    <None Include="InstallerEditor.exe.Release.manifest" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InstallerLib\InstallerLib.csproj">
@@ -185,8 +187,8 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>"%25ProgramFiles%25\Microsoft Visual Studio 8\Common7\Tools\Bin\mt.exe" -manifest “$(ProjectDir)$(TargetFileName).manifest” -outputresource:"$(TargetPath)";#1
-copy "$(ProjectDir)..\ThirdParty\VisualStudioCRT\*.*" "$(TargetDir)" /y
+    <PostBuildEvent>"%25ProgramFiles%25\Microsoft Visual Studio 8\Common7\Tools\Bin\mt.exe" -manifest “$(ProjectDir)$(TargetFileName).$(ConfigurationName).manifest” -outputresource:"$(TargetPath)";#1
+copy "$(ProjectDir)..\ThirdParty\VisualStudioCRT\$(ConfigurationName)\*.*" "$(TargetDir)" /y
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

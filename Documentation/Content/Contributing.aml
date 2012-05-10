@@ -70,7 +70,7 @@
         <step>
           <content>
             <para>
-              Install 
+              Optionally Install 
               <externalLink>
                 <linkText>Sandcastle Help File Builder 1.9.3.0</linkText>
                 <linkUri>http://shfb.codeplex.com/</linkUri>

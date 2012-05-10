@@ -52,7 +52,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
-    <Reference Include="Vestris.ResourceLib, Version=1.2.26529.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Vestris.ResourceLib, Version=1.2.28064.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdParty\ResourceLib\Vestris.ResourceLib.dll</HintPath>
     </Reference>

@@ -1,0 +1,164 @@
+This is not an official patch from Microsoft so use at your own risk.
+
+The URLs listed for each fix go to the work item in the Sandcastle project
+at CodePlex.  Refer to the work item for the fix details and to vote for the
+item.
+
+Bugs fixed and features added by this patch
+-------------------------------------------
+- Remaining presentation Style Issues (VS2005 div.code pre break-work)
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2255]
+
+- Hana and Prototype styles need to add CHARSET attribute to topics
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=998]
+
+- Version Builder Issues (Prototyp doesn't render info on member pages)
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=939]
+
+- XAML code samples cannot be hidden (VS2005 style)
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=1965]
+
+- APIName Attributes Incorrect (Hana and Prototype)
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=1978]
+
+- Better implementation of the <note type=""> tag
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=1795]
+
+- Better implementation of the ddue:alert element
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2256]
+
+- Support External Hyperlink Target with Appropriate Default
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=974]
+
+- Conceptual: codeEntityReference is sensitive to space
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=1249]
+
+- Conceptual: autoOutline Changes
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2142]
+
+- Conceptual: XLinks in relatedTopics section requires explicit text
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2034]
+
+- Conceptual: Formatting is not applied to some in-line MAML elements
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2060]
+
+- Conceptual: Glossary Improvements
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=1835]
+
+- Conceptual: Hana does not wrap code blocks in <div class="code"> in
+  utilities_dduexml.xsl in the ddue:code template if not a recognized title.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2257]
+
+- Conceptual: ddue:copyright processing is broken
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2258]
+
+- Conceptual: Hana and Prototype are missing some namespace declarations
+  in the XSL header and the <html> tag.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2259]
+
+- Anchor tag styles need to be fixed
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2260]
+
+- Conceptual: All three styles, normalize the space on the abstract
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2261]
+
+- mediaLink and mediaLinkInline should be handled as separate templates
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2189]
+
+- ddue:list should support the "nobullet" style.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2264]
+
+- ddue:table handling needs fixing.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2265]
+
+- Rendering of ddue:definitionTable isn't consistent in presentation styles.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2266]
+
+- "ddue:schemaHierarchy" and the related "indent" templates are missing from
+   the Prototype style.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2267]
+
+- The sub-section toggles do not work in Hana and VS2005 because they are
+  not given a unique ID.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2268]
+
+- Conceptual: Pass-through HTML
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=933]
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2174]
+
+- Conceptual: Support NamedUrlIndex keywords in metadata.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2270]
+
+- List formatting doesn't look good (all three styles).
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2271]
+
+- The Prototype See Also section doesn't have a #seeAlsoSection anchor.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2272]
+
+- Support linkAlternateText and linkTarget in externalLink.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2273]
+
+- Conceptual: Don't Display Summary in Topic
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=1854]
+
+- Auto-generated Bibliography (No dependency on build components)
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2082]
+
+- ResolveArtLinksComponent is wrong in the configs.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=1943]
+
+- Conceptual: Hana style, External link in a token not rendered in
+  relatedTopics.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2274]
+
+- Conceptual: ddue:math should apply templates to its inner text.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2275]
+
+- Prototype syntax sections have unnecessary leading whitespace
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2282]
+
+- Stylesheet updates needed to correct spacing and alignment
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2947]
+
+- Case of Presentation.css is not consistent in transformations
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2421]
+
+- Add address attribute support to several elements
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2948]
+
+- Sections containing nothing but an image or a list of link elements
+  are not rendered.
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2949]
+
+- autoOutline displays "Related Topics" instead of "See Also"
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2950]
+
+- JavaScript syntax section is not shown in the Hana style
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2951]
+
+- "this" argument modifier not shown for extension methods
+  [http://www.codeplex.com/Sandcastle/WorkItem/View.aspx?WorkItemId=2603]
+
+- Enumerated type members no longer contain a description in VS2005 style
+  [http://sandcastle.codeplex.com/WorkItem/View.aspx?WorkItemId=6785]
+
+- Enumeration topics should show the value of each enumeration member
+  [http://sandcastle.codeplex.com/WorkItem/View.aspx?WorkItemId=6786]
+
+- Add missing resource items to Hana and Prototype styles
+  [http://sandcastle.codeplex.com/WorkItem/View.aspx?WorkItemId=6787]
+
+- Support for definition list type is missing
+  [http://sandcastle.codeplex.com/WorkItem/View.aspx?WorkItemId=6788]
+
+- Support term element in bullet and number list types
+  [http://sandcastle.codeplex.com/WorkItem/View.aspx?WorkItemId=6803]
+
+- Support starting number on numbered lists
+  [http://sandcastle.codeplex.com/WorkItem/View.aspx?WorkItemId=6789]
+
+- Add code contract support for VS2005 style
+  [http://sandcastle.codeplex.com/WorkItem/View.aspx?WorkItemId=6790]
+
+- Some pre elements are missing xml:space="preserve"
+  [http://sandcastle.codeplex.com/workitem/8879]

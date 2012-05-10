@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
     <NoWarn>1591</NoWarn>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -64,7 +65,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="InstallerLinker.exe.manifest" />
+    <None Include="InstallerLinker.exe.Debug.manifest" />
+    <None Include="InstallerLinker.exe.Release.manifest" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -75,8 +77,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"%25ProgramFiles%25\Microsoft Visual Studio 8\Common7\Tools\Bin\mt.exe" -manifest “$(ProjectDir)$(TargetFileName).manifest” -outputresource:"$(TargetPath)";#1
-copy "$(ProjectDir)..\ThirdParty\VisualStudioCRT\*.*" "$(TargetDir)" /y
+    <PostBuildEvent>"%25ProgramFiles%25\Microsoft Visual Studio 8\Common7\Tools\Bin\mt.exe" -manifest “$(ProjectDir)$(TargetFileName).$(ConfigurationName).manifest” -outputresource:"$(TargetPath)";#1
+copy "$(ProjectDir)..\ThirdParty\VisualStudioCRT\$(ConfigurationName)\*.*" "$(TargetDir)" /y
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

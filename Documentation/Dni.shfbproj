@@ -145,6 +145,10 @@
       <ImageId>Logo.gif</ImageId>
     </Image>
   </ItemGroup>
+  <PropertyGroup>
+    <DXROOT>$(MSBuildProjectDirectory)\..\ThirdParty\Sandcastle 2.6.1062.1</DXROOT>
+    <SHFBROOT>$(MSBuildProjectDirectory)\..\ThirdParty\SHFB 1.9.3.0</SHFBROOT>
+  </PropertyGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />
 </Project>

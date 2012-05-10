@@ -92,10 +92,10 @@
     <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
     <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
     <Binaries Include="ThirdParty\Mslu\unicows.dll" />
-    <Binaries Include="ThirdParty\VisualStudioCRT\Microsoft.VC80.CRT.manifest" />
-    <Binaries Include="ThirdParty\VisualStudioCRT\msvcm80.dll" />
-    <Binaries Include="ThirdParty\VisualStudioCRT\msvcp80.dll" />
-    <Binaries Include="ThirdParty\VisualStudioCRT\msvcr80.dll" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\Microsoft.VC80.CRT.manifest" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcm80.dll" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcp80.dll" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcr80.dll" />
   </ItemGroup>
   <Target Name="all">
     <Message Importance="high" Text="Building project ..." />
@@ -119,7 +119,8 @@
     <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Clean" />
     <DeleteTree Directories="Documentation\Content\Generated" />
     <DeleteTree Directories="$(ReleaseDir)" />
-    <DeleteTree Directories=".\**\obj;.\**\$(Configuration)" Recursive="true" ContinueOnError="true" />
+    <DeleteTree Directories=".\**\obj" Recursive="true" ContinueOnError="true" />
+    <DeleteTree Directories=".\*Installer*\$(Configuration)" Recursive="true" ContinueOnError="true" />
     <Delete Files="Version\Version.h;Version\Version.wxi;Version\GlobalAssemblyInfo.cs" />
   </Target>
   <Target Name="build" DependsOnTargets="version">
@@ -179,8 +180,6 @@
   </Target>
   <Target Name="doc" DependsOnTargets="version">
     <CallTarget Targets="doclib" />
-    <Error Condition="'$(DXROOT)'==''" Text="Missing Sandcastle, DXROOT environment variable not set, install from http://www.codeplex.com/Sandcastle" />
-    <Error Condition="'$(SHFBROOT)'==''" Text="Missing Sandcastle Builder, SHFBROOT environment variable not set, install from http://www.codeplex.com/SHFB" />
     <Delete Files="Documentation\$(Configuration)\dotNetInstaller.chm" />
     <Exec Command="$(MSBuild_4_0_ExeFilePath) Documentation\Dni.shfbproj /p:Configuration=$(Configuration)" />
     <Error Condition="Exists('Documentation\$(Configuration)\LastBuild.log')" Text="Documentation build failed, check Documentation\$(Configuration)\LastBuild.log" />
