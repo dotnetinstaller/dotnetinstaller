@@ -11,7 +11,7 @@ Bugs
 ----
 * [#10280](http://dotnetinstaller.codeplex.com/workitem/10280): UI displayed briefly if auto_close_if_install set.
 * [#10270](http://dotnetinstaller.codeplex.com/workitem/10270): Run key not deleted on restart.
-* (http://dotnetinstaller.codeplex.com/discussions/343238, http://dotnetinstaller.codeplex.com/discussions/218777): Fixed dotNetInstaller.exe crash when WaitForSingleObject returns nonsignaled member when Start() and End() were called quickly in succession causing pointers to be deleted while a dependent thread is still running
+* [#343238](http://dotnetinstaller.codeplex.com/discussions/343238), [#218777](http://dotnetinstaller.codeplex.com/discussions/218777): Fixed dotNetInstaller.exe crash when WaitForSingleObject returns nonsignaled member when Start() and End() were called quickly in succession causing pointers to be deleted while a dependent thread is still running
 
 Misc
 ----
