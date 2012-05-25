@@ -8,3 +8,4 @@ Release
 dni*.log
 Documentation/Content/Generated/
 ThirdParty/CabLib/assembly/
+*.ncb
