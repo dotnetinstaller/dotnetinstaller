@@ -11,3 +11,4 @@ assembly
 *.ncb
 *.suo
 *tmp_*_Win32.vcproj
+*.vcproj.*.user
