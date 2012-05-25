@@ -3,9 +3,11 @@ Version/Version.h
 Version/Version.wxi
 bin
 obj
-*Installer*/Debug
+Debug
 Release
 dni*.log
-Documentation/Content/Generated/
-ThirdParty/CabLib/assembly/
+Documentation/Content/Generated
+assembly
 *.ncb
+*.suo
+*tmp_*_Win32.vcproj
