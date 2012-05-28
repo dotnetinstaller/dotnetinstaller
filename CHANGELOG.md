@@ -1,11 +1,11 @@
-Next Release
-============
+2.1 (5/28/2012)
+===============
 
 Features
 --------
 
+* First release from [Github](http://github.com/dblock/dotnetinstaller).
 * [#10448](http://dotnetinstaller.codeplex.com/workitem/10448): Added Windows Server 8 support.
-
 
 Bugs
 ----
@@ -17,7 +17,6 @@ Misc
 ----
 * using Sandcastle and Sandcastle Help File Builder from ThirdParty directory
 * upgraded to Microsoft CRT v8.0.50727.6195
-
 
 2.0 (9/27/2011)
 ===============

@@ -9,9 +9,9 @@ Essentials
 ----------
 
 * [Need Help? Google Group](http://groups.google.com/group/dotnetinstaller)
-* Download Version 2.0
-  [[installer](https://github.com/downloads/dblock/dotnetinstaller/dotNetInstaller.2.0.msi)]
-  [[zip](https://github.com/downloads/dblock/dotnetinstaller/dotNetInstaller.2.0.zip)]
+* Download Version 2.1
+  [[installer](https://github.com/downloads/dblock/dotnetinstaller/dotNetInstaller.2.1.msi)]
+  [[zip](https://github.com/downloads/dblock/dotnetinstaller/dotNetInstaller.2.1.zip)]
 * [Older Versions on CodePlex](http://dotnetinstaller.codeplex.com/).
 
 Bootstrapper
