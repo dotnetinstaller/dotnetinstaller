@@ -586,6 +586,11 @@ void InstallerWindow::Stop()
 	::PostMessage(hwnd, WM_CLOSE, 0,0);
 }
 
+void InstallerWindow::Hide()
+{
+	::ShowWindow(hwnd, SW_HIDE);
+}
+
 std::wstring InstallerWindow::GetPositionStyle(const WidgetPosition& position)
 {
 	std::wstringstream style;

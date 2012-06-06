@@ -68,5 +68,6 @@ private:
 	HINSTANCE GetInstance() const;
 	void StartInstall();
 	void Stop();
+	void Hide();
 	void SetElevationRequired(bool required = true);
 };

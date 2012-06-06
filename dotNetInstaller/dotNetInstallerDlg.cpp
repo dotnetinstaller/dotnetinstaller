@@ -587,6 +587,11 @@ void CdotNetInstallerDlg::Stop()
 	OnOK();
 }
 
+void CdotNetInstallerDlg::Hide()
+{
+	this->ShowWindow(SW_HIDE);
+}
+
 void CdotNetInstallerDlg::StartInstall()
 {
 	if (! InstallUILevelSetting::Instance->IsSilent())
