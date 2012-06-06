@@ -102,6 +102,7 @@
         <ComponentRef Id="CustomInputSetupSample" />
         <ComponentRef Id="ReferenceSetupSample" />
         <ComponentRef Id="OsFiltersSetupSample" />
+        <ComponentRef Id="PAFilterSetupSample" />
         <ComponentRef Id="MultilingualSetupSample" />
         <ComponentRef Id="LicenseAgreementSample" />
         <ComponentRef Id="PatchSetupSample" />

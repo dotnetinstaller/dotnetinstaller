@@ -41,7 +41,8 @@ BOOL CHtmlInstallerApp::InitInstance()
 		LOG(L"-------------------------------------------------------------------");
 		LOG(L"htmlNetInstaller (DNI) started, version " << TEXT(VERSION_VALUE));
 		LOG(VERSION_LEGALCOPYRIGHT_VALUE);
-		LOG(L"Operating system: " << DVLib::GetOperatingSystemVersionString());
+		LOG(L"Operating system: " << DVLib::GetOperatingSystemVersionString() << 
+			L" (" << DVLib::pa2wstring(DVLib::GetProcessorArchitecture()) << L")");
 		LOG(L"-------------------------------------------------------------------");
 		LOG(L"Sequence: " << InstallSequenceUtil::towstring(InstallerSession::Instance->sequence));
 

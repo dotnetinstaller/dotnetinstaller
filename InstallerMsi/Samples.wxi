@@ -13,6 +13,11 @@
             <File Id="OsFiltersSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\OsFilters\Configuration.xml" />
           </Component>
         </Directory>
+        <Directory Id="PAFilterSetupFolder" Name="PAFilterSetup">
+          <Component Id="PAFilterSetupSample" Guid="C84EF8B1-1BF1-49c1-9DBA-577E42471C31">
+            <File Id="PAFilterSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\PAFilter\Configuration.xml" />
+          </Component>
+        </Directory>
         <Directory Id="MultilingualSetupFolder" Name="MultilingualSetup">
           <Component Id="MultilingualSetupSample" Guid="B343AC65-ACA1-4ac2-89F3-CB7505051631">
             <File Id="MultilingualSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\MultilingualSetup\Configuration.xml" />

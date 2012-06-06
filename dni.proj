@@ -58,9 +58,6 @@
     <InstallCheckProductSample Include="Samples/InstallCheckProduct/**/*.xml" />
   </ItemGroup>
   <ItemGroup>
-    <OsFiltersSetupSample Include="Samples/OsFiltersSetup/**/*.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <PatchSetupSample Include="Samples/PatchSetup/**/*.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +74,9 @@
   </ItemGroup>
   <ItemGroup>
     <OsFiltersSetupSample Include="Samples/OsFilters/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PAFilterSetupSample Include="Samples/PAFilter/**/*.xml" />
   </ItemGroup>
   <ItemGroup>
     <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" />
@@ -161,15 +161,15 @@
     <!-- Sample: OsFiltersSetup -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup" />
     <Copy SourceFiles="@(OsFiltersSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup\%(RecursiveDir)" />
+    <!-- Sample: PAfilterSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PAFilterSetup" />
+    <Copy SourceFiles="@(PAFilterSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PAFilterSetup\%(RecursiveDir)" />
     <!-- Sample: PatchSetup -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PatchSetup" />
     <Copy SourceFiles="@(PatchSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PatchSetup\%(RecursiveDir)" />
     <!-- Sample: ExeSetup -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ExeSetup" />
     <Copy SourceFiles="@(ExeSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ExeSetup\%(RecursiveDir)" />
-    <!-- Sample: OsFiltersSetup -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup" />
-    <Copy SourceFiles="@(OsFiltersSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup\%(RecursiveDir)" />
     <!-- Sample: ReferenceSetup -->
     <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ReferenceSetup" />
     <Copy SourceFiles="@(ReferenceSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ReferenceSetup\%(RecursiveDir)" />

@@ -1,3 +1,8 @@
+2.2 (Next)
+==========
+
+* Displaying processor architecture next to the operating system version in the log file.
+
 2.1 (5/28/2012)
 ===============
 
@@ -15,8 +20,8 @@ Bugs
 
 Misc
 ----
-* using Sandcastle and Sandcastle Help File Builder from ThirdParty directory
-* upgraded to Microsoft CRT v8.0.50727.6195
+* Using Sandcastle and Sandcastle Help File Builder from ThirdParty directory
+* Upgraded to Microsoft CRT v8.0.50727.6195
 
 2.0 (9/27/2011)
 ===============

@@ -131,7 +131,8 @@ void ConfigFiles::Run()
 		LOG(L"-------------------------------------------------------------------");
 		LOG(L"dotNetInstaller (DNI), version " << TEXT(VERSION_VALUE));
 		LOG(VERSION_LEGALCOPYRIGHT_VALUE);
-		LOG(L"Operating system: " << DVLib::GetOperatingSystemVersionString());
+		LOG(L"Operating system: " << DVLib::GetOperatingSystemVersionString() << 
+			L" (" << DVLib::pa2wstring(DVLib::GetProcessorArchitecture()) << L")");
 		LOG(L"-------------------------------------------------------------------");
 		LOG(L"Sequence: " << InstallSequenceUtil::towstring(InstallerSession::Instance->sequence));
 	}
