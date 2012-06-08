@@ -53,33 +53,6 @@
         </step>
         <step>
           <content>
-            <para>Install Visual Studio 2005.</para>
-          </content>
-        </step>
-        <step>
-          <content>
-            <para>
-              Install
-              <externalLink>
-                <linkText>MSBuild Community Tasks 1.3</linkText>
-                <linkUri>http://dl.dropbox.com/u/4321494/MSBuild%20Community%20Tasks/MSBuild.Community.Tasks.1.3.0.msi</linkUri>
-              </externalLink>.
-            </para>
-          </content>
-        </step>
-        <step>
-          <content>
-            <para>
-              Optionally Install 
-              <externalLink>
-                <linkText>Sandcastle Help File Builder 1.9.3.0</linkText>
-                <linkUri>http://shfb.codeplex.com/</linkUri>
-              </externalLink> to build the documentation. The guided installer will include Microsoft Help Workshop and SandCastle.
-            </para>
-          </content>
-        </step>
-        <step>
-          <content>
             <para>
               Clone the source code repository from Github at
               <externalLink>
@@ -111,11 +84,26 @@
         <step>
           <content>
             <para>
-              Optionally install
-              <externalLink>
-                <linkText>NUnit</linkText>
-                <linkUri>http://www.nunit.org/</linkUri>
-              </externalLink>.
+              Optionally install:
+              <para>Visual Studio 2005 for an Integrated Development Environment (IDE).</para>
+              <para>
+                <externalLink>
+                  <linkText>WiX Toolset v3.5 (v3.5.2519.0)</linkText>
+                  <linkUri>http://wix.codeplex.com/releases/view/60102</linkUri>
+                </externalLink> for WiX integration within the IDE.
+              </para>
+              <para>
+                <externalLink>
+                  <linkText>Sandcastle Help File Builder 1.9.3.0</linkText>
+                  <linkUri>http://shfb.codeplex.com/</linkUri>
+                </externalLink> for the help documentation IDE. The guided installer will include Microsoft Help Workshop and SandCastle.
+              </para>
+              <para>
+                <externalLink>
+                  <linkText>NUnit</linkText>
+                  <linkUri>http://www.nunit.org/</linkUri>
+                </externalLink> for unit test integration within the IDE.
+              </para>
             </para>
           </content>
         </step>

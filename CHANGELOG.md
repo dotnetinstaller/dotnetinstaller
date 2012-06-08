@@ -3,6 +3,7 @@
 
 * [#12](https://github.com/dblock/dotnetinstaller/issues/12): Processor architecture filter matching for negated values (using `!`) is incorrect.
 * Displaying processor architecture next to the operating system version in the log file.
+* Using MSBuild Community Tasks from the ThirdParty directory
 
 2.1 (5/28/2012)
 ===============
