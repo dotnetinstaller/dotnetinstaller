@@ -15,15 +15,16 @@
           The <literal>os_filter</literal> value specifies a filter to install a configuration or component on. 
           The operating system must be equal to any of the values specified. Separate multiple operating system ids 
           with commas. For example, <literal>win2000</literal> means only to install a configuration on Windows 2000, 
-          <literal>win2000,win2000sp1,winServer2008</literal> means Windows 2000, Windows 2000 SP1 or Windows 2008. You can use the 
-          <literal>!</literal> sign to define a NOT operator. For example, <literal>!win2000,!win2000sp1</literal> means installing
-          on any operating system except Windows 2000 and Windows 2000 SP1. You can use the <literal>+</literal> sign to define a 
-          greater than or equal operator. For example, <literal>+winXPsp3,+win2003sp1</literal> means installing
-          on any operating system later than Windows XP SP3 and later than Windows 2003 SP1.
+          <literal>win2000,win2000sp1,winServer2008</literal> means Windows 2000, Windows 2000 SP1 or Windows 2008. 
         </para>
         <para>
           You can use the <literal>!</literal> sign to define a NOT operator. For example, <literal>!win2000,!win2000sp1</literal> 
           means installing on any operating system except Windows 2000 and Windows 2000 SP1.
+        </para>
+        <para>
+          You can use the <literal>+</literal> sign to define a greater than or equal operator. For example, 
+          <literal>+winXPsp3,+win2003sp1</literal> means installing on any operating system later than Windows XP SP3 and 
+          later than Windows 2003 SP1.
         </para>
         <para>
           You can use the <literal>+</literal> sign to define a group of filters that specify the minimum OS value for each OS specified. 

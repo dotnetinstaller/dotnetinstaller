@@ -686,39 +686,68 @@ WORD DVLib::GetProcessorArchitecture()
     return info.wProcessorArchitecture;
 }
 	
-bool DVLib::IsProcessorArchitecture(WORD pa, const std::wstring& pa_list)
+bool DVLib::IsProcessorArchitecture(WORD pa_in, const std::wstring& filter)
 {
-	if (pa_list.empty())
-		return true;
-
-	std::vector<std::wstring> pa_vector = DVLib::split(pa_list, L",");
-
-	for (size_t i = 0; i < pa_vector.size(); i++)
+	if (filter.empty())
 	{
-		// tolerate blanks
-		if (pa_vector[i].empty())
-			continue;
+		return true;
+	}
 
-		bool not = false;
-		std::wstring pa_s;
-		if (pa_vector[i][0] == L'!')
+	std::vector<std::wstring> pas = DVLib::split(filter, L",");
+
+	size_t filters = 0;
+	std::vector<int> pa_or;
+	std::vector<int> pa_andnot;
+
+	for (size_t i = 0; i < pas.size(); i++)
+	{
+		if (pas[i].empty())
 		{
-			not = true;
-			pa_s = pa_vector[i].substr(1);
+			continue; // tolerate an empty value
+		}
+
+		filters++; // Total number of filters (excluding empty ones)
+
+		if (pas[i][0] == L'!')
+		{
+			pa_andnot.push_back(DVLib::wstring2pa(pas[i].substr(1)));
 		}
 		else
 		{
-			pa_s = pa_vector[i];
+			pa_or.push_back(DVLib::wstring2pa(pas[i]));
 		}
-
-		WORD pa_c = wstring2pa(pa_s);
-		if (not && pa_c == pa)
-			return false;
-		else if (! not && pa_c == pa)
-			return true;
 	}
 
-	return false;
+	if ((pa_or.size() > 0 && pa_or.size() != filters) || 
+		(pa_andnot.size() > 0 && pa_andnot.size() != filters))
+	{
+		THROW_EX(L"Ambiguous processor architecture filter: " << filter);
+	}
+
+	if (pa_or.size() > 0)
+	{
+		for each (int pa in pa_or)
+		{
+			if (pa == pa_in)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	} 
+	else 
+	{
+		for each (int pa in pa_andnot)
+		{
+			if (pa == pa_in)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
 
 

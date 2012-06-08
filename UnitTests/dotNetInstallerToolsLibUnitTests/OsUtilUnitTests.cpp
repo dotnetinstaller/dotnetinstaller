@@ -241,15 +241,46 @@ void OsUtilUnitTests::testProcessorArchitectureToFromString()
 
 void OsUtilUnitTests::testIsProcessorArchitecture()
 {
+	// current processor architecture
+	CPPUNIT_ASSERT(DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), L""));
+	CPPUNIT_ASSERT(DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), DVLib::pa2wstring(DVLib::GetProcessorArchitecture()) + L",mips"));
+	CPPUNIT_ASSERT(! DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), L"!" + DVLib::pa2wstring(DVLib::GetProcessorArchitecture()) + L",!mips"));
+	CPPUNIT_ASSERT(! DVLib::IsProcessorArchitecture(PROCESSOR_ARCHITECTURE_ARM, L"alpha64"));
+	CPPUNIT_ASSERT(DVLib::IsProcessorArchitecture(PROCESSOR_ARCHITECTURE_ARM, L"alpha64,arm"));
+	CPPUNIT_ASSERT(DVLib::IsProcessorArchitecture(PROCESSOR_ARCHITECTURE_AMD64, L"!x86"));
+	CPPUNIT_ASSERT(! DVLib::IsProcessorArchitecture(PROCESSOR_ARCHITECTURE_AMD64, L"!x64"));
+
+	// known processor architectures
 	for (int i = 0; i < ARRAYSIZE(processor_architectures); i++)
 	{
 		CPPUNIT_ASSERT(DVLib::IsProcessorArchitecture(processor_architectures[i].pa, processor_architectures[i].name));
 		CPPUNIT_ASSERT(! DVLib::IsProcessorArchitecture(processor_architectures[i].pa, std::wstring(L"!") + processor_architectures[i].name));
 	}
 
-	// some known ones
-	CPPUNIT_ASSERT(! DVLib::IsProcessorArchitecture(PROCESSOR_ARCHITECTURE_ARM, L"alpha64"));
-	CPPUNIT_ASSERT(DVLib::IsProcessorArchitecture(PROCESSOR_ARCHITECTURE_ARM, L"alpha64,arm"));
+	{
+		try
+		{
+			// ambiguous negation
+			DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), L"mips,!x86");
+			throw "IsProcessorArchitecture was expected to throw std::exception";
+		}
+		catch(std::exception& ex)
+		{
+			std::cout << std::endl << "Expected exception: " << ex.what();
+		}
+
+		try
+		{
+			// invalid filter
+			DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), L"mips,foobar,!x86");
+			throw "IsProcessorArchitecture was expected to throw std::exception";
+		}
+		catch(std::exception& ex)
+		{
+			std::cout << std::endl << "Expected exception: " << ex.what();
+		}
+
+	}
 }
 
 void OsUtilUnitTests::testIsWow64()
