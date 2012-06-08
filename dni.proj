@@ -1,4 +1,7 @@
 <Project DefaultTargets="all" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <MSBuildCommunityTasksPath>..\..\ThirdParty\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
+  </PropertyGroup>
   <Import Project="ThirdParty\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
   <Import Project="Version.proj"/>
   <PropertyGroup Condition="'$(Configuration)'==''">
