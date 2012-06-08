@@ -8,6 +8,7 @@
     <OutputName>dotNetInstaller</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">..\ThirdParty\Wix\Wix.targets</WixTargetsPath>
+    <WixTasksPath Condition=" '$(WixTasksPath)' == '' ">..\..\ThirdParty\Wix\WixTasks.dll</WixTasksPath>
     <WixToolPath>..\ThirdParty\Wix\</WixToolPath>
     <DefineSolutionProperties>False</DefineSolutionProperties>
     <SccProjectName>
@@ -57,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixUIExtension">
-      <HintPath>C:\Program Files\Windows Installer XML v3\bin\WixUIExtension.dll</HintPath>
+      <HintPath>..\ThirdParty\Wix\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
   </ItemGroup>
