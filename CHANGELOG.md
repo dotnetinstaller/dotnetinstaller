@@ -1,9 +1,9 @@
 2.2 (Next)
 ==========
 
-* [#12](https://github.com/dblock/dotnetinstaller/issues/12): Processor architecture filter matching for negated values (using `!`) is incorrect.
-* Displaying processor architecture next to the operating system version in the log file.
-* Using MSBuild Community Tasks from the ThirdParty directory
+* [#12](https://github.com/dblock/dotnetinstaller/issues/12): Processor architecture filter matching for negated values (using `!`) is incorrect - [@dblock](https://github.com/dblock).
+* Displaying processor architecture next to the operating system version in the log file - [@dblock](https://github.com/dblock).
+* Using MSBuild Community Tasks from the ThirdParty directory - [@icnocop](https://github.com/icnocop).
 
 2.1 (5/28/2012)
 ===============
