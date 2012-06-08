@@ -256,9 +256,9 @@ void CdotNetInstallerDlg::OnBnClickedInstall()
 }
 
 // returns true if all components have been installed
-bool CdotNetInstallerDlg::LoadComponentsList()
+ComponentsStatus CdotNetInstallerDlg::LoadComponentsList()
 {
-	bool rc = InstallerUI::LoadComponentsList();
+	ComponentsStatus rc = InstallerUI::LoadComponentsList();
 	InstallConfiguration * pConfiguration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(pConfiguration != NULL, L"Invalid configuration");
 	m_ListBoxComponents.Load(pConfiguration);

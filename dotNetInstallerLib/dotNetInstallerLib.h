@@ -57,5 +57,6 @@
 #include "SplashWnd.h"
 #include "InstallerCommandLineInfo.h"
 #include "DisableWnd.h"
+#include "ComponentsStatus.h"
 #include "InstallerUI.h"
 #include "Wow64NativeFS.h"

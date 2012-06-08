@@ -7,6 +7,7 @@
 #include "ControlLicense.h"
 #include "ControlHyperlink.h"
 #include "ControlImage.h"
+#include "ComponentsStatus.h"
 
 class InstallerUI
 {
@@ -16,7 +17,7 @@ protected:
 	int m_total_progress;
 	bool m_reboot;
 	bool m_additional_config;
-	bool m_all;
+	ComponentsStatus m_install_status;
 	ConfigurationPtr m_configuration;
 public:
 	InstallerUI();
@@ -31,7 +32,7 @@ protected:
 	virtual void ClearError();
 	virtual void ResetContent() = 0;
 	virtual void AddComponent(const ComponentPtr& component) = 0;
-	virtual bool LoadComponentsList();
+	virtual ComponentsStatus LoadComponentsList();
 	virtual void ExecuteCompleteCode(bool components_installed);
 	virtual void ShowMessage(const std::wstring& message, int flags = 0);
 	virtual bool Run() = 0;

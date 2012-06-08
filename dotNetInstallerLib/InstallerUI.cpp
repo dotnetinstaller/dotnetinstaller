@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "ComponentsStatus.h"
 #include "InstallerUI.h"
 #include "ReferenceConfiguration.h"
 #include "InstallUILevel.h"
@@ -75,18 +76,20 @@ bool InstallerUI::AutoStart(InstallConfiguration * p_configuration)
 
 void InstallerUI::LoadComponents()
 {
-	m_all = LoadComponentsList();
+	m_install_status = LoadComponentsList();
 
 	// load xml file
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
-	if (InstallerSession::Instance->sequence == SequenceInstall && m_all && p_configuration->supports_uninstall)
+	if (InstallerSession::Instance->sequence == SequenceInstall 
+		&& m_install_status.all_required()
+		&& p_configuration->supports_uninstall)
 	{
 		LOG("All components installed, switching to uninstall.");
 		InstallerSession::Instance->sequence = SequenceUninstall;
-		m_all = LoadComponentsList();
-		if (m_all)
+		m_install_status = LoadComponentsList();
+		if (m_install_status.all())
 		{
 			LOG("All components uninstalled, nothing to do.");
 			InstallerSession::Instance->sequence = SequenceInstall;
@@ -95,12 +98,12 @@ void InstallerUI::LoadComponents()
 }
 
 // returns true if all components have been installed
-bool InstallerUI::LoadComponentsList()
+ComponentsStatus InstallerUI::LoadComponentsList()
 {
+	ComponentsStatus rc;
+	
 	InstallConfiguration * pConfiguration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(pConfiguration != NULL, L"Invalid configuration");	
-
-	bool all = true;
 
 	ResetContent();
 
@@ -123,9 +126,19 @@ bool InstallerUI::LoadComponentsList()
 			component->checked = false;
 
 		if (InstallerSession::Instance->sequence == SequenceInstall)
-			all &= (component->installed || (!component->required_install));
+		{
+			if (component->required_install)
+				rc.add_required(component->installed);
+			else
+				rc.add_optional(component->installed);
+		}
 		else if (InstallerSession::Instance->sequence == SequenceUninstall)
-			all &= (! component->installed);
+		{
+			if (component->required_uninstall)
+				rc.add_required(! component->installed);
+			else
+				rc.add_optional(! component->installed);
+		}
 
 		std::wstring description = component->GetDisplayName();
 	    description += L" ";
@@ -180,7 +193,7 @@ bool InstallerUI::LoadComponentsList()
 		AddComponent(component);
     }
 
-	return all;
+	return rc;
 }
 
 void InstallerUI::ExecuteCompleteCode(bool components_installed)
@@ -371,7 +384,9 @@ void InstallerUI::Start()
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
-	if (InstallerSession::Instance->sequence == SequenceInstall && m_all && p_configuration->supports_install)
+	if (InstallerSession::Instance->sequence == SequenceInstall 
+		&& m_install_status.all_required()
+		&& p_configuration->supports_install)
 	{
 		if (p_configuration->auto_close_if_installed || InstallUILevelSetting::Instance->IsSilent())
 		{
@@ -386,7 +401,9 @@ void InstallerUI::Start()
 			Stop();
 		}
 	}
-	else if (InstallerSession::Instance->sequence == SequenceUninstall && m_all && p_configuration->supports_uninstall)
+	else if (InstallerSession::Instance->sequence == SequenceUninstall 
+		&& m_install_status.all()
+		&& p_configuration->supports_uninstall)
 	{
 		Stop();
 	}
@@ -577,8 +594,8 @@ void InstallerUI::AfterInstall(int rc)
 	// success and possibly auto-close with a complete code if all components have been installed
 	if (rc == 0)
 	{
-		bool all = LoadComponentsList();
-		if (all)
+		ComponentsStatus status = LoadComponentsList();
+		if (status.all())
 		{
 			ExecuteCompleteCode(true);
 			if (p_configuration->auto_close_if_installed)
