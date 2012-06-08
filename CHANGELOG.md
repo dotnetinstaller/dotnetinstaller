@@ -2,6 +2,7 @@
 ==========
 
 * Displaying processor architecture next to the operating system version in the log file.
+* Using MSBuild Community Tasks from the ThirdParty directory
 
 2.1 (5/28/2012)
 ===============
