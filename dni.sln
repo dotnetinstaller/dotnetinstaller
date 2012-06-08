@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{401947AE
 	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		build.cmd = build.cmd
+		CHANGELOG.md = CHANGELOG.md
 		dni.proj = dni.proj
 		dni.vsprops = dni.vsprops
 		Version.proj = Version.proj
