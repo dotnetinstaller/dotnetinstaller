@@ -18,6 +18,11 @@
             <File Id="PAFilterSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\PAFilter\Configuration.xml" />
           </Component>
         </Directory>
+        <Directory Id="OptionalComponentsSetupFolder" Name="OptionalComponentsSetup">
+          <Component Id="OptionalComponentsSetupSample" Guid="9ADC9DEA-E741-4918-B989-57F467572C87">
+            <File Id="OptionalComponentsSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\OptionalComponents\Configuration.xml" />
+          </Component>
+        </Directory>
         <Directory Id="MultilingualSetupFolder" Name="MultilingualSetup">
           <Component Id="MultilingualSetupSample" Guid="B343AC65-ACA1-4ac2-89F3-CB7505051631">
             <File Id="MultilingualSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\MultilingualSetup\Configuration.xml" />

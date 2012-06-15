@@ -67,6 +67,7 @@
     <Compile Include="DownloadComponentsUnitTests.cs" />
     <Compile Include="LanguageUnitTests.cs" />
     <Compile Include="LoggingUnitTests.cs" />
+    <Compile Include="PromptForOptionalUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExitCodeUnitTests.cs" />
     <Compile Include="RebootUnitTests.cs" />

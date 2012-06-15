@@ -391,6 +391,16 @@ namespace InstallerLib
             set { m_complete_command_basic = value; }
         }
 
+        private bool m_prompt_for_optional_components = false;
+        [Description("Prompt for optional components when all required components are installed, instead of switching to uninstall.")]
+        [Category("Runtime")]
+        [Required]
+        public bool prompt_for_optional_components
+        {
+            get { return m_prompt_for_optional_components; }
+            set { m_prompt_for_optional_components = value; }
+        }
+
         private bool m_auto_close_if_installed = true;
         [Description("Auto-close the dialog (display 'installation_completed' message and execute the 'complete_command') if all the components are already installed.")]
         [Category("Runtime")]
@@ -618,7 +628,8 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("complete_command_silent", m_complete_command_silent);
             e.XmlWriter.WriteAttributeString("complete_command_basic", m_complete_command_basic);
             e.XmlWriter.WriteAttributeString("wait_for_complete_command", m_wait_for_complete_command.ToString());
-            
+
+            e.XmlWriter.WriteAttributeString("prompt_for_optional_components", m_prompt_for_optional_components.ToString());
             e.XmlWriter.WriteAttributeString("auto_close_if_installed", m_auto_close_if_installed.ToString());
             e.XmlWriter.WriteAttributeString("auto_close_on_error", m_auto_close_on_error.ToString());
             e.XmlWriter.WriteAttributeString("reload_on_error", m_reload_on_error.ToString());
@@ -691,6 +702,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "complete_command_silent", ref m_complete_command_silent);
             ReadAttributeValue(e, "complete_command_basic", ref m_complete_command_basic);
             ReadAttributeValue(e, "wait_for_complete_command", ref m_wait_for_complete_command);
+            ReadAttributeValue(e, "prompt_for_optional_components", ref m_prompt_for_optional_components);
             ReadAttributeValue(e, "auto_close_if_installed", ref m_auto_close_if_installed);
             ReadAttributeValue(e, "auto_close_on_error", ref m_auto_close_on_error);
             ReadAttributeValue(e, "reload_on_error", ref m_reload_on_error);

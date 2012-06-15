@@ -78,12 +78,12 @@ void InstallerUI::LoadComponents()
 {
 	m_install_status = LoadComponentsList();
 
-	// load xml file
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
 
-	if (InstallerSession::Instance->sequence == SequenceInstall 
-		&& m_install_status.all_required()
+	if ((InstallerSession::Instance->sequence == SequenceInstall)
+		&& m_install_status.all_required() 
+		&& (! p_configuration->prompt_for_optional_components || m_install_status.all_optional())
 		&& p_configuration->supports_uninstall)
 	{
 		LOG("All components installed, switching to uninstall.");
@@ -193,6 +193,13 @@ ComponentsStatus InstallerUI::LoadComponentsList()
 		AddComponent(component);
     }
 
+	LOG(L"All required components " 
+		<< (InstallerSession::Instance->sequence == SequenceInstall ? L"installed: " : L"uninstalled: ") 
+		<< (rc.all_required() ? L"yes" : L"no"));
+	LOG(L"All optional components " 
+		<< (InstallerSession::Instance->sequence == SequenceInstall ? L"installed: " : L"uninstalled: ") 
+		<< (rc.all_optional() ? L"yes" : L"no"));
+	
 	return rc;
 }
 
@@ -379,6 +386,8 @@ void InstallerUI::DisplaySplash()
 
 void InstallerUI::Start()
 {
+	LOG(L"Start: " << InstallSequenceUtil::towstring(InstallerSession::Instance->sequence));
+
 	DisplaySplash();
 
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
@@ -386,6 +395,7 @@ void InstallerUI::Start()
 
 	if (InstallerSession::Instance->sequence == SequenceInstall 
 		&& m_install_status.all_required()
+		&& (! p_configuration->prompt_for_optional_components || m_install_status.all_optional())
 		&& p_configuration->supports_install)
 	{
 		if (p_configuration->auto_close_if_installed || InstallUILevelSetting::Instance->IsSilent())

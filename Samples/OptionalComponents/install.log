@@ -1,0 +1,35 @@
+2012-06-13 21:10:02	-------------------------------------------------------------------
+2012-06-13 21:10:02	dotNetInstaller (DNI) started, version 2.2.69.0
+2012-06-13 21:10:02	Copyright (c) DevAge, Vestris Inc. & Contributors
+2012-06-13 21:10:02	Operating system: Windows 7 SP1 (x64)
+2012-06-13 21:10:02	-------------------------------------------------------------------
+2012-06-13 21:10:02	Sequence: install
+2012-06-13 21:10:02	Loading configuration file: configuration.xml
+2012-06-13 21:10:02	Parsing: 5.0KB
+2012-06-13 21:10:02	Loaded schema: version=2.2.69.0, generator=dotNetInstaller InstallerEditor
+2012-06-13 21:10:02	Loaded 'registry' installed check 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\'
+2012-06-13 21:10:02	Loaded dummy-required, display_name='Required Component'
+2012-06-13 21:10:02	Loaded 'registry' installed check 'HKEY_LOCAL_MACHINE\SOFTWARE\DoesNotExist\'
+2012-06-13 21:10:02	Loaded dummy-optional, display_name='Optional Component'
+2012-06-13 21:10:02	Loaded 2 component(s) from configuration type=1 (lcid_filter=, os_filter=, os_filter_min=, os_filter_max=, processor_architecture_filter=)
+2012-06-13 21:10:02	--- Read 1 configuration(s)
+2012-06-13 21:10:02	Lcid type: UserExe
+2012-06-13 21:10:02	Operating system language id: 1033
+2012-06-13 21:10:02	-- Loading supported configurations (lcid=1033)
+2012-06-13 21:10:02	-- Loading supported configurations (lcid=1033)
+2012-06-13 21:10:02	UI level: full
+2012-06-13 21:10:02	Configuration language id: 1033 
+2012-06-13 21:10:02	-- Loading supported components (lcid=1033)
+2012-06-13 21:10:02	-- dummy-required (display_name='Required Component', os_filter_lcid=, os_filter=, os_filter_min=, os_filter_max=, processor_architecture_filter=): LOADED
+2012-06-13 21:10:02	-- dummy-optional (display_name='Optional Component', os_filter_lcid=, os_filter=, os_filter_min=, os_filter_max=, processor_architecture_filter=): LOADED
+2012-06-13 21:10:02	--- Loaded 2 supported component(s)
+2012-06-13 21:10:02	Checking whether registry key 'SOFTWARE\Microsoft' exists
+2012-06-13 21:10:02	Registry key 'SOFTWARE\Microsoft' found
+2012-06-13 21:10:02	-- dummy-required (Required Component): INSTALLED
+2012-06-13 21:10:02	Checking whether registry key 'SOFTWARE\DoesNotExist' exists
+2012-06-13 21:10:02	Registry key 'SOFTWARE\DoesNotExist' not found
+2012-06-13 21:10:02	-- dummy-optional (Optional Component): NOT INSTALLED
+2012-06-13 21:10:02	All required components installed: yes
+2012-06-13 21:10:02	All optional components installed: no
+2012-06-13 21:10:02	--- Complete Command
+2012-06-13 21:10:03	dotNetInstaller finished, return code: 0 (0x0)

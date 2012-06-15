@@ -1,6 +1,7 @@
 2.2 (Next)
 ==========
 
+* [#8](https://github.com/dblock/dotnetinstaller/issues/8): Added `prompt_for_optional_components`, prompt for optional components when all required components are installed - [@dblock](https://github.com/dblock).
 * [#12](https://github.com/dblock/dotnetinstaller/issues/12): Processor architecture filter matching for negated values (using `!`) is incorrect - [@dblock](https://github.com/dblock).
 * Displaying processor architecture next to the operating system version in the log file - [@dblock](https://github.com/dblock).
 * Using MSBuild Community Tasks from the ThirdParty directory - [@icnocop](https://github.com/icnocop).

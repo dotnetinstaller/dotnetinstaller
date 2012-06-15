@@ -21,6 +21,7 @@
 InstallConfiguration::InstallConfiguration()
 	: Configuration(configuration_install)
     , must_reboot_required(false)
+	, prompt_for_optional_components(false)
     , auto_close_if_installed(false)
     , auto_close_on_error(false)
 	, reload_on_error(true)
@@ -88,6 +89,7 @@ void InstallConfiguration::Load(TiXmlElement * node)
 	complete_command_basic = node->Attribute("complete_command_basic");
 	complete_command_silent = node->Attribute("complete_command_silent");
 	wait_for_complete_command = XmlAttribute(node->Attribute("wait_for_complete_command")).GetBoolValue(true);
+	prompt_for_optional_components = XmlAttribute(node->Attribute("prompt_for_optional_components")).GetBoolValue(true);
 	auto_close_if_installed = XmlAttribute(node->Attribute("auto_close_if_installed")).GetBoolValue(true);
     auto_close_on_error = XmlAttribute(node->Attribute("auto_close_on_error")).GetBoolValue(false);
 	reload_on_error = XmlAttribute(node->Attribute("reload_on_error")).GetBoolValue(true);

@@ -43,6 +43,8 @@ public:
 	bool disable_wow64_fs_redirection; 
 	// wait for the complete command to finish
 	bool wait_for_complete_command;
+	// if true, prompt for optional components if any instead of switching to uninstall mode
+	bool prompt_for_optional_components;
 	// if true auto close the dialog (display installation_completed or installation_none message 
 	// and execute the complete_command) if all the components are already installed
 	bool auto_close_if_installed;
