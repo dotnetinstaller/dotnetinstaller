@@ -120,6 +120,11 @@ namespace dotNetUnitTestsRunner
                 foreach (string folder in args.embedFolders)
                     cmd.Add(string.Format("/EmbedFolder:\"{0}\"", folder));
             }
+            if (args.htmlFiles != null)
+            {
+                foreach (string folder in args.htmlFiles)
+                    cmd.Add(string.Format("/EmbedHtml:\"{0}\"", folder));
+            }
             Run(InstallerLinkerExeUtils.Executable, string.Join(" ", cmd.ToArray()));
         }
     }

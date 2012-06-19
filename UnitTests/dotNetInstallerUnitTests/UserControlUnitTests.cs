@@ -496,6 +496,54 @@ namespace dotNetInstallerUnitTests
         }
 
         [Test]
+        public void TestUserControlEditHtmlValues()
+        {
+            Console.WriteLine("TestUserControlEditHtmlValues");
+
+            // a configuration with a checkbox control
+            ConfigFile configFile = new ConfigFile();
+            SetupConfiguration setupConfiguration = new SetupConfiguration();
+            configFile.Children.Add(setupConfiguration);
+            ControlEdit edit = new ControlEdit();
+            edit.Text = "3";
+            edit.Id = "edit1";
+            setupConfiguration.Children.Add(edit);
+            ComponentCmd cmd = new ComponentCmd();
+            cmd.command = "cmd.exe /C exit /b [edit1]";
+            cmd.required_install = true;
+            setupConfiguration.Children.Add(cmd);
+            // save config file
+            InstallerLinkerArguments args = new InstallerLinkerArguments();
+            args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+            Console.WriteLine("Writing '{0}'", args.config);
+            configFile.SaveAs(args.config);
+            // create HTML directory
+            string htmlPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            Directory.CreateDirectory(htmlPath);
+            string htmlIndexFilename = Path.Combine(htmlPath, "index.html");
+            File.WriteAllText(htmlIndexFilename,
+                              @"<html><head><title></title></head><body>
+                                <input type=""text"" id=""edit1"" value=""4"" />
+                                <input id=""button_install"" type=""button"" value=""Install"" />
+                                </body></html>");
+            // link the install executable
+            args.htmlFiles = new string[] { htmlPath };
+            args.embed = true;
+            args.apppath = Path.GetTempPath();
+            args.embedFiles = new string[] { Path.GetFileName(args.config) };
+            args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
+            args.template = dotNetInstallerExeUtils.Executable;
+            Console.WriteLine("Linking '{0}'", args.output);
+            InstallerLinkerExeUtils.CreateInstaller(args);
+            Assert.IsTrue(File.Exists(args.output));
+            // execute dotNetInstaller
+            dotNetInstallerExeUtils.RunOptions runOptions = new dotNetInstallerExeUtils.RunOptions(args.config);
+            Assert.AreEqual(4, dotNetInstallerExeUtils.Run(runOptions));
+            File.Delete(args.config);
+            Directory.Delete(args.htmlFiles[0], true);
+        }
+
+        [Test]
         public void TestUserControlBrowseControlArgs()
         {
             Console.WriteLine("TestUserControlBrowseControlArgs");
