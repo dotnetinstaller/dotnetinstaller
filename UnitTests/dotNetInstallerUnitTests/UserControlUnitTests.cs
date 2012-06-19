@@ -503,6 +503,9 @@ namespace dotNetInstallerUnitTests
             // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
+            setupConfiguration.auto_start = true;
+            setupConfiguration.failed_exec_command_continue = "";
+            setupConfiguration.auto_close_on_error = true;
             configFile.Children.Add(setupConfiguration);
             ControlEdit edit = new ControlEdit();
             edit.Text = "3";
@@ -538,6 +541,8 @@ namespace dotNetInstallerUnitTests
             Assert.IsTrue(File.Exists(args.output));
             // execute dotNetInstaller
             dotNetInstallerExeUtils.RunOptions runOptions = new dotNetInstallerExeUtils.RunOptions(args.config);
+            runOptions.autostart = true;
+            runOptions.quiet = false;
             Assert.AreEqual(4, dotNetInstallerExeUtils.Run(runOptions));
             File.Delete(args.config);
             Directory.Delete(args.htmlFiles[0], true);
