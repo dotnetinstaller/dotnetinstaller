@@ -500,6 +500,9 @@ namespace dotNetInstallerUnitTests
         {
             Console.WriteLine("TestUserControlEditHtmlValues");
 
+            bool usingHtmlInstaller = dotNetInstallerExeUtils.Executable.EndsWith("htmlInstaller.exe");
+            if (!usingHtmlInstaller) return;
+
             // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -540,10 +543,10 @@ namespace dotNetInstallerUnitTests
             InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
             // execute dotNetInstaller
-            dotNetInstallerExeUtils.RunOptions runOptions = new dotNetInstallerExeUtils.RunOptions(args.config);
+            dotNetInstallerExeUtils.RunOptions runOptions = new dotNetInstallerExeUtils.RunOptions();
             runOptions.autostart = true;
             runOptions.quiet = false;
-            Assert.AreEqual(4, dotNetInstallerExeUtils.Run(runOptions));
+            Assert.AreEqual(4, dotNetInstallerExeUtils.Run(args.output, runOptions.CommandLineArgs));
             File.Delete(args.config);
             Directory.Delete(args.htmlFiles[0], true);
         }
