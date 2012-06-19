@@ -202,6 +202,7 @@
   </ItemGroup>
   <Target Name="uitests" Inputs="@(UIDrivers)" Outputs="%(UIDrivers.Identity).out">
     <Message Text="Testing %(UIDrivers.Identity)" />
+    <MakeDir Directories="$(ReleaseDir)" />
     <CreateItem Include="TestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\%(UIDrivers.Identity)">
       <Output TaskParameter="Include" ItemName="TestExecutables"/>
     </CreateItem>

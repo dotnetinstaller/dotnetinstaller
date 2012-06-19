@@ -56,7 +56,7 @@ void SetControlValuesTask::exec(htmlayout::dom::element elt)
 			}
 			else if (0 == wcscmp(type, L"text"))
 			{
-				std::wstring value = DVLib::UTF8string2wstring(elt.get_html(false));
+				std::wstring value = elt.get_value().to_string();
 				LOG(L"--- Setting user-defined edit value '" << id << L"'=" << value);
 				InstallerSession::Instance->AdditionalControlArgs[id] = value;
 			}
