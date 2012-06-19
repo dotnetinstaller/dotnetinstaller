@@ -515,7 +515,7 @@ namespace dotNetInstallerUnitTests
             edit.Id = "edit1";
             setupConfiguration.Children.Add(edit);
             ComponentCmd cmd = new ComponentCmd();
-            cmd.command = "cmd.exe /C exit /b [edit1]";
+            cmd.command = "cmd.exe /C exit /b [edit1]1";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
             // save config file
@@ -546,7 +546,7 @@ namespace dotNetInstallerUnitTests
             dotNetInstallerExeUtils.RunOptions runOptions = new dotNetInstallerExeUtils.RunOptions();
             runOptions.autostart = true;
             runOptions.quiet = false;
-            Assert.AreEqual(4, dotNetInstallerExeUtils.Run(args.output, runOptions.CommandLineArgs));
+            Assert.AreEqual(41, dotNetInstallerExeUtils.Run(args.output, runOptions.CommandLineArgs));
             File.Delete(args.config);
             Directory.Delete(args.htmlFiles[0], true);
         }
