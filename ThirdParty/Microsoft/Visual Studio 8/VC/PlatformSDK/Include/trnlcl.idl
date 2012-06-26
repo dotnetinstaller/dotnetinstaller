@@ -1,0 +1,48 @@
+//-----------------------------------------------------------------------------
+// File:			trnlcl.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//  
+    
+    REMOTED_INTERFACE(0c733a5f-2a1c-11ce-ade5-00aa0044773d)
+
+    
+interface ITransactionLocal : ITransaction {
+
+	[local]
+	HRESULT GetOptionsObject(
+		[out] ITransactionOptions ** ppOptions
+	);
+
+	[call_as(GetOptionsObject)]
+	HRESULT RemoteGetOptionsObject(
+		[out] ITransactionOptions ** ppOptions,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT StartTransaction(
+		[in] ISOLEVEL isoLevel,
+		[in] ULONG isoFlags,
+		[in] ITransactionOptions * pOtherOptions,
+		[out] ULONG * pulTransactionLevel
+	);
+
+	[call_as(StartTransaction)]
+	HRESULT RemoteStartTransaction(
+		[in] ISOLEVEL isoLevel,
+		[in] ULONG isoFlags,
+		[in] ITransactionOptions * pOtherOptions,
+		[in, out, unique] ULONG * pulTransactionLevel,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

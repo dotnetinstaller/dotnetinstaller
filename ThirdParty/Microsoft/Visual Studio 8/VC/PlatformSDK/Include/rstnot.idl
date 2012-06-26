@@ -1,0 +1,86 @@
+//-----------------------------------------------------------------------------
+// File:			rstnot.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a83-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IRowsetNotify : IUnknown {
+
+	[local]
+	HRESULT OnFieldChange(
+		[in] IRowset * pRowset,
+		[in] HROW hRow,
+		[in] DBORDINAL cColumns,
+		[in, size_is((ULONG)cColumns)] DBORDINAL rgColumns[],
+		[in] DBREASON eReason,
+		[in] DBEVENTPHASE ePhase,
+		[in] BOOL fCantDeny
+	);
+
+#ifndef NO_REMOTE
+
+	[call_as(OnFieldChange)]
+	HRESULT RemoteOnFieldChange(
+		[in] IRowset * pRowset,
+		[in] HROW hRow,
+		[in] DBORDINAL cColumns,
+		[in, size_is((ULONG)cColumns)] DBORDINAL * rgColumns,
+		[in] DBREASON eReason,
+		[in] DBEVENTPHASE ePhase,
+		[in] BOOL fCantDeny
+	);
+
+#endif
+
+	[local]
+	HRESULT OnRowChange(
+		[in] IRowset * pRowset,
+		[in] DBCOUNTITEM cRows,
+		[in, size_is((ULONG)cRows)] const HROW rghRows[],
+		[in] DBREASON eReason,
+		[in] DBEVENTPHASE ePhase,
+		[in] BOOL fCantDeny
+	);
+
+#ifndef NO_REMOTE
+
+	[call_as(OnRowChange)]
+	HRESULT RemoteOnRowChange(
+		[in] IRowset * pRowset,
+		[in] DBCOUNTITEM cRows,
+		[in, size_is((ULONG)cRows)] const HROW * rghRows,
+		[in] DBREASON eReason,
+		[in] DBEVENTPHASE ePhase,
+		[in] BOOL fCantDeny
+	);
+
+#endif
+
+	[local]
+	HRESULT OnRowsetChange(
+		[in] IRowset * pRowset,
+		[in] DBREASON eReason,
+		[in] DBEVENTPHASE ePhase,
+		[in] BOOL fCantDeny
+	);
+
+	[call_as(OnRowsetChange)]
+	HRESULT RemoteOnRowsetChange(
+		[in] IRowset * pRowset,
+		[in] DBREASON eReason,
+		[in] DBEVENTPHASE ePhase,
+		[in] BOOL fCantDeny
+	);
+
+}

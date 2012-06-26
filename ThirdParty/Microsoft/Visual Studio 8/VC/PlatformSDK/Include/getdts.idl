@@ -1,0 +1,33 @@
+//-----------------------------------------------------------------------------
+// File:			getdts.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a75-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IGetDataSource : IUnknown {
+
+	[local]
+	HRESULT GetDataSource(
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppDataSource
+	);
+
+	[call_as(GetDataSource)]
+	HRESULT RemoteGetDataSource(
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppDataSource,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

@@ -1,0 +1,55 @@
+/*------------------------------------------------*\
+ *
+ *	Copyright 1997 - 1999 Microsoft Corporation
+ *
+ *	Module Name:
+ *
+ *		wpobj.idl
+ *
+ *	Abstract:
+ *
+ *		Declaration of the IWPObj interface
+ *		and type library
+ *
+\*------------------------------------------------*/
+
+	[
+		object,
+		uuid(EDD8BBC0-9240-11CF-9ED3-00AA004C120C),
+		dual,
+		helpstring("IWPObj Interface"),
+		pointer_default(unique)
+	]
+	interface IWPObj : IDispatch
+	{
+		import "oaidl.idl";
+
+		HRESULT WpPostFile(		[in]				LONG hwnd,
+    							[in, string]		BSTR bsLocalPath,
+								[in, out]			LONG *plSiteNameBufLen,
+								[in, out, string]	BSTR *pbsSiteName,
+								[in, out]			LONG *plDestURLBufLen,
+								[in, out, string]	BSTR *pbsDestURL,
+								[in]				LONG lFlag,
+								[out]				LONG *plRetCode);
+	};
+
+
+[
+	uuid(336c8c70-a62b-11d0-ad5f-00aa00a219aa),
+	version(1.0),
+	helpstring("WPObj 1.0 Type Library")
+]
+library WPObjLib
+{
+	importlib("stdole2.tlb");
+
+	[
+		uuid(53DEFDE0-9222-11CF-9ED3-00AA004C120C),
+		helpstring("WPObj Class")
+	]
+	coclass WPObj
+	{
+		[default] interface IWPObj;
+	};
+};

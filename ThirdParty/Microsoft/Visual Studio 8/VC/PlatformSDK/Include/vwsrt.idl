@@ -1,0 +1,55 @@
+//-----------------------------------------------------------------------------
+// File:			vwsrt.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+    REMOTED_INTERFACE(0c733a9a-2a1c-11ce-ade5-00aa0044773d)
+
+interface IViewSort : IUnknown {
+
+	[local]
+	HRESULT GetSortOrder(
+		[out] DBORDINAL * pcValues,
+		[out] DBORDINAL * prgColumns[],
+		[out] DBSORT * prgOrders[]
+	);
+
+#ifndef NO_REMOTE
+
+	[call_as(GetSortOrder)]
+	HRESULT RemoteGetSortOrder(
+		[in, out] DBORDINAL * pcValues,
+		[out, size_is(,(ULONG)*pcValues)] DBORDINAL ** prgColumns,
+		[out, size_is(,(ULONG)*pcValues)] DBSORT ** prgOrders,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+#endif
+
+	[local]
+	HRESULT SetSortOrder(
+		[in] DBORDINAL cValues,
+		[in, size_is((ULONG)cValues)] const DBORDINAL rgColumns[],
+		[in, size_is((ULONG)cValues)] const DBSORT rgOrders[]
+	);
+
+#ifndef NO_REMOTE
+
+	[call_as(SetSortOrder)]
+	HRESULT RemoteSetSortOrder(
+		[in] DBORDINAL cValues,
+		[in, size_is((ULONG)cValues)] const DBORDINAL * rgColumns,
+		[in, size_is((ULONG)cValues)] const DBSORT * rgOrders,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+#endif
+}

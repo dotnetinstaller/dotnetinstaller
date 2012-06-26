@@ -1,0 +1,33 @@
+//-----------------------------------------------------------------------------
+// File:			rowpsc.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+    REMOTED_INTERFACE(0997a571-126e-11d0-9f8a-00a0c9a0631e)
+
+interface IRowPositionChange : IUnknown {
+
+	[local]
+	HRESULT OnRowPositionChange(
+		[in] DBREASON eReason,
+		[in] DBEVENTPHASE ePhase,
+		[in] BOOL fCantDeny
+	);
+
+	[call_as(OnRowPositionChange)]
+	HRESULT RemoteOnRowPositionChange(
+		[in] DBREASON eReason,
+		[in] DBEVENTPHASE ePhase,
+		[in] BOOL fCantDeny,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

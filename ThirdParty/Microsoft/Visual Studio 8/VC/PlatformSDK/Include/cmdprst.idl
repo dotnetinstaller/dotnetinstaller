@@ -1,0 +1,43 @@
+//-----------------------------------------------------------------------------
+// File:			cmdprst.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+#if( OLEDBVER >= 0x0200 )
+    REMOTED_INTERFACE(0c733aa7-2a1c-11ce-ade5-00aa0044773d)
+#else
+    LOCAL_INTERFACE(0c733aa7-2a1c-11ce-ade5-00aa0044773d)
+#endif
+
+
+interface ICommandPersist : IUnknown {
+
+	HRESULT	DeleteCommand(
+		[in]	DBID *	pCommandID
+	); 
+ 
+
+	HRESULT	GetCurrentCommand(
+		[out]	DBID **	ppCommandID
+	); 
+
+	HRESULT	LoadCommand(
+		[in]	DBID *		pCommandID,
+		[in]	DWORD		dwFlags
+	); 
+
+	HRESULT	SaveCommand(
+		[in]	DBID *		pCommandID,
+		[in]	DWORD		dwFlags
+	); 
+
+}

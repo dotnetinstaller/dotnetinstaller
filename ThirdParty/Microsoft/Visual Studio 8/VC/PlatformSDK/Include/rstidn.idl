@@ -1,0 +1,33 @@
+//-----------------------------------------------------------------------------
+// File:			rstidn.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a09-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IRowsetIdentity : IUnknown {
+
+	[local]
+	HRESULT IsSameRow(
+		[in] HROW hThisRow,
+		[in] HROW hThatRow
+	);
+
+	[call_as(IsSameRow)]
+	HRESULT RemoteIsSameRow(
+		[in] HROW hThisRow,
+		[in] HROW hThatRow,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

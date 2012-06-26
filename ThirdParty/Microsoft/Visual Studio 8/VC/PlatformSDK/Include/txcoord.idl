@@ -1,0 +1,190 @@
+//-----------------------------------------------------------------------------
+// File:			txcoord.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		Transaction types and interfaces related to
+//		            transaction coordination.
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+import "transact.idl";
+import "objidl.idl";    // needed for IMoniker
+
+//
+//--------------------------------------------------------------------------
+//
+
+interface ITransactionResourceAsync;
+interface ITransactionEnlistmentAsync;
+
+interface ITransactionExportFactory;
+interface ITransactionImportWhereabouts;
+interface ITransactionExport;
+interface ITransactionImport;
+
+//
+//--------------------------------------------------------------------------
+//
+
+// @interface ITransactionResourceAsync | Implemented by the resource manager.
+
+[object,uuid(69E971F0-23CE-11cf-AD60-00AA00A74CCD),pointer_default(unique)]
+interface ITransactionResourceAsync : IUnknown
+	{
+    HRESULT PrepareRequest
+        (
+        [in] BOOL fRetaining, 
+        [in] DWORD grfRM, 
+        [in] BOOL fWantMoniker,
+        [in] BOOL fSinglePhase
+        );
+    HRESULT CommitRequest
+        (
+        [in] DWORD grfRM, 
+        [in] XACTUOW* pNewUOW
+        );
+    HRESULT AbortRequest
+        (
+        [in] BOID* pboidReason,
+        [in] BOOL  fRetaining,
+        [in] XACTUOW* pNewUOW
+        );
+	HRESULT	TMDown 
+		( 
+			void 
+		);
+    }
+
+//
+//--------------------------------------------------------------------------
+//
+
+// @interface ITransactionEnlistmentAsync |
+
+[object,uuid(0fb15081-af41-11ce-bd2b-204c4f4f5020),pointer_default(unique)]
+interface ITransactionEnlistmentAsync : IUnknown {
+    HRESULT PrepareRequestDone
+        (
+        [in] HRESULT hr, 
+        [in] IMoniker* pmk,
+        [in] BOID* pboidReason
+        );
+    HRESULT CommitRequestDone
+        (
+        [in] HRESULT hr
+        );
+    HRESULT AbortRequestDone
+        (
+        [in] HRESULT hr
+        );
+    } 
+
+//
+//==========================================================================
+// Interfaces related to ODBC transaction coordination.
+//==========================================================================
+//
+
+// @interface ITransactionExportFactory | Used on the client side to associate an export / import object pair with an external connection.
+
+[object,uuid(E1CF9B53-8745-11ce-A9BA-00AA006C3706),pointer_default(unique)]
+interface ITransactionExportFactory : IUnknown {
+    HRESULT GetRemoteClassId
+        (
+        [out] CLSID*    pclsid
+        );
+    HRESULT Create
+        (
+        [in]  ULONG                     cbWhereabouts,
+        [in, size_is(cbWhereabouts)]            
+              BYTE*                     rgbWhereabouts,
+        [out] ITransactionExport**      ppExport
+        );
+    }
+
+//
+//--------------------------------------------------------------------------
+//
+
+// @interface ITransactionImportWhereabouts | Used on the server side to associate an export / import object pair with an external connection.
+
+[object,uuid(0141fda4-8fc0-11ce-bd18-204c4f4f5020),pointer_default(unique)]
+interface ITransactionImportWhereabouts : IUnknown {
+    HRESULT GetWhereaboutsSize
+        (
+        [out] ULONG*    pcbWhereabouts
+        );
+    [local]
+    HRESULT GetWhereabouts
+        (
+        [in]  ULONG     cbWhereabouts,
+        [out, size_is(cbWhereabouts)]
+              BYTE*     rgbWhereabouts,
+        [out] ULONG*    pcbUsed
+        );
+    [call_as(GetWhereabouts)]   // pcbWhereaboutsUsed is optional; error semantics on it
+    HRESULT RemoteGetWhereabouts
+        (
+        [out] ULONG*    pcbUsed,
+        [in]  ULONG     cbWhereabouts,
+        [out, size_is(cbWhereabouts), length_is(*pcbUsed)]
+              BYTE*     rgbWhereabouts
+        );
+    }
+
+//
+//--------------------------------------------------------------------------
+//
+
+// @interface ITransactionExport | Used to plumb up a particular transaction with an export / import pair.
+
+[object,uuid(0141fda5-8fc0-11ce-bd18-204c4f4f5020),pointer_default(unique)]
+interface ITransactionExport : IUnknown {
+    HRESULT Export
+        (
+        [in]  IUnknown* punkTransaction,
+        [out] ULONG*    pcbTransactionCookie
+        );
+    [local]
+    HRESULT GetTransactionCookie
+        (
+        [in]  IUnknown* punkTransaction,
+        [in]  ULONG     cbTransactionCookie,
+        [out, size_is(cbTransactionCookie)]
+              BYTE*     rgbTransactionCookie,
+        [out] ULONG*    pcbUsed
+        );
+    [call_as(GetTransactionCookie)]
+    HRESULT RemoteGetTransactionCookie
+        (
+        [in]  IUnknown* punkTransaction,
+        [out] ULONG*    pcbUsed,
+        [in]  ULONG     cbTransactionCookie,
+        [out, size_is(cbTransactionCookie), length_is(*pcbUsed)]
+              BYTE*     rgbTransactionCookie
+        );
+    }
+
+//
+//--------------------------------------------------------------------------
+//
+
+// @interface ITransactionImport | Used to plumb up a particular transaction with an export / import pair.
+
+[object,uuid(E1CF9B5A-8745-11ce-A9BA-00AA006C3706),pointer_default(unique)]
+interface ITransactionImport : IUnknown {
+    HRESULT Import
+        (
+        [in]  ULONG         cbTransactionCookie,
+        [in, size_is(cbTransactionCookie)]
+              BYTE*         rgbTransactionCookie,
+        [in]  IID*          piid,
+        [out, iid_is(piid)]
+              void**        ppvTransaction
+        );
+    }
+
+

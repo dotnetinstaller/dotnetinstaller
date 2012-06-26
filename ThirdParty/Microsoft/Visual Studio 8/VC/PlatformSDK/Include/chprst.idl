@@ -1,0 +1,44 @@
+//-----------------------------------------------------------------------------
+// File:			chprst.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+    REMOTED_INTERFACE(0c733a93-2a1c-11ce-ade5-00aa0044773d)
+
+interface IChapteredRowset : IUnknown {
+
+	[local]
+	HRESULT AddRefChapter(
+		[in] HCHAPTER hChapter,
+		[out] DBREFCOUNT * pcRefCount
+	);
+
+	[call_as(AddRefChapter)]
+	HRESULT RemoteAddRefChapter(
+		[in] HCHAPTER hChapter,
+		[out] DBREFCOUNT * pcRefCount,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT ReleaseChapter(
+		[in] HCHAPTER hChapter,
+		[out] DBREFCOUNT * pcRefCount
+	);
+
+	[call_as(ReleaseChapter)]
+	HRESULT RemoteReleaseChapter(
+		[in] HCHAPTER hChapter,
+		[out] DBREFCOUNT * pcRefCount,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

@@ -1,0 +1,66 @@
+//-----------------------------------------------------------------------------
+// File:			colrst.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a10-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IColumnsRowset : IUnknown {
+
+	[local]
+	HRESULT GetAvailableColumns(
+		[in, out] DBORDINAL * pcOptColumns,
+		[out, size_is(,(ULONG)*pcOptColumns)] DBID ** prgOptColumns
+	);
+
+#ifndef NO_REMOTE
+
+	[call_as(GetAvailableColumns)]
+	HRESULT RemoteGetAvailableColumns(
+		[in, out] DBORDINAL * pcOptColumns,
+		[out, size_is(,(ULONG)*pcOptColumns)] DBID ** prgOptColumns,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+#endif
+
+	[local]
+	HRESULT GetColumnsRowset(
+		[in] IUnknown * pUnkOuter,
+		[in] DBORDINAL cOptColumns,
+		[in, size_is((ULONG)cOptColumns)] const DBID rgOptColumns[],
+		[in] REFIID riid,
+		[in] ULONG cPropertySets,
+		[in, out, size_is((ULONG)cPropertySets)] DBPROPSET rgPropertySets[],
+		[out, iid_is(riid)] IUnknown ** ppColRowset
+	);
+
+#ifndef NO_REMOTE
+
+	[call_as(GetColumnsRowset)]
+	HRESULT RemoteGetColumnsRowset(
+		[in] IUnknown * pUnkOuter,
+		[in] DBORDINAL cOptColumns,
+		[in, unique, size_is((ULONG)cOptColumns)] const DBID * rgOptColumns,
+		[in] REFIID riid,
+		[in] ULONG cPropertySets,
+		[in, unique, size_is((ULONG)cPropertySets)] DBPROPSET * rgPropertySets,
+		[out, iid_is(riid)] IUnknown ** ppColRowset,
+		[in] ULONG cTotalProps,
+		[out, size_is((ULONG)cTotalProps)] DBPROPSTATUS * rgPropStatus,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+#endif
+
+}

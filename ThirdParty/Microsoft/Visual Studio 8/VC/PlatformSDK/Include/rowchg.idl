@@ -1,0 +1,23 @@
+//-----------------------------------------------------------------------------
+// File:			rowchg.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+
+
+LOCAL_INTERFACE(0c733ab5-2a1c-11ce-ade5-00aa0044773d)
+
+interface IRowChange : IUnknown
+{
+[local] HRESULT SetColumns(
+    [in]                            DBORDINAL           cColumns,
+    [in, out, size_is(cColumns)]    DBCOLUMNACCESS  rgColumns[]
+    );
+};

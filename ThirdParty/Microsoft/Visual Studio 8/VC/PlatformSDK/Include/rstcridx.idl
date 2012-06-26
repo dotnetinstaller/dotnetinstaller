@@ -1,0 +1,25 @@
+//-----------------------------------------------------------------------------
+// File:			rstcridx.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+    
+    LOCAL_INTERFACE(0c733abd-2a1c-11ce-ade5-00aa0044773d)
+
+    
+interface IRowsetCurrentIndex : IRowsetIndex {
+
+	HRESULT GetIndex(
+		[out]	DBID **		ppIndexID);
+
+	HRESULT SetIndex(
+		[in]	DBID *		pIndexID);
+
+}

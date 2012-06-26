@@ -1,0 +1,85 @@
+//-----------------------------------------------------------------------------
+// File:			dbdsad.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a7a-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IDBDataSourceAdmin : IUnknown {
+
+	[local]
+	HRESULT CreateDataSource(
+		[in] ULONG cPropertySets,
+		[in, out, size_is(cPropertySets)] DBPROPSET rgPropertySets[],
+		[in] IUnknown * pUnkOuter,
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppDBSession
+	);
+
+	[call_as(CreateDataSource)]
+	HRESULT RemoteCreateDataSource(
+		[in] ULONG cPropertySets,
+		[in, unique, size_is(cPropertySets)] DBPROPSET * rgPropertySets,
+		[in] IUnknown * pUnkOuter,
+		[in] REFIID riid,
+		[in, out, unique, iid_is(riid)] IUnknown ** ppDBSession,
+		[in] ULONG cTotalProps,
+		[out, size_is(cTotalProps)] DBPROPSTATUS * rgPropStatus,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT DestroyDataSource(
+	);
+
+	[call_as(DestroyDataSource)]
+	HRESULT RemoteDestroyDataSource(
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT GetCreationProperties(
+		[in] ULONG cPropertyIDSets,
+		[in, size_is(cPropertyIDSets)] const DBPROPIDSET rgPropertyIDSets[],
+		[in, out] ULONG * pcPropertyInfoSets,
+		[out, size_is(,*pcPropertyInfoSets)] DBPROPINFOSET ** prgPropertyInfoSets,
+		[out] OLECHAR ** ppDescBuffer
+	);
+
+	[call_as(GetCreationProperties)]
+	HRESULT RemoteGetCreationProperties(
+		[in] ULONG cPropertyIDSets,
+		[in, unique, size_is(cPropertyIDSets)] const DBPROPIDSET * rgPropertyIDSets,
+		[in, out] ULONG * pcPropertyInfoSets,
+		[out, size_is(,*pcPropertyInfoSets)] DBPROPINFOSET ** prgPropertyInfoSets,
+		[in, out] DBCOUNTITEM * pcOffsets,
+		[out, size_is(,(ULONG)*pcOffsets)] DBBYTEOFFSET ** prgDescOffsets,
+		[in, out] ULONG * pcbDescBuffer,
+		[in, out, unique, size_is(,*pcbDescBuffer)] OLECHAR ** ppDescBuffer,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT ModifyDataSource(
+		[in] ULONG cPropertySets,
+		[in, size_is(cPropertySets)] DBPROPSET rgPropertySets[]
+	);
+
+	[call_as(ModifyDataSource)]
+	HRESULT RemoteModifyDataSource(
+		[in] ULONG cPropertySets,
+		[in, size_is(cPropertySets)] DBPROPSET * rgPropertySets,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

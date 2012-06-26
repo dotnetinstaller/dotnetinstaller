@@ -1,0 +1,52 @@
+//-----------------------------------------------------------------------------
+// File:			asysta.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+    REMOTED_INTERFACE(0c733a95-2a1c-11ce-ade5-00aa0044773d)
+
+interface IDBAsynchStatus : IUnknown {
+
+	[local]
+	HRESULT Abort(
+		[in] HCHAPTER hChapter,
+		[in] DBASYNCHOP eOperation
+	);
+
+	[call_as(Abort)]
+	HRESULT RemoteAbort(
+		[in] HCHAPTER hChapter,
+		[in] DBASYNCHOP eOperation,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT GetStatus(
+		[in] HCHAPTER hChapter,
+		[in] DBASYNCHOP eOperation,
+		[out] DBCOUNTITEM * pulProgress,
+		[out] DBCOUNTITEM * pulProgressMax,
+		[out] DBASYNCHPHASE * peAsynchPhase,
+		[out] LPOLESTR * ppwszStatusText
+	);
+
+	[call_as(GetStatus)]
+	HRESULT RemoteGetStatus(
+		[in] HCHAPTER hChapter,
+		[in] DBASYNCHOP eOperation,
+		[in,out,unique] DBCOUNTITEM * pulProgress,
+		[in,out,unique] DBCOUNTITEM * pulProgressMax,
+		[in,out,unique] DBASYNCHPHASE * peAsynchPhase,
+		[in,out,unique] LPOLESTR * ppwszStatusText,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

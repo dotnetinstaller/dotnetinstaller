@@ -1,0 +1,64 @@
+//-----------------------------------------------------------------------------
+// File:			rstinf.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a55-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IRowsetInfo : IUnknown {
+
+	[local]
+	HRESULT GetProperties(
+		[in] const ULONG cPropertyIDSets,
+		[in, size_is(cPropertyIDSets)] const DBPROPIDSET rgPropertyIDSets[],
+		[in, out] ULONG * pcPropertySets,
+		[out, size_is(,*pcPropertySets)] DBPROPSET ** prgPropertySets
+	);
+
+	[call_as(GetProperties)]
+	HRESULT RemoteGetProperties(
+		[in] ULONG cPropertyIDSets,
+		[in, unique, size_is(cPropertyIDSets)] const DBPROPIDSET *rgPropertyIDSets,
+		[in, out] ULONG * pcPropertySets,
+		[out, size_is(,*pcPropertySets)] DBPROPSET ** prgPropertySets,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT GetReferencedRowset(
+		[in] DBORDINAL iOrdinal,
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppReferencedRowset
+	);
+
+	[call_as(GetReferencedRowset)]
+	HRESULT RemoteGetReferencedRowset(
+		[in] DBORDINAL iOrdinal,
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppReferencedRowset,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT GetSpecification(
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppSpecification
+	);
+
+	[call_as(GetSpecification)]
+	HRESULT RemoteGetSpecification(
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppSpecification,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+}
