@@ -1,0 +1,38 @@
+//-----------------------------------------------------------------------------
+// File:			mdfind.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//  
+
+#if( OLEDBVER >= 0x0200 )
+    REMOTED_INTERFACE(a07cccd2-8148-11d0-87bb-00c04fc33942)
+#else
+    LOCAL_INTERFACE(a07cccd2-8148-11d0-87bb-00c04fc33942)
+#endif
+    
+interface IMDFind : IUnknown {
+
+	HRESULT FindCell(
+		[in] DBORDINAL ulStartingOrdinal,
+		[in] DBCOUNTITEM cMembers,
+		[in, size_is((ULONG)cMembers)] LPCOLESTR * rgpwszMember,
+		[out] DBORDINAL * pulCellOrdinal
+	);
+
+	HRESULT FindTuple(
+		[in] ULONG ulAxisIdentifier,
+		[in] DBORDINAL ulStartingOrdinal,
+		[in] DBCOUNTITEM cMembers,
+		[in, size_is((ULONG)cMembers)] LPCOLESTR * rgpwszMember,
+		[out] ULONG * pulTupleOrdinal
+	);
+
+}

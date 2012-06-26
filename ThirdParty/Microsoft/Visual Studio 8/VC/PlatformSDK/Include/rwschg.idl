@@ -1,0 +1,31 @@
+//-----------------------------------------------------------------------------
+// File:			rwschg.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+
+
+LOCAL_INTERFACE(0c733aae-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IRowSchemaChange : IRowChange
+{
+HRESULT DeleteColumns(
+	[in]                            DBORDINAL	    cColumns,
+	[in, size_is(cColumns)]  const  DBID 	        rgColumnIDs[],
+	[in, out, size_is(cColumns)]    DBSTATUS 	    rgdwStatus[]
+    );
+
+HRESULT AddColumns(
+	[in]                            DBORDINAL       cColumns,
+	[in, size_is(cColumns)]  const  DBCOLUMNINFO    rgNewColumnInfo[],
+	[in, out, size_is(cColumns)]    DBCOLUMNACCESS	rgColumns[]
+    );
+};

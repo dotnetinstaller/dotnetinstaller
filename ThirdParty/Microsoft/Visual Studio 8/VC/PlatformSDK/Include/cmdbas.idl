@@ -1,0 +1,70 @@
+//-----------------------------------------------------------------------------
+// File:			cmdbas.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a63-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface ICommand : IUnknown {
+
+	[local]
+	HRESULT Cancel(
+	);
+
+	[call_as(Cancel)]
+	HRESULT RemoteCancel(
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT Execute(
+		[in] IUnknown * pUnkOuter,
+		[in] REFIID riid,
+		[in, out] DBPARAMS * pParams,
+		[out] DBROWCOUNT * pcRowsAffected,
+		[out, iid_is(riid)] IUnknown ** ppRowset
+	);
+
+#ifndef NO_REMOTE
+	[call_as(Execute)]
+	HRESULT RemoteExecute( 
+		[in] IUnknown * pUnkOuter,
+		[in] REFIID riid,
+		[in] HACCESSOR hAccessor,
+		[in] DB_UPARAMS cParamSets,
+		[in, unique] GUID * pGuid,
+		[in] ULONG ulGuidOffset,
+		[in, unique] RMTPACK * pInputParams,
+		[in, out, unique] RMTPACK * pOutputParams,
+		[in] DBCOUNTITEM cBindings,
+		[in, unique, size_is((ULONG)cBindings)] DBBINDING * rgBindings,
+		[in, out, unique, size_is((ULONG)cBindings)] DBSTATUS * rgStatus,
+		[in, out, unique] DBROWCOUNT * pcRowsAffected,
+		[in, out, unique, iid_is(riid)] IUnknown ** ppRowset
+	);
+#endif
+
+	[local]
+	HRESULT GetDBSession(
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppSession
+	);
+
+	[call_as(GetDBSession)]
+	HRESULT RemoteGetDBSession(
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppSession,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

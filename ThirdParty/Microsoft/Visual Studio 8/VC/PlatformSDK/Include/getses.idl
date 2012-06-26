@@ -1,0 +1,26 @@
+//-----------------------------------------------------------------------------
+// File:			getses.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+
+
+	REMOTED_INTERFACE(0c733aba-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IGetSession : IUnknown
+{
+
+	HRESULT GetSession(
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppSession
+	);
+};
+

@@ -1,0 +1,46 @@
+//-----------------------------------------------------------------------------
+// File:			cmdtxt.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a27-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface ICommandText : ICommand {
+
+	[local]
+	HRESULT GetCommandText(
+		[in, out] GUID * pguidDialect,
+		[out] LPOLESTR * ppwszCommand
+	);
+
+	[call_as(GetCommandText)]
+	HRESULT RemoteGetCommandText(
+		[in, out, unique] GUID * pguidDialect,
+		[out] LPOLESTR * ppwszCommand,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT SetCommandText(
+		[in] REFGUID rguidDialect,
+		[in, unique] LPCOLESTR pwszCommand
+	);
+
+	[call_as(SetCommandText)]
+	HRESULT RemoteSetCommandText(
+		[in] REFGUID rguidDialect,
+		[in, unique] LPCOLESTR pwszCommand,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

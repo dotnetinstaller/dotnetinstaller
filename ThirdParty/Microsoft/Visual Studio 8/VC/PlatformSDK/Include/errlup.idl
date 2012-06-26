@@ -1,0 +1,71 @@
+//-----------------------------------------------------------------------------
+// File:			errlup.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a66-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IErrorLookup : IUnknown {
+
+	[local]
+	HRESULT GetErrorDescription(
+		[in] HRESULT hrError,
+		[in] DWORD dwLookupID,
+		[in] DISPPARAMS * pdispparams,
+		[in] LCID lcid,
+		[out] BSTR * pbstrSource,
+		[out] BSTR * pbstrDescription
+	);
+
+	[call_as(GetErrorDescription)]
+	HRESULT RemoteGetErrorDescription(
+		[in] HRESULT hrError,
+		[in] DWORD dwLookupID,
+		[in] DISPPARAMS * pdispparams,
+		[in] LCID lcid,
+		[out] BSTR * pbstrSource,
+		[out] BSTR * pbstrDescription,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT GetHelpInfo(
+		[in] HRESULT hrError,
+		[in] DWORD dwLookupID,
+		[in] LCID lcid,
+		[out] BSTR * pbstrHelpFile,
+		[out] DWORD * pdwHelpContext
+	);
+
+	[call_as(GetHelpInfo)]
+	HRESULT RemoteGetHelpInfo(
+		[in] HRESULT hrError,
+		[in] DWORD dwLookupID,
+		[in] LCID lcid,
+		[out] BSTR * pbstrHelpFile,
+		[out] DWORD * pdwHelpContext,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT ReleaseErrors(
+		[in] const DWORD dwDynamicErrorID
+	);
+
+	[call_as(ReleaseErrors)]
+	HRESULT RemoteReleaseErrors(
+		[in] const DWORD dwDynamicErrorID,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

@@ -1,0 +1,32 @@
+//-----------------------------------------------------------------------------
+// File:			rstfnd.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//  
+    LOCAL_INTERFACE(0c733a9d-2a1c-11ce-ade5-00aa0044773d)
+
+    
+interface IRowsetFind : IUnknown {
+
+	HRESULT FindNextRow(
+		[in] HCHAPTER hChapter,
+		[in] HACCESSOR hAccessor,
+		[in] void * pFindValue,
+		[in] DBCOMPAREOP CompareOp,
+		[in] DBBKMARK cbBookmark,
+		[in, size_is(cbBookmark)] const BYTE * pBookmark,
+		[in] DBROWOFFSET lRowsOffset,
+		[in] DBROWCOUNT cRows,
+		[in, out] DBCOUNTITEM * pcRowsObtained,
+		[out, size_is(,*pcRowsObtained)] HROW ** prghRows
+	);
+
+}

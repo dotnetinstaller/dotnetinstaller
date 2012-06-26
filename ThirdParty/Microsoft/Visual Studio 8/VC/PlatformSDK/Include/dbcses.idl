@@ -1,0 +1,35 @@
+//-----------------------------------------------------------------------------
+// File:			dbcses.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a5d-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IDBCreateSession : IUnknown {
+
+	[local]
+	HRESULT CreateSession(
+		[in] IUnknown * pUnkOuter,
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppDBSession
+	);
+
+	[call_as(CreateSession)]
+	HRESULT RemoteCreateSession(
+		[in] IUnknown * pUnkOuter,
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppDBSession,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

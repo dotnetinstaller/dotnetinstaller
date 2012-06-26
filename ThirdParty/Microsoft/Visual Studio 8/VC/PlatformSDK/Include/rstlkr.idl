@@ -1,0 +1,38 @@
+//-----------------------------------------------------------------------------
+// File:			rstlkr.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//  
+    
+    REMOTED_INTERFACE(0c733a0a-2a1c-11ce-ade5-00aa0044773d)
+
+    
+interface IRowsetLockRows : IUnknown {
+
+typedef DWORD DBLOCKMODE;
+
+enum DBLOCKMODEENUM {
+	DBLOCKMODE_NONE,
+	DBLOCKMODE_READ,
+	DBLOCKMODE_INTENT,
+	DBLOCKMODE_WRITE
+};
+
+	HRESULT LockRowsByBookmark(
+		[in] DBLOCKMODE eLockMode,
+		[in] HCHAPTER hReserved,
+		[in] DBCOUNTITEM cRows,
+		[in, size_is((ULONG)cRows)] const DBBKMARK rgcbBookmarks[],
+		[in, size_is((ULONG)cRows)] const BYTE * rgBookmarks[],
+		[out, size_is((ULONG)cRows)] DBROWSTATUS rgRowStatus[]
+	);
+
+}

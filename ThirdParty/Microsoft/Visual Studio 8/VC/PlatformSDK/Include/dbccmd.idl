@@ -1,0 +1,35 @@
+//-----------------------------------------------------------------------------
+// File:			dbccmd.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a1d-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IDBCreateCommand : IUnknown {
+
+	[local]
+	HRESULT CreateCommand(
+		[in] IUnknown * pUnkOuter,
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppCommand
+	);
+
+	[call_as(CreateCommand)]
+	HRESULT RemoteCreateCommand(
+		[in] IUnknown * pUnkOuter,
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppCommand,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

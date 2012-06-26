@@ -1,0 +1,50 @@
+//-----------------------------------------------------------------------------
+// File:			crtrow.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+
+	REMOTED_INTERFACE(0c733ab2-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface ICreateRow : IUnknown
+{
+
+[local]
+HRESULT CreateRow(	
+	[in, unique]                    IUnknown*           pUnkOuter,
+	[in]                            LPCOLESTR 	        pwszURL,
+	[in]                            DBBINDURLFLAG       dwBindURLFlags,
+	[in]                            REFGUID		        rguid,
+	[in]                            REFIID 		        riid,	
+	[in, unique]                    IAuthenticate*      pAuthenticate,
+	[in, out, unique]               DBIMPLICITSESSION*  pImplSession,
+	[in, out, unique]               DBBINDURLSTATUS*	pdwBindStatus,
+	[out]                           LPOLESTR*           ppwszNewURL,
+	[out, iid_is(riid)]             IUnknown**          ppUnk
+    );
+
+[call_as(CreateRow)]
+HRESULT RemoteCreateRow(
+	[in] IUnknown * pUnkOuter,
+	[in] LPCOLESTR pwszURL,
+	[in] DBBINDURLFLAG dwBindURLFlags,
+	[in] REFGUID rguid,
+	[in] REFIID riid,
+	[in] IAuthenticate * pAuthenticate,
+	[in] IUnknown *pSessionUnkOuter,
+	[in, unique] IID *piid,
+	[in, out, unique, iid_is(piid)] IUnknown **ppSession,
+	[in, out, unique] DBBINDURLSTATUS * pdwBindStatus,
+	[in, out, unique] LPOLESTR * ppwszNewURL,
+	[out, iid_is(riid)] IUnknown ** ppUnk
+	);
+
+};

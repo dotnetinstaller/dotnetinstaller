@@ -1,0 +1,45 @@
+//-----------------------------------------------------------------------------
+// File:			regprv.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+
+	REMOTED_INTERFACE(0c733ab9-2a1c-11ce-ade5-00aa0044773d)
+
+interface IRegisterProvider : IUnknown
+{
+
+[local]
+HRESULT GetURLMapping(
+	[in] LPCOLESTR pwszURL,
+	[in] DB_DWRESERVE dwReserved,
+	[out] CLSID * pclsidProvider
+	);
+
+[call_as(GetURLMapping)]
+HRESULT RemoteGetURLMapping(
+	[in] LPCOLESTR pwszURL,
+	[in] DB_DWRESERVE dwReserved,
+	[out] CLSID * pclsidProvider
+	);
+
+HRESULT SetURLMapping(
+	[in, unique] LPCOLESTR pwszURL,
+	[in] DB_DWRESERVE dwReserved,
+	[in, unique] REFCLSID rclsidProvider
+	);
+
+HRESULT UnregisterProvider(
+	[in, unique] LPCOLESTR pwszURL,
+	[in] DB_DWRESERVE dwReserved,
+	[in, unique] REFCLSID rclsidProvider
+	);
+
+};

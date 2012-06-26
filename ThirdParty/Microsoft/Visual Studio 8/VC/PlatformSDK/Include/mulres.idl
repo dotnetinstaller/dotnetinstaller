@@ -1,0 +1,48 @@
+//-----------------------------------------------------------------------------
+// File:			mulres.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a90-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IMultipleResults : IUnknown {
+
+typedef DB_LRESERVE DBRESULTFLAG;
+
+enum DBRESULTFLAGENUM
+    {
+    DBRESULTFLAG_DEFAULT   = 0,
+    DBRESULTFLAG_ROWSET    = 1,
+    DBRESULTFLAG_ROW       = 2,
+    };
+
+	[local]
+	HRESULT GetResult(
+		[in] IUnknown * pUnkOuter,
+		[in] DBRESULTFLAG lResultFlag,
+		[in] REFIID riid,
+		[out] DBROWCOUNT * pcRowsAffected,
+		[out, iid_is(riid)] IUnknown ** ppRowset
+	);
+
+	[call_as(GetResult)]
+	HRESULT RemoteGetResult(
+		[in] IUnknown * pUnkOuter,
+		[in] DBRESULTFLAG lResultFlag,
+		[in] REFIID riid,
+		[in, out, unique] DBROWCOUNT * pcRowsAffected,
+		[in, out, unique, iid_is(riid)] IUnknown ** ppRowset,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

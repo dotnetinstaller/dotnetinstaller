@@ -1,0 +1,40 @@
+//-----------------------------------------------------------------------------
+// File:			rstchg.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//  
+    
+    LOCAL_INTERFACE(0c733a05-2a1c-11ce-ade5-00aa0044773d)
+
+    
+interface IRowsetChange : IUnknown {
+
+	HRESULT DeleteRows(
+		[in] HCHAPTER hReserved,
+		[in] DBCOUNTITEM cRows,
+		[in, size_is(cRows)] const HROW rghRows[],
+		[out, size_is(cRows)] DBROWSTATUS rgRowStatus[]
+	);
+
+	HRESULT SetData(
+		[in] HROW hRow,
+		[in] HACCESSOR hAccessor,
+		[in] void * pData
+	);
+
+	HRESULT InsertRow(
+		[in] HCHAPTER hReserved,
+		[in] HACCESSOR hAccessor,
+		[in] void * pData,
+		[out] HROW * phRow
+	);
+
+}

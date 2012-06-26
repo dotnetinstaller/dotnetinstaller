@@ -1,0 +1,78 @@
+//-----------------------------------------------------------------------------
+// File:			cmdwpr.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a64-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface ICommandWithParameters : IUnknown {
+
+typedef struct tagDBPARAMBINDINFO {
+	LPOLESTR pwszDataSourceType;
+	LPOLESTR pwszName;
+	DBLENGTH ulParamSize;
+	DBPARAMFLAGS dwFlags;
+	BYTE bPrecision;
+	BYTE bScale;
+} DBPARAMBINDINFO;
+
+	[local]
+	HRESULT GetParameterInfo(
+        [in, out] DB_UPARAMS * pcParams,
+		[out, size_is(,*pcParams)] DBPARAMINFO ** prgParamInfo,
+		[out] OLECHAR ** ppNamesBuffer
+	);
+
+#ifndef NO_REMOTE
+	[call_as(GetParameterInfo)]
+	HRESULT RemoteGetParameterInfo(
+		[in, out] DB_UPARAMS * pcParams,
+		[out, size_is(,(ULONG)*pcParams)] DBPARAMINFO ** prgParamInfo,
+		[out, size_is(,(ULONG)*pcParams)] DBBYTEOFFSET ** prgNameOffsets,
+		[in, out] DBLENGTH * pcbNamesBuffer,
+		[in, out, unique, size_is(,(ULONG)*pcbNamesBuffer)] OLECHAR ** ppNamesBuffer,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+#endif
+
+	[local]
+	HRESULT MapParameterNames(
+		[in] DB_UPARAMS cParamNames,
+		[in, size_is((ULONG)cParamNames)] const OLECHAR * rgParamNames[],
+		[out, size_is((ULONG)cParamNames)] DB_LPARAMS rgParamOrdinals[]
+	);
+
+	[call_as(MapParameterNames)]
+	HRESULT RemoteMapParameterNames(
+		[in] DB_UPARAMS cParamNames,
+		[in, size_is((ULONG)cParamNames)] LPCOLESTR *rgParamNames,
+		[out, size_is((ULONG)cParamNames)] DB_LPARAMS * rgParamOrdinals,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT SetParameterInfo(
+		[in] DB_UPARAMS cParams,
+		[in, unique, size_is((ULONG)cParams)] const DB_UPARAMS rgParamOrdinals[],
+		[in, unique, size_is((ULONG)cParams)] const DBPARAMBINDINFO rgParamBindInfo[]
+	);
+
+	[call_as(SetParameterInfo)]
+	HRESULT RemoteSetParameterInfo(
+		[in] DB_UPARAMS cParams,
+		[in, unique, size_is((ULONG)cParams)] const DB_UPARAMS * rgParamOrdinals,
+		[in, unique, size_is((ULONG)cParams)] const DBPARAMBINDINFO * rgParamBindInfo,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

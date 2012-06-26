@@ -1,0 +1,21 @@
+//-----------------------------------------------------------------------------
+// File:			dbrtpr.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+
+	REMOTED_INTERFACE(0c733ab3-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface  IDBBinderProperties : IDBProperties
+{
+	HRESULT Reset(
+	);
+};

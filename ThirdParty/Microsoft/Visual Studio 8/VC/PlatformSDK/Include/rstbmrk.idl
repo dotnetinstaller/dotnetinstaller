@@ -1,0 +1,27 @@
+//-----------------------------------------------------------------------------
+// File:			rstbmrk.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733ac2-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IRowsetBookmark : IUnknown {
+
+	[local]
+	HRESULT PositionOnBookmark(
+		[in] HCHAPTER hChapter,
+		[in] DBBKMARK cbBookmark,
+		[in, size_is((ULONG)cbBookmark)] const BYTE * pBookmark
+	);
+
+}

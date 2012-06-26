@@ -1,0 +1,32 @@
+//-----------------------------------------------------------------------------
+// File:			tblcrt.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+
+LOCAL_INTERFACE(0c733abc-2a1c-11ce-ade5-00aa0044773d)
+
+interface ITableCreation : ITableDefinition
+{
+
+[local] 
+	HRESULT GetTableDefinition(
+	[in]								DBID*					pTableID,
+	[out]								DBORDINAL*				pcColumnDescs,
+	[out, size_is(,(ULONG)*pcColumnDescs)] DBCOLUMNDESC*			prgColumnDescs[],
+	[out]								ULONG*					pcPropertySets,
+	[out, size_is(,*pcPropertySets)]	DBPROPSET*				prgPropertySets[],
+	[out]								ULONG*					pcConstraintDescs, 
+	[out, size_is(,*pcConstraintDescs)]	DBCONSTRAINTDESC*		prgConstraintDescs[],
+	[out]								OLECHAR**				ppwszStringBuffer
+	);
+}
+
+

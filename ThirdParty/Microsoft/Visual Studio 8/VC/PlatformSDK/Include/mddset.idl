@@ -1,0 +1,50 @@
+//-----------------------------------------------------------------------------
+// File:			mddset.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//  
+
+	LOCAL_INTERFACE(a07cccd1-8148-11d0-87bb-00c04fc33942)
+    
+interface IMDDataset : IUnknown {
+
+	HRESULT FreeAxisInfo(
+		[in] DBCOUNTITEM cAxes,
+		[in, size_is(cAxes)] MDAXISINFO * rgAxisInfo
+	);
+
+	HRESULT GetAxisInfo(
+		[in, out] DBCOUNTITEM * pcAxes,
+		[out, size_is(,*pcAxes)] MDAXISINFO ** prgAxisInfo
+	);
+
+	HRESULT GetAxisRowset(
+		[in] IUnknown * pUnkOuter,
+		[in] DBCOUNTITEM iAxis,
+		[in] REFIID riid,
+		[in] ULONG cPropertySets,
+		[in, out, size_is(cPropertySets)] DBPROPSET rgPropertySets[],
+		[out, iid_is(riid)] IUnknown ** ppRowset
+	);
+
+	HRESULT GetCellData(
+		[in] HACCESSOR hAccessor,
+		[in] DBORDINAL ulStartCell,
+		[in] DBORDINAL ulEndCell,
+		[out] void * pData
+	);
+
+	HRESULT GetSpecification(
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppSpecification
+	);
+
+}
