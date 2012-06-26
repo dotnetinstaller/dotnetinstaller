@@ -97,6 +97,14 @@
     <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
     <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
     <Binaries Include="ThirdParty\Mslu\unicows.dll" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\Microsoft.VC80.DebugCRT.manifest" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcm80d.dll" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcp80d.dll" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcr80d.dll" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
     <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\Microsoft.VC80.CRT.manifest" />
     <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcm80.dll" />
     <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcp80.dll" />
@@ -254,9 +262,9 @@
   </ItemGroup>
   <Target Name="rewritewizardxmls" Inputs="@(WizardXmls)" Outputs="%(WizardXmls.Identity).output">
     <Message Text="%(WizardXmls.Identity)" />
-    <XslTransform XmlFile="%(WizardXmls.Identity)" XsltFiles="InstallerEditor\xsl\wizard2config.xsl" OutputFile="%(WizardXmls.Identity).config" />
+    <XslTransform ToolPath="$(ProjectDir)ThirdParty\Sandcastle 2.6.1062.1\ProductionTools" XmlFile="%(WizardXmls.Identity)" XsltFiles="InstallerEditor\xsl\wizard2config.xsl" OutputFile="%(WizardXmls.Identity).config" />
     <Exec Command="InstallerConfig\bin\$(Configuration)\InstallerConfig.exe /ConfigFile:%(WizardXmls.Identity).config" />
-    <XslTransform XmlFile="%(WizardXmls.Identity).config" XsltFiles="InstallerEditor\xsl\config2wizard.xsl" OutputFile="%(WizardXmls.Identity)" />
+    <XslTransform ToolPath="$(ProjectDir)ThirdParty\Sandcastle 2.6.1062.1\ProductionTools" XmlFile="%(WizardXmls.Identity).config" XsltFiles="InstallerEditor\xsl\config2wizard.xsl" OutputFile="%(WizardXmls.Identity)" />
     <Delete Files="%(WizardXmls.Identity).config" />
   </Target>
   <Target Name="packagedsetupsample" DependsOnTargets="version">
