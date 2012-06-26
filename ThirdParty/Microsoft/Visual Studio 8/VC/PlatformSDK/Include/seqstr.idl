@@ -1,0 +1,32 @@
+//-----------------------------------------------------------------------------
+// File:			seqstr.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//  
+    
+    LOCAL_INTERFACE(0c733a30-2a1c-11ce-ade5-00aa0044773d)
+
+    
+interface ISequentialStream : IUnknown {
+
+	HRESULT Read(
+		[out] void * pv,
+		[in] DBLENGTH cb,
+		[out] DBLENGTH * pcbRead
+	);
+
+	HRESULT Write(
+		[in] const void * pv,
+		[in] DBLENGTH cb,
+		[out] DBLENGTH * pcbWritten
+	);
+
+}

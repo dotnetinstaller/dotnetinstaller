@@ -1,0 +1,48 @@
+//-----------------------------------------------------------------------------
+// File:			trnjoi.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a5e-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface ITransactionJoin : IUnknown {
+
+	[local]
+	HRESULT GetOptionsObject(
+		[out] ITransactionOptions ** ppOptions
+	);
+
+	[call_as(GetOptionsObject)]
+	HRESULT RemoteGetOptionsObject(
+		[out] ITransactionOptions ** ppOptions,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT JoinTransaction(
+		[in] IUnknown * punkTransactionCoord,
+		[in] ISOLEVEL isoLevel,
+		[in] ULONG isoFlags,
+		[in] ITransactionOptions * pOtherOptions
+	);
+
+	[call_as(JoinTransaction)]
+	HRESULT RemoteJoinTransaction(
+		[in, unique] IUnknown * punkTransactionCoord,
+		[in] ISOLEVEL isoLevel,
+		[in] ULONG isoFlags,
+		[in] ITransactionOptions * pOtherOptions,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

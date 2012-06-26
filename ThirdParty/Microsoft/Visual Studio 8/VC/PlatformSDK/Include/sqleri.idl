@@ -1,0 +1,33 @@
+//-----------------------------------------------------------------------------
+// File:			sqleri.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a74-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface ISQLErrorInfo : IUnknown {
+
+	[local]
+	HRESULT GetSQLInfo(
+		[out] BSTR * pbstrSQLState,
+		[out] LONG * plNativeError
+	);
+
+	[call_as(GetSQLInfo)]
+	HRESULT RemoteGetSQLInfo(
+		[out] BSTR * pbstrSQLState,
+		[out] LONG * plNativeError,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

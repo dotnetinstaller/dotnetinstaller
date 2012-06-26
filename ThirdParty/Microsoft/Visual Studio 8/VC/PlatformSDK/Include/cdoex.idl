@@ -1,0 +1,1846 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+import "msado15.idl";
+
+	
+
+	
+
+interface IMessage;
+interface IMessages;
+interface IBodyPart;
+interface IConfiguration;
+interface IBodyParts;
+interface IDataSource;
+
+[helpstring("Used to set or examine the urn:schemas:calendar:attendeerole property, the value of which identifies whether the attendee is required, optional, or not a participant, or the meeting chairperson.")] 
+typedef enum CdoAttendeeRoleValues
+{
+            [helpstring("This attendee is required.")] 
+          cdoRequiredParticipant  = 0,
+            [helpstring("This attendee is optional.")] 
+          cdoOptionalParticipant  = 1,
+            [helpstring("This attendee is not a participant in the meeting and is copied for informational purposes only.")] 
+          cdoNonParticipant  = 2,
+            [helpstring("This attendee is the meeting chairperson.")] 
+          cdoChair  = 3,
+ } CdoAttendeeRoleValues;
+
+[helpstring("Used to set or examine the urn:schemas:calendar:attendeestatus (IAttendee.Status) property, the value of which identifies whether the attendee has accepted, declined, or indicated their status as tentative.")] 
+typedef enum CdoAttendeeStatusValues
+{
+            [helpstring("The attendee has accepted the appointment.")] 
+          cdoAccepted  = 0,
+            [helpstring("This attendee has declined the meeting request.")] 
+          cdoDeclined  = 1,
+            [helpstring("The attendee status is tentative.")] 
+          cdoAttendeeStatusTentative  = 2,
+            [helpstring("The attendee has not yet responded. This is the default for the attendee status value.")] 
+          cdoNeedsAction  = 3,
+          cdoDelegated  = 4,
+          cdoCompleted  = 5,
+          cdoInProgress  = 6,
+ } CdoAttendeeStatusValues;
+
+[helpstring("Used to examine the ICalendarPart.ComponentType property, the value of which indicates the calendar body part type.")] 
+typedef enum CdoComponentType
+{
+            [helpstring("The calendar body part type is unknown.")] 
+          cdoComponentTypeUnknown  = 0,
+            [helpstring("The calendar body part is an appointment.")] 
+          cdoComponentTypeAppointment  = 1,
+ } CdoComponentType;
+
+[helpstring("Used with the IConfiguration.Load method to specify which default configuration values are to be loaded.")] 
+typedef enum CdoConfigSource
+{
+            [helpstring("Load all applicable default values from both Outlook Express and Internet Information Services.")] 
+          cdoDefaults  = -1,
+            [helpstring("Load configuration default values from the local Internet Information Service.")] 
+          cdoIIS  = 1,
+            [helpstring("Load configuration values from the default identity of the default Outlook Express account.")] 
+          cdoOutlookExpress  = 2,
+            [helpstring("Load configuration from the directory object specified in the URL parameter.")] 
+          cdoDirectory  = 3,
+ } CdoConfigSource;
+
+[helpstring("Used to set or examine the IRecurrencePattern.FirstDayOfWeek property, the value of which indicates what day is to be designated as the first of a week.")] 
+typedef enum CdoDayOfWeek
+{
+            [helpstring("Sunday")] 
+          cdoSunday  = 0,
+            [helpstring("Monday")] 
+          cdoMonday  = 1,
+            [helpstring("Tuesday")] 
+          cdoTuesday  = 2,
+            [helpstring("Wednesday")] 
+          cdoWednesday  = 3,
+            [helpstring("Thursday")] 
+          cdoThursday  = 4,
+            [helpstring("Friday")] 
+          cdoFriday  = 5,
+            [helpstring("Saturday")] 
+          cdoSaturday  = 6,
+ } CdoDayOfWeek;
+
+[helpstring("Used to set or examine the IMessage.DSNOptions property, the value of which identifies the condition(s) under which Delivery Status Notifications (DSNs) are to be sent.")] 
+typedef enum CdoDSNOptions
+{
+            [helpstring("No DSN commands are issued.")] 
+          cdoDSNDefault  = 0,
+            [helpstring("No DSNs are issued.")] 
+          cdoDSNNever  = 1,
+            [helpstring("Return a DSN if delivery fails.")] 
+          cdoDSNFailure  = 2,
+            [helpstring("Return a DSN if delivery succeeds.")] 
+          cdoDSNSuccess  = 4,
+            [helpstring("Return a DSN if delivery is delayed.")] 
+          cdoDSNDelay  = 8,
+            [helpstring("Return a DSN if delivery succeeds, fails, or is delayed.")] 
+          cdoDSNSuccessFailOrDelay  = 14,
+ } CdoDSNOptions;
+
+[helpstring("Passed to SMTP-NNTP transport event sinks through corresponding event methods and used by a sink to indicate to the event source whether it has consumed the event.")] 
+typedef enum CdoEventStatus
+{
+            [helpstring("Proceed to run the next sink.")] 
+          cdoRunNextSink  = 0,
+            [helpstring("Do not notify (skip) any remaining sinks for the event. This sink has consumed the event.")] 
+          cdoSkipRemainingSinks  = 1,
+ } CdoEventStatus;
+
+[helpstring("Used to identify the type of transport event.")] 
+typedef enum CdoEventType
+{
+            [helpstring("The event is SMTPOnArrival.")] 
+          cdoSMTPOnArrival  = 1,
+            [helpstring("The event is NNTPOnPostEarly.")] 
+          cdoNNTPOnPostEarly  = 2,
+            [helpstring("The event is NNTPOnPost.")] 
+          cdoNNTPOnPost  = 3,
+            [helpstring("The event is NNTPOnPostFinal.")] 
+          cdoNNTPOnPostFinal  = 4,
+ } CdoEventType;
+
+[helpstring("Used to set or examine the urn:schemas:contacts:fileasid property, the value of which identifies how the corresponding urn:schemas:contacts:fileas property is or has been constructed.")] 
+typedef enum CdoFileAsMappingId
+{
+            [helpstring("No construction. FileAs property is as entered.")] 
+          cdoMapToNone  = 0,
+            [helpstring("File contact using the property order sn, givenname, and middlename.")] 
+          cdoMapToLastFirst  = 1,
+            [helpstring("File contact using the property order givenname, middlename, and sn.")] 
+          cdoMapToFirstLast  = 2,
+            [helpstring("File contact using the o (organization) property.")] 
+          cdoMapToOrg  = 3,
+            [helpstring("File contact using the property order sn, givenname, middlename, and o.")] 
+          cdoMapToLastFirstOrg  = 4,
+            [helpstring("File contact using the property order o, givenname, sn, and middlename.")] 
+          cdoMapToOrgLastFirst  = 5,
+ } CdoFileAsMappingId;
+
+[helpstring("Used to set or examine the IRecurrencePattern.Frequency property, the value of which indicates the recurring appointment's frequency.")] 
+typedef enum CdoFrequency
+{
+            [helpstring("The recurrence frequency is secondly (1 per second).")] 
+          cdoSecondly  = 1,
+            [helpstring("The recurrence frequency is minutely (1 per minute).")] 
+          cdoMinutely  = 2,
+            [helpstring("The recurrence frequency is hourly (1 per hour).")] 
+          cdoHourly  = 3,
+            [helpstring("The recurrence frequency is daily (1 per day).")] 
+          cdoDaily  = 4,
+            [helpstring("The recurrence frequency is weekly (1 per week).")] 
+          cdoWeekly  = 5,
+            [helpstring("The recurrence frequency is monthly (1 per month).")] 
+          cdoMonthly  = 6,
+            [helpstring("The recurrence frequency is yearly (1 per year).")] 
+          cdoYearly  = 7,
+ } CdoFrequency;
+
+[helpstring("Used to set or examine the urn:schemas:contacts:gender property, the value of which  identifies a contact's gender.")] 
+typedef enum CdoGenderValues
+{
+            [helpstring("The contact's gender is unspecified.")] 
+          cdoGenderUnspecified  = 0,
+            [helpstring("The contact is female.")] 
+          cdoFemale  = 1,
+            [helpstring("The contact is male.")] 
+          cdoMale  = 2,
+ } CdoGenderValues;
+
+[helpstring("Used to set or examine the urn:schemas:httpmail:importance property, the value of which identifies the item's importance.")] 
+typedef enum cdoImportanceValues
+{
+            [helpstring("The item is of low importance.")] 
+          cdoLow  = 0,
+            [helpstring("The item is of normal importance.")] 
+          cdoNormal  = 1,
+            [helpstring("The item is of high importance.")] 
+          cdoHigh  = 2,
+ } cdoImportanceValues;
+
+[helpstring("Used to set or examine the urn:schemas:calendar:instancetype property, the value of which identifies the appointment instance type.")] 
+typedef enum CdoInstanceTypes
+{
+            [helpstring("This instance is a single, non recurring appointment.")] 
+          cdoSingle  = 0,
+            [helpstring("This instance is the master for a recurring appointment.")] 
+          cdoMaster  = 1,
+            [helpstring("This is a single instance of a recurring appointment.")] 
+          cdoInstance  = 2,
+            [helpstring("This instance is an exception to a recurring appointment.")] 
+          cdoException  = 3,
+ } CdoInstanceTypes;
+
+[helpstring("Used to set or examine the urn:schemas:contacts:mailingaddressid property, the value of which identifies what address is the contact's current mailing address.")] 
+typedef enum CdoMailingAddressIdValues
+{
+            [helpstring("The mailing addresses are not constructed from other entries (and will be empty).")] 
+          cdoNoAddress  = 0,
+            [helpstring("The mailing entries are constructed from the home address entries of the contact.")] 
+          cdoHomeAddress  = 1,
+            [helpstring("The mailing entries are constructed from the contact's work address entries.")] 
+          cdoBusinessAddress  = 2,
+            [helpstring("The mailing entries are constructed from the contact's other address entries.")] 
+          cdoOtherAddress  = 3,
+ } CdoMailingAddressIdValues;
+
+[helpstring("Used by SMTP OnArrival transport event sinks to set or examine the http://schemas.microsoft.com/cdo/smtpenvelope/messagestatus property, the value of which indicates the message's transport status.")] 
+typedef enum CdoMessageStat
+{
+            [helpstring("Success. Proceed to deliver message.")] 
+          cdoStatSuccess  = 0,
+            [helpstring("Discard message and do not deliver.")] 
+          cdoStatAbortDelivery  = 2,
+            [helpstring("Do not deliver message and place it in the bad mail location.")] 
+          cdoStatBadMail  = 3,
+ } CdoMessageStat;
+
+[helpstring("Used with the IMessage.CreateMHTMLBody method to specify what resource types referenced within the page specified by the URL parameter should not be downloaded.")] 
+typedef enum CdoMHTMLFlags
+{
+            [helpstring("Download all resources referred to in elements within the resource at the specified URI (not recursive).")] 
+          cdoSuppressNone  = 0,
+            [helpstring("Do not download resources referred to in IMG elements.")] 
+          cdoSuppressImages  = 1,
+            [helpstring("Do not download resources referred to in BGSOUND elements.")] 
+          cdoSuppressBGSounds  = 2,
+            [helpstring("Do not download resources referred to in FRAME elements.")] 
+          cdoSuppressFrames  = 4,
+            [helpstring("Do not download resources referred to in OBJECT elements.")] 
+          cdoSuppressObjects  = 8,
+            [helpstring("Do not download resources referred to in LINK elements.")] 
+          cdoSuppressStyleSheets  = 16,
+            [helpstring("Do not download any resources referred to from within the page.")] 
+          cdoSuppressAll  = 31,
+ } CdoMHTMLFlags;
+
+[helpstring("Used by NNTP transport event sinks to set or examine the http://schemas.microsoft.com/cdo/nntpenvelope/nntpprocessing property, the value of which indicates what message processing is to occur.")] 
+typedef enum CdoNNTPProcessingField
+{
+            [helpstring("Post the message.")] 
+          cdoPostMessage  = 1,
+            [helpstring("Send message through process control.")] 
+          cdoProcessControl  = 2,
+            [helpstring("Send message to moderator.")] 
+          cdoProcessModerator  = 4,
+ } CdoNNTPProcessingField;
+
+[helpstring("Determines how a recurrence pattern ends")] 
+typedef enum CdoPatternEndType
+{
+            [helpstring("Pattern repeats for ever")] 
+          cdoNoEndDate  = 0,
+            [helpstring("Pattern ends after generating a specific number of instances")] 
+          cdoEndByInstances  = 1,
+            [helpstring("Pattern stops generating instances after a specific date and time")] 
+          cdoEndByDate  = 2,
+ } CdoPatternEndType;
+
+[helpstring("Used with the http://schemas.microsoft.com/cdo/configuration/postusing  property, the value of which specifies how a message is to be posted.")] 
+typedef enum CdoPostUsing
+{
+            [helpstring("Post the message using the local NNTP Service pickup directory.")] 
+          cdoPostUsingPickup  = 1,
+            [helpstring("Post the message using the NNTP protocol over the network.")] 
+          cdoPostUsingPort  = 2,
+            [helpstring("Post the message using Exchange (WebDAV transmission URI).")] 
+          cdoPostUsingExchange  = 3,
+ } CdoPostUsing;
+
+typedef enum cdoPriorityValues
+{
+            [helpstring("The item is of non-urgent priority.")] 
+          cdoPriorityNonUrgent  = -1,
+            [helpstring("The item is of normal priority.")] 
+          cdoPriorityNormal  = 0,
+            [helpstring("The item is of urgent priority.")] 
+          cdoPriorityUrgent  = 1,
+ } cdoPriorityValues;
+
+[helpstring("Used with http://schemas.microsoft.com/cdo/configuration/smtpauthenticate and http://schemas.microsoft.com/cdo/configuration/nntpauthenticate, the values of which specify the network authentication mechansim used when sending and posting messages.")] 
+typedef enum CdoProtocolsAuthentication
+{
+            [helpstring("Perform no authentication (anonymous).")] 
+          cdoAnonymous  = 0,
+            [helpstring("Use the basic (clear text) authentication mechanism.")] 
+          cdoBasic  = 1,
+            [helpstring("Use the NTLM authentication mechanism")] 
+          cdoNTLM  = 2,
+ } CdoProtocolsAuthentication;
+
+[helpstring("Used with the IMessage.AddRelatedBodyPart method to specify how the new body part is to be referenced within the related HTML body part.")] 
+typedef enum CdoReferenceType
+{
+            [helpstring("The reference parameter contains a value for the Content-ID header. The HTML body refers to the resource using this Content-ID header.")] 
+          cdoRefTypeId  = 0,
+            [helpstring("The reference parameter contains a value for the Content-Location MIME header. The HTML body refers to this resource using this message-relative URL.")] 
+          cdoRefTypeLocation  = 1,
+ } CdoReferenceType;
+
+[helpstring("Used to set or examine the IAddressee.ResolvedStatus property, the value of which identifies whether the addressee name was unambiguously resolved by IAddressee.CheckName.")] 
+typedef enum CdoResolvedStatus
+{
+            [helpstring("The addressee name has not been resolved.")] 
+          cdoUnresolved  = 0,
+            [helpstring("The addressee name was unambiguously resolved.")] 
+          cdoResolved  = 1,
+            [helpstring("The indicated recipient was ambiguous. A list of possible recipients is provided in the IAddressee.AmbiguousNames collection.")] 
+          cdoAmbiguous  = 2,
+ } CdoResolvedStatus;
+
+[helpstring("Used with the http://schemas.microsoft.com/cdo/configuration/sendusing property, the value of which specifies how a message is to be sent.")] 
+typedef enum CdoSendUsing
+{
+            [helpstring("Send message using the local SMTP service pickup directory.")] 
+          cdoSendUsingPickup  = 1,
+            [helpstring("Send the message using the SMTP protocol over the network.")] 
+          cdoSendUsingPort  = 2,
+            [helpstring("Send message using Exchange (WebDAV transmission URI).")] 
+          cdoSendUsingExchange  = 3,
+ } CdoSendUsing;
+
+[helpstring("Used to set or examine the http://schemas.microsoft.com/exchange/sensitivity property, the value of which identifies the item's sensitivity.")] 
+typedef enum cdoSensitivityValues
+{
+            [helpstring("The item is of no designated sensitivity.")] 
+          cdoSensitivityNone  = 0,
+            [helpstring("The item is of personal sensitivity.")] 
+          cdoPersonal  = 1,
+            [helpstring("The item is of private sensitivity.")] 
+          cdoPrivate  = 2,
+            [helpstring("The item is confidential to the company.")] 
+          cdoCompanyConfidential  = 3,
+ } cdoSensitivityValues;
+
+[helpstring("Used to set or examine the urn:schemas:calendar:timezoneid property, the value of which specifies the local time zone to use when returning Date values.")] 
+typedef enum CdoTimeZoneId
+{
+            [helpstring("(UTC) Universal Coordinated Time")] 
+          cdoUTC  = 0,
+            [helpstring("(GMT) Greenwich Mean Time; Dublin, Edinburgh, London")] 
+          cdoGMT  = 1,
+            [helpstring("(GMT+01:00) Sarajevo, Warsaw, Zagreb")] 
+          cdoSarajevo  = 2,
+            [helpstring("(GMT+01:00) Paris, Madrid, Brussels, Copenhagen")] 
+          cdoParis  = 3,
+            [helpstring("(GMT+01:00) Berlin, Stockholm, Rome, Bern, Vienna")] 
+          cdoBerlin  = 4,
+            [helpstring("(GMT+02:00) Bucharest, Eastern Europe")] 
+          cdoEasternEurope  = 5,
+            [helpstring("(GMT+01:00) Prague, Central Europe")] 
+          cdoPrague  = 6,
+            [helpstring("(GMT+02:00) Athens, Istanbul, Minsk")] 
+          cdoAthens  = 7,
+            [helpstring("(GMT-03:00) Brasilia")] 
+          cdoBrasilia  = 8,
+            [helpstring("(GMT-04:00) Atlantic Time (Canada)")] 
+          cdoAtlanticCanada  = 9,
+            [helpstring("(GMT-05:00) Eastern Time (US & Canada)")] 
+          cdoEastern  = 10,
+            [helpstring("(GMT-06:00) Central Time (US & Canada)")] 
+          cdoCentral  = 11,
+            [helpstring("(GMT-07:00) Mountain Time (US & Canada)")] 
+          cdoMountain  = 12,
+            [helpstring("(GMT-08:00) Pacific Time (US & Canada); Tijuana")] 
+          cdoPacific  = 13,
+            [helpstring("(GMT-09:00) Alaska")] 
+          cdoAlaska  = 14,
+            [helpstring("(GMT-10:00) Hawaii")] 
+          cdoHawaii  = 15,
+            [helpstring("(GMT-11:00) Midway Island, Samoa")] 
+          cdoMidwayIsland  = 16,
+            [helpstring("(GMT+12:00) Wellington, Auckland")] 
+          cdoWellington  = 17,
+            [helpstring("(GMT+10:00) Brisbane, East Australia")] 
+          cdoBrisbane  = 18,
+            [helpstring("(GMT+09:30) Adelaide, Central Australia")] 
+          cdoAdelaide  = 19,
+            [helpstring("(GMT+09:00) Tokyo, Osaka, Sapporo")] 
+          cdoTokyo  = 20,
+            [helpstring("(GMT+08:00) Kuala Lumpur, Singapore")] 
+          cdoSingapore  = 21,
+            [helpstring("(GMT+07:00) Bangkok, Jakarta, Hanoi")] 
+          cdoBangkok  = 22,
+            [helpstring("(GMT+05:30) Calcutta, Chennai, Mumbai, New Delhi, India Standard Time")] 
+          cdoBombay  = 23,
+            [helpstring("(GMT+04:00) Abu Dhabi, Muscat")] 
+          cdoAbuDhabi  = 24,
+            [helpstring("(GMT+03:30) Tehran")] 
+          cdoTehran  = 25,
+            [helpstring("(GMT+03:00) Baghdad")] 
+          cdoBaghdad  = 26,
+            [helpstring("(GMT+02:00) Israel, Jerusalem Standard Time")] 
+          cdoIsrael  = 27,
+            [helpstring("(GMT-03:30) Newfoundland")] 
+          cdoNewfoundland  = 28,
+            [helpstring("(GMT-01:00) Azores")] 
+          cdoAzores  = 29,
+            [helpstring("(GMT-02:00) Mid-Atlantic")] 
+          cdoMidAtlantic  = 30,
+            [helpstring("(GMT) Monrovia, Casablanca")] 
+          cdoMonrovia  = 31,
+            [helpstring("(GMT-03:00) Buenos Aires, Georgetown")] 
+          cdoBuenosAires  = 32,
+            [helpstring("(GMT-04:00) Caracas, La Paz")] 
+          cdoCaracas  = 33,
+            [helpstring("(GMT-05:00) Indiana (East)")] 
+          cdoIndiana  = 34,
+            [helpstring("(GMT-05:00) Bogota, Lima")] 
+          cdoBogota  = 35,
+            [helpstring("(GMT-06:00) Saskatchewan")] 
+          cdoSaskatchewan  = 36,
+            [helpstring("(GMT-06:00) Mexico City, Tegucigalpa")] 
+          cdoMexicoCity  = 37,
+            [helpstring("(GMT-07:00) Arizona")] 
+          cdoArizona  = 38,
+            [helpstring("(GMT-12:00) Eniwetok, Kwajalein, Dateline Time")] 
+          cdoEniwetok  = 39,
+            [helpstring("(GMT+12:00) Fiji, Kamchatka, Marshall Is.")] 
+          cdoFiji  = 40,
+            [helpstring("(GMT+11:00) Magadan, Solomon Is., New Caledonia")] 
+          cdoMagadan  = 41,
+            [helpstring("(GMT+10:00) Hobart, Tasmania")] 
+          cdoHobart  = 42,
+            [helpstring("(GMT+10:00) Guam, Port Moresby")] 
+          cdoGuam  = 43,
+            [helpstring("(GMT+09:30) Darwin")] 
+          cdoDarwin  = 44,
+            [helpstring("(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi")] 
+          cdoBeijing  = 45,
+            [helpstring("(GMT+06:00) Almaty, North Central Asia, Novosibirsk")] 
+          cdoAlmaty  = 46,
+            [helpstring("(GMT+05:00) Islamabad, Karachi, Sverdlovsk, Tashkent")] 
+          cdoIslamabad  = 47,
+            [helpstring("(GMT+04:30) Kabul")] 
+          cdoKabul  = 48,
+            [helpstring("(GMT+02:00) Cairo")] 
+          cdoCairo  = 49,
+            [helpstring("(GMT+02:00) Harare, Pretoria")] 
+          cdoHarare  = 50,
+            [helpstring("(GMT+03:00) Moscow, St. Petersburg, Volgograd")] 
+          cdoMoscow  = 51,
+            [helpstring("The time zone is floating.")] 
+          cdoFloating  = 52,
+            [helpstring("(GMT-01:00) Cape Verde Is.")] 
+          cdoCapeVerde  = 53,
+            [helpstring("(GMT+04:00) Caucasus, Baku, Tbilisi, Yerevan")] 
+          cdoCaucasus  = 54,
+            [helpstring("(GMT-06:00) Central America")] 
+          cdoCentralAmerica  = 55,
+            [helpstring("(GMT+03:00) East Africa, Nairobi")] 
+          cdoEastAfrica  = 56,
+            [helpstring("(GMT+10:00) Melbourne, Sydney")] 
+          cdoMelbourne  = 57,
+            [helpstring("(GMT+05:00) Ekaterinburg")] 
+          cdoEkaterinburg  = 58,
+            [helpstring("(GMT+02:00) Helsinki")] 
+          cdoHelsinki  = 59,
+            [helpstring("(GMT-03:00) Greenland")] 
+          cdoGreenland  = 60,
+            [helpstring("(GMT+06:30) Rangoon")] 
+          cdoRangoon  = 61,
+            [helpstring("(GMT+05:45) Kathmandu, Nepal")] 
+          cdoNepal  = 62,
+            [helpstring("(GMT+08:00) Irkutsk")] 
+          cdoIrkutsk  = 63,
+            [helpstring("(GMT+07:00) Krasnoyarsk")] 
+          cdoKrasnoyarsk  = 64,
+            [helpstring("(GMT-04:00) Santiago")] 
+          cdoSantiago  = 65,
+            [helpstring("(GMT+06:00) Sri Jayawardenepura, Sri Lanka")] 
+          cdoSriLanka  = 66,
+            [helpstring("(GMT+13:00) Tonga, Nuku'alofa")] 
+          cdoTonga  = 67,
+            [helpstring("(GMT+10:00) Vladivostok")] 
+          cdoVladivostok  = 68,
+            [helpstring("(GMT+01:00) West Central Africa")] 
+          cdoWestCentralAfrica  = 69,
+            [helpstring("(GMT+09:00) Yakutsk")] 
+          cdoYakutsk  = 70,
+            [helpstring("(GMT+06:00) Dhaka")] 
+          cdoDhaka  = 71,
+            [helpstring("(GMT+09:00) Seoul, Korea Standard Time")] 
+          cdoSeoul  = 72,
+            [helpstring("(GMT+08:00) Perth, Western Australia")] 
+          cdoPerth  = 73,
+            [helpstring("(GMT+03:00) Arab, Kuwait, Riyadh")] 
+          cdoArab  = 74,
+            [helpstring("(GMT+08:00) Taipei")] 
+          cdoTaipei  = 75,
+            [helpstring("(GMT+10:00) Canberra, Melbourne, Sydney, Hobart (Year 2000 only)")] 
+          cdoSydney2000  = 76,
+            [helpstring("The time zone is unrecognized or invalid.")] 
+          cdoInvalidTimeZone  = 77,
+ } CdoTimeZoneId;
+
+[helpstring("Identifies if the cdoMailboxURL is an Exchange Server URL or a Client Store URL")] 
+typedef enum cdoURLSourceValues
+{
+            [helpstring("Exchange Server URL")] 
+          cdoExchangeServerURL  = 0,
+            [helpstring("Client Store URL")] 
+          cdoClientStoreURL  = 1,
+ } cdoURLSourceValues;
+
+[ object, uuid(CD000029-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to bind to data sources, such as other objects or resources at the specified URL."), helpcontext(0x00000100), pointer_default(unique) ] interface IDataSource : IDispatch
+{
+	[ id( 207 ), propget, helpstring( "The interface name (type) of the currently bound object. When you bind resources by URL, the value _Record is returned." ), helpcontext( 0x00000101 ), readonly ] HRESULT SourceClass ([out,retval] BSTR* varSourceClass);
+	[ id( 208 ), propget, helpstring( "Returns the currently bound object. When you bind resources by URL, an ADO _Record interface is returned on an open Record object." ), helpcontext( 0x00000102 ), readonly ] HRESULT Source ([out,retval] IUnknown** varSource);
+	[ id( 209 ), propget, helpstring( "Indicates whether the local data has been changed since the last save or bind operation." ), helpcontext(0x00000103) ] HRESULT IsDirty ([out,retval] VARIANT_BOOL* pIsDirty); [ id( 209 ), propput, helpstring( "Indicates whether the local data has been changed since the last save or bind operation." ), helpcontext(0x00000103) ] HRESULT IsDirty ([in] VARIANT_BOOL varIsDirty);
+	[ id( 210 ), propget, helpstring( "Returns the URL of the currently bound resource. (Not applicable if bound to an object.)" ), helpcontext( 0x00000104 ), readonly ] HRESULT SourceURL ([out,retval] BSTR* varSourceURL);
+	[ id( 211 ), propget, helpstring( "Returns the current ActiveConnection object if bound to a resource at a specified URL. (Not applicable if bound to an object.)" ), helpcontext( 0x00000105 ), readonly ] HRESULT ActiveConnection ([out,retval] _Connection** varActiveConnection);
+
+	[ id( 251 ), helpstring ( "Binds to and saves data into the specified object." ), helpcontext( 0x00000106 ) ] HRESULT SaveToObject(
+				[in]		IUnknown* Source,
+				[in]		BSTR InterfaceName);
+
+	[ id( 252 ), helpstring ( "Binds to and opens data from the specified object." ), helpcontext( 0x00000108 ) ] HRESULT OpenObject(
+				[in]		IUnknown* Source,
+				[in]		BSTR InterfaceName);
+
+	[ id( 253 ), helpstring ( "Binds to and saves data into the resource specified by URL." ), helpcontext( 0x00000109 ) ] HRESULT SaveTo(
+				[in]			        BSTR SourceURL,
+				[in, defaultvalue(0)]	IDispatch* ActiveConnection,
+				[in, optional]	        ConnectModeEnum Mode,
+				[in, optional]	        RecordCreateOptionsEnum CreateOptions,
+				[in, optional]	        RecordOpenOptionsEnum Options,
+				[in, optional]	        BSTR UserName,
+				[in, optional]	        BSTR Password);
+
+	[ id( 254 ), helpstring ( "Binds to and opens data from the resource specified by URL. SourceClass returns _Record." ), helpcontext( 0x0000010a ) ] HRESULT Open(
+				[in]			        BSTR SourceURL,
+				[in, defaultvalue(0)]	IDispatch* ActiveConnection,
+				[in, optional]	        ConnectModeEnum Mode,
+				[in, defaultvalue(adFailIfNotExists)]	        RecordCreateOptionsEnum CreateOptions,
+				[in, optional]	        RecordOpenOptionsEnum Options,
+				[in, optional]	        BSTR UserName,
+				[in, optional]	        BSTR Password);
+
+	[ id( 255 ), helpstring ( "Saves data into the currently bound object or resource." ), helpcontext( 0x0000010b ) ] HRESULT Save();
+
+	[ id( 256 ), helpstring ( "Binds to and saves data into a new item created in the container (folder) specified by URL." ), helpcontext( 0x00000107 ) ] HRESULT SaveToContainer(
+				[in]			        BSTR ContainerURL,
+				[in, defaultvalue(0)]	IDispatch* ActiveConnection,
+				[in, optional]	        ConnectModeEnum Mode,
+				[in, optional]	        RecordCreateOptionsEnum CreateOptions,
+				[in, optional]	        RecordOpenOptionsEnum Options,
+				[in, optional]	        BSTR UserName,
+				[in, optional]	        BSTR Password);
+};
+
+[ object, uuid(CD000020-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to manage a message."), helpcontext(0x00000110), pointer_default(unique) ] interface IMessage : IDispatch
+{
+	[ id( 101 ), propget, helpstring( "The message's hidden carbon copy (BCC header) recipients." ), helpcontext(0x00000111) ] HRESULT BCC ([out,retval] BSTR* pBCC); [ id( 101 ), propput, helpstring( "The message's hidden carbon copy (BCC header) recipients." ), helpcontext(0x00000111) ] HRESULT BCC ([in] BSTR varBCC);
+	[ id( 103 ), propget, helpstring( "The message's secondary (CC header) recipients." ), helpcontext(0x00000112) ] HRESULT CC ([out,retval] BSTR* pCC); [ id( 103 ), propput, helpstring( "The message's secondary (CC header) recipients." ), helpcontext(0x00000112) ] HRESULT CC ([in] BSTR varCC);
+	[ id( 105 ), propget, helpstring( "The message's follow-up recipients." ), helpcontext(0x00000113) ] HRESULT FollowUpTo ([out,retval] BSTR* pFollowUpTo); [ id( 105 ), propput, helpstring( "The message's follow-up recipients." ), helpcontext(0x00000113) ] HRESULT FollowUpTo ([in] BSTR varFollowUpTo);
+	[ id( 106 ), propget, helpstring( "The message's principle (From header) authors." ), helpcontext(0x00000114) ] HRESULT From ([out,retval] BSTR* pFrom); [ id( 106 ), propput, helpstring( "The message's principle (From header) authors." ), helpcontext(0x00000114) ] HRESULT From ([in] BSTR varFrom);
+	[ id( 107 ), propget, helpstring( "The message's keywords." ), helpcontext(0x00000115) ] HRESULT Keywords ([out,retval] BSTR* pKeywords); [ id( 107 ), propput, helpstring( "The message's keywords." ), helpcontext(0x00000115) ] HRESULT Keywords ([in] BSTR varKeywords);
+	[ id( 110 ), propget, helpstring( "Indicates whether the message is to be serialized using the MIME (True) or UUENCODE (False) format." ), helpcontext(0x00000116) ] HRESULT MimeFormatted ([out,retval] VARIANT_BOOL* pMimeFormatted); [ id( 110 ), propput, helpstring( "Indicates whether the message is to be serialized using the MIME (True) or UUENCODE (False) format." ), helpcontext(0x00000116) ] HRESULT MimeFormatted ([in] VARIANT_BOOL varMimeFormatted);
+	[ id( 111 ), propget, helpstring( "The message's newsgroup (Newsgroups header) recipients." ), helpcontext(0x00000117) ] HRESULT Newsgroups ([out,retval] BSTR* pNewsgroups); [ id( 111 ), propput, helpstring( "The message's newsgroup (Newsgroups header) recipients." ), helpcontext(0x00000117) ] HRESULT Newsgroups ([in] BSTR varNewsgroups);
+	[ id( 112 ), propget, helpstring( "The sender's organization name." ), helpcontext(0x00000118) ] HRESULT Organization ([out,retval] BSTR* pOrganization); [ id( 112 ), propput, helpstring( "The sender's organization name." ), helpcontext(0x00000118) ] HRESULT Organization ([in] BSTR varOrganization);
+	[ id( 114 ), propget, helpstring( "The date and time the message was received." ), helpcontext( 0x00000119 ), readonly ] HRESULT ReceivedTime ([out,retval] DATE* varReceivedTime);
+	[ id( 115 ), propget, helpstring( "The email addresses (Reply-To header) to which to reply." ), helpcontext(0x0000011a) ] HRESULT ReplyTo ([out,retval] BSTR* pReplyTo); [ id( 115 ), propput, helpstring( "The email addresses (Reply-To header) to which to reply." ), helpcontext(0x0000011a) ] HRESULT ReplyTo ([in] BSTR varReplyTo);
+	[ id( 116 ), propget, helpstring( "The delivery status notification (DSN) options for the message." ), helpcontext(0x0000011b) ] HRESULT DSNOptions ([out,retval] CdoDSNOptions* pDSNOptions); [ id( 116 ), propput, helpstring( "The delivery status notification (DSN) options for the message." ), helpcontext(0x0000011b) ] HRESULT DSNOptions ([in] CdoDSNOptions varDSNOptions);
+	[ id( 119 ), propget, helpstring( "The date and time the message was sent." ), helpcontext( 0x0000011c ), readonly ] HRESULT SentOn ([out,retval] DATE* varSentOn);
+	[ id( 120 ), propget, helpstring( "The message's subject (Subject header)." ), helpcontext(0x0000011d) ] HRESULT Subject ([out,retval] BSTR* pSubject); [ id( 120 ), propput, helpstring( "The message's subject (Subject header)." ), helpcontext(0x0000011d) ] HRESULT Subject ([in] BSTR varSubject);
+	[ id( 121 ), propget, helpstring( "The message's principle (To header) recipients." ), helpcontext(0x0000011e) ] HRESULT To ([out,retval] BSTR* pTo); [ id( 121 ), propput, helpstring( "The message's principle (To header) recipients." ), helpcontext(0x0000011e) ] HRESULT To ([in] BSTR varTo);
+	[ id( 123 ), propget, helpstring( "The text/plain portion of the message body." ), helpcontext(0x0000011f) ] HRESULT TextBody ([out,retval] BSTR* pTextBody); [ id( 123 ), propput, helpstring( "The text/plain portion of the message body." ), helpcontext(0x0000011f) ] HRESULT TextBody ([in] BSTR varTextBody);
+	[ id( 124 ), propget, helpstring( "The text/html portion of the message body." ), helpcontext(0x00000120) ] HRESULT HTMLBody ([out,retval] BSTR* pHTMLBody); [ id( 124 ), propput, helpstring( "The text/html portion of the message body." ), helpcontext(0x00000120) ] HRESULT HTMLBody ([in] BSTR varHTMLBody);
+	[ id( 125 ), propget, helpstring( "The object's Attachments collection." ), helpcontext( 0x00000121 ), readonly ] HRESULT Attachments ([out,retval] IBodyParts ** varAttachments);
+	[ id( 126 ), propget, helpstring( "The message's actual sender." ), helpcontext(0x00000122) ] HRESULT Sender ([out,retval] BSTR* pSender); [ id( 126 ), propput, helpstring( "The message's actual sender." ), helpcontext(0x00000122) ] HRESULT Sender ([in] BSTR varSender);
+	[ id( 127 ), propget, helpstring( "The object's Configuration object." ), helpcontext( 0x00000123) ] HRESULT Configuration ([out,retval] IConfiguration ** pConfiguration); [ id( 127 ), propput, helpstring( "The object's Configuration object." ), helpcontext( 0x00000123 ) ] HRESULT Configuration ([in] IConfiguration * varConfiguration); [ id( 127 ), propputref, helpstring( "The object's Configuration object." ), helpcontext( 0x00000123 ) ] HRESULT Configuration ([in] IConfiguration * varConfiguration);
+	[ id( 128 ), propget, helpstring( "Indicates whether a text/plain alternate representation should automatically be generated from the text/html part of the message body." ), helpcontext(0x00000124) ] HRESULT AutoGenerateTextBody ([out,retval] VARIANT_BOOL* pAutoGenerateTextBody); [ id( 128 ), propput, helpstring( "Indicates whether a text/plain alternate representation should automatically be generated from the text/html part of the message body." ), helpcontext(0x00000124) ] HRESULT AutoGenerateTextBody ([in] VARIANT_BOOL varAutoGenerateTextBody);
+	[ id( 129 ), propget, helpstring( "The transport envelope Fields collection for the message (transport event sinks only)." ), helpcontext( 0x00000125 ), readonly ] HRESULT EnvelopeFields ([out,retval] Fields ** varEnvelopeFields);
+	[ id( 130 ), propget, helpstring( "Returns the BodyPart object (IBodyPart interface) containing the text/plain part of the message body." ), helpcontext( 0x00000126 ), readonly ] HRESULT TextBodyPart ([out,retval] IBodyPart ** varTextBodyPart);
+	[ id( 131 ), propget, helpstring( "Returns the BodyPart object (IBodyPart interface) containing the text/html portion of the message body." ), helpcontext( 0x00000127 ), readonly ] HRESULT HTMLBodyPart ([out,retval] IBodyPart ** varHTMLBodyPart);
+	[ id( 132 ), propget, helpstring( "The object's IBodyPart interface." ), helpcontext( 0x00000128 ), readonly ] HRESULT BodyPart ([out,retval] IBodyPart ** varBodyPart);
+	[ id( 133 ), propget, helpstring( "The object's IDataSource interface." ), helpcontext( 0x00000129 ), readonly ] HRESULT DataSource ([out,retval] IDataSource ** varDataSource);
+	[ id( 134 ), propget, helpstring( "The object's Fields collection." ), helpcontext( 0x0000012a ), readonly ] HRESULT Fields ([out,retval] Fields ** varFields);
+	[ id( 135 ), propget, helpstring( "Indicates whether a mail delivery notification (MDN) should be sent when the message is received." ), helpcontext(0x0000012b) ] HRESULT MDNRequested ([out,retval] VARIANT_BOOL* pMDNRequested); [ id( 135 ), propput, helpstring( "Indicates whether a mail delivery notification (MDN) should be sent when the message is received." ), helpcontext(0x0000012b) ] HRESULT MDNRequested ([in] VARIANT_BOOL varMDNRequested);
+
+	[ id( 150 ), helpstring ( "Adds a BodyPart object with content referenced within the text/html portion of the message body." ), helpcontext( 0x0000012c ) ] HRESULT AddRelatedBodyPart(
+				[in] 			BSTR URL, 
+				[in] 			BSTR Reference,
+				[in] 			CdoReferenceType ReferenceType,
+				[in, optional]	BSTR UserName,
+				[in, optional]	BSTR Password,
+				[out,retval]	IBodyPart **ppBody);
+				
+	[ id( 151 ), helpstring ( "Adds an attachment (BodyPart) to the message." ), helpcontext( 0x0000012d ) ] HRESULT AddAttachment(
+				[in] 			BSTR URL,
+				[in, optional]	BSTR UserName,
+				[in, optional]	BSTR Password,
+				[out,retval]	IBodyPart **ppBody);
+			
+	[ id( 152 ), helpstring ( "Creates an MHTML-formatted message body using the resource(s) at the specified URL." ), helpcontext( 0x0000012e ) ] HRESULT CreateMHTMLBody(
+				[in] 					BSTR URL, 
+				[in, defaultvalue(cdoSuppressNone)]	CdoMHTMLFlags Flags,
+				[in, optional]	BSTR UserName,
+				[in, optional]	BSTR Password);
+				
+	[ id( 153 ), helpstring ( "Returns a Message object used to forward a message." ), helpcontext( 0x0000012f ) ] HRESULT Forward(
+				[out,retval] 	IMessage **ppMsg);
+
+	[ id( 154 ), helpstring ( "Posts the message using the method specified in the associated Configuration object." ), helpcontext( 0x00000130 ) ] HRESULT Post();
+	
+	[ id( 155 ), helpstring ( "Returns a Message object used to post a reply to the message." ), helpcontext( 0x00000131 ) ] HRESULT PostReply(
+				[out,retval] 	IMessage **ppMsg);
+				
+	[ id( 156 ), helpstring ( "Returns a Message object used to reply to the message." ), helpcontext( 0x00000132 ) ] HRESULT Reply(
+				[out,retval] 	IMessage **ppMsg);
+				
+	[ id( 157 ), helpstring ( "Returns a Message object used to post a reply to all recipients of the message." ), helpcontext( 0x00000133 ) ] HRESULT ReplyAll(
+				[out,retval] IMessage **ppMsg);
+				
+	[ id( 158 ), helpstring ( "Sends the message using the method specified in the associated Configuration object." ), helpcontext( 0x00000136 ) ] HRESULT Send();
+
+	[ id( 159 ), helpstring ( "Returns an ADO Stream object containing the message in serialized, RFC 822 format. The message body is encoded using either MIME or UUENCODE as specified by the MIMEFormatted property." ), helpcontext( 0x00000134 ) ] HRESULT GetStream(
+				[out,retval] _Stream **ppStream);
+
+	[ id( 160 ), helpstring ( "Returns a specified interface on this object; provided for script languages." ), helpcontext( 0x00000135 ) ] HRESULT GetInterface(
+				[in] BSTR Interface,
+				[out, retval] IDispatch** ppUnknown);
+};
+
+[ object, uuid(CD000021-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to manage a message body part."), helpcontext(0x00000140), pointer_default(unique) ] interface IBodyPart : IDispatch
+{
+	[ id( 200 ), propget, helpstring( "The object's BodyParts collection." ), helpcontext( 0x00000141 ), readonly ] HRESULT BodyParts ([out,retval] IBodyParts ** varBodyParts);
+	[ id( 201 ), propget, helpstring( "The method used to encode the body part content. For example, quoted-printable or base64." ), helpcontext(0x00000142) ] HRESULT ContentTransferEncoding ([out,retval] BSTR* pContentTransferEncoding); [ id( 201 ), propput, helpstring( "The method used to encode the body part content. For example, quoted-printable or base64." ), helpcontext(0x00000142) ] HRESULT ContentTransferEncoding ([in] BSTR varContentTransferEncoding);
+	[ id( 202 ), propget, helpstring( "The content media type portion of the body part's content type." ), helpcontext(0x00000143) ] HRESULT ContentMediaType ([out,retval] BSTR* pContentMediaType); [ id( 202 ), propput, helpstring( "The content media type portion of the body part's content type." ), helpcontext(0x00000143) ] HRESULT ContentMediaType ([in] BSTR varContentMediaType);
+	[ id( 203 ), propget, helpstring( "The object's Fields collection." ), helpcontext( 0x00000144 ), readonly ] HRESULT Fields ([out,retval] Fields ** varFields);
+	[ id( 204 ), propget, helpstring( "The character set of the body part's text content (not applicable for non-text content types)." ), helpcontext(0x00000145) ] HRESULT Charset ([out,retval] BSTR* pCharset); [ id( 204 ), propput, helpstring( "The character set of the body part's text content (not applicable for non-text content types)." ), helpcontext(0x00000145) ] HRESULT Charset ([in] BSTR varCharset);
+	[ id( 205 ), propget, helpstring( "The value of the filename parameter for the content-disposition MIME header." ), helpcontext( 0x00000146 ), readonly ] HRESULT FileName ([out,retval] BSTR* varFileName);
+	[ id( 207 ), propget, helpstring( "The object's IDataSource interface." ), helpcontext( 0x00000147 ), readonly ] HRESULT DataSource ([out,retval] IDataSource ** varDataSource);
+	[ id( 208 ), propget, helpstring( "The body part's content class." ), helpcontext(0x00000148) ] HRESULT ContentClass ([out,retval] BSTR* pContentClass); [ id( 208 ), propput, helpstring( "The body part's content class." ), helpcontext(0x00000148) ] HRESULT ContentClass ([in] BSTR varContentClass);
+	[ id( 209 ), propget, helpstring( "Deprecated. Do not use." ), helpcontext(0x00000149) ] HRESULT ContentClassName ([out,retval] BSTR* pContentClassName); [ id( 209 ), propput, helpstring( "Deprecated. Do not use." ), helpcontext(0x00000149) ] HRESULT ContentClassName ([in] BSTR varContentClassName);
+	[ id( 210 ), propget, helpstring( "The object's parent object in the body part hierarchy." ), helpcontext( 0x0000014a ), readonly ] HRESULT Parent ([out,retval] IBodyPart** varParent);
+
+	[ id( 250 ), helpstring ( "Adds a body part to the object's BodyParts collection." ), helpcontext( 0x0000014b ) ] HRESULT AddBodyPart(
+				[in, defaultvalue(-1)]	long Index,
+				[out, retval]			IBodyPart **ppPart);
+
+	[ id( 251 ), helpstring ( "Saves the body part content to the specified file." ), helpcontext( 0x0000014c ) ] HRESULT SaveToFile(
+				[in]		BSTR FileName);
+
+	[ id( 252 ), helpstring ( "Returns a Stream object containing the body part content in encoded format. The encoding method is specified in the ContentTransferEncoding property." ), helpcontext( 0x0000014d ) ] HRESULT GetEncodedContentStream(
+				[out, retval]_Stream **ppStream); 
+
+	[ id( 253 ), helpstring ( "Returns a Stream object containing the body part content in decoded format." ), helpcontext( 0x0000014e ) ] HRESULT GetDecodedContentStream(
+				[out, retval]_Stream **ppStream); 
+
+	[ id( 254 ), helpstring ( "Returns an ADO Stream object containing the body part in serialized, MIME encoded format." ), helpcontext( 0x0000014f ) ] HRESULT GetStream(
+				[out,retval] _Stream **ppStream);
+
+	[ id( 255 ), helpstring ( "Returns the specified parameter from the body part's specified header field." ), helpcontext( 0x00000150 ) ] HRESULT GetFieldParameter(
+				[in] BSTR FieldName,
+				[in] BSTR Parameter,
+				[out, retval] BSTR* pbstrValue);	
+
+	[ id( 160 ), helpstring ( "Returns a specified interface on this object; provided for script languages." ), helpcontext( 0x00000151 ) ] HRESULT GetInterface(
+				[in] BSTR Interface,
+				[out, retval] IDispatch** ppUnknown);
+};
+
+[ object, uuid(CD000022-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to manage configuration information for CDO objects."), helpcontext(0x00000160), pointer_default(unique) ] interface IConfiguration : IDispatch
+{
+	[ id( 0 ), propget, helpstring( "The object's Fields collection." ), helpcontext( 0x00000161 ), readonly ] HRESULT Fields ([out,retval] Fields ** varFields);
+
+	[ id( 50 ), helpstring ( "Loads the specified configuration." ), helpcontext( 0x00000162 ) ] HRESULT Load(
+				[in]	CdoConfigSource LoadFrom,
+				[in, optional] BSTR URL);
+
+	[ id( 160 ), helpstring ( "Returns a specified interface on this object; provided for script languages." ), helpcontext( 0x00000163 ) ] HRESULT GetInterface(
+				[in] BSTR Interface,
+				[out, retval] IDispatch** ppUnknown);
+};
+
+[ object, uuid(CD000025-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods and properties used to manage a collection of Message objects on the file system. Returned by IDropDirectory.GetMessages."), helpcontext(0x00000180), pointer_default(unique) ] interface IMessages : IDispatch
+{
+	[ 
+		id( 0 ), 
+        propget, 
+		helpstring( "Returns the message specified by index from the collection." ), 
+		helpcontext( 0x00000181 ),
+		readonly 
+	] HRESULT Item (long Index, 
+				[out, retval] 	IMessage **ppMessage);	
+
+	[ id( 1 ), propget, helpstring( "The number of message objects in the collection." ), helpcontext( 0x00000182 ), readonly ] HRESULT Count ([out,retval] long* varCount);	
+
+	[ id( 2 ), helpstring ( "Deletes the specified message object in the collection." ), helpcontext( 0x00000183 ) ] HRESULT Delete(
+				[in] 			long Index);
+	
+	[ id( 3 ), helpstring ( "Deletes all message objects in the collection." ), helpcontext( 0x00000184 ) ] HRESULT DeleteAll();
+				
+	[propget, restricted, id(DISPID_NEWENUM)]						
+	HRESULT _NewEnum(
+				[out, retval] 	IUnknown** retval);
+	[ 
+		id( 5 ), 
+        propget, 
+		helpstring( "Returns the name of the file containing the specified message in the file system." ), 
+		helpcontext( 0x00000185 ),
+		readonly 
+	] HRESULT Filename (VARIANT var, 
+				[out, retval] 	BSTR *Filename);	
+};
+
+[ object, uuid(CD000024-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to manage a collection of messages on the file system."), helpcontext(0x00000190), pointer_default(unique) ] interface IDropDirectory : IDispatch
+{
+	[ 
+		id( 200 ), 
+		helpstring( "Returns a collection of messages contained in the specified directory on the file system. The default location is the SMTP drop directory." ),
+		helpcontext( 0x00000191 ), 
+		readonly 
+	] 
+	HRESULT GetMessages ([in, optional] BSTR DirName, 
+					  [out,retval] IMessages** Msgs);
+};
+
+[ object, uuid(CD000023-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods and properties used to manage a collection of BodyPart objects."), helpcontext(0x00000170), pointer_default(unique) ] interface IBodyParts : IDispatch
+{
+	[ id( 1 ), propget, helpstring( "Returns the number of BodyPart objects in the collection." ), helpcontext( 0x00000171 ), readonly ] HRESULT Count ([out,retval] long* varCount);	
+
+	[ 
+		id( 0 ), 
+        propget, 
+		helpstring( "The specified BodyPart object in the collection." ),
+		helpcontext( 0x00000172 ),
+		readonly 
+	]
+	HRESULT Item (
+				[in] 			long Index, 
+				[out, retval] 	IBodyPart **ppBody);	
+
+	[propget, restricted, id(DISPID_NEWENUM)]						
+	HRESULT _NewEnum(
+				[out, retval] 	IUnknown** retval);
+
+	[ id( 2 ), helpstring ( "Deletes the specified BodyPart object from the collection. Can use the index or a reference to the object." ), helpcontext( 0x00000173 ) ] HRESULT Delete(
+				[in]			VARIANT varBP);
+
+	[ id( 3 ), helpstring ( "Deletes all BodyPart objects in the collection." ), helpcontext( 0x00000174 ) ] HRESULT DeleteAll();
+
+	[ id( 4 ), helpstring ( "Adds a BodyPart object to the collection at the specified index, and returns the newly added object." ), helpcontext( 0x00000175 ) ] HRESULT Add(
+				[in, defaultvalue(-1)]	long Index,
+				[out, retval]			IBodyPart **ppPart);
+};
+
+[ object, uuid(CD000030-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("ISMTPScriptConnector interface"), pointer_default(unique), hidden ] interface ISMTPScriptConnector : IDispatch
+{
+};
+[ object, uuid(CD000034-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("INNTPFinalScriptConnector interface"), pointer_default(unique), hidden ] interface INNTPEarlyScriptConnector : IDispatch
+{
+};
+[ object, uuid(CD000031-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("INNTPPostScriptConnector interface"), pointer_default(unique), hidden ] interface INNTPPostScriptConnector : IDispatch
+{
+};
+[ object, uuid(CD000032-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("INNTPFinalScriptConnector interface"), pointer_default(unique), hidden ] interface INNTPFinalScriptConnector : IDispatch
+{
+};
+
+[ object, uuid(CD000026-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Implement when creating SMTP OnArrival event sinks."), helpcontext(0x00000200), pointer_default(unique) ] interface ISMTPOnArrival : IDispatch
+{
+	[ id( 256 ), helpstring ( "Called by the SMTP event dispatcher when a message arrives." ), helpcontext( 0x00000201 ) ] HRESULT OnArrival(
+			[in] IMessage *Msg, [in,out]CdoEventStatus *EventStatus);
+
+};
+
+[ object, uuid(CD000033-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Implement when creating NNTP OnPostEarly event sinks."), helpcontext(0x00000210), pointer_default(unique) ] interface INNTPOnPostEarly : IDispatch
+{
+	[ id( 256 ), helpstring ( "Called by the NNTP event dispatcher when message headers arrive." ), helpcontext( 0x00000211 ) ] HRESULT OnPostEarly(
+			[in] IMessage *Msg, [in,out]CdoEventStatus *EventStatus);
+
+}
+
+[ object, uuid(CD000027-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Implement when creating NNTP OnPost event sinks."), helpcontext(0x00000220), pointer_default(unique) ] interface INNTPOnPost : IDispatch
+{
+	[ id( 256 ), helpstring ( "Called by the NNTP event dispatcher when a message is posted." ), helpcontext( 0x00000221 ) ] HRESULT OnPost(
+			[in] IMessage *Msg, [in,out]CdoEventStatus *EventStatus);
+
+};
+
+[ object, uuid(CD000028-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Implement when creating NNTP OnPostFinal event sinks."), helpcontext(0x00000230), pointer_default(unique) ] interface INNTPOnPostFinal : IDispatch
+{
+	[ id( 256 ), helpstring ( "Called by the NNTP event dispatcher after a posted message has been saved to its final location." ), helpcontext( 0x00000231 ) ] HRESULT OnPostFinal(
+			[in] IMessage *Msg, [in,out]CdoEventStatus *EventStatus);
+
+};
+
+[
+	object,
+	uuid(CD000083-8B95-11D1-82DB-00C04FB1625D),
+	pointer_default(unique)
+]
+interface IProxyObject : IUnknown
+{
+	[propget,readonly]
+	HRESULT Object([out] IUnknown** ppParent);
+};
+
+interface IContactGroupMembers;
+interface IRecurrencePatterns;
+interface IExceptions;
+interface ICalendarMessage;
+interface ICalendarParts;
+interface IAttendee;
+interface IAttendees;
+interface IPerson;
+
+interface IEventRegistration;
+interface IEventAction;
+interface IAddressees;
+
+[ object, uuid(CD000126-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to manage an item."), helpcontext(0x00000400), pointer_default(unique) ] interface IItem : IDispatch
+{
+	[ id( 1 ), helpstring ( "Returns a specified interface on this object; provided for script languages." ), helpcontext( 0x00000401 ) ] HRESULT GetInterface([in] BSTR Interface, [out, retval] IDispatch** ppUnknown);
+	[ id( 2 ), helpstring ( "Returns an ADO Stream object containing the item's stream (adDefaultStream property)." ), helpcontext( 0x00000402 ) ] HRESULT GetStream([out,retval] _Stream **ppStream);
+	[ id( 3 ), propget, helpstring( "The number of items, including subfolders, within a folder. Only valid when bound to a folder." ), helpcontext( 0x00000403 ), readonly ] HRESULT ChildCount ([out,retval] long* varChildCount);
+	[ id( 4 ), propget, helpstring( "The object's Configuration object." ), helpcontext( 0x00000404) ] HRESULT Configuration ([out,retval] IConfiguration** pConfiguration); [ id( 4 ), propput, helpstring( "The object's Configuration object." ), helpcontext( 0x00000404 ) ] HRESULT Configuration ([in] IConfiguration* varConfiguration); [ id( 4 ), propputref, helpstring( "The object's Configuration object." ), helpcontext( 0x00000404 ) ] HRESULT Configuration ([in] IConfiguration* varConfiguration);
+	[ id( 5 ), propget, helpstring( "The item's content class." ), helpcontext(0x00000405) ] HRESULT ContentClass ([out,retval] BSTR* pContentClass); [ id( 5 ), propput, helpstring( "The item's content class." ), helpcontext(0x00000405) ] HRESULT ContentClass ([in] BSTR varContentClass);
+	[ id( 6 ), propget, helpstring( "The date and time the item was created." ), helpcontext( 0x00000406 ), readonly ] HRESULT CreationDate ([out,retval] DATE* varCreationDate);
+	[ id( 7 ), propget, helpstring( "The object's IDataSource interface." ), helpcontext( 0x00000407 ), readonly ] HRESULT DataSource ([out,retval] IDataSource** varDataSource);
+	[ id( 8 ), propget, helpstring( "The item's display name." ), helpcontext( 0x00000408 ), readonly ] HRESULT DisplayName ([out,retval] BSTR* varDisplayName);
+	[ id( 9 ), propget, helpstring( "The object's Fields collection." ), helpcontext( 0x00000409 ), readonly ] HRESULT Fields ([out,retval] Fields** varFields);
+	[ id( 10 ), propget, helpstring( "Indicates whether the item is a collection." ), helpcontext( 0x0000040a ), readonly ] HRESULT IsCollection ([out,retval] VARIANT_BOOL* varIsCollection);
+	[ id( 11 ), propget, helpstring( "Indicates whether the item is hidden." ), helpcontext(0x0000040b) ] HRESULT IsHidden ([out,retval] VARIANT_BOOL* pIsHidden); [ id( 11 ), propput, helpstring( "Indicates whether the item is hidden." ), helpcontext(0x0000040b) ] HRESULT IsHidden ([in] VARIANT_BOOL varIsHidden);
+	[ id( 12 ), propget, helpstring( "Indicates whether the item is a structured document." ), helpcontext( 0x0000040c ), readonly ] HRESULT IsStructuredDocument ([out,retval] VARIANT_BOOL* varIsStructuredDocument);
+	[ id( 13 ), propget, helpstring( "The date and time the item was last modified." ), helpcontext( 0x0000040d ), readonly ] HRESULT LastModified ([out,retval] DATE* varLastModified);
+	[ id( 14 ), propget, helpstring( "The number of non-folder items in a folder, including any hidden items. Only valid when bound to a folder." ), helpcontext( 0x0000040e ), readonly ] HRESULT ObjectCount ([out,retval] long* varObjectCount);
+	[ id( 15 ), propget, helpstring( "The absolute URL of the item's parent folder." ), helpcontext( 0x0000040f ), readonly ] HRESULT ParentURL ([out,retval] BSTR* varParentURL);
+	[ id( 16 ), propget, helpstring( "The number of visible items in the folder (Each item's DAV:ishidden property is False). Only valid when bound to a folder." ), helpcontext( 0x00000410 ), readonly ] HRESULT VisibleCount ([out,retval] long* varVisibleCount);
+}
+
+[ object, uuid(CD000120-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to manage information about appointments."), helpcontext(0x00001000), pointer_default(unique) ] interface IAppointment : IDispatch 
+{
+
+	[ id( 2 ), propget, helpstring( "The object's Attachments collection." ), helpcontext( 0x00001002 ), readonly ] HRESULT Attachments ([out,retval] IBodyParts** varAttachments);
+
+	[ id( 3 ), propget, helpstring( "The object's Attendees collection." ), helpcontext( 0x00001004 ), readonly ] HRESULT Attendees ([out,retval] IAttendees** varAttendees);
+
+	[ id( 5 ), propget, helpstring( "Indicates how the appointment appears in the user's Free/Busy status." ), helpcontext(0x00001006) ] HRESULT BusyStatus ([out,retval] BSTR* pBusyStatus); [ id( 5 ), propput, helpstring( "Indicates how the appointment appears in the user's Free/Busy status." ), helpcontext(0x00001006) ] HRESULT BusyStatus ([in] BSTR varBusyStatus);
+	[ id( 6 ), propget, helpstring( "The appointment's keywords." ), helpcontext(0x00001008) ] HRESULT Keywords ([out,retval] VARIANT* pKeywords); [ id( 6 ), propput, helpstring( "The appointment's keywords." ), helpcontext(0x00001008) ] HRESULT Keywords ([in] VARIANT varKeywords);
+
+	[ id( 8 ), propget, helpstring( "The object's Configuration object." ), helpcontext( 0x0000100c) ] HRESULT Configuration ([out,retval] IConfiguration** pConfiguration); [ id( 8 ), propput, helpstring( "The object's Configuration object." ), helpcontext( 0x0000100c ) ] HRESULT Configuration ([in] IConfiguration* varConfiguration); [ id( 8 ), propputref, helpstring( "The object's Configuration object." ), helpcontext( 0x0000100c ) ] HRESULT Configuration ([in] IConfiguration* varConfiguration);
+	[ id( 9 ), propget, helpstring( "A person's name as a contact for the appointment." ), helpcontext(0x0000100f) ] HRESULT Contact ([out,retval] BSTR* pContact); [ id( 9 ), propput, helpstring( "A person's name as a contact for the appointment." ), helpcontext(0x0000100f) ] HRESULT Contact ([in] BSTR varContact);
+	[ id( 10 ), propget, helpstring( "A URL used to access an alternative format of the contact information." ), helpcontext(0x00001011) ] HRESULT ContactURL ([out,retval] BSTR* pContactURL); [ id( 10 ), propput, helpstring( "A URL used to access an alternative format of the contact information." ), helpcontext(0x00001011) ] HRESULT ContactURL ([in] BSTR varContactURL);
+
+	[ id( 15 ), propget, helpstring( "The object's IDataSource interface." ), helpcontext( 0x00001013 ), readonly ] HRESULT DataSource ([out,retval] IDataSource** varDataSource);
+
+	[ id( 18 ), propget, helpstring( "The date and time the appointment ends." ), helpcontext(0x00001019) ] HRESULT EndTime ([out,retval] DATE* pEndTime); [ id( 18 ), propput, helpstring( "The date and time the appointment ends." ), helpcontext(0x00001019) ] HRESULT EndTime ([in] DATE varEndTime);
+	[ id( 19 ), propget, helpstring( "The object's Exceptions collection." ), helpcontext( 0x0000101b ), readonly ] HRESULT Exceptions ([out,retval] IExceptions** varExceptions);
+
+	[ id( 21 ), propget, helpstring( "The duration of the appointment in seconds." ), helpcontext(0x0000101d) ] HRESULT Duration ([out,retval] long* pDuration); [ id( 21 ), propput, helpstring( "The duration of the appointment in seconds." ), helpcontext(0x0000101d) ] HRESULT Duration ([in] long varDuration);
+	[ id( 22 ), propget, helpstring( "The object's Fields collection." ), helpcontext( 0x00001020 ), readonly ] HRESULT Fields ([out,retval] Fields** varFields);
+
+	
+
+	[ id( 27 ), propget, helpstring( "The appointment's meeting location." ), helpcontext(0x00001022) ] HRESULT Location ([out,retval] BSTR* pLocation); [ id( 27 ), propput, helpstring( "The appointment's meeting location." ), helpcontext(0x00001022) ] HRESULT Location ([in] BSTR varLocation);
+	[ id( 28 ), propget, helpstring( "The URL for accessing an alternative format of the location information." ), helpcontext(0x00001024) ] HRESULT LocationURL ([out,retval] BSTR* pLocationURL); [ id( 28 ), propput, helpstring( "The URL for accessing an alternative format of the location information." ), helpcontext(0x00001024) ] HRESULT LocationURL ([in] BSTR varLocationURL);
+
+	
+
+	[ id( 34 ), propget, helpstring( "The appointment's priority status: Normal, Urgent, or Non-urgent." ), helpcontext(0x00001026) ] HRESULT Priority ([out,retval] long* pPriority); [ id( 34 ), propput, helpstring( "The appointment's priority status: Normal, Urgent, or Non-urgent." ), helpcontext(0x00001026) ] HRESULT Priority ([in] long varPriority);
+
+	[ id( 38 ), propget, helpstring( "The date and time a recipient replied to the meeting request." ), helpcontext( 0x00001028 ), readonly ] HRESULT ReplyTime ([out,retval] DATE* varReplyTime);
+	[ id( 39 ), propget, helpstring( "A list of supportive resources for the appointment." ), helpcontext(0x0000102a) ] HRESULT Resources ([out,retval] BSTR* pResources); [ id( 39 ), propput, helpstring( "A list of supportive resources for the appointment." ), helpcontext(0x0000102a) ] HRESULT Resources ([in] BSTR varResources);
+	[ id( 40 ), propget, helpstring( "Indicates if a response is requested for the appointment." ), helpcontext(0x0000102c) ] HRESULT ResponseRequested ([out,retval] VARIANT_BOOL* pResponseRequested); [ id( 40 ), propput, helpstring( "Indicates if a response is requested for the appointment." ), helpcontext(0x0000102c) ] HRESULT ResponseRequested ([in] VARIANT_BOOL varResponseRequested);
+	[ id( 41 ), propget, helpstring( "The object's RecurrencePatterns collection." ), helpcontext( 0x0000102f ), readonly ] HRESULT RecurrencePatterns ([out,retval] IRecurrencePatterns** varRecurrencePatterns);
+	[ id( 42 ), propget, helpstring( "The appointment's sensitivity: Company-Confidential, Personal, or Private." ), helpcontext(0x00001031) ] HRESULT Sensitivity ([out,retval] long* pSensitivity); [ id( 42 ), propput, helpstring( "The appointment's sensitivity: Company-Confidential, Personal, or Private." ), helpcontext(0x00001031) ] HRESULT Sensitivity ([in] long varSensitivity);
+
+	[ id( 44 ), propget, helpstring( "The appointment's starting date and time." ), helpcontext(0x00001033) ] HRESULT StartTime ([out,retval] DATE* pStartTime); [ id( 44 ), propput, helpstring( "The appointment's starting date and time." ), helpcontext(0x00001033) ] HRESULT StartTime ([in] DATE varStartTime);
+	[ id( 45 ), propget, helpstring( "The appointment's status: Tentative, Confirmed, or Cancelled." ), helpcontext(0x00001035) ] HRESULT MeetingStatus ([out,retval] BSTR* pMeetingStatus); [ id( 45 ), propput, helpstring( "The appointment's status: Tentative, Confirmed, or Cancelled." ), helpcontext(0x00001035) ] HRESULT MeetingStatus ([in] BSTR varMeetingStatus);
+	[ id( 46 ), propget, helpstring( "The appointment's topic." ), helpcontext(0x00001037) ] HRESULT Subject ([out,retval] BSTR* pSubject); [ id( 46 ), propput, helpstring( "The appointment's topic." ), helpcontext(0x00001037) ] HRESULT Subject ([in] BSTR varSubject);
+
+	[ id( 48 ), propget, helpstring( "Indicates whether the appointment appears in the free/busy string." ), helpcontext(0x00001039) ] HRESULT Transparent ([out,retval] BSTR* pTransparent); [ id( 48 ), propput, helpstring( "Indicates whether the appointment appears in the free/busy string." ), helpcontext(0x00001039) ] HRESULT Transparent ([in] BSTR varTransparent);
+
+	
+
+	[ id( 52 ), propget, helpstring( "The object's IBodyPart interface." ), helpcontext( 0x0000103b ), readonly ] HRESULT BodyPart ([out,retval] IBodyPart** varBodyPart);
+
+	[ id( 54 ), propget, helpstring( "The geographical latitude of the appointment's location." ), helpcontext(0x0000103d) ] HRESULT GEOLatitude ([out,retval] double* pGEOLatitude); [ id( 54 ), propput, helpstring( "The geographical latitude of the appointment's location." ), helpcontext(0x0000103d) ] HRESULT GEOLatitude ([in] double varGEOLatitude);
+	[ id( 55 ), propget, helpstring( "The geographical longitude of the appointment's location." ), helpcontext(0x0000103f) ] HRESULT GEOLongitude ([out,retval] double* pGEOLongitude); [ id( 55 ), propput, helpstring( "The geographical longitude of the appointment's location." ), helpcontext(0x0000103f) ] HRESULT GEOLongitude ([in] double varGEOLongitude);
+	[ id( 56 ), propget, helpstring( "Indicates whether the appointment duration is all day." ), helpcontext(0x00001056) ] HRESULT AllDayEvent ([out,retval] VARIANT_BOOL* pAllDayEvent); [ id( 56 ), propput, helpstring( "Indicates whether the appointment duration is all day." ), helpcontext(0x00001056) ] HRESULT AllDayEvent ([in] VARIANT_BOOL varAllDayEvent);
+
+	[ id( 61 ), propget, helpstring( "The appointment's text description." ), helpcontext(0x00001054) ] HRESULT TextBody ([out,retval] BSTR* pTextBody); [ id( 61 ), propput, helpstring( "The appointment's text description." ), helpcontext(0x00001054) ] HRESULT TextBody ([in] BSTR varTextBody);
+	[ id( 62 ), propget, helpstring( "The attendee response text for the appointment." ), helpcontext(0x00001057) ] HRESULT ResponseText ([out,retval] BSTR* pResponseText); [ id( 62 ), propput, helpstring( "The attendee response text for the appointment." ), helpcontext(0x00001057) ] HRESULT ResponseText ([in] BSTR varResponseText);
+
+	[ id( 201 ), helpstring ( "Returns a CalendarMessage object used to accept the appointment." ), helpcontext( 0x00001041 ) ] HRESULT Accept	([out, retval] ICalendarMessage **Response);
+	[ id( 202 ), helpstring ( "Returns a CalendarMessage object used to tentatively accept the appointment." ), helpcontext( 0x00001043 ) ] HRESULT AcceptTentative	([out, retval] ICalendarMessage **Response);
+	[ id( 203 ), helpstring ( "Returns a CalendarMessage object used to cancel the appointment." ), helpcontext( 0x00001045 ) ] HRESULT Cancel	([in, optional] BSTR EmailList, [in, optional] VARIANT_BOOL CleanupCalendar, [in, optional] BSTR UserName, [in, optional] BSTR Password, [out, retval] ICalendarMessage **Request);
+
+	[ id( 205 ), helpstring ( "Returns a CalendarMessage object used to invite attendees to the appointment." ), helpcontext( 0x00001047 ) ] HRESULT CreateRequest	([out, retval] ICalendarMessage **Request);
+	[ id( 206 ), helpstring ( "Returns a CalendarMessage object used to decline the appointment." ), helpcontext( 0x00001049 ) ] HRESULT Decline	([in, optional] VARIANT_BOOL CleanupCalendar, [in, optional] BSTR UserName, [in, optional] BSTR Password, [out, retval] ICalendarMessage **Response);
+
+	[ id( 211 ), helpstring ( "Returns a CalendarMessage object used to invite other attendees to the appointment." ), helpcontext( 0x0000104b ) ] HRESULT Invite 	([in] BSTR EmailList, [out, retval] ICalendarMessage **Request);
+	[ id( 212 ), helpstring ( "Publishes the appointment to a file or URL." ), helpcontext( 0x0000104d ) ] HRESULT Publish	([out, retval] ICalendarMessage **Request);
+
+	[ id( 217 ), helpstring ( "Returns the first instance of the recurring appointment." ), helpcontext( 0x0000104f ) ] HRESULT GetFirstInstance	([in] DATE MinDate, [in] DATE MaxDate, [out, retval] IAppointment **Appointment);
+	[ id( 218 ), helpstring ( "Returns the next instance of the recurring appointment." ), helpcontext( 0x00001051 ) ] HRESULT GetNextInstance	([out, retval] IAppointment **Appointment);
+	[ id( 219 ), helpstring ( "Returns a specified interface on this object; provided for script languages." ), helpcontext( 0x00001053 ) ] HRESULT GetInterface	([in] BSTR Interface, [out, retval] IDispatch** ppUnknown);
+	[ id( 220 ), helpstring ( "Returns the master recurring appointment for an exception or instance of the master appointment." ), helpcontext( 0x00001055 ) ] HRESULT GetRecurringMaster	([in, optional] BSTR CalendarLocation, [in, optional] BSTR UserName, [in, optional] BSTR Password, [out, retval] IAppointment **Appointment);
+};
+
+[ object, uuid(CD000122-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to create and process meeting requests."), helpcontext(0x00011000), pointer_default(unique) ] interface ICalendarMessage : IDispatch
+{
+
+	[ id( 2 ), helpstring ( "Returns a specified interface on this object; provided for script languages." ), helpcontext( 0x00011002 ) ] HRESULT GetInterface		([in] BSTR Interface, [out, retval] IDispatch** ppUnknown);
+	[ id( 3 ), propget, helpstring( "The object's CalendarParts collection. Contains all calendar-related body parts in the message." ), helpcontext( 0x00011003 ), readonly ] HRESULT CalendarParts ([out,retval] ICalendarParts ** varCalendarParts);
+
+	[ id( 5 ), propget, helpstring( "The object's IMessage interface." ), helpcontext( 0x00011005 ), readonly ] HRESULT Message ([out,retval] IMessage ** varMessage);
+	[ id( 6 ), propget, helpstring( "The object's IDataSource interface." ), helpcontext( 0x00011006 ), readonly ] HRESULT DataSource ([out,retval] IDataSource ** varDataSource);
+	[ id( 7 ), propget, helpstring( "The object's Configuration object." ), helpcontext( 0x00011007) ] HRESULT Configuration ([out,retval] IConfiguration ** pConfiguration); [ id( 7 ), propput, helpstring( "The object's Configuration object." ), helpcontext( 0x00011007 ) ] HRESULT Configuration ([in] IConfiguration * varConfiguration); [ id( 7 ), propputref, helpstring( "The object's Configuration object." ), helpcontext( 0x00011007 ) ] HRESULT Configuration ([in] IConfiguration * varConfiguration);
+
+};
+
+[ object, uuid(CD00012E-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods and properties used to manage a collection of integers. Used in recurrence patterns."), helpcontext(0x00011100), pointer_default(unique) ] interface IIntegers : IDispatch
+{
+	[propget, id(0), helpstring("The integer at the specified index in the collection."),helpcontext(0x00011100)] HRESULT Item(long Index, [out, retval] long *Value);
+	[propget, id(1), helpstring("The number of integers in the collection."),helpcontext(0x00011100)] HRESULT Count([out, retval] long *Count);
+	[id(2), helpstring("Deletes the integer at the specified index."),helpcontext(0x00011100)] HRESULT Delete([in] long *Value);
+
+	[id(3), helpstring("Adds an integer to the collection."),helpcontext(0x00011100)] HRESULT Add([in] long NewValue);
+	[propget, restricted, id(DISPID_NEWENUM)] HRESULT _NewEnum([out, retval] 	IUnknown** Unknown);
+};
+
+[ object, uuid(CD00012F-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods and properties used to manage a collection of Variants. Used in recurrence patterns."), helpcontext(0x00011110), pointer_default(unique) ] interface IVariants : IDispatch
+{
+	[propget, id(0), helpstring("The Variant at the specified index in the collection."),helpcontext(0x00011111)] HRESULT Item(long Index, [out, retval] VARIANT *Value);
+	[propget, id(1), helpstring("The number of Variants in the collection."),helpcontext(0x00011112)] HRESULT Count([out, retval] long *Count);
+	[id(2), helpstring("Deletes the Variant at the specified index."),helpcontext(0x00011114)] HRESULT Delete([in] VARIANT *Value);
+
+	[id(3), helpstring("Adds a Variant to the collection."),helpcontext(0x00011113)] HRESULT Add([in] VARIANT NewValue);
+	[propget, restricted, id(DISPID_NEWENUM)] HRESULT _NewEnum([out, retval] 	IUnknown** Unknown);
+};
+
+[ object, uuid(CD000123-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Provides scheduling properties for specifying recurrence pattern rules."), helpcontext(0x00011060), pointer_default(unique) ] interface IRecurrencePattern : IDispatch
+{
+        [ id( 1 ), propget, helpstring( "The interval between any two instances generated by the pattern." ), helpcontext(0x00011061) ] HRESULT Interval ([out,retval] long* pInterval); [ id( 1 ), propput, helpstring( "The interval between any two instances generated by the pattern." ), helpcontext(0x00011061) ] HRESULT Interval ([in] long varInterval);
+        [ id( 2 ), propget, helpstring( "The number of instances generated by the pattern." ), helpcontext(0x00011062) ] HRESULT Instances ([out,retval] long* pInstances); [ id( 2 ), propput, helpstring( "The number of instances generated by the pattern." ), helpcontext(0x00011062) ] HRESULT Instances ([in] long varInstances);
+        [ id( 3 ), propget, helpstring( "The recurring type of the pattern, such as daily or weekly." ), helpcontext(0x00011063) ] HRESULT Frequency ([out,retval] CdoFrequency* pFrequency); [ id( 3 ), propput, helpstring( "The recurring type of the pattern, such as daily or weekly." ), helpcontext(0x00011063) ] HRESULT Frequency ([in] CdoFrequency varFrequency);
+        [ id( 4 ), propget, helpstring( "The date and time the recurrence pattern terminates." ), helpcontext(0x00011064) ] HRESULT PatternEndDate ([out,retval] DATE* pPatternEndDate); [ id( 4 ), propput, helpstring( "The date and time the recurrence pattern terminates." ), helpcontext(0x00011064) ] HRESULT PatternEndDate ([in] DATE varPatternEndDate);
+
+        [ id( 6 ), propget, helpstring( "Indicates whether to add or delete a set of appointment instances from a recurring appointment. Values are ADD and DELETE." ), helpcontext( 0x00011066 ), readonly ] HRESULT Type ([out,retval] BSTR* varType);
+        [ id( 7 ), propget, helpstring( "Indicates how the appointment recurrences end." ), helpcontext(0x00011067) ] HRESULT EndType ([out,retval] CdoPatternEndType* pEndType); [ id( 7 ), propput, helpstring( "Indicates how the appointment recurrences end." ), helpcontext(0x00011067) ] HRESULT EndType ([in] CdoPatternEndType varEndType);
+        [ id( 8 ), propget, helpstring( "The day on which a week starts, such as Sunday or Monday" ), helpcontext(0x00011068) ] HRESULT FirstDayOfWeek ([out,retval] CdoDayOfWeek* pFirstDayOfWeek); [ id( 8 ), propput, helpstring( "The day on which a week starts, such as Sunday or Monday" ), helpcontext(0x00011068) ] HRESULT FirstDayOfWeek ([in] CdoDayOfWeek varFirstDayOfWeek);
+        [ id( 9 ), propget, helpstring( "The days of the month spanned by a recurrence pattern." ), helpcontext( 0x00011069 ), readonly ] HRESULT DaysOfMonth ([out,retval] IIntegers** varDaysOfMonth);
+        [ id( 10 ), propget, helpstring( "The days of the week spanned by a recurrence pattern." ), helpcontext( 0x0001106a ), readonly ] HRESULT DaysOfWeek ([out,retval] IIntegers** varDaysOfWeek);
+        [ id( 11 ), propget, helpstring( "The days of the year spanned by a recurrence pattern." ), helpcontext( 0x0001106b ), readonly ] HRESULT DaysOfYear ([out,retval] IIntegers** varDaysOfYear);
+        [ id( 12 ), propget, helpstring( "The seconds of a minute when a recurrence pattern is valid." ), helpcontext( 0x0001106c ), readonly ] HRESULT SecondsOfMinute ([out,retval] IIntegers** varSecondsOfMinute);
+        [ id( 13 ), propget, helpstring( "The minutes of the hour spanned by a recurrence pattern." ), helpcontext( 0x0001106d ), readonly ] HRESULT MinutesOfHour ([out,retval] IIntegers** varMinutesOfHour);
+        [ id( 14 ), propget, helpstring( "The hours of day spanned by a recurrence pattern." ), helpcontext( 0x0001106e ), readonly ] HRESULT HoursOfDay ([out,retval] IIntegers** varHoursOfDay);
+        [ id( 15 ), propget, helpstring( "The weeks and days that appointment instances should occur." ), helpcontext( 0x0001106f ), readonly ] HRESULT WeekDays ([out,retval] IVariants** varWeekDays);
+        [ id( 16 ), propget, helpstring( "The weeks of the year when a recurrence pattern is valid." ), helpcontext( 0x00011070 ), readonly ] HRESULT WeeksOfYear ([out,retval] IIntegers** varWeeksOfYear);
+        [ id( 17 ), propget, helpstring( "The months of the year spanned by a recurrence pattern." ), helpcontext( 0x00011071 ), readonly ] HRESULT MonthsOfYear ([out,retval] IIntegers** varMonthsOfYear);
+        [ id( 18 ), propget, helpstring( "The relative position of the instance in a recurrence pattern. For example, in a monthly recurrence pattern, a ByPosition value of -1 indicates the last day of the month." ), helpcontext( 0x00011072 ), readonly ] HRESULT ByPosition ([out,retval] IIntegers** varByPosition);
+};
+
+[ object, uuid(CD000124-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to manage exceptions to a recurring meeting."), helpcontext(0x00011080), pointer_default(unique) ] interface IException : IDispatch
+{
+        [ id( 1 ), propget, helpstring( "Indicates whether to add, delete, or modify an appointment instance." ), helpcontext( 0x00011081 ), readonly ] HRESULT Type ([out,retval] BSTR* varType);
+        [ id( 2 ), propget, helpstring( "Modifies the meaning of the RecurrenceID property to refer to multiple instances of a recurring meeting." ), helpcontext(0x00011082) ] HRESULT RecurrenceIDRange ([out,retval] BSTR* pRecurrenceIDRange); [ id( 2 ), propput, helpstring( "Modifies the meaning of the RecurrenceID property to refer to multiple instances of a recurring meeting." ), helpcontext(0x00011082) ] HRESULT RecurrenceIDRange ([in] BSTR varRecurrenceIDRange);
+        [ id( 3 ), propget, helpstring( "Returns the starting date and time of an appointment instance being deleted or modified." ), helpcontext(0x00011083) ] HRESULT RecurrenceID ([out,retval] DATE* pRecurrenceID); [ id( 3 ), propput, helpstring( "Returns the starting date and time of an appointment instance being deleted or modified." ), helpcontext(0x00011083) ] HRESULT RecurrenceID ([in] DATE varRecurrenceID);
+        [ id( 4 ), propget, helpstring( "The start date and time of an appointment instance being added, or the new start date and time of an appointment instance being modified." ), helpcontext(0x00011084) ] HRESULT StartTime ([out,retval] DATE* pStartTime); [ id( 4 ), propput, helpstring( "The start date and time of an appointment instance being added, or the new start date and time of an appointment instance being modified." ), helpcontext(0x00011084) ] HRESULT StartTime ([in] DATE varStartTime);
+        [ id( 5 ), propget, helpstring( "The end date and time of an appointment instance being added, or the new end date and time of an appointment instance being modified" ), helpcontext(0x00011085) ] HRESULT EndTime ([out,retval] DATE* pEndTime); [ id( 5 ), propput, helpstring( "The end date and time of an appointment instance being added, or the new end date and time of an appointment instance being modified" ), helpcontext(0x00011085) ] HRESULT EndTime ([in] DATE varEndTime);
+
+        [ id( 101 ), propget, helpstring( "The object's Fields collection." ), helpcontext( 0x00011088 ), readonly ] HRESULT Fields ([out,retval] Fields ** varFields);
+};
+
+[ object, uuid(CD00012C-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines properties and methods used to manage a collection of RecurrencePattern objects."), helpcontext(0x00011090), pointer_default(unique) ] interface IRecurrencePatterns : IDispatch
+{
+	[propget, id(0), helpstring("The RecurrencePattern object at the specified index."),helpcontext(0x00011091)] HRESULT Item(long Index, [out, retval] IRecurrencePattern **RecurrencePattern);
+	[propget, id(1), helpstring("The number of RecurrencePattern objects in the collection."),helpcontext(0x00011092)] HRESULT Count([out, retval] long *Count);
+	[id(2), helpstring("Deletes the RecurrencePattern object at the specified index."),helpcontext(0x00011093)] HRESULT Delete([in] long Index);
+	[id(3), helpstring("Adds a RecurrencePattern object to the collection. Possible values for the Type parameter are 'Add', to add a set of instances based on the pattern, and 'Delete', to delete a set of instances based on the pattern."),helpcontext(0x00011094)] HRESULT Add([in]BSTR Type, [out, retval] IRecurrencePattern **RecurrencePattern );
+	[propget, restricted, id(DISPID_NEWENUM)] HRESULT _NewEnum([out, retval] 	IUnknown** Unknown);
+};
+
+[ object, uuid(CD00012D-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods and properties used to manage a collection of Exception objects."), helpcontext(0x00011097), pointer_default(unique) ] interface IExceptions : IDispatch
+{
+	[propget, id(0), helpstring("The Exception object at the specified index."),helpcontext(0x00011098)] HRESULT Item(long Index, [out, retval] IException **Exception);
+	[propget, id(1), helpstring("The number of Exception objects in the collection."),helpcontext(0x00011099)] HRESULT Count([out, retval] long *Count);
+	[id(2), helpstring("Deletes the Exception object at the specified index."),helpcontext(0x0001109a)] HRESULT Delete([in] long Index);
+	[id(3), helpstring("Adds an Exception object to the collection. Possible values for the Type parameter are 'Add', 'Modify', and 'Delete' indicating to add, modify, or delete exception instances."),helpcontext(0x0001109b)] HRESULT Add([in]BSTR Type, [out, retval] IException **Exception );
+	[propget, restricted, id(DISPID_NEWENUM)] HRESULT _NewEnum([out, retval] 	IUnknown** Unknown);
+};
+
+[ object, uuid(CD000133-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to manage calendar-related body parts in a CalendarMessage object."), helpcontext(0x000110a1), pointer_default(unique) ] interface ICalendarPart : IDispatch
+{
+	[ id( 301 ), helpstring ( "Returns an Appointment object bound to the associated appointment item (same UID as appointment in body part) in the specified folder." ), helpcontext( 0x000110a2 ) ] HRESULT GetAssociatedItem	([in, optional] BSTR CalendarLocation, [in, optional] BSTR UserName, [in, optional] BSTR Password, [out, retval] IDispatch **Item);
+	[ id( 302 ), helpstring ( "Returns a specified interface on this object; provided for script languages." ), helpcontext( 0x000110a3 ) ] HRESULT GetInterface	([in] BSTR Interface, [out, retval] IDispatch** ppUnknown);
+    [ id( 303 ), propget, helpstring( "The type of calendar-related body part, such as an appointment." ), helpcontext( 0x000110a4 ), readonly ] HRESULT ComponentType ([out,retval] CdoComponentType* varComponentType);
+	[ id( 304 ), propget, helpstring( "The product identifier." ), helpcontext( 0x000110a5 ), readonly ] HRESULT ProdID ([out,retval] BSTR* varProdID);
+	[ id( 305 ), propget, helpstring( "The version of the iCalendar standard for a meeting request." ), helpcontext( 0x000110a6 ), readonly ] HRESULT CalendarVersion ([out,retval] BSTR* varCalendarVersion);
+
+	[ id( 307 ), propget, helpstring( "The type of calendar action, such as a meeting request." ), helpcontext( 0x000110a8 ), readonly ] HRESULT CalendarMethod ([out,retval] BSTR* varCalendarMethod);
+
+	[ id( 309 ), helpstring ( "Returns the Appointment object that contains the latest updated version of the appointment." ), helpcontext( 0x000110aa ) ] HRESULT GetUpdatedItem		([in, optional] BSTR CalendarLocation, [in, optional] BSTR UserName, [in, optional] BSTR Password, [out, retval] IDispatch **Item);
+};
+
+[ object, uuid(CD000130-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods and properties used to manage a collection of CalendarPart objects."), helpcontext(0x000110b0), pointer_default(unique) ] interface ICalendarParts : IDispatch
+{
+	[propget, id(0), helpstring("The CalendarPart object at the specified index."),helpcontext(0x000110b1)] HRESULT Item(long Index, [out, retval] ICalendarPart **CalendarPart);
+	[propget, id(1), helpstring("The number of CalendarPart objects in the collection."),helpcontext(0x000110b2)] HRESULT Count([out, retval] long *Count);
+	[id(2), helpstring("Deletes the CalendarPart object at the specified index."),helpcontext(0x000110b3)] HRESULT Delete([in] long Index);
+	[id(3), helpstring("Adds a CalendarPart object to the collection."),helpcontext(0x000110b4)] HRESULT Add([in] IUnknown* CalendarPart, [in] CdoComponentType ComponentType);
+	[propget, restricted, id(DISPID_NEWENUM)] HRESULT _NewEnum([out, retval] 	IUnknown** Unknown);
+};
+
+[ object, uuid(CD000135-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties and collections use to manage appointment attendees."), helpcontext(0x000110c0), pointer_default(unique) ] interface IAttendee : IDispatch 
+{
+	[ id( 1 ), propget, helpstring( "The attendee's display name." ), helpcontext(0x000110c1) ] HRESULT DisplayName ([out,retval] BSTR* pDisplayName); [ id( 1 ), propput, helpstring( "The attendee's display name." ), helpcontext(0x000110c1) ] HRESULT DisplayName ([in] BSTR varDisplayName);
+	[ id( 2 ), propget, helpstring( "Indicates the type of calendar user, such as Individual, Group, or Room." ), helpcontext(0x000110c2) ] HRESULT Type ([out,retval] BSTR* pType); [ id( 2 ), propput, helpstring( "Indicates the type of calendar user, such as Individual, Group, or Room." ), helpcontext(0x000110c2) ] HRESULT Type ([in] BSTR varType);
+	[ id( 3 ), propget, helpstring( "The attendee's email address." ), helpcontext(0x000110c3) ] HRESULT Address ([out,retval] BSTR* pAddress); [ id( 3 ), propput, helpstring( "The attendee's email address." ), helpcontext(0x000110c3) ] HRESULT Address ([in] BSTR varAddress);
+	[ id( 4 ), propget, helpstring( "Indicates whether an attendee is the organizer of an appointment." ), helpcontext(0x000110c4) ] HRESULT IsOrganizer ([out,retval] VARIANT_BOOL* pIsOrganizer); [ id( 4 ), propput, helpstring( "Indicates whether an attendee is the organizer of an appointment." ), helpcontext(0x000110c4) ] HRESULT IsOrganizer ([in] VARIANT_BOOL varIsOrganizer);
+	[ id( 6 ), propget, helpstring( "Indicates whether an attendee is optional, required, or the meeting chair." ), helpcontext(0x000110c6) ] HRESULT Role ([out,retval] CdoAttendeeRoleValues* pRole); [ id( 6 ), propput, helpstring( "Indicates whether an attendee is optional, required, or the meeting chair." ), helpcontext(0x000110c6) ] HRESULT Role ([in] CdoAttendeeRoleValues varRole);
+	[ id( 7 ), propget, helpstring( "Indicates whether an attendee has accepted, declined, or delegated an appointment." ), helpcontext(0x000110c7) ] HRESULT Status ([out,retval] CdoAttendeeStatusValues* pStatus); [ id( 7 ), propput, helpstring( "Indicates whether an attendee has accepted, declined, or delegated an appointment." ), helpcontext(0x000110c7) ] HRESULT Status ([in] CdoAttendeeStatusValues varStatus);
+};
+
+[ object, uuid(CD000136-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines properties and methods used to manage a collection of Attendee objects."), helpcontext(0x000110d0), pointer_default(unique) ] interface IAttendees : IDispatch
+{
+	[propget, id(0), helpstring("The Attendee object at the specified index."),helpcontext(0x000110d2)] HRESULT Item(long Index, [out, retval] IAttendee **Attendee);
+	[propget, id(1), helpstring("The number of Attendee objects in the collection."),helpcontext(0x000110d1)] HRESULT Count([out, retval] long *Count);
+	[id(2), helpstring("Deletes the Attendee object in the collection at the specified index."),helpcontext(0x000110d3)] HRESULT Delete([in] long Index);
+	[id(3), helpstring("Adds an Attendee object to the collection."),helpcontext(0x000110d3)] HRESULT Add([in, optional] BSTR Address, [out, retval] IAttendee **Attendee);
+	[propget, restricted, id(DISPID_NEWENUM)] HRESULT _NewEnum([out, retval] 	IUnknown** Unknown);
+};
+
+[ object, uuid(CD000125-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to access information about a user's mailbox folders."), helpcontext(0x000110e0), pointer_default(unique) ] interface IMailbox : IDispatch
+{
+	[ id( 1 ), propget, helpstring( "The URL to the user's base mailbox folder." ), helpcontext( 0x000110e1 ), readonly ] HRESULT BaseFolder ([out,retval] BSTR* varBaseFolder);
+	[ id( 2 ), propget, helpstring( "The URL to the user's mailbox non IPM subtree." ), helpcontext( 0x000110e2 ), readonly ] HRESULT RootFolder ([out,retval] BSTR* varRootFolder);
+	[ id( 3 ), propget, helpstring( "The URL to the user's Inbox folder." ), helpcontext( 0x000110e3 ), readonly ] HRESULT Inbox ([out,retval] BSTR* varInbox);
+	[ id( 4 ), propget, helpstring( "The URL to the user's Outbox folder." ), helpcontext( 0x000110e4 ), readonly ] HRESULT Outbox ([out,retval] BSTR* varOutbox);
+	[ id( 5 ), propget, helpstring( "The URL to the user's Sent Items folder." ), helpcontext( 0x000110e5 ), readonly ] HRESULT SentItems ([out,retval] BSTR* varSentItems);
+	[ id( 6 ), propget, helpstring( "The URL to the user's Drafts folder." ), helpcontext( 0x000110e6 ), readonly ] HRESULT Drafts ([out,retval] BSTR* varDrafts);
+	[ id( 7 ), propget, helpstring( "The URL to the user's Deleted Items folder." ), helpcontext( 0x000110e7 ), readonly ] HRESULT DeletedItems ([out,retval] BSTR* varDeletedItems);
+	[ id( 8 ), propget, helpstring( "The URL to the user's Calendar folder." ), helpcontext( 0x000110e8 ), readonly ] HRESULT Calendar ([out,retval] BSTR* varCalendar);
+	[ id( 9 ), propget, helpstring( "The URL to the user's Tasks folder." ), helpcontext( 0x000110e9 ), readonly ] HRESULT Tasks ([out,retval] BSTR* varTasks);
+	[ id( 10 ), propget, helpstring( "The URL to the user's Contacts folder." ), helpcontext( 0x000110ea ), readonly ] HRESULT Contacts ([out,retval] BSTR* varContacts);
+	[ id( 11 ), propget, helpstring( "The URL to the user's Notes folder." ), helpcontext( 0x000110eb ), readonly ] HRESULT Notes ([out,retval] BSTR* varNotes);
+	[ id( 12 ), propget, helpstring( "The URL to the user's Journal folder." ), helpcontext( 0x000110ec ), readonly ] HRESULT Journal ([out,retval] BSTR* varJournal);
+};
+
+[ object, uuid(CD000132-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to manage a folder."), helpcontext(0x000110f0), pointer_default(unique) ] interface IFolder : IDispatch
+{
+	[ id( 1 ), propget, helpstring( "The folder's display name." ), helpcontext( 0x000110f1 ), readonly ] HRESULT DisplayName ([out,retval] BSTR* varDisplayName);
+	[ id( 2 ), propget, helpstring( "The object's Configuration object." ), helpcontext( 0x000110f2) ] HRESULT Configuration ([out,retval] IConfiguration** pConfiguration); [ id( 2 ), propput, helpstring( "The object's Configuration object." ), helpcontext( 0x000110f2 ) ] HRESULT Configuration ([in] IConfiguration* varConfiguration); [ id( 2 ), propputref, helpstring( "The object's Configuration object." ), helpcontext( 0x000110f2 ) ] HRESULT Configuration ([in] IConfiguration* varConfiguration);
+	[ id( 3 ), propget, helpstring( "The object's IDataSource interface." ), helpcontext( 0x000110f3 ), readonly ] HRESULT DataSource ([out,retval] IDataSource** varDataSource);
+	[ id( 5 ), propget, helpstring( "The folder's email address." ), helpcontext( 0x000110f5 ), readonly ] HRESULT EmailAddress ([out,retval] BSTR* varEmailAddress);
+	[ id( 6 ), propget, helpstring( "The number of un-read items in the folder." ), helpcontext( 0x000110f6 ), readonly ] HRESULT UnreadItemCount ([out,retval] LONG* varUnreadItemCount);
+	[ id( 7 ), propget, helpstring( "The number of visible items in the folder (Each item's DAV:ishidden property is False)." ), helpcontext( 0x000110f7 ), readonly ] HRESULT VisibleCount ([out,retval] LONG* varVisibleCount);
+	[ id( 8 ), propget, helpstring( "The number of non-folder items in the folder." ), helpcontext( 0x000110f8 ), readonly ] HRESULT ItemCount ([out,retval] LONG* varItemCount);
+	[ id( 9 ), propget, helpstring( "Indicates whether the folder contains subfolders." ), helpcontext( 0x000110f9 ), readonly ] HRESULT HasSubFolders ([out,retval] VARIANT_BOOL* varHasSubFolders);
+	[ id( 12 ), propget, helpstring( "The folder's description." ), helpcontext(0x000110fc) ] HRESULT Description ([out,retval] BSTR* pDescription); [ id( 12 ), propput, helpstring( "The folder's description." ), helpcontext(0x000110fc) ] HRESULT Description ([in] BSTR varDescription);
+	[ id( 13 ), propget, helpstring( "The object's Fields collection." ), helpcontext( 0x000110fd ), readonly ] HRESULT Fields ([out,retval] Fields** varFields);
+	[ id( 14 ), propget, helpstring( "The folder's content class." ), helpcontext(0x000110fe) ] HRESULT ContentClass ([out,retval] BSTR* pContentClass); [ id( 14 ), propput, helpstring( "The folder's content class." ), helpcontext(0x000110fe) ] HRESULT ContentClass ([in] BSTR varContentClass);
+
+	[ id( 15 ), helpstring ( "Returns a specified interface on this object; provided for script languages." ), helpcontext( 0x00000135 ) ] HRESULT GetInterface(
+				[in] BSTR Interface,
+				[out, retval] IDispatch** ppUnknown);
+};
+
+[ object, uuid(CD000138-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods and properties used to manage a collection of members."), helpcontext(0x00111000), pointer_default(unique) ] interface IContactGroupMembers : IDispatch
+{
+	[propget, id(0), helpstring("The member at the specified index in the collection."), helpcontext(0x00111001)] HRESULT Item(long Index, [out, retval] BSTR *pVal);
+	[propget, id(1), helpstring("The number of members in the collection."), helpcontext(0x00111002)] HRESULT Count([out, retval] long *Count);
+	
+	 [id(2), helpstring("Deletes the member at the specified index."), helpcontext(0x00111004)] HRESULT Delete([in] BSTR *Member);
+	[id(3), helpstring("Adds a member to the collection."), helpcontext(0x00111003)] HRESULT Add([in]BSTR val); 
+	[propget, restricted, id(DISPID_NEWENUM)] HRESULT _NewEnum([out, retval] 	IUnknown** Unknown);
+};
+
+[ object, uuid(CD000127-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to manage information about a person."), helpcontext(0x00111110), pointer_default(unique) ] interface IPerson : IDispatch
+{
+	[ id( 1 ), propget, helpstring( "The object's IDataSource interface." ), helpcontext( 0x00111111 ), readonly ] HRESULT DataSource ([out,retval] IDataSource** varDataSource);
+	[ id( 3 ), propget, helpstring( "The object's Configuration object." ), helpcontext( 0x00111113) ] HRESULT Configuration ([out,retval] IConfiguration** pConfiguration); [ id( 3 ), propput, helpstring( "The object's Configuration object." ), helpcontext( 0x00111113 ) ] HRESULT Configuration ([in] IConfiguration* varConfiguration); [ id( 3 ), propputref, helpstring( "The object's Configuration object." ), helpcontext( 0x00111113 ) ] HRESULT Configuration ([in] IConfiguration* varConfiguration);
+	[ id( 4 ), propget, helpstring( "The object's Fields collection." ), helpcontext( 0x00111114 ), readonly ] HRESULT Fields ([out,retval] Fields** varFields);
+	[ id( 5 ), propget, helpstring( "Identifies the mailing address." ), helpcontext(0x00111115) ] HRESULT MailingAddressID ([out,retval] CdoMailingAddressIdValues* pMailingAddressID); [ id( 5 ), propput, helpstring( "Identifies the mailing address." ), helpcontext(0x00111115) ] HRESULT MailingAddressID ([in] CdoMailingAddressIdValues varMailingAddressID);
+	[ id( 6 ), propget, helpstring( "The person's postal mailing address." ), helpcontext( 0x00111116 ), readonly ] HRESULT MailingAddress ([out,retval] BSTR* varMailingAddress);
+	[ id( 7 ), propget, helpstring( "How to construct the default value for the FileAs property." ), helpcontext(0x00111117) ] HRESULT FileAsMapping ([out,retval] CdoFileAsMappingId* pFileAsMapping); [ id( 7 ), propput, helpstring( "How to construct the default value for the FileAs property." ), helpcontext(0x00111117) ] HRESULT FileAsMapping ([in] CdoFileAsMappingId varFileAsMapping);
+	[ id( 8 ), propget, helpstring( "The display string to be used by applications to sort and display this contact record in folder views." ), helpcontext(0x00111118) ] HRESULT FileAs ([out,retval] BSTR* pFileAs); [ id( 8 ), propput, helpstring( "The display string to be used by applications to sort and display this contact record in folder views." ), helpcontext(0x00111118) ] HRESULT FileAs ([in] BSTR varFileAs);
+	[ id( 9 ), propget, helpstring( "The person's work phone." ), helpcontext(0x00111119) ] HRESULT WorkPhone ([out,retval] BSTR* pWorkPhone); [ id( 9 ), propput, helpstring( "The person's work phone." ), helpcontext(0x00111119) ] HRESULT WorkPhone ([in] BSTR varWorkPhone);
+	[ id( 10 ), propget, helpstring( "The person's work fax." ), helpcontext(0x0011111a) ] HRESULT WorkFax ([out,retval] BSTR* pWorkFax); [ id( 10 ), propput, helpstring( "The person's work fax." ), helpcontext(0x0011111a) ] HRESULT WorkFax ([in] BSTR varWorkFax);
+	[ id( 11 ), propget, helpstring( "The person's home telephone number." ), helpcontext(0x0011111b) ] HRESULT HomePhone ([out,retval] BSTR* pHomePhone); [ id( 11 ), propput, helpstring( "The person's home telephone number." ), helpcontext(0x0011111b) ] HRESULT HomePhone ([in] BSTR varHomePhone);
+	[ id( 12 ), propget, helpstring( "The person's mobile, or cellular, telephone number." ), helpcontext(0x0011111c) ] HRESULT MobilePhone ([out,retval] BSTR* pMobilePhone); [ id( 12 ), propput, helpstring( "The person's mobile, or cellular, telephone number." ), helpcontext(0x0011111c) ] HRESULT MobilePhone ([in] BSTR varMobilePhone);
+	[ id( 13 ), propget, helpstring( "The person's first name." ), helpcontext(0x0011111d) ] HRESULT FirstName ([out,retval] BSTR* pFirstName); [ id( 13 ), propput, helpstring( "The person's first name." ), helpcontext(0x0011111d) ] HRESULT FirstName ([in] BSTR varFirstName);
+	[ id( 14 ), propget, helpstring( "The person's last name." ), helpcontext(0x0011111e) ] HRESULT LastName ([out,retval] BSTR* pLastName); [ id( 14 ), propput, helpstring( "The person's last name." ), helpcontext(0x0011111e) ] HRESULT LastName ([in] BSTR varLastName);
+	[ id( 15 ), propget, helpstring( "The person's title to precede the name." ), helpcontext(0x0011111f) ] HRESULT NamePrefix ([out,retval] BSTR* pNamePrefix); [ id( 15 ), propput, helpstring( "The person's title to precede the name." ), helpcontext(0x0011111f) ] HRESULT NamePrefix ([in] BSTR varNamePrefix);
+	[ id( 16 ), propget, helpstring( "The person's title to follow the name." ), helpcontext(0x00111120) ] HRESULT NameSuffix ([out,retval] BSTR* pNameSuffix); [ id( 16 ), propput, helpstring( "The person's title to follow the name." ), helpcontext(0x00111120) ] HRESULT NameSuffix ([in] BSTR varNameSuffix);
+	[ id( 17 ), propget, helpstring( "The person's primary email address." ), helpcontext(0x00111121) ] HRESULT Email ([out,retval] BSTR* pEmail); [ id( 17 ), propput, helpstring( "The person's primary email address." ), helpcontext(0x00111121) ] HRESULT Email ([in] BSTR varEmail);
+	[ id( 18 ), propget, helpstring( "The person's secondary email address." ), helpcontext(0x00111122) ] HRESULT Email2 ([out,retval] BSTR* pEmail2); [ id( 18 ), propput, helpstring( "The person's secondary email address." ), helpcontext(0x00111122) ] HRESULT Email2 ([in] BSTR varEmail2);
+	[ id( 19 ), propget, helpstring( "The person's tertiary email address." ), helpcontext(0x00111123) ] HRESULT Email3 ([out,retval] BSTR* pEmail3); [ id( 19 ), propput, helpstring( "The person's tertiary email address." ), helpcontext(0x00111123) ] HRESULT Email3 ([in] BSTR varEmail3);
+	[id(20), helpstring("Returns an ADO Stream object containing the person's contact information in serialized, VCARD format."),helpcontext(0x00111124)] HRESULT GetVCardStream([out, retval] _Stream **Stream);
+	[ id( 21 ), helpstring ( "Returns a specified interface on this object; provided for script languages." ), helpcontext( 0x00111125 ) ] HRESULT GetInterface	([in] BSTR Interface, [out, retval] IDispatch** ppUnknown);
+
+	[ id( 22 ), propget, helpstring( "The person's work street." ), helpcontext(0x00111126) ] HRESULT WorkStreet ([out,retval] BSTR* pWorkStreet); [ id( 22 ), propput, helpstring( "The person's work street." ), helpcontext(0x00111126) ] HRESULT WorkStreet ([in] BSTR varWorkStreet);
+	[ id( 23 ), propget, helpstring( "The person's work city." ), helpcontext(0x00111127) ] HRESULT WorkCity ([out,retval] BSTR* pWorkCity); [ id( 23 ), propput, helpstring( "The person's work city." ), helpcontext(0x00111127) ] HRESULT WorkCity ([in] BSTR varWorkCity);
+	[ id( 24 ), propget, helpstring( "The person's work country." ), helpcontext(0x00111128) ] HRESULT WorkCountry ([out,retval] BSTR* pWorkCountry); [ id( 24 ), propput, helpstring( "The person's work country." ), helpcontext(0x00111128) ] HRESULT WorkCountry ([in] BSTR varWorkCountry);
+	[ id( 25 ), propget, helpstring( "The person's work postal code (zip code in the US)." ), helpcontext(0x00111129) ] HRESULT WorkPostalCode ([out,retval] BSTR* pWorkPostalCode); [ id( 25 ), propput, helpstring( "The person's work postal code (zip code in the US)." ), helpcontext(0x00111129) ] HRESULT WorkPostalCode ([in] BSTR varWorkPostalCode);
+	[ id( 26 ), propget, helpstring( "The person's work post office box number." ), helpcontext(0x0011112a) ] HRESULT WorkPostOfficeBox ([out,retval] BSTR* pWorkPostOfficeBox); [ id( 26 ), propput, helpstring( "The person's work post office box number." ), helpcontext(0x0011112a) ] HRESULT WorkPostOfficeBox ([in] BSTR varWorkPostOfficeBox);
+	[ id( 27 ), propget, helpstring( "The person's work postal address." ), helpcontext( 0x0011112b ), readonly ] HRESULT WorkPostalAddress ([out,retval] BSTR* varWorkPostalAddress);
+	[ id( 28 ), propget, helpstring( "The person's work state." ), helpcontext(0x0011112c) ] HRESULT WorkState ([out,retval] BSTR* pWorkState); [ id( 28 ), propput, helpstring( "The person's work state." ), helpcontext(0x0011112c) ] HRESULT WorkState ([in] BSTR varWorkState);
+	[ id( 29 ), propget, helpstring( "The person's work pager." ), helpcontext(0x0011112d) ] HRESULT WorkPager ([out,retval] BSTR* pWorkPager); [ id( 29 ), propput, helpstring( "The person's work pager." ), helpcontext(0x0011112d) ] HRESULT WorkPager ([in] BSTR varWorkPager);
+	
+	[ id( 30 ), propget, helpstring( "The person's home street." ), helpcontext(0x0011112e) ] HRESULT HomeStreet ([out,retval] BSTR* pHomeStreet); [ id( 30 ), propput, helpstring( "The person's home street." ), helpcontext(0x0011112e) ] HRESULT HomeStreet ([in] BSTR varHomeStreet);
+	[ id( 31 ), propget, helpstring( "The person's home city." ), helpcontext(0x0011112f) ] HRESULT HomeCity ([out,retval] BSTR* pHomeCity); [ id( 31 ), propput, helpstring( "The person's home city." ), helpcontext(0x0011112f) ] HRESULT HomeCity ([in] BSTR varHomeCity);
+	[ id( 32 ), propget, helpstring( "The person's home country." ), helpcontext(0x00111130) ] HRESULT HomeCountry ([out,retval] BSTR* pHomeCountry); [ id( 32 ), propput, helpstring( "The person's home country." ), helpcontext(0x00111130) ] HRESULT HomeCountry ([in] BSTR varHomeCountry);
+	[ id( 33 ), propget, helpstring( "The person's home postal code (zip code in the US)." ), helpcontext(0x00111131) ] HRESULT HomePostalCode ([out,retval] BSTR* pHomePostalCode); [ id( 33 ), propput, helpstring( "The person's home postal code (zip code in the US)." ), helpcontext(0x00111131) ] HRESULT HomePostalCode ([in] BSTR varHomePostalCode);
+	[ id( 34 ), propget, helpstring( "The person's post office box number." ), helpcontext(0x00111132) ] HRESULT HomePostOfficeBox ([out,retval] BSTR* pHomePostOfficeBox); [ id( 34 ), propput, helpstring( "The person's post office box number." ), helpcontext(0x00111132) ] HRESULT HomePostOfficeBox ([in] BSTR varHomePostOfficeBox);
+	[ id( 35 ), propget, helpstring( "The person's home postal address." ), helpcontext( 0x00111133 ), readonly ] HRESULT HomePostalAddress ([out,retval] BSTR* varHomePostalAddress);
+	[ id( 36 ), propget, helpstring( "The person's home state." ), helpcontext(0x00111134) ] HRESULT HomeState ([out,retval] BSTR* pHomeState); [ id( 36 ), propput, helpstring( "The person's home state." ), helpcontext(0x00111134) ] HRESULT HomeState ([in] BSTR varHomeState);
+	[ id( 37 ), propget, helpstring( "The person's home fax number." ), helpcontext(0x00111135) ] HRESULT HomeFax ([out,retval] BSTR* pHomeFax); [ id( 37 ), propput, helpstring( "The person's home fax number." ), helpcontext(0x00111135) ] HRESULT HomeFax ([in] BSTR varHomeFax);
+
+	[ id( 38 ), propget, helpstring( "The person's middle name." ), helpcontext(0x00111136) ] HRESULT MiddleName ([out,retval] BSTR* pMiddleName); [ id( 38 ), propput, helpstring( "The person's middle name." ), helpcontext(0x00111136) ] HRESULT MiddleName ([in] BSTR varMiddleName);
+	[ id( 39 ), propget, helpstring( "The person's initials." ), helpcontext(0x00111137) ] HRESULT Initials ([out,retval] BSTR* pInitials); [ id( 39 ), propput, helpstring( "The person's initials." ), helpcontext(0x00111137) ] HRESULT Initials ([in] BSTR varInitials);
+
+	[ id( 40 ), propget, helpstring( "A list of the person's valid e-mail addresses." ), helpcontext(0x00111138) ] HRESULT EmailAddresses ([out,retval] VARIANT* pEmailAddresses); [ id( 40 ), propput, helpstring( "A list of the person's valid e-mail addresses." ), helpcontext(0x00111138) ] HRESULT EmailAddresses ([in] VARIANT varEmailAddresses);
+	[ id( 41 ), propget, helpstring( "The person's company." ), helpcontext(0x00111139) ] HRESULT Company ([out,retval] BSTR* pCompany); [ id( 41 ), propput, helpstring( "The person's company." ), helpcontext(0x00111139) ] HRESULT Company ([in] BSTR varCompany);
+	[ id( 42 ), propget, helpstring( "The person's job title." ), helpcontext(0x0011113a) ] HRESULT Title ([out,retval] BSTR* pTitle); [ id( 42 ), propput, helpstring( "The person's job title." ), helpcontext(0x0011113a) ] HRESULT Title ([in] BSTR varTitle);
+};
+
+[ object, uuid(CD000139-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods, properties, and collections used to manage address resolution and free/busy information for addressees."), helpcontext(0x00111250), pointer_default(unique) ] interface IAddressee : IDispatch
+{
+	[ id( 1 ), propget, helpstring( "The object's Fields collection." ), helpcontext( 0x00111251 ), readonly ] HRESULT Fields ([out,retval] Fields** varFields);
+	[ id( 2 ), propget, helpstring( "The object's Configuration object." ), helpcontext( 0x00111252) ] HRESULT Configuration ([out,retval] IConfiguration** pConfiguration); [ id( 2 ), propput, helpstring( "The object's Configuration object." ), helpcontext( 0x00111252 ) ] HRESULT Configuration ([in] IConfiguration* varConfiguration); [ id( 2 ), propputref, helpstring( "The object's Configuration object." ), helpcontext( 0x00111252 ) ] HRESULT Configuration ([in] IConfiguration* varConfiguration);
+	[ id( 3 ), propget, helpstring( "The addressee's display name. Use CheckName to resolve this name." ), helpcontext(0x00111253) ] HRESULT DisplayName ([out,retval] BSTR* pDisplayName); [ id( 3 ), propput, helpstring( "The addressee's display name. Use CheckName to resolve this name." ), helpcontext(0x00111253) ] HRESULT DisplayName ([in] BSTR varDisplayName);
+	[ id( 4 ), propget, helpstring( "The addressee's email address." ), helpcontext(0x00111254) ] HRESULT EmailAddress ([out,retval] BSTR* pEmailAddress); [ id( 4 ), propput, helpstring( "The addressee's email address." ), helpcontext(0x00111254) ] HRESULT EmailAddress ([in] BSTR varEmailAddress);
+	[ id( 5 ), propget, helpstring( "The object's IDataSource interface." ), helpcontext( 0x00111255 ), readonly ] HRESULT DataSource ([out,retval] IDataSource** varDataSource);
+	[ id( 6 ), propget, helpstring( "The addressee's Active Directory LDAP URL. Only valid after the addressee name has been successfully resolved." ), helpcontext( 0x00111256 ), readonly ] HRESULT DirURL ([out,retval] BSTR* varDirURL);
+	[ id( 7 ), propget, helpstring( "The resolution status of the addressee." ), helpcontext(0x00111257) ] HRESULT ResolvedStatus ([out,retval] CdoResolvedStatus* pResolvedStatus); [ id( 7 ), propput, helpstring( "The resolution status of the addressee." ), helpcontext(0x00111257) ] HRESULT ResolvedStatus ([in] CdoResolvedStatus varResolvedStatus);
+	[ id( 8 ), propget, helpstring( "The addressee's content class." ), helpcontext( 0x00111258 ), readonly ] HRESULT ContentClass ([out,retval] BSTR* varContentClass);
+	[ id( 9 ), propget, helpstring( "An Addressees collection containing all addressees that matched the ambiguous criteria used while attempting to resolve the addressee's name." ), helpcontext( 0x00111259 ), readonly ] HRESULT AmbiguousNames ([out,retval] IAddressees** varAmbiguousNames);
+
+	[ id( 10 ), helpstring ( "Returns a specified interface on this object; provided for script languages." ), helpcontext( 0x0011125a ) ] HRESULT GetInterface(
+					[in] BSTR Interface,
+					[out, retval] IDispatch** ppUnknown);
+
+	[ id( 11 ), helpstring ( "Returns the Free/Busy status of the addressee. Only valid if the addressee has been resolved." ), helpcontext( 0x0011125b ) ] HRESULT GetFreeBusy(
+					[in] DATE StartTime,
+					[in] DATE EndTime,
+					[in] long Interval,
+					[in,optional] BSTR HTTPHost,
+					[in,optional] BSTR VRoot,
+					[in,optional] BSTR UserName,
+					[in,optional] BSTR Password,
+					[out,retval] BSTR* pbstrRet);
+
+	[ id( 12 ), helpstring ( "Attempts to resolve an addressee directory object using the information specified in the object." ), helpcontext( 0x0011125c ) ] HRESULT CheckName(
+					[in] BSTR Directory,
+					[in,optional] BSTR UserName,
+					[in,optional] BSTR Password,
+					[out,retval] VARIANT_BOOL* pBRet);
+};
+
+[ object, uuid(CD000142-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines methods and properties used to manage a collection of Addressee objects."), helpcontext(0x00111260), pointer_default(unique) ] interface IAddressees : IDispatch
+{
+	[propget, id(0), helpstring("The Addressee object at the specified index."),helpcontext(0x00111260)] HRESULT Item(long Index, [out, retval] IAddressee **Value);
+	[propget, id(1), helpstring("The number of Addressee objects in the collection."),helpcontext(0x00111260)] HRESULT Count([out, retval] long *Count);
+	[propget, restricted, id(DISPID_NEWENUM)] HRESULT _NewEnum([out, retval] 	IUnknown** Unknown);
+};
+
+[
+	object,
+	uuid(CD0ff000-8B95-11D1-82DB-00C04FB1625D),
+	pointer_default(unique)
+]
+interface IGetInterface : IUnknown
+{
+	HRESULT GetInterface(
+				[in] BSTR Interface,
+				[out, retval] IDispatch** ppUnknown);
+	HRESULT GetInterfaceInner(
+				[in] BSTR Interface,
+				[out, retval] IDispatch** ppUnknown);
+};
+
+[
+	uuid(CD000000-8B95-11D1-82DB-00C04FB1625D),
+	version(1.0),
+
+	helpfile("cdo.chm"),
+	helpstring("Microsoft CDO For Exchange 2000 Library")
+
+]
+library CDO
+{
+
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("msado15.dll");
+
+enum CdoAttendeeRoleValues;
+enum CdoAttendeeStatusValues;
+enum CdoComponentType;
+enum CdoConfigSource;
+enum CdoDayOfWeek;
+enum CdoDSNOptions;
+enum CdoEventStatus;
+enum CdoFileAsMappingId;
+enum CdoFrequency;
+enum CdoGenderValues;
+enum cdoImportanceValues;
+enum CdoInstanceTypes;
+enum CdoMailingAddressIdValues;
+enum CdoMessageStat;
+enum CdoMHTMLFlags;
+enum CdoNNTPProcessingField;
+enum CdoPatternEndType;
+enum CdoPostUsing;
+enum cdoPriorityValues;
+enum CdoProtocolsAuthentication;
+enum CdoReferenceType;
+enum CdoResolvedStatus;
+enum CdoSendUsing;
+enum cdoSensitivityValues;
+enum CdoTimeZoneId;
+enum cdoURLSourceValues;
+
+          [  dllname("cdoex.dll")   ]
+          module CdoBusyStatusValues
+          {
+               const BSTR cdoBusy  =L"Busy";
+               const BSTR cdoFree  =L"Free";
+               const BSTR cdoOOF  =L"OOF";
+               const BSTR cdoTentative  =L"Tentative";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoCalendar
+          {
+               const BSTR cdoAllDayEvent  =L"urn:schemas:calendar:alldayevent";
+               const BSTR cdoAttendeeRole  =L"urn:schemas:calendar:attendeerole";
+               const BSTR cdoAttendeeStatus  =L"urn:schemas:calendar:attendeestatus";
+               const BSTR cdoBusyStatus  =L"urn:schemas:calendar:busystatus";
+               const BSTR cdoCalendarLastModified  =L"urn:schemas:calendar:lastmodified";
+               const BSTR cdoCalendarUID  =L"urn:schemas:calendar:uid";
+               const BSTR cdoContact  =L"urn:schemas:calendar:contact";
+               const BSTR cdoContactURL  =L"urn:schemas:calendar:contacturl";
+               const BSTR cdoCreated  =L"urn:schemas:calendar:created";
+               const BSTR cdoDelegatedFrom  =L"urn:schemas:calendar:delegated-from";
+               const BSTR cdoDelegatedTo  =L"urn:schemas:calendar:delegated-to";
+               const BSTR cdoDescriptionURL  =L"urn:schemas:calendar:descriptionurl";
+               const BSTR cdoDTEnd  =L"urn:schemas:calendar:dtend";
+               const BSTR cdoDTStamp  =L"urn:schemas:calendar:dtstamp";
+               const BSTR cdoDTStart  =L"urn:schemas:calendar:dtstart";
+               const BSTR cdoDuration  =L"urn:schemas:calendar:duration";
+               const BSTR cdoExDate  =L"urn:schemas:calendar:exdate";
+               const BSTR cdoExRule  =L"urn:schemas:calendar:exrule";
+               const BSTR cdoFburl  =L"urn:schemas:calendar:fburl";
+               const BSTR cdoGEOLatitude  =L"urn:schemas:calendar:geolatitude";
+               const BSTR cdoGEOLongitude  =L"urn:schemas:calendar:geolongitude";
+               const BSTR cdoInstanceType  =L"urn:schemas:calendar:instancetype";
+               const BSTR cdoIsOrganizer  =L"urn:schemas:calendar:isorganizer";
+               const BSTR cdoLastModifiedTime  =L"urn:schemas:calendar:lastmodifiedtime";
+               const BSTR cdoLocation  =L"urn:schemas:calendar:location";
+               const BSTR cdoLocationURL  =L"urn:schemas:calendar:locationurl";
+               const BSTR cdoMeetingStatus  =L"urn:schemas:calendar:meetingstatus";
+               const BSTR cdoMethod  =L"urn:schemas:calendar:method";
+               const BSTR cdoProdId  =L"urn:schemas:calendar:prodid";
+               const BSTR cdoRDate  =L"urn:schemas:calendar:rdate";
+               const BSTR cdoRecurrenceId  =L"urn:schemas:calendar:recurrenceid";
+               const BSTR cdoRecurrenceIdRange  =L"urn:schemas:calendar:recurrenceidrange";
+               const BSTR cdoReminderOffset  =L"urn:schemas:calendar:reminderoffset";
+               const BSTR cdoReplyTime  =L"urn:schemas:calendar:replytime";
+               const BSTR cdoResources  =L"urn:schemas:calendar:resources";
+               const BSTR cdoResponseRequested  =L"urn:schemas:calendar:responserequested";
+               const BSTR cdoRRule  =L"urn:schemas:calendar:rrule";
+               const BSTR cdoRSVP  =L"urn:schemas:calendar:rsvp";
+               const BSTR cdoSentBy  =L"urn:schemas:calendar:sent-by";
+               const BSTR cdoSequence  =L"urn:schemas:calendar:sequence";
+               const BSTR cdoTimeZoneIDURN  =L"urn:schemas:calendar:timezoneid";
+               const BSTR cdoTimeZoneURN  =L"urn:schemas:calendar:timezone";
+               const BSTR cdoTransparency  =L"urn:schemas:calendar:transparent";
+               const BSTR cdoVersion  =L"urn:schemas:calendar:version";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoCharset
+          {
+               const BSTR cdoBIG5  =L"big5";
+               const BSTR cdoEUC_JP  =L"euc-jp";
+               const BSTR cdoEUC_KR  =L"euc-kr";
+               const BSTR cdoGB2312  =L"gb2312";
+               const BSTR cdoISO_2022_JP  =L"iso-2022-jp";
+               const BSTR cdoISO_2022_KR  =L"iso-2022-kr";
+               const BSTR cdoISO_8859_1  =L"iso-8859-1";
+               const BSTR cdoISO_8859_2  =L"iso-8859-2";
+               const BSTR cdoISO_8859_3  =L"iso-8859-3";
+               const BSTR cdoISO_8859_4  =L"iso-8859-4";
+               const BSTR cdoISO_8859_5  =L"iso-8859-5";
+               const BSTR cdoISO_8859_6  =L"iso-8859-6";
+               const BSTR cdoISO_8859_7  =L"iso-8859-7";
+               const BSTR cdoISO_8859_8  =L"iso-8859-8";
+               const BSTR cdoISO_8859_9  =L"iso-8859-9";
+               const BSTR cdoKOI8_R  =L"koi8-r";
+               const BSTR cdoShift_JIS  =L"shift-jis";
+               const BSTR cdoUS_ASCII  =L"us-ascii";
+               const BSTR cdoUTF_7  =L"utf-7";
+               const BSTR cdoUTF_8  =L"utf-8";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoConfiguration
+          {
+           [helpstring("Active Connection String")] 
+               const BSTR cdoActiveConnection  =L"http://schemas.microsoft.com/cdo/configuration/activeconnection";
+               const BSTR cdoAutoPromoteBodyParts  =L"http://schemas.microsoft.com/cdo/configuration/autopromotebodyparts";
+               const BSTR cdoFlushBuffersOnWrite  =L"http://schemas.microsoft.com/cdo/configuration/flushbuffersonwrite";
+               const BSTR cdoHTTPCookies  =L"http://schemas.microsoft.com/cdo/configuration/httpcookies";
+               const BSTR cdoLanguageCode  =L"http://schemas.microsoft.com/cdo/configuration/languagecode";
+           [helpstring("User Mailbox URL")] 
+               const BSTR cdoMailboxURL  =L"http://schemas.microsoft.com/cdo/configuration/mailboxurl";
+               const BSTR cdoNNTPAccountName  =L"http://schemas.microsoft.com/cdo/configuration/nntpaccountname";
+               const BSTR cdoNNTPAuthenticate  =L"http://schemas.microsoft.com/cdo/configuration/nntpauthenticate";
+               const BSTR cdoNNTPConnectionTimeout  =L"http://schemas.microsoft.com/cdo/configuration/nntpconnectiontimeout";
+               const BSTR cdoNNTPServer  =L"http://schemas.microsoft.com/cdo/configuration/nntpserver";
+               const BSTR cdoNNTPServerPickupDirectory  =L"http://schemas.microsoft.com/cdo/configuration/nntpserverpickupdirectory";
+               const BSTR cdoNNTPServerPort  =L"http://schemas.microsoft.com/cdo/configuration/nntpserverport";
+               const BSTR cdoNNTPUseSSL  =L"http://schemas.microsoft.com/cdo/configuration/nntpusessl";
+               const BSTR cdoPostEmailAddress  =L"http://schemas.microsoft.com/cdo/configuration/postemailaddress";
+               const BSTR cdoPostPassword  =L"http://schemas.microsoft.com/cdo/configuration/postpassword";
+               const BSTR cdoPostUserName  =L"http://schemas.microsoft.com/cdo/configuration/postusername";
+               const BSTR cdoPostUserReplyEmailAddress  =L"http://schemas.microsoft.com/cdo/configuration/postuserreplyemailaddress";
+               const BSTR cdoPostUsingMethod  =L"http://schemas.microsoft.com/cdo/configuration/postusing";
+               const BSTR cdoSaveSentItems  =L"http://schemas.microsoft.com/cdo/configuration/savesentitems";
+               const BSTR cdoSendEmailAddress  =L"http://schemas.microsoft.com/cdo/configuration/sendemailaddress";
+               const BSTR cdoSendPassword  =L"http://schemas.microsoft.com/cdo/configuration/sendpassword";
+               const BSTR cdoSendUserName  =L"http://schemas.microsoft.com/cdo/configuration/sendusername";
+               const BSTR cdoSendUserReplyEmailAddress  =L"http://schemas.microsoft.com/cdo/configuration/senduserreplyemailaddress";
+               const BSTR cdoSendUsingMethod  =L"http://schemas.microsoft.com/cdo/configuration/sendusing";
+               const BSTR cdoSMTPAccountName  =L"http://schemas.microsoft.com/cdo/configuration/smtpaccountname";
+               const BSTR cdoSMTPAuthenticate  =L"http://schemas.microsoft.com/cdo/configuration/smtpauthenticate";
+               const BSTR cdoSMTPConnectionTimeout  =L"http://schemas.microsoft.com/cdo/configuration/smtpconnectiontimeout";
+               const BSTR cdoSMTPServer  =L"http://schemas.microsoft.com/cdo/configuration/smtpserver";
+               const BSTR cdoSMTPServerPickupDirectory  =L"http://schemas.microsoft.com/cdo/configuration/smtpserverpickupdirectory";
+               const BSTR cdoSMTPServerPort  =L"http://schemas.microsoft.com/cdo/configuration/smtpserverport";
+               const BSTR cdoSMTPUseSSL  =L"http://schemas.microsoft.com/cdo/configuration/smtpusessl";
+               const BSTR cdoURLGetLatestVersion  =L"http://schemas.microsoft.com/cdo/configuration/urlgetlatestversion";
+               const BSTR cdoURLProxyBypass  =L"http://schemas.microsoft.com/cdo/configuration/urlproxybypass";
+               const BSTR cdoURLProxyServer  =L"http://schemas.microsoft.com/cdo/configuration/urlproxyserver";
+               const BSTR cdoURLSource  =L"http://schemas.microsoft.com/cdo/configuration/urlsource";
+               const BSTR cdoUseMessageResponseText  =L"http://schemas.microsoft.com/cdo/configuration/usemessageresponsetext";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoContacts
+          {
+               const BSTR cdoAccount  =L"urn:schemas:contacts:account";
+               const BSTR cdoBirthday  =L"urn:schemas:contacts:bday";
+               const BSTR cdoCallbackPhone  =L"urn:schemas:contacts:callbackphone";
+               const BSTR cdoChildrensNames  =L"urn:schemas:contacts:childrensnames";
+               const BSTR cdoCommonName  =L"urn:schemas:contacts:cn";
+               const BSTR cdoComputerNetworkName  =L"urn:schemas:contacts:computernetworkname";
+               const BSTR cdoCustomerId  =L"urn:schemas:contacts:customerid";
+               const BSTR cdoDepartment  =L"urn:schemas:contacts:department";
+               const BSTR cdoDistinguishedName  =L"urn:schemas:contacts:dn";
+               const BSTR cdoEmail1Address  =L"urn:schemas:contacts:email1";
+               const BSTR cdoEmail2Address  =L"urn:schemas:contacts:email2";
+               const BSTR cdoEmail3Address  =L"urn:schemas:contacts:email3";
+               const BSTR cdoEmployeeNumber  =L"urn:schemas:contacts:employeenumber";
+               const BSTR cdoFileAs  =L"urn:schemas:contacts:fileas";
+               const BSTR cdoFileAsId  =L"urn:schemas:contacts:fileasid";
+               const BSTR cdoFirstName  =L"urn:schemas:contacts:givenName";
+               const BSTR cdoFtpSite  =L"urn:schemas:contacts:ftpsite";
+               const BSTR cdoGender  =L"urn:schemas:contacts:gender";
+               const BSTR cdoGovernmentId  =L"urn:schemas:contacts:governmentid";
+               const BSTR cdoHobbies  =L"urn:schemas:contacts:hobbies";
+               const BSTR cdoHomeCity  =L"urn:schemas:contacts:homeCity";
+               const BSTR cdoHomeCountry  =L"urn:schemas:contacts:homeCountry";
+               const BSTR cdoHomeFax  =L"urn:schemas:contacts:homefax";
+               const BSTR cdoHomeLatitude  =L"urn:schemas:contacts:homelatitude";
+               const BSTR cdoHomeLongitude  =L"urn:schemas:contacts:homelongitude";
+               const BSTR cdoHomePhone  =L"urn:schemas:contacts:homePhone";
+               const BSTR cdoHomePhone2  =L"urn:schemas:contacts:homephone2";
+               const BSTR cdoHomePostalAddress  =L"urn:schemas:contacts:homepostaladdress";
+               const BSTR cdoHomePostalCode  =L"urn:schemas:contacts:homePostalCode";
+               const BSTR cdoHomePostOfficeBox  =L"urn:schemas:contacts:homepostofficebox";
+               const BSTR cdoHomeState  =L"urn:schemas:contacts:homeState";
+               const BSTR cdoHomeStreet  =L"urn:schemas:contacts:homeStreet";
+               const BSTR cdoHomeTimeZone  =L"urn:schemas:contacts:hometimezone";
+               const BSTR cdoInitials  =L"urn:schemas:contacts:initials";
+               const BSTR cdoInternationalISDNNumber  =L"urn:schemas:contacts:internationalisdnnumber";
+               const BSTR cdoLanguage  =L"urn:schemas:contacts:language";
+               const BSTR cdoLastName  =L"urn:schemas:contacts:sn";
+               const BSTR cdoMailingAddressId  =L"urn:schemas:contacts:mailingaddressid";
+               const BSTR cdoMailingCity  =L"urn:schemas:contacts:mailingcity";
+               const BSTR cdoMailingCountry  =L"urn:schemas:contacts:mailingcountry";
+               const BSTR cdoMailingPostalAddress  =L"urn:schemas:contacts:mailingpostaladdress";
+               const BSTR cdoMailingPostalCode  =L"urn:schemas:contacts:mailingpostalcode";
+               const BSTR cdoMailingPostOfficeBox  =L"urn:schemas:contacts:mailingpostofficebox";
+               const BSTR cdoMailingState  =L"urn:schemas:contacts:mailingstate";
+               const BSTR cdoMailingStreet  =L"urn:schemas:contacts:mailingstreet";
+               const BSTR cdoManager  =L"urn:schemas:contacts:manager";
+               const BSTR cdoMapURL  =L"urn:schemas:contacts:mapurl";
+               const BSTR cdoMiddleName  =L"urn:schemas:contacts:middlename";
+               const BSTR cdoNamePrefix  =L"urn:schemas:contacts:personaltitle";
+               const BSTR cdoNameSuffix  =L"urn:schemas:contacts:namesuffix";
+               const BSTR cdoNickname  =L"urn:schemas:contacts:nickname";
+               const BSTR cdoOrganizationName  =L"urn:schemas:contacts:o";
+               const BSTR cdoOriginalAuthor  =L"urn:schemas:contacts:authorig";
+               const BSTR cdoOtherCity  =L"urn:schemas:contacts:othercity";
+               const BSTR cdoOtherCountry  =L"urn:schemas:contacts:othercountry";
+               const BSTR cdoOtherCountryCode  =L"urn:schemas:contacts:othercountrycode";
+               const BSTR cdoOtherFax  =L"urn:schemas:contacts:otherfax";
+               const BSTR cdoOtherMobile  =L"urn:schemas:contacts:othermobile";
+               const BSTR cdoOtherPager  =L"urn:schemas:contacts:otherpager";
+               const BSTR cdoOtherPostalAddress  =L"urn:schemas:contacts:otherpostaladdress";
+               const BSTR cdoOtherPostalCode  =L"urn:schemas:contacts:otherpostalcode";
+               const BSTR cdoOtherPostOfficeBox  =L"urn:schemas:contacts:otherpostofficebox";
+               const BSTR cdoOtherState  =L"urn:schemas:contacts:otherstate";
+               const BSTR cdoOtherStreet  =L"urn:schemas:contacts:otherstreet";
+               const BSTR cdoOtherTimeZone  =L"urn:schemas:contacts:othertimezone";
+               const BSTR cdoOtherWorkPhone  =L"urn:schemas:contacts:otherTelephone";
+               const BSTR cdoPersonalURL  =L"urn:schemas:contacts:personalHomePage";
+               const BSTR cdoProfession  =L"urn:schemas:contacts:profession";
+               const BSTR cdoProxyAddresses  =L"urn:schemas:contacts:proxyaddresses";
+               const BSTR cdoRoomNumber  =L"urn:schemas:contacts:roomnumber";
+               const BSTR cdoSecretary  =L"urn:schemas:contacts:secretary";
+               const BSTR cdoSecretaryCommonName  =L"urn:schemas:contacts:secretarycn";
+               const BSTR cdoSecretaryURL  =L"urn:schemas:contacts:secretaryurl";
+               const BSTR cdoSourceURL  =L"urn:schemas:contacts:sourceurl";
+               const BSTR cdoSpouseCommonName  =L"urn:schemas:contacts:spousecn";
+               const BSTR cdoSubmissionContLength  =L"urn:schemas:contacts:submissioncontlength";
+               const BSTR cdoTelexNumber  =L"urn:schemas:contacts:telexnumber";
+               const BSTR cdoTitle  =L"urn:schemas:contacts:title";
+               const BSTR cdoUserCertificate  =L"urn:schemas:contacts:usercertificate";
+               const BSTR cdoWeddingAnniversary  =L"urn:schemas:contacts:weddinganniversary";
+               const BSTR cdoWorkAddress  =L"urn:schemas:contacts:workaddress";
+               const BSTR cdoWorkCity  =L"urn:schemas:contacts:l";
+               const BSTR cdoWorkCountry  =L"urn:schemas:contacts:co";
+               const BSTR cdoWorkCountryAbbreviation  =L"urn:schemas:contacts:c";
+               const BSTR cdoWorkFax  =L"urn:schemas:contacts:facsimiletelephonenumber";
+               const BSTR cdoWorkMobilePhone  =L"urn:schemas:contacts:mobile";
+               const BSTR cdoWorkPager  =L"urn:schemas:contacts:pager";
+               const BSTR cdoWorkPhone  =L"urn:schemas:contacts:telephoneNumber";
+               const BSTR cdoWorkPhone2  =L"urn:schemas:contacts:telephonenumber2";
+               const BSTR cdoWorkPostalCode  =L"urn:schemas:contacts:postalcode";
+               const BSTR cdoWorkPostOfficeBox  =L"urn:schemas:contacts:postofficebox";
+               const BSTR cdoWorkState  =L"urn:schemas:contacts:st";
+               const BSTR cdoWorkStreet  =L"urn:schemas:contacts:street";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoContentTypeValues
+          {
+               const BSTR cdoGif  =L"image/gif";
+               const BSTR cdoJpeg  =L"image/jpeg";
+               const BSTR cdoMessageExternalBody  =L"message/external-body";
+               const BSTR cdoMessagePartial  =L"message/partial";
+               const BSTR cdoMessageRFC822  =L"message/rfc822";
+               const BSTR cdoMultipartAlternative  =L"multipart/alternative";
+               const BSTR cdoMultipartDigest  =L"multipart/digest";
+               const BSTR cdoMultipartMixed  =L"multipart/mixed";
+               const BSTR cdoMultipartRelated  =L"multipart/related";
+               const BSTR cdoTextHTML  =L"text/html";
+               const BSTR cdoTextPlain  =L"text/plain";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoDAV
+          {
+               const BSTR cdoAbstract  =L"DAV:abstract";
+               const BSTR cdoChildCount  =L"DAV:childcount";
+               const BSTR cdoContentClass  =L"DAV:contentclass";
+               const BSTR cdoCreationDate  =L"DAV:creationdate";
+               const BSTR cdoDAVComment  =L"DAV:comment";
+               const BSTR cdoDefaultDocument  =L"DAV:defaultdocument";
+               const BSTR cdoDisplayName  =L"DAV:displayname";
+           [helpstring(" ")] 
+               const BSTR cdoGetContentLanguage  =L"DAV:getcontentlanguage";
+               const BSTR cdoGetContentLength  =L"DAV:getcontentlength";
+               const BSTR cdoGetContentType  =L"DAV:getcontenttype";
+               const BSTR cdoGetEtag  =L"DAV:getetag";
+               const BSTR cdoGetLastModified  =L"DAV:getlastmodified";
+               const BSTR cdoHasChildren  =L"DAV:haschildren";
+               const BSTR cdoHasSubs  =L"DAV:hassubs";
+               const BSTR cdoHref  =L"DAV:href";
+               const BSTR cdoId  =L"DAV:id";
+               const BSTR cdoIsCollection  =L"DAV:iscollection";
+               const BSTR cdoIsFolder  =L"DAV:isfolder";
+               const BSTR cdoIsHidden  =L"DAV:ishidden";
+               const BSTR cdoIsRoot  =L"DAV:isroot";
+               const BSTR cdoIsStructuredDocument  =L"DAV:isstructureddocument";
+               const BSTR cdoLastAccessed  =L"DAV:lastaccessed";
+               const BSTR cdoLastModified  =L"DAV:lastmodified";
+               const BSTR cdoLockDiscovery  =L"DAV:lockdiscovery";
+               const BSTR cdoNoSubs  =L"DAV:nosubs";
+               const BSTR cdoObjectCount  =L"DAV:objectcount";
+               const BSTR cdoParentName  =L"DAV:parentname";
+               const BSTR cdoResourceType  =L"DAV:resourcetype";
+               const BSTR cdoSupportedLock  =L"DAV:supportedlock";
+               const BSTR cdoUID  =L"DAV:uid";
+               const BSTR cdoVisibleCount  =L"DAV:visiblecount";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoEncodingType
+          {
+               const BSTR cdo7bit  =L"7bit";
+               const BSTR cdo8bit  =L"8bit";
+               const BSTR cdoBase64  =L"base64";
+               const BSTR cdoBinary  =L"binary";
+               const BSTR cdoMacBinHex40  =L"mac-binhex40";
+               const BSTR cdoQuotedPrintable  =L"quoted-printable";
+               const BSTR cdoUuencode  =L"uuencode";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoExchange
+          {
+               const BSTR cdoAltRecipient  =L"http://schemas.microsoft.com/exchange/altrecipient";
+               const BSTR cdoCompanies  =L"http://schemas.microsoft.com/exchange/companies";
+               const BSTR cdoFolderSize  =L"http://schemas.microsoft.com/exchange/foldersize";
+               const BSTR cdoHardLinkList  =L"http://schemas.microsoft.com/exchange/hardlinklist";
+               const BSTR cdoSensitivity  =L"http://schemas.microsoft.com/exchange/sensitivity";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoHTTPMail
+          {
+               const BSTR cdoAttachmentFilename  =L"urn:schemas:httpmail:attachmentfilename";
+               const BSTR cdoBcc  =L"urn:schemas:httpmail:bcc";
+               const BSTR cdoCalendarFolderURL  =L"urn:schemas:httpmail:calendar";
+               const BSTR cdoCc  =L"urn:schemas:httpmail:cc";
+               const BSTR cdoContactFolderURL  =L"urn:schemas:httpmail:contacts";
+               const BSTR cdoContentDispositionType  =L"urn:schemas:httpmail:content-disposition-type";
+               const BSTR cdoContentMediaType  =L"urn:schemas:httpmail:content-media-type";
+               const BSTR cdoDate  =L"urn:schemas:httpmail:date";
+               const BSTR cdoDateReceived  =L"urn:schemas:httpmail:datereceived";
+               const BSTR cdoDeletedItems  =L"urn:schemas:httpmail:deleteditems";
+               const BSTR cdoFrom  =L"urn:schemas:httpmail:from";
+               const BSTR cdoHasAttachment  =L"urn:schemas:httpmail:hasattachment";
+               const BSTR cdoHTMLDescription  =L"urn:schemas:httpmail:htmldescription";
+               const BSTR cdoImportance  =L"urn:schemas:httpmail:importance";
+               const BSTR cdoInbox  =L"urn:schemas:httpmail:inbox";
+               const BSTR cdoJournal  =L"urn:schemas:httpmail:journal";
+               const BSTR cdoMsgFolderRoot  =L"urn:schemas:httpmail:msgfolderroot";
+               const BSTR cdoNormalizedSubject  =L"urn:schemas:httpmail:normalizedsubject";
+               const BSTR cdoNotes  =L"urn:schemas:httpmail:notes";
+               const BSTR cdoOutbox  =L"urn:schemas:httpmail:outbox";
+               const BSTR cdoPriority  =L"urn:schemas:httpmail:priority";
+               const BSTR cdoRead  =L"urn:schemas:httpmail:read";
+               const BSTR cdoReplyTo  =L"urn:schemas:httpmail:reply-to";
+               const BSTR cdoSender  =L"urn:schemas:httpmail:sender";
+               const BSTR cdoSendMsg  =L"urn:schemas:httpmail:sendmsg";
+               const BSTR cdoSentItems  =L"urn:schemas:httpmail:sentitems";
+               const BSTR cdoSpecial  =L"urn:schemas:httpmail:special";
+               const BSTR cdoSubject  =L"urn:schemas:httpmail:subject";
+               const BSTR cdoSubmitted  =L"urn:schemas:httpmail:submitted";
+               const BSTR cdoTasks  =L"urn:schemas:httpmail:tasks";
+               const BSTR cdoTextDescription  =L"urn:schemas:httpmail:textdescription";
+               const BSTR cdoThreadTopic  =L"urn:schemas:httpmail:thread-topic";
+               const BSTR cdoTo  =L"urn:schemas:httpmail:to";
+               const BSTR cdoUnreadCount  =L"urn:schemas:httpmail:unreadcount";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoInterfaces
+          {
+               const BSTR cdoAdoRecord  =L"_Record";
+               const BSTR cdoAdoRecordset  =L"_Recordset";
+               const BSTR cdoAdoStream  =L"_Stream";
+               const BSTR cdoIAddressee  =L"IAddressee";
+               const BSTR cdoIAppointment  =L"IAppointment";
+               const BSTR cdoIBodyPart  =L"IBodyPart";
+               const BSTR cdoICalendarMessage  =L"ICalendarMessage";
+               const BSTR cdoICalendarPart  =L"ICalendarPart";
+               const BSTR cdoICalendarParts  =L"ICalendarParts";
+               const BSTR cdoIConfiguration  =L"IConfiguration";
+               const BSTR cdoIDataSource  =L"IDataSource";
+               const BSTR cdoIFolder  =L"IFolder";
+               const BSTR cdoIItem  =L"IItem";
+               const BSTR cdoIMailbox  =L"IMailbox";
+               const BSTR cdoIMessage  =L"IMessage";
+               const BSTR cdoIPerson  =L"IPerson";
+               const BSTR cdoIRow  =L"IRow";
+               const BSTR cdoIRowset  =L"IRowset";
+               const BSTR cdoIStream  =L"IStream";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoMailHeader
+          {
+               const BSTR cdoApproved  =L"urn:schemas:mailheader:approved";
+               const BSTR cdoComment  =L"urn:schemas:mailheader:comment";
+               const BSTR cdoContentBase  =L"urn:schemas:mailheader:content-base";
+               const BSTR cdoContentDescription  =L"urn:schemas:mailheader:content-description";
+               const BSTR cdoContentDisposition  =L"urn:schemas:mailheader:content-disposition";
+               const BSTR cdoContentId  =L"urn:schemas:mailheader:content-id";
+               const BSTR cdoContentLanguage  =L"urn:schemas:mailheader:content-language";
+               const BSTR cdoContentLocation  =L"urn:schemas:mailheader:content-location";
+               const BSTR cdoContentTransferEncoding  =L"urn:schemas:mailheader:content-transfer-encoding";
+               const BSTR cdoContentType  =L"urn:schemas:mailheader:content-type";
+               const BSTR cdoControl  =L"urn:schemas:mailheader:control";
+               const BSTR cdoDisposition  =L"urn:schemas:mailheader:disposition";
+               const BSTR cdoDispositionNotificationTo  =L"urn:schemas:mailheader:disposition-notification-to";
+               const BSTR cdoDistribution  =L"urn:schemas:mailheader:distribution";
+               const BSTR cdoExpires  =L"urn:schemas:mailheader:expires";
+               const BSTR cdoFollowupTo  =L"urn:schemas:mailheader:followup-to";
+               const BSTR cdoInReplyTo  =L"urn:schemas:mailheader:in-reply-to";
+               const BSTR cdoLines  =L"urn:schemas:mailheader:lines";
+               const BSTR cdoMessageId  =L"urn:schemas:mailheader:message-id";
+               const BSTR cdoMIMEVersion  =L"urn:schemas:mailheader:mime-version";
+               const BSTR cdoNewsgroups  =L"urn:schemas:mailheader:newsgroups";
+               const BSTR cdoOrganization  =L"urn:schemas:mailheader:organization";
+               const BSTR cdoOriginalRecipient  =L"urn:schemas:mailheader:original-recipient";
+               const BSTR cdoPath  =L"urn:schemas:mailheader:path";
+               const BSTR cdoPostingVersion  =L"urn:schemas:mailheader:posting-version";
+               const BSTR cdoReceived  =L"urn:schemas:mailheader:received";
+               const BSTR cdoReferences  =L"urn:schemas:mailheader:references";
+               const BSTR cdoRelayVersion  =L"urn:schemas:mailheader:relay-version";
+               const BSTR cdoReturnPath  =L"urn:schemas:mailheader:return-path";
+               const BSTR cdoReturnReceiptTo  =L"urn:schemas:mailheader:return-receipt-to";
+               const BSTR cdoSummary  =L"urn:schemas:mailheader:summary";
+               const BSTR cdoThreadIndex  =L"urn:schemas:mailheader:thread-index";
+               const BSTR cdoXMailer  =L"urn:schemas:mailheader:x-mailer";
+               const BSTR cdoXref  =L"urn:schemas:mailheader:xref";
+               const BSTR cdoXUnsent  =L"urn:schemas:mailheader:x-unsent";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoMeetingStatusValues
+          {
+               const BSTR cdoMeetingStatusCancelled  =L"Cancelled";
+               const BSTR cdoMeetingStatusConfirmed  =L"Confirmed";
+               const BSTR cdoMeetingStatusTentative  =L"Tentative";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoMethodValues
+          {
+               const BSTR cdoAdd  =L"Add";
+               const BSTR cdoCancel  =L"Cancel";
+               const BSTR cdoCounter  =L"Counter";
+               const BSTR cdoDeclineCounter  =L"DeclineCounter";
+               const BSTR cdoPublish  =L"Publish";
+               const BSTR cdoRefresh  =L"Refresh";
+               const BSTR cdoReply  =L"Reply";
+               const BSTR cdoRequest  =L"Request";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoNamespace
+          {
+               const BSTR cdoNSCalendar  =L"urn:schemas:calendar:";
+               const BSTR cdoNSConfiguration  =L"http://schemas.microsoft.com/cdo/configuration/";
+               const BSTR cdoNSContacts  =L"urn:schemas:contacts:";
+               const BSTR cdoNSDAV  =L"DAV:";
+               const BSTR cdoNSHTTPMail  =L"urn:schemas:httpmail:";
+               const BSTR cdoNSMailHeader  =L"urn:schemas:mailheader:";
+               const BSTR cdoNSNNTPEnvelope  =L"http://schemas.microsoft.com/cdo/nntpenvelope/";
+               const BSTR cdoNSSMTPEnvelope  =L"http://schemas.microsoft.com/cdo/smtpenvelope/";
+               const BSTR cdoNSVCAL  =L"urn:schemas:vcal:";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoNNTPEnvelope
+          {
+               const BSTR cdoNewsgroupList  =L"http://schemas.microsoft.com/cdo/nntpenvelope/newsgrouplist";
+               const BSTR cdoNNTPProcessing  =L"http://schemas.microsoft.com/cdo/nntpenvelope/nntpprocessing";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoOffice
+          {
+               const BSTR cdoKeywords  =L"urn:schemas-microsoft-com:office:office#Keywords";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoRecurrenceIdRangeValues
+          {
+               const BSTR cdoNone  =L"None";
+               const BSTR cdoThisAndFuture  =L"ThisAndFuture";
+               const BSTR cdoThisAndPrior  =L"ThisAndPrior";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoSMTPEnvelope
+          {
+               const BSTR cdoArrivalTime  =L"http://schemas.microsoft.com/cdo/smtpenvelope/arrivaltime";
+               const BSTR cdoClientIPAddress  =L"http://schemas.microsoft.com/cdo/smtpenvelope/clientipaddress";
+               const BSTR cdoMessageStatus  =L"http://schemas.microsoft.com/cdo/smtpenvelope/messagestatus";
+               const BSTR cdoPickupFileName  =L"http://schemas.microsoft.com/cdo/smtpenvelope/pickupfilename";
+               const BSTR cdoRecipientList  =L"http://schemas.microsoft.com/cdo/smtpenvelope/recipientlist";
+               const BSTR cdoSenderEmailAddress  =L"http://schemas.microsoft.com/cdo/smtpenvelope/senderemailaddress";
+          };
+
+          [  dllname("cdoex.dll")   ]
+          module CdoTransparentValues
+          {
+               const BSTR cdoOpaque  =L"Opaque";
+               const BSTR cdoTransparent  =L"Transparent";
+          };
+
+	
+ 	 [	dllname("cdosys.dll")	]
+	module CdoErrors 
+{ 	
+		 const LONG CDO_E_UNCAUGHT_EXCEPTION = 0x80040201L;
+		 const LONG CDO_E_NOT_OPENED = 0x80040202L;
+		 const LONG CDO_E_UNSUPPORTED_DATASOURCE = 0x80040203L;
+		 const LONG CDO_E_INVALID_PROPERTYNAME = 0x80040204L;
+		 const LONG CDO_E_PROP_UNSUPPORTED = 0x80040205L;
+		 const LONG CDO_E_INACTIVE = 0x80040206L;
+		 const LONG CDO_E_NO_SUPPORT_FOR_OBJECTS = 0x80040207L;
+		 const LONG CDO_E_NOT_AVAILABLE = 0x80040208L;
+		 const LONG CDO_E_NO_DEFAULT_DROP_DIR = 0x80040209L;
+		 const LONG CDO_E_SMTP_SERVER_REQUIRED = 0x8004020AL;
+		 const LONG CDO_E_NNTP_SERVER_REQUIRED = 0x8004020BL;
+		 const LONG CDO_E_RECIPIENT_MISSING = 0x8004020CL;
+		 const LONG CDO_E_FROM_MISSING = 0x8004020DL;
+		 const LONG CDO_E_SENDER_REJECTED = 0x8004020EL;
+		 const LONG CDO_E_RECIPIENTS_REJECTED = 0x8004020FL;
+		 const LONG CDO_E_NNTP_POST_FAILED = 0x80040210L;
+		 const LONG CDO_E_SMTP_SEND_FAILED = 0x80040211L;
+		 const LONG CDO_E_CONNECTION_DROPPED = 0x80040212L;
+		 const LONG CDO_E_FAILED_TO_CONNECT = 0x80040213L;
+		 const LONG CDO_E_INVALID_POST = 0x80040214L;
+		 const LONG CDO_E_AUTHENTICATION_FAILURE = 0x80040215L;
+		 const LONG CDO_E_INVALID_CONTENT_TYPE = 0x80040216L;
+		 const LONG CDO_E_LOGON_FAILURE = 0x80040217L;
+		 const LONG CDO_E_HTTP_NOT_FOUND = 0x80040218L;
+		 const LONG CDO_E_HTTP_FORBIDDEN = 0x80040219L;
+		 const LONG CDO_E_HTTP_FAILED = 0x8004021AL;
+		 const LONG CDO_E_MULTIPART_NO_DATA = 0x8004021BL;
+		 const LONG CDO_E_INVALID_ENCODING_FOR_MULTIPART = 0x8004021CL;
+		 const LONG CDO_E_UNSAFE_OPERATION = 0x8004021DL;
+		 const LONG CDO_E_PROP_NOT_FOUND = 0x8004021EL;
+		 const LONG CDO_E_INVALID_SEND_OPTION = 0x80040220L;
+		 const LONG CDO_E_INVALID_POST_OPTION = 0x80040221L;
+		 const LONG CDO_E_NO_PICKUP_DIR = 0x80040222L;
+		 const LONG CDO_E_NOT_ALL_DELETED = 0x80040223L;
+		 const LONG CDO_E_NO_METHOD = 0x80040224L;
+		 const LONG CDO_E_PROP_READONLY = 0x80040227L;
+		 const LONG CDO_E_PROP_CANNOT_DELETE = 0x80040228L;
+		 const LONG CDO_E_BAD_DATA = 0x80040229L;
+		 const LONG CDO_E_PROP_NONHEADER = 0x8004022AL;
+		 const LONG CDO_E_INVALID_CHARSET = 0x8004022BL;
+		 const LONG CDO_E_ADOSTREAM_NOT_BOUND = 0x8004022CL;
+		 const LONG CDO_E_CONTENTPROPXML_NOT_FOUND = 0x8004022DL;
+		 const LONG CDO_E_CONTENTPROPXML_WRONG_CHARSET = 0x8004022EL;
+		 const LONG CDO_E_CONTENTPROPXML_PARSE_FAILED = 0x8004022FL;
+		 const LONG CDO_E_CONTENTPROPXML_CONVERT_FAILED = 0x80040230L;
+		 const LONG CDO_E_NO_DIRECTORIES_SPECIFIED = 0x80040231L;
+		 const LONG CDO_E_DIRECTORIES_UNREACHABLE = 0x80040232L;
+		 const LONG CDO_E_BAD_SENDER = 0x80040233L;
+		 const LONG CDO_E_SELF_BINDING = 0x80040234L;
+		 const LONG CDO_E_BAD_ATTENDEE_DATA = 0x80040235L;
+		 const LONG CDO_E_ARGUMENT1 = 0x80044000L;
+		 const LONG CDO_E_ARGUMENT2 = 0x80044001L;
+		 const LONG CDO_E_ARGUMENT3 = 0x80044002L;
+		 const LONG CDO_E_ARGUMENT4 = 0x80044003L;
+		 const LONG CDO_E_ARGUMENT5 = 0x80044004L;
+		 const LONG CDO_E_NOT_FOUND = 0x800CCE05L;
+		 const LONG CDO_E_INVALID_ENCODING_TYPE = 0x800CCE1DL;
+
+ 	};
+interface IBodyParts;
+interface IMessages;
+
+[ uuid(CD000001-8B95-11D1-82DB-00C04FB1625D), helpstring("Defines an object used to manage a message."), helpcontext(0x00000010) ] coclass Message
+{
+	[default] interface IMessage;
+	interface IDataSource;
+	interface IBodyPart;
+};
+
+[ uuid(CD000002-8B95-11D1-82DB-00C04FB1625D), helpstring("Defines an object used to store configuration information for CDO objects."), helpcontext(0x00000012) ] coclass Configuration
+{
+	[default] interface IConfiguration;
+};
+
+[ uuid(CD000004-8B95-11D1-82DB-00C04FB1625D), helpstring("Defines an object used to access messages located on the file system."), helpcontext(0x00000011) ] coclass DropDirectory
+{
+	[default] interface IDropDirectory;
+};
+
+[ uuid(CD000008-8B95-11D1-82DB-00C04FB1625D), helpstring("SMTPConnector Class"), hidden ] coclass SMTPConnector
+{
+	[default] interface ISMTPScriptConnector;
+	[default,source] interface ISMTPOnArrival;
+};
+[ uuid(CD000011-8B95-11D1-82DB-00C04FB1625D), helpstring("NNTPEarlyConnector Class"), hidden ] coclass NNTPEarlyConnector
+{
+	[default] interface INNTPEarlyScriptConnector;
+	[default,source] interface INNTPOnPostEarly;
+};
+[ uuid(CD000009-8B95-11D1-82DB-00C04FB1625D), helpstring("NNTPPostConnector Class"), hidden ] coclass NNTPPostConnector
+{
+	[default] interface INNTPPostScriptConnector;
+	[default,source] interface INNTPOnPost;
+};
+[ uuid(CD000010-8B95-11D1-82DB-00C04FB1625D), helpstring("NNTPFinalConnector Class"), hidden ] coclass NNTPFinalConnector
+{
+	[default] interface INNTPFinalScriptConnector;
+	[default,source] interface INNTPOnPostFinal;
+};
+
+[ uuid(CD000112-8B95-11D1-82DB-00C04FB1625D), helpstring("Defines an object used to manage information about an item."), helpcontext(0x0000001d) ] coclass Item
+{
+	[default] interface IItem;
+	interface IDataSource;
+};
+
+[ uuid(CD000100-8B95-11D1-82DB-00C04FB1625D), helpstring("Defines an object used to manage information about an appointment."), helpcontext(0x00000013) ] coclass Appointment
+{
+	[default] interface IAppointment;
+	interface IBodyPart;
+	interface IDataSource;
+};
+
+[ uuid(CD000102-8B95-11D1-82DB-00C04FB1625D), helpstring("Defines an object used to manage a message containing calendar information."), helpcontext(0x00000014) ] coclass CalendarMessage
+{
+	[default] interface ICalendarMessage;
+	interface IMessage;
+	interface IBodyPart;
+	interface IDataSource;
+};
+
+[ uuid(CD00010E-8B95-11D1-82DB-00C04FB1625D), helpstring("Defines an object used to manage information about a folder."), helpcontext(0x00000015) ] coclass Folder
+{
+	[default] interface IFolder;
+	interface IDataSource;
+};
+
+[ uuid(CD000107-8B95-11D1-82DB-00C04FB1625D), helpstring("Defines an object used to manage information about a person."), helpcontext(0x00000016) ] coclass Person
+{
+	[default] interface IPerson;
+	interface IMailbox;
+	interface IDataSource;
+};
+
+[ uuid(CD00010D-8B95-11D1-82DB-00C04FB1625D), helpstring("Defines an object used to manage information about an appointment attendee."), helpcontext(0x00000019) ] coclass Attendee
+{
+	[default] interface IAttendee;
+};
+
+[ uuid(CD000110-8B95-11D1-82DB-00C04FB1625D), helpstring("Defines an object used to manage information about an addressee."), helpcontext(0x0000001c) ] coclass Addressee
+{
+	[default] interface IAddressee;
+	interface IDataSource;
+};
+};

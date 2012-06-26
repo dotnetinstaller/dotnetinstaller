@@ -1,0 +1,633 @@
+//+--------------------------------------------------------------------------------
+//	evtsnk.idl
+//
+//	Purpose:
+//		Defines the callback interfaces that an event sink (event handler) must
+//		implement to process the external event interfaces specific to the 
+//		Exchange Platinum Store.
+//
+//	Copyright (C) 1997-1999 Microsoft Corporation
+//
+//+--------------------------------------------------------------------------------
+import "wtypes.idl";
+import "ocidl.idl";
+
+//==================================================================================
+//		Interface defs
+//==================================================================================
+
+//------------------------------------------------------------------------
+// IExStoreEventInfo
+// This interface is implemented by the provider and passed to the
+// event handler allowing the handler to retrieve (and set) further
+// information regarding the event.")
+//-------------------------------------------------------------------------
+[
+	object,
+	uuid(9da0e100-86ce-11d1-8699-00c04fb98036),
+	helpstring("IExStoreEventInfo Interface"),
+	pointer_default(unique)
+]
+interface IExStoreEventInfo : IUnknown
+{
+	[local]
+	HRESULT GetEventItem(
+			[in]	REFIID						riid, 
+			[out]	DWORD *						pdwBindStatus,
+			[out, iid_is(riid)]	IUnknown **		ppunkEventItem);
+
+	[call_as(GetEventItem)]
+	HRESULT RemoteGetEventItem(
+			[in]	REFIID						riid, 
+			[out]	DWORD *						pdwBindStatus,
+			[out, iid_is(riid)]	IUnknown **		ppunkEventItem);
+
+	[local,helpstring("Get session for this event")]
+	HRESULT GetEventSession(
+			[in]	REFIID						riid,
+			[out, iid_is(riid)]	IUnknown **		ppSession);
+
+	[call_as(GetEventSession)]
+	HRESULT RemoteGetEventSession(
+			[in]	REFIID						riid,
+			[out, iid_is(riid)]	IUnknown **		ppSession);
+			
+	[helpstring("Abort synchronous operation on this event item")]
+	HRESULT Abort(
+			[in, defaultvalue(0)]	LONG		lErrorCode);
+};
+
+
+
+//---------------------------------------------------------------------------------------------------
+// IExStoreDispEventInfo
+//	This interface is a IDispatch compatible event info object implemented by the provider
+//	and passed to the event handler.
+//	VB sink implentor should use the following example.
+//		Implements IExStoreSyncEvents
+//		Public sub IExStoreSyncEvents_OnSyncSave(ByVal pEventInfo As ExevtsnkLib.IExStoreEventInfo,..
+//		Dim dispInfo As IExStoreDispEventInfo
+//		Set dispInfo = pEventInfo
+//---------------------------------------------------------------------------------------------------
+[
+	object,
+	uuid(9da0e110-86ce-11d1-8699-00c04fb98036),
+	helpstring("IExStoreDispEventInfo Interface"),
+	dual,
+	oleautomation,
+	pointer_default(unique)
+]
+interface IExStoreDispEventInfo : IDispatch
+{
+#ifdef EXOLEDBPROXY
+	[local,helpstring("Get ADO connection"),propget]
+	HRESULT EventConnection([out,retval] IDispatch **ppConnection);
+
+	[call_as(get_EventConnection),helpstring("Get ADO connection"),propget]
+	HRESULT RemoteEventConnection([out,retval] IDispatch **ppConnection);
+	
+	[local,helpstring("Get ADO record"),propget]
+	HRESULT EventRecord([out,retval] IDispatch **ppRecord);
+
+	[call_as(get_EventRecord),helpstring("Get ADO record"),propget]
+	HRESULT RemoteEventRecord([out,retval] IDispatch **ppRecord);
+	
+#else
+				
+	[helpstring("Get ADO connection"),propget]
+	HRESULT EventConnection([out,retval] IDispatch **ppConnection);
+
+	[helpstring("Get ADO record"),propget]
+	HRESULT EventRecord([out,retval] IDispatch **ppRecord);
+
+#endif
+
+	[helpstring("Abort any change on this event item")]
+	HRESULT AbortChange([in, defaultvalue(0)]	LONG	lErrorCode);
+
+	[helpstring("Get original source URL during OnSyncSave event caused by move"), propget]
+	HRESULT	SourceURL([out,retval] BSTR * pbstrURL);
+
+	[helpstring("Get User GUID who caused this synchronous event"), propget]
+	HRESULT	UserGuid([out,retval] BSTR * pvarUserGuid);
+
+	[helpstring("Get Store GUID on which this synchronous event occurrs"), propget]
+	HRESULT StoreGuid([out,retval] BSTR * pvarStoreGuid);
+
+	[helpstring("Get User SID who caused this synchronous event"), propget]
+	HRESULT UserSid([out,retval] VARIANT * pvarSid);
+
+	[helpstring("Get Data"), propget]
+	HRESULT Data([out, retval] LONG_PTR * plData);
+
+	[helpstring("Set Data"), propput]
+	HRESULT Data([in] LONG_PTR lData);
+};
+
+
+//---------------------------------------------------------------------------------------
+// IExStoreEventRegistrationURL
+//		Get URL for the event registration msg
+//---------------------------------------------------------------------------------------
+[
+	object,
+	uuid(9da0e117-86ce-11d1-8699-00c04fb98036),
+	dual,
+	helpstring("IExStoreEventRegistrationURL interface"),
+	pointer_default(unique)
+]
+interface IExStoreEventRegistrationURL : IDispatch
+{
+	[helpstring("URL for the event registration item"),propget]
+	HRESULT EventRegistrationURL([out,retval] BSTR *pbstrURL);
+};
+
+
+//---------------------------------------------------------------------------------------
+// IStoreGuidFromUrl
+//  Get MDB GUID from the given URL
+//---------------------------------------------------------------------------------------
+[
+	object,
+	uuid(9da0e10c-86ce-11d1-8699-00c04fb98036),
+	dual,
+	helpstring("IStoreGuidFromUrl interface"),
+	pointer_default(unique)
+]
+interface IStoreGuidFromUrl : IDispatch
+{
+	[helpstring("Get Store GUID from URL")] HRESULT StoreGuidFromUrl(
+		[in] 			BSTR	bstrUrl,
+		[out,retval]	BSTR *	pbstrGuid);
+};
+
+
+
+//------------------------------------------------------------------------------------------
+// IExStoreEventLogonInfo
+//		This interface supplies information on the user logon which caused the sync events.
+//------------------------------------------------------------------------------------------
+[
+	object,
+	uuid(9da0e111-86ce-11d1-8699-00c04fb98036),
+	helpstring("IExStoreEventLogonInfo Interface"),
+	pointer_default(unique)
+]
+interface IExStoreEventLogonInfo : IUnknown
+{
+	[helpstring("Get User GUID who caused this synchronous event")]
+	HRESULT	GetUserGuid(
+				[in,out] GUID	* pguid);
+
+	[helpstring("Get Store GUID on which this synchronous event occurrs")]
+	HRESULT GetStoreGuid(
+				[in,out] GUID	* pguid);
+
+	[helpstring("Get User SID who caused this synchronous event")]
+	HRESULT GetUserSid(
+				[out]	SID	** ppsid);
+};
+
+
+
+//----------------------------------------------------------------------------------------------------------
+// IGetSourceURL
+//	This interface allows to get the original source URL during OnSyncSave event caused by move operation.
+//----------------------------------------------------------------------------------------------------------
+[
+	object,
+	uuid(9da0e10b-86ce-11d1-8699-00c04fb98036),
+	helpstring("IGetSourceURL Interface"),
+	pointer_default(unique)
+]
+interface IGetSourceURL : IUnknown
+{
+	[helpstring("Get original source URL during OnSyncSave event caused by move")]
+	HRESULT	GetSourceURL(
+				[out,retval]	BSTR	*pbstrURL);
+};
+
+
+//-----------------------------------------------------------------------------------------
+//	IGetLockRow
+//	This interface allows to get Lock row during lock/unlock events
+//-----------------------------------------------------------------------------------------
+[
+	object,
+	helpstring("IGetLockRow Interface"),
+	pointer_default(unique),
+	uuid(9da0e0ef-86ce-11d1-8699-00c04fb98036)
+]
+interface IGetLockRow : IUnknown
+{
+#ifdef EXOLEDBPROXY
+	[local]
+	HRESULT	GetLockRow(
+			[in]	REFIID						riid, 
+			[out]	DWORD *						pdwBindStatus,
+			[out, iid_is(riid)]	IUnknown **		ppunkLockRow);
+
+	[call_as(GetLockRow)]
+	HRESULT	RemoteGetLockRow(
+			[in]	REFIID						riid, 
+			[out]	DWORD *						pdwBindStatus,
+			[out, iid_is(riid)]	IUnknown **		ppunkLockRow);
+#else
+	[helpstring("Bind to LOCK row which caused this lock/unlock event")]
+	HRESULT	GetLockRow(
+			[in]	REFIID						riid, 
+			[out]	DWORD *						pdwBindStatus,
+			[out, iid_is(riid)]	IUnknown **		ppunkLockRow);
+#endif
+};
+
+
+
+//-----------------------------------------------------------------------------------------------
+// IAsyncNotify
+//		This interface is used by server event to notify status of reliable async event.
+//------------------------------------------------------------------------------------------------
+[
+	object,
+	uuid(9da0e10a-86ce-11d1-8699-00c04fb98036),
+	helpstring("IAsyncNotify Interface"),
+	pointer_default(unique)
+]
+interface IAsyncNotify : IUnknown
+{
+	[helpstring("Reliable asynchronous event has finished")]
+	HRESULT	Completed();
+};
+
+
+
+//-----------------------------------------------------------------------------------------
+//	IExStoreAsyncEvents -- Asynchronous Event Sink Interface
+//	This is the callback interface that an asynchronous event handler
+//	(event sink) must implement for asynchronous event handling.
+//-----------------------------------------------------------------------------------------
+[
+	helpstring("IExStoreAsyncEvents"),object,pointer_default(unique),
+	uuid(9da0e0fe-86ce-11d1-8699-00c04fb98036)
+]
+interface IExStoreAsyncEvents : IUnknown
+{
+	HRESULT OnSave(
+				[in] IExStoreEventInfo *	pEventInfo,
+				[in] BSTR				bstrURLItem,
+				[in] LONG 				lFlags);
+
+	HRESULT OnDelete(
+				[in] IExStoreEventInfo *	pEventInfo,
+				[in] BSTR					bstrURLItem,
+				[in] LONG 					lFlags);
+};
+
+
+
+//------------------------------------------------------------------------------------------
+//	IExStoreSyncEvents -- Synchronous Event Sink Interface
+//	This is the callback interface that a Synchronous event handler
+//	(event sink) must implement.
+//------------------------------------------------------------------------------------------
+[
+	helpstring("IExStoreSyncEvents"),object,pointer_default(unique),
+	uuid(9da0e0ff-86ce-11d1-8699-00c04fb98036)
+]
+interface IExStoreSyncEvents : IUnknown
+{
+	HRESULT OnSyncSave(
+				[in] IExStoreEventInfo *	pEventInfo,
+				[in] BSTR					bstrURLItem,
+				[in] LONG 					lFlags);
+
+	HRESULT	OnSyncDelete(
+				[in] IExStoreEventInfo *	pEventInfo,
+				[in] BSTR					bstrURLItem,
+				[in] LONG					lFlags);
+
+};
+
+
+
+//-------------------------------------------------------------------------------------------------
+//	IExStoreSystemEvents -- Asynchronous System Event Sink Interface
+//	This is the callback interface that a system event handler must implement.
+//-------------------------------------------------------------------------------------------------
+[
+	helpstring("IExStoreSystemEvents"),object,pointer_default(unique),
+	uuid(9da0e101-86ce-11d1-8699-00c04fb98036)
+]
+interface IExStoreSystemEvents : IUnknown
+{
+	HRESULT OnTimer(
+				[in] BSTR					bstrURLItem,
+				[in] LONG					lFlags);
+
+	HRESULT OnMDBStartUp(
+				[in] BSTR					bstrMDBGuid,
+				[in] BSTR					bstrMDBName,
+				[in] LONG					lFlags);
+
+	HRESULT OnMDBShutDown(
+				[in] BSTR					bstrMDBGuid,
+				[in] LONG					lFlags);
+};
+
+
+
+//------------------------------------------------------------------------------------------
+//	IExStoreLockEvents	-- Synchronous Lock Event Sink Interface
+//	This is the callback interface that a Lock Event handler must implement.
+//------------------------------------------------------------------------------------------
+[
+	helpstring("IExStoreLockEvents"),object,pointer_default(unique),
+	uuid(9da0e10e-86ce-11d1-8699-00c04fb98036)
+]
+interface IExStoreLockEvents : IUnknown
+{
+	HRESULT	OnSyncLock(
+				[in]	IExStoreEventInfo *	pEventInfo,
+				[in]	BSTR				bstrURLItem,
+				[in]	LONG				lFlags);
+
+	HRESULT OnSyncUnlock(
+				[in]	IExStoreEventInfo *	pEventInfo,
+				[in]	BSTR				bstrURLItem,
+				[in]	LONG				lFlags);
+};
+
+
+//---------------------------------------------------------------------------------------
+// IUserData	--- Allows the caller to set data during Begin phase of event
+//					and retrieve it during Commit/Abort phase.
+//---------------------------------------------------------------------------------------
+[
+	helpstring("IUserData"),object,pointer_default(unique),
+	uuid(9da0e116-86ce-11d1-8699-00c04fb98036)
+]
+interface IUserData : IUnknown
+{
+	HRESULT GetData(
+			[out]	LONG_PTR	* plData);
+
+	HRESULT SetData(
+			[in]	LONG_PTR	lData);
+};
+
+
+//---------------------------------------------------------------------------------------
+// IEventSinkIsCacheable
+//		This interface is implemented by the event sink and tells Exchange store
+//		how to handle (store) event sink object..
+//		
+//		Possible return values:
+//			S_FALSE			not cached
+//			S_OK			???
+//---------------------------------------------------------------------------------------
+[
+	helpstring("IEventSinkIsCacheable"),
+	object,
+	pointer_default(unique),
+	uuid(9da0e118-86ce-11d1-8699-00c04fb98036)
+]
+interface IEventSinkIsCacheable : IUnknown
+{
+	HRESULT IsCacheable();
+};
+
+
+//--------------------------------------------------------------------------------------
+// ICreateRegistration
+//		This (optional) interface is implemented by event sink and tells Exchange store
+//		whether to allow or deny saving of event registration item
+//		The return hr value is ignored. If phr contains
+//		S_OK		allow saving of event registration item
+//		S_FALSE		deny
+//--------------------------------------------------------------------------------------
+[
+	helpstring("ICreateRegistration"),
+	object,
+	pointer_default(unique),
+	uuid(9da0e11c-86ce-11d1-8699-00c04fb98036)
+]
+interface ICreateRegistration : IUnknown
+{
+	HRESULT	Register(
+				[in] 			IExStoreEventInfo * pEventInfo,
+				[in]			BSTR				bstrURLItem,
+				[in]			LONG				lFlags,
+				[out,retval]	long *				phr);
+};
+
+
+//=======================================================================================
+//	Other defs
+//=======================================================================================
+cpp_quote("")
+cpp_quote("//")
+cpp_quote("// Place a \"#define INITGUID\" in just ONE of your projects source files BEFORE")
+cpp_quote("// including this header file to define the IIDs below.")
+cpp_quote("//")
+cpp_quote("")
+cpp_quote("#ifdef DEFINE_GUID")
+cpp_quote("#undef DEFINE_GUID")
+cpp_quote("#endif")
+cpp_quote("")
+cpp_quote("#ifdef INITGUID")
+cpp_quote("#define DEFINE_GUID(name, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8) \\")
+cpp_quote("        EXTERN_C const GUID DECLSPEC_SELECTANY name \\")
+cpp_quote("                = { l, w1, w2, { b1, b2,  b3,  b4,  b5,  b6,  b7,  b8 } }")
+cpp_quote("#else")
+cpp_quote("#define DEFINE_GUID(name, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8) \\")
+cpp_quote("    EXTERN_C const GUID FAR name")
+cpp_quote("#endif // INITGUID")
+
+cpp_quote("//")
+cpp_quote("//	Bit flags passed to event handlers in the 'lFlags' parameter")
+cpp_quote("//")
+
+enum EVT_SINK_FLAGS
+{
+	EVT_NEW_ITEM		= 0x00000001,	// item is newly created
+	EVT_IS_COLLECTION	= 0x00000002,	// item is folder
+	EVT_REPLICATED_ITEM	= 0x00000004,
+	EVT_IS_DELIVERED	= 0x00000008,	// fsfSaveDeliver: delivered item
+	EVT_SYNC_BEGIN		= 0x01000000,	// sync begin event
+	EVT_SYNC_COMMITTED	= 0x02000000,	// sync committed event
+	EVT_SYNC_ABORTED	= 0x04000000,	// sync aborted event
+	EVT_SOFTDELETE		= 0x00000010,	// fsfDeleteSoft: soft delete
+	EVT_HARDDELETE		= 0x00000020,	// fsfDeleteHard: hard delete
+
+	EVT_INITNEW			= 0x00000040,	// 1st firing of event sink. time to initialize sink
+	
+	EVT_MOVE			= 0x00000100,	// fsfSaveMove: save due to a move, fsfDeleteMove: deleted due to a move
+	EVT_COPY			= 0x00000200,	// fsfSaveCopy: save due to a copy
+	EVT_DRAFT_CREATE	= 0x00000400,	// fsfSaveCreateDraft: create of a draft
+	EVT_DRAFT_SAVE		= 0x00000800,	// fsfSaveDraft: save of an update draft
+	EVT_DRAFT_CHECKIN	= 0x00001000,	// fsfSaveCheckinDraft: save that makes the draft a "real row"
+
+	EVT_INVALID_SOURCE_URL =0x20000000,	// Unable to get Source URL
+	EVT_INVALID_URL		= 	0x40000000,	// Unable to get Target URL
+	EVT_ERROR			= 	0x80000000,	// error during event
+
+	// flags available during lock/unlock events
+	EVT_LOCKTYPE_READ		= 0x00010000,	// locktRead
+	EVT_LOCKTYPE_WRITE		= 0x00020000,	// locktWrite
+	EVT_LOCKTYPE_CHECKOUT	= 0x00040000,	// locktCheckout
+	EVT_LOCKTYPE_READWRITE	= 0x00030000,	// locktReadWrite
+	EVT_LOCKSCOPE_SHARED	= 0x00080000,	// lockscpShared
+	EVT_LOCKSCOPE_EXCLUSIVE = 0x00100000,	// lockscpExclusive
+	
+	// Only during Unlock event
+	EVT_UNLOCK_CHECKIN_ABORT 		= 0x00200000,
+	EVT_UNLOCK_CHECKIN_KEEP_LOCKED	= 0x00400000,
+
+	// Other lock event property
+	EVT_LOCKDEPTH_DEEP		=	0x00800000,		// ulDepthInifinity
+	EVT_LOCK_TRANSIENT		=	0x00002000		// transient lock
+};
+cpp_quote("")
+typedef enum EVT_SINK_FLAGS EVT_SINK_FLAGS;
+
+cpp_quote("")
+cpp_quote("//")
+cpp_quote("//	Event binding property names")
+cpp_quote("//")
+cpp_quote("// To register event, DAV:contentclass should have the following value")
+cpp_quote("#define	EVTPROPVAL_EVENTREG				L\"urn:content-class:storeeventreg\"")
+cpp_quote("")
+cpp_quote("// Required event registration properties")
+cpp_quote("#define	EVTPROP_EVENTMETHOD				L\"http://schemas.microsoft.com/exchange/events/EventMethod\"")
+cpp_quote("#define	EVTPROP_EVENTMETHOD_TYPE		DBTYPE_WSTR")
+
+cpp_quote("#define	EVTPROP_SINKCLASS				L\"http://schemas.microsoft.com/exchange/events/SinkClass\"")
+cpp_quote("#define	EVTPROP_SINKCLASS_TYPE			DBTYPE_WSTR")
+
+cpp_quote("")
+cpp_quote("// Optional event registration properties")
+cpp_quote("#define	EVTPROP_PRIORITY				L\"http://schemas.microsoft.com/exchange/events/Priority\"")
+cpp_quote("#define	EVTPROP_PRIORITY_TYPE			DBTYPE_I4")
+
+cpp_quote("#define	EVTPROP_MATCHSCOPE				L\"http://schemas.microsoft.com/exchange/events/MatchScope\"")
+cpp_quote("#define	EVTPROP_MATCHSCOPE_TYPE			DBTYPE_WSTR")
+
+cpp_quote("#define	EVTPROP_CRITERIA				L\"http://schemas.microsoft.com/exchange/events/Criteria\"")
+cpp_quote("#define	EVTPROP_CRITERIA_TYPE			DBTYPE_WSTR")
+
+cpp_quote("#define	EVTPROP_TIMERINTERVAL			L\"http://schemas.microsoft.com/exchange/events/TimerInterval\"")
+cpp_quote("#define	EVTPROP_TIMERINTERVAL_TYPE		DBTYPE_I4")
+
+cpp_quote("#define	EVTPROP_TIMERSTARTTIME			L\"http://schemas.microsoft.com/exchange/events/TimerStartTime\"")
+cpp_quote("#define	EVTPROP_TIMERSTARTTIME_TYPE		DBTYPE_FILETIME")
+
+cpp_quote("#define	EVTPROP_TIMEREXPIRYTIME			L\"http://schemas.microsoft.com/exchange/events/TimerExpiryTime\"")
+cpp_quote("#define	EVTPROP_TIMEREXPIRYTIME_TYPE	DBTYPE_FILETIME")
+
+cpp_quote("#define	EVTPROP_SCRIPTURL				L\"http://schemas.microsoft.com/exchange/events/ScriptUrl\"")
+cpp_quote("#define	EVTPROP_SCRIPTURL_TYPE			DBTYPE_WSTR")
+
+cpp_quote("#define	EVTPROP_ENABLED					L\"http://schemas.microsoft.com/exchange/events/Enabled\"")
+cpp_quote("#define	EVTPROP_ENABLED_TYPE			DBTYPE_BOOL")
+
+cpp_quote("")
+cpp_quote("//")
+cpp_quote("//	EVTPROP_MATCHSCOPE parameter values")
+cpp_quote("//")
+cpp_quote("#define	EVT_MATCHSCOPE_DEEP				L\"DEEP\"")
+cpp_quote("#define	EVT_MATCHSCOPE_SHALLOW			L\"SHALLOW\"")
+cpp_quote("#define	EVT_MATCHSCOPE_EXACT			L\"EXACT\"")
+cpp_quote("#define	EVT_MATCHSCOPE_ANY				L\"ANY\"")
+cpp_quote("")
+cpp_quote("//")
+cpp_quote("//	Event names for the EVTPROP_EVENTMETHOD property")
+cpp_quote("//")
+cpp_quote("#define	EVT_ON_SAVE						L\"OnSave\"")
+cpp_quote("#define	EVT_ON_DELETE					L\"OnDelete\"")
+cpp_quote("#define	EVT_ON_TIMER					L\"OnTimer\"")
+cpp_quote("#define	EVT_ON_MDB_STARTUP				L\"OnMDBStartUp\"")
+cpp_quote("#define	EVT_ON_MDB_SHUTDOWN				L\"OnMDBShutDown\"")
+cpp_quote("#define	EVT_ON_SYNC_SAVE				L\"OnSyncSave\"")
+cpp_quote("#define	EVT_ON_SYNC_DELETE				L\"OnSyncDelete\"")
+cpp_quote("#define	EVT_ON_SYNC_LOCK				L\"OnSyncLock\"")
+cpp_quote("#define	EVT_ON_SYNC_UNLOCK				L\"OnSyncUnlock\"")
+cpp_quote("")
+cpp_quote("")
+
+cpp_quote("//")
+cpp_quote("// Return code for Reliable async event")
+cpp_quote("#define S_PENDING	0x00000002L")
+cpp_quote("//")
+
+cpp_quote("//")
+cpp_quote("// Return code for IEventSinkIsCacheable")
+cpp_quote("#define S_CACHE_PER_BINDING	S_OK")
+cpp_quote("")
+
+cpp_quote("//")
+cpp_quote("// Exchange Store OLEDB CLSIDs")
+cpp_quote("//")
+cpp_quote("")
+cpp_quote("DEFINE_GUID(CLSID_CExoledbDataSource,0x9da0e0fa,0x86ce,0x11d1,0x86, 0x99, 0x00, 0xc0, 0x4f, 0xb9, 0x80, 0x36);")
+cpp_quote("DEFINE_GUID(CLSID_CExoledbBinder,0x9da0e0f3,0x86ce,0x11d1,0x86, 0x99, 0x00, 0xc0, 0x4f, 0xb9, 0x80, 0x36);")
+cpp_quote("DEFINE_GUID(CLSID_CExoledbDataSourceLS,0x9da0e120,0x86ce,0x11d1,0x86, 0x99, 0x00, 0xc0, 0x4f, 0xb9, 0x80, 0x36);")
+cpp_quote("DEFINE_GUID(CLSID_CExoledbBinderLS,0x9da0e11f,0x86ce,0x11d1,0x86, 0x99, 0x00, 0xc0, 0x4f, 0xb9, 0x80, 0x36);")
+cpp_quote("")
+cpp_quote("")
+cpp_quote("// Interface GUID")
+cpp_quote("//")
+cpp_quote("DEFINE_GUID(IID_IExStoreEventInfo,0x9da0e100,0x86ce,0x11d1,0x86, 0x99, 0x00, 0xc0, 0x4f, 0xb9, 0x80, 0x36);")
+cpp_quote("DEFINE_GUID(IID_IExStoreDispEventInfo,0x9da0e110,0x86ce,0x11d1,0x86,0x99,0x00,0xc0,0x4f,0xb9,0x80,0x36);")
+cpp_quote("DEFINE_GUID(IID_IExStoreEventLogonInfo,0x9da0e111,0x86ce,0x11d1,0x86,0x99,0x00,0xc0,0x4f,0xb9,0x80,0x36);")
+cpp_quote("DEFINE_GUID(IID_IGetSourceURL,0x9da0e10b,0x86ce,0x11d1,0x86,0x99,0x00,0xc0,0x4f,0xb9,0x80,0x36);")
+cpp_quote("DEFINE_GUID(IID_IGetLockRow,0x9da0e0ef,0x86ce,0x11d1,0x86,0x99,0x00,0xc0,0x4f,0xb9,0x80,0x36);")
+cpp_quote("DEFINE_GUID(IID_IAsyncNotify,0x9da0e10a,0x86ce,0x11d1,0x86,0x99,0x00,0xc0,0x4f,0xb9,0x80,0x36);")
+cpp_quote("DEFINE_GUID(IID_IExStoreAsyncEvents,0x9da0e0fe,0x86ce,0x11d1,0x86, 0x99, 0x00, 0xc0, 0x4f, 0xb9, 0x80, 0x36);")
+cpp_quote("DEFINE_GUID(IID_IExStoreSyncEvents,0x9da0e0ff,0x86ce,0x11d1,0x86, 0x99, 0x00, 0xc0, 0x4f, 0xb9, 0x80, 0x36);")
+cpp_quote("DEFINE_GUID(IID_IExStoreSystemEvents,0x9da0e101,0x86ce,0x11d1,0x86,0x99,0x00,0xC0,0x4F,0xb9,0x80,0x36);")
+cpp_quote("DEFINE_GUID(IID_IExStoreLockEvents,0x9da0e10e,0x86ce,0x11d1,0x86,0x99,0x00,0xc0,0x4f,0xb9,0x80,0x36);")
+cpp_quote("DEFINE_GUID(IID_IStoreGuidFromUrl,0x9da0e10c,0x86ce,0x11d1,0x86,0x99,0x00,0xc0,0x4f,0xb9,0x80,0x36);")
+cpp_quote("DEFINE_GUID(IID_IExStoreEventRegistrationURL,0x9da0e117,0x86ce,0x11d1,0x86,0x99,0x00,0xc0,0x4f,0xb9,0x80,0x36);")
+cpp_quote("DEFINE_GUID(IID_IUserData,0x9da0e116,0x86ce,0x11d1,0x86,0x99,0x00,0xc0,0x4f,0xb9,0x80,0x36);")
+cpp_quote("DEFINE_GUID(IID_IEventSinkIsCacheable,0x9da0e118,0x86ce,0x11d1,0x86,0x99,0x00,0xc0,0x4f,0xb9,0x80,0x36);")
+cpp_quote("DEFINE_GUID(IID_ICreateRegistration,0x9da0e11c,0x86ce,0x11d1,0x86,0x99,0x00,0xc0,0x4f,0xb9,0x80,0x36);")
+cpp_quote("DEFINE_GUID(CLSID_StoreGuidFromUrl,0x9da0e10d,0x86ce,0x11d1,0x86,0x99,0x00,0xc0,0x4f,0xb9,0x80,0x36);")
+cpp_quote("DEFINE_GUID(CLSID_StoreGuidFromUrlLS,0x9da0e123,0x86ce,0x11d1,0x86,0x99,0x00,0xc0,0x4f,0xb9,0x80,0x36);")
+
+
+#ifndef EXOLEDBPROXY
+
+// ===========================================================================
+// Type library & CLSID
+// ===========================================================================
+[
+	uuid(1F28FCC2-8B0D-11d2-9C95-00C04F79F1DB),
+	version(1.0),
+	helpstring("EXOLEDB Event Sink Type Library")
+]
+library ExevtsnkLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+// Sink defs
+	EVT_SINK_FLAGS;
+	interface IExStoreEventInfo;
+	interface IExStoreDispEventInfo;
+	interface IExStoreEventRegistrationURL;
+	interface IExStoreAsyncEvents;
+	interface IExStoreSyncEvents;
+	interface IExStoreSystemEvents;
+	interface IExStoreLockEvents;
+	interface IGetLockRow;
+	interface IExStoreEventLogonInfo;
+	interface IGetSourceURL;
+	interface IUserData;
+	interface IAsyncNotify;
+	interface IStoreGUIDFromURL;
+	interface IEventSinkIsCacheable;
+	interface ICreateRegistration;
+};
+
+#endif
+

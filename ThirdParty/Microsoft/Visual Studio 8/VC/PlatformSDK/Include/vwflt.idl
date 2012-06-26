@@ -1,0 +1,49 @@
+//-----------------------------------------------------------------------------
+// File:			vwflt.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+    REMOTED_INTERFACE(0c733a9b-2a1c-11ce-ade5-00aa0044773d)
+
+interface IViewFilter : IUnknown {
+
+	[local]
+	HRESULT GetFilter(
+		[in] HACCESSOR hAccessor,
+		[out] DBCOUNTITEM * pcRows,
+		[out] DBCOMPAREOP * pCompareOps[],
+		[out] void * pCriteriaData
+	);
+
+	[local]
+	HRESULT GetFilterBindings(
+		[out] DBCOUNTITEM * pcBindings,
+		[out] DBBINDING ** prgBindings
+	);
+#ifndef NO_REMOTE
+
+	[call_as(GetFilterBindings)]
+	HRESULT RemoteGetFilterBindings(
+		[in, out] DBCOUNTITEM * pcBindings,
+		[out, size_is(,(ULONG)*pcBindings)] DBBINDING ** prgBindings,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+#endif
+
+	[local]
+	HRESULT SetFilter(
+		[in] HACCESSOR hAccessor,
+		[in] DBCOUNTITEM cRows,
+		[in] DBCOMPAREOP CompareOps[],
+		[in] void * pCriteriaData
+	);
+
+}

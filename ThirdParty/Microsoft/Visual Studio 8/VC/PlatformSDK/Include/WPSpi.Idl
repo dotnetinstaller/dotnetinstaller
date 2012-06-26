@@ -1,0 +1,117 @@
+/*------------------------------------------------*\
+ *
+ *	Copyright 1997 - 1999 Microsoft Corporation
+ *
+ *	Module Name:
+ *
+ *		wpspi.idl
+ *
+ *	Abstract:
+ *
+ *		Declaration of Microsoft Web Publishing
+ *		Service Provider Interface and type
+ *		library.
+ *
+\*------------------------------------------------*/
+ 
+ 
+
+cpp_quote("#undef DeleteFile")
+cpp_quote("#undef FindFirstFile")
+cpp_quote("#undef FindNextFile")
+cpp_quote(" ")
+cpp_quote("typedef HRESULT (CALLBACK *PFNPROGRESSUPDATEPROC)(LPCWSTR, DWORD);")
+
+
+	[
+		object,
+		local,
+		uuid(5261F720-6C4C-11CF-86B1-00AA0060F86C),
+		helpstring("IWPSiteW Interface"),
+		pointer_default(unique)
+	]
+	interface IWPSiteW : IUnknown
+	{
+		import "oaidl.idl";
+		import "wptypes.h";
+
+		cpp_quote("#ifndef _WINBASE_")
+
+		typedef struct tagWIN32_FIND_DATAW {
+			long dwFileAttributes;
+			FILETIME ftCreationTime;
+			FILETIME ftLastAccessTime;
+			FILETIME ftLastWriteTime;
+			long nFileSizeHigh;
+			long nFileSizeLow;
+			long dwReserved0;
+			long dwReserved1;
+			WCHAR   cFileName[ 260 ];
+			WCHAR   cAlternateFileName[ 14 ];
+		} WIN32_FIND_DATAW, *PWIN32_FIND_DATAW, *LPWIN32_FIND_DATAW;
+
+		cpp_quote("#endif")
+
+		HRESULT GetSiteInfo(	[out]		LPWPSITEINFOW lpbSite,
+								[in, out]	LONG *lpcbSite);
+
+		HRESULT NetworkConnect(	[in, string]	LPCWSTR lpszUserName,
+								[in, string]	LPCWSTR lpszPassword);
+
+		HRESULT NetworkDisconnect();
+
+		HRESULT ServerLogin(	[in, string]	LPCWSTR lpszUserName,
+								[in, string]	LPCWSTR lpszPassword);
+
+		HRESULT ServerLogout();
+
+		HRESULT PostFiles(	[in]				LONG cLocalPaths,
+							[in, string]		LPWSTR *lppszLocalPaths,  
+							[in, out]			LONG *lpcbURL,
+							[in, out, string]	LPWSTR lpszURL, 
+							[in]				LONG fdwFlags);
+
+		HRESULT DeleteFile(	[in, string]	LPCWSTR lpszFile);
+
+		HRESULT FindFirstFile(	[in, string]	LPCWSTR lpszSearchFile,
+								[out]			LPWIN32_FIND_DATAW lpFindFileData,
+								[out]			LONG *lpSearchHandle);
+
+		HRESULT FindNextFile(	[in]	LONG hSearchHandle,
+								[out]	LPWIN32_FIND_DATAW lpFindFileData); 
+
+		HRESULT FindClose(	[in]	 LONG hSearchHandle);
+
+		HRESULT Commit();
+
+		HRESULT GetParam(	[in, string]	LPCWSTR lpszParameter,
+							[in, out]		LONG *lpcbValue,
+							[out, string]	LPWSTR lpszValue);
+
+		HRESULT SetParam(	[in, string]	LPCWSTR lpszParameter,
+							[in, string]	LPCWSTR	lpszValue); 
+
+		HRESULT GetError(	[out]			LONG *lpdwErrorType,
+							[out]			LONG *lpdwErrorCode,
+							[in, out]		LONG *lpcbError,
+							[out, string]	LPWSTR lpszError);
+
+		HRESULT AddWizardPages(	[in]		LONG *lpv,
+								[in]		LONG *lpfnAdd,
+								[in, out]	LONG *lParam);
+
+	};
+
+	[
+		object,
+		local,
+		uuid(CB1D5316-30F6-11D0-AD03-00AA00A219AA),
+		helpstring("IWPProvider Interface"),
+		pointer_default(unique)
+	]
+	interface IWPProvider : IWPSiteW
+	{
+		HRESULT SetProgressUpdateProc( [in] LONG *pfnProgressUpdateProc);
+	};
+
+

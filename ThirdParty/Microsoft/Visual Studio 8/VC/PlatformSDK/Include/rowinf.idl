@@ -1,0 +1,26 @@
+//-----------------------------------------------------------------------------
+// File:			rowinf.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733ac1-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IRowInfo : IUnknown {
+
+	[local]
+	HRESULT GetParentRow(
+		[in] REFIID riid,
+		[out] IUnknown ** ppRow
+	);
+
+}

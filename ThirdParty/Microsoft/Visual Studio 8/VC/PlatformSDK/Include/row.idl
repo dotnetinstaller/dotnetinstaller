@@ -1,0 +1,41 @@
+//-----------------------------------------------------------------------------
+// File:			row.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+
+LOCAL_INTERFACE(0c733ab4-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IRow : IUnknown
+{
+[local] HRESULT GetColumns(
+    [in]                            DBORDINAL           cColumns,
+    [in, out, size_is(cColumns)]    DBCOLUMNACCESS  rgColumns[]
+    );
+
+HRESULT	GetSourceRowset(
+	[in]                            REFIID		    riid,
+	[out, iid_is(riid)]             IUnknown**      ppRowset,
+	[out]							HROW*			phRow	
+    );
+
+
+HRESULT Open(
+	[in, unique]                    IUnknown*       pUnkOuter,
+	[in]                            DBID*		    pColumnID,
+	[in]                            REFGUID		    rguidColumnType,
+	[in]                            DWORD		    dwBindFlags,
+	[in]                            REFIID		    riid,
+	[out, iid_is(riid)]             IUnknown**      ppUnk
+    );
+};
+
+

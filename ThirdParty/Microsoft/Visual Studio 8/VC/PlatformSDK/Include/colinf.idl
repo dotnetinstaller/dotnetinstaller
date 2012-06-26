@@ -1,0 +1,59 @@
+//-----------------------------------------------------------------------------
+// File:			colinf.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a11-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IColumnsInfo : IUnknown {
+
+	[local]
+	HRESULT GetColumnInfo(
+		[in, out] DBORDINAL * pcColumns,
+		[out, size_is(,(ULONG)*pcColumns)] DBCOLUMNINFO ** prgInfo,
+		[out] OLECHAR ** ppStringsBuffer
+	);
+
+#ifndef NO_REMOTE
+	[call_as(GetColumnInfo)]
+	HRESULT RemoteGetColumnInfo(
+		[in, out] DBORDINAL * pcColumns,
+		[out, size_is(,(ULONG)*pcColumns)] DBCOLUMNINFO  ** prgInfo,
+		[out, size_is(,(ULONG)*pcColumns)] DBBYTEOFFSET ** prgNameOffsets,
+		[out, size_is(,(ULONG)*pcColumns)] DBBYTEOFFSET ** prgcolumnidOffsets,
+		[in, out] DBLENGTH * pcbStringsBuffer,
+		[in, out, unique, size_is(,(ULONG)*pcbStringsBuffer)] OLECHAR ** ppStringsBuffer,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+#endif
+
+	[local]
+	HRESULT MapColumnIDs(
+		[in] DBORDINAL cColumnIDs,
+		[in, size_is((ULONG)cColumnIDs)] const DBID rgColumnIDs[],
+		[out, size_is((ULONG)cColumnIDs)] DBORDINAL rgColumns[]
+	);
+
+#ifndef NO_REMOTE
+
+	[call_as(MapColumnIDs)]
+	HRESULT RemoteMapColumnIDs(
+		[in] DBORDINAL cColumnIDs,
+		[in, size_is((ULONG)cColumnIDs)] const DBID *rgColumnIDs,
+		[out, size_is((ULONG)cColumnIDs)] DBORDINAL *rgColumns,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+#endif
+
+}

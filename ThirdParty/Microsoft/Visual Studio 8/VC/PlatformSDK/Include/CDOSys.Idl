@@ -1,0 +1,909 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+import "msado15.idl";
+
+		
+	
+
+interface IMessage;
+interface IMessages;
+interface IBodyPart;
+interface IConfiguration;
+interface IBodyParts;
+interface IDataSource;
+
+[helpstring("Used with the IConfiguration.Load method to specify which default configuration values are to be loaded.")] 
+typedef enum CdoConfigSource
+{
+            [helpstring("Load all applicable default values from both Outlook Express (OE) and Internet Information Services.")] 
+          cdoDefaults  = -1,
+            [helpstring("Load configuration default values from the local Internet Information Service.")] 
+          cdoIIS  = 1,
+            [helpstring("Load configuration values from the default identify of the default Outlook Express account.")] 
+          cdoOutlookExpress  = 2,
+ } CdoConfigSource;
+
+[helpstring("Used to set or examine the IMessage.DSNOptions property, the value of which identifies the condition(s) under which Delivery Status Notifications (DSNs) are to be sent.")] 
+typedef enum CdoDSNOptions
+{
+            [helpstring("No DSN commands are issued.")] 
+          cdoDSNDefault  = 0,
+            [helpstring("No DSNs are issued.")] 
+          cdoDSNNever  = 1,
+            [helpstring("Return an DSN if delivery fails.")] 
+          cdoDSNFailure  = 2,
+            [helpstring("Return a DSN if delivery succeeds.")] 
+          cdoDSNSuccess  = 4,
+            [helpstring("Return a DSN if delivery is delayed.")] 
+          cdoDSNDelay  = 8,
+            [helpstring("Return a DSN if delivery succeeds, fails, or is delayed.")] 
+          cdoDSNSuccessFailOrDelay  = 14,
+ } CdoDSNOptions;
+
+[helpstring("Passed to SMTP-NNTP transport event sinks through corresponding event methods and used by sinks to indicate to the event source whether or not they have consumed the event.")] 
+typedef enum CdoEventStatus
+{
+            [helpstring("Proceed to run the next sink.")] 
+          cdoRunNextSink  = 0,
+            [helpstring("Do not notify (skip) any remaining sinks for the event (i.e. this sink has consumed the event).")] 
+          cdoSkipRemainingSinks  = 1,
+ } CdoEventStatus;
+
+typedef enum CdoEventType
+{
+          cdoSMTPOnArrival  = 1,
+          cdoNNTPOnPostEarly  = 2,
+          cdoNNTPOnPost  = 3,
+          cdoNNTPOnPostFinal  = 4,
+ } CdoEventType;
+
+typedef enum cdoImportanceValues
+{
+          cdoLow  = 0,
+          cdoNormal  = 1,
+          cdoHigh  = 2,
+ } cdoImportanceValues;
+
+[helpstring("Used by SMTP transport event sinks to set or examine the http://schemas.microsoft.com/cdo/smtpenvelope/messagestatus property, the value of which indicates the current message status.")] 
+typedef enum CdoMessageStat
+{
+            [helpstring("Success. Proceed to deliver message.")] 
+          cdoStatSuccess  = 0,
+            [helpstring("Discard message and do not deliver.")] 
+          cdoStatAbortDelivery  = 2,
+            [helpstring("Do not deliver message and place it in the bad mail location.")] 
+          cdoStatBadMail  = 3,
+ } CdoMessageStat;
+
+[helpstring("Used with the IMessage.CreateMHTMLBody method to specify what resource types referenced within the page specified by the URL parameter should not be downloaded.")] 
+typedef enum CdoMHTMLFlags
+{
+            [helpstring("Download all resources referred to in elements within the resource at the specified URI. (not recursive)")] 
+          cdoSuppressNone  = 0,
+            [helpstring("Do not download resources referred to in IMG elements.")] 
+          cdoSuppressImages  = 1,
+            [helpstring("Do not download resources referred to in BGSOUND elements.")] 
+          cdoSuppressBGSounds  = 2,
+            [helpstring("Do not download resources referred to in FRAME elements.")] 
+          cdoSuppressFrames  = 4,
+            [helpstring("Do not download resources referred to in OBJECT elements.")] 
+          cdoSuppressObjects  = 8,
+            [helpstring("Do not download resources referred to in LINK elements.")] 
+          cdoSuppressStyleSheets  = 16,
+            [helpstring("Do not download any resources referred to from within the page.")] 
+          cdoSuppressAll  = 31,
+ } CdoMHTMLFlags;
+
+[helpstring("Used by NNTP transport event sinks to set or examine the http://schemas.microsoft.com/cdo/nntpenvelope/nntpprocessing property, the value of which indicates what message processing is to occur.")] 
+typedef enum CdoNNTPProcessingField
+{
+            [helpstring("Post the message.")] 
+          cdoPostMessage  = 1,
+            [helpstring("Send message through process control.")] 
+          cdoProcessControl  = 2,
+            [helpstring("Send message to moderator.")] 
+          cdoProcessModerator  = 4,
+ } CdoNNTPProcessingField;
+
+[helpstring("Used with the http://schemas.microsoft.com/cdo/configuration/postusing  property, the value of which specifies how a message is to be posted.")] 
+typedef enum CdoPostUsing
+{
+            [helpstring(" Post the message using the local NNTP Service pickup directory.")] 
+          cdoPostUsingPickup  = 1,
+            [helpstring(" Post the message using the NNTP protocol over the network.")] 
+          cdoPostUsingPort  = 2,
+ } CdoPostUsing;
+
+typedef enum cdoPriorityValues
+{
+          cdoPriorityNonUrgent  = -1,
+          cdoPriorityNormal  = 0,
+          cdoPriorityUrgent  = 1,
+ } cdoPriorityValues;
+
+[helpstring("Used with the http://schemas.microsoft.com/cdo/configuration/smtpauthenticate and http://schemas.microsoft.com/cdo/configuration/nntpauthenticate properties, the values of which specify the network authentication mechansim to use when sending messages.")] 
+typedef enum CdoProtocolsAuthentication
+{
+            [helpstring("Perform no authentication (anonymous)")] 
+          cdoAnonymous  = 0,
+            [helpstring("Use the basic (clear text) authentication mechanism.")] 
+          cdoBasic  = 1,
+            [helpstring("Use the NTLM authentication mechanism")] 
+          cdoNTLM  = 2,
+ } CdoProtocolsAuthentication;
+
+[helpstring("Used with the IMessage.AddRelatedBodyPart method to specify how the new body part is to be referenced within the related HTML body part.")] 
+typedef enum CdoReferenceType
+{
+            [helpstring("The reference paramter contains a value for the Content-ID header. The HTML body refers to the resource using this Content-ID header")] 
+          cdoRefTypeId  = 0,
+            [helpstring("The reference parameter contains a value for the Content-Location MIME header. The HTML body refers to this resource using this message-relative URL.")] 
+          cdoRefTypeLocation  = 1,
+ } CdoReferenceType;
+
+[helpstring(" Used with the http://schemas.microsoft.com/cdo/configuration/sendusing  property, the value of which specifies how a message is to be sent.")] 
+typedef enum CdoSendUsing
+{
+            [helpstring("Send message using the local SMTP service pickup directory.")] 
+          cdoSendUsingPickup  = 1,
+            [helpstring("Send the message using the SMTP protocol over the network.")] 
+          cdoSendUsingPort  = 2,
+ } CdoSendUsing;
+
+typedef enum cdoSensitivityValues
+{
+          cdoSensitivityNone  = 0,
+          cdoPersonal  = 1,
+          cdoPrivate  = 2,
+          cdoCompanyConfidential  = 3,
+ } cdoSensitivityValues;
+
+[helpstring("Used to set or examine the urn:schemas:calendar:timezoneid property, the value of which specifies the local timezone to use when returning Date properties.")] 
+typedef enum CdoTimeZoneId
+{
+            [helpstring("(UTC) Universal Coordinated Time")] 
+          cdoUTC  = 0,
+            [helpstring("(GMT) Greenwich Mean Time; Dublin, Edinburgh, London")] 
+          cdoGMT  = 1,
+            [helpstring("(GMT+01:00) Lisbon, Warsaw")] 
+          cdoLisbon  = 2,
+            [helpstring("(GMT+01:00) Paris, Madrid")] 
+          cdoParis  = 3,
+            [helpstring("(GMT+01:00) Berlin, Stockholm, Rome, Bern, Brussels, Vienna")] 
+          cdoBerlin  = 4,
+            [helpstring("(GMT+02:00) Eastern Europe")] 
+          cdoEasternEurope  = 5,
+            [helpstring("(GMT+01:00) Prague")] 
+          cdoPrague  = 6,
+            [helpstring("(GMT+02:00) Athens, Helsinki, Istanbul")] 
+          cdoAthens  = 7,
+            [helpstring("(GMT-03:00) Brasilia")] 
+          cdoBrasilia  = 8,
+            [helpstring("(GMT-04:00) Atlantic Time (Canada)")] 
+          cdoAtlanticCanada  = 9,
+            [helpstring("(GMT-05:00) Eastern Time (US & Canada)")] 
+          cdoEastern  = 10,
+            [helpstring("(GMT-06:00) Central Time (US & Canada)")] 
+          cdoCentral  = 11,
+            [helpstring("(GMT-07:00) Mountain Time (US & Canada)")] 
+          cdoMountain  = 12,
+            [helpstring("(GMT-08:00) Pacific Time (US & Canada); Tijuana")] 
+          cdoPacific  = 13,
+            [helpstring("(GMT-09:00) Alaska")] 
+          cdoAlaska  = 14,
+            [helpstring("(GMT-10:00) Hawaii")] 
+          cdoHawaii  = 15,
+            [helpstring("(GMT-11:00) Midway Island, Samoa")] 
+          cdoMidwayIsland  = 16,
+            [helpstring("(GMT+12:00) Wellington, Auckland")] 
+          cdoWellington  = 17,
+            [helpstring("(GMT+10:00) Brisbane, Melbourne, Sydney")] 
+          cdoBrisbane  = 18,
+            [helpstring("(GMT+09:30) Adelaide")] 
+          cdoAdelaide  = 19,
+            [helpstring("(GMT+09:00) Tokyo, Osaka, Sapporo, Seoul, Yakutsk")] 
+          cdoTokyo  = 20,
+            [helpstring("(GMT+08:00) Hong Kong, Perth, Singapore, Taipei")] 
+          cdoHongKong  = 21,
+            [helpstring("(GMT+07:00) Bangkok, Jakarta, Hanoi")] 
+          cdoBangkok  = 22,
+            [helpstring("(GMT+05:30) Bombay, Calcutta, Madras, New Delhi, Colombo")] 
+          cdoBombay  = 23,
+            [helpstring("(GMT+04:00) Abu Dhabi, Muscat, Tbilisi, Kazan, Volgograd")] 
+          cdoAbuDhabi  = 24,
+            [helpstring("(GMT+03:30) Tehran")] 
+          cdoTehran  = 25,
+            [helpstring("(GMT+03:00) Baghdad, Kuwait, Nairobi, Riyadh")] 
+          cdoBaghdad  = 26,
+            [helpstring("(GMT+02:00) Israel")] 
+          cdoIsrael  = 27,
+            [helpstring("(GMT-03:30) Newfoundland")] 
+          cdoNewfoundland  = 28,
+            [helpstring("(GMT-01:00) Azores, Cape Verde Is.")] 
+          cdoAzores  = 29,
+            [helpstring("(GMT-02:00) Mid-Atlantic")] 
+          cdoMidAtlantic  = 30,
+            [helpstring("(GMT) Monrovia, Casablanca")] 
+          cdoMonrovia  = 31,
+            [helpstring("(GMT-03:00) Buenos Aires, Georgetown")] 
+          cdoBuenosAires  = 32,
+            [helpstring("(GMT-04:00) Caracas, La Paz")] 
+          cdoCaracas  = 33,
+            [helpstring("(GMT-05:00) Indiana (East)")] 
+          cdoIndiana  = 34,
+            [helpstring("(GMT-05:00) Bogota, Lima")] 
+          cdoBogota  = 35,
+            [helpstring("(GMT-06:00) Saskatchewan")] 
+          cdoSaskatchewan  = 36,
+            [helpstring("(GMT-06:00) Mexico City, Tegucigalpa")] 
+          cdoMexicoCity  = 37,
+            [helpstring("(GMT-07:00) Arizona")] 
+          cdoArizona  = 38,
+            [helpstring("(GMT-12:00) Eniwetok, Kwajalein")] 
+          cdoEniwetok  = 39,
+            [helpstring("(GMT+12:00) Fiji, Kamchatka, Marshall Is.")] 
+          cdoFiji  = 40,
+            [helpstring("(GMT+11:00) Magadan, Solomon Is., New Caledonia")] 
+          cdoMagadan  = 41,
+            [helpstring("(GMT+10:00) Hobart")] 
+          cdoHobart  = 42,
+            [helpstring("(GMT+10:00) Guam, Port Moresby, Vladivostok")] 
+          cdoGuam  = 43,
+            [helpstring("(GMT+09:30) Darwin")] 
+          cdoDarwin  = 44,
+            [helpstring("(GMT+08:00) Beijing, Chongqing, Urumqi")] 
+          cdoBeijing  = 45,
+            [helpstring("(GMT+06:00) Almaty, Dhaka")] 
+          cdoAlmaty  = 46,
+            [helpstring("(GMT+05:00) Islamabad, Karachi, Sverdlovsk, Tashkent")] 
+          cdoIslamabad  = 47,
+            [helpstring("(GMT+04:30) Kabul")] 
+          cdoKabul  = 48,
+            [helpstring("(GMT+02:00) Cairo")] 
+          cdoCairo  = 49,
+            [helpstring("(GMT+02:00) Harare, Pretoria")] 
+          cdoHarare  = 50,
+            [helpstring("(GMT+03:00) Moscow, St. Petersburg")] 
+          cdoMoscow  = 51,
+          cdoInvalidTimeZone  = 52,
+ } CdoTimeZoneId;
+
+[ object, uuid(CD000029-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines abstract methods and properties used to extract messages from or embed messages into other CDO message body parts"), helpcontext(0x00000100), pointer_default(unique) ] interface IDataSource : IDispatch
+{
+	[ id( 207 ), propget, helpstring( "Returns the name (type) of the interface originally used to bind the object" ), helpcontext( 0x00000101 ), readonly ] HRESULT SourceClass ([out,retval] BSTR* varSourceClass);
+	[ id( 208 ), propget, helpstring( "Returns the currently bound object" ), helpcontext( 0x00000102 ), readonly ] HRESULT Source ([out,retval] IUnknown** varSource);
+	[ id( 209 ), propget, helpstring( "Indicates whether or not the local data has been changed since the last save or bind operation" ), helpcontext(0x00000103) ] HRESULT IsDirty ([out,retval] VARIANT_BOOL* pIsDirty); [ id( 209 ), propput, helpstring( "Indicates whether or not the local data has been changed since the last save or bind operation" ), helpcontext(0x00000103) ] HRESULT IsDirty ([in] VARIANT_BOOL varIsDirty);
+	[ id( 210 ), propget, helpstring( "Not Implemented. Reserved for future use" ), helpcontext( 0x00000104 ), readonly ] HRESULT SourceURL ([out,retval] BSTR* varSourceURL);
+	[ id( 211 ), propget, helpstring( "Not Implemented. Reserved for future use" ), helpcontext( 0x00000105 ), readonly ] HRESULT ActiveConnection ([out,retval] _Connection** varActiveConnection);
+
+	[ id( 251 ), helpstring ( "Binds to and saves data into the specified object" ), helpcontext( 0x00000106 ) ] HRESULT SaveToObject(
+				[in]		IUnknown* Source,
+				[in]		BSTR InterfaceName);
+
+	[ id( 252 ), helpstring ( "Binds to and opens data from the specified object" ), helpcontext( 0x00000108 ) ] HRESULT OpenObject(
+				[in]		IUnknown* Source,
+				[in]		BSTR InterfaceName);
+
+	[ id( 253 ), helpstring ( "Not Implemented. Reserved for future use" ), helpcontext( 0x00000109 ) ] HRESULT SaveTo(
+				[in]			        BSTR SourceURL,
+				[in, defaultvalue(0)]	IDispatch* ActiveConnection,
+				[in, optional]	        ConnectModeEnum Mode,
+				[in, optional]	        RecordCreateOptionsEnum CreateOptions,
+				[in, optional]	        RecordOpenOptionsEnum Options,
+				[in, optional]	        BSTR UserName,
+				[in, optional]	        BSTR Password);
+
+	[ id( 254 ), helpstring ( "Not implemented. Reserved for future use" ), helpcontext( 0x0000010a ) ] HRESULT Open(
+				[in]			        BSTR SourceURL,
+				[in, defaultvalue(0)]	IDispatch* ActiveConnection,
+				[in, optional]	        ConnectModeEnum Mode,
+				[in, optional]	        RecordCreateOptionsEnum CreateOptions,
+				[in, optional]	        RecordOpenOptionsEnum Options,
+				[in, optional]	        BSTR UserName,
+				[in, optional]	        BSTR Password);
+
+	[ id( 255 ), helpstring ( "Saves data into the currently bound object" ), helpcontext( 0x0000010b ) ] HRESULT Save();
+
+	[ id( 256 ), helpstring ( "Not Implemented. Reserved for future use" ), helpcontext( 0x00000107 ) ] HRESULT SaveToContainer(
+				[in]			        BSTR ContainerURL,
+				[in, defaultvalue(0)]	IDispatch* ActiveConnection,
+				[in, optional]	        ConnectModeEnum Mode,
+				[in, optional]	        RecordCreateOptionsEnum CreateOptions,
+				[in, optional]	        RecordOpenOptionsEnum Options,
+				[in, optional]	        BSTR UserName,
+				[in, optional]	        BSTR Password);
+};
+
+[ object, uuid(CD000020-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines abstract methods and properties used to manage a complete message"), helpcontext(0x00000110), pointer_default(unique) ] interface IMessage : IDispatch
+{
+	[ id( 101 ), propget, helpstring( "The intended blind carbon copy (BCC header) recipients" ), helpcontext(0x00000111) ] HRESULT BCC ([out,retval] BSTR* pBCC); [ id( 101 ), propput, helpstring( "The intended blind carbon copy (BCC header) recipients" ), helpcontext(0x00000111) ] HRESULT BCC ([in] BSTR varBCC);
+	[ id( 103 ), propget, helpstring( "The intended secondary (carbon copy) recipients" ), helpcontext(0x00000112) ] HRESULT CC ([out,retval] BSTR* pCC); [ id( 103 ), propput, helpstring( "The intended secondary (carbon copy) recipients" ), helpcontext(0x00000112) ] HRESULT CC ([in] BSTR varCC);
+	[ id( 105 ), propget, helpstring( "The recipient to which follow up messages should be sent" ), helpcontext(0x00000113) ] HRESULT FollowUpTo ([out,retval] BSTR* pFollowUpTo); [ id( 105 ), propput, helpstring( "The recipient to which follow up messages should be sent" ), helpcontext(0x00000113) ] HRESULT FollowUpTo ([in] BSTR varFollowUpTo);
+	[ id( 106 ), propget, helpstring( "The principle recipients from which the message is sent" ), helpcontext(0x00000114) ] HRESULT From ([out,retval] BSTR* pFrom); [ id( 106 ), propput, helpstring( "The principle recipients from which the message is sent" ), helpcontext(0x00000114) ] HRESULT From ([in] BSTR varFrom);
+	[ id( 107 ), propget, helpstring( "The keywords for the message" ), helpcontext(0x00000115) ] HRESULT Keywords ([out,retval] BSTR* pKeywords); [ id( 107 ), propput, helpstring( "The keywords for the message" ), helpcontext(0x00000115) ] HRESULT Keywords ([in] BSTR varKeywords);
+	[ id( 110 ), propget, helpstring( "Specifies whether or not the message is to be formatted using MIME (True) or UUEncode (False)" ), helpcontext(0x00000116) ] HRESULT MimeFormatted ([out,retval] VARIANT_BOOL* pMimeFormatted); [ id( 110 ), propput, helpstring( "Specifies whether or not the message is to be formatted using MIME (True) or UUEncode (False)" ), helpcontext(0x00000116) ] HRESULT MimeFormatted ([in] VARIANT_BOOL varMimeFormatted);
+	[ id( 111 ), propget, helpstring( "The names of newsgroups (NewsGroups header) to which the message is to be posted" ), helpcontext(0x00000117) ] HRESULT Newsgroups ([out,retval] BSTR* pNewsgroups); [ id( 111 ), propput, helpstring( "The names of newsgroups (NewsGroups header) to which the message is to be posted" ), helpcontext(0x00000117) ] HRESULT Newsgroups ([in] BSTR varNewsgroups);
+	[ id( 112 ), propget, helpstring( "The organization of the sender" ), helpcontext(0x00000118) ] HRESULT Organization ([out,retval] BSTR* pOrganization); [ id( 112 ), propput, helpstring( "The organization of the sender" ), helpcontext(0x00000118) ] HRESULT Organization ([in] BSTR varOrganization);
+	[ id( 114 ), propget, helpstring( "Returns the time the message was received" ), helpcontext( 0x00000119 ), readonly ] HRESULT ReceivedTime ([out,retval] DATE* varReceivedTime);
+	[ id( 115 ), propget, helpstring( "The addresses (Reply-To header) to which to reply" ), helpcontext(0x0000011a) ] HRESULT ReplyTo ([out,retval] BSTR* pReplyTo); [ id( 115 ), propput, helpstring( "The addresses (Reply-To header) to which to reply" ), helpcontext(0x0000011a) ] HRESULT ReplyTo ([in] BSTR varReplyTo);
+	[ id( 116 ), propget, helpstring( "The delivery status notification options for the message" ), helpcontext(0x0000011b) ] HRESULT DSNOptions ([out,retval] CdoDSNOptions* pDSNOptions); [ id( 116 ), propput, helpstring( "The delivery status notification options for the message" ), helpcontext(0x0000011b) ] HRESULT DSNOptions ([in] CdoDSNOptions varDSNOptions);
+	[ id( 119 ), propget, helpstring( "The date on which the message was sent" ), helpcontext( 0x0000011c ), readonly ] HRESULT SentOn ([out,retval] DATE* varSentOn);
+	[ id( 120 ), propget, helpstring( "The subject (Subject header) of the message" ), helpcontext(0x0000011d) ] HRESULT Subject ([out,retval] BSTR* pSubject); [ id( 120 ), propput, helpstring( "The subject (Subject header) of the message" ), helpcontext(0x0000011d) ] HRESULT Subject ([in] BSTR varSubject);
+	[ id( 121 ), propget, helpstring( "The principle (To header) recipients of the message" ), helpcontext(0x0000011e) ] HRESULT To ([out,retval] BSTR* pTo); [ id( 121 ), propput, helpstring( "The principle (To header) recipients of the message" ), helpcontext(0x0000011e) ] HRESULT To ([in] BSTR varTo);
+	[ id( 123 ), propget, helpstring( "The text/plain portion of the message body" ), helpcontext(0x0000011f) ] HRESULT TextBody ([out,retval] BSTR* pTextBody); [ id( 123 ), propput, helpstring( "The text/plain portion of the message body" ), helpcontext(0x0000011f) ] HRESULT TextBody ([in] BSTR varTextBody);
+	[ id( 124 ), propget, helpstring( "The text/html portion of the message body" ), helpcontext(0x00000120) ] HRESULT HTMLBody ([out,retval] BSTR* pHTMLBody); [ id( 124 ), propput, helpstring( "The text/html portion of the message body" ), helpcontext(0x00000120) ] HRESULT HTMLBody ([in] BSTR varHTMLBody);
+	[ id( 125 ), propget, helpstring( "Returns the message's Attachments collection" ), helpcontext( 0x00000121 ), readonly ] HRESULT Attachments ([out,retval] IBodyParts ** varAttachments);
+	[ id( 126 ), propget, helpstring( "The sender of the message" ), helpcontext(0x00000122) ] HRESULT Sender ([out,retval] BSTR* pSender); [ id( 126 ), propput, helpstring( "The sender of the message" ), helpcontext(0x00000122) ] HRESULT Sender ([in] BSTR varSender);
+	[ id( 127 ), propget, helpstring( "The object's associated Configuration object" ), helpcontext( 0x00000123) ] HRESULT Configuration ([out,retval] IConfiguration ** pConfiguration); [ id( 127 ), propput, helpstring( "The object's associated Configuration object" ), helpcontext( 0x00000123 ) ] HRESULT Configuration ([in] IConfiguration * varConfiguration); [ id( 127 ), propputref, helpstring( "The object's associated Configuration object" ), helpcontext( 0x00000123 ) ] HRESULT Configuration ([in] IConfiguration * varConfiguration);
+	[ id( 128 ), propget, helpstring( "Specifies whether a text/plain alternate representation should automatically be generated from the text/html part of the message body" ), helpcontext(0x00000124) ] HRESULT AutoGenerateTextBody ([out,retval] VARIANT_BOOL* pAutoGenerateTextBody); [ id( 128 ), propput, helpstring( "Specifies whether a text/plain alternate representation should automatically be generated from the text/html part of the message body" ), helpcontext(0x00000124) ] HRESULT AutoGenerateTextBody ([in] VARIANT_BOOL varAutoGenerateTextBody);
+	[ id( 129 ), propget, helpstring( "Returns the transport envelope Fields collection for the message (transport event sinks only) " ), helpcontext( 0x00000125 ), readonly ] HRESULT EnvelopeFields ([out,retval] Fields ** varEnvelopeFields);
+	[ id( 130 ), propget, helpstring( "Returns the BodyPart object (IBodyPart interface) containing the text/plain part of the message body" ), helpcontext( 0x00000126 ), readonly ] HRESULT TextBodyPart ([out,retval] IBodyPart ** varTextBodyPart);
+	[ id( 131 ), propget, helpstring( "Returns the BodyPart object (IBodyPart interface) containing the text/html portion of the message body" ), helpcontext( 0x00000127 ), readonly ] HRESULT HTMLBodyPart ([out,retval] IBodyPart ** varHTMLBodyPart);
+	[ id( 132 ), propget, helpstring( "Returns the IBodyPart interface on the object" ), helpcontext( 0x00000128 ), readonly ] HRESULT BodyPart ([out,retval] IBodyPart ** varBodyPart);
+	[ id( 133 ), propget, helpstring( "Returns the IDataSource interface on the object" ), helpcontext( 0x00000129 ), readonly ] HRESULT DataSource ([out,retval] IDataSource ** varDataSource);
+	[ id( 134 ), propget, helpstring( "Returns the Fields collection for the message" ), helpcontext( 0x0000012a ), readonly ] HRESULT Fields ([out,retval] Fields ** varFields);
+	[ id( 135 ), propget, helpstring( "Specifies whether or not mail delivery notifications should be sent when the message is received" ), helpcontext(0x0000012b) ] HRESULT MDNRequested ([out,retval] VARIANT_BOOL* pMDNRequested); [ id( 135 ), propput, helpstring( "Specifies whether or not mail delivery notifications should be sent when the message is received" ), helpcontext(0x0000012b) ] HRESULT MDNRequested ([in] VARIANT_BOOL varMDNRequested);
+
+	[ id( 150 ), helpstring ( "Adds a BodyPart object with content referenced within the text/html portion of the message body" ), helpcontext( 0x0000012c ) ] HRESULT AddRelatedBodyPart(
+				[in] 			BSTR URL, 
+				[in] 			BSTR Reference,
+				[in] 			CdoReferenceType ReferenceType,
+				[in, optional]	BSTR UserName,
+				[in, optional]	BSTR Password,
+				[out,retval]	IBodyPart **ppBody);
+				
+	[ id( 151 ), helpstring ( "Adds an attachment (BodyPart) to the message" ), helpcontext( 0x0000012d ) ] HRESULT AddAttachment(
+				[in] 			BSTR URL,
+				[in, optional]	BSTR UserName,
+				[in, optional]	BSTR Password,
+				[out,retval]	IBodyPart **ppBody);
+			
+	[ id( 152 ), helpstring ( "Creates an MHTML-formatted message body using the contents at the specified URL" ), helpcontext( 0x0000012e ) ] HRESULT CreateMHTMLBody(
+				[in] 					BSTR URL, 
+				[in, defaultvalue(cdoSuppressNone)]	CdoMHTMLFlags Flags,
+				[in, optional]	BSTR UserName,
+				[in, optional]	BSTR Password);
+				
+	[ id( 153 ), helpstring ( "Returns a Message object that can be used to forward the message" ), helpcontext( 0x0000012f ) ] HRESULT Forward(
+				[out,retval] 	IMessage **ppMsg);
+
+	[ id( 154 ), helpstring ( "Post the message using the method specified in the associated Configuration object" ), helpcontext( 0x00000130 ) ] HRESULT Post();
+	
+	[ id( 155 ), helpstring ( "Returns a Message object that can be used to post a reply to the message" ), helpcontext( 0x00000131 ) ] HRESULT PostReply(
+				[out,retval] 	IMessage **ppMsg);
+				
+	[ id( 156 ), helpstring ( "Returns a Message object that can be used to reply to the message" ), helpcontext( 0x00000132 ) ] HRESULT Reply(
+				[out,retval] 	IMessage **ppMsg);
+				
+	[ id( 157 ), helpstring ( "Returns a Message object that can be used to post a reply to all recipients of the message" ), helpcontext( 0x00000133 ) ] HRESULT ReplyAll(
+				[out,retval] IMessage **ppMsg);
+				
+	[ id( 158 ), helpstring ( "Send the message using the method specified in the associated Configuration object" ), helpcontext( 0x00000136 ) ] HRESULT Send();
+
+	[ id( 159 ), helpstring ( "Returns a Stream object containing the message in serialized format" ), helpcontext( 0x00000134 ) ] HRESULT GetStream(
+				[out,retval] _Stream **ppStream);
+
+	[ id( 160 ), helpstring ( "Returns the specified interface on the object" ), helpcontext( 0x00000135 ) ] HRESULT GetInterface(
+				[in] BSTR Interface,
+				[out, retval] IDispatch** ppUnknown);
+};
+
+[ object, uuid(CD000021-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines abstract methods and properties used to manage a message body part"), helpcontext(0x00000140), pointer_default(unique) ] interface IBodyPart : IDispatch
+{
+	[ id( 200 ), propget, helpstring( "Returns the object's BodyParts collection" ), helpcontext( 0x00000141 ), readonly ] HRESULT BodyParts ([out,retval] IBodyParts ** varBodyParts);
+	[ id( 201 ), propget, helpstring( "The encoding mechanism for the body part's content" ), helpcontext(0x00000142) ] HRESULT ContentTransferEncoding ([out,retval] BSTR* pContentTransferEncoding); [ id( 201 ), propput, helpstring( "The encoding mechanism for the body part's content" ), helpcontext(0x00000142) ] HRESULT ContentTransferEncoding ([in] BSTR varContentTransferEncoding);
+	[ id( 202 ), propget, helpstring( "The content media type portion of the body part's content type" ), helpcontext(0x00000143) ] HRESULT ContentMediaType ([out,retval] BSTR* pContentMediaType); [ id( 202 ), propput, helpstring( "The content media type portion of the body part's content type" ), helpcontext(0x00000143) ] HRESULT ContentMediaType ([in] BSTR varContentMediaType);
+	[ id( 203 ), propget, helpstring( "Returns the Fields collection for the body part" ), helpcontext( 0x00000144 ), readonly ] HRESULT Fields ([out,retval] Fields ** varFields);
+	[ id( 204 ), propget, helpstring( "The character set of the body part text content (not applicable for non-text content types)" ), helpcontext(0x00000145) ] HRESULT Charset ([out,retval] BSTR* pCharset); [ id( 204 ), propput, helpstring( "The character set of the body part text content (not applicable for non-text content types)" ), helpcontext(0x00000145) ] HRESULT Charset ([in] BSTR varCharset);
+	[ id( 205 ), propget, helpstring( "Returns the value of the filename parameter for the content-disposition MIME header" ), helpcontext( 0x00000146 ), readonly ] HRESULT FileName ([out,retval] BSTR* varFileName);
+	[ id( 207 ), propget, helpstring( "Returns the IDataSource interface on the object" ), helpcontext( 0x00000147 ), readonly ] HRESULT DataSource ([out,retval] IDataSource ** varDataSource);
+	[ id( 208 ), propget, helpstring( "The content class for the body part's content" ), helpcontext(0x00000148) ] HRESULT ContentClass ([out,retval] BSTR* pContentClass); [ id( 208 ), propput, helpstring( "The content class for the body part's content" ), helpcontext(0x00000148) ] HRESULT ContentClass ([in] BSTR varContentClass);
+	[ id( 209 ), propget, helpstring( "The friendly name for the body part's content class" ), helpcontext(0x00000149) ] HRESULT ContentClassName ([out,retval] BSTR* pContentClassName); [ id( 209 ), propput, helpstring( "The friendly name for the body part's content class" ), helpcontext(0x00000149) ] HRESULT ContentClassName ([in] BSTR varContentClassName);
+	[ id( 210 ), propget, helpstring( "Returns the parent object in the body part hierarchy" ), helpcontext( 0x0000014a ), readonly ] HRESULT Parent ([out,retval] IBodyPart** varParent);
+
+	[ id( 250 ), helpstring ( "Adds a body part to the object's BodyParts collection" ), helpcontext( 0x0000014b ) ] HRESULT AddBodyPart(
+				[in, defaultvalue(-1)]	long Index,
+				[out, retval]			IBodyPart **ppPart);
+
+	[ id( 251 ), helpstring ( "Saves the body part contents to the specified file" ), helpcontext( 0x0000014c ) ] HRESULT SaveToFile(
+				[in]		BSTR FileName);
+
+	[ id( 252 ), helpstring ( "Returns a Stream object containing the body part content in serialized, encoded format" ), helpcontext( 0x0000014d ) ] HRESULT GetEncodedContentStream(
+				[out, retval]_Stream **ppStream); 
+
+	[ id( 253 ), helpstring ( "Returns a Stream object containing the body part content in serialized, decoded format" ), helpcontext( 0x0000014e ) ] HRESULT GetDecodedContentStream(
+				[out, retval]_Stream **ppStream); 
+
+	[ id( 254 ), helpstring ( "Returns a Stream object containing the complete body part in serialized, encoded format" ), helpcontext( 0x0000014f ) ] HRESULT GetStream(
+				[out,retval] _Stream **ppStream);
+
+	[ id( 255 ), helpstring ( "Returns the specified parameter from the body part's specified MIME header" ), helpcontext( 0x00000150 ) ] HRESULT GetFieldParameter(
+				[in] BSTR FieldName,
+				[in] BSTR Parameter,
+				[out, retval] BSTR* pbstrValue);	
+
+	[ id( 160 ), helpstring ( "Returns the specified interface on the object" ), helpcontext( 0x00000151 ) ] HRESULT GetInterface(
+				[in] BSTR Interface,
+				[out, retval] IDispatch** ppUnknown);
+};
+
+[ object, uuid(CD000022-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines abstract methods and properties used to manage configuration information for CDO objects"), helpcontext(0x00000160), pointer_default(unique) ] interface IConfiguration : IDispatch
+{
+	[ id( 0 ), propget, helpstring( "Returns the Fields collection for the object" ), helpcontext( 0x00000161 ), readonly ] HRESULT Fields ([out,retval] Fields ** varFields);
+
+	[ id( 50 ), helpstring ( "Loads the specified configuration" ), helpcontext( 0x00000162 ) ] HRESULT Load(
+				[in]	CdoConfigSource LoadFrom,
+				[in, optional] BSTR URL);
+
+	[ id( 160 ), helpstring ( "Returns the specified interface on the object" ), helpcontext( 0x00000163 ) ] HRESULT GetInterface(
+				[in] BSTR Interface,
+				[out, retval] IDispatch** ppUnknown);
+};
+
+[ object, uuid(CD000025-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines abstract methods and properties used to manage a collection of Message objects on the file system. Returned by IDropDirectory.GetMessages"), helpcontext(0x00000180), pointer_default(unique) ] interface IMessages : IDispatch
+{
+	[ 
+		id( 0 ), 
+        propget, 
+		helpstring( "Returns the message specified by index from the collection" ), 
+		helpcontext( 0x00000181 ),
+		readonly 
+	] HRESULT Item (long Index, 
+				[out, retval] 	IMessage **ppMessage);	
+
+	[ id( 1 ), propget, helpstring( "Returns the number of message objects in the collection" ), helpcontext( 0x00000182 ), readonly ] HRESULT Count ([out,retval] long* varCount);	
+
+	[ id( 2 ), helpstring ( "Deletes the specifed message object in the collection" ), helpcontext( 0x00000183 ) ] HRESULT Delete(
+				[in] 			long Index);
+	
+	[ id( 3 ), helpstring ( "Deletes all message objects in the collection" ), helpcontext( 0x00000184 ) ] HRESULT DeleteAll();
+				
+	[propget, restricted, id(DISPID_NEWENUM)]						
+	HRESULT _NewEnum(
+				[out, retval] 	IUnknown** retval);
+	[ 
+		id( 5 ), 
+        propget, 
+		helpstring( "Returns the name of the file containing the specified message on the file system" ), 
+		helpcontext( 0x00000185 ),
+		readonly 
+	] HRESULT Filename (VARIANT var, 
+				[out, retval] 	BSTR *Filename);	
+};
+
+[ object, uuid(CD000024-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines abstract methods and properties used to manage a collection of messages on the file system"), helpcontext(0x00000190), pointer_default(unique) ] interface IDropDirectory : IDispatch
+{
+	[ 
+		id( 200 ), 
+		helpstring( "Returns a collection of messages contained in the specified directory on the file system. Default is SMTP drop directory." ),
+		helpcontext( 0x00000191 ), 
+		readonly 
+	] 
+	HRESULT GetMessages ([in, optional] BSTR DirName, 
+					  [out,retval] IMessages** Msgs);
+};
+
+[ object, uuid(CD000023-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("Defines abstract methods and properties used to manage a collection of BodyPart objects"), helpcontext(0x00000170), pointer_default(unique) ] interface IBodyParts : IDispatch
+{
+	[ id( 1 ), propget, helpstring( "Returns the number of BodyPart objects in the collection" ), helpcontext( 0x00000171 ), readonly ] HRESULT Count ([out,retval] long* varCount);	
+
+	[ 
+		id( 0 ), 
+        propget, 
+		helpstring( "Returns the specified BodyPart object from the collection" ),
+		helpcontext( 0x00000172 ),
+		readonly 
+	]
+	HRESULT Item (
+				[in] 			long Index, 
+				[out, retval] 	IBodyPart **ppBody);	
+
+	[propget, restricted, id(DISPID_NEWENUM)]						
+	HRESULT _NewEnum(
+				[out, retval] 	IUnknown** retval);
+
+	[ id( 2 ), helpstring ( "Deletes the specified BodyPart object from the collection. Can use index or object reference" ), helpcontext( 0x00000173 ) ] HRESULT Delete(
+				[in]			VARIANT varBP);
+
+	[ id( 3 ), helpstring ( "Deletes all BodyPart objects in the collection" ), helpcontext( 0x00000174 ) ] HRESULT DeleteAll();
+
+	[ id( 4 ), helpstring ( "Adds a BodyPart object to the collection at the specified index, and returns the newly added object" ), helpcontext( 0x00000175 ) ] HRESULT Add(
+				[in, defaultvalue(-1)]	long Index,
+				[out, retval]			IBodyPart **ppPart);
+};
+
+[ object, uuid(CD000030-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("ISMTPScriptConnector interface"), pointer_default(unique), hidden ] interface ISMTPScriptConnector : IDispatch
+{
+};
+[ object, uuid(CD000034-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("INNTPFinalScriptConnector interface"), pointer_default(unique), hidden ] interface INNTPEarlyScriptConnector : IDispatch
+{
+};
+[ object, uuid(CD000031-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("INNTPPostScriptConnector interface"), pointer_default(unique), hidden ] interface INNTPPostScriptConnector : IDispatch
+{
+};
+[ object, uuid(CD000032-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("INNTPFinalScriptConnector interface"), pointer_default(unique), hidden ] interface INNTPFinalScriptConnector : IDispatch
+{
+};
+
+[ object, uuid(CD000026-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("The interface to implement when creating SMTP OnArrival event sinks"), helpcontext(0x00000200), pointer_default(unique) ] interface ISMTPOnArrival : IDispatch
+{
+	[ id( 256 ), helpstring ( "Called by the SMTP event source when a message arrives" ), helpcontext( 0x00000201 ) ] HRESULT OnArrival(
+			[in] IMessage *Msg, [in,out]CdoEventStatus *EventStatus);
+
+};
+
+[ object, uuid(CD000033-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("The interface to implement when creating NNTP OnPostEarly event sinks"), helpcontext(0x00000210), pointer_default(unique) ] interface INNTPOnPostEarly : IDispatch
+{
+	[ id( 256 ), helpstring ( "Called by the NNTP event source when message headers arrive" ), helpcontext( 0x00000211 ) ] HRESULT OnPostEarly(
+			[in] IMessage *Msg, [in,out]CdoEventStatus *EventStatus);
+
+}
+
+[ object, uuid(CD000027-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("The interface to implement when creating NNTP OnPost event sinks"), helpcontext(0x00000220), pointer_default(unique) ] interface INNTPOnPost : IDispatch
+{
+	[ id( 256 ), helpstring ( "Called by the NNTP event source when a message is posted" ), helpcontext( 0x00000221 ) ] HRESULT OnPost(
+			[in] IMessage *Msg, [in,out]CdoEventStatus *EventStatus);
+
+};
+
+[ object, uuid(CD000028-8B95-11D1-82DB-00C04FB1625D), dual, nonextensible, helpstring("The interface to implement when creating NNTP OnPostFinal event sinks"), helpcontext(0x00000230), pointer_default(unique) ] interface INNTPOnPostFinal : IDispatch
+{
+	[ id( 256 ), helpstring ( "Called by the NNTP event source after a posted message has been saved to disk or the Exchange store" ), helpcontext( 0x00000231 ) ] HRESULT OnPostFinal(
+			[in] IMessage *Msg, [in,out]CdoEventStatus *EventStatus);
+
+};
+
+[
+	uuid(CD000000-8B95-11D1-82DB-00C04FB1625D),
+	version(1.0),
+
+	helpfile("cdosys.chm"),
+	helpstring("Microsoft CDO for Windows 2000 Library")
+]
+library CDO
+{
+
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	importlib("msado15.dll");
+
+enum CdoConfigSource;
+enum CdoDSNOptions;
+enum CdoEventStatus;
+enum cdoImportanceValues;
+enum CdoMessageStat;
+enum CdoMHTMLFlags;
+enum CdoNNTPProcessingField;
+enum CdoPostUsing;
+enum cdoPriorityValues;
+enum CdoProtocolsAuthentication;
+enum CdoReferenceType;
+enum CdoSendUsing;
+enum cdoSensitivityValues;
+enum CdoTimeZoneId;
+          [  dllname("cdosys.dll")   ]
+          module CdoCalendar
+          {
+               const BSTR cdoTimeZoneIDURN  =L"urn:schemas:calendar:timezoneid";
+          };
+
+          [  dllname("cdosys.dll")   ]
+          module CdoCharset
+          {
+               const BSTR cdoBIG5  =L"big5";
+               const BSTR cdoEUC_JP  =L"euc-jp";
+               const BSTR cdoEUC_KR  =L"euc-kr";
+               const BSTR cdoGB2312  =L"gb2312";
+               const BSTR cdoISO_2022_JP  =L"iso-2022-jp";
+               const BSTR cdoISO_2022_KR  =L"iso-2022-kr";
+               const BSTR cdoISO_8859_1  =L"iso-8859-1";
+               const BSTR cdoISO_8859_2  =L"iso-8859-2";
+               const BSTR cdoISO_8859_3  =L"iso-8859-3";
+               const BSTR cdoISO_8859_4  =L"iso-8859-4";
+               const BSTR cdoISO_8859_5  =L"iso-8859-5";
+               const BSTR cdoISO_8859_6  =L"iso-8859-6";
+               const BSTR cdoISO_8859_7  =L"iso-8859-7";
+               const BSTR cdoISO_8859_8  =L"iso-8859-8";
+               const BSTR cdoISO_8859_9  =L"iso-8859-9";
+               const BSTR cdoKOI8_R  =L"koi8-r";
+               const BSTR cdoShift_JIS  =L"shift-jis";
+               const BSTR cdoUS_ASCII  =L"us-ascii";
+               const BSTR cdoUTF_7  =L"utf-7";
+               const BSTR cdoUTF_8  =L"utf-8";
+          };
+
+          [  dllname("cdosys.dll")   ]
+          module CdoConfiguration
+          {
+               const BSTR cdoAutoPromoteBodyParts  =L"http://schemas.microsoft.com/cdo/configuration/autopromotebodyparts";
+               const BSTR cdoFlushBuffersOnWrite  =L"http://schemas.microsoft.com/cdo/configuration/flushbuffersonwrite";
+               const BSTR cdoHTTPCookies  =L"http://schemas.microsoft.com/cdo/configuration/httpcookies";
+               const BSTR cdoLanguageCode  =L"http://schemas.microsoft.com/cdo/configuration/languagecode";
+               const BSTR cdoNNTPAccountName  =L"http://schemas.microsoft.com/cdo/configuration/nntpaccountname";
+               const BSTR cdoNNTPAuthenticate  =L"http://schemas.microsoft.com/cdo/configuration/nntpauthenticate";
+               const BSTR cdoNNTPConnectionTimeout  =L"http://schemas.microsoft.com/cdo/configuration/nntpconnectiontimeout";
+               const BSTR cdoNNTPServer  =L"http://schemas.microsoft.com/cdo/configuration/nntpserver";
+               const BSTR cdoNNTPServerPickupDirectory  =L"http://schemas.microsoft.com/cdo/configuration/nntpserverpickupdirectory";
+               const BSTR cdoNNTPServerPort  =L"http://schemas.microsoft.com/cdo/configuration/nntpserverport";
+               const BSTR cdoNNTPUseSSL  =L"http://schemas.microsoft.com/cdo/configuration/nntpusessl";
+               const BSTR cdoPostEmailAddress  =L"http://schemas.microsoft.com/cdo/configuration/postemailaddress";
+               const BSTR cdoPostPassword  =L"http://schemas.microsoft.com/cdo/configuration/postpassword";
+               const BSTR cdoPostUserName  =L"http://schemas.microsoft.com/cdo/configuration/postusername";
+               const BSTR cdoPostUserReplyEmailAddress  =L"http://schemas.microsoft.com/cdo/configuration/postuserreplyemailaddress";
+               const BSTR cdoPostUsingMethod  =L"http://schemas.microsoft.com/cdo/configuration/postusing";
+               const BSTR cdoSaveSentItems  =L"http://schemas.microsoft.com/cdo/configuration/savesentitems";
+               const BSTR cdoSendEmailAddress  =L"http://schemas.microsoft.com/cdo/configuration/sendemailaddress";
+               const BSTR cdoSendPassword  =L"http://schemas.microsoft.com/cdo/configuration/sendpassword";
+               const BSTR cdoSendUserName  =L"http://schemas.microsoft.com/cdo/configuration/sendusername";
+               const BSTR cdoSendUserReplyEmailAddress  =L"http://schemas.microsoft.com/cdo/configuration/senduserreplyemailaddress";
+               const BSTR cdoSendUsingMethod  =L"http://schemas.microsoft.com/cdo/configuration/sendusing";
+               const BSTR cdoSMTPAccountName  =L"http://schemas.microsoft.com/cdo/configuration/smtpaccountname";
+               const BSTR cdoSMTPAuthenticate  =L"http://schemas.microsoft.com/cdo/configuration/smtpauthenticate";
+               const BSTR cdoSMTPConnectionTimeout  =L"http://schemas.microsoft.com/cdo/configuration/smtpconnectiontimeout";
+               const BSTR cdoSMTPServer  =L"http://schemas.microsoft.com/cdo/configuration/smtpserver";
+               const BSTR cdoSMTPServerPickupDirectory  =L"http://schemas.microsoft.com/cdo/configuration/smtpserverpickupdirectory";
+               const BSTR cdoSMTPServerPort  =L"http://schemas.microsoft.com/cdo/configuration/smtpserverport";
+               const BSTR cdoSMTPUseSSL  =L"http://schemas.microsoft.com/cdo/configuration/smtpusessl";
+               const BSTR cdoURLGetLatestVersion  =L"http://schemas.microsoft.com/cdo/configuration/urlgetlatestversion";
+               const BSTR cdoURLProxyBypass  =L"http://schemas.microsoft.com/cdo/configuration/urlproxybypass";
+               const BSTR cdoURLProxyServer  =L"http://schemas.microsoft.com/cdo/configuration/urlproxyserver";
+               const BSTR cdoUseMessageResponseText  =L"http://schemas.microsoft.com/cdo/configuration/usemessageresponsetext";
+          };
+
+          [  dllname("cdosys.dll")   ]
+          module CdoContentTypeValues
+          {
+               const BSTR cdoGif  =L"image/gif";
+               const BSTR cdoJpeg  =L"image/jpeg";
+               const BSTR cdoMessageExternalBody  =L"message/external-body";
+               const BSTR cdoMessagePartial  =L"message/partial";
+               const BSTR cdoMessageRFC822  =L"message/rfc822";
+               const BSTR cdoMultipartAlternative  =L"multipart/alternative";
+               const BSTR cdoMultipartDigest  =L"multipart/digest";
+               const BSTR cdoMultipartMixed  =L"multipart/mixed";
+               const BSTR cdoMultipartRelated  =L"multipart/related";
+               const BSTR cdoTextHTML  =L"text/html";
+               const BSTR cdoTextPlain  =L"text/plain";
+          };
+
+          [  dllname("cdosys.dll")   ]
+          module CdoEncodingType
+          {
+               const BSTR cdo7bit  =L"7bit";
+               const BSTR cdo8bit  =L"8bit";
+               const BSTR cdoBase64  =L"base64";
+               const BSTR cdoBinary  =L"binary";
+               const BSTR cdoMacBinHex40  =L"mac-binhex40";
+               const BSTR cdoQuotedPrintable  =L"quoted-printable";
+               const BSTR cdoUuencode  =L"uuencode";
+          };
+
+          [  dllname("cdosys.dll")   ]
+          module CdoExchange
+          {
+               const BSTR cdoSensitivity  =L"http://schemas.microsoft.com/exchange/sensitivity";
+          };
+
+          [  dllname("cdosys.dll")   ]
+          module CdoHTTPMail
+          {
+               const BSTR cdoAttachmentFilename  =L"urn:schemas:httpmail:attachmentfilename";
+               const BSTR cdoBcc  =L"urn:schemas:httpmail:bcc";
+               const BSTR cdoCc  =L"urn:schemas:httpmail:cc";
+               const BSTR cdoContentDispositionType  =L"urn:schemas:httpmail:content-disposition-type";
+               const BSTR cdoContentMediaType  =L"urn:schemas:httpmail:content-media-type";
+               const BSTR cdoDate  =L"urn:schemas:httpmail:date";
+               const BSTR cdoDateReceived  =L"urn:schemas:httpmail:datereceived";
+               const BSTR cdoFrom  =L"urn:schemas:httpmail:from";
+               const BSTR cdoHasAttachment  =L"urn:schemas:httpmail:hasattachment";
+               const BSTR cdoHTMLDescription  =L"urn:schemas:httpmail:htmldescription";
+               const BSTR cdoImportance  =L"urn:schemas:httpmail:importance";
+               const BSTR cdoNormalizedSubject  =L"urn:schemas:httpmail:normalizedsubject";
+               const BSTR cdoPriority  =L"urn:schemas:httpmail:priority";
+               const BSTR cdoReplyTo  =L"urn:schemas:httpmail:reply-to";
+               const BSTR cdoSender  =L"urn:schemas:httpmail:sender";
+               const BSTR cdoSubject  =L"urn:schemas:httpmail:subject";
+               const BSTR cdoTextDescription  =L"urn:schemas:httpmail:textdescription";
+               const BSTR cdoThreadTopic  =L"urn:schemas:httpmail:thread-topic";
+               const BSTR cdoTo  =L"urn:schemas:httpmail:to";
+          };
+
+          [  dllname("cdosys.dll")   ]
+          module CdoInterfaces
+          {
+               const BSTR cdoAdoStream  =L"_Stream";
+               const BSTR cdoIBodyPart  =L"IBodyPart";
+               const BSTR cdoIConfiguration  =L"IConfiguration";
+               const BSTR cdoIDataSource  =L"IDataSource";
+               const BSTR cdoIMessage  =L"IMessage";
+               const BSTR cdoIStream  =L"IStream";
+          };
+
+          [  dllname("cdosys.dll")   ]
+          module CdoMailHeader
+          {
+               const BSTR cdoApproved  =L"urn:schemas:mailheader:approved";
+               const BSTR cdoComment  =L"urn:schemas:mailheader:comment";
+               const BSTR cdoContentBase  =L"urn:schemas:mailheader:content-base";
+               const BSTR cdoContentDescription  =L"urn:schemas:mailheader:content-description";
+               const BSTR cdoContentDisposition  =L"urn:schemas:mailheader:content-disposition";
+               const BSTR cdoContentId  =L"urn:schemas:mailheader:content-id";
+               const BSTR cdoContentLanguage  =L"urn:schemas:mailheader:content-language";
+               const BSTR cdoContentLocation  =L"urn:schemas:mailheader:content-location";
+               const BSTR cdoContentTransferEncoding  =L"urn:schemas:mailheader:content-transfer-encoding";
+               const BSTR cdoContentType  =L"urn:schemas:mailheader:content-type";
+               const BSTR cdoControl  =L"urn:schemas:mailheader:control";
+               const BSTR cdoDisposition  =L"urn:schemas:mailheader:disposition";
+               const BSTR cdoDispositionNotificationTo  =L"urn:schemas:mailheader:disposition-notification-to";
+               const BSTR cdoDistribution  =L"urn:schemas:mailheader:distribution";
+               const BSTR cdoExpires  =L"urn:schemas:mailheader:expires";
+               const BSTR cdoFollowupTo  =L"urn:schemas:mailheader:followup-to";
+               const BSTR cdoInReplyTo  =L"urn:schemas:mailheader:in-reply-to";
+               const BSTR cdoLines  =L"urn:schemas:mailheader:lines";
+               const BSTR cdoMessageId  =L"urn:schemas:mailheader:message-id";
+               const BSTR cdoMIMEVersion  =L"urn:schemas:mailheader:mime-version";
+               const BSTR cdoNewsgroups  =L"urn:schemas:mailheader:newsgroups";
+               const BSTR cdoOrganization  =L"urn:schemas:mailheader:organization";
+               const BSTR cdoOriginalRecipient  =L"urn:schemas:mailheader:original-recipient";
+               const BSTR cdoPath  =L"urn:schemas:mailheader:path";
+               const BSTR cdoPostingVersion  =L"urn:schemas:mailheader:posting-version";
+               const BSTR cdoReceived  =L"urn:schemas:mailheader:received";
+               const BSTR cdoReferences  =L"urn:schemas:mailheader:references";
+               const BSTR cdoRelayVersion  =L"urn:schemas:mailheader:relay-version";
+               const BSTR cdoReturnPath  =L"urn:schemas:mailheader:return-path";
+               const BSTR cdoReturnReceiptTo  =L"urn:schemas:mailheader:return-receipt-to";
+               const BSTR cdoSummary  =L"urn:schemas:mailheader:summary";
+               const BSTR cdoThreadIndex  =L"urn:schemas:mailheader:thread-index";
+               const BSTR cdoXMailer  =L"urn:schemas:mailheader:x-mailer";
+               const BSTR cdoXref  =L"urn:schemas:mailheader:xref";
+               const BSTR cdoXUnsent  =L"urn:schemas:mailheader:x-unsent";
+          };
+
+          [  dllname("cdosys.dll")   ]
+          module CdoNamespace
+          {
+               const BSTR cdoNSConfiguration  =L"http://schemas.microsoft.com/cdo/configuration/";
+               const BSTR cdoNSContacts  =L"urn:schemas:contacts:";
+               const BSTR cdoNSHTTPMail  =L"urn:schemas:httpmail:";
+               const BSTR cdoNSMailHeader  =L"urn:schemas:mailheader:";
+               const BSTR cdoNSNNTPEnvelope  =L"http://schemas.microsoft.com/cdo/nntpenvelope/";
+               const BSTR cdoNSSMTPEnvelope  =L"http://schemas.microsoft.com/cdo/smtpenvelope/";
+          };
+
+          [  dllname("cdosys.dll")   ]
+          module CdoNNTPEnvelope
+          {
+               const BSTR cdoNewsgroupList  =L"http://schemas.microsoft.com/cdo/nntpenvelope/newsgrouplist";
+               const BSTR cdoNNTPProcessing  =L"http://schemas.microsoft.com/cdo/nntpenvelope/nntpprocessing";
+          };
+
+          [  dllname("cdosys.dll")   ]
+          module CdoSMTPEnvelope
+          {
+               const BSTR cdoArrivalTime  =L"http://schemas.microsoft.com/cdo/smtpenvelope/arrivaltime";
+               const BSTR cdoClientIPAddress  =L"http://schemas.microsoft.com/cdo/smtpenvelope/clientipaddress";
+               const BSTR cdoMessageStatus  =L"http://schemas.microsoft.com/cdo/smtpenvelope/messagestatus";
+               const BSTR cdoPickupFileName  =L"http://schemas.microsoft.com/cdo/smtpenvelope/pickupfilename";
+               const BSTR cdoRecipientList  =L"http://schemas.microsoft.com/cdo/smtpenvelope/recipientlist";
+               const BSTR cdoSenderEmailAddress  =L"http://schemas.microsoft.com/cdo/smtpenvelope/senderemailaddress";
+          };
+
+	
+ 	 [	dllname("cdosys.dll")	]
+	module CdoErrors 
+{ 	
+		 const LONG CDO_E_UNCAUGHT_EXCEPTION = 0x80040201L;
+		 const LONG CDO_E_NOT_OPENED = 0x80040202L;
+		 const LONG CDO_E_UNSUPPORTED_DATASOURCE = 0x80040203L;
+		 const LONG CDO_E_INVALID_PROPERTYNAME = 0x80040204L;
+		 const LONG CDO_E_PROP_UNSUPPORTED = 0x80040205L;
+		 const LONG CDO_E_INACTIVE = 0x80040206L;
+		 const LONG CDO_E_NO_SUPPORT_FOR_OBJECTS = 0x80040207L;
+		 const LONG CDO_E_NOT_AVAILABLE = 0x80040208L;
+		 const LONG CDO_E_NO_DEFAULT_DROP_DIR = 0x80040209L;
+		 const LONG CDO_E_SMTP_SERVER_REQUIRED = 0x8004020AL;
+		 const LONG CDO_E_NNTP_SERVER_REQUIRED = 0x8004020BL;
+		 const LONG CDO_E_RECIPIENT_MISSING = 0x8004020CL;
+		 const LONG CDO_E_FROM_MISSING = 0x8004020DL;
+		 const LONG CDO_E_SENDER_REJECTED = 0x8004020EL;
+		 const LONG CDO_E_RECIPIENTS_REJECTED = 0x8004020FL;
+		 const LONG CDO_E_NNTP_POST_FAILED = 0x80040210L;
+		 const LONG CDO_E_SMTP_SEND_FAILED = 0x80040211L;
+		 const LONG CDO_E_CONNECTION_DROPPED = 0x80040212L;
+		 const LONG CDO_E_FAILED_TO_CONNECT = 0x80040213L;
+		 const LONG CDO_E_INVALID_POST = 0x80040214L;
+		 const LONG CDO_E_AUTHENTICATION_FAILURE = 0x80040215L;
+		 const LONG CDO_E_INVALID_CONTENT_TYPE = 0x80040216L;
+		 const LONG CDO_E_LOGON_FAILURE = 0x80040217L;
+		 const LONG CDO_E_HTTP_NOT_FOUND = 0x80040218L;
+		 const LONG CDO_E_HTTP_FORBIDDEN = 0x80040219L;
+		 const LONG CDO_E_HTTP_FAILED = 0x8004021AL;
+		 const LONG CDO_E_MULTIPART_NO_DATA = 0x8004021BL;
+		 const LONG CDO_E_INVALID_ENCODING_FOR_MULTIPART = 0x8004021CL;
+		 const LONG CDO_E_PROP_NOT_FOUND = 0x8004021EL;
+		 const LONG CDO_E_INVALID_SEND_OPTION = 0x80040220L;
+		 const LONG CDO_E_INVALID_POST_OPTION = 0x80040221L;
+		 const LONG CDO_E_NO_PICKUP_DIR = 0x80040222L;
+		 const LONG CDO_E_NOT_ALL_DELETED = 0x80040223L;
+		 const LONG CDO_E_PROP_READONLY = 0x80040227L;
+		 const LONG CDO_E_PROP_CANNOT_DELETE = 0x80040228L;
+		 const LONG CDO_E_BAD_DATA = 0x80040229L;
+		 const LONG CDO_E_PROP_NONHEADER = 0x8004022AL;
+		 const LONG CDO_E_INVALID_CHARSET = 0x8004022BL;
+		 const LONG CDO_E_ADOSTREAM_NOT_BOUND = 0x8004022CL;
+		 const LONG CDO_E_CONTENTPROPXML_NOT_FOUND = 0x8004022DL;
+		 const LONG CDO_E_CONTENTPROPXML_WRONG_CHARSET = 0x8004022EL;
+		 const LONG CDO_E_CONTENTPROPXML_PARSE_FAILED = 0x8004022FL;
+		 const LONG CDO_E_CONTENTPROPXML_CONVERT_FAILED = 0x80040230L;
+		 const LONG CDO_E_NO_DIRECTORIES_SPECIFIED = 0x80040231L;
+		 const LONG CDO_E_DIRECTORIES_UNREACHABLE = 0x80040232L;
+		 const LONG CDO_E_BAD_SENDER = 0x80040233L;
+		 const LONG CDO_E_SELF_BINDING = 0x80040234L;
+		 const LONG CDO_E_ARGUMENT1 = 0x80044000L;
+		 const LONG CDO_E_ARGUMENT2 = 0x80044001L;
+		 const LONG CDO_E_ARGUMENT3 = 0x80044002L;
+		 const LONG CDO_E_ARGUMENT4 = 0x80044003L;
+		 const LONG CDO_E_ARGUMENT5 = 0x80044004L;
+		 const LONG CDO_E_NOT_FOUND = 0x800CCE05L;
+		 const LONG CDO_E_INVALID_ENCODING_TYPE = 0x800CCE1DL;
+
+ 	};
+interface IBodyParts;
+interface IMessages;
+
+[ uuid(CD000001-8B95-11D1-82DB-00C04FB1625D), helpstring("Defines an object used to manage or create a complete message"), helpcontext(0x00000010) ] coclass Message
+{
+	[default] interface IMessage;
+	interface IDataSource;
+	interface IBodyPart;
+};
+
+[ uuid(CD000002-8B95-11D1-82DB-00C04FB1625D), helpstring("Defines an object used to store configuration information for CDO objects"), helpcontext(0x00000012) ] coclass Configuration
+{
+	[default] interface IConfiguration;
+};
+
+[ uuid(CD000004-8B95-11D1-82DB-00C04FB1625D), helpstring("Defines an object used to access messages on the file system"), helpcontext(0x00000011) ] coclass DropDirectory
+{
+	[default] interface IDropDirectory;
+};
+
+[ uuid(CD000008-8B95-11D1-82DB-00C04FB1625D), helpstring("SMTPConnector Class"), hidden ] coclass SMTPConnector
+{
+	[default] interface ISMTPScriptConnector;
+	[default,source] interface ISMTPOnArrival;
+};
+[ uuid(CD000011-8B95-11D1-82DB-00C04FB1625D), helpstring("NNTPEarlyConnector Class"), hidden ] coclass NNTPEarlyConnector
+{
+	[default] interface INNTPEarlyScriptConnector;
+	[default,source] interface INNTPOnPostEarly;
+};
+[ uuid(CD000009-8B95-11D1-82DB-00C04FB1625D), helpstring("NNTPPostConnector Class"), hidden ] coclass NNTPPostConnector
+{
+	[default] interface INNTPPostScriptConnector;
+	[default,source] interface INNTPOnPost;
+};
+[ uuid(CD000010-8B95-11D1-82DB-00C04FB1625D), helpstring("NNTPFinalConnector Class"), hidden ] coclass NNTPFinalConnector
+{
+	[default] interface INNTPFinalScriptConnector;
+	[default,source] interface INNTPOnPostFinal;
+};
+
+[
+	object,
+	uuid(CD0ff000-8B95-11D1-82DB-00C04FB1625D),
+	pointer_default(unique)
+]
+interface IGetInterface : IUnknown
+{
+	HRESULT GetInterface(
+				[in] BSTR Interface,
+				[out, retval] IDispatch** ppUnknown);
+	HRESULT GetInterfaceInner(
+				[in] BSTR Interface,
+				[out, retval] IDispatch** ppUnknown);
+};
+
+};

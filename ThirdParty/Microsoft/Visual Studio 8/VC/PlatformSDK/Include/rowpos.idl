@@ -1,0 +1,90 @@
+//-----------------------------------------------------------------------------
+// File:			rowpos.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+    REMOTED_INTERFACE(0c733a94-2a1c-11ce-ade5-00aa0044773d)
+
+interface IRowPosition : IUnknown {
+
+typedef DWORD DBPOSITIONFLAGS;
+
+enum DBPOSITIONFLAGSENUM {
+	DBPOSITION_OK,
+	DBPOSITION_NOROW,
+	DBPOSITION_BOF,
+	DBPOSITION_EOF,
+};
+
+	[local]
+	HRESULT ClearRowPosition(
+	);
+
+	[call_as(ClearRowPosition)]
+	HRESULT RemoteClearRowPosition(
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT GetRowPosition(
+		[out] HCHAPTER * phChapter,
+		[out] HROW * phRow,
+		[out] DBPOSITIONFLAGS * pdwPositionFlags
+	);
+
+	[call_as(GetRowPosition)]
+	HRESULT RemoteGetRowPosition(
+		[out] HCHAPTER * phChapter,
+		[out] HROW * phRow,
+		[out] DBPOSITIONFLAGS * pdwPositionFlags,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT GetRowset(
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppRowset
+	);
+
+	[call_as(GetRowset)]
+	HRESULT RemoteGetRowset(
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppRowset,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT Initialize(
+		[in] IUnknown * pRowset
+	);
+
+	[call_as(Initialize)]
+	HRESULT RemoteInitialize(
+		[in] IUnknown * pRowset,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT SetRowPosition(
+		[in] HCHAPTER hChapter,
+		[in] HROW hRow,
+		[in] DBPOSITIONFLAGS dwPositionFlags
+	);
+
+	[call_as(SetRowPosition)]
+	HRESULT RemoteSetRowPosition(
+		[in] HCHAPTER hChapter,
+		[in] HROW hRow,
+		[in] DBPOSITIONFLAGS dwPositionFlags,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

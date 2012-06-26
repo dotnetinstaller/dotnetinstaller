@@ -1,0 +1,47 @@
+//-----------------------------------------------------------------------------
+// File:			binres.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+
+	REMOTED_INTERFACE(0c733ab1-2a1c-11ce-ade5-00aa0044773d)
+
+interface IBindResource : IUnknown
+{
+
+[local]
+HRESULT Bind(	
+	[in]                    		IUnknown*           pUnkOuter,
+	[in]                            LPCOLESTR 		    pwszURL,
+	[in]                            DBBINDURLFLAG       dwBindURLFlags,
+	[in]                            REFGUID		        rguid,
+	[in]                            REFIID 		        riid,	
+	[in]                    		IAuthenticate*      pAuthenticate,
+	[in, out, unique]               DBIMPLICITSESSION*  pImplSession,
+	[in, out, unique]               DBBINDURLSTATUS*    pdwBindStatus,
+	[out, iid_is(riid)]             IUnknown**          ppUnk
+    );
+
+[call_as(Bind)]
+HRESULT RemoteBind(
+	[in] IUnknown * pUnkOuter,
+	[in] LPCOLESTR pwszURL,
+	[in] DBBINDURLFLAG dwBindURLFlags,
+	[in] REFGUID rguid,
+	[in] REFIID riid,
+	[in] IAuthenticate * pAuthenticate,
+	[in] IUnknown *pSessionUnkOuter,
+	[in, unique] IID *piid,
+	[in, out, unique, iid_is(piid)] IUnknown **ppSession,
+	[in, out, unique] DBBINDURLSTATUS * pdwBindStatus,
+	[out, iid_is(riid)] IUnknown ** ppUnk
+	);
+
+};

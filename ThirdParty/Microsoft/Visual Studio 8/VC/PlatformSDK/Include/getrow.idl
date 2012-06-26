@@ -1,0 +1,31 @@
+//-----------------------------------------------------------------------------
+// File:			getrow.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+
+
+LOCAL_INTERFACE(0c733aaf-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IGetRow : IUnknown
+{
+HRESULT GetRowFromHROW(
+	[in, unique]                    IUnknown*       pUnkOuter,
+	[in]                            HROW		    hRow,
+	[in]                            REFIID		    riid,
+	[out, iid_is(riid)]             IUnknown**      ppUnk
+    );
+
+HRESULT GetURLFromHROW(
+	[in]                            HROW		    hRow,
+	[out]                           LPOLESTR*	    ppwszURL
+    );
+};

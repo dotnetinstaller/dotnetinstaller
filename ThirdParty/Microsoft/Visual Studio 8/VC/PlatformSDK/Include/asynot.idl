@@ -1,0 +1,64 @@
+//-----------------------------------------------------------------------------
+// File:			asynot.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+    REMOTED_INTERFACE(0c733a96-2a1c-11ce-ade5-00aa0044773d)
+
+interface IDBAsynchNotify : IUnknown {
+
+	[local]
+	HRESULT OnLowResource(
+		[in] DB_DWRESERVE dwReserved
+	);
+
+	[call_as(OnLowResource)]
+	HRESULT RemoteOnLowResource(
+		[in] DB_DWRESERVE dwReserved
+	);
+
+	[local]
+	HRESULT OnProgress(
+		[in] HCHAPTER hChapter,
+		[in] DBASYNCHOP eOperation,
+		[in] DBCOUNTITEM ulProgress,
+		[in] DBCOUNTITEM ulProgressMax,
+		[in] DBASYNCHPHASE eAsynchPhase,
+		[in] LPOLESTR pwszStatusText
+	);
+
+	[call_as(OnProgress)]
+	HRESULT RemoteOnProgress(
+		[in] HCHAPTER hChapter,
+		[in] DBASYNCHOP eOperation,
+		[in] DBCOUNTITEM ulProgress,
+		[in] DBCOUNTITEM ulProgressMax,
+		[in] DBASYNCHPHASE eAsynchPhase,
+		[in,unique,string] LPOLESTR pwszStatusText
+	);
+
+	[local]
+	HRESULT OnStop(
+		[in] HCHAPTER hChapter,
+		[in] DBASYNCHOP eOperation,
+		[in] HRESULT hrStatus,
+		[in] LPOLESTR pwszStatusText
+	);
+
+	[call_as(OnStop)]
+	HRESULT RemoteOnStop(
+		[in] HCHAPTER hChapter,
+		[in] DBASYNCHOP eOperation,
+		[in] HRESULT hrStatus,
+		[in,unique,string] LPOLESTR pwszStatusText
+	);
+
+}

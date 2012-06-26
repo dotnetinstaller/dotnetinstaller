@@ -1,0 +1,50 @@
+//-----------------------------------------------------------------------------
+// File:			rstvw.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+    REMOTED_INTERFACE(0c733a99-2a1c-11ce-ade5-00aa0044773d)
+
+interface IRowsetView : IUnknown {
+
+	[local]
+	HRESULT CreateView(
+		[in] IUnknown * pUnkOuter,
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppView
+	);
+
+	[call_as(CreateView)]
+	HRESULT RemoteCreateView(
+		[in] IUnknown * pUnkOuter,
+		[in] REFIID riid,
+		[out, iid_is(riid)] IUnknown ** ppView,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT GetView(
+		[in] HCHAPTER hChapter,
+		[in] REFIID riid,
+		[out] HCHAPTER * phChapterSource,
+		[out, iid_is(riid)] IUnknown ** ppView
+	);
+
+	[call_as(GetView)]
+	HRESULT RemoteGetView(
+		[in] HCHAPTER hChapter,
+		[in] REFIID riid,
+		[out] HCHAPTER * phChapterSource,
+		[out, iid_is(riid)] IUnknown ** ppView,
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}

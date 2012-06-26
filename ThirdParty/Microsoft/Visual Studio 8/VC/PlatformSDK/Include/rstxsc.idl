@@ -1,0 +1,28 @@
+//-----------------------------------------------------------------------------
+// File:			rstxsc.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//  
+    
+    LOCAL_INTERFACE(0c733a7f-2a1c-11ce-ade5-00aa0044773d)
+
+    
+interface IRowsetExactScroll : IRowsetScroll {
+
+	HRESULT GetExactPosition(
+		[in] HCHAPTER hChapter,
+		[in] DBBKMARK cbBookmark,
+		[in, size_is(cbBookmark)] const BYTE * pBookmark,
+		[out] DBCOUNTITEM * pulPosition,
+		[out] DBCOUNTITEM * pcRows
+	);
+
+}

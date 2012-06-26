@@ -1,0 +1,38 @@
+//-----------------------------------------------------------------------------
+// File:			dbinit.idl
+//
+// Copyright:		Copyright (c) Microsoft Corporation          
+//
+// Contents: 		OLE DB interface definition
+//
+// Comments: 		
+//
+//-----------------------------------------------------------------------------
+
+#include "idlmulti.h"
+//
+
+    REMOTED_INTERFACE(0c733a8b-2a1c-11ce-ade5-00aa0044773d)
+
+
+interface IDBInitialize : IUnknown {
+
+	[local]
+	HRESULT Initialize(
+	);
+
+	[call_as(Initialize)]
+	HRESULT RemoteInitialize(
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+	[local]
+	HRESULT Uninitialize(
+	);
+
+	[call_as(Uninitialize)]
+	HRESULT RemoteUninitialize(
+		[out] IErrorInfo ** ppErrorInfoRem
+	);
+
+}
