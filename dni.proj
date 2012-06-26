@@ -97,6 +97,14 @@
     <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
     <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
     <Binaries Include="ThirdParty\Mslu\unicows.dll" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\Microsoft.VC80.DebugCRT.manifest" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcm80d.dll" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcp80d.dll" />
+    <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcr80d.dll" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
     <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\Microsoft.VC80.CRT.manifest" />
     <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcm80.dll" />
     <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcp80.dll" />
