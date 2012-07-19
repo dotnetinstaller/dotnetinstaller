@@ -6,7 +6,7 @@
         <application>htmlInstaller.exe</application> is a <literal>bootstrapper</literal>, a driver for
         your setup process. Simply put, this is your <command>setup.exe</command>. It offers an HTML-based user interface, progress,
         status, supports silent installs and enables user selection of optional components. The workflow is flexible
-        and the UI, written in HTLM, can be completely customized.
+        and the UI, written in HTML, can be completely customized.
       </para>
     </introduction>
     <section address="htmlengine">
