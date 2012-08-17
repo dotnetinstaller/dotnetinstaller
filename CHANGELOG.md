@@ -1,11 +1,22 @@
 2.2 (Next)
 ==========
 
+Features
+--------
+
 * [#8](https://github.com/dblock/dotnetinstaller/issues/8): Added `prompt_for_optional_components`, prompt for optional components when all required components are installed - [@dblock](https://github.com/dblock).
-* [#12](https://github.com/dblock/dotnetinstaller/issues/12): Processor architecture filter matching for negated values (using `!`) is incorrect - [@dblock](https://github.com/dblock).
 * Displaying processor architecture next to the operating system version in the log file - [@dblock](https://github.com/dblock).
-* Using MSBuild Community Tasks from the ThirdParty directory - [@icnocop](https://github.com/icnocop).
+
+Bugs
+----
+
+* [#12](https://github.com/dblock/dotnetinstaller/issues/12): Processor architecture filter matching for negated values (using `!`) is incorrect - [@dblock](https://github.com/dblock).
 * [#14](https://github.com/dblock/dotnetinstaller/issues/14): htmlInstaller does not populate user-defined edit values - [@jennings](https://github.com/jennings).
+
+Misc
+----
+
+* Using MSBuild Community Tasks from the ThirdParty directory - [@icnocop](https://github.com/icnocop).
 
 2.1 (5/28/2012)
 ===============
