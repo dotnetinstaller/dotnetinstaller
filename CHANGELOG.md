@@ -12,6 +12,7 @@ Bugs
 
 * [#12](https://github.com/dblock/dotnetinstaller/issues/12): Processor architecture filter matching for negated values (using `!`) is incorrect - [@dblock](https://github.com/dblock).
 * [#14](https://github.com/dblock/dotnetinstaller/issues/14): htmlInstaller does not populate user-defined edit values - [@jennings](https://github.com/jennings).
+* [#22](https://github.com/dblock/dotnetinstaller/pull/22): Add the ability to use radio buttons in htmlInstaller - [@jennings](https://github.com/jennings).
 
 Misc
 ----

@@ -54,6 +54,20 @@ void SetControlValuesTask::exec(htmlayout::dom::element elt)
 				LOG(L"--- Setting user-defined checkbox value '" << id << L"'=" << value);
 				InstallerSession::Instance->AdditionalControlArgs[id] = value;
 			}
+			else if (0 == wcscmp(type, L"radio"))
+			{
+				std::wstring value;
+				// Ignore this radio button if it's not checked.
+				// Only one "checked" element for each ID should exist
+				if (elt.get_state(STATE_CHECKED))
+				{
+					const wchar_t * elt_value = elt.get_attribute("value");
+					value = elt_value != NULL ? elt_value : L"1";
+
+					LOG(L"--- Setting user-defined radio button value '" << id << L"'=" << value);
+					InstallerSession::Instance->AdditionalControlArgs[id] = value;
+				}
+			}
 			else if (0 == wcscmp(type, L"text"))
 			{
 				std::wstring value = elt.get_value().to_string();
