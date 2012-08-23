@@ -6,6 +6,7 @@
 * Displaying processor architecture next to the operating system version in the log file - [@dblock](https://github.com/dblock).
 * Using MSBuild Community Tasks from the ThirdParty directory - [@icnocop](https://github.com/icnocop).
 * [#14](https://github.com/dblock/dotnetinstaller/issues/14): htmlInstaller does not populate user-defined edit values - [@jennings](https://github.com/jennings).
+* [#22](https://github.com/dblock/dotnetinstaller/pull/22): Add the ability to use radio buttons in htmlInstaller - [@jennings](https://github.com/jennings).
 
 2.1 (5/28/2012)
 ===============
