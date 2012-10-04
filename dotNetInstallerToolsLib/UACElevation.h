@@ -55,6 +55,7 @@ typedef struct _TOKEN_ELEVATION {
 namespace DVLib
 {
 	BOOL CreateWellKnownSid(WELL_KNOWN_SID_TYPE WellKnownSidType, PSID DomainSid, PSID pSid, DWORD *cbSid);
+	BOOL CheckTokenMembership(HANDLE TokenHandle, PSID SidToCheck, PBOOL IsMember);
 
 	bool IsUserInAdminGroup();
 	bool IsRunAsAdmin();
