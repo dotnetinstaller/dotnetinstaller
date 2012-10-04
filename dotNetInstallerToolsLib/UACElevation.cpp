@@ -30,6 +30,21 @@ BOOL DVLib::CreateWellKnownSid(WELL_KNOWN_SID_TYPE WellKnownSidType, PSID Domain
 	return TRUE;
 }
 
+// Dynamically load CheckTokenMembership() as it may not be on the target system
+BOOL DVLib::CheckTokenMembership(HANDLE TokenHandle, PSID SidToCheck, PBOOL IsMember)
+{
+	typedef BOOL (WINAPI * LPFN_CHECKTOKENMEMBERSHIP)(HANDLE, PSID, PBOOL);
+    LPFN_CHECKTOKENMEMBERSHIP fnCheckTokenMembership = (LPFN_CHECKTOKENMEMBERSHIP) GetProcAddress(
+        GetModuleHandle(TEXT("Advapi32")), "CheckTokenMembership");
+  
+    if (NULL != fnCheckTokenMembership)
+    {
+        return fnCheckTokenMembership(TokenHandle, SidToCheck, IsMember);
+    }
+
+	return TRUE;
+}
+
 // Smart pointer for PSID
 struct sid_free
 {
@@ -112,7 +127,7 @@ bool DVLib::IsUserInAdminGroup()
     // http://msdn.microsoft.com/en-us/library/aa379596(VS.85).aspx:
     // To determine whether a SID is enabled in a token, that is, whether it 
     // has the SE_GROUP_ENABLED attribute, call CheckTokenMembership.
-	CHECK_WIN32_BOOL(::CheckTokenMembership(hTokenToCheck, &adminSID, &fInAdminGroup),
+	CHECK_WIN32_BOOL(CheckTokenMembership(hTokenToCheck, &adminSID, &fInAdminGroup),
 		L"CheckTokenMembership");
 
 	return fInAdminGroup ? true : false;
@@ -152,7 +167,7 @@ bool DVLib::IsRunAsAdmin()
 
     // Determine whether the SID of administrators group is enabled in 
     // the primary access token of the process.
-    CHECK_WIN32_BOOL(::CheckTokenMembership(NULL, pAdministratorsGroup, &fIsRunAsAdmin),
+    CHECK_WIN32_BOOL(CheckTokenMembership(NULL, pAdministratorsGroup, &fIsRunAsAdmin),
 		L"CheckTokenMembership");
 
 	return fIsRunAsAdmin ? true : false;
