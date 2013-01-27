@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VisualStudioToolFile
+	Name="License Compiler"
+	Version="8.00"
+	>
+	<Rules>
+		<CustomBuildRule
+			Name="LicxCompiler"
+			DisplayName="License Compiler"
+			CommandLine="lc.exe [AllOptions] [AdditionalOptions] [Inputs]"
+			Outputs="[$OutputDirectory]\[$TargetAssembly].licenses"
+			FileExtensions="*.licx"
+			ExecutionDescription="Compiling licenses..."
+			BatchingSeparator=" /complist:"
+			>
+			<Properties>
+				<BooleanProperty
+					Name="NoLogo"
+					DisplayName="Suppress Startup Banner"
+					Description="Suppress the display of the startup banner and information messages.     (/nologo)"
+					HelpURL="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cptools/html/cpgrflicensecompilerlcexe.asp"
+					Switch="/nologo"
+					DefaultValue="true"
+				/>
+				<BooleanProperty
+					Name="VerboseOutput"
+					DisplayName="Verbose Output"
+					Description="Specifies verbose mode; displays compilation progress information.     (/v)"
+					HelpURL="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cptools/html/cpgrflicensecompilerlcexe.asp"
+					Switch="/v"
+				/>
+				<StringProperty
+					Name="TargetAssembly"
+					DisplayName="Target Assembly"
+					Description="Specifies the executable for which the .licenses file is being generated.     (/target:[assembly])"
+					HelpURL="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cptools/html/cpgrflicensecompilerlcexe.asp"
+					Switch="/target:&quot;[value]&quot;"
+					DefaultValue="$(TargetFileName)"
+				/>
+				<StringProperty
+					Name="OutputDirectory"
+					DisplayName="Output Directory"
+					Description="Specifies the directory in which to place the output .licenses file.     (/outdir:[directory])"
+					HelpURL="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cptools/html/cpgrflicensecompilerlcexe.asp"
+					Switch="/outdir:&quot;[value]&quot;"
+					DefaultValue="$(IntDir)"
+				/>
+				<StringProperty
+					Name="ComponentModules"
+					DisplayName="Component Modules"
+					Description="Specifies the list of modules that contain the components listed in the /complist file.     (/i:[module])"
+					HelpURL="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cptools/html/cpgrflicensecompilerlcexe.asp"
+					Switch="/i:&quot;[value]&quot;"
+					DefaultValue="$(References)"
+					Delimited="true"
+				/>
+			</Properties>
+		</CustomBuildRule>
+	</Rules>
+</VisualStudioToolFile>
