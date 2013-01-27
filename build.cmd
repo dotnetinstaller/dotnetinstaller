@@ -7,7 +7,8 @@ if "%~1"=="" (
  goto :EOF
 )
 
-PATH C:\Program Files\Microsoft SDKs\Windows\v6.0\VC\Bin;%~dp0ThirdParty\Microsoft\Visual Studio 8\VC\bin;%PATH%
+PATH ;%~dp0ThirdParty\Microsoft\Windows SDK v6.0\VC\Bin;%~dp0ThirdParty\Microsoft\Visual Studio 8\VC\bin;%PATH%
+SET VCINSTALLDIR=%~dp0ThirdParty\Microsoft\Windows SDK v6.0\VC
 SET INCLUDE=%~dp0ThirdParty\Microsoft\Visual Studio 8\VC\atlmfc\include;%~dp0ThirdParty\Microsoft\Visual Studio 8\VC\include;%~dp0ThirdParty\Microsoft\Visual Studio 8\VC\PlatformSDK\Include;%INCLUDE%
 SET LIB=%~dp0\ThirdParty\Microsoft\Visual Studio 8\VC\PlatformSDK\Lib;%~dp0ThirdParty\Microsoft\Visual Studio 8\VC\lib;%~dp0ThirdParty\Microsoft\Visual Studio 8\VC\atlmfc\lib;%LIB%
 
