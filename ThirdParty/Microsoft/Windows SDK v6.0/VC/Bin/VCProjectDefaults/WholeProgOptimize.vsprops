@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<VisualStudioPropertySheet 
+	ProjectType="Visual C++" 
+	Version="8.00" 
+	Name="Whole Program Optimization"
+	>
+	<Tool 
+		Name="VCCLCompilerTool" 
+		WholeProgramOptimization="true"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		LinkTimeCodeGeneration="1"
+	/>
+	<Tool
+		Name="VCLibrarianTool"
+		LinkTimeCodeGeneration="true"
+	/>
+</VisualStudioPropertySheet>
