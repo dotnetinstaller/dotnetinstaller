@@ -12,3 +12,4 @@ assembly
 *.suo
 *tmp_*_Win32.vcproj
 *.vcproj.*.user
+/Documentation/Dni.shfbproj_*
