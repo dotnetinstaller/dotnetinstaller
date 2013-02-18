@@ -18,6 +18,7 @@ public:
 	bool NoReboot() const { return m_noreboot; }
 	bool EnableRunOnReboot() const { return m_enableRunOnReboot; }
 	bool DisplaySplash() const { return m_displaySplash; }
+	bool LoadMSLU() const { return m_loadMSLU; }
 public:
 	std::wstring configFile;
 	std::wstring logFile;
@@ -60,5 +61,7 @@ private:
 	bool m_displayConfig;
 	// show splash screen
 	bool m_displaySplash;
+	// load MSLU
+	bool m_loadMSLU;
 };
 

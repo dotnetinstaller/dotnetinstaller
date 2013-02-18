@@ -32,6 +32,11 @@ BOOL CdotNetInstallerApp::InitInstance()
 		reset(InstallUILevelSetting::Instance, new InstallUILevelSetting());
 
 		ParseCommandLine(* get(InstallerCommandLineInfo::Instance));
+
+		if (InstallerCommandLineInfo::Instance->LoadMSLU())
+		{
+			LoadMSLU();
+		}
 		
 		CSplashWnd::EnableSplashScreen(InstallerCommandLineInfo::Instance->DisplaySplash());
 

@@ -593,6 +593,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MSLU.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MspComponent.h"
 				>
 			</File>

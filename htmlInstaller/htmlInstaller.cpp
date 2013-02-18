@@ -35,7 +35,12 @@ BOOL CHtmlInstallerApp::InitInstance()
 		HtmlWindow::RegisterClass(m_hInstance);
 
 		ParseCommandLine(* get(InstallerCommandLineInfo::Instance));
-			
+		
+		if (InstallerCommandLineInfo::Instance->LoadMSLU())
+		{
+			LoadMSLU();
+		}
+
 		CSplashWnd::EnableSplashScreen(InstallerCommandLineInfo::Instance->DisplaySplash());
 
 		LOG(L"-------------------------------------------------------------------");

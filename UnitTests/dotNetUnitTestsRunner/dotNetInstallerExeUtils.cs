@@ -25,6 +25,7 @@ namespace dotNetUnitTestsRunner
             public string args;
             public bool noreboot = true;
             public bool noRunOnReboot = false;
+            public bool loadMSLU = false;
 
             public RunOptions()
             {
@@ -59,6 +60,7 @@ namespace dotNetUnitTestsRunner
                     if (autostart) result += " /autostart";
                     if (noreboot) result += " /noreboot";
                     if (noRunOnReboot) result += " /noRunOnReboot";
+                    if (loadMSLU) result += " /loadMSLU";
                     if (log)
                     {
                         result += " /Log";

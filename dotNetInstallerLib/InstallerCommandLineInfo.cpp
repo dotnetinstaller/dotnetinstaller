@@ -19,6 +19,7 @@ InstallerCommandLineInfo::InstallerCommandLineInfo()
 	, m_enableRunOnReboot(true)
 	, m_displayConfig(false)
 	, m_displaySplash(true)
+	, m_loadMSLU(false)
 {
 
 }
@@ -125,6 +126,10 @@ void InstallerCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		else if (_wcsicmp(pszParam, TEXT("nosplash")) == 0)
 		{
 			m_displaySplash = false;
+		}
+		else if (_wcsicmp(pszParam, TEXT("loadMSLU")) == 0)
+		{
+			m_loadMSLU = true;
 		}
 		else
 		{
