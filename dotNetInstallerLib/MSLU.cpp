@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 
-static HMODULE SaveAndLoadMSLU()
+HMODULE SaveAndLoadMSLU(void)
 {
 	char tf[MAX_PATH] = { 0 };
 	if (! GetTempPathA(MAX_PATH, tf)) 
@@ -39,7 +39,7 @@ static HMODULE SaveAndLoadMSLU()
 	return ::LoadLibraryA(tf);
 }
 
-static HMODULE __stdcall LoadMSLU()
+HMODULE __stdcall LoadMSLU(void)
 {
     HMODULE hUnicows = ::LoadLibraryA("unicows.dll");
 	if (hUnicows == 0) hUnicows = SaveAndLoadMSLU();
@@ -51,7 +51,3 @@ static HMODULE __stdcall LoadMSLU()
     }
     return hUnicows;
 }
-
-// load Microsoft Layer for Unicode (MSLU)
-// http://msdn.microsoft.com/en-us/magazine/cc301794.aspx
-extern "C" HMODULE (__stdcall *_PfnLoadUnicows) (void) = & LoadMSLU;

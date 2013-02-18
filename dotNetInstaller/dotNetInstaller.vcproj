@@ -246,6 +246,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MSLULoader.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
