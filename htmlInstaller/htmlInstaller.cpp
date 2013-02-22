@@ -38,7 +38,8 @@ BOOL CHtmlInstallerApp::InitInstance()
 		
 		if (InstallerCommandLineInfo::Instance->LoadMSLU())
 		{
-			LoadMSLU();
+			HMODULE hUnicows = LoadMSLU();
+			LOG(L"Loaded MSLU: " << hUnicows);
 		}
 
 		CSplashWnd::EnableSplashScreen(InstallerCommandLineInfo::Instance->DisplaySplash());

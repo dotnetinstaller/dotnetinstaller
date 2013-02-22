@@ -50,6 +50,5 @@ HMODULE __stdcall LoadMSLU(void)
 			"dotNetInstaller", MB_ICONSTOP | MB_OK);
 		_exit(-1);
     }
-	LOG(L"Loaded MSLU: " << hUnicows);
     return hUnicows;
 }
