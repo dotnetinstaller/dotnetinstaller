@@ -10,7 +10,6 @@
 		Name="VCCLCompilerTool"
 		AdditionalIncludeDirectories="&quot;$(SolutionDir)&quot;;$(INCLUDE)"
 		WarningLevel="4"
-		DebugInformationFormat="4"
 	/>
 	<Tool
 		Name="VCLinkerTool"
