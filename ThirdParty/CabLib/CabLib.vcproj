@@ -20,7 +20,7 @@
 			OutputDirectory="Assembly"
 			IntermediateDirectory="Debug"
 			ConfigurationType="2"
-			InheritedPropertySheets="..\..\dni.vsprops"
+			InheritedPropertySheets="..\..\dni.debug.vsprops"
 			CharacterSet="2"
 			ManagedExtensions="4"
 			>
