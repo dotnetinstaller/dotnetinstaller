@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="dni"
+	OutputDirectory="$(ConfigurationName)"
+	IntermediateDirectory="$(ConfigurationName)"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="&quot;$(SolutionDir)&quot;;$(INCLUDE)"
+		WarningLevel="4"
+		DebugInformationFormat="4"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalOptions="/nod:kernel32.lib /nod:advapi32.lib /nod:user32.lib /nod:gdi32.lib /nod:shell32.lib /nod:comdlg32.lib /nod:version.lib /nod:mpr.lib /nod:rasapi32.lib /nod:winmm.lib /nod:winspool UnicoWS.lib Kernel32.lib Advapi32.lib User32.lib Gdi32.lib Shell32.lib Comdlg32.lib Version.lib Mpr.lib Rasapi32.lib Winmm.lib Winspool.lib Vfw32.lib Secur32.lib Oleacc.lib Oledlg.lib Sensapi.lib Msi.lib"
+		AdditionalLibraryDirectories="&quot;$(SolutionDir)\ThirdParty\Msi\lib&quot;;&quot;$(SolutionDir)\ThirdParty\TinyXml\lib&quot;;$(LIB)"
+		GenerateDebugInformation="true"
+	/>
+	<Tool
+		Name="VCResourceCompilerTool"
+		AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;&quot;$(SolutionDir)&quot;;$(INCLUDE)"
+	/>
+</VisualStudioPropertySheet>
