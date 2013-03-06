@@ -1,6 +1,11 @@
 2.3 (Next)
 ==========
 
+Features
+--------
+
+* Added support for escape patterns for square brackets ([\[] for an open bracket and [\]] for a close bracket) - [@montrowe](https://github.com/montrowe)
+
 Misc
 --------
 
