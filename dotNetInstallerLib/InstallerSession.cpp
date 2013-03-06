@@ -39,22 +39,36 @@ std::wstring InstallerSession::ExpandVariables(const std::wstring& value)
 
 std::wstring InstallerSession::ExpandUserVariables(const std::wstring& s_in)
 {
+	static wchar_t const openBracketEscape[] = L"[\\[]";
+	static size_t const openBracketEscapeSize = sizeof(openBracketEscape) / sizeof(openBracketEscape[0])- 1;
+	static wchar_t const closeBracketEscape[] = L"[\\]]";
+	static size_t const closeBracketEscapeSize = sizeof(closeBracketEscape) / sizeof(closeBracketEscape[0]) - 1;
+
 	std::wstring s(s_in);
-	std::wstring::size_type i = 0, j = 0;	
-	while (((i = s.find(L"[", i)) != s.npos) && ((j = s.find(L"]", i + 1)) != s.npos))
-	{
-		if (i + 1 != j)
-		{
-			std::wstring name = s.substr(i + 1, j - i - 1);
-			std::wstring value = AdditionalControlArgs[name];			
-			s.replace(i, j - i + 1, value);
-			i += value.length();
-		}
-		else
-		{
-			i = j + 1;
+	std::wstring::size_type current = 0, open = s.npos;	
+	while ((current = s.find_first_of(L"[]", current)) != s.npos) {
+		if (s[current] == L'[') {
+			if (s.compare(current, openBracketEscapeSize, openBracketEscape, openBracketEscapeSize) == 0) {
+				s.erase(++current, openBracketEscapeSize - 1);
+			} else if (s.compare(current, closeBracketEscapeSize, closeBracketEscape, closeBracketEscapeSize) == 0) {
+				s.erase(current++, closeBracketEscapeSize - 1);
+			} else if (open == s.npos) {
+				open = current++;
+			}
+		} else if (open != s.npos) {
+			if (open + 1 == current) {
+				++current;
+			} else {
+				std::wstring value = AdditionalControlArgs[s.substr(open + 1, current - open - 1)];			
+				s.replace(open, current - open + 1, value);
+				current = open + value.size();
+			}
+			open = s.npos;
+		} else {
+			++current;
 		}
 	}
+ 
 	return s;
 }
 

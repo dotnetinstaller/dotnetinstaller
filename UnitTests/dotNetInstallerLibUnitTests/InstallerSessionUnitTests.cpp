@@ -72,6 +72,16 @@ void InstallerSessionUnitTests::testExpandEnvironmentVariables()
 		InstallerSession::Instance->ExpandVariables(L"{%SystemRoot%|%SystemRoot%}"));
 }
 
+void InstallerSessionUnitTests::testExpandUserVariablesEscapes()
+{
+	CPPUNIT_ASSERT(L"[]" == InstallerSession::Instance->ExpandUserVariables(L"[\\[][\\]]"));
+	InstallerSession::Instance->AdditionalControlArgs[L"test1"] = L"t1";
+	CPPUNIT_ASSERT(L"[t1]" == InstallerSession::Instance->ExpandUserVariables(L"[\\[][test1][\\]]"));
+	CPPUNIT_ASSERT(L"t1t1" == InstallerSession::Instance->ExpandUserVariables(L"[test1][test1]"));
+	InstallerSession::Instance->AdditionalControlArgs[L"test2"] = L"t2";
+	CPPUNIT_ASSERT(L"t1t2" == InstallerSession::Instance->ExpandUserVariables(L"[test1][test2]"));
+}
+
 void InstallerSessionUnitTests::testExpandUserVariables()
 {
 	CPPUNIT_ASSERT(L"[]" == InstallerSession::Instance->ExpandUserVariables(L"[]"));
