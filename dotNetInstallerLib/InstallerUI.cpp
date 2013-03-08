@@ -468,9 +468,30 @@ bool InstallerUI::ComponentExecError(const ComponentPtr& component, std::excepti
 
 bool InstallerUI::ComponentExecSuccess(const ComponentPtr& component)
 {
-	if (! component->installcompletemessage.empty())
-	{
-		DniMessageBox::Show(component->installcompletemessage, MB_OK | MB_ICONINFORMATION);
+	bool messageEmpty = true;
+	switch(InstallerSession::Instance->sequence) {
+		case SequenceInstall:
+			messageEmpty = component->installcompletemessage.empty();
+			if (!messageEmpty) {
+				DniMessageBox::Show(component->installcompletemessage, MB_OK | MB_ICONINFORMATION);
+			}
+			LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): successfully completed installation"
+				<< ((messageEmpty) ? L"" : L", message=\"")
+				<< ((messageEmpty) ? L"" : component->installcompletemessage)
+				<< ((messageEmpty) ? L"" : L"\""));
+			break;
+		case SequenceUninstall:
+			messageEmpty = component->uninstallcompletemessage.empty();
+			if (!messageEmpty) {
+				DniMessageBox::Show(component->uninstallcompletemessage, MB_OK | MB_ICONINFORMATION);
+			}
+			LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): successfully completed uninstallation"
+				<< ((messageEmpty) ? L"" : L", message=\"")
+				<< ((messageEmpty) ? L"" : component->uninstallcompletemessage)
+				<< ((messageEmpty) ? L"" : L"\""));
+			break;
+		default:
+			THROW_EX(L"Unsupported install sequence: " << InstallerSession::Instance->sequence << L".");
 	}
 
 	// se l'installazione ha chiesto di riavviare non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
