@@ -4,18 +4,18 @@
 Features
 --------
 
-* [#40](https://github.com/dblock/dotnetinstaller/pull/40) - Added support for escape patterns for square brackets ([\[] for an open bracket and [\]] for a close bracket) - [@montrowe](https://github.com/montrowe).
+* [#40](https://github.com/dblock/dotnetinstaller/pull/40) - Added support for escape patterns for square brackets (`[\[]` for an open bracket and `[\]]` for a close bracket) - [@montrowe](https://github.com/montrowe).
 
 Bugs
 ----
 
-* [#41](https://github.com/dblock/dotnetinstaller/pull/41): Fix: When an uninstall successfully completes, pop UninstallComplete message box instead of InstallComplete - [@montrowe](https://github.com/montrowe).
+* [#41](https://github.com/dblock/dotnetinstaller/pull/41): Fix: When an uninstall successfully completes, pop `uninstallcompletemessage` message box instead of `installcompletemessage` - [@montrowe](https://github.com/montrowe).
 
 Misc
 --------
 
 * Fix: restored support for Win95/98 - [@MikeGratsas](https://github.com/MikeGratsas).
-* [#30](https://github.com/dblock/dotnetinstaller/pull/30): using mt.exe from ThirdParty instead of %Program Files%, added missing application compatibility sections to manifest files and updated to include Windows 8\2012, and added "Microsoft\Windows SDK v6.0" to ThirdParty and updated build.cmd to set the PATH and VCINSTALLDIR environment variables accordingly - [@icnocop](https://github.com/icnocop).
+* [#30](https://github.com/dblock/dotnetinstaller/pull/30): using mt.exe from ThirdParty instead of `%Program Files%`, added missing application compatibility sections to manifest files and updated to include Windows 8\2012, and added "Microsoft\Windows SDK v6.0" to ThirdParty and updated build.cmd to set the `PATH` and `VCINSTALLDIR` environment variables accordingly - [@icnocop](https://github.com/icnocop).
 
 2.2 (8/24/2012)
 ===============
