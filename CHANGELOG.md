@@ -16,6 +16,7 @@ Misc
 
 * Fix: restored support for Win95/98 - [@MikeGratsas](https://github.com/MikeGratsas).
 * [#30](https://github.com/dblock/dotnetinstaller/pull/30): using mt.exe from ThirdParty instead of `%Program Files%`, added missing application compatibility sections to manifest files and updated to include Windows 8\2012, and added "Microsoft\Windows SDK v6.0" to ThirdParty and updated build.cmd to set the `PATH` and `VCINSTALLDIR` environment variables accordingly - [@icnocop](https://github.com/icnocop).
+* Added single quotes around the version number for troubleshooting an "Invalid version format" error message.
 
 2.2 (8/24/2012)
 ===============
