@@ -224,7 +224,7 @@ DVLib::FileVersion DVLib::wstring2fileversion(const std::wstring& version)
 	for (size_t i = 0; i < version.length(); i++)
 	{
 		CHECK_BOOL(version[i] == '.' || isdigit(version[i]),
-			L"Invalid version format: " << version);
+			L"Invalid version format: '" << version << L"'");
 	}
 
 	if (! version.empty())
