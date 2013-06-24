@@ -77,6 +77,9 @@ void MsuComponent::Wait(DWORD tt)
 
 	DWORD exitcode = ProcessComponent::GetProcessExitCode();
 
+	LOG(L"Component '" << id << "' return code " << exitcode 
+		<< DVLib::FormatMessage(L" (0x%x).", exitcode));
+
 	// a non-zero error code represents failure
 	CHECK_BOOL(exitcode == ERROR_SUCCESS || exitcode == ERROR_SUCCESS_REBOOT_REQUIRED,
 		L"Error executing '" << id << "' (" << GetDisplayName() << L"): " 
