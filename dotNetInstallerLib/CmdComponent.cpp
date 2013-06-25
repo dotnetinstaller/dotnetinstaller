@@ -73,6 +73,9 @@ void CmdComponent::Wait(DWORD tt)
 
 	DWORD exitcode = ProcessComponent::GetProcessExitCode();
 	
+	LOG(L"Component '" << id << "' return code " << exitcode 
+		<< DVLib::FormatMessage(L" (0x%x).", exitcode));
+
 	// check for reboot
 	if (! returncodes_reboot.empty() && IsReturnCode(exitcode, returncodes_reboot))
 	{
