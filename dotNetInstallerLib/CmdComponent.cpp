@@ -10,7 +10,6 @@
 CmdComponent::CmdComponent()
 	: ProcessComponent(component_type_cmd)
 {
-
 }
 
 void CmdComponent::Exec()
@@ -45,11 +44,11 @@ void CmdComponent::Exec()
 	if (disable_wow64_fs_redirection)
 	{
 		auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
-		DVLib::RunCmd(l_command, & m_process_info);
+		DVLib::RunCmd(l_command, & m_process_info, 0, hide_window);
 	}
 	else
 	{
-		DVLib::RunCmd(l_command, & m_process_info);
+		DVLib::RunCmd(l_command, & m_process_info, 0, hide_window);
 	}
 };
 
@@ -63,6 +62,7 @@ void CmdComponent::Load(TiXmlElement * node)
 	uninstall_command_basic = node->Attribute("uninstall_command_basic");	
 	returncodes_success = node->Attribute("returncodes_success");
 	returncodes_reboot = node->Attribute("returncodes_reboot");
+	hide_window = XmlAttribute(node->Attribute("hide_window")).GetBoolValue(false);
     disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
 	Component::Load(node);
 }
