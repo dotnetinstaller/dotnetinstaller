@@ -52,7 +52,7 @@ void DVLib::DetachCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi)
 	RunCmd(cmd, lpi, DETACHED_PROCESS);
 }
 
-void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags)
+void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags, bool hideWindow)
 {
 	// expand command line, using ShellExecuteEx API function with setting the flag 
 	// SEE_MASK_DOENVSUBST does not work because environment variables can also be 
@@ -60,6 +60,12 @@ void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags
 
 	STARTUPINFO si = { 0 };
 	si.cb = sizeof(si);
+
+	if (hideWindow)
+	{
+		si.dwFlags = STARTF_USESHOWWINDOW;
+		si.wShowWindow = SW_HIDE;
+	}
 
 	PROCESS_INFORMATION pi = { 0 };
 

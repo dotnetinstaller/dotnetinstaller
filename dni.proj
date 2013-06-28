@@ -14,7 +14,7 @@
     <Trademark>All Rights Reserved</Trademark>
     <ReleaseDir>target\$(Configuration)</ReleaseDir>
     <MajorVersion>2</MajorVersion>
-    <MinorVersion>2</MinorVersion>
+    <MinorVersion>3</MinorVersion>
     <RevisionVersion>0</RevisionVersion>
   </PropertyGroup>
   <PropertyGroup>
@@ -92,7 +92,7 @@
     <Binaries Include="InstallerEditor\bin\$(Configuration)\InstallerEditor.exe" />
     <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceLibrary.dll" />
     <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceGrid2.dll" />
-    <Binaries Include="ThirdParty\CabLib\assembly\CabLib.dll" />
+    <Binaries Include="ThirdParty\CabLib\$(Configuration)\CabLib.dll" />
     <Binaries Include="ThirdParty\ResourceLib\Vestris.ResourceLib.dll" />
     <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
     <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
