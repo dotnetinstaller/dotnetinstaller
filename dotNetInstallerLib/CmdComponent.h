@@ -12,6 +12,8 @@ public:
 	XmlAttribute uninstall_command;
     XmlAttribute uninstall_command_silent;
 	XmlAttribute uninstall_command_basic;
+	// hide window
+	bool hide_window;
 	// wow64 fs redirection
 	bool disable_wow64_fs_redirection; 
 	// return codes
