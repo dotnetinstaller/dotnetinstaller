@@ -3,7 +3,6 @@
 #include "StringUtil.h"
 #include "ExceptionMacros.h"
 #include "ErrorUtil.h"
-#include "DirectoryUtil.h"
 
 std::string DVLib::GetFileDirectoryA(const std::string& path)
 {
@@ -91,9 +90,6 @@ std::string DVLib::GetTemporaryDirectoryA()
 	CHECK_WIN32_BOOL(GetTempPathA(MAX_PATH, td),
         L"GetTempPathA");
 
-    // create temporary directory if it doesn't already exist
-    DVLib::DirectoryCreate(td);
-
 	return td;
 }
 
@@ -102,9 +98,6 @@ std::wstring DVLib::GetTemporaryDirectoryW()
 	wchar_t td[MAX_PATH] = { 0 };
 	CHECK_WIN32_BOOL(::GetTempPathW(MAX_PATH, td),
 		"GetTempPathW");
-
-    // create temporary directory if it doesn't already exist
-    DVLib::DirectoryCreate(td);
 
 	return td;
 }
