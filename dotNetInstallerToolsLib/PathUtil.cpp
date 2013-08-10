@@ -89,6 +89,7 @@ std::string DVLib::GetTemporaryDirectoryA()
 	char td[MAX_PATH] = { 0 };
 	CHECK_WIN32_BOOL(GetTempPathA(MAX_PATH, td),
         L"GetTempPathA");
+
 	return td;
 }
 
@@ -97,6 +98,7 @@ std::wstring DVLib::GetTemporaryDirectoryW()
 	wchar_t td[MAX_PATH] = { 0 };
 	CHECK_WIN32_BOOL(::GetTempPathW(MAX_PATH, td),
 		"GetTempPathW");
+
 	return td;
 }
 

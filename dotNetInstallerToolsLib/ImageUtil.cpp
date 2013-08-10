@@ -5,6 +5,7 @@
 #include "ErrorUtil.h"
 #include "PathUtil.h"
 #include "FileUtil.h"
+#include "DirectoryUtil.h"
 
 HBITMAP DVLib::LoadBitmapFromFile(const std::wstring& filename)
 {
@@ -23,6 +24,14 @@ HBITMAP DVLib::LoadBitmapFromFile(const std::wstring& filename)
 HBITMAP DVLib::LoadBitmapFromBuffer(const std::vector<char>& data)
 {
 	std::wstring filename = DVLib::GetTemporaryFileNameW();
+
+    // create temporary directory if it doesn't already exist
+    std::wstring path = DVLib::GetFileDirectoryW(filename);
+	if (path.length())
+    {
+        DVLib::DirectoryCreate(path);
+    }
+
 	try
 	{
 		DVLib::FileWrite(filename, data);

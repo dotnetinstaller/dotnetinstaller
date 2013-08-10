@@ -5,7 +5,8 @@ Features
 --------
 
 * [#40](https://github.com/dblock/dotnetinstaller/pull/40) - Added support for escape patterns for square brackets (`[\[]` for an open bracket and `[\]]` for a close bracket) - [@montrowe](https://github.com/montrowe).
-* [#46](https://github.com/dblock/dotnetinstaller/pull/46) - Added support for hiding command based components' application window when run) - [@icnocop](https://github.com/icnocop).
+* [#46](https://github.com/dblock/dotnetinstaller/pull/46) - Added support for hiding command based components' application window when run - [@icnocop](https://github.com/icnocop).
+* [#24](https://github.com/dblock/dotnetinstaller/issues/24) - The temporary directory is automatically created if it doesn't already exist - [@icnocop](https://github.com/icnocop).
 
 Bugs
 ----
