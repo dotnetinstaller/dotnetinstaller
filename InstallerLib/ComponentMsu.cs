@@ -40,6 +40,14 @@ namespace InstallerLib
             set { m_cmdparameters_basic = value; }
         }
 
+        private string m_cmdparameters_silent = "/quiet /norestart";
+        [Description("Specifies the command line parameters for the 'wusa.exe' program when running a silent install (eg. '/quiet /norestart'). Defaults to 'cmdparameters' if blank. See MSDN for the command line you can use with 'wusa.exe'.")]
+        public string cmdparameters_silent
+        {
+            get { return m_cmdparameters_silent; }
+            set { m_cmdparameters_silent = value; }
+        }
+
         private bool m_disable_wow64_fs_redirection = false;
         [Description("Indicates whether to disable wow64 file system redirection on x64 systems. Setting this option to 'true' forces the command to execute in the native x64 environment.")]
         [Category("Runtime")]
@@ -50,12 +58,14 @@ namespace InstallerLib
             set { m_disable_wow64_fs_redirection = value; }
         }
 
-        private string m_cmdparameters_silent = "/quiet /norestart";
-        [Description("Specifies the command line parameters for the 'wusa.exe' program when running a silent install (eg. '/quiet /norestart'). Defaults to 'cmdparameters' if blank. See MSDN for the command line you can use with 'wusa.exe'.")]
-        public string cmdparameters_silent
+        private CommandExecutionMethod m_execution_method = CommandExecutionMethod.CreateProcess;
+        [Description("Function used to execute command. Use ShellExecute if command requires elevated privileges. Otherwise, use CreateProcess.")]
+        [Category("Runtime")]
+        [Required]
+        public CommandExecutionMethod execution_method
         {
-            get { return m_cmdparameters_silent; }
-            set { m_cmdparameters_silent = value; }
+            get { return m_execution_method; }
+            set { m_execution_method = value; }
         }
 
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
@@ -65,6 +75,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("cmdparameters_silent", m_cmdparameters_silent);
             e.XmlWriter.WriteAttributeString("cmdparameters_basic", m_cmdparameters_basic);
             e.XmlWriter.WriteAttributeString("disable_wow64_fs_redirection", m_disable_wow64_fs_redirection.ToString());
+            e.XmlWriter.WriteAttributeString("execution_method", m_execution_method.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -75,6 +86,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "cmdparameters_silent", ref m_cmdparameters_silent);
             ReadAttributeValue(e, "cmdparameters_basic", ref m_cmdparameters_basic);
             ReadAttributeValue(e, "disable_wow64_fs_redirection", ref m_disable_wow64_fs_redirection);
+            ReadAttributeValue(e, "execution_method", ref m_execution_method);
             base.OnXmlReadTag(e);
         }
     }

@@ -8,10 +8,10 @@
 #include "ResponseFileIni.h"
 #include "ResponseFileText.h"
 #include "ResponseFileNone.h"
-#include "Wow64NativeFS.h"
 
 ExeComponent::ExeComponent()
-	: ProcessComponent(component_type_exe)
+	: ProcessComponent(component_type_exe),
+	  execution_method(DVLib::CemCreateProcess)
 {
 
 }
@@ -110,16 +110,7 @@ void ExeComponent::Exec()
 
 	CHECK_BOOL(! l_command.empty(), L"Component command is empty");
 
-	if (disable_wow64_fs_redirection)
-	{
-		auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
-		DVLib::RunCmd(l_command, & m_process_info);
-	}
-	else
-	{
-		DVLib::RunCmd(l_command, & m_process_info);
-	}
-	
+	ProcessComponent::ExecCmd(l_command, execution_method, disable_wow64_fs_redirection);
 };
 
 void ExeComponent::Load(TiXmlElement * node)
@@ -145,6 +136,7 @@ void ExeComponent::Load(TiXmlElement * node)
 	returncodes_success = node->Attribute("returncodes_success");
 	returncodes_reboot = node->Attribute("returncodes_reboot");
     disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
+	execution_method = DVLib::wstring2cem(XmlAttribute(node->Attribute("execution_method")).GetValue());
 	Component::Load(node);
 }
 

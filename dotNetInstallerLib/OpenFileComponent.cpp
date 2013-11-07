@@ -20,11 +20,11 @@ void OpenFileComponent::Exec()
 	if (disable_wow64_fs_redirection)
 	{
 		auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
-		DVLib::ShellCmd(l_file, & m_rc); 
+		DVLib::ShellCmd(l_file, & m_rc, NULL, main_window);
 	}
 	else
 	{
-		DVLib::ShellCmd(l_file, & m_rc);
+		DVLib::ShellCmd(l_file, & m_rc, NULL, main_window);
 	}
 }
 

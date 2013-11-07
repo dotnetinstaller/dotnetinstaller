@@ -4,6 +4,33 @@
 #include "StringUtil.h"
 #include "ErrorUtil.h"
 
+DVLib::CommandExecutionMethod DVLib::wstring2cem(const std::wstring& name, CommandExecutionMethod defaultValue)
+{
+	if (name.empty()) 
+	{
+		return defaultValue;
+	}
+
+	for (int i = 0; i < ARRAYSIZE(CommandExecutionMethod2wstringMap); i++)
+	{
+		if (CommandExecutionMethod2wstringMap[i].name == name)
+			return CommandExecutionMethod2wstringMap[i].command_execution_method;
+	}
+
+	THROW_EX(L"Invalid command execution method: " << name);
+}
+ 
+std::wstring DVLib::cem2wstring(DVLib::CommandExecutionMethod commandExecutionMethod)
+{
+	for (int i = 0; i < ARRAYSIZE(CommandExecutionMethod2wstringMap); i++)
+	{
+		if (CommandExecutionMethod2wstringMap[i].command_execution_method == commandExecutionMethod)
+			return CommandExecutionMethod2wstringMap[i].name;
+	}
+
+	THROW_EX(L"Invalid command execution method: " << commandExecutionMethod);
+}
+
 std::wstring DVLib::GetEnvironmentVariable(const std::wstring& name)
 {
 	DWORD size = ::GetEnvironmentVariableW(name.c_str(), NULL, 0);
@@ -94,7 +121,7 @@ DWORD DVLib::ExecCmd(const std::wstring& cmd)
 	return dwExitCode;
 }
 
-void DVLib::ShellCmd(const std::wstring& cmd, int * rc)
+void DVLib::ShellCmd(const std::wstring& cmd, int * rc, LPHANDLE lpProcessHandle, HWND hWnd)
 {
 	std::wstring cmd_expanded = DVLib::ExpandEnvironmentVariables(cmd);
 	CHECK_BOOL(! cmd_expanded.empty(), L"Missing command");
@@ -102,23 +129,26 @@ void DVLib::ShellCmd(const std::wstring& cmd, int * rc)
 	// split arguments
 	std::vector<std::wstring> cmd_args;
 	cmd_args = DVLib::split(cmd_expanded, (cmd_expanded[0] == L'\"') ? L"\" " : L" ", 2);
+	std::wstring cmd_file = DVLib::trimleft(cmd_args[0], L"\"");
 
-	HINSTANCE h = ::ShellExecuteW(NULL, NULL, DVLib::trim(cmd_args[0], L"\"").c_str(), 
-		cmd_args.size() == 2 ? cmd_args[1].c_str() : NULL, NULL, SW_SHOWNORMAL);
+	SHELLEXECUTEINFO sei = { 0 };
+	sei.cbSize = sizeof(sei);
+	sei.fMask = SEE_MASK_NOCLOSEPROCESS | SEE_MASK_UNICODE;
+	sei.hwnd = hWnd;
+	sei.lpFile = cmd_file.c_str();
+	sei.lpParameters = cmd_args.size() == 2 ? cmd_args[1].c_str() : NULL;
+	sei.nShow = SW_SHOWNORMAL;
 
-	if (h <= (HINSTANCE) 32) 
+	CHECK_WIN32_BOOL(::ShellExecuteExW(&sei), 
+		L"Error running " << cmd_expanded);
+ 
+	if (NULL != rc)
 	{
-		if (rc != NULL)
-		{
-			* rc = reinterpret_cast<int>(h);
-		}
-		CHECK_WIN32_DWORD((DWORD) h, L"Error running " <<  cmd_expanded);
+		* rc = reinterpret_cast<int>(sei.hInstApp);
 	}
-	else
+
+	if (NULL != lpProcessHandle)
 	{
-		if (rc != NULL)
-		{
-			* rc = 0;
-		}
+		* lpProcessHandle = sei.hProcess;
 	}
 }

@@ -89,6 +89,16 @@ namespace InstallerLib
             set { m_disable_wow64_fs_redirection = value; }
         }
 
+        private CommandExecutionMethod m_execution_method = CommandExecutionMethod.CreateProcess;
+        [Description("Function used to execute command. Use ShellExecute if command requires elevated privileges. Otherwise, use CreateProcess.")]
+        [Category("Runtime")]
+        [Required]
+        public CommandExecutionMethod execution_method
+        {
+            get { return m_execution_method; }
+            set { m_execution_method = value; }
+        }
+
         #endregion
 
         #region Return Codes
@@ -125,6 +135,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("returncodes_reboot", m_returncodes_reboot);
             e.XmlWriter.WriteAttributeString("hide_window", m_hide_window.ToString());
             e.XmlWriter.WriteAttributeString("disable_wow64_fs_redirection", m_disable_wow64_fs_redirection.ToString());
+            e.XmlWriter.WriteAttributeString("execution_method", m_execution_method.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -140,6 +151,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "returncodes_reboot", ref m_returncodes_reboot);
             ReadAttributeValue(e, "hide_window", ref m_hide_window);
             ReadAttributeValue(e, "disable_wow64_fs_redirection", ref m_disable_wow64_fs_redirection);
+            ReadAttributeValue(e, "execution_method", ref m_execution_method);
             base.OnXmlReadTag(e);
         }
     }

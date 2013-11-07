@@ -174,6 +174,16 @@ namespace InstallerLib
             set { m_disable_wow64_fs_redirection = value; }
         }
 
+        private CommandExecutionMethod m_execution_method = CommandExecutionMethod.CreateProcess;
+        [Description("Function used to execute command. Use ShellExecute if command requires elevated privileges. Otherwise, use CreateProcess.")]
+        [Category("Runtime")]
+        [Required]
+        public CommandExecutionMethod execution_method
+        {
+            get { return m_execution_method; }
+            set { m_execution_method = value; }
+        }
+
         #endregion
 
         #region Return Codes
@@ -287,6 +297,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("uninstall_exeparameters_basic", m_uninstall_exeparameters_basic);
             e.XmlWriter.WriteAttributeString("uninstall_exeparameters_silent", m_uninstall_exeparameters_silent);
             e.XmlWriter.WriteAttributeString("disable_wow64_fs_redirection", m_disable_wow64_fs_redirection.ToString());
+            e.XmlWriter.WriteAttributeString("execution_method", m_execution_method.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -313,6 +324,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "uninstall_exeparameters_basic", ref m_uninstall_exeparameters_basic);
             ReadAttributeValue(e, "uninstall_exeparameters_silent", ref m_uninstall_exeparameters_silent);
             ReadAttributeValue(e, "disable_wow64_fs_redirection", ref m_disable_wow64_fs_redirection);
+            ReadAttributeValue(e, "execution_method", ref m_execution_method);
             base.OnXmlReadTag(e);
         }
     }
