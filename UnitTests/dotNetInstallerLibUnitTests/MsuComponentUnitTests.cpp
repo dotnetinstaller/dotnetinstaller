@@ -107,10 +107,55 @@ void MsuComponentUnitTests::testExecUninstallSilent()
 	}
 }
 
+void MsuComponentUnitTests::testExecShell()
+{
+	if (DVLib::GetOperatingSystemVersion() < winVista)
+	{
+		std::wcout << std::endl << L"skipping: MsuComponentUnitTests::testExecutionMethod (os=" 
+			<< DVLib::GetOperatingSystemVersionString() << L")";
+		return;
+	}
+
+	// Cannot test whether ShellExecute is really used, because executable is fixed (wusa.exe)
+	// Just check it can run when execution method is ShellExecute
+
+	MsuComponent component;
+	component.package = L"msidoesntexist.msu"; 
+	component.cmdparameters = L"/quiet";
+	// default execution method is CreateProcess
+	CPPUNIT_ASSERT(component.execution_method == DVLib::CemCreateProcess);
+	component.execution_method = DVLib::CemShellExecute;
+	component.Exec();
+	try
+	{
+		component.Wait();
+		throw "expected std::exception";
+	}
+	catch(std::exception&)
+	{
+		// msu file cannot be opened
+		CPPUNIT_ASSERT(ERROR_FILE_NOT_FOUND == component.GetProcessExitCode());
+	}
+}
+
 void MsuComponentUnitTests::testMustReboot()
 {
 	MsuComponent component;
 	CPPUNIT_ASSERT(! component.IsRebootRequired());
 	component.mustreboot = L"True";
 	CPPUNIT_ASSERT(component.IsRebootRequired());
+}
+
+void MsuComponentUnitTests::testLoad()
+{
+	TiXmlDocument doc;
+	doc.Parse("<component type=\"msu\" \
+			  package=\"test-dir\\test.msu\" \
+			  cmdparameters=\"/forcereboot\" \
+			  execution_method=\"ShellExecute\"/>");
+	MsuComponent component;
+	component.Load(doc.RootElement());
+	CPPUNIT_ASSERT(component.package.GetValue() == L"test-dir\\test.msu");
+	CPPUNIT_ASSERT(component.cmdparameters.GetValue() == L"/forcereboot");
+	CPPUNIT_ASSERT(component.execution_method == DVLib::CemShellExecute);
 }

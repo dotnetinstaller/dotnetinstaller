@@ -12,6 +12,7 @@ namespace DVLib
 			CPPUNIT_TEST( testExecUISilent );
 			CPPUNIT_TEST( testExecUIBasic );
 			CPPUNIT_TEST( testExecXCopy );
+			CPPUNIT_TEST( testExecShell );
 			CPPUNIT_TEST( testReturnCodeZero );
 			CPPUNIT_TEST( testReturnCodeNone );
 			CPPUNIT_TEST( testReturnCodeAll );
@@ -20,6 +21,7 @@ namespace DVLib
 			CPPUNIT_TEST( testReturnCodeRebootRequired );
 			CPPUNIT_TEST( testReturnCodeSuccess );
 			CPPUNIT_TEST( testMustReboot );
+			CPPUNIT_TEST( testLoad );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testExecInstall();
@@ -27,6 +29,7 @@ namespace DVLib
 			void testExecUISilent();
 			void testExecUIBasic();
 			void testExecXCopy();
+			void testExecShell();
 			void testReturnCodeZero();
 			void testReturnCodeNone();
 			void testReturnCodeAll();
@@ -35,6 +38,7 @@ namespace DVLib
 			void testReturnCodeRebootRequired();
 			void testReturnCodeSuccess();
 			void testMustReboot();
+			void testLoad();
 		};
 	}
 }
