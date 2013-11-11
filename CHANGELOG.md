@@ -8,6 +8,7 @@ Features
 * [#46](https://github.com/dblock/dotnetinstaller/pull/46) - Added support for hiding command based components' application window when run - [@icnocop](https://github.com/icnocop).
 * [#24](https://github.com/dblock/dotnetinstaller/issues/24) - The temporary directory is automatically created if it doesn't already exist - [@icnocop](https://github.com/icnocop).
 * [#54](https://github.com/dblock/dotnetinstaller/pull/54) - Option to run Cmd/Exe/MsuComponent via `ShellExecute`. This allows to properly request elevated privileges with UAC prompt if needed - [@baSSiLL](https://github.com/baSSiLL).
+* [#56](https://github.com/dblock/dotnetinstaller/pull/56) - Support for Windows 8.1 / Server 2012 R2 - [@baSSiLL](https://github.com/baSSiLL).
 
 Bugs
 ----
