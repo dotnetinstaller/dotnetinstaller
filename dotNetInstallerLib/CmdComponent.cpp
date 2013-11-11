@@ -5,10 +5,10 @@
 #include "InstallerLog.h"
 #include "InstallConfiguration.h"
 #include "InstallerSession.h"
-#include "Wow64NativeFS.h"
 
 CmdComponent::CmdComponent()
-	: ProcessComponent(component_type_cmd)
+	: ProcessComponent(component_type_cmd),
+	  execution_method(DVLib::CemCreateProcess)
 {
 }
 
@@ -41,15 +41,7 @@ void CmdComponent::Exec()
 
 	LOG(L"Executing: " << l_command);
 
-	if (disable_wow64_fs_redirection)
-	{
-		auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
-		DVLib::RunCmd(l_command, & m_process_info, 0, hide_window);
-	}
-	else
-	{
-		DVLib::RunCmd(l_command, & m_process_info, 0, hide_window);
-	}
+	ProcessComponent::ExecCmd(l_command, execution_method, disable_wow64_fs_redirection);
 };
 
 void CmdComponent::Load(TiXmlElement * node)
@@ -64,6 +56,7 @@ void CmdComponent::Load(TiXmlElement * node)
 	returncodes_reboot = node->Attribute("returncodes_reboot");
 	hide_window = XmlAttribute(node->Attribute("hide_window")).GetBoolValue(false);
     disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
+	execution_method = DVLib::wstring2cem(XmlAttribute(node->Attribute("execution_method")).GetValue());
 	Component::Load(node);
 }
 

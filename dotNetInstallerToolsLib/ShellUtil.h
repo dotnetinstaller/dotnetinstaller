@@ -2,6 +2,27 @@
 
 namespace DVLib
 {
+	enum CommandExecutionMethod
+	{
+		CemCreateProcess = 0,
+		CemShellExecute = 1,
+	};
+
+	struct CommandExecutionMethod2wstringMapEntry
+	{
+		CommandExecutionMethod command_execution_method;
+		LPCWSTR name;
+	};
+
+	static const CommandExecutionMethod2wstringMapEntry CommandExecutionMethod2wstringMap[] = 
+	{
+		{ CemCreateProcess, L"CreateProcess" },
+		{ CemShellExecute, L"ShellExecute" },
+	};
+
+	CommandExecutionMethod wstring2cem(const std::wstring& name, CommandExecutionMethod defaultValue = CemCreateProcess);
+	std::wstring cem2wstring(CommandExecutionMethod commandExecutionMethod);
+
 	// return the value of an environment variable
 	std::wstring GetEnvironmentVariable(const std::wstring& name);
 	// expand environment variables
@@ -13,5 +34,5 @@ namespace DVLib
 	// execute a process, wait and return exit code
 	DWORD ExecCmd(const std::wstring& cmd);
 	// shell-execute a process
-	void ShellCmd(const std::wstring& cmd, int * rc = NULL);
+	void ShellCmd(const std::wstring& cmd, int * rc = NULL, LPHANDLE lpProcessHandle = NULL, HWND hWnd = NULL);
 }

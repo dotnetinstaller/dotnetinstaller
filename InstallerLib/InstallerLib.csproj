@@ -63,6 +63,7 @@
     <Compile Include="..\Version\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CommandExecutionMethod.cs" />
     <Compile Include="CommandLineArguments.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="ComponentCmd.cs">

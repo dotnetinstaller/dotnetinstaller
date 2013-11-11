@@ -71,6 +71,8 @@ public:
 	std::vector<InstalledCheckPtr> installedchecks;
 	// informazioni sull'eventuale download dei componenti (fa riferimento al nodo downloaddialog all'interno di Component, se non è presente non viene scaricato nessun componente)
 	DownloadDialogPtr downloaddialog;
+	// handle to main window of installator for use in calls to ShellExecute and similar
+	HWND main_window;
 	// embedded files
 	std::vector< EmbedFilePtr > embedfiles;
 	// embedded folders

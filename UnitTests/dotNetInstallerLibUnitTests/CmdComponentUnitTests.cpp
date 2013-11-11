@@ -91,6 +91,36 @@ void CmdComponentUnitTests::testExecXCopy()
 	DVLib::DirectoryDelete(todir);
 }
 
+void CmdComponentUnitTests::testExecShell()
+{
+	std::wstring filename = DVLib::GetTemporaryFileNameW();
+	DVLib::FileMove(filename, filename + L".txt");
+	filename = filename + L".txt";
+
+	CmdComponent component;
+	component.command = filename;
+	// default execution method is CreateProcess
+	CPPUNIT_ASSERT(component.execution_method == DVLib::CemCreateProcess);
+	try
+	{
+		component.Exec();
+		throw "expected std::exception";
+	}
+	catch (std::exception& ex)
+	{
+		// expected - CreateProcess cannot run text files
+		CPPUNIT_ASSERT(strstr(ex.what(), "CreateProcess") != NULL);
+		CPPUNIT_ASSERT(strstr(ex.what(), "0x800700c1") != NULL);
+	}
+
+	component.execution_method = DVLib::CemShellExecute;
+	component.Exec();
+	::TerminateProcess(component.m_process_handle, 0);
+	component.Wait();
+
+	DVLib::FileDelete(filename);
+}
+
 void CmdComponentUnitTests::testReturnCodeZero()
 {
 	CmdComponent component;
@@ -273,4 +303,18 @@ void CmdComponentUnitTests::testMustReboot()
 	CPPUNIT_ASSERT(! component.IsRebootRequired());
 	component.mustreboot = L"True";
 	CPPUNIT_ASSERT(component.IsRebootRequired());
+}
+
+void CmdComponentUnitTests::testLoad()
+{
+	TiXmlDocument doc;
+	doc.Parse("<component type=\"cmd\" \
+			  command=\"test install\" \
+			  uninstall_command=\"test uninstall\" \
+			  execution_method=\"ShellExecute\"/>");
+	CmdComponent component;
+	component.Load(doc.RootElement());
+	CPPUNIT_ASSERT(component.command.GetValue() == L"test install");
+	CPPUNIT_ASSERT(component.uninstall_command.GetValue() == L"test uninstall");
+	CPPUNIT_ASSERT(component.execution_method == DVLib::CemShellExecute);
 }

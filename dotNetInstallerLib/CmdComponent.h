@@ -16,6 +16,7 @@ public:
 	bool hide_window;
 	// wow64 fs redirection
 	bool disable_wow64_fs_redirection; 
+	DVLib::CommandExecutionMethod execution_method;
 	// return codes
 	XmlAttribute returncodes_success;
 	XmlAttribute returncodes_reboot;

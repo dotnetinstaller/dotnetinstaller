@@ -190,6 +190,8 @@ ComponentsStatus InstallerUI::LoadComponentsList()
 
 		component->disabled = disabled;
 
+		component->main_window = GetHwnd();
+
 		AddComponent(component);
     }
 

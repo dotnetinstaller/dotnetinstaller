@@ -12,6 +12,7 @@ public:
 	XmlAttribute cmdparameters_basic;
 	// wow64 fs redirection
 	bool disable_wow64_fs_redirection; 
+	DVLib::CommandExecutionMethod execution_method;
 	void Exec();
 	void Load(TiXmlElement * node);
 	void Wait(DWORD tt = 1000);

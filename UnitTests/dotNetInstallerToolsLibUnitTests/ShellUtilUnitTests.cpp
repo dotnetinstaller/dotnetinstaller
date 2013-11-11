@@ -78,5 +78,9 @@ void ShellUtilUnitTests::testShellCmd()
 {
 	DVLib::ShellCmd(L"cmd.exe /C");
 	DVLib::ShellCmd(L"\"" + DVLib::GetEnvironmentVariable(L"SystemRoot") + L"\\system32\\cmd.exe\" /C");
-	DVLib::ShellCmd(L"\"cmd.exe\" /C dir");
+	HANDLE hProcess;
+	DVLib::ShellCmd(L"\"cmd.exe\" /C dir", NULL, &hProcess);
+	auto_handle pi_process(hProcess);
+	CPPUNIT_ASSERT(hProcess != NULL);
+	CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
 }
