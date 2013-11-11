@@ -85,9 +85,11 @@ namespace DVLib
 		win7Max = 129,
 
 		win8 = 130,
+		win8_1 = 131,
 		win8Max = 139,
 		
 		win8Server = 140,
+		win8ServerR2 = 141,
 		win8ServerMax = 149,
 
 		winMax = 255, // This value should always be last
@@ -144,9 +146,11 @@ namespace DVLib
 		{ win7sp1, L"win7sp1", L"Windows 7 SP1" },
 		{ win7Max, L"win7Max", L"Windows 7+" },
 		{ win8, L"win8", L"Windows 8" },
+		{ win8_1, L"win8_1", L"Windows 8.1" },
 		{ win8Max, L"win8Max", L"Windows 8+" },
-		{ win8Server, L"win8Server", L"Windows 8 Server" },
-		{ win8ServerMax, L"win8ServerMax", L"Windows 8 Server+" },
+		{ win8Server, L"win8Server", L"Windows Server 2012" },
+		{ win8ServerR2, L"win8ServerR2", L"Windows Server 2012 R2" },
+		{ win8ServerMax, L"win8ServerMax", L"Windows Server 2012+" },
 		{ winMax, L"winMax", L"Windows Latest" },
 	};
 
