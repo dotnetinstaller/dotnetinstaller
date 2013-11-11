@@ -29,11 +29,21 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 		// Test for the Windows NT product family.
 		case VER_PLATFORM_WIN32_NT:
 			// Newer Windows version
-			if (((osvi.dwMajorVersion == 6 && osvi.dwMinorVersion > 2) || (osvi.dwMajorVersion > 6)) && osvi.wProductType == VER_NT_WORKSTATION)
+			if (((osvi.dwMajorVersion == 6 && osvi.dwMinorVersion > 3) || (osvi.dwMajorVersion > 6)) && osvi.wProductType == VER_NT_WORKSTATION)
 			{
 				os = winMax;
 			}
-			// Windows 8 Server
+			// Windows Server 2012 R2
+			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 3 && osvi.wProductType != VER_NT_WORKSTATION)
+			{
+				os = win8ServerR2;
+			}
+			// Windows 8.1
+			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 3 && osvi.wProductType == VER_NT_WORKSTATION)
+			{
+				os = win8_1;
+			}
+			// Windows Server 2012
 			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 2 && osvi.wProductType != VER_NT_WORKSTATION)
 			{
 				os = win8Server;
@@ -420,11 +430,13 @@ bool DVLib::IsOperatingSystemID(OperatingSystem os_in, const std::wstring& filte
 					{
 						match = true;
 					}
+					break;
 				case win8:
 					if (OperatingSystemType(os) == win8 && os_in >= os)
 					{
 						match = true;
 					}
+					break;
 				case win8Server:
 					if (OperatingSystemType(os) == win8Server && os_in >= os)
 					{
@@ -509,11 +521,13 @@ bool DVLib::IsOperatingSystemID(OperatingSystem os_in, const std::wstring& filte
 					{
 						match = true;
 					}
+					break;
 				case win8:
 					if (OperatingSystemType(os) == win8 && os_in < os)
 					{
 						match = true;
 					}
+					break;
 				case win8Server:
 					if (OperatingSystemType(os) == win8Server && os_in < os)
 					{
@@ -603,7 +617,7 @@ DVLib::OperatingSystem DVLib::OperatingSystemType(OperatingSystem os)
 	{
 		return win8Server;
 	}
-	else if (os > win8Max)
+	else if (os > win8ServerMax)
 	{
 		return winMax;
 	}

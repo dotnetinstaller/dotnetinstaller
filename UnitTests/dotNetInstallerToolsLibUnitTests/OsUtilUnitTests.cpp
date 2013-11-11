@@ -346,6 +346,9 @@ void OsUtilUnitTests::testoscode2os()
 		L"winVista", L"winVistaSp1", L"winVistaSp2", L"winVistaMax",
 		L"winServer2008", L"winServer2008sp2", L"winServer2008R2", L"winServer2008Max",
 		L"win7", L"win7sp1", L"win7Max",
+		L"win8", L"win8_1", L"win8Max",
+		L"win8Server", L"win8ServerR2", L"win8ServerMax",
+		L"winMax"
 	};
 
 	for (int i = 0; i < ARRAYSIZE(KnownOperatingSystems); i++)
@@ -375,6 +378,8 @@ void OsUtilUnitTests::testos2wstring()
 		winVista, winVistaSp1, winVistaSp2, winVistaMax,
 		winServer2008, winServer2008sp2, winServer2008R2, winServer2008Max,
 		win7, win7sp1, win7Max,
+		win8, win8_1, win8Max,
+		win8Server, win8ServerR2, win8ServerMax,
 		winMax,
 	};
 
@@ -431,6 +436,12 @@ void OsUtilUnitTests::testOperatingSystemType()
 
 	CPPUNIT_ASSERT(DVLib::OperatingSystemType(win7) == win7);
 	CPPUNIT_ASSERT(DVLib::OperatingSystemType(win7sp1) == win7);
+
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(win8) == win8);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(win8_1) == win8);
+
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(win8Server) == win8Server);
+	CPPUNIT_ASSERT(DVLib::OperatingSystemType(win8ServerR2) == win8Server);
 
 	CPPUNIT_ASSERT(DVLib::OperatingSystemType(winMax) == winMax);
 }

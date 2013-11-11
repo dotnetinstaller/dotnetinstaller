@@ -60,9 +60,11 @@ namespace InstallerLib
         win7Max = 129,
 
         win8 = 130,
+        win8_1 = 131,
         win8Max = 139,
 		
 		win8Server = 140,
+        win8ServerR2 = 141,
 		win8ServerMax = 149,
 
         winMax = 255,
