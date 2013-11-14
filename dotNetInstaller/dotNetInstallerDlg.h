@@ -39,7 +39,7 @@ public:
 	CStatic m_PictureBox;
 	CStatic m_lblOperatingSystem;
 	afx_msg void OnBnClickedInstall();
-	ComponentsStatus LoadComponentsList();
+	ComponentsStatus LoadComponentsList(bool autoSetChecked);
 	CHyperlinkStatic m_InfoLink;
 	afx_msg void OnDestroy();
 	afx_msg void OnBnClickedCancel();

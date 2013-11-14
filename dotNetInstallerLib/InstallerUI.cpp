@@ -76,7 +76,7 @@ bool InstallerUI::AutoStart(InstallConfiguration * p_configuration)
 
 void InstallerUI::LoadComponents()
 {
-	m_install_status = LoadComponentsList();
+	m_install_status = LoadComponentsList(true);
 
 	InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
 	CHECK_BOOL(p_configuration != NULL, L"Invalid configuration");
@@ -88,7 +88,7 @@ void InstallerUI::LoadComponents()
 	{
 		LOG("All components installed, switching to uninstall.");
 		InstallerSession::Instance->sequence = SequenceUninstall;
-		m_install_status = LoadComponentsList();
+		m_install_status = LoadComponentsList(true);
 		if (m_install_status.all())
 		{
 			LOG("All components uninstalled, nothing to do.");
@@ -97,8 +97,7 @@ void InstallerUI::LoadComponents()
 	}
 }
 
-// returns true if all components have been installed
-ComponentsStatus InstallerUI::LoadComponentsList()
+ComponentsStatus InstallerUI::LoadComponentsList(bool autoSetChecked)
 {
 	ComponentsStatus rc;
 	
@@ -113,17 +112,20 @@ ComponentsStatus InstallerUI::LoadComponentsList()
 	for (size_t i = 0; i < components_list.size(); i++)
 	{
 		ComponentPtr component(components_list[i]);
-		component->checked = true;
         component->installed = component->IsInstalled();
         
         LOG(L"-- " << component->id << L" (" << component->GetDisplayName() << L"): " 
 			<< (component->installed ? L"INSTALLED" : L"NOT INSTALLED"));		
 
 		// component selection
-		if (component->installed && InstallerSession::Instance->sequence == SequenceInstall)
-			component->checked = false;
-		if (! component->installed && InstallerSession::Instance->sequence == SequenceUninstall)
-			component->checked = false;
+		if (autoSetChecked)
+		{
+			component->checked = true;
+			if (component->installed && InstallerSession::Instance->sequence == SequenceInstall)
+				component->checked = false;
+			if (! component->installed && InstallerSession::Instance->sequence == SequenceUninstall)
+				component->checked = false;
+		}
 
 		if (InstallerSession::Instance->sequence == SequenceInstall)
 		{
@@ -148,34 +150,59 @@ ComponentsStatus InstallerUI::LoadComponentsList()
 
 		component->description = description;
 
+		bool visible = true;
+
 		// show installed
         if (InstallerSession::Instance->sequence == SequenceInstall 
 			&& ! pConfiguration->dialog_show_installed 
 			&& component->installed)
-            continue;
+		{
+            visible = false;
+		}
 
 		// show uninstalled
         if (InstallerSession::Instance->sequence == SequenceUninstall 
 			&& ! pConfiguration->dialog_show_uninstalled
 			&& ! component->installed)
-            continue;
+		{
+            visible = false;
+		}
 
         if (! pConfiguration->dialog_show_required)
 		{
 			if (component->IsRequired())
-				continue;
+			{
+				visible = false;
+			}
 		}
 
-		bool checked = false;
-        if (component->checked)
-        {
-			if (component->selected_install && InstallerSession::Instance->sequence == SequenceInstall)
-				checked = true;
-			else if (component->selected_uninstall && InstallerSession::Instance->sequence == SequenceUninstall)
-				checked = true;
-        }
+		if (visible && autoSetChecked)
+		{
+			bool checked = false;
+			if (component->checked)
+			{
+				if (component->selected_install && InstallerSession::Instance->sequence == SequenceInstall)
+					checked = true;
+				else if (component->selected_uninstall && InstallerSession::Instance->sequence == SequenceUninstall)
+					checked = true;
+			}
 
-		component->checked = checked;
+			component->checked = checked;
+		}
+
+		if (component->checked && InstallerSession::Instance->sequence == SequenceInstall)
+		{
+			rc.add_checked(component->installed);
+		}
+		else if (component->checked && InstallerSession::Instance->sequence == SequenceUninstall)
+		{
+			rc.add_checked(! component->installed);
+		}
+
+		component->main_window = GetHwnd();
+
+		if (!visible)
+			continue;
 
         // a component is considered installed when it has an install check which results
         // in a clear positive; if a component doesn't have any install checks, it cannot
@@ -190,8 +217,6 @@ ComponentsStatus InstallerUI::LoadComponentsList()
 
 		component->disabled = disabled;
 
-		component->main_window = GetHwnd();
-
 		AddComponent(component);
     }
 
@@ -201,6 +226,9 @@ ComponentsStatus InstallerUI::LoadComponentsList()
 	LOG(L"All optional components " 
 		<< (InstallerSession::Instance->sequence == SequenceInstall ? L"installed: " : L"uninstalled: ") 
 		<< (rc.all_optional() ? L"yes" : L"no"));
+	LOG(L"All checked components " 
+		<< (InstallerSession::Instance->sequence == SequenceInstall ? L"installed: " : L"uninstalled: ") 
+		<< (rc.all_checked() ? L"yes" : L"no"));
 	
 	return rc;
 }
@@ -620,15 +648,15 @@ void InstallerUI::AfterInstall(int rc)
 	if (rc != 0 && p_configuration->reload_on_error && ! InstallUILevelSetting::Instance->IsSilent())
 	{
 		LOG(L"*** Failed to install one or more components, reloading components (reload_on_error).");
-		LoadComponentsList();
+		LoadComponentsList(false);
 		return;
 	}
 
-	// success and possibly auto-close with a complete code if all components have been installed
+	// success and possibly auto-close with a complete code if all checked components have been installed
 	if (rc == 0)
 	{
-		ComponentsStatus status = LoadComponentsList();
-		if (status.all())
+		ComponentsStatus status = LoadComponentsList(false);
+		if (status.all_checked())
 		{
 			ExecuteCompleteCode(true);
 			if (p_configuration->auto_close_if_installed)
