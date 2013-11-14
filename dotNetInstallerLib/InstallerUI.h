@@ -30,14 +30,21 @@ protected:
 	virtual bool AutoStart(InstallConfiguration * p_configuration);
 	virtual void RecordError(int error = -1);
 	virtual void ClearError();
+	// Resets contents of the UI
 	virtual void ResetContent() = 0;
+	// Adds component to the UI
 	virtual void AddComponent(const ComponentPtr& component) = 0;
-	virtual ComponentsStatus LoadComponentsList();
+	// (Re)loads components list, updating their install state.
+	// Parameter autoSetChecked defines whether the checked state of the components should be set automatically
+	// (depending on configuration, current install sequence, install state), or leaved as it was previously set by a user.
+	// Returns install state of the components relative to current install sequence.
+	virtual ComponentsStatus LoadComponentsList(bool autoSetChecked);
 	virtual void ExecuteCompleteCode(bool components_installed);
 	virtual void ShowMessage(const std::wstring& message, int flags = 0);
 	virtual bool Run() = 0;
 	virtual HINSTANCE GetInstance() const = 0;
 	virtual HWND GetHwnd() const = 0;
+	// Loads components on startup and chooses an install sequence
 	void LoadComponents();
 	void Start();
 	void AddUserControls();

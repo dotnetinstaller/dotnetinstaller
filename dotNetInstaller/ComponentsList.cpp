@@ -108,7 +108,7 @@ void CComponentsList::OnLButtonDblClk(UINT nFlags, CPoint point)
 			Exec(component);
 			if (m_pExecuteCallback)
 			{
-				m_pExecuteCallback->LoadComponentsList();
+				m_pExecuteCallback->LoadComponentsList(false);
 			}
 		}
 	}
