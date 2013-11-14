@@ -13,7 +13,8 @@ Features
 Bugs
 ----
 
-* [#41](https://github.com/dblock/dotnetinstaller/pull/41): Fix: When an uninstall successfully completes, pop `uninstallcompletemessage` message box instead of `installcompletemessage` - [@montrowe](https://github.com/montrowe).
+* [#41](https://github.com/dblock/dotnetinstaller/pull/41) - Fix: When an uninstall successfully completes, pop `uninstallcompletemessage` message box instead of `installcompletemessage` - [@montrowe](https://github.com/montrowe).
+* [#18](https://github.com/dblock/dotnetinstaller/issues/18) - Installer should auto close when all checked components are installed - [@baSSiLL](https://github.com/baSSiLL).
 
 Misc
 --------

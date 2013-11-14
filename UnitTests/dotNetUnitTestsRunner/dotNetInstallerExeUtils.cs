@@ -120,8 +120,34 @@ namespace dotNetUnitTestsRunner
 
         public static int Run(RunOptions options)
         {
+            return Run(options, new TimeSpan(-1));
+        }
+
+        /// <summary>
+        /// Runs the installer and waits till its exit for a specified timeout.
+        /// </summary>
+        /// <param name="options">Run options.</param>
+        /// <param name="timeout">Timeout. Negative values mean "no timeout".</param>
+        /// <returns>Exit code of the installer process.</returns>
+        /// <exception cref="TimeoutException">
+        /// Timeout exceeded while waiting for the installer process to exit.
+        /// </exception>
+        public static int Run(RunOptions options, TimeSpan timeout)
+        {
             Process p = Detach(options);
-            p.WaitForExit();
+            if (timeout < TimeSpan.Zero)
+            {
+                p.WaitForExit();
+            }
+            else
+            {
+                if (!p.WaitForExit((int)timeout.TotalMilliseconds))
+                {
+                    p.Kill();
+                    p.WaitForExit();
+                    throw new TimeoutException();
+                }
+            }
             return p.ExitCode;
         }
 
