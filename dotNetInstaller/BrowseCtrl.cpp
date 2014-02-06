@@ -150,7 +150,7 @@ CBrowseCtrl::CBrowseCtrl()
 	m_bBtnPushed = FALSE;
 	m_bMouseIn = FALSE;
 	m_sTootipText = _T("Browse");
-	m_sDlgBanner = _T("Plseas select a folder from the list:");
+	m_sDlgBanner = _T("Please select a folder from the list:");
 	m_bReadOnlyRef = FALSE;
 	m_bOpenFileDialog = TRUE;
 	m_dwFileFlags = OFN_ALLOWMULTISELECT | OFN_OVERWRITEPROMPT | OFN_CREATEPROMPT | OFN_ENABLESIZING | OFN_EXPLORER;

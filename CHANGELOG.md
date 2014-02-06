@@ -1,3 +1,17 @@
+Next Release
+============
+
+Features
+--------
+
+Bugs
+----
+
+* [#60](https://github.com/dblock/dotnetinstaller/issues/60) - Fix: Typo in Browse for Folder popup - [@romanws](https://github.com/romanws).
+
+Misc
+--------
+
 2.3 (1/6/2013)
 ==============
 
