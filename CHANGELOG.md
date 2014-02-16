@@ -12,6 +12,8 @@ Bugs
 Misc
 --------
 
+* Added a password unprotected strong key (dni.key) and signing InstallerLib.dll - [@icnocop](https://github.com/icnocop).
+
 2.3 (1/6/2013)
 ==============
 
