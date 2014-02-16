@@ -56,7 +56,7 @@
             <linkText>http://resourcelib.codeplex.com/</linkText>
             <linkUri>http://resourcelib.codeplex.com/</linkUri>
           </externalLink> for more information.
-          <code language="text" source="..\ThirdParty\ResourceLib\license.txt" />
+          <code language="text" source="..\ThirdParty\ResourceLib\LICENSE" />
         </para>
       </content>
     </section>
