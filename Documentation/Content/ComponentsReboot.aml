@@ -30,7 +30,8 @@
               The message to display when a reboot is required. Set this value to something like
               <legacyItalic>"Would you like to reboot now?"</legacyItalic> if <literal>must_reboot_required</literal> is
               <literal>false</literal>. Set this value to something like <legacyItalic>"Setup will reboot now"</legacyItalic>
-              if the value of <literal>must_reboot_required</literal> is <literal>true</literal>.
+              if the value of <literal>must_reboot_required</literal> is <literal>true</literal>. 
+              If this value is empty, the message will not be displayed.
             </definition>
           </definitionTable>
         </para>
