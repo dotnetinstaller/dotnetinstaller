@@ -464,7 +464,11 @@ bool InstallerUI::ComponentExecError(const ComponentPtr& component, std::excepti
     // the component failed to install, display an error message and let the user choose to continue or not
     // unless global or component setting decides otherwise
 	std::wstring failed_exec_command_continue = component->failed_exec_command_continue;
-	if (failed_exec_command_continue.empty()) failed_exec_command_continue = p_configuration->failed_exec_command_continue;
+	if (failed_exec_command_continue.empty())
+    {
+        failed_exec_command_continue = p_configuration->failed_exec_command_continue;
+    }
+
 	std::wstring error_message = DVLib::FormatMessage(const_cast<wchar_t *>(failed_exec_command_continue.c_str()), 
 		component->GetDisplayName().c_str());
 
@@ -524,7 +528,8 @@ bool InstallerUI::ComponentExecSuccess(const ComponentPtr& component)
 			THROW_EX(L"Unsupported install sequence: " << InstallerSession::Instance->sequence << L".");
 	}
 
-	// se l'installazione ha chiesto di riavviare non continuo con gli altri componenti ma aggiorno solo la lista e lascio il Run nel registry per fare in modo che al prossimo riavvio venga rilanciato
+	// if the installation is not prompted to restart, continue with the other components
+    // update the list and set the Run in the registry to make sure that the installer will be relaunched on the next reboot
 	if (component->IsRebootRequired())
 	{
 		InstallConfiguration * p_configuration = reinterpret_cast<InstallConfiguration *>(get(m_configuration));
@@ -533,15 +538,23 @@ bool InstallerUI::ComponentExecSuccess(const ComponentPtr& component)
 		LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): REQUESTS REBOOT");
 
 		std::wstring reboot_required = component->reboot_required;
-		if (reboot_required.empty()) reboot_required = p_configuration->reboot_required;
+		if (reboot_required.empty())
+        {
+            reboot_required = p_configuration->reboot_required;
+        }
 		
 		if (p_configuration->must_reboot_required || component->must_reboot_required)
 		{
 			LOG(L"--- Component '" << component->id << L" (" << component->GetDisplayName() << L"): REQUIRES REBOOT");
-			DniMessageBox::Show(reboot_required, MB_OK | MB_ICONQUESTION);
+
+            if (!reboot_required.empty())
+            {
+			    DniMessageBox::Show(reboot_required, MB_OK | MB_ICONQUESTION);
+            }
+
 			m_reboot = true;
 		}
-		else if (DniMessageBox::Show(reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES)
+		else if ((!reboot_required.empty()) && (DniMessageBox::Show(reboot_required, MB_YESNO|MB_ICONQUESTION, IDYES) == IDYES))
 		{
 			m_reboot = true;
 		}

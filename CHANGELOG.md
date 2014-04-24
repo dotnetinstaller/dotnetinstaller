@@ -8,6 +8,7 @@ Bugs
 ----
 
 * [#60](https://github.com/dblock/dotnetinstaller/issues/60) - Fix: Typo in Browse for Folder popup - [@romanws](https://github.com/romanws).
+* [#71](https://github.com/dblock/dotnetinstaller/issues/71) - Fix: If reboot_required="" then the message box to prompt for a reboot should not be displayed - [@icnocop](https://github.com/icnocop).
 
 Misc
 --------
