@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "ShellUtilUnitTests.h"
+#include "FindWindow.h"
 
 using namespace DVLib::UnitTests;
 
@@ -72,6 +73,9 @@ void ShellUtilUnitTests::testExecCmd()
 {
 	CPPUNIT_ASSERT(0 == DVLib::ExecCmd(L"cmd.exe /C"));
 	CPPUNIT_ASSERT(123 == DVLib::ExecCmd(L"cmd.exe /C exit /b 123"));
+
+	// hide window
+	CPPUNIT_ASSERT(456== DVLib::ExecCmd(L"cmd.exe /C exit /b 456", SW_HIDE));
 }
 
 void ShellUtilUnitTests::testShellCmd()
@@ -82,5 +86,39 @@ void ShellUtilUnitTests::testShellCmd()
 	DVLib::ShellCmd(L"\"cmd.exe\" /C dir", NULL, &hProcess);
 	auto_handle pi_process(hProcess);
 	CPPUNIT_ASSERT(hProcess != NULL);
+	CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
+}
+
+void ShellUtilUnitTests::RunCmd_WithHiddenWindow_DoesNotShowWindow()
+{
+	// Arrange
+	int nShow = SW_HIDE;
+
+	// Act
+	PROCESS_INFORMATION pi = { 0 };
+	DVLib::RunCmd(L"cmd.exe /C ping -n 6 127.0.0.1 > nul && exit /b 0", & pi, 0, nShow);
+	auto_handle pi_thread(pi.hThread);
+	auto_handle pi_process(pi.hProcess);
+
+	// Assert
+	CPPUNIT_ASSERT(pi.dwProcessId > 0);
+	CPPUNIT_ASSERT(NULL == FindWindow::FindWindowFromProcessId(pi.dwProcessId));
+	CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(pi.hProcess, INFINITE));
+}
+
+void ShellUtilUnitTests::ShellCmd_WithHiddenWindow_DoesNotShowWindow()
+{
+	// Arrange
+	int nShow = SW_HIDE;
+
+	HANDLE hProcess;
+
+	// Act
+	DVLib::ShellCmd(L"\"cmd.exe\" /C ping -n 6 127.0.0.1 > nul", NULL, &hProcess, NULL, nShow);
+	auto_handle pi_process(hProcess);
+
+	// Assert
+	CPPUNIT_ASSERT(hProcess != NULL);
+	CPPUNIT_ASSERT(NULL == FindWindow::FindWindowFromProcess(hProcess));
 	CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
 }

@@ -4,7 +4,7 @@ Next Release
 Features
 --------
 
-* Added support for hiding the application window for ShellExecute execution method for command components
+* [#46](https://github.com/dblock/dotnetinstaller/pull/46) - Added support for hiding the application window for ShellExecute execution method for command components - [@icnocop](https://github.com/icnocop).
 
 Bugs
 ----

@@ -44,31 +44,31 @@ void ProcessComponent::Wait(DWORD /* tt */)
 		L"WaitForSingleObject");
 }
 
-void ProcessComponent::ExecCmd(std::wstring command, DVLib::CommandExecutionMethod executionMethod, bool disableWow64FsRedirection, bool hideWindow)
+void ProcessComponent::ExecCmd(std::wstring command, DVLib::CommandExecutionMethod executionMethod, bool disableWow64FsRedirection, int nShow)
 {
 	if (disableWow64FsRedirection)
 	{
 		auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
-		ExecCmdCore(command, executionMethod, hideWindow);
+		ExecCmdCore(command, executionMethod, nShow);
 	}
 	else
 	{
-		ExecCmdCore(command, executionMethod, hideWindow);
+		ExecCmdCore(command, executionMethod, nShow);
 	}
 }
 
-void ProcessComponent::ExecCmdCore(std::wstring command, DVLib::CommandExecutionMethod executionMethod, bool hideWindow)
+void ProcessComponent::ExecCmdCore(std::wstring command, DVLib::CommandExecutionMethod executionMethod, int nShow)
 {
 	PROCESS_INFORMATION process_info;
 	switch (executionMethod)
 	{
 		case DVLib::CemCreateProcess:
-			DVLib::RunCmd(command, & process_info, 0, hideWindow);
+			DVLib::RunCmd(command, & process_info, nShow);
 			m_process_handle = process_info.hProcess;
 			::CloseHandle(process_info.hThread);
 			break;
 		case DVLib::CemShellExecute:
-			DVLib::ShellCmd(command, NULL, & m_process_handle, main_window, hideWindow);
+			DVLib::ShellCmd(command, NULL, & m_process_handle, main_window, nShow);
 			break;
 	}
 }
