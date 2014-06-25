@@ -32,7 +32,7 @@ namespace DVLib
 	// run a command, return process information
 	void RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi = NULL, int flags = 0, bool hideWindow = false);
 	// execute a process, wait and return exit code
-	DWORD ExecCmd(const std::wstring& cmd);
+	DWORD ExecCmd(const std::wstring& cmd, bool hideWindow = false);
 	// shell-execute a process
-	void ShellCmd(const std::wstring& cmd, int * rc = NULL, LPHANDLE lpProcessHandle = NULL, HWND hWnd = NULL);
+	void ShellCmd(const std::wstring& cmd, int * rc = NULL, LPHANDLE lpProcessHandle = NULL, HWND hWnd = NULL, bool hideWindow = false);
 }

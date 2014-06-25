@@ -4,6 +4,8 @@ Next Release
 Features
 --------
 
+* Added support for hiding the application window for ShellExecute execution method for command components
+
 Bugs
 ----
 

@@ -92,6 +92,7 @@ void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags
 	{
 		si.dwFlags = STARTF_USESHOWWINDOW;
 		si.wShowWindow = SW_HIDE;
+        flags |= CREATE_NO_WINDOW;
 	}
 
 	PROCESS_INFORMATION pi = { 0 };
@@ -107,10 +108,10 @@ void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags
 	}
 }
 
-DWORD DVLib::ExecCmd(const std::wstring& cmd)
+DWORD DVLib::ExecCmd(const std::wstring& cmd, bool hideWindow)
 {
 	PROCESS_INFORMATION pi = { 0 };
-	RunCmd(cmd, & pi);
+	RunCmd(cmd, & pi, 0, hideWindow);
 	auto_handle pi_thread(pi.hThread);
 	auto_handle pi_process(pi.hProcess);
 	CHECK_WIN32_BOOL(WAIT_OBJECT_0 == WaitForSingleObject(pi.hProcess, INFINITE),
@@ -121,7 +122,7 @@ DWORD DVLib::ExecCmd(const std::wstring& cmd)
 	return dwExitCode;
 }
 
-void DVLib::ShellCmd(const std::wstring& cmd, int * rc, LPHANDLE lpProcessHandle, HWND hWnd)
+void DVLib::ShellCmd(const std::wstring& cmd, int * rc, LPHANDLE lpProcessHandle, HWND hWnd, bool hideWindow)
 {
 	std::wstring cmd_expanded = DVLib::ExpandEnvironmentVariables(cmd);
 	CHECK_BOOL(! cmd_expanded.empty(), L"Missing command");
@@ -135,9 +136,17 @@ void DVLib::ShellCmd(const std::wstring& cmd, int * rc, LPHANDLE lpProcessHandle
 	sei.cbSize = sizeof(sei);
 	sei.fMask = SEE_MASK_NOCLOSEPROCESS | SEE_MASK_UNICODE;
 	sei.hwnd = hWnd;
+
+    int nShow = SW_SHOWNORMAL;
+
+    if (hideWindow)
+    {
+        nShow = SW_HIDE;
+    }
+
 	sei.lpFile = cmd_file.c_str();
 	sei.lpParameters = cmd_args.size() == 2 ? cmd_args[1].c_str() : NULL;
-	sei.nShow = SW_SHOWNORMAL;
+	sei.nShow = nShow;
 
 	CHECK_WIN32_BOOL(::ShellExecuteExW(&sei), 
 		L"Error running " << cmd_expanded);
