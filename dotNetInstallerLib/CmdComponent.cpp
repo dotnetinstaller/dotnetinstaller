@@ -41,7 +41,7 @@ void CmdComponent::Exec()
 
 	LOG(L"Executing: " << l_command);
 
-	ProcessComponent::ExecCmd(l_command, execution_method, disable_wow64_fs_redirection);
+	ProcessComponent::ExecCmd(l_command, execution_method, disable_wow64_fs_redirection, hide_window);
 };
 
 void CmdComponent::Load(TiXmlElement * node)

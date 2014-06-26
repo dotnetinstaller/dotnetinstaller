@@ -197,6 +197,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FindWindow.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FormatUnitTests.cpp"
 				>
 			</File>
@@ -280,6 +284,10 @@
 			</File>
 			<File
 				RelativePath=".\FileUtilUnitTests.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FindWindow.h"
 				>
 			</File>
 			<File

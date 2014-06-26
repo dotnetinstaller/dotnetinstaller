@@ -79,7 +79,7 @@ void DVLib::DetachCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi)
 	RunCmd(cmd, lpi, DETACHED_PROCESS);
 }
 
-void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags, bool hideWindow)
+void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags, int nShow)
 {
 	// expand command line, using ShellExecuteEx API function with setting the flag 
 	// SEE_MASK_DOENVSUBST does not work because environment variables can also be 
@@ -88,11 +88,15 @@ void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags
 	STARTUPINFO si = { 0 };
 	si.cb = sizeof(si);
 
-	if (hideWindow)
+	DWORD startupInfoFlags = STARTF_USESHOWWINDOW;
+
+	if (nShow == SW_HIDE)
 	{
-		si.dwFlags = STARTF_USESHOWWINDOW;
-		si.wShowWindow = SW_HIDE;
+		startupInfoFlags |= CREATE_NO_WINDOW;
 	}
+
+	si.dwFlags = startupInfoFlags;
+	si.wShowWindow = nShow;
 
 	PROCESS_INFORMATION pi = { 0 };
 
@@ -107,10 +111,10 @@ void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags
 	}
 }
 
-DWORD DVLib::ExecCmd(const std::wstring& cmd)
+DWORD DVLib::ExecCmd(const std::wstring& cmd, int nShow)
 {
 	PROCESS_INFORMATION pi = { 0 };
-	RunCmd(cmd, & pi);
+	RunCmd(cmd, & pi, 0, nShow);
 	auto_handle pi_thread(pi.hThread);
 	auto_handle pi_process(pi.hProcess);
 	CHECK_WIN32_BOOL(WAIT_OBJECT_0 == WaitForSingleObject(pi.hProcess, INFINITE),
@@ -121,7 +125,7 @@ DWORD DVLib::ExecCmd(const std::wstring& cmd)
 	return dwExitCode;
 }
 
-void DVLib::ShellCmd(const std::wstring& cmd, int * rc, LPHANDLE lpProcessHandle, HWND hWnd)
+void DVLib::ShellCmd(const std::wstring& cmd, int * rc, LPHANDLE lpProcessHandle, HWND hWnd, int nShow)
 {
 	std::wstring cmd_expanded = DVLib::ExpandEnvironmentVariables(cmd);
 	CHECK_BOOL(! cmd_expanded.empty(), L"Missing command");
@@ -135,9 +139,10 @@ void DVLib::ShellCmd(const std::wstring& cmd, int * rc, LPHANDLE lpProcessHandle
 	sei.cbSize = sizeof(sei);
 	sei.fMask = SEE_MASK_NOCLOSEPROCESS | SEE_MASK_UNICODE;
 	sei.hwnd = hWnd;
+
 	sei.lpFile = cmd_file.c_str();
 	sei.lpParameters = cmd_args.size() == 2 ? cmd_args[1].c_str() : NULL;
-	sei.nShow = SW_SHOWNORMAL;
+	sei.nShow = nShow;
 
 	CHECK_WIN32_BOOL(::ShellExecuteExW(&sei), 
 		L"Error running " << cmd_expanded);
