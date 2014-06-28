@@ -318,3 +318,13 @@ void CmdComponentUnitTests::testLoad()
 	CPPUNIT_ASSERT(component.uninstall_command.GetValue() == L"test uninstall");
 	CPPUNIT_ASSERT(component.execution_method == DVLib::CemShellExecute);
 }
+
+void CmdComponentUnitTests::testWithHiddenWindow()
+{
+	CmdComponent component;
+	component.command = L"cmd.exe /C exit /b 0";
+	component.hide_window = true;
+	component.Exec();
+	component.Wait();
+	CPPUNIT_ASSERT(0 == component.GetExitCode());
+}

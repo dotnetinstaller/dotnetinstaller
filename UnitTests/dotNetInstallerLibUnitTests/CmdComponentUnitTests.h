@@ -22,6 +22,7 @@ namespace DVLib
 			CPPUNIT_TEST( testReturnCodeSuccess );
 			CPPUNIT_TEST( testMustReboot );
 			CPPUNIT_TEST( testLoad );
+			CPPUNIT_TEST( testWithHiddenWindow );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testExecInstall();
@@ -39,6 +40,7 @@ namespace DVLib
 			void testReturnCodeSuccess();
 			void testMustReboot();
 			void testLoad();
+			void testWithHiddenWindow();
 		};
 	}
 }
