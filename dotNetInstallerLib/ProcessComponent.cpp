@@ -63,7 +63,7 @@ void ProcessComponent::ExecCmdCore(std::wstring command, DVLib::CommandExecution
 	switch (executionMethod)
 	{
 		case DVLib::CemCreateProcess:
-			DVLib::RunCmd(command, & process_info, nShow);
+			DVLib::RunCmd(command, & process_info, 0, nShow);
 			m_process_handle = process_info.hProcess;
 			::CloseHandle(process_info.hThread);
 			break;

@@ -89,7 +89,7 @@ void ShellUtilUnitTests::testShellCmd()
 	CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
 }
 
-void ShellUtilUnitTests::RunCmd_WithHiddenWindow_DoesNotShowWindow()
+void ShellUtilUnitTests::testRunCmdWithHiddenWindow()
 {
 	// Arrange
 	int nShow = SW_HIDE;
@@ -106,7 +106,7 @@ void ShellUtilUnitTests::RunCmd_WithHiddenWindow_DoesNotShowWindow()
 	CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(pi.hProcess, INFINITE));
 }
 
-void ShellUtilUnitTests::ShellCmd_WithHiddenWindow_DoesNotShowWindow()
+void ShellUtilUnitTests::testShellCmdWithHiddenWindow()
 {
 	// Arrange
 	int nShow = SW_HIDE;
