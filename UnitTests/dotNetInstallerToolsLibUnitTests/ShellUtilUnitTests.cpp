@@ -129,9 +129,9 @@ void ShellUtilUnitTests::testShellCmdWithHiddenWindow()
 void ShellUtilUnitTests::testRunCmdWithoutWorkingDirectorySpecified()
 {
 	// Arrange
-	std::wstring working_directory = DVLib::GetCurrentDirectoryW();
+	const std::wstring working_directory = DVLib::GetCurrentDirectoryW();
 	PROCESS_INFORMATION pi = { 0 };
-	std::wstring command = DVLib::FormatMessage(
+	const std::wstring command = DVLib::FormatMessage(
 		L"cmd.exe /C if '%%cd%%'=='%s' (exit /b 0) else (echo '%%cd%%'!='%s' && exit /b 1)",
 		working_directory.c_str(),
 		working_directory.c_str());
@@ -154,7 +154,7 @@ void ShellUtilUnitTests::testRunCmdWithoutWorkingDirectorySpecified()
 void ShellUtilUnitTests::testRunCmdWithWorkingDirectorySpecified()
 {
 	// Arrange
-	std::wstring working_directory = DVLib::GetTemporaryDirectoryW();
+	const std::wstring working_directory = DVLib::GetTemporaryDirectoryW();
 
 	// Act
 	PROCESS_INFORMATION pi = { 0 };
@@ -175,9 +175,8 @@ void ShellUtilUnitTests::testRunCmdWithWorkingDirectorySpecified()
 void ShellUtilUnitTests::testShellCmdWithoutWorkingDirectorySpecified()
 {
 	// Arrange
-	std::wstring working_directory = DVLib::GetCurrentDirectoryW();
-	PROCESS_INFORMATION pi = { 0 };
-	std::wstring command = DVLib::FormatMessage(
+	const std::wstring working_directory = DVLib::GetCurrentDirectoryW();
+	const std::wstring command = DVLib::FormatMessage(
 		L"cmd.exe /C if '%%cd%%'=='%s' (exit /b 0) else (echo '%%cd%%'!='%s' && exit /b 1)",
 		working_directory.c_str(),
 		working_directory.c_str());
@@ -200,7 +199,7 @@ void ShellUtilUnitTests::testShellCmdWithoutWorkingDirectorySpecified()
 void ShellUtilUnitTests::testShellCmdWithWorkingDirectorySpecified()
 {
 	// Arrange
-	std::wstring working_directory = DVLib::GetTemporaryDirectoryW();
+	const std::wstring working_directory = DVLib::GetTemporaryDirectoryW();
 	HANDLE hProcess;
 
 	// Act
