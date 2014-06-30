@@ -63,8 +63,17 @@ std::wstring DVLib::ExpandEnvironmentVariables(const std::wstring& s_in)
 		{
 			std::wstring name = s.substr(i + 1, j - i - 1);
 			std::wstring value = DVLib::GetEnvironmentVariable(name);
-			s.replace(i, j - i + 1, value);
-			i += value.length();
+			
+			// if it's not an environment variable, just ignore it and let the command interpreter handle it
+			if (value != L"")
+			{
+				s.replace(i, j - i + 1, value);
+				i += value.length();
+			}
+			else
+			{
+				i = j + 1;
+			}
 		}
 		else
 		{
@@ -79,7 +88,7 @@ void DVLib::DetachCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi)
 	RunCmd(cmd, lpi, DETACHED_PROCESS);
 }
 
-void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags, int nShow)
+void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags, const std::wstring& working_directory, int nShow)
 {
 	// expand command line, using ShellExecuteEx API function with setting the flag 
 	// SEE_MASK_DOENVSUBST does not work because environment variables can also be 
@@ -101,7 +110,15 @@ void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags
 	PROCESS_INFORMATION pi = { 0 };
 
 	std::wstring cmd_expanded = DVLib::ExpandEnvironmentVariables(cmd);
-	CHECK_WIN32_BOOL(::CreateProcessW(NULL, & * cmd_expanded.begin(), NULL, NULL, FALSE, flags, NULL, NULL, & si, lpi == NULL ? & pi : lpi),
+	
+	// set the current directory if it was specified
+	LPCWSTR lpCurrentDirectory = NULL;
+	if (working_directory != L"")
+	{
+		lpCurrentDirectory = working_directory.c_str();
+	}
+
+	CHECK_WIN32_BOOL(::CreateProcessW(NULL, & * cmd_expanded.begin(), NULL, NULL, FALSE, flags, NULL, lpCurrentDirectory, & si, lpi == NULL ? & pi : lpi),
 		L"CreateProcessW: " << cmd_expanded);
 
 	if (lpi == NULL)
@@ -111,10 +128,10 @@ void DVLib::RunCmd(const std::wstring& cmd, LPPROCESS_INFORMATION lpi, int flags
 	}
 }
 
-DWORD DVLib::ExecCmd(const std::wstring& cmd, int nShow)
+DWORD DVLib::ExecCmd(const std::wstring& cmd, const std::wstring& working_directory, int nShow)
 {
 	PROCESS_INFORMATION pi = { 0 };
-	RunCmd(cmd, & pi, 0, nShow);
+	RunCmd(cmd, & pi, 0, working_directory, nShow);
 	auto_handle pi_thread(pi.hThread);
 	auto_handle pi_process(pi.hProcess);
 	CHECK_WIN32_BOOL(WAIT_OBJECT_0 == WaitForSingleObject(pi.hProcess, INFINITE),
@@ -125,7 +142,7 @@ DWORD DVLib::ExecCmd(const std::wstring& cmd, int nShow)
 	return dwExitCode;
 }
 
-void DVLib::ShellCmd(const std::wstring& cmd, int * rc, LPHANDLE lpProcessHandle, HWND hWnd, int nShow)
+void DVLib::ShellCmd(const std::wstring& cmd, int * rc, LPHANDLE lpProcessHandle, HWND hWnd, const std::wstring& working_directory, int nShow)
 {
 	std::wstring cmd_expanded = DVLib::ExpandEnvironmentVariables(cmd);
 	CHECK_BOOL(! cmd_expanded.empty(), L"Missing command");
@@ -139,6 +156,15 @@ void DVLib::ShellCmd(const std::wstring& cmd, int * rc, LPHANDLE lpProcessHandle
 	sei.cbSize = sizeof(sei);
 	sei.fMask = SEE_MASK_NOCLOSEPROCESS | SEE_MASK_UNICODE;
 	sei.hwnd = hWnd;
+	
+	// set the current directory if it was specified
+	LPCWSTR lpCurrentDirectory = NULL;
+	if (working_directory != L"")
+	{
+		lpCurrentDirectory = working_directory.c_str();
+	}
+	
+	sei.lpDirectory = lpCurrentDirectory;
 
 	sei.lpFile = cmd_file.c_str();
 	sei.lpParameters = cmd_args.size() == 2 ? cmd_args[1].c_str() : NULL;

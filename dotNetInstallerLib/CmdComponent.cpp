@@ -41,7 +41,7 @@ void CmdComponent::Exec()
 
 	LOG(L"Executing: " << l_command);
 
-	ProcessComponent::ExecCmd(l_command, execution_method, disable_wow64_fs_redirection, hide_window ? SW_HIDE : SW_SHOWNORMAL);
+	ProcessComponent::ExecCmd(l_command, execution_method, disable_wow64_fs_redirection, working_directory, hide_window ? SW_HIDE : SW_SHOWNORMAL);
 };
 
 void CmdComponent::Load(TiXmlElement * node)
@@ -51,7 +51,8 @@ void CmdComponent::Load(TiXmlElement * node)
 	command_basic = node->Attribute("command_basic");	
 	uninstall_command = node->Attribute("uninstall_command");
     uninstall_command_silent = node->Attribute("uninstall_command_silent");
-	uninstall_command_basic = node->Attribute("uninstall_command_basic");	
+	uninstall_command_basic = node->Attribute("uninstall_command_basic");
+	working_directory = node->Attribute("working_directory");
 	returncodes_success = node->Attribute("returncodes_success");
 	returncodes_reboot = node->Attribute("returncodes_reboot");
 	hide_window = XmlAttribute(node->Attribute("hide_window")).GetBoolValue(false);
