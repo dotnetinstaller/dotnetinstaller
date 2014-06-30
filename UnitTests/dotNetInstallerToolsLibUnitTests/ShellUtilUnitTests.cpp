@@ -23,7 +23,10 @@ void ShellUtilUnitTests::testExpandEnvironmentVariables()
 	CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"") == L"");
 	CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%%") == L"%%");
 	CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%%%") == L"%%%");
-	CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%" + DVLib::GenerateGUIDStringW() + L"%") == L"");
+
+	std::wstring guid = DVLib::GenerateGUIDStringW();
+	CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%" + guid + L"%") == L"%" + guid + L"%");
+	CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%cd%") == L"%cd%");
 	CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%COMPUTERNAME%") == DVLib::GetEnvironmentVariableW(L"COMPUTERNAME"));
 	CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%COMPUTERNAME%%COMPUTERNAME%") == DVLib::GetEnvironmentVariableW(L"COMPUTERNAME") + DVLib::GetEnvironmentVariableW(L"COMPUTERNAME"));
 	CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%COMPUTERNAME") == L"%COMPUTERNAME");
@@ -75,7 +78,7 @@ void ShellUtilUnitTests::testExecCmd()
 	CPPUNIT_ASSERT(123 == DVLib::ExecCmd(L"cmd.exe /C exit /b 123"));
 
 	// hide window
-	CPPUNIT_ASSERT(456 == DVLib::ExecCmd(L"cmd.exe /C exit /b 456", SW_HIDE));
+	CPPUNIT_ASSERT(456 == DVLib::ExecCmd(L"cmd.exe /C exit /b 456", L"", SW_HIDE));
 }
 
 void ShellUtilUnitTests::testShellCmd()
@@ -96,7 +99,7 @@ void ShellUtilUnitTests::testRunCmdWithHiddenWindow()
 
 	// Act
 	PROCESS_INFORMATION pi = { 0 };
-	DVLib::RunCmd(L"cmd.exe /C ping -n 6 127.0.0.1 > nul && exit /b 0", & pi, 0, nShow);
+	DVLib::RunCmd(L"cmd.exe /C ping -n 6 127.0.0.1 > nul && exit /b 0", & pi, 0, L"", nShow);
 	auto_handle pi_thread(pi.hThread);
 	auto_handle pi_process(pi.hProcess);
 
@@ -114,11 +117,102 @@ void ShellUtilUnitTests::testShellCmdWithHiddenWindow()
 	HANDLE hProcess;
 
 	// Act
-	DVLib::ShellCmd(L"\"cmd.exe\" /C ping -n 6 127.0.0.1 > nul", NULL, &hProcess, NULL, nShow);
+	DVLib::ShellCmd(L"\"cmd.exe\" /C ping -n 6 127.0.0.1 > nul", NULL, &hProcess, NULL, L"", nShow);
 	auto_handle pi_process(hProcess);
 
 	// Assert
 	CPPUNIT_ASSERT(hProcess != NULL);
 	CPPUNIT_ASSERT(NULL == FindWindow::FindWindowFromProcess(hProcess));
 	CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
+}
+
+void ShellUtilUnitTests::testRunCmdWithoutWorkingDirectorySpecified()
+{
+	// Arrange
+	std::wstring working_directory = DVLib::GetCurrentDirectoryW();
+	PROCESS_INFORMATION pi = { 0 };
+	std::wstring command = DVLib::FormatMessage(
+		L"cmd.exe /C if '%%cd%%'=='%s' (exit /b 0) else (echo '%%cd%%'!='%s' && exit /b 1)",
+		working_directory.c_str(),
+		working_directory.c_str());
+
+	// Act
+	DVLib::RunCmd(command, &pi, 0);
+	auto_handle pi_thread(pi.hThread);
+	auto_handle pi_process(pi.hProcess);
+
+	// Assert
+	CPPUNIT_ASSERT(pi.dwProcessId > 0);
+	CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(pi.hProcess, INFINITE));
+
+	DWORD exitCode = 0;
+	CHECK_WIN32_BOOL(::GetExitCodeProcess(pi.hProcess, &exitCode),
+		L"GetExitCodeProcess");
+	CPPUNIT_ASSERT(exitCode == 0);
+}
+
+void ShellUtilUnitTests::testRunCmdWithWorkingDirectorySpecified()
+{
+	// Arrange
+	std::wstring working_directory = DVLib::GetTemporaryDirectoryW();
+
+	// Act
+	PROCESS_INFORMATION pi = { 0 };
+	DVLib::RunCmd(L"cmd.exe /C if '%%cd%%'=='%%temp%%' (exit /b 0) else (echo '%%cd%%'!='%%temp%%' && exit /b 1)", &pi, 0, working_directory);
+	auto_handle pi_thread(pi.hThread);
+	auto_handle pi_process(pi.hProcess);
+
+	// Assert
+	CPPUNIT_ASSERT(pi.dwProcessId > 0);
+	CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(pi.hProcess, INFINITE));
+
+	DWORD exitCode = 0;
+	CHECK_WIN32_BOOL(::GetExitCodeProcess(pi.hProcess, &exitCode),
+		L"GetExitCodeProcess");
+	CPPUNIT_ASSERT(exitCode == 0);
+}
+
+void ShellUtilUnitTests::testShellCmdWithoutWorkingDirectorySpecified()
+{
+	// Arrange
+	std::wstring working_directory = DVLib::GetCurrentDirectoryW();
+	PROCESS_INFORMATION pi = { 0 };
+	std::wstring command = DVLib::FormatMessage(
+		L"cmd.exe /C if '%%cd%%'=='%s' (exit /b 0) else (echo '%%cd%%'!='%s' && exit /b 1)",
+		working_directory.c_str(),
+		working_directory.c_str());
+	HANDLE hProcess;
+
+	// Act
+	DVLib::ShellCmd(command.c_str(), NULL, &hProcess, NULL);
+	auto_handle pi_process(hProcess);
+
+	// Assert
+	CPPUNIT_ASSERT(hProcess != NULL);
+	CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
+
+	DWORD exitCode = 0;
+	CHECK_WIN32_BOOL(::GetExitCodeProcess(hProcess, &exitCode),
+		L"GetExitCodeProcess");
+	CPPUNIT_ASSERT(exitCode == 0);
+}
+
+void ShellUtilUnitTests::testShellCmdWithWorkingDirectorySpecified()
+{
+	// Arrange
+	std::wstring working_directory = DVLib::GetTemporaryDirectoryW();
+	HANDLE hProcess;
+
+	// Act
+	DVLib::ShellCmd(L"\"cmd.exe\" /C if '%%cd%%'=='%%temp%%' (exit /b 0) else (echo '%%cd%%'!='%%temp%%' && exit /b 1)", NULL, &hProcess, NULL, working_directory);
+	auto_handle pi_process(hProcess);
+
+	// Assert
+	CPPUNIT_ASSERT(hProcess != NULL);
+	CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
+
+	DWORD exitCode = 0;
+	CHECK_WIN32_BOOL(::GetExitCodeProcess(hProcess, &exitCode),
+		L"GetExitCodeProcess");
+	CPPUNIT_ASSERT(exitCode == 0);
 }

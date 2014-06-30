@@ -15,6 +15,10 @@ namespace DVLib
 			CPPUNIT_TEST( testShellCmd );
 			CPPUNIT_TEST( testRunCmdWithHiddenWindow );
 			CPPUNIT_TEST( testShellCmdWithHiddenWindow );
+			CPPUNIT_TEST( testRunCmdWithoutWorkingDirectorySpecified );
+			CPPUNIT_TEST( testRunCmdWithWorkingDirectorySpecified );
+			CPPUNIT_TEST( testShellCmdWithoutWorkingDirectorySpecified );
+			CPPUNIT_TEST( testShellCmdWithWorkingDirectorySpecified );
 			CPPUNIT_TEST_SUITE_END();
 		public:
 			void testGetEnvironmentVariable();
@@ -25,6 +29,10 @@ namespace DVLib
 			void testRunCmd();
 			void testRunCmdWithHiddenWindow();
 			void testShellCmdWithHiddenWindow();
+			void testRunCmdWithoutWorkingDirectorySpecified();
+			void testRunCmdWithWorkingDirectorySpecified();
+			void testShellCmdWithoutWorkingDirectorySpecified();
+			void testShellCmdWithWorkingDirectorySpecified();
 		};
 	}
 }

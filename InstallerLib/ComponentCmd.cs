@@ -69,6 +69,15 @@ namespace InstallerLib
             set { m_uninstall_command_basic = value; }
         }
 
+        private string m_working_directory;
+        [Description("The working directory for the process. Defaults to the current working directory of the bootstrapper.")]
+        [Category("Runtime")]
+        public string working_directory
+        {
+            get { return m_working_directory; }
+            set { m_working_directory = value; }
+        }
+
         private bool m_hide_window = false;
         [Description("Indicates whether to hide the application window from being displayed when run.")]
         [Category("Runtime")]
@@ -131,6 +140,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("uninstall_command", m_uninstall_command);
             e.XmlWriter.WriteAttributeString("uninstall_command_silent", m_uninstall_command_silent);
             e.XmlWriter.WriteAttributeString("uninstall_command_basic", m_uninstall_command_basic);
+            e.XmlWriter.WriteAttributeString("working_directory", m_working_directory);
             e.XmlWriter.WriteAttributeString("returncodes_success", m_returncodes_success);
             e.XmlWriter.WriteAttributeString("returncodes_reboot", m_returncodes_reboot);
             e.XmlWriter.WriteAttributeString("hide_window", m_hide_window.ToString());
@@ -147,6 +157,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "uninstall_command", ref m_uninstall_command);
             ReadAttributeValue(e, "uninstall_command_silent", ref m_uninstall_command_silent);
             ReadAttributeValue(e, "uninstall_command_basic", ref m_uninstall_command_basic);
+            ReadAttributeValue(e, "working_directory", ref m_working_directory);
             ReadAttributeValue(e, "returncodes_success", ref m_returncodes_success);
             ReadAttributeValue(e, "returncodes_reboot", ref m_returncodes_reboot);
             ReadAttributeValue(e, "hide_window", ref m_hide_window);
