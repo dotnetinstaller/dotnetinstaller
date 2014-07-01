@@ -44,7 +44,7 @@ void ProcessComponent::Wait(DWORD /* tt */)
 		L"WaitForSingleObject");
 }
 
-void ProcessComponent::ExecCmd(std::wstring command, DVLib::CommandExecutionMethod executionMethod, bool disableWow64FsRedirection, const std::wstring& working_directory, int nShow)
+void ProcessComponent::ExecCmd(const std::wstring& command, DVLib::CommandExecutionMethod executionMethod, bool disableWow64FsRedirection, const std::wstring& working_directory, int nShow)
 {
 	if (disableWow64FsRedirection)
 	{
@@ -57,7 +57,7 @@ void ProcessComponent::ExecCmd(std::wstring command, DVLib::CommandExecutionMeth
 	}
 }
 
-void ProcessComponent::ExecCmdCore(std::wstring command, DVLib::CommandExecutionMethod executionMethod, const std::wstring& working_directory, int nShow)
+void ProcessComponent::ExecCmdCore(const std::wstring& command, DVLib::CommandExecutionMethod executionMethod, const std::wstring& working_directory, int nShow)
 {
 	PROCESS_INFORMATION process_info;
 	switch (executionMethod)

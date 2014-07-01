@@ -176,7 +176,6 @@ void ShellUtilUnitTests::testShellCmdWithoutWorkingDirectorySpecified()
 {
 	// Arrange
 	std::wstring working_directory = DVLib::GetCurrentDirectoryW();
-	PROCESS_INFORMATION pi = { 0 };
 	std::wstring command = DVLib::FormatMessage(
 		L"cmd.exe /C if '%%cd%%'=='%s' (exit /b 0) else (echo '%%cd%%'!='%s' && exit /b 1)",
 		working_directory.c_str(),
