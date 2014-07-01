@@ -12,7 +12,7 @@ public:
 	void Wait(DWORD tt = 1000);
 	int GetExitCode() const;
 protected:
-	void ExecCmd(std::wstring command, DVLib::CommandExecutionMethod executionMethod, bool disableWow64FsRedirection, const std::wstring& working_directory = L"", int nShow = SW_SHOWNORMAL);
+	void ExecCmd(const std::wstring& command, DVLib::CommandExecutionMethod executionMethod, bool disableWow64FsRedirection, const std::wstring& working_directory = L"", int nShow = SW_SHOWNORMAL);
 private:
-	void ExecCmdCore(std::wstring command, DVLib::CommandExecutionMethod executionMethod, const std::wstring& working_directory = L"", int nShow = SW_SHOWNORMAL);
+	void ExecCmdCore(const std::wstring& command, DVLib::CommandExecutionMethod executionMethod, const std::wstring& working_directory = L"", int nShow = SW_SHOWNORMAL);
 };
