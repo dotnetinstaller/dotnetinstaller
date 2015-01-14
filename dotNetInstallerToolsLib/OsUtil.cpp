@@ -65,6 +65,9 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 1 && osvi.wProductType != VER_NT_WORKSTATION)
 			{
 				os = winServer2008R2;
+				
+				if (osvi.wServicePackMajor >= 1)
+					os = winServer2008R2sp1;
 			}
 			// Windows Server 2008
 			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType != VER_NT_WORKSTATION)
