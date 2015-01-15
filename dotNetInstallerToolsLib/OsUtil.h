@@ -137,7 +137,7 @@ namespace DVLib
 		{ winServer2003Max, L"winServer2003Max", L"Windows Server 2003+" },
 		{ winServer2008, L"winServer2008", L"Windows Server 2008" },
 		{ winServer2008sp2, L"winServer2008sp2", L"Windows Server 2008 SP2" },
-		{ winServer2008R2, L"winServer2008R2", L"Windows Server 2008 R2" },		
+		{ winServer2008R2, L"winServer2008R2", L"Windows Server 2008 R2" },
 		{ winServer2008R2sp1, L"winServer2008R2sp1", L"Windows Server 2008 R2 SP1" },
 		{ winServer2008Max, L"winServer2008Max", L"Windows Server 2008+" },
 		{ winVista, L"winVista", L"Windows Vista" },

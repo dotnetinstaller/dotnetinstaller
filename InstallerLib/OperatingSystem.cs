@@ -4,9 +4,9 @@ using System.Text;
 
 namespace InstallerLib
 {
-	public enum OperatingSystem
-	{
-		winNone = 0,
+    public enum OperatingSystem
+    {
+        winNone = 0,
 
         win95 = 5,
         win95osr2 = 10,
@@ -53,7 +53,7 @@ namespace InstallerLib
         winServer2008 = 110,
         winServer2008sp2 = 111,
         winServer2008R2 = 112,
-		winServer2008R2sp1 = 113,
+        winServer2008R2sp1 = 113,
         winServer2008Max = 119,
 
         win7 = 120,
@@ -64,9 +64,9 @@ namespace InstallerLib
         win8_1 = 131,
         win8Max = 139,
 
-		win8Server = 140,
-        win8ServerR2 = 141,		
-		win8ServerMax = 149,
+        win8Server = 140,
+        win8ServerR2 = 141,
+        win8ServerMax = 149,
 
         winMax = 255,
     }

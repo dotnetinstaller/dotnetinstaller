@@ -172,14 +172,14 @@
               <entry>winServer2008</entry>
             </row>
             <row>
-	            <entry>Windows Server 2008 Service Pack 2</entry>
-	            <entry>winServer2008sp2</entry>
+                <entry>Windows Server 2008 Service Pack 2</entry>
+                <entry>winServer2008sp2</entry>
             </row>
             <row>
               <entry>Windows Server 2008 R2</entry>
               <entry>winServer2008R2</entry>
             </row>
-			<row>
+            <row>
               <entry>Windows Server 2008 R2 Service Pack 1</entry>
               <entry>winServer2008R2sp1</entry>
             </row>
@@ -188,17 +188,17 @@
               <entry>win7</entry>
             </row>
             <row>
-	            <entry>Windows 7 Service Pack 1</entry>
-	            <entry>win7sp1</entry>
+              <entry>Windows 7 Service Pack 1</entry>
+              <entry>win7sp1</entry>
             </row>
-		        <row>
-			        <entry>Windows 8</entry>
-			        <entry>win8</entry>
-		        </row>
-			      <row>
-			        <entry>Windows Server 2012</entry>
-			        <entry>win8Server</entry>
-		        </row>
+            <row>
+              <entry>Windows 8</entry>
+              <entry>win8</entry>
+            </row>
+            <row>
+              <entry>Windows Server 2012</entry>
+              <entry>win8Server</entry>
+            </row>
             <row>
               <entry>Windows 8.1</entry>
               <entry>win8_1</entry>
@@ -206,7 +206,7 @@
             <row>
               <entry>Windows Server 2012 R2</entry>
               <entry>win8serverR2</entry>
-            </row>			 
+            </row>
             <row>
               <entry>Windows newer than 8.1</entry>
               <entry>winMax</entry>
