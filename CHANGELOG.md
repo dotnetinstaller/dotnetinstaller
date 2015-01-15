@@ -6,6 +6,7 @@ Features
 
 * [#46](https://github.com/dblock/dotnetinstaller/pull/46) - Added support for hiding the application window for ShellExecute execution method for command components - [@icnocop](https://github.com/icnocop).
 * [#75](https://github.com/dblock/dotnetinstaller/issues/75) - Added the ability to set the current working directory for command components - [@icnocop](https://github.com/icnocop).
+* [#84](https://github.com/dblock/dotnetinstaller/issues/84) - Is it possible to add WinServer2008R2sp1 to the list of Operating Systems? - [@FroggieFrog](https://github.com/FroggieFrog).
 
 Bugs
 ----

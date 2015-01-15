@@ -78,6 +78,7 @@ namespace DVLib
 		winServer2008 = 110,
 		winServer2008sp2 = 111,
 		winServer2008R2 = 112,
+		winServer2008R2sp1 = 113,
 		winServer2008Max = 119,
 
 		win7 = 120,
@@ -137,6 +138,7 @@ namespace DVLib
 		{ winServer2008, L"winServer2008", L"Windows Server 2008" },
 		{ winServer2008sp2, L"winServer2008sp2", L"Windows Server 2008 SP2" },
 		{ winServer2008R2, L"winServer2008R2", L"Windows Server 2008 R2" },
+		{ winServer2008R2sp1, L"winServer2008R2sp1", L"Windows Server 2008 R2 SP1" },
 		{ winServer2008Max, L"winServer2008Max", L"Windows Server 2008+" },
 		{ winVista, L"winVista", L"Windows Vista" },
 		{ winVistaSp1, L"winVistaSp1", L"Windows Vista SP1" },
