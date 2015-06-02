@@ -78,6 +78,7 @@ namespace DVLib
 		winServer2008 = 110,
 		winServer2008sp2 = 111,
 		winServer2008R2 = 112,
+		winServer2008R2sp1 = 113,
 		winServer2008Max = 119,
 
 		win7 = 120,
@@ -91,6 +92,12 @@ namespace DVLib
 		win8Server = 140,
 		win8ServerR2 = 141,
 		win8ServerMax = 149,
+
+		win10 = 150,
+		win10Max = 159,
+
+		win10Server = 160,
+		win10ServerMax = 169,
 
 		winMax = 255, // This value should always be last
 	};
@@ -137,6 +144,7 @@ namespace DVLib
 		{ winServer2008, L"winServer2008", L"Windows Server 2008" },
 		{ winServer2008sp2, L"winServer2008sp2", L"Windows Server 2008 SP2" },
 		{ winServer2008R2, L"winServer2008R2", L"Windows Server 2008 R2" },
+		{ winServer2008R2sp1, L"winServer2008R2sp1", L"Windows Server 2008 R2 SP1" },
 		{ winServer2008Max, L"winServer2008Max", L"Windows Server 2008+" },
 		{ winVista, L"winVista", L"Windows Vista" },
 		{ winVistaSp1, L"winVistaSp1", L"Windows Vista SP1" },
@@ -151,6 +159,10 @@ namespace DVLib
 		{ win8Server, L"win8Server", L"Windows Server 2012" },
 		{ win8ServerR2, L"win8ServerR2", L"Windows Server 2012 R2" },
 		{ win8ServerMax, L"win8ServerMax", L"Windows Server 2012+" },
+		{ win10, L"win10", L"Windows 10" },
+		{ win10Max, L"win10Max", L"Windows 10+" },
+		{ win10Server, L"win10Server", L"Windows Server 10" },
+		{ win10ServerMax, L"win10ServerMax", L"Windows Server 10+" },
 		{ winMax, L"winMax", L"Windows Latest" },
 	};
 
