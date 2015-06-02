@@ -53,6 +53,7 @@ namespace InstallerLib
         winServer2008 = 110,
         winServer2008sp2 = 111,
         winServer2008R2 = 112,
+        winServer2008R2sp1 = 113,
         winServer2008Max = 119,
 
         win7 = 120,
@@ -62,10 +63,16 @@ namespace InstallerLib
         win8 = 130,
         win8_1 = 131,
         win8Max = 139,
-		
-		win8Server = 140,
+
+        win8Server = 140,
         win8ServerR2 = 141,
-		win8ServerMax = 149,
+        win8ServerMax = 149,
+
+        win10 = 150,
+        win10Max = 159,
+
+        win10Server = 160,
+        win10ServerMax = 169,
 
         winMax = 255,
     }

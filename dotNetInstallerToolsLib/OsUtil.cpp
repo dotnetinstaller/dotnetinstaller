@@ -29,9 +29,19 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 		// Test for the Windows NT product family.
 		case VER_PLATFORM_WIN32_NT:
 			// Newer Windows version
-			if (((osvi.dwMajorVersion == 6 && osvi.dwMinorVersion > 3) || (osvi.dwMajorVersion > 6)) && osvi.wProductType == VER_NT_WORKSTATION)
+			if ((osvi.dwMajorVersion == 10 && osvi.dwMinorVersion > 0) || (osvi.dwMajorVersion > 10))
 			{
 				os = winMax;
+			}
+			// Windows 10
+			else if ( osvi.dwMajorVersion == 10 && osvi.dwMinorVersion == 0 && osvi.wProductType == VER_NT_WORKSTATION)
+			{
+				os = win10;
+			}
+			// Windows Server 10
+			else if ( osvi.dwMajorVersion == 10 && osvi.dwMinorVersion == 0 && osvi.wProductType != VER_NT_WORKSTATION)
+			{
+				os = win10Server;
 			}
 			// Windows Server 2012 R2
 			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 3 && osvi.wProductType != VER_NT_WORKSTATION)
@@ -65,6 +75,9 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
 			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 1 && osvi.wProductType != VER_NT_WORKSTATION)
 			{
 				os = winServer2008R2;
+				
+				if (osvi.wServicePackMajor >= 1)
+					os = winServer2008R2sp1;
 			}
 			// Windows Server 2008
 			else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType != VER_NT_WORKSTATION)
@@ -617,7 +630,15 @@ DVLib::OperatingSystem DVLib::OperatingSystemType(OperatingSystem os)
 	{
 		return win8Server;
 	}
-	else if (os > win8ServerMax)
+	else if (os >= win10 && os <= win10Max)
+	{
+		return win10;
+	}
+	else if (os >= win10Server && os <= win10ServerMax)
+	{
+		return win10Server;
+	}
+	else if (os > win10Server)
 	{
 		return winMax;
 	}
