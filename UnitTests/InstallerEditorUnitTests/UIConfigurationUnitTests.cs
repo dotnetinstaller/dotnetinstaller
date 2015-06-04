@@ -321,8 +321,7 @@ namespace InstallerEditorUnitTests
                     {
                         if ((p.MainWindowTitle.StartsWith(windowText)) && (p.MainModule.ModuleName == moduleName))
                         {
-                            Application notepad = Application.Attach(p);
-                            notepad.GetWindow(p.MainWindowTitle, InitializeOption.NoCache).Close();
+                            p.CloseMainWindow();
                             foundNotepad = true;
                             break;
                         }
