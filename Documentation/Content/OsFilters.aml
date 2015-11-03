@@ -229,7 +229,7 @@
           </para>
           <para>
             So that you can match against as yet unknown Windows operating system releases there exists a <literal>winMax</literal> 
-            identifier. This is set if the OS is greater than the maximum known OS, currently Windows 7 SP1.
+            identifier. This is set if the OS is greater than the maximum known OS, currently Windows 10.
           </para>
         </alert>
       </content>
