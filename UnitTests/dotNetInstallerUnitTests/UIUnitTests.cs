@@ -16,6 +16,8 @@ namespace dotNetInstallerUnitTests
     using White.Core.Factory;
     using White.Core.UIItems.ListBoxItems;
     using White.Core.UIItems.WindowItems;
+    using White.Core.UIItems;
+    using White.Core.UIItems.Finders;
 
     /// <summary>
     /// UI unit tests
@@ -32,10 +34,6 @@ namespace dotNetInstallerUnitTests
             string dotNetInstallerExeFilePath = dotNetInstallerExeUtils.Executable;
 
             bool usingHtmlInstaller = dotNetInstallerExeFilePath.EndsWith("htmlInstaller.exe");
-            if (usingHtmlInstaller)
-            {
-                Assert.Inconclusive("This test doesn't work for the htmlInstaller.exe");
-            }
 
             // create configuration file
             ConfigFile configFile = new ConfigFile();
@@ -70,11 +68,25 @@ namespace dotNetInstallerUnitTests
                 // get the main install window
                 Window mainWindow = dotNetInstaller.GetWindow("APPLICATION_NAME Installer", InitializeOption.NoCache);
 
-                // get the components list box
-                ListBox componentsList = mainWindow.Get<ListBox>();
+                if (usingHtmlInstaller)
+                {
+                    // get all the checkboxes in the window
+                    IUIItem[] checkBoxes = mainWindow.GetMultiple(SearchCriteria.ByControlType(typeof(CheckBox)));
 
-                // assert that only one component is in the list
-                Assert.AreEqual(1, componentsList.Items.Count);
+                    // assert that there's only one checkbox
+                    Assert.AreEqual(1, checkBoxes.Length);
+                    Assert.AreEqual("command1 ", checkBoxes[0].Name);
+                }
+                else
+                {
+                    // using dotNetInstaller
+                    // get the components list box
+                    ListBox componentsList = mainWindow.Get<ListBox>();
+
+                    // assert that only one component is in the list
+                    Assert.AreEqual(1, componentsList.Items.Count);
+                    Assert.AreEqual("command1 ", componentsList.Items[0].Name);
+                }
             }
         }
     }
