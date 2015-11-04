@@ -29,6 +29,14 @@ namespace dotNetInstallerUnitTests
         [Test]
         public void HideComponentIfInstalled_WithComponentAlreadyInstalledDuringInstallSequence_HidesComponent()
         {
+            string dotNetInstallerExeFilePath = dotNetInstallerExeUtils.Executable;
+
+            bool usingHtmlInstaller = dotNetInstallerExeFilePath.EndsWith("htmlInstaller.exe");
+            if (usingHtmlInstaller)
+            {
+                Assert.Inconclusive("This test doesn't work for the htmlInstaller.exe");
+            }
+
             // create configuration file
             ConfigFile configFile = new ConfigFile();
 
@@ -57,7 +65,7 @@ namespace dotNetInstallerUnitTests
 
             // execute dotNetInstaller
             string arguments = string.Format("/ConfigFile {0}", configFilename);
-            using (Application dotNetInstaller = Application.Launch(new ProcessStartInfo(dotNetInstallerExeUtils.Executable, arguments)))
+            using (Application dotNetInstaller = Application.Launch(new ProcessStartInfo(dotNetInstallerExeFilePath, arguments)))
             {
                 // get the main install window
                 Window mainWindow = dotNetInstaller.GetWindow("APPLICATION_NAME Installer", InitializeOption.NoCache);
