@@ -14,3 +14,4 @@ assembly
 *.vcproj.*.user
 /Documentation/Dni.shfbproj_*
 *.aps
+StyleCop.Cache

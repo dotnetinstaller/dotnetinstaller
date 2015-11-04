@@ -56,7 +56,7 @@ BOOL CdotNetInstallerDlg::OnInitDialog()
 		SetIcon(m_hIcon, TRUE);			// Set large icon.
 		SetIcon(m_hIcon, FALSE);		// Set small icon.
 
-		// determinating operating system
+		// determining operating system
 		m_lblOperatingSystem.SetWindowText(
 			(DVLib::GetOperatingSystemVersionString() + L" (" + 
 			DVLib::pa2wstring(DVLib::GetProcessorArchitecture()) + L")").c_str());
