@@ -5,10 +5,10 @@ std::wstring CppUnitTestRunner::s_XmlPath;
 
 CppUnitTestRunner::CppUnitTestRunner(void)
 {
-	wchar_t moduleFileName[MAX_PATH];
+    wchar_t moduleFileName[MAX_PATH];
     CPPUNIT_ASSERT(::GetModuleFileNameW(NULL, moduleFileName, MAX_PATH) != 0);
 
-	std::wstring smoduleFileName = moduleFileName;
+    std::wstring smoduleFileName = moduleFileName;
     size_t backslashPos = smoduleFileName.rfind(L'\\', smoduleFileName.length());
     CPPUNIT_ASSERT(backslashPos != smoduleFileName.npos);
 
@@ -28,19 +28,19 @@ std::wstring CppUnitTestRunner::Help()
 
 std::wstring CppUnitTestRunner::Help(CPPUNIT_NS::Test * test, int level)
 {
-	USES_CONVERSION;
+    USES_CONVERSION;
     std::wstringstream s;
     for (int i = 0; i < test->getChildTestCount(); i++)
     {
         s << std::endl;
-		if (0 < level)
-		{
-			std::wstring spaces(level, L' ');
-			s << spaces;
-		}
-		CPPUNIT_NS::Test * child = test->getChildTestAt(i);
-		s << A2W(child->getName().c_str());
-		s << Help(child, level + 1);
+        if (0 < level)
+        {
+            std::wstring spaces(level, L' ');
+            s << spaces;
+        }
+        CPPUNIT_NS::Test * child = test->getChildTestAt(i);
+        s << A2W(child->getName().c_str());
+        s << Help(child, level + 1);
     }
     return s.str();
 }
@@ -62,7 +62,7 @@ int CppUnitTestRunner::Run(int argc, wchar_t * argv[])
             try
             {
                 CPPUNIT_NS::Test * test = NULL;
-				USES_CONVERSION;
+                USES_CONVERSION;
                 test = root->findTest(W2A(argv[i]));
                 tests.push_back(test);
             }
@@ -99,9 +99,9 @@ int CppUnitTestRunner::Run(std::vector<CPPUNIT_NS::Test *>& tests)
     controller.addListener(& progress);      
 
     for each (CPPUNIT_NS::Test * test in tests)
-	{
+    {
         runner.addTest(test);
-	}
+    }
 
     runner.run( controller );
 

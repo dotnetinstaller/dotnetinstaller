@@ -69,7 +69,7 @@ namespace InstallerLibUnitTests
             configFile.Children.Add(x86Configuration);
             configFile.Children.Add(x64Configuration);
             configFile.Children.Add(mipsConfiguration);
-            
+
             // Console.WriteLine("Total : {0}x{1}", configFile.ConfigurationCount, configFile.ComponentCount);
 
             TestProcessorArchitectureFilter_TestData[] testdata = 

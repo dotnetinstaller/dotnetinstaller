@@ -905,7 +905,7 @@ namespace InstallerEditor
 
         private bool OpenConfiguration(string filename)
         {
-            if (! CloseConfiguration())
+            if (!CloseConfiguration())
                 return false;
 
             try
@@ -1618,7 +1618,7 @@ namespace InstallerEditor
                 m_settingsRegistry.SetValue("TemplateConfigFile", legacyAppSetting.TemplateConfigFile);
 
             foreach (string template in legacyAppSetting.AvailableTemplates)
-            {                
+            {
                 m_templateFiles.Add(template);
             }
 
@@ -1632,7 +1632,7 @@ namespace InstallerEditor
         {
             foreach (MenuItemTemplate menuItem in mnTemplates.MenuItems)
             {
-                if (menuItem.AreEqual((string) m_settingsRegistry.GetValue("TemplateConfigFile", "English")))
+                if (menuItem.AreEqual((string)m_settingsRegistry.GetValue("TemplateConfigFile", "English")))
                 {
                     menuItem.PerformClick();
                     return;
@@ -1652,13 +1652,13 @@ namespace InstallerEditor
                 }
 
                 MakeExe l_frmMakeExe = new MakeExe();
-                l_frmMakeExe.TemplateFile = (string) m_makeExeRegistry.GetValue("TemplateFile", string.Empty);
-                l_frmMakeExe.BannerBitmapFile = (string) m_makeExeRegistry.GetValue("BannerBitmapFile", string.Empty);
-                l_frmMakeExe.IconFile = (string) m_makeExeRegistry.GetValue("IconFile", string.Empty);
-                l_frmMakeExe.OutputFileName = (string) m_makeExeRegistry.GetValue("OutputFileName", string.Empty);
+                l_frmMakeExe.TemplateFile = (string)m_makeExeRegistry.GetValue("TemplateFile", string.Empty);
+                l_frmMakeExe.BannerBitmapFile = (string)m_makeExeRegistry.GetValue("BannerBitmapFile", string.Empty);
+                l_frmMakeExe.IconFile = (string)m_makeExeRegistry.GetValue("IconFile", string.Empty);
+                l_frmMakeExe.OutputFileName = (string)m_makeExeRegistry.GetValue("OutputFileName", string.Empty);
                 l_frmMakeExe.SplashBitmapFile = (string)m_makeExeRegistry.GetValue("SplashBitmapFile", string.Empty);
                 l_frmMakeExe.ManifestFile = (string)m_makeExeRegistry.GetValue("ManifestFile", string.Empty);
-                l_frmMakeExe.Embed = ((int) m_makeExeRegistry.GetValue("Embed", 1) != 0);
+                l_frmMakeExe.Embed = ((int)m_makeExeRegistry.GetValue("Embed", 1) != 0);
                 l_frmMakeExe.ConfigFile = Path.GetTempFileName();
 
                 try

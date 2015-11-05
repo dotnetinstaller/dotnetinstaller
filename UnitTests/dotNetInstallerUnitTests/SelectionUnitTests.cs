@@ -69,7 +69,7 @@ namespace dotNetInstallerUnitTests
             ComponentCmd component2 = new ComponentCmd();
             setupConfiguration.Children.Add(component2);
             component2.uninstall_command = "cmd.exe /C exit /b 42";
-            component2.selected_uninstall = false ;
+            component2.selected_uninstall = false;
             component2.supports_uninstall = true;
             component2.Children.Add(existsCheck);
             // second component is selected and runs, not the first one

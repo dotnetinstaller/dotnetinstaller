@@ -159,9 +159,9 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("language_id", m_language_id);
             e.XmlWriter.WriteAttributeString("language", m_language);
             e.XmlWriter.WriteAttributeString("os_filter", m_os_filter);
-            e.XmlWriter.WriteAttributeString("os_filter_min", (m_os_filter_min == OperatingSystem.winNone 
+            e.XmlWriter.WriteAttributeString("os_filter_min", (m_os_filter_min == OperatingSystem.winNone
                 ? "" : Enum.GetName(typeof(OperatingSystem), m_os_filter_min)));
-            e.XmlWriter.WriteAttributeString("os_filter_max", (m_os_filter_max == OperatingSystem.winNone 
+            e.XmlWriter.WriteAttributeString("os_filter_max", (m_os_filter_max == OperatingSystem.winNone
                 ? "" : Enum.GetName(typeof(OperatingSystem), m_os_filter_max)));
             e.XmlWriter.WriteAttributeString("processor_architecture_filter", m_processor_architecture_filter);
             e.XmlWriter.WriteAttributeString("supports_install", m_supports_install.ToString());
@@ -190,7 +190,7 @@ namespace InstallerLib
                 default:
                     throw new Exception(string.Format("Invalid configuration type: {0}", xmltype));
             }
-            
+
             l_Config.FromXml(element);
             return l_Config;
         }

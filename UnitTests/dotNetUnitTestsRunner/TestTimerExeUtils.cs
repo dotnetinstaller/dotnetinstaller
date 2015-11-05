@@ -51,7 +51,7 @@ namespace dotNetUnitTestsRunner
             p.WaitForExit();
             return p.ExitCode;
         }
-        
+
         private static Process Detach()
         {
             return Detach(string.Empty);

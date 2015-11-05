@@ -184,5 +184,5 @@ namespace dotNetInstallerUnitTests
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(options));
             File.Delete(configFilename);
         }
-   }
+    }
 }

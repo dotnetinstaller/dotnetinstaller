@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace InstallerLib
 {
-    public class DocumentationSection : Attribute 
+    public class DocumentationSection : Attribute
     {
         private string m_content;
         private string m_title;
@@ -38,9 +38,9 @@ namespace InstallerLib
                 "<title>{1}</title>" +
                  "<content>" +
                   "{2}" +
-                 "</content>" + 
+                 "</content>" +
                 "</section>", Guid.NewGuid().ToString(), Title, Content);
         }
-        
+
     }
 }

@@ -7,10 +7,10 @@ using namespace DVLib::UnitTests;
 
 void InstalledCheckDirectoryUnitTests::testIsInstalled()
 {
-	std::wcout << std::endl << L"Checking " << DVLib::GetSystemDirectoryW();
-	InstalledCheckDirectory check;
-	check.path = DVLib::GetSystemDirectoryW();
-	CPPUNIT_ASSERT(check.IsInstalled());
-	check.path = DVLib::GenerateGUIDStringW();
-	CPPUNIT_ASSERT(! check.IsInstalled());
+    std::wcout << std::endl << L"Checking " << DVLib::GetSystemDirectoryW();
+    InstalledCheckDirectory check;
+    check.path = DVLib::GetSystemDirectoryW();
+    CPPUNIT_ASSERT(check.IsInstalled());
+    check.path = DVLib::GenerateGUIDStringW();
+    CPPUNIT_ASSERT(! check.IsInstalled());
 }

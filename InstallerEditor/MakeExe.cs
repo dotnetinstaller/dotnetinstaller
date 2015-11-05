@@ -290,10 +290,10 @@ namespace InstallerEditor
         {
             try
             {
-                if (! System.IO.File.Exists(txtTemplateFile.Text))
+                if (!System.IO.File.Exists(txtTemplateFile.Text))
                     throw new ApplicationException("Template file '" + txtTemplateFile.Text + "' is missing");
 
-                if (! System.IO.File.Exists(ConfigFile))
+                if (!System.IO.File.Exists(ConfigFile))
                     throw new ApplicationException("Configuration file '" + ConfigFile + " ' is missing");
 
                 SaveFileDialog l_dg = new SaveFileDialog();
@@ -335,7 +335,7 @@ namespace InstallerEditor
             get { return txtTemplateFile.Text; }
             set { txtTemplateFile.Text = value; }
         }
-        
+
         public string BannerBitmapFile
         {
             get { return txtBannerBitmap.Text; }

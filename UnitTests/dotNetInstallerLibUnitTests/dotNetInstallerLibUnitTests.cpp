@@ -2,7 +2,7 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	CppUnitTestRunner runner;
-	return runner.Run(argc, argv);
+    CppUnitTestRunner runner;
+    return runner.Run(argc, argv);
 }
 

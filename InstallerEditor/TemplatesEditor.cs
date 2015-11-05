@@ -6,44 +6,44 @@ using System.Windows.Forms;
 
 namespace InstallerEditor
 {
-	/// <summary>
-	/// Summary description for TemplatesEditor.
-	/// </summary>
-	public class TemplatesEditor : System.Windows.Forms.Form
-	{
-		private SourceGrid2.Grid gridList;
-		private System.Windows.Forms.Button btCancel;
-		private System.Windows.Forms.Button btOK;
-		private System.Windows.Forms.Label label1;
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+    /// <summary>
+    /// Summary description for TemplatesEditor.
+    /// </summary>
+    public class TemplatesEditor : System.Windows.Forms.Form
+    {
+        private SourceGrid2.Grid gridList;
+        private System.Windows.Forms.Button btCancel;
+        private System.Windows.Forms.Button btOK;
+        private System.Windows.Forms.Label label1;
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.Container components = null;
 
-		public TemplatesEditor()
-		{
-			InitializeComponent();
-		}
+        public TemplatesEditor()
+        {
+            InitializeComponent();
+        }
 
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if(components != null)
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Windows Form Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.gridList = new SourceGrid2.Grid();
             this.btCancel = new System.Windows.Forms.Button();
             this.btOK = new System.Windows.Forms.Button();
@@ -124,102 +124,102 @@ namespace InstallerEditor
             this.Load += new System.EventHandler(this.TemplatesEditor_Load);
             this.ResumeLayout(false);
 
-		}
-		#endregion
+        }
+        #endregion
 
-		private void TemplatesEditor_Load(object sender, System.EventArgs e)
-		{
-			SourceGrid2.DataModels.EditorTextBoxButton editorBtn = new SourceGrid2.DataModels.EditorTextBoxButton(typeof(string));
-			editorBtn.AttachEditorControl(gridList.ScrollablePanel);
-			editorBtn.GetEditorTextBoxTypedButton(gridList.ScrollablePanel).DialogOpen += new EventHandler(TemplatesEditor_DialogOpen);
+        private void TemplatesEditor_Load(object sender, System.EventArgs e)
+        {
+            SourceGrid2.DataModels.EditorTextBoxButton editorBtn = new SourceGrid2.DataModels.EditorTextBoxButton(typeof(string));
+            editorBtn.AttachEditorControl(gridList.ScrollablePanel);
+            editorBtn.GetEditorTextBoxTypedButton(gridList.ScrollablePanel).DialogOpen += new EventHandler(TemplatesEditor_DialogOpen);
 
-			gridList.ColumnsCount = 1;
-			for (int r = 0; r < AvailableTemplateFiles.Count; r++)
-			{
-				gridList.Rows.Insert(r);
-				gridList[r, 0] = new SourceGrid2.Cells.Real.Cell(AvailableTemplateFiles[r], editorBtn);
-			}
+            gridList.ColumnsCount = 1;
+            for (int r = 0; r < AvailableTemplateFiles.Count; r++)
+            {
+                gridList.Rows.Insert(r);
+                gridList[r, 0] = new SourceGrid2.Cells.Real.Cell(AvailableTemplateFiles[r], editorBtn);
+            }
 
-			for (int r = AvailableTemplateFiles.Count; r < AvailableTemplateFiles.Count+20; r++)
-			{
-				gridList.Rows.Insert(r);
-				gridList[r, 0] = new SourceGrid2.Cells.Real.Cell("", editorBtn);
-			}
+            for (int r = AvailableTemplateFiles.Count; r < AvailableTemplateFiles.Count + 20; r++)
+            {
+                gridList.Rows.Insert(r);
+                gridList[r, 0] = new SourceGrid2.Cells.Real.Cell("", editorBtn);
+            }
 
-			gridList.AutoSizeMinHeight = gridList.Font.Height;
-			gridList.AutoStretchColumnsToFitWidth = true;
-			gridList.StretchColumnsToFitWidth();
-		}
+            gridList.AutoSizeMinHeight = gridList.Font.Height;
+            gridList.AutoStretchColumnsToFitWidth = true;
+            gridList.StretchColumnsToFitWidth();
+        }
 
-		private void TemplatesEditor_DialogOpen(object sender, EventArgs e)
-		{
-			SourceLibrary.Windows.Forms.TextBoxTypedButton txtBtn = (SourceLibrary.Windows.Forms.TextBoxTypedButton)sender;
-			OpenFileDialog dlg = new OpenFileDialog();
-			if (txtBtn.Value is String)
-				dlg.FileName = (string)txtBtn.Value;
-			dlg.Filter = "Xml Files|*.xml|All Files|*.*";
-			if (dlg.ShowDialog(this) == DialogResult.OK)
-			{
-				txtBtn.Value = dlg.FileName;
-			}
-		}
+        private void TemplatesEditor_DialogOpen(object sender, EventArgs e)
+        {
+            SourceLibrary.Windows.Forms.TextBoxTypedButton txtBtn = (SourceLibrary.Windows.Forms.TextBoxTypedButton)sender;
+            OpenFileDialog dlg = new OpenFileDialog();
+            if (txtBtn.Value is String)
+                dlg.FileName = (string)txtBtn.Value;
+            dlg.Filter = "Xml Files|*.xml|All Files|*.*";
+            if (dlg.ShowDialog(this) == DialogResult.OK)
+            {
+                txtBtn.Value = dlg.FileName;
+            }
+        }
 
-		private List<String> m_AvailableTemplateFiles;
+        private List<String> m_AvailableTemplateFiles;
 
-		private void btOK_Click(object sender, System.EventArgs e)
-		{
-			try
-			{
-				for (int r = 0; r < gridList.RowsCount; r++)
-				{
-					string file = gridList[r, 0].DisplayText;
-					if (file != null &&
-						file.Length > 0)
-					{
-						file = file.Trim();
-						if (System.IO.File.Exists(file))
-						{
-						}
-						else
-						{
-							MessageBox.Show(this, "File not exist:" + file);
-							return;
-						}
-					}
-				}
+        private void btOK_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                for (int r = 0; r < gridList.RowsCount; r++)
+                {
+                    string file = gridList[r, 0].DisplayText;
+                    if (file != null &&
+                        file.Length > 0)
+                    {
+                        file = file.Trim();
+                        if (System.IO.File.Exists(file))
+                        {
+                        }
+                        else
+                        {
+                            MessageBox.Show(this, "File not exist:" + file);
+                            return;
+                        }
+                    }
+                }
 
-				AvailableTemplateFiles.Clear();
-				for (int r = 0; r < gridList.RowsCount; r++)
-				{
-					string file = gridList[r, 0].DisplayText;
-					if (file != null &&
-						file.Length > 0)
-					{
-						file = file.Trim();
-						if (System.IO.File.Exists(file))
-						{
-							if (AvailableTemplateFiles.Contains(file) == false)
-								AvailableTemplateFiles.Add(file);
-						}
-						else
-						{
-							throw new ApplicationException("Invalid file");
-						}
-					}
-				}
+                AvailableTemplateFiles.Clear();
+                for (int r = 0; r < gridList.RowsCount; r++)
+                {
+                    string file = gridList[r, 0].DisplayText;
+                    if (file != null &&
+                        file.Length > 0)
+                    {
+                        file = file.Trim();
+                        if (System.IO.File.Exists(file))
+                        {
+                            if (AvailableTemplateFiles.Contains(file) == false)
+                                AvailableTemplateFiles.Add(file);
+                        }
+                        else
+                        {
+                            throw new ApplicationException("Invalid file");
+                        }
+                    }
+                }
 
-				DialogResult = DialogResult.OK;
-			}
-			catch(Exception err)
-			{
-				SourceLibrary.Windows.Forms.ErrorDialog.Show(this, err, "Error");
-			}
-		}
+                DialogResult = DialogResult.OK;
+            }
+            catch (Exception err)
+            {
+                SourceLibrary.Windows.Forms.ErrorDialog.Show(this, err, "Error");
+            }
+        }
 
-		public List<String> AvailableTemplateFiles
-		{
-			get { return m_AvailableTemplateFiles; }
-			set { m_AvailableTemplateFiles = value; }
-		}
-	}
+        public List<String> AvailableTemplateFiles
+        {
+            get { return m_AvailableTemplateFiles; }
+            set { m_AvailableTemplateFiles = value; }
+        }
+    }
 }

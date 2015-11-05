@@ -58,7 +58,7 @@ namespace InstallerLib
             m_status_notinstalled = tpl.status_notinstalled;
 
             // message and caption to show during CAB extraction
-            m_cab_dialog_message = tpl.cab_dialog_message; 
+            m_cab_dialog_message = tpl.cab_dialog_message;
             m_cab_cancelled_message = tpl.cab_cancelled_message;
             m_cab_dialog_caption = tpl.cab_dialog_caption;
             m_cab_path = tpl.cab_path;
@@ -685,12 +685,12 @@ namespace InstallerLib
             ReadAttributeValue(e, "install_caption", ref m_install_caption);
             ReadAttributeValue(e, "uninstall_caption", ref m_uninstall_caption);
             ReadAttributeValue(e, "installation_completed", ref m_installation_completed);
-            if (! ReadAttributeValue(e, "uninstallation_completed", ref m_uninstallation_completed))
+            if (!ReadAttributeValue(e, "uninstallation_completed", ref m_uninstallation_completed))
                 m_uninstallation_completed = m_installation_completed;
             ReadAttributeValue(e, "installation_none", ref m_installation_none);
             ReadAttributeValue(e, "uninstallation_none", ref m_uninstallation_none);
             ReadAttributeValue(e, "installing_component_wait", ref m_installing_component_wait);
-            if (! ReadAttributeValue(e, "uninstalling_component_wait", ref m_uninstalling_component_wait))
+            if (!ReadAttributeValue(e, "uninstalling_component_wait", ref m_uninstalling_component_wait))
                 m_uninstalling_component_wait = m_installing_component_wait;
             ReadAttributeValue(e, "reboot_required", ref m_reboot_required);
             ReadAttributeValue(e, "must_reboot_required", ref m_must_reboot_required);

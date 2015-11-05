@@ -112,7 +112,7 @@ namespace dotNetInstallerUnitTests
             component_optional.required_install = false;
             component_optional.supports_install = true;
             component_optional.command = string.Format("cmd.exe /C dir > \"{0}\"", markerFilename);
-            
+
             InstalledCheckFile check_optional = new InstalledCheckFile();
             check_optional.filename = markerFilename;
             check_optional.comparison = installcheckfile_comparison.exists;

@@ -46,7 +46,7 @@ namespace InstallerLib
                 filteredXml.Save(configTemp);
                 configfile.LoadXml(filteredXml);
                 args.WriteLine(string.Format(" configurations: {0} => {1}", configurationCount, configfile.ConfigurationCount));
-                args.WriteLine(string.Format(" components: {0} => {1}", componentCount, configfile.ComponentCount));                
+                args.WriteLine(string.Format(" components: {0} => {1}", componentCount, configfile.ComponentCount));
             }
 
             args.WriteLine(string.Format("Updating binary attributes in \"{0}\"", args.output));
@@ -302,9 +302,9 @@ namespace InstallerLib
                     args.WriteLine("Embedding MSLU unicows.dll");
 
                     string unicowsdll = Path.Combine(templatepath, "unicows.dll");
-                    if (! File.Exists(unicowsdll)) unicowsdll = Path.Combine(supportdir, "unicows.dll");
-                    if (! File.Exists(unicowsdll)) unicowsdll = Path.Combine(Environment.CurrentDirectory, "unicows.dll");
-                    if (! File.Exists(unicowsdll))
+                    if (!File.Exists(unicowsdll)) unicowsdll = Path.Combine(supportdir, "unicows.dll");
+                    if (!File.Exists(unicowsdll)) unicowsdll = Path.Combine(Environment.CurrentDirectory, "unicows.dll");
+                    if (!File.Exists(unicowsdll))
                     {
                         throw new Exception(string.Format("Error locating \"{0}\\unicows.dll\"", templatepath));
                     }
@@ -335,7 +335,7 @@ namespace InstallerLib
                 }
             }
 
-            args.WriteLine(string.Format("Successfully created \"{0}\" ({1})", 
+            args.WriteLine(string.Format("Successfully created \"{0}\" ({1})",
                 args.output, EmbedFileCollection.FormatBytes(new FileInfo(args.output).Length)));
         }
     }

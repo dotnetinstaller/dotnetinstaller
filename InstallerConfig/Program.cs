@@ -34,8 +34,8 @@ namespace InstallerConfig
                 {
                     ConfigFile configFile = new ConfigFile();
                     configFile.Load(i_args.configfile);
-                    configFile.SaveAs(string.IsNullOrEmpty(i_args.outputfile) 
-                        ? i_args.configfile 
+                    configFile.SaveAs(string.IsNullOrEmpty(i_args.outputfile)
+                        ? i_args.configfile
                         : i_args.outputfile);
                 }
                 catch (Exception ex)

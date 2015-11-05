@@ -7,15 +7,15 @@ using namespace DVLib::UnitTests;
 
 void OpenFileComponentUnitTests::testExec()
 {
-	OpenFileComponent component;
-	component.file = L"cmd.exe /C";
-	component.Exec();
+    OpenFileComponent component;
+    component.file = L"cmd.exe /C";
+    component.Exec();
 }
 
 void OpenFileComponentUnitTests::testMustReboot()
 {
-	OpenFileComponent component;
-	CPPUNIT_ASSERT(! component.IsRebootRequired());
-	component.mustreboot = L"True";
-	CPPUNIT_ASSERT(component.IsRebootRequired());
+    OpenFileComponent component;
+    CPPUNIT_ASSERT(! component.IsRebootRequired());
+    component.mustreboot = L"True";
+    CPPUNIT_ASSERT(component.IsRebootRequired());
 }

@@ -42,7 +42,7 @@ namespace dotNetInstallerUnitTests
             ConfigFile configFile = new ConfigFile();
             configFile.log_enabled = true;
             configFile.log_file = Path.Combine(Path.GetTempPath(), "TestLogConfigSpecified.log");
-            if (File.Exists(configFile.log_file)) 
+            if (File.Exists(configFile.log_file))
                 File.Delete(configFile.log_file);
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -94,11 +94,11 @@ namespace dotNetInstallerUnitTests
             string resolved_logfile = Path.Combine(Path.GetTempPath(), "TestLogAcceptsPathVariables.log");
             if (File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile))
                 File.Delete(dotNetInstallerExeUtils.RunOptions.DefaultLogFile);
-            if (File.Exists(resolved_logfile)) 
+            if (File.Exists(resolved_logfile))
                 File.Delete(resolved_logfile);
             ConfigFile configFile = new ConfigFile();
             configFile.log_enabled = true;
-            configFile.log_file = @"#TEMPPATH\TestLogAcceptsPathVariables.log"; 
+            configFile.log_file = @"#TEMPPATH\TestLogAcceptsPathVariables.log";
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");

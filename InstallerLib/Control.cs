@@ -188,7 +188,7 @@ namespace InstallerLib
         }
 
         public static Control CreateFromXml(XmlElement element)
-        {            
+        {
             string xmltype = element.Attributes["type"].InnerText;
             Control control = null;
             ControlType type = (ControlType)Enum.Parse(typeof(ControlType), xmltype);

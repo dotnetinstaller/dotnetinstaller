@@ -53,7 +53,7 @@ namespace InstallerLib
         // Returns:
         //     true if the property this attribute is bound to is required; false if the
         //     property is optional.
-        public bool IsRequired 
+        public bool IsRequired
         {
             get
             {
@@ -73,7 +73,7 @@ namespace InstallerLib
         public override bool Equals(object value)
         {
             if (value is Boolean || value is bool)
-                return ((bool) value == IsRequired);
+                return ((bool)value == IsRequired);
             else if (value is Required)
                 return (value as Required).IsRequired == IsRequired;
             else

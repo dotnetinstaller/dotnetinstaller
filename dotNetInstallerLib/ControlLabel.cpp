@@ -5,19 +5,19 @@
 #include "InstallerLog.h"
 
 ControlLabel::ControlLabel()
-	: ControlText(control_type_label)
+: ControlText(control_type_label)
 {
 
 }
 
 void ControlLabel::Load(TiXmlElement * node)
 {
-	ControlText::Load(node);
+    ControlText::Load(node);
 }
 
 std::wstring ControlLabel::GetString() const
 {
-	std::wstringstream ss;
-	ss << L"'label' control, " << ControlText::GetString();
-	return ss.str();
+    std::wstringstream ss;
+    ss << L"'label' control, " << ControlText::GetString();
+    return ss.str();
 }

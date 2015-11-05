@@ -315,17 +315,17 @@ namespace InstallerLib
 
         public static string FormatBytes(long bytes)
         {
-	        if (bytes == 1) // bytes
+            if (bytes == 1) // bytes
                 return String.Format("{0} byte", bytes);
-	        else if (bytes < 1024) // bytes
+            else if (bytes < 1024) // bytes
                 return String.Format("{0} bytes", bytes);
-	        else if (bytes < 1048576) // Kb
+            else if (bytes < 1048576) // Kb
                 return String.Format("{0:F1}KB", (double)bytes / 1024);
-	        else if (bytes < 1073741824) // Mb
+            else if (bytes < 1073741824) // Mb
                 return String.Format("{0:F1}MB", (double)bytes / 1048576);
-	        else if (bytes < 1099511627776 ) // GB
+            else if (bytes < 1099511627776) // GB
                 return String.Format("{0:F1}GB", (double)bytes / 1073741824);
-	        else
+            else
                 return String.Format("{0} bytes", bytes);
         }
 

@@ -47,7 +47,7 @@ namespace InstallerLib
 
         private OperatingSystem m_os_filter_min;
         [Description("Filter to install this component only on all operating systems greater or equal to the id value specified. For example to install a component only in Windows 2000 or later use 'win2000'.")]
-        [Category("Operating System")]        
+        [Category("Operating System")]
         public OperatingSystem os_filter_min
         {
             get { return m_os_filter_min; }
@@ -350,7 +350,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("mustreboot", m_mustreboot.ToString());
             e.XmlWriter.WriteAttributeString("reboot_required", m_reboot_required);
             e.XmlWriter.WriteAttributeString("must_reboot_required", m_must_reboot_required.ToString());
-            e.XmlWriter.WriteAttributeString("failed_exec_command_continue", m_failed_exec_command_continue);            
+            e.XmlWriter.WriteAttributeString("failed_exec_command_continue", m_failed_exec_command_continue);
             e.XmlWriter.WriteAttributeString("allow_continue_on_error", m_allow_continue_on_error.ToString());
             e.XmlWriter.WriteAttributeString("default_continue_on_error", m_default_continue_on_error.ToString());
             e.XmlWriter.WriteAttributeString("required_install", m_required_install.ToString());
@@ -387,14 +387,14 @@ namespace InstallerLib
             ReadAttributeValue(e, "allow_continue_on_error", ref m_allow_continue_on_error);
             ReadAttributeValue(e, "default_continue_on_error", ref m_default_continue_on_error);
             // required -> required_install and required_uninstall
-            if (! ReadAttributeValue(e, "required_install", ref m_required_install))
+            if (!ReadAttributeValue(e, "required_install", ref m_required_install))
                 ReadAttributeValue(e, "required", ref m_required_install);
-            if (! ReadAttributeValue(e, "required_uninstall", ref m_required_uninstall))
+            if (!ReadAttributeValue(e, "required_uninstall", ref m_required_uninstall))
                 m_required_uninstall = m_required_install;
             // selected -> selected_install & selected_uninstall
-            if (! ReadAttributeValue(e, "selected_install", ref m_selected_install))
+            if (!ReadAttributeValue(e, "selected_install", ref m_selected_install))
                 ReadAttributeValue(e, "selected", ref m_selected_install);
-            if (! ReadAttributeValue(e, "selected_uninstall", ref m_selected_uninstall))
+            if (!ReadAttributeValue(e, "selected_uninstall", ref m_selected_uninstall))
                 m_selected_uninstall = m_selected_install;
             // filters
             ReadAttributeValue(e, "os_filter", ref m_os_filter);

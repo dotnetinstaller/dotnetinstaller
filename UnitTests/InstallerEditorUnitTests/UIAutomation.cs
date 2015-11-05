@@ -28,11 +28,11 @@ namespace InstallerEditorUnitTests
 
         private static void DumpControl(AutomationElement el, bool recurse, int level)
         {
-            Console.WriteLine("{0}{1}: {2}", new String(' ', level), 
+            Console.WriteLine("{0}{1}: {2}", new String(' ', level),
                 el.Current.ControlType.LocalizedControlType, el.Current.Name);
 
             if (recurse)
-            {                
+            {
                 foreach (AutomationElement child in el.FindAll(TreeScope.Children, Condition.TrueCondition))
                 {
                     DumpControl(child, true, level + 1);

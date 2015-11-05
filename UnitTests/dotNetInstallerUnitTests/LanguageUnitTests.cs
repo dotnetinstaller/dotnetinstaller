@@ -64,7 +64,7 @@ namespace dotNetInstallerUnitTests
             ConfigFile configFile = new ConfigFile();
             // current lcid setup configuration
             SetupConfiguration currentLcidConfiguration = new SetupConfiguration();
-            currentLcidConfiguration.lcid_filter = CultureInfo.CurrentUICulture.LCID.ToString(); 
+            currentLcidConfiguration.lcid_filter = CultureInfo.CurrentUICulture.LCID.ToString();
             configFile.Children.Add(currentLcidConfiguration);
             string currentLcidFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             ComponentCmd cmdCurrentLcid = new ComponentCmd();

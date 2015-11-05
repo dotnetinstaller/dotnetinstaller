@@ -7,10 +7,10 @@ std::string DVLib::GetErrorStringA(HRESULT hr, LPCSTR error)
 {
     std::stringstream ss;
     ss << "0x" << std::hex << hr;
-	if (NULL != error)
-	{
-		ss << " - " << error;
-	}
+    if (NULL != error)
+    {
+        ss << " - " << error;
+    }
     ss << ": " << DVLib::FormatMessageFromHRA(hr);
     return ss.str();
 }
@@ -29,10 +29,10 @@ std::wstring DVLib::GetErrorStringW(HRESULT hr, LPCTSTR error, LPCTSTR dllname)
 {
     std::wstringstream ss;
     ss << L"0x" << std::hex << hr;
-	if (NULL != error)
-	{
-		ss << L" - " << error;
-	}
+    if (NULL != error)
+    {
+        ss << L" - " << error;
+    }
     ss << L": " << DVLib::FormatMessageFromHRW(hr, dllname);
     return ss.str();
 }

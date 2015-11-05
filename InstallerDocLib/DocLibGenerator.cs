@@ -24,7 +24,7 @@ namespace InstallerDocLib
             Type[] types = lib.GetTypes();
             foreach (Type type in types)
             {
-                if (typeof(XmlClass).IsAssignableFrom(type) && ! type.IsAbstract)
+                if (typeof(XmlClass).IsAssignableFrom(type) && !type.IsAbstract)
                 {
                     // Console.WriteLine("Processing {0}", type.Name);
                     GenerateType(type);

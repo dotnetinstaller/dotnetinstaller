@@ -5,20 +5,20 @@
 #include "InstallerLog.h"
 
 ControlHyperlink::ControlHyperlink()
-	: ControlText(control_type_hyperlink)
+: ControlText(control_type_hyperlink)
 {
 
 }
 
 void ControlHyperlink::Load(TiXmlElement * node)
 {
-	uri = node->Attribute("uri");
-	ControlText::Load(node);
+    uri = node->Attribute("uri");
+    ControlText::Load(node);
 }
 
 std::wstring ControlHyperlink::GetString() const
 {
-	std::wstringstream ss;
-	ss << L"'hyperlink' control, uri=" << uri << L", " << ControlText::GetString();
-	return ss.str();
+    std::wstringstream ss;
+    ss << L"'hyperlink' control, uri=" << uri << L", " << ControlText::GetString();
+    return ss.str();
 }

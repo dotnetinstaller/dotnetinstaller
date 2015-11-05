@@ -7,12 +7,12 @@
 #include "InstallerSession.h"
 
 ResponseFileNone::ResponseFileNone(const std::wstring& s, const std::wstring& t)
-	: ResponseFile(s, t)
+: ResponseFile(s, t)
 {
 
 }
 
 void ResponseFileNone::Exec()
 {
-	DVLib::FileCopy(source, target);
+    DVLib::FileCopy(source, target);
 }

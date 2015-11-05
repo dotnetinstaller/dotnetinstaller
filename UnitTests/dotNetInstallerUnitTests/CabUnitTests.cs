@@ -70,14 +70,14 @@ namespace dotNetInstallerUnitTests
             configFile.SaveAs(args.config);
             args.embed = true;
             args.apppath = Path.GetTempPath();
-            args.embedFiles = new string[]{ Path.GetFileName(args.config) };
+            args.embedFiles = new string[] { Path.GetFileName(args.config) };
             args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
             args.template = dotNetInstallerExeUtils.Executable;
             Console.WriteLine("Linking '{0}'", args.output);
             InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
             // execute dotNetInstaller
-            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, "/ExtractCab"));            
+            Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, "/ExtractCab"));
             // this should have created a directory called SupportFiles in the current directory
             string supportFilesPath = Path.Combine(Path.GetDirectoryName(args.output), "SupportFiles");
             Console.WriteLine("Checking {0}", supportFilesPath);

@@ -13,35 +13,35 @@ void InstalledCheckOperator::Load(TiXmlElement * node)
 {
     type = DVLib::UTF8string2wstring(node->Attribute("type"));
     description = node->Attribute("description");
-	// child install checks
-	TiXmlNode * child = NULL;
-	while( (child = node->IterateChildren(child)) != NULL )
-	{
-		TiXmlElement * child_element = child->ToElement();
-		
-		if (child_element == NULL)
-			continue;
-		
-		if (strcmp(child_element->Value(), "installedcheck") == 0)
-		{
-			std::wstring installedcheck_type = DVLib::UTF8string2wstring(child_element->Attribute("type"));
-			InstalledCheckPtr installedcheck(InstalledCheck::Create(installedcheck_type));
-			installedcheck->Load(child_element);
-			installedchecks.push_back(installedcheck);
-		}
-		else if (strcmp(child_element->Value(), "installedcheckoperator") == 0)
-		{
-			InstalledCheckPtr installedcheckoperator(new InstalledCheckOperator());
-			installedcheckoperator->Load(child_element);
-			installedchecks.push_back(installedcheckoperator);
-		}
-		else
-		{
-			THROW_EX(L"Unexpected node '" << child_element->Value() << L"'");
-		}
-	}
+    // child install checks
+    TiXmlNode * child = NULL;
+    while( (child = node->IterateChildren(child)) != NULL )
+    {
+        TiXmlElement * child_element = child->ToElement();
 
-	LOG(L"Loaded '" << type << L"' installed check operator");
+        if (child_element == NULL)
+            continue;
+
+        if (strcmp(child_element->Value(), "installedcheck") == 0)
+        {
+            std::wstring installedcheck_type = DVLib::UTF8string2wstring(child_element->Attribute("type"));
+            InstalledCheckPtr installedcheck(InstalledCheck::Create(installedcheck_type));
+            installedcheck->Load(child_element);
+            installedchecks.push_back(installedcheck);
+        }
+        else if (strcmp(child_element->Value(), "installedcheckoperator") == 0)
+        {
+            InstalledCheckPtr installedcheckoperator(new InstalledCheckOperator());
+            installedcheckoperator->Load(child_element);
+            installedchecks.push_back(installedcheckoperator);
+        }
+        else
+        {
+            THROW_EX(L"Unexpected node '" << child_element->Value() << L"'");
+        }
+    }
+
+    LOG(L"Loaded '" << type << L"' installed check operator");
 }
 
 bool InstalledCheckOperator::IsInstalled() const
@@ -66,7 +66,7 @@ bool InstalledCheckOperator::IsInstalled() const
             if (installedcheck->IsInstalled())
                 return true;
         }
-        
+
         return false;
     }
     else if (type == L"Not")
@@ -84,6 +84,6 @@ bool InstalledCheckOperator::IsInstalled() const
     }
     else
     {
-		THROW_EX("Invalid check operator \"" << type << L"\"");
+        THROW_EX("Invalid check operator \"" << type << L"\"");
     }
 }

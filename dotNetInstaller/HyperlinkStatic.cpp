@@ -3,12 +3,12 @@
 #include "resource.h"
 
 CHyperlinkStatic::CHyperlinkStatic()
-	: _rect(0, 0, 0, 0)
-	, _bCreateFont(false)
-	, _bMouseInControl(false)
-	, _bGetCaptionSize(false)
-	, _hHandCursor(::LoadCursor(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDC_CUSTOM_HAND)))
-	, _hArrowCursor(::LoadCursor(NULL, IDC_ARROW))
+: _rect(0, 0, 0, 0)
+, _bCreateFont(false)
+, _bMouseInControl(false)
+, _bGetCaptionSize(false)
+, _hHandCursor(::LoadCursor(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDC_CUSTOM_HAND)))
+, _hArrowCursor(::LoadCursor(NULL, IDC_ARROW))
 {
 
 }
@@ -19,81 +19,81 @@ CHyperlinkStatic::~CHyperlinkStatic()
 }
 
 BEGIN_MESSAGE_MAP(CHyperlinkStatic, CStatic)
-	//{{AFX_MSG_MAP(CHyperlinkStatic)
-	ON_WM_LBUTTONDOWN()
-	ON_WM_PAINT()
-	ON_WM_DESTROY()
-	ON_WM_MOUSEMOVE()
-	//}}AFX_MSG_MAP
-	ON_MESSAGE(WM_MOUSELEAVE, OnMouseLeave)
+    //{{AFX_MSG_MAP(CHyperlinkStatic)
+    ON_WM_LBUTTONDOWN()
+    ON_WM_PAINT()
+    ON_WM_DESTROY()
+    ON_WM_MOUSEMOVE()
+    //}}AFX_MSG_MAP
+    ON_MESSAGE(WM_MOUSELEAVE, OnMouseLeave)
 END_MESSAGE_MAP()
 
 void CHyperlinkStatic::SetHyperlink(std::wstring strHyperlink)
 {
-	_strHyperlink = strHyperlink.c_str();
+    _strHyperlink = strHyperlink.c_str();
 }
 
 void CHyperlinkStatic::SetCaption(std::wstring strCaption)
 {
-	_strCaption = strCaption.c_str();
-	_bGetCaptionSize = false;
+    _strCaption = strCaption.c_str();
+    _bGetCaptionSize = false;
 }
 
 void CHyperlinkStatic::OnLButtonDown(UINT nFlags, CPoint point) 
 {
-	try
-	{
-		if ( _bGetCaptionSize == false )
-			GetCaptionSize();
-		if (InCaptionRange(point))
-			DVLib::ShellCmd(_strHyperlink.GetBuffer());
-		CStatic::OnLButtonDown(nFlags, point);
-	}
-	catch(std::exception& ex)
-	{
-		DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
-	}
+    try
+    {
+        if ( _bGetCaptionSize == false )
+            GetCaptionSize();
+        if (InCaptionRange(point))
+            DVLib::ShellCmd(_strHyperlink.GetBuffer());
+        CStatic::OnLButtonDown(nFlags, point);
+    }
+    catch(std::exception& ex)
+    {
+        DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK | MB_ICONSTOP);
+    }
 }
 
 BOOL CHyperlinkStatic::Create(LPCTSTR lpszText, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID)
 {
-	_rect.SetRect(rect.left, rect.top, rect.right, rect.bottom);
-	BOOL rc = CStatic::Create(lpszText, dwStyle, rect, pParentWnd, nID);
-	SetCaption(lpszText);
-	return rc;
+    _rect.SetRect(rect.left, rect.top, rect.right, rect.bottom);
+    BOOL rc = CStatic::Create(lpszText, dwStyle, rect, pParentWnd, nID);
+    SetCaption(lpszText);
+    return rc;
 }
 
 void CHyperlinkStatic::OnPaint() 
 {	
-	if ( _bCreateFont == false )
-	{
-		CreateFont();
-	}
+    if ( _bCreateFont == false )
+    {
+        CreateFont();
+    }
 
-	CPaintDC dc(this);
-	CFont * pOldFont = (CFont*) dc.SelectObject(& _fontCaption);
-	dc.SetBkMode(TRANSPARENT);
-	dc.SetTextColor(RGB(0, 0, 255));
+    CPaintDC dc(this);
+    CFont * pOldFont = (CFont*) dc.SelectObject(& _fontCaption);
+    dc.SetBkMode(TRANSPARENT);
+    dc.SetTextColor(RGB(0, 0, 255));
 
-	if (! _bGetCaptionSize)
-	{
-		GetCaptionSize();
-	}
+    if (! _bGetCaptionSize)
+    {
+        GetCaptionSize();
+    }
 
-	dc.TextOut(_captionRect.left, _captionRect.top, _strCaption);
-	dc.SelectObject(pOldFont);
+    dc.TextOut(_captionRect.left, _captionRect.top, _strCaption);
+    dc.SelectObject(pOldFont);
 }
 
 void CHyperlinkStatic::OnDestroy() 
 {
-	CStatic::OnDestroy();
-	_fontCaption.DeleteObject();
+    CStatic::OnDestroy();
+    _fontCaption.DeleteObject();
 }
 
 void CHyperlinkStatic::PreSubclassWindow() 
 {
-	ModifyStyle(0, SS_NOTIFY | SS_OWNERDRAW, TRUE);
-	CStatic::PreSubclassWindow();
+    ModifyStyle(0, SS_NOTIFY | SS_OWNERDRAW, TRUE);
+    CStatic::PreSubclassWindow();
 }
 
 void CHyperlinkStatic::DrawItem(LPDRAWITEMSTRUCT)
@@ -103,69 +103,69 @@ void CHyperlinkStatic::DrawItem(LPDRAWITEMSTRUCT)
 
 LRESULT CHyperlinkStatic::OnMouseLeave(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
-	_bMouseInControl = false;
-	::SetCursor(_hArrowCursor);	
-	return 0;
+    _bMouseInControl = false;
+    ::SetCursor(_hArrowCursor);	
+    return 0;
 }
 
 void CHyperlinkStatic::OnMouseMove(UINT nFlags, CPoint point) 
 {
-	if ( _bMouseInControl == false ) 
-	{
-		TRACKMOUSEEVENT tme;
-		tme.cbSize = sizeof(tme);
+    if ( _bMouseInControl == false ) 
+    {
+        TRACKMOUSEEVENT tme;
+        tme.cbSize = sizeof(tme);
         tme.hwndTrack = GetSafeHwnd();
         tme.dwFlags = TME_LEAVE;        
-		_TrackMouseEvent(&tme);
-		_bMouseInControl = true;
-	}
-	else 
-	{
-		if ( _bGetCaptionSize == false )
-		{
-			GetCaptionSize();
-		}
+        _TrackMouseEvent(&tme);
+        _bMouseInControl = true;
+    }
+    else 
+    {
+        if ( _bGetCaptionSize == false )
+        {
+            GetCaptionSize();
+        }
 
-		::SetCursor((InCaptionRange(point))?_hHandCursor:_hArrowCursor);		
-	}
+        ::SetCursor((InCaptionRange(point))?_hHandCursor:_hArrowCursor);		
+    }
 
-	CStatic::OnMouseMove(nFlags, point);
+    CStatic::OnMouseMove(nFlags, point);
 }
 
 void CHyperlinkStatic::CreateFont()
 {
-	CFont * pFontParent = GetParent()->GetFont();
-	if ( pFontParent ) 
-	{
-		LOGFONT lf;
-		pFontParent->GetObject(sizeof(lf), &lf);
-		lf.lfUnderline = TRUE;
-		_fontCaption.CreateFontIndirect(&lf);
-		_bCreateFont = true;
-	}
+    CFont * pFontParent = GetParent()->GetFont();
+    if ( pFontParent ) 
+    {
+        LOGFONT lf;
+        pFontParent->GetObject(sizeof(lf), &lf);
+        lf.lfUnderline = TRUE;
+        _fontCaption.CreateFontIndirect(&lf);
+        _bCreateFont = true;
+    }
 }
 
 void CHyperlinkStatic::GetCaptionSize()
 {
-	if (! _bGetCaptionSize && _bCreateFont) 
-	{
-		CClientDC dc(this);
-		CFont * pOldFont = dc.SelectObject(& _fontCaption);
-		_sizeCaption = dc.GetTextExtent(_strCaption);
-		dc.SelectObject(pOldFont);
+    if (! _bGetCaptionSize && _bCreateFont) 
+    {
+        CClientDC dc(this);
+        CFont * pOldFont = dc.SelectObject(& _fontCaption);
+        _sizeCaption = dc.GetTextExtent(_strCaption);
+        dc.SelectObject(pOldFont);
 
-		GetWindowRect(& _rect);
+        GetWindowRect(& _rect);
 
-		_captionRect.SetRect(0, 
-			(_rect.bottom - _rect.top - _sizeCaption.cy - 1) / 2,
-			_rect.right - _rect.left,
-			(_rect.bottom - _rect.top - _sizeCaption.cy - 1) / 2 + _sizeCaption.cy);
+        _captionRect.SetRect(0, 
+            (_rect.bottom - _rect.top - _sizeCaption.cy - 1) / 2,
+            _rect.right - _rect.left,
+            (_rect.bottom - _rect.top - _sizeCaption.cy - 1) / 2 + _sizeCaption.cy);
 
-		_bGetCaptionSize = true;
-	}
+        _bGetCaptionSize = true;
+    }
 }
 
 bool CHyperlinkStatic::InCaptionRange(CPoint &point)
 {
-	return _captionRect.PtInRect(point) ? true : false;
+    return _captionRect.PtInRect(point) ? true : false;
 }

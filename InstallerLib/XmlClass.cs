@@ -137,7 +137,7 @@ namespace InstallerLib
                 while (enumerator.MoveNext())
                 {
                     EmbedFileCollection coll = null;
-                    if (! c_files.TryGetValue(enumerator.Current.Key, out coll))
+                    if (!c_files.TryGetValue(enumerator.Current.Key, out coll))
                     {
                         coll = new EmbedFileCollection(supportdir);
                         c_files.Add(enumerator.Current.Key, coll);
@@ -173,10 +173,10 @@ namespace InstallerLib
         /// <typeparam name="T">Node type.</typeparam>
         /// <returns>Total count.</returns>
         public int GetCount<T>()
-            where T : XmlClass 
+            where T : XmlClass
         {
             int total = 0;
-            
+
             foreach (XmlClass xmlclazz in Children)
             {
                 if (xmlclazz is T)
@@ -327,7 +327,7 @@ namespace InstallerLib
             PropertyDescriptorCollection baseProperties = TypeDescriptor.GetProperties(this, attributes, true);
             foreach (PropertyDescriptor pd in baseProperties)
             {
-                coll.Add(pd.Attributes.Contains(Required.Yes) 
+                coll.Add(pd.Attributes.Contains(Required.Yes)
                     ? new RequiredPropertyDescriptor(pd)
                     : pd);
             }
@@ -511,7 +511,7 @@ namespace InstallerLib
         {
             foreach (XmlClass c in this)
             {
-                if (filter != null && ! filter.IsSupported(c))
+                if (filter != null && !filter.IsSupported(c))
                     continue;
 
                 c.ToXml(p_Writer, filter);

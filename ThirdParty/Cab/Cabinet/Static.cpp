@@ -31,12 +31,12 @@ DWORD Cabinet::CStatic::mu32_ExtractTlsIndex;
 // and initializing them !!THERE!! will only work in 99,9% of the cases.
 Cabinet::CStatic::CStatic()
 {
-	#if _TraceExtract || _TraceCompress
-		CTrace::TraceW(L"Constructor CStatic() initializing Critical Section structures");
-	#endif
+#if _TraceExtract || _TraceCompress
+    CTrace::TraceW(L"Constructor CStatic() initializing Critical Section structures");
+#endif
 
-	ms32_CompressClassID = 0;
-	mu32_ExtractTlsIndex = TlsAlloc();
+    ms32_CompressClassID = 0;
+    mu32_ExtractTlsIndex = TlsAlloc();
 }
 
 // ###############################################################################
