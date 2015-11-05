@@ -38,7 +38,7 @@ int DniMessageBox::Show(const std::wstring& p_lpszText, UINT p_nType /*=MB_OK*/,
 	int result = p_nDefaultResult;
 	switch(InstallUILevelSetting::Instance->GetUILevel())
 	{
-	// basic UI, dialogs appear and disappea
+	// basic UI, dialogs appear and disappear
 	case InstallUILevelBasic:
 		{
 			g_hHook = SetWindowsHookEx(WH_CBT, CBTProc, NULL, GetCurrentThreadId());
