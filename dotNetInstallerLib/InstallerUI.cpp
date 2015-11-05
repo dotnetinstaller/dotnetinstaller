@@ -154,7 +154,7 @@ ComponentsStatus InstallerUI::LoadComponentsList(bool autoSetChecked)
 
 		// show installed
         if (InstallerSession::Instance->sequence == SequenceInstall 
-			&& ! pConfiguration->dialog_show_installed 
+			&& ((!pConfiguration->dialog_show_installed) || (component->hide_component_if_installed))
 			&& component->installed)
 		{
             visible = false;
@@ -163,7 +163,8 @@ ComponentsStatus InstallerUI::LoadComponentsList(bool autoSetChecked)
 		// show uninstalled
         if (InstallerSession::Instance->sequence == SequenceUninstall 
 			&& ! pConfiguration->dialog_show_uninstalled
-			&& ! component->installed)
+			&& ((!component->installed)
+                || (component->hide_component_if_installed && component->installed)))
 		{
             visible = false;
 		}

@@ -298,6 +298,16 @@ namespace InstallerLib
             set { m_show_cab_dialog = value; }
         }
 
+        private bool m_hide_component_if_installed = false;
+        [Description("Indicates whether the component is hidden if it's already installed. "
+            + "The default value is 'false' so the component is displayed even if it's already installed.")]
+        [Category("Component")]
+        public bool hide_component_if_installed
+        {
+            get { return m_hide_component_if_installed; }
+            set { m_hide_component_if_installed = value; }
+        }
+
         #endregion
 
         #region Events
@@ -356,6 +366,7 @@ namespace InstallerLib
             // dialog options
             e.XmlWriter.WriteAttributeString("show_progress_dialog", m_show_progress_dialog.ToString());
             e.XmlWriter.WriteAttributeString("show_cab_dialog", m_show_cab_dialog.ToString());
+            e.XmlWriter.WriteAttributeString("hide_component_if_installed", m_hide_component_if_installed.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -405,6 +416,7 @@ namespace InstallerLib
             // dialog options
             ReadAttributeValue(e, "show_progress_dialog", ref m_show_progress_dialog);
             ReadAttributeValue(e, "show_cab_dialog", ref m_show_cab_dialog);
+            ReadAttributeValue(e, "hide_component_if_installed", ref m_hide_component_if_installed);
             base.OnXmlReadTag(e);
         }
 

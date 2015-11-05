@@ -52,6 +52,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationClient, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="UIAutomationTypes, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="White.Core, Version=0.1.9.0, Culture=neutral, PublicKeyToken=2672efbf3e161801, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\White\White.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Version\GlobalAssemblyInfo.cs">
@@ -75,6 +81,7 @@
     <Compile Include="RebootUnitTests.cs" />
     <Compile Include="SelectionUnitTests.cs" />
     <Compile Include="UILevelUnitTests.cs" />
+    <Compile Include="UIUnitTests.cs" />
     <Compile Include="UninstallUnitTests.cs" />
     <Compile Include="UserControlUnitTests.cs" />
   </ItemGroup>
@@ -92,6 +99,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\ThirdParty\Microsoft\StyleCop v4.3.3.0\Microsoft.StyleCop.Targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

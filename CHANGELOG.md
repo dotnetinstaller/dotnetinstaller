@@ -1,3 +1,11 @@
+TBD
+===
+
+Features
+--------
+
+* [#96](https://github.com/dblock/dotnetinstaller/issues/96) - Added the ability to hide a component if it's already installed - [@icnocop](https://github.com/icnocop).
+
 2.4 (9/9/2015)
 ==============
 

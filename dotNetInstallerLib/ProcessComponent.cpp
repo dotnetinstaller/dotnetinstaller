@@ -40,6 +40,11 @@ bool ProcessComponent::IsExecuting() const
 
 void ProcessComponent::Wait(DWORD /* tt */)
 {
+    if (m_process_handle == NULL)
+    {
+        return;
+    }
+
 	CHECK_WIN32_BOOL(WAIT_OBJECT_0 == WaitForSingleObject(m_process_handle, INFINITE),
 		L"WaitForSingleObject");
 }

@@ -67,9 +67,9 @@ public:
 	// true if component is selected
     bool selected_install;
     bool selected_uninstall;
-	// classi per gestire la verifica se il componente è installato o no
+    // manages the verification of whether the component is installed or not
 	std::vector<InstalledCheckPtr> installedchecks;
-	// informazioni sull'eventuale download dei componenti (fa riferimento al nodo downloaddialog all'interno di Component, se non è presente non viene scaricato nessun componente)
+    // the nested download dialog within a Component
 	DownloadDialogPtr downloaddialog;
 	// handle to main window of installator for use in calls to ShellExecute and similar
 	HWND main_window;
@@ -84,7 +84,8 @@ public:
 	// dialog options
 	bool show_progress_dialog;
 	bool show_cab_dialog;
-	// funzione virtuale specifica per il tipo di componente
+    bool hide_component_if_installed;
+	// virtual functions specific for the type of component
 	virtual void Exec() = 0;
 	virtual void Wait(DWORD tt = 1000);
 	virtual bool IsRebootRequired() const;

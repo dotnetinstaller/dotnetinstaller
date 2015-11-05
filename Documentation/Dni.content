@@ -7,6 +7,8 @@
     <Topic id="1aa2140c-f65d-4aac-83a4-b86a3a554525" visible="True" title="Multilingual Support" />
   </Topic>
   <Topic id="b88e8650-71df-4328-a720-72ea55cf60f5" visible="True" title="Install Editor &amp; Configuration">
+    <Topic id="installerlib.setupconfiguration" visible="True" title="Setup Configuration" />
+    <Topic id="installerlib.webconfiguration" visible="True" title="Web Configuration" />
     <Topic id="db007eb2-ccc6-4657-843e-adad7da5db5b" visible="True" title="Components">
       <Topic id="installerlib.componentmsi" visible="True" title="Windows Installer Components (MSI)" />
       <Topic id="installerlib.componentmsu" visible="True" title="Windows Update Components (MSU)" />

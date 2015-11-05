@@ -22,7 +22,7 @@ namespace dotNetInstallerUnitTests
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
-            // a checkbox that changes are return value
+            // a checkbox that changes the return value
             ControlCheckBox checkbox = new ControlCheckBox();
             checkbox.UncheckedValue = "3";
             checkbox.CheckedValue = "4";

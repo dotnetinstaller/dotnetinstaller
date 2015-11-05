@@ -12,25 +12,26 @@
 #include "InstallerLog.h"
 
 Component::Component(component_type t)
-	: type(t)
-    , mustreboot(false)
-    , must_reboot_required(false)
-    , allow_continue_on_error(true)
-	, default_continue_on_error(false)
-    , cancelled(false)
-    , required_install(true)
-	, required_uninstall(true)
-	, selected_install(true)
-	, selected_uninstall(true)
-    , checked(true)
-	, disabled(false)
-	, supports_install(true)
-	, supports_uninstall(false)
-	, os_filter_min(DVLib::winNone)
-	, os_filter_max(DVLib::winNone)
-	, show_progress_dialog(true)
-	, show_cab_dialog(true)
-	, installed(false)
+	: type(t),
+    mustreboot(false),
+    must_reboot_required(false),
+    allow_continue_on_error(true),
+	default_continue_on_error(false),
+    cancelled(false),
+    required_install(true),
+	required_uninstall(true),
+	selected_install(true),
+	selected_uninstall(true),
+    checked(true),
+	disabled(false),
+	supports_install(true),
+	supports_uninstall(false),
+	os_filter_min(DVLib::winNone),
+	os_filter_max(DVLib::winNone),
+	show_progress_dialog(true),
+	show_cab_dialog(true),
+	installed(false),
+    hide_component_if_installed(false)
 {
 
 }
@@ -104,6 +105,7 @@ void Component::Load(TiXmlElement * node)
 	// progress options
 	show_progress_dialog = XmlAttribute(node->Attribute("show_progress_dialog")).GetBoolValue(true);
 	show_cab_dialog = XmlAttribute(node->Attribute("show_cab_dialog")).GetBoolValue(true);
+    hide_component_if_installed = XmlAttribute(node->Attribute("hide_component_if_installed")).GetBoolValue(false);
 	// install checks, embed files, etc.
 	TiXmlNode * child = NULL;
 	while( (child = node->IterateChildren(child)) != NULL )
