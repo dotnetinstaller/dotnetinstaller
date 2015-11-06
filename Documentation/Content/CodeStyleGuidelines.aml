@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="230e954b-47fa-4a55-98e1-5f92e3ba5dbf" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>Code Style Guidelines</para>
+    </introduction>
+    <section address="All">
+      <title>All languages</title>
+      <content>
+      	<sections>
+      		<section address="AllTabs">
+      			<title>Tabs</title>
+      			<content>
+      				<para>Use smart indenting.</para>
+      				<para>Use a tab size of 4.</para>
+      				<para>Use an indentation size of 4.</para>
+      		    	<para>Insert spaces instead of tabs.</para>
+      		  	</content>
+      		</section>
+      	</sections>
+      </content>
+    </section>
+    <section address="Cpp">
+      <title>C++</title>
+      <content>
+      	<sections>
+      		<section address="CppTabs">
+      			<title>Formatting</title>
+      			<content>
+        			<para>Do not indent braces.</para>
+      		  	</content>
+      		</section>
+      	</sections>
+      </content>
+    </section>
+    <section address="CSharp">
+      <title>C#</title>
+      <content>
+      	<sections>
+      		<section address="CSharpIndentation">
+      			<title>Indentation</title>
+      			<content>
+        			<para>Indent block contents.</para>
+        			<para>Do not indent open and close braces.</para>
+        			<para>Indent case contents.</para>
+        			<para>Indent case labels.</para>
+        			<para>Place goto labels one indent less than current.</para>
+      		  	</content>
+      		</section>
+      		<section address="CSharpNewLines">
+      			<title>New Lines</title>
+      			<content>
+        			<para>Place open brace on new line for types.</para>
+        			<para>Place open brace on new line for methods.</para>
+        			<para>Place open brace on new line for anonymous methods.</para>
+        			<para>Place open brace on new line for control blocks.</para>
+        			<para>Place "else" on new line.</para>
+        			<para>Place "catch" on new line.</para>
+        			<para>Place "finally" on new line.</para>
+      		  	</content>
+      		</section>
+      		<section address="CSharpSpacing">
+      			<title>Spacing</title>
+      			<content>
+      				<sections>
+      					<section address="CSharpSpacingMethodDeclarations">
+      						<title>Method declarations</title>
+      						<content>
+        						<para>Do not insert space between method name and its opening parenthesis.</para>
+        						<para>Do not insert space within argument list parentheses.</para>
+        						<para>Do not insert space within empty argument list parentheses.</para>
+        					</content>
+        				</section>
+      					<section address="CSharpSpacingMethodCalls">
+      						<title>Method calls</title>
+      						<content>
+        						<para>Do not insert space between method name and its opening parenthesis.</para>
+        						<para>Do not insert space within argument list parentheses.</para>
+        						<para>Do not insert space within empty argument list parentheses.</para>
+        					</content>
+        				</section>
+      					<section address="CSharpSpacingOtherOptions">
+      						<title>Other options</title>
+      						<content>
+        						<para>Insert space after keywords in control flow statements.</para>
+        						<para>Do not insert space within parentheses of expressions.</para>
+        						<para>Do not insert space within parentheses of type casts.</para>
+        						<para>Do not insert spaces within parentheses of control flow statements.</para>
+        						<para>Do not insert space after type cast.</para>
+        					</content>
+        				</section>
+      					<section address="CSharpSpacingBrackets">
+      						<title>Brackets</title>
+      						<content>
+        						<para>Do not insert space before open square bracket.</para>
+        						<para>Do not insert space within empty square brackets.</para>
+        						<para>Do not insert spaces within square bracket.</para>
+        					</content>
+        				</section>
+      					<section address="CSharpSpacingDelimiters">
+      						<title>Delimiters</title>
+      						<content>
+      							<para>Insert space after colon for base or interface in type declaration.</para>
+      							<para>Insert space after comma.</para>
+      							<para>Do not insert space after dot.</para>
+      							<para>Insert space after semicolon in "for" statement.</para>
+        						<para>Insert space before colon for base or interface in type declaration.</para>
+        						<para>Do not insert space before comma.</para>
+        						<para>Do not insert space before dot.</para>
+        						<para>Do not insert space before semicolon in "for" statement.</para>
+        					</content>
+        				</section>
+      					<section address="CSharpSpacingOperators">
+      						<title>Operators</title>
+      						<content>
+        						<para>Insert space before and after binary operators.</para>
+        					</content>
+        				</section>
+        			</sections>
+      		  	</content>
+      		</section>
+      	</sections>
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

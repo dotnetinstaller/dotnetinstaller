@@ -29,6 +29,7 @@
           <listItem>Preserve backwards compatibility.</listItem>
           <listItem>Discuss large changes.</listItem>
           <listItem>Write unit tests with every new feature.</listItem>
+          <listItem>Follow the recommended code style guidelines.</listItem>
         </list>
       </para>
     </introduction>
@@ -109,5 +110,8 @@
         </step>
       </steps>
     </procedure>
+    <relatedTopics>
+      <link xlink:href="230e954b-47fa-4a55-98e1-5f92e3ba5dbf"/>
+    </relatedTopics>
   </developerHowToDocument>
 </topic>

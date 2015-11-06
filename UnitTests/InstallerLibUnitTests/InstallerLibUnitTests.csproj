@@ -153,6 +153,7 @@
     <None Include="..\..\Samples\ExeSetup\Setup.rsp">
       <Link>Samples\ExeSetup\Setup.rsp</Link>
     </None>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -165,5 +166,6 @@
   <PropertyGroup>
     <PreBuildEvent>"$(SolutionDir)\build.cmd" rewritesamples /p:Configuration=$(ConfigurationName)
 </PreBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)..\..\ThirdParty\VisualStudioCRT\$(ConfigurationName)\*.*" "$(TargetDir)" /y</PostBuildEvent>
   </PropertyGroup>
 </Project>

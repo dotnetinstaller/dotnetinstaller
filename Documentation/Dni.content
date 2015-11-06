@@ -50,6 +50,7 @@
   </Topic>
   <Topic id="078b8f1e-5f24-48f0-a1e2-f3a1a1f336ff" visible="True" title="Contributors">
     <Topic id="a1bf54f2-d23f-43d1-b1e6-380a057e35f8" visible="True" title="Contributing to Source Code" />
+    <Topic id="230e954b-47fa-4a55-98e1-5f92e3ba5dbf" visible="True" title="Code Style Guidelines" />
   </Topic>
   <Topic id="eafd60ba-a819-40a9-a429-cbe796ec1c9e" visible="True" noFile="True" title="Licensing">
     <Topic id="bfd78578-6e10-47e5-8b41-44426e0a1ac1" visible="True" title="dotNetInstaller MIT License" />

@@ -172,7 +172,16 @@ namespace InstallerLibUnitTests
                     ri.Load(args.output);
                     List<Resource> manifests = ri.Resources[new ResourceId(Kernel32.ResourceTypes.RT_MANIFEST)]; // RT_MANIFEST
                     Assert.IsNotNull(manifests);
-                    Assert.AreEqual(1, manifests.Count);
+
+                    int expectedManifestFiles = 1;
+                    bool usingHtmlInstaller = dotNetInstallerExeUtils.Executable.EndsWith("htmlInstaller.exe");
+                    if (usingHtmlInstaller)
+                    {
+                        // the stub file already has an embedded manifest
+                        expectedManifestFiles++;
+                    }
+
+                    Assert.AreEqual(expectedManifestFiles, manifests.Count);
                     ManifestResource manifest = (ManifestResource)manifests[0]; // RT_MANIFEST
                     Console.WriteLine(manifest.Manifest.OuterXml);
                     XmlNamespaceManager manifestNamespaceManager = new XmlNamespaceManager(manifest.Manifest.NameTable);
@@ -334,7 +343,15 @@ namespace InstallerLibUnitTests
                 args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
                 Console.WriteLine("Linking '{0}'", args.output);
                 args.template = dotNetInstallerExeUtils.Executable;
-                args.splash = Path.Combine(dotNetInstallerExeUtils.Location, @"..\res\banner.bmp");
+
+                string relativePathName = "res";
+                bool usingHtmlInstaller = dotNetInstallerExeUtils.Executable.EndsWith("htmlInstaller.exe");
+                if (usingHtmlInstaller)
+                {
+                    relativePathName = "Html";
+                }
+
+                args.splash = Path.Combine(dotNetInstallerExeUtils.Location, string.Format(@"..\{0}\banner.bmp", relativePathName));
                 InstallerLib.InstallerLinker.CreateInstaller(args);
                 // check that the linker generated output
                 Assert.IsTrue(File.Exists(args.output));

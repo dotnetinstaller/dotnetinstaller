@@ -1,0 +1,126 @@
+version: '{build}'
+pull_requests:
+  do_not_increment_build_number: true
+init:
+- ps: >-
+    # Allow Remote Desktop
+
+    # $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+
+    # MSBuild Community Tasks
+
+    # This is only to get unit tests in InstalledCheckProductUnitTests to succeed
+
+    $msiFilePath = "$($env:TEMP)\MSBuild.Community.Tasks.v1.4.0.88.msi"
+
+    $logFilePath = "$($env:TEMP)\MSBuild.Community.Tasks.v1.4.0.88.msi.txt"
+
+    (New-Object Net.WebClient).DownloadFile('https://github.com/loresoft/msbuildtasks/releases/download/1.4.0.88/MSBuild.Community.Tasks.v1.4.0.88.msi', $msiFilePath)
+
+    $process = (Start-Process -FilePath "msiexec.exe" -ArgumentList "/i $msiFilePath /quiet /l*v $logFilePath" -Wait -Passthru)
+
+    $exitCode = $process.ExitCode
+
+    if ($exitCode -ne 0)
+
+    {
+      Get-Content $logFilePath
+      throw "Command failed with exit code $exitCode."
+    }
+
+    del $msiFilePath
+
+    del $logFilePath
+
+    Write-Host "MSBuild Community Tasks v1.4.0.88 installed successfully." -ForegroundColor Green
+
+
+    # Microsoft Visual C++ 2005 Express Program Compatibility
+
+    $reg = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::CurrentUser, [Microsoft.Win32.RegistryView]::Registry32)
+
+    $key = $reg.CreateSubKey('SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags')
+
+    $key.SetValue("{b5f72fda-0549-4d67-9927-92997864fd7f}", 4, [Microsoft.Win32.RegistryValueKind]::DWORD)
+
+    Write-Host "Microsoft Visual C++ 2005 Express Program Compatibility configured successfully." -ForegroundColor Green
+
+
+    # Microsoft Visual C++ 2005 Express Edition
+
+    # http://blogs.msdn.com/b/astebner/archive/2006/03/14/551674.aspx
+
+    Write-Host "Downloading Microsoft Visual C++ 2005 Express..." -ForegroundColor Green
+
+    $isoFilePath = "$($env:USERPROFILE)\VC.iso"
+
+    (New-Object Net.WebClient).DownloadFile('http://go.microsoft.com/fwlink/?linkid=57034', $isoFilePath)
+
+    Write-Host "Installing Microsoft Visual C++ 2005 Express..." -ForegroundColor Green
+
+    $process = (Start-Process -FilePath "C:\Program Files\7-Zip\7z.exe" -ArgumentList "x -y -oC:\VC2005Express $isoFilePath" -Wait -Passthru)
+
+    $exitCode = $process.ExitCode
+
+    if ($exitCode -ne 0)
+
+    {
+      throw "Command failed with exit code $exitCode."
+    }
+
+    del $isoFilePath
+
+    # Install Visual C++ 2005 Express silently
+
+    # http://blogs.msdn.com/b/astebner/archive/2006/03/19/555326.aspx
+
+    $exeFilePath = "C:\VC2005Express\ixpvc.exe"
+
+    $process = (Start-Process -FilePath $exeFilePath -ArgumentList '/t:c:\vc2005express /q:a /c:"msiexec /i vcsetup.msi VSEXTUI=1 ADDLOCAL=ALL REBOOT=ReallySuppress /qn /l*v c:\vc2005express\setup.log"' -Wait -Passthru)
+
+    $exitCode = $process.ExitCode
+
+    if ($exitCode -ne 0)
+
+    {
+      throw "Command failed with exit code $exitCode."
+    }
+
+    Write-Host "Microsoft Visual C++ 2005 Express installed successfully" -ForegroundColor Green
+
+
+    # Associate .txt files with notepad
+
+    $reg = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::CurrentUser, [Microsoft.Win32.RegistryView]::Registry32)
+
+    $key = $reg.CreateSubKey('SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\FileExts\.txt\OpenWithProgids')
+
+    $bytes = New-Object Byte[] 0
+
+    $key.SetValue("txtfile", $bytes, [Microsoft.Win32.RegistryValueKind]::NONE)
+
+    $key = $reg.CreateSubKey('SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\FileExts\.txt\UserChoice')
+
+    $key.SetValue("Hash", "Tn/DUO0bX5E=", [Microsoft.Win32.RegistryValueKind]::String)
+
+    $key.SetValue("ProgId", "txtfile", [Microsoft.Win32.RegistryValueKind]::String)
+
+
+    # $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+nuget:
+  disable_publish_on_pr: true
+build_script:
+- cmd: build.cmd all /p:Configuration=Release
+test: off
+artifacts:
+- path: target\Release\dotNetInstaller.*.zip
+  name: zip
+- path: target\Release\dotNetInstaller.*.msi
+  name: msi
+deploy: off
+on_finish:
+- ps: >-
+    # Allow Remote Desktop
+
+    # $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))

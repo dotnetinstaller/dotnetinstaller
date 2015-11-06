@@ -56,6 +56,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
   </PropertyGroup>
   <ItemGroup>
+    <None Include="Content\CodeStyleGuidelines.aml" />
     <None Include="Content\Generated\ComponentExe.aml" />
     <None Include="Content\Generated\ComponentOpenFile.aml" />
     <None Include="Content\Generated\ComponentCmd.aml" />

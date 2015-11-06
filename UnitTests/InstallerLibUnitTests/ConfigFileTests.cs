@@ -80,6 +80,8 @@ namespace InstallerLibUnitTests
                                 pi.SetValue(xmlclazz, SetupConfiguration.DefaultButton.skip, null);
                             else if (pi.PropertyType.Equals(typeof(InstallerLib.OperatingSystem)))
                                 pi.SetValue(xmlclazz, InstallerLib.OperatingSystem.winServer2003, null);
+                            else if (pi.PropertyType.Equals(typeof(InstallerLib.CommandExecutionMethod)))
+                                pi.SetValue(xmlclazz, InstallerLib.CommandExecutionMethod.CreateProcess, null);
                             else
                             {
                                 Assert.Fail(string.Format("Value change required for type: {0}", pi.PropertyType));
