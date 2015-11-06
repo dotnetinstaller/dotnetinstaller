@@ -41,7 +41,7 @@ namespace InstallerLib
         public string manifest;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Embed MSLU unicows.dll", LongName = "Mslu", ShortName = "u", DefaultValue = false)]
         public bool mslu;
-        [Argument(ArgumentType.AtMostOnce, HelpText = "Link only components that match a processor architecture filter", LongName="ProcessorArchitecture", ShortName = "p")]
+        [Argument(ArgumentType.AtMostOnce, HelpText = "Link only components that match a processor architecture filter", LongName = "ProcessorArchitecture", ShortName = "p")]
         public string processorArchitecture;
 
         public void Validate()
@@ -54,7 +54,7 @@ namespace InstallerLib
                 throw new FileNotFoundException(template);
 
             // banner
-            if (!string.IsNullOrEmpty(banner)) 
+            if (!string.IsNullOrEmpty(banner))
                 banner = Path.GetFullPath(banner);
             if (!String.IsNullOrEmpty(banner) && !File.Exists(banner))
                 throw new FileNotFoundException(banner);

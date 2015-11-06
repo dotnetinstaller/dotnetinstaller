@@ -29,7 +29,7 @@ namespace dotNetUnitTestsRunner
 
             public RunOptions()
             {
-            
+
             }
 
             public RunOptions(string file)
@@ -50,7 +50,7 @@ namespace dotNetUnitTestsRunner
                 get
                 {
                     string result = string.Empty;
-                    if (! string.IsNullOrEmpty(configFile))
+                    if (!string.IsNullOrEmpty(configFile))
                     {
                         result += string.Format("/ConfigFile \"{0}\"", configFile);
                     }

@@ -125,7 +125,7 @@ namespace InstallerLibUnitTests
                     List<Resource> manifests = ri.Resources[new ResourceId(Kernel32.ResourceTypes.RT_MANIFEST)]; // RT_MANIFEST
                     Assert.IsNotNull(manifests);
                     Assert.AreEqual(1, manifests.Count);
-                    ManifestResource manifest = (ManifestResource) manifests[0]; // RT_MANIFEST
+                    ManifestResource manifest = (ManifestResource)manifests[0]; // RT_MANIFEST
                     Console.WriteLine(manifest.Manifest.OuterXml);
                     XmlNamespaceManager manifestNamespaceManager = new XmlNamespaceManager(manifest.Manifest.NameTable);
                     manifestNamespaceManager.AddNamespace("v1", "urn:schemas-microsoft-com:asm.v1");
@@ -173,7 +173,7 @@ namespace InstallerLibUnitTests
                     List<Resource> manifests = ri.Resources[new ResourceId(Kernel32.ResourceTypes.RT_MANIFEST)]; // RT_MANIFEST
                     Assert.IsNotNull(manifests);
                     Assert.AreEqual(1, manifests.Count);
-                    ManifestResource manifest = (ManifestResource) manifests[0]; // RT_MANIFEST
+                    ManifestResource manifest = (ManifestResource)manifests[0]; // RT_MANIFEST
                     Console.WriteLine(manifest.Manifest.OuterXml);
                     XmlNamespaceManager manifestNamespaceManager = new XmlNamespaceManager(manifest.Manifest.NameTable);
                     manifestNamespaceManager.AddNamespace("v1", "urn:schemas-microsoft-com:asm.v1");
@@ -259,7 +259,7 @@ namespace InstallerLibUnitTests
                 Assert.IsTrue(new FileInfo(args.output).Length > 0);
                 using (ResourceInfo ri = new ResourceInfo())
                 {
-                    ri.Load(args.output);                    
+                    ri.Load(args.output);
                     Assert.IsFalse(ri.Resources.ContainsKey(new ResourceId("RES_CAB")));
                 }
             }

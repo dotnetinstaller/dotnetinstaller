@@ -118,7 +118,7 @@ namespace dotNetInstallerUnitTests
             File.Delete(configFilename);
             Assert.IsFalse(File.Exists(markerFilename));
         }
-        
+
         [Test]
         public void TestWaitForCompleteCommand()
         {

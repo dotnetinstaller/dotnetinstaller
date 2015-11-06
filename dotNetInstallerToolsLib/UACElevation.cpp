@@ -18,40 +18,40 @@ All other rights reserved.
 // Dynamically load CreateWellKnownSid() as it may not be on the target system
 BOOL DVLib::CreateWellKnownSid(WELL_KNOWN_SID_TYPE WellKnownSidType, PSID DomainSid, PSID pSid, DWORD *cbSid)
 {
-	typedef BOOL (WINAPI * LPFN_CREATEWELLKNOWNSID)(WELL_KNOWN_SID_TYPE, PSID, PSID, DWORD *);
+    typedef BOOL (WINAPI * LPFN_CREATEWELLKNOWNSID)(WELL_KNOWN_SID_TYPE, PSID, PSID, DWORD *);
     LPFN_CREATEWELLKNOWNSID fnCreateWellKnownSid = (LPFN_CREATEWELLKNOWNSID) GetProcAddress(
         GetModuleHandle(TEXT("Advapi32")), "CreateWellKnownSid");
-  
+
     if (NULL != fnCreateWellKnownSid)
     {
         return fnCreateWellKnownSid(WellKnownSidType, DomainSid, pSid, cbSid);
     }
 
-	return TRUE;
+    return TRUE;
 }
 
 // Dynamically load CheckTokenMembership() as it may not be on the target system
 BOOL DVLib::CheckTokenMembership(HANDLE TokenHandle, PSID SidToCheck, PBOOL IsMember)
 {
-	typedef BOOL (WINAPI * LPFN_CHECKTOKENMEMBERSHIP)(HANDLE, PSID, PBOOL);
+    typedef BOOL (WINAPI * LPFN_CHECKTOKENMEMBERSHIP)(HANDLE, PSID, PBOOL);
     LPFN_CHECKTOKENMEMBERSHIP fnCheckTokenMembership = (LPFN_CHECKTOKENMEMBERSHIP) GetProcAddress(
         GetModuleHandle(TEXT("Advapi32")), "CheckTokenMembership");
-  
+
     if (NULL != fnCheckTokenMembership)
     {
         return fnCheckTokenMembership(TokenHandle, SidToCheck, IsMember);
     }
 
-	return TRUE;
+    return TRUE;
 }
 
 // Smart pointer for PSID
 struct sid_free
 {
-	static void close(PSID pSid)
-	{
-		::FreeSid(pSid);
-	}
+    static void close(PSID pSid)
+    {
+        ::FreeSid(pSid);
+    }
 };
 
 typedef auto_any<PSID, sid_free> auto_psid;
@@ -73,36 +73,36 @@ typedef auto_any<PSID, sid_free> auto_psid;
 //
 bool DVLib::IsUserInAdminGroup()
 {
-	BOOL fInAdminGroup = FALSE;
+    BOOL fInAdminGroup = FALSE;
     HANDLE hToken = NULL;
     HANDLE hTokenToCheck = NULL;
     DWORD cbSize = 0;
     OSVERSIONINFO osver = { sizeof(osver) };
 
-	// Open the primary access token of the process for query and duplicate.
-	CHECK_WIN32_BOOL(::OpenProcessToken(::GetCurrentProcess(), TOKEN_QUERY | TOKEN_DUPLICATE, &hToken),
-		L"OpenProcessToken");
-	auto_handle hToken_handle(hToken);
+    // Open the primary access token of the process for query and duplicate.
+    CHECK_WIN32_BOOL(::OpenProcessToken(::GetCurrentProcess(), TOKEN_QUERY | TOKEN_DUPLICATE, &hToken),
+        L"OpenProcessToken");
+    auto_handle hToken_handle(hToken);
 
     // Determine whether system is running Windows Vista or later operating 
     // systems (major version >= 6) because they support linked tokens, but 
     // previous versions (major version < 6) do not.
-	CHECK_WIN32_BOOL(::GetVersionEx(&osver),
-		L"GetVersionEx");
+    CHECK_WIN32_BOOL(::GetVersionEx(&osver),
+        L"GetVersionEx");
 
     if (osver.dwMajorVersion >= 6)
     {
         // Running Windows Vista or later (major version >= 6). 
         // Determine token type: limited, elevated, or default. 
-		TOKEN_ELEVATION_TYPE elevType;
-		CHECK_WIN32_BOOL(::GetTokenInformation(hToken, (TOKEN_INFORMATION_CLASS)TokenElevationType, &elevType, sizeof(elevType), &cbSize),
-			L"GetTokenInformation");
+        TOKEN_ELEVATION_TYPE elevType;
+        CHECK_WIN32_BOOL(::GetTokenInformation(hToken, (TOKEN_INFORMATION_CLASS)TokenElevationType, &elevType, sizeof(elevType), &cbSize),
+            L"GetTokenInformation");
 
         // If limited, get the linked elevated token for further check.
         if (TokenElevationTypeLimited == elevType)
         {
-			CHECK_WIN32_BOOL(::GetTokenInformation(hToken, (TOKEN_INFORMATION_CLASS)TokenLinkedToken, &hTokenToCheck, sizeof(hTokenToCheck), &cbSize),
-				L"GetTokenInformation");
+            CHECK_WIN32_BOOL(::GetTokenInformation(hToken, (TOKEN_INFORMATION_CLASS)TokenLinkedToken, &hTokenToCheck, sizeof(hTokenToCheck), &cbSize),
+                L"GetTokenInformation");
         }
     }
 
@@ -112,25 +112,25 @@ bool DVLib::IsUserInAdminGroup()
     // CheckTokenMembership.
     if (!hTokenToCheck)
     {
-		CHECK_WIN32_BOOL(::DuplicateToken(hToken, SecurityIdentification, &hTokenToCheck),
-			L"DuplicateToken");
+        CHECK_WIN32_BOOL(::DuplicateToken(hToken, SecurityIdentification, &hTokenToCheck),
+            L"DuplicateToken");
     }
-	auto_handle hTokenToCheck_handle(hTokenToCheck);
+    auto_handle hTokenToCheck_handle(hTokenToCheck);
 
     // Create the SID corresponding to the Administrators group.
     BYTE adminSID[SECURITY_MAX_SID_SIZE];
     cbSize = sizeof(adminSID);
-	CHECK_WIN32_BOOL(DVLib::CreateWellKnownSid(WinBuiltinAdministratorsSid, NULL, &adminSID, &cbSize),
-		L"CreateWellKnownSid");
+    CHECK_WIN32_BOOL(DVLib::CreateWellKnownSid(WinBuiltinAdministratorsSid, NULL, &adminSID, &cbSize),
+        L"CreateWellKnownSid");
 
     // Check if the token to be checked contains admin SID.
     // http://msdn.microsoft.com/en-us/library/aa379596(VS.85).aspx:
     // To determine whether a SID is enabled in a token, that is, whether it 
     // has the SE_GROUP_ENABLED attribute, call CheckTokenMembership.
-	CHECK_WIN32_BOOL(CheckTokenMembership(hTokenToCheck, &adminSID, &fInAdminGroup),
-		L"CheckTokenMembership");
+    CHECK_WIN32_BOOL(CheckTokenMembership(hTokenToCheck, &adminSID, &fInAdminGroup),
+        L"CheckTokenMembership");
 
-	return fInAdminGroup ? true : false;
+    return fInAdminGroup ? true : false;
 }
 
 // 
@@ -152,25 +152,25 @@ bool DVLib::IsRunAsAdmin()
     BOOL fIsRunAsAdmin = FALSE;
     PSID pAdministratorsGroup = NULL;
 
-	// Allocate and initialize a SID of the administrators group.
+    // Allocate and initialize a SID of the administrators group.
     SID_IDENTIFIER_AUTHORITY NtAuthority = SECURITY_NT_AUTHORITY;
-	CHECK_WIN32_BOOL(::AllocateAndInitializeSid(
-			&NtAuthority, 
-			2, 
-			SECURITY_BUILTIN_DOMAIN_RID, 
-			DOMAIN_ALIAS_RID_ADMINS, 
-			0, 0, 0, 0, 0, 0, 
-			&pAdministratorsGroup),
-		L"AllocateAndInitializeSid");
+    CHECK_WIN32_BOOL(::AllocateAndInitializeSid(
+        &NtAuthority, 
+        2, 
+        SECURITY_BUILTIN_DOMAIN_RID, 
+        DOMAIN_ALIAS_RID_ADMINS, 
+        0, 0, 0, 0, 0, 0, 
+        &pAdministratorsGroup),
+        L"AllocateAndInitializeSid");
 
-	auto_psid psid_ptr(pAdministratorsGroup);
+    auto_psid psid_ptr(pAdministratorsGroup);
 
     // Determine whether the SID of administrators group is enabled in 
     // the primary access token of the process.
     CHECK_WIN32_BOOL(CheckTokenMembership(NULL, pAdministratorsGroup, &fIsRunAsAdmin),
-		L"CheckTokenMembership");
+        L"CheckTokenMembership");
 
-	return fIsRunAsAdmin ? true : false;
+    return fIsRunAsAdmin ? true : false;
 }
 
 //
@@ -203,28 +203,28 @@ bool DVLib::IsProcessElevated()
 {
     HANDLE hToken = NULL;
 
-	// Open the primary access token of the process with TOKEN_QUERY.
-	CHECK_WIN32_BOOL(::OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken),
-		L"OpenProcessToken");
-	auto_handle hToken_handle(hToken);
+    // Open the primary access token of the process with TOKEN_QUERY.
+    CHECK_WIN32_BOOL(::OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken),
+        L"OpenProcessToken");
+    auto_handle hToken_handle(hToken);
 
     // Retrieve token elevation information.
-	TOKEN_ELEVATION elevation = { 0 };
+    TOKEN_ELEVATION elevation = { 0 };
     DWORD dwSize = 0;
     // When the process is run on operating systems prior to Windows Vista, GetTokenInformation returns FALSE with the 
     // ERROR_INVALID_PARAMETER error code because TokenElevation is not supported on those operating systems.
     CHECK_WIN32_BOOL(::GetTokenInformation(hToken, (TOKEN_INFORMATION_CLASS)TokenElevation, &elevation, sizeof(elevation), &dwSize),
-		L"GetTokenInformation");
+        L"GetTokenInformation");
 
-	return 0 != elevation.TokenIsElevated;
+    return 0 != elevation.TokenIsElevated;
 }
 
 #pragma endregion
 
 bool DVLib::IsElevationSupported()
 {
-	OSVERSIONINFO osver = { sizeof(osver) };
-	return GetVersionEx(&osver) && osver.dwMajorVersion >= 6;
+    OSVERSIONINFO osver = { sizeof(osver) };
+    return GetVersionEx(&osver) && osver.dwMajorVersion >= 6;
 }
 
 //
@@ -232,7 +232,7 @@ bool DVLib::IsElevationSupported()
 //
 bool DVLib::RestartElevated(HWND hwnd, const std::wstring& cmdline)
 {
-	return ShellElevated(hwnd, DVLib::GetModuleFileNameW(), DVLib::GetModuleDirectoryW(), cmdline);
+    return ShellElevated(hwnd, DVLib::GetModuleFileNameW(), DVLib::GetModuleDirectoryW(), cmdline);
 }
 
 //
@@ -241,34 +241,34 @@ bool DVLib::RestartElevated(HWND hwnd, const std::wstring& cmdline)
 //
 bool DVLib::ShellElevated(HWND hwnd, const std::wstring& file, const std::wstring& directory, const std::wstring& cmdline)
 {
-	OSVERSIONINFO osver = { sizeof(osver) };
-	CHECK_BOOL(GetVersionEx(&osver) && osver.dwMajorVersion >= 6,
-		L"ShellElevated: not running Windows Vista or later");
+    OSVERSIONINFO osver = { sizeof(osver) };
+    CHECK_BOOL(GetVersionEx(&osver) && osver.dwMajorVersion >= 6,
+        L"ShellElevated: not running Windows Vista or later");
 
-	// Relaunch installation as administrator.
-	SHELLEXECUTEINFO sei = { sizeof(sei) };
-	sei.lpVerb = L"runas";
-	sei.lpFile = file.c_str();
-	sei.lpDirectory = directory.c_str();
-	sei.lpParameters = cmdline.c_str();
-	sei.hwnd = hwnd;
-	sei.nShow = SW_NORMAL;
+    // Relaunch installation as administrator.
+    SHELLEXECUTEINFO sei = { sizeof(sei) };
+    sei.lpVerb = L"runas";
+    sei.lpFile = file.c_str();
+    sei.lpDirectory = directory.c_str();
+    sei.lpParameters = cmdline.c_str();
+    sei.hwnd = hwnd;
+    sei.nShow = SW_NORMAL;
 
-	if (! ShellExecuteExW(&sei))
-	{
-		DWORD dwErr = ::GetLastError();
-		// The user refused the elevation
-		if (dwErr == ERROR_CANCELLED)
-		{
-			return false;
-		}
-		// Other error
-		CHECK_WIN32_DWORD(dwErr, L"ShellExecuteExW");
-		// Not really required but fixes warning
-		return false;
-	}
-	else
-	{
-		return true;
-	}
+    if (! ShellExecuteExW(&sei))
+    {
+        DWORD dwErr = ::GetLastError();
+        // The user refused the elevation
+        if (dwErr == ERROR_CANCELLED)
+        {
+            return false;
+        }
+        // Other error
+        CHECK_WIN32_DWORD(dwErr, L"ShellExecuteExW");
+        // Not really required but fixes warning
+        return false;
+    }
+    else
+    {
+        return true;
+    }
 }

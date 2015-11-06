@@ -6,56 +6,56 @@ using InstallerLib;
 
 namespace InstallerEditor
 {
-	/// <summary>
-	/// Summary description for ComponentWizard.
-	/// </summary>
-	public class ComponentWizard2 : System.Windows.Forms.Form
-	{
-		private System.Windows.Forms.CheckedListBox chkListComponents;
-		private System.Windows.Forms.Label lblComponentsToInstall;
-		private System.Windows.Forms.GroupBox groupBoxDownloaded;
-		private System.Windows.Forms.TextBox txtSupportFilesWebSite;
-		private System.Windows.Forms.TextBox txtSupportFilesFileSystem;
-		private System.Windows.Forms.Button btBrowseSupportFilesFileSystem;
-		private System.Windows.Forms.Button btCancel;
-		private System.Windows.Forms.Button btOK;
-		private System.Windows.Forms.Label lblWizard;
-		private System.Windows.Forms.GroupBox groupBoxSupportFilesFileSystem;
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+    /// <summary>
+    /// Summary description for ComponentWizard.
+    /// </summary>
+    public class ComponentWizard2 : System.Windows.Forms.Form
+    {
+        private System.Windows.Forms.CheckedListBox chkListComponents;
+        private System.Windows.Forms.Label lblComponentsToInstall;
+        private System.Windows.Forms.GroupBox groupBoxDownloaded;
+        private System.Windows.Forms.TextBox txtSupportFilesWebSite;
+        private System.Windows.Forms.TextBox txtSupportFilesFileSystem;
+        private System.Windows.Forms.Button btBrowseSupportFilesFileSystem;
+        private System.Windows.Forms.Button btCancel;
+        private System.Windows.Forms.Button btOK;
+        private System.Windows.Forms.Label lblWizard;
+        private System.Windows.Forms.GroupBox groupBoxSupportFilesFileSystem;
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.Container components = null;
 
-		public ComponentWizard2()
-		{
-			//
-			// Required for Windows Form Designer support
-			//
-			InitializeComponent();
-		}
+        public ComponentWizard2()
+        {
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if(components != null)
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Windows Form Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ComponentWizard2));
             this.chkListComponents = new System.Windows.Forms.CheckedListBox();
             this.lblComponentsToInstall = new System.Windows.Forms.Label();
@@ -185,95 +185,95 @@ namespace InstallerEditor
             this.groupBoxSupportFilesFileSystem.PerformLayout();
             this.ResumeLayout(false);
 
-		}
-		#endregion
+        }
+        #endregion
 
-		private void ComponentWizard2_Load(object sender, System.EventArgs e)
-		{
-			//supported component
-			chkListComponents.Items.Clear();
+        private void ComponentWizard2_Load(object sender, System.EventArgs e)
+        {
+            //supported component
+            chkListComponents.Items.Clear();
 
-			System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-			System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             doc.Load(assembly.GetManifestResourceStream("InstallerEditor.wizardcomponents.xml"));
 
-			System.Xml.XmlNodeList list = doc.SelectNodes("//components/component");
-			foreach (System.Xml.XmlElement element in list)
-			{
-				chkListComponents.Items.Add(new ComponentFromXML(element.OuterXml));
-			}
-		}
+            System.Xml.XmlNodeList list = doc.SelectNodes("//components/component");
+            foreach (System.Xml.XmlElement element in list)
+            {
+                chkListComponents.Items.Add(new ComponentFromXML(element.OuterXml));
+            }
+        }
 
-		private ComponentCollection m_SelectedComponents = new ComponentCollection();
+        private ComponentCollection m_SelectedComponents = new ComponentCollection();
 
-		private void btOK_Click(object sender, System.EventArgs e)
-		{
-			try
-			{
-				foreach (WizardComponent w in chkListComponents.CheckedItems)
-				{
-					m_SelectedComponents.AddRange(w.CreateComponent(txtSupportFilesWebSite.Text, txtSupportFilesFileSystem.Text));
-				}
-				
-				DialogResult = DialogResult.OK;
-			}
-			catch(Exception err)
-			{
-				AppUtility.ShowError(this, err);
-			}
-		}
+        private void btOK_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                foreach (WizardComponent w in chkListComponents.CheckedItems)
+                {
+                    m_SelectedComponents.AddRange(w.CreateComponent(txtSupportFilesWebSite.Text, txtSupportFilesFileSystem.Text));
+                }
 
-		public ComponentCollection SelectedComponents
-		{
-			get{return m_SelectedComponents;}
-		}
+                DialogResult = DialogResult.OK;
+            }
+            catch (Exception err)
+            {
+                AppUtility.ShowError(this, err);
+            }
+        }
 
-		private abstract class WizardComponent
-		{
-			private string m_Description;
-			public string Description
-			{
-				get{return m_Description;}
-				set{m_Description = value;}
-			}
-			public WizardComponent()
-			{
-			}
+        public ComponentCollection SelectedComponents
+        {
+            get { return m_SelectedComponents; }
+        }
 
-			public override string ToString()
-			{
-				return m_Description;
-			}
+        private abstract class WizardComponent
+        {
+            private string m_Description;
+            public string Description
+            {
+                get { return m_Description; }
+                set { m_Description = value; }
+            }
+            public WizardComponent()
+            {
+            }
 
-			public abstract Component[] CreateComponent(string p_WebSetupPath, string StandardPath);
-		}
+            public override string ToString()
+            {
+                return m_Description;
+            }
 
-		private class ComponentFromXML : WizardComponent
-		{
-			private string m_RawXml;
+            public abstract Component[] CreateComponent(string p_WebSetupPath, string StandardPath);
+        }
 
-			public ComponentFromXML(string xmlComponent)
-			{
-				m_RawXml = xmlComponent;
+        private class ComponentFromXML : WizardComponent
+        {
+            private string m_RawXml;
 
-				System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-				doc.LoadXml(xmlComponent);
-				Component c = Component.CreateFromXml(doc.DocumentElement);
+            public ComponentFromXML(string xmlComponent)
+            {
+                m_RawXml = xmlComponent;
 
-				Description = c.note;
-			}
+                System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+                doc.LoadXml(xmlComponent);
+                Component c = Component.CreateFromXml(doc.DocumentElement);
 
-			public override Component[] CreateComponent(string p_WebSetupPath, string StandardPath)
-			{
-				m_RawXml = m_RawXml.Replace("#APPPATH\\SupportFiles", StandardPath);
-				m_RawXml = m_RawXml.Replace("http://www.example.com/MyApp/SupportFiles", p_WebSetupPath);
+                Description = c.note;
+            }
 
-				System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-				doc.LoadXml(m_RawXml);
-				Component c = Component.CreateFromXml(doc.DocumentElement);
-				return new Component[]{c};
-			}
-		}
-	}
+            public override Component[] CreateComponent(string p_WebSetupPath, string StandardPath)
+            {
+                m_RawXml = m_RawXml.Replace("#APPPATH\\SupportFiles", StandardPath);
+                m_RawXml = m_RawXml.Replace("http://www.example.com/MyApp/SupportFiles", p_WebSetupPath);
+
+                System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+                doc.LoadXml(m_RawXml);
+                Component c = Component.CreateFromXml(doc.DocumentElement);
+                return new Component[] { c };
+            }
+        }
+    }
 
 }

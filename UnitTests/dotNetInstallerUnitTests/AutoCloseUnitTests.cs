@@ -76,7 +76,7 @@ namespace dotNetInstallerUnitTests
             cmd.required_install = true;
             cmd.supports_install = true;
             setupConfiguration.Children.Add(cmd);
-            
+
             InstalledCheckRegistry check = new InstalledCheckRegistry();
             check.path = @"SOFTWARE\KeyDoesntExists";
             check.comparison = installcheckregistry_comparison.exists;

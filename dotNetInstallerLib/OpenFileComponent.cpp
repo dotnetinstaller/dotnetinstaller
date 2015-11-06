@@ -7,40 +7,40 @@
 #include "Wow64NativeFS.h"
 
 OpenFileComponent::OpenFileComponent()
-	: Component(component_type_openfile)
-	, m_rc(0)
+: Component(component_type_openfile)
+, m_rc(0)
 {
 }
 
 void OpenFileComponent::Exec()
 {
-	std::wstring l_file = file;
-	l_file = InstallerSession::Instance->ExpandUserVariables(l_file);
-	LOG(L"Opening: " << l_file);
-	if (disable_wow64_fs_redirection)
-	{
-		auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
-		DVLib::ShellCmd(l_file, & m_rc, NULL, main_window);
-	}
-	else
-	{
-		DVLib::ShellCmd(l_file, & m_rc, NULL, main_window);
-	}
+    std::wstring l_file = file;
+    l_file = InstallerSession::Instance->ExpandUserVariables(l_file);
+    LOG(L"Opening: " << l_file);
+    if (disable_wow64_fs_redirection)
+    {
+        auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
+        DVLib::ShellCmd(l_file, & m_rc, NULL, main_window);
+    }
+    else
+    {
+        DVLib::ShellCmd(l_file, & m_rc, NULL, main_window);
+    }
 }
 
 bool OpenFileComponent::IsExecuting() const
 {
-	return false;
+    return false;
 }
 
 void OpenFileComponent::Load(TiXmlElement * node)
 {
-	file = node->Attribute("file");
+    file = node->Attribute("file");
     disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
-	Component::Load(node);
+    Component::Load(node);
 }
 
 int OpenFileComponent::GetExitCode() const
 {
-	return m_rc;
+    return m_rc;
 }

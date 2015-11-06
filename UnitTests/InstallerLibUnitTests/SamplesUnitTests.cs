@@ -20,9 +20,9 @@ namespace InstallerLibUnitTests
             string[] manifestResourceNames = Assembly.GetExecutingAssembly().GetManifestResourceNames();
             foreach (string manifestResourceName in manifestResourceNames)
             {
-                if (! manifestResourceName.EndsWith(".Configuration.xml"))
+                if (!manifestResourceName.EndsWith(".Configuration.xml"))
                     continue;
-                
+
                 // fetch the configuration from the resource
                 Console.WriteLine(manifestResourceName);
                 Stream s = Assembly.GetExecutingAssembly().GetManifestResourceStream(manifestResourceName);

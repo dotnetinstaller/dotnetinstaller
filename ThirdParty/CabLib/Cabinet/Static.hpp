@@ -20,15 +20,15 @@
 namespace Cabinet
 {
 
-class CStatic
-{
-public:
-	// Constructor
-	CStatic();
+    class CStatic
+    {
+    public:
+        // Constructor
+        CStatic();
 
-	static LONG  ms32_CompressClassID;
-	static DWORD mu32_ExtractTlsIndex;
-};
+        static LONG  ms32_CompressClassID;
+        static DWORD mu32_ExtractTlsIndex;
+    };
 
 } // Namespace Cabinet
 

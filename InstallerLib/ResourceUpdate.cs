@@ -50,9 +50,9 @@ namespace InstallerLib
             IntPtr h,
             ResourceId resourceType,
             ResourceId resourceName,
-            UInt16 resourceLanguage, 
+            UInt16 resourceLanguage,
             string input)
-        {            
+        {
             using (FileStream binaryStream = new FileStream(input, FileMode.Open, FileAccess.Read))
             {
                 byte[] data = null;
@@ -81,7 +81,7 @@ namespace InstallerLib
         {
             try
             {
-                if (!UpdateResource(h, resourceType.Id, resourceName.Id, resourceLanguage, buffer, (uint) buffer.Length))
+                if (!UpdateResource(h, resourceType.Id, resourceName.Id, resourceLanguage, buffer, (uint)buffer.Length))
                     throw new Win32Exception(Marshal.GetLastWin32Error());
             }
             catch (Exception ex)

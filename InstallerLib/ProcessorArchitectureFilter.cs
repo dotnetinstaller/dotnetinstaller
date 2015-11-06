@@ -54,9 +54,9 @@ namespace InstallerLib
                     }
 
                     if (right_not && left == right)
-			            return false;
-		            else if (! right_not && left == right)
-			            return true;
+                        return false;
+                    else if (!right_not && left == right)
+                        return true;
                 }
             }
 
@@ -77,6 +77,6 @@ namespace InstallerLib
             }
 
             return true;
-        }        
+        }
     }
 }

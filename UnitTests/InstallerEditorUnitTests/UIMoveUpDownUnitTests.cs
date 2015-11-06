@@ -27,7 +27,7 @@ namespace InstallerEditorUnitTests
         {
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
-                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);                
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
                 UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
                 Tree configurationTree = mainWindow.Get<Tree>("configurationTree");
                 TreeNode configFileNode = configurationTree.SelectedNode;
@@ -44,7 +44,7 @@ namespace InstallerEditorUnitTests
         {
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
-                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);                
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
                 UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
                 Tree configurationTree = mainWindow.Get<Tree>("configurationTree");
                 UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
@@ -62,7 +62,7 @@ namespace InstallerEditorUnitTests
         {
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
-                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);                
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
                 UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
                 Tree configurationTree = mainWindow.Get<Tree>("configurationTree");
                 UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
@@ -81,7 +81,7 @@ namespace InstallerEditorUnitTests
         {
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
-                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);                
+                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
                 UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
                 Tree configurationTree = mainWindow.Get<Tree>("configurationTree");
                 UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();

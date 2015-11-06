@@ -240,7 +240,7 @@ public class MRUManager : IEnumerable<String>
         {
             try
             {
-                menuItemParent = (MenuItem) menuItemMRU.Parent;
+                menuItemParent = (MenuItem)menuItemMRU.Parent;
             }
             catch
             {
@@ -297,7 +297,7 @@ public class MRUManager : IEnumerable<String>
             Add(file);
         }
     }
-    
+
     /// <summary>
     /// Remove file name from MRU list.
     /// Call this function when File - Open operation failed.

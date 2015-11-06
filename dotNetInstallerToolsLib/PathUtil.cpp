@@ -6,74 +6,74 @@
 
 std::string DVLib::GetFileDirectoryA(const std::string& path)
 {
-	if (DVLib::startswith(path, "file://"))
-		return "file://" + GetFileDirectoryA(path.substr(ARRAYSIZE("file://") - 1));
+    if (DVLib::startswith(path, "file://"))
+        return "file://" + GetFileDirectoryA(path.substr(ARRAYSIZE("file://") - 1));
 
-	int backslashPos = path.rfind('\\', path.length());
-	if (backslashPos == path.npos) backslashPos = path.rfind('/', path.length());
-	if (backslashPos == path.npos)
-		return "";
+    int backslashPos = path.rfind('\\', path.length());
+    if (backslashPos == path.npos) backslashPos = path.rfind('/', path.length());
+    if (backslashPos == path.npos)
+        return "";
 
-	return path.substr(0, backslashPos + 1);
+    return path.substr(0, backslashPos + 1);
 }
 
 std::wstring DVLib::GetFileDirectoryW(const std::wstring& path)
 {
-	if (DVLib::startswith(path, L"file://"))
-		return L"file://" + GetFileDirectoryW(path.substr(ARRAYSIZE(L"file://") - 1));
+    if (DVLib::startswith(path, L"file://"))
+        return L"file://" + GetFileDirectoryW(path.substr(ARRAYSIZE(L"file://") - 1));
 
-	std::wstring::size_type backslashPos = path.rfind(L'\\', path.length());
-	if (backslashPos == path.npos) backslashPos = path.rfind(L'/', path.length());
-	if (backslashPos == path.npos)
-		return L"";
+    std::wstring::size_type backslashPos = path.rfind(L'\\', path.length());
+    if (backslashPos == path.npos) backslashPos = path.rfind(L'/', path.length());
+    if (backslashPos == path.npos)
+        return L"";
 
-	return path.substr(0, backslashPos + 1);
+    return path.substr(0, backslashPos + 1);
 }
 
 std::string DVLib::GetFileNameA(const std::string& path)
 {
-	int backslashPos = path.rfind('\\', path.length());
-	if (backslashPos == path.npos) backslashPos = path.rfind('/', path.length());
-	if (backslashPos == path.npos)
-		return path;
+    int backslashPos = path.rfind('\\', path.length());
+    if (backslashPos == path.npos) backslashPos = path.rfind('/', path.length());
+    if (backslashPos == path.npos)
+        return path;
 
-	return path.substr(backslashPos + 1, path.length() - backslashPos - 1);
+    return path.substr(backslashPos + 1, path.length() - backslashPos - 1);
 }
 
 std::wstring DVLib::GetFileNameW(const std::wstring& path)
 {
-	std::wstring::size_type backslashPos = path.rfind(L'\\', path.length());
-	if (backslashPos == path.npos) backslashPos = path.rfind(L'/', path.length());
-	if (backslashPos == path.npos)
-		return path;
+    std::wstring::size_type backslashPos = path.rfind(L'\\', path.length());
+    if (backslashPos == path.npos) backslashPos = path.rfind(L'/', path.length());
+    if (backslashPos == path.npos)
+        return path;
 
-	return path.substr(backslashPos + 1, path.length() - backslashPos - 1);
+    return path.substr(backslashPos + 1, path.length() - backslashPos - 1);
 }
 
 std::string DVLib::GetModuleDirectoryA()
 {
-	return GetFileDirectoryA(GetModuleFileNameA());
+    return GetFileDirectoryA(GetModuleFileNameA());
 }
 
 std::wstring DVLib::GetModuleDirectoryW()
 {
-	return GetFileDirectoryW(GetModuleFileNameW());
+    return GetFileDirectoryW(GetModuleFileNameW());
 }
 
 std::string DVLib::GetModuleFileNameA(HINSTANCE h)
 {
-	char moduleFileName[MAX_PATH] = { 0 };
-	CHECK_WIN32_BOOL(::GetModuleFileNameA(h, moduleFileName, MAX_PATH),
-		L"GetModuleFileNameA");
-	return moduleFileName;
+    char moduleFileName[MAX_PATH] = { 0 };
+    CHECK_WIN32_BOOL(::GetModuleFileNameA(h, moduleFileName, MAX_PATH),
+        L"GetModuleFileNameA");
+    return moduleFileName;
 }
 
 std::wstring DVLib::GetModuleFileNameW(HINSTANCE h)
 {
-	wchar_t moduleFileName[MAX_PATH] = { 0 };
-	CHECK_WIN32_BOOL(::GetModuleFileNameW(h, moduleFileName, MAX_PATH),
-		L"GetModuleFileNameW");
-	return moduleFileName;
+    wchar_t moduleFileName[MAX_PATH] = { 0 };
+    CHECK_WIN32_BOOL(::GetModuleFileNameW(h, moduleFileName, MAX_PATH),
+        L"GetModuleFileNameW");
+    return moduleFileName;
 }
 
 std::wstring DVLib::DirectoryCombine(const std::wstring& dir, const std::wstring& file)
@@ -86,20 +86,20 @@ std::wstring DVLib::DirectoryCombine(const std::wstring& dir, const std::wstring
 
 std::string DVLib::GetTemporaryDirectoryA()
 {
-	char td[MAX_PATH] = { 0 };
-	CHECK_WIN32_BOOL(GetTempPathA(MAX_PATH, td),
+    char td[MAX_PATH] = { 0 };
+    CHECK_WIN32_BOOL(GetTempPathA(MAX_PATH, td),
         L"GetTempPathA");
 
-	return td;
+    return td;
 }
 
 std::wstring DVLib::GetTemporaryDirectoryW()
 {
-	wchar_t td[MAX_PATH] = { 0 };
-	CHECK_WIN32_BOOL(::GetTempPathW(MAX_PATH, td),
-		"GetTempPathW");
+    wchar_t td[MAX_PATH] = { 0 };
+    CHECK_WIN32_BOOL(::GetTempPathW(MAX_PATH, td),
+        "GetTempPathW");
 
-	return td;
+    return td;
 }
 
 std::string DVLib::GetCurrentDirectoryA()
@@ -120,52 +120,52 @@ std::wstring DVLib::GetCurrentDirectoryW()
 
 std::string DVLib::GetSystemDirectoryA()
 {
-	char td[MAX_PATH];	
-	CHECK_WIN32_BOOL(::GetSystemDirectoryA(td, MAX_PATH),
+    char td[MAX_PATH];	
+    CHECK_WIN32_BOOL(::GetSystemDirectoryA(td, MAX_PATH),
         L"GetSystemDirectoryA");
-	return td;
+    return td;
 }
 
 std::wstring DVLib::GetSystemDirectoryW()
 {
-	wchar_t td[MAX_PATH] = { 0 };
-	CHECK_WIN32_BOOL(::GetSystemDirectoryW(td, MAX_PATH),
-		L"GetSystemDirectoryW");
-	return td;
+    wchar_t td[MAX_PATH] = { 0 };
+    CHECK_WIN32_BOOL(::GetSystemDirectoryW(td, MAX_PATH),
+        L"GetSystemDirectoryW");
+    return td;
 }
 
 std::string DVLib::GetWindowsDirectoryA()
 {
-	char td[MAX_PATH] = { 0 };
-	CHECK_WIN32_BOOL(::GetWindowsDirectoryA(td, MAX_PATH),
+    char td[MAX_PATH] = { 0 };
+    CHECK_WIN32_BOOL(::GetWindowsDirectoryA(td, MAX_PATH),
         L"GetWindowsDirectoryA");
-	return td;
+    return td;
 }
 
 std::wstring DVLib::GetWindowsDirectoryW()
 {
-	wchar_t td[MAX_PATH] = { 0 };
-	CHECK_WIN32_BOOL(::GetWindowsDirectoryW(td, MAX_PATH),
-		L"GetWindowsDirectoryW");
-	return td;
+    wchar_t td[MAX_PATH] = { 0 };
+    CHECK_WIN32_BOOL(::GetWindowsDirectoryW(td, MAX_PATH),
+        L"GetWindowsDirectoryW");
+    return td;
 }
 
 std::string DVLib::GetSystemWindowsDirectoryA()
 {
-	return DVLib::wstring2string(GetSystemWindowsDirectoryW());
+    return DVLib::wstring2string(GetSystemWindowsDirectoryW());
 }
 
 std::wstring DVLib::GetSystemWindowsDirectoryW()
 {
-	wchar_t td[MAX_PATH] = { 0 };
-	CHECK_WIN32_BOOL(::GetSystemWindowsDirectoryW(td, MAX_PATH),
-		L"GetSystemWindowsDirectoryW");
-	return td;
+    wchar_t td[MAX_PATH] = { 0 };
+    CHECK_WIN32_BOOL(::GetSystemWindowsDirectoryW(td, MAX_PATH),
+        L"GetSystemWindowsDirectoryW");
+    return td;
 }
 
 std::wstring DVLib::StripPathTerminator(const std::wstring& path)
 {
-	std::wstring result = DVLib::trimright(path, L" \t\n\r\\/");
-	if (result.length() == 2 && result[1] == L':') result += L"\\";
-	return result;
+    std::wstring result = DVLib::trimright(path, L" \t\n\r\\/");
+    if (result.length() == 2 && result[1] == L':') result += L"\\";
+    return result;
 }

@@ -14,11 +14,11 @@ namespace InstallerLib
         {
             if (string.IsNullOrEmpty(s))
                 return new Rectangle();
-            
+
             string[] parts = s.Split(",".ToCharArray(), 4);
-            if (parts.Length != 4) 
+            if (parts.Length != 4)
                 return new Rectangle();
-            
+
             return new Rectangle(
                 int.Parse(parts[0]),
                 int.Parse(parts[1]),

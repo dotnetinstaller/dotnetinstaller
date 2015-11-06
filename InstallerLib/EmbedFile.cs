@@ -115,7 +115,7 @@ namespace InstallerLib
 
             string normalizedId = EmbedFileCollection.GetNormalizedId(id);
             EmbedFileCollection coll = null;
-            if (! files.TryGetValue(normalizedId, out coll))
+            if (!files.TryGetValue(normalizedId, out coll))
             {
                 coll = new EmbedFileCollection(supportdir);
                 files.Add(normalizedId, coll);

@@ -7,13 +7,13 @@ namespace InstallerLib
 {
     [Description(
         "<para>" +
-         "An application that has been installed using the Microsoft Windows Installer can be upgraded by reinstalling an updated installation package (.msi file), or by applying a Windows Installer patch (an .msp file) to the application. " + 
-         "A Windows Installer patch (.msp file) is a self-contained package that contains the updates to the application and describes which versions of the application can receive the patch. For more information see <externalLink>" + 
-         "<linkUri>http://msdn.microsoft.com/en-us/library/aa370578(VS.85).aspx</linkUri>" + 
-         "<linkText>Patching in MSDN</linkText></externalLink>." + 
-        "</para>" + 
-        "<para>" + 
-         "A component of type <literal>msp</literal> executes a Windows Installer patch using the <command>msiexec.exe</command> command." + 
+         "An application that has been installed using the Microsoft Windows Installer can be upgraded by reinstalling an updated installation package (.msi file), or by applying a Windows Installer patch (an .msp file) to the application. " +
+         "A Windows Installer patch (.msp file) is a self-contained package that contains the updates to the application and describes which versions of the application can receive the patch. For more information see <externalLink>" +
+         "<linkUri>http://msdn.microsoft.com/en-us/library/aa370578(VS.85).aspx</linkUri>" +
+         "<linkText>Patching in MSDN</linkText></externalLink>." +
+        "</para>" +
+        "<para>" +
+         "A component of type <literal>msp</literal> executes a Windows Installer patch using the <command>msiexec.exe</command> command." +
         "</para>")]
     public class ComponentMsp : Component
     {

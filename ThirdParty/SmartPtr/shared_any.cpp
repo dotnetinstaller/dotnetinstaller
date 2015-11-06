@@ -89,24 +89,24 @@ namespace detail
         short m_free_list; // offset to start of freelist
         short m_available; // count of refcounts in this block that are available
         long  m_refcounts[ s_sizeBlock ];
-        
+
         ref_count_block()
-          : m_free_list(0), m_available(s_sizeBlock)
+            : m_free_list(0), m_available(s_sizeBlock)
         {
             for( long l=0; l<s_sizeBlock; ++l )
                 m_refcounts[l] = l+1;
         }
-        
+
         bool empty() const // throw()
         {
             return s_sizeBlock == m_available;
         }
-        
+
         bool full() const // throw()
         {
             return 0 == m_available;
         }
-        
+
         long volatile *alloc( lock & )
         {
             assert( 0 != m_available );
@@ -115,7 +115,7 @@ namespace detail
             --m_available;
             return refcount;
         }
-        
+
         void free( long volatile *refcount, lock & ) // throw()
         {
             assert( owns( refcount ) );
@@ -123,11 +123,11 @@ namespace detail
             m_free_list = static_cast<short>( refcount - m_refcounts );
             ++m_available;
         }
-        
+
         bool owns( long volatile *refcount ) const // throw()
         {
             return ! std::less<void*>()( const_cast<long*>( refcount ), const_cast<long*>( m_refcounts ) ) &&
-                    std::less<void*>()( const_cast<long*>( refcount ), const_cast<long*>( m_refcounts ) + s_sizeBlock );
+                std::less<void*>()( const_cast<long*>( refcount ), const_cast<long*>( m_refcounts ) + s_sizeBlock );
         }
     };
 
@@ -138,7 +138,7 @@ namespace detail
         node           *m_prev;
         ref_count_block m_block;
         explicit node( node *next=0, node *prev=0 )
-        : m_next(next), m_prev(prev), m_block()
+            : m_next(next), m_prev(prev), m_block()
         {
             if( m_next )
                 m_next->m_prev = this;
@@ -149,10 +149,10 @@ namespace detail
 
 
     ref_count_allocator::ref_count_allocator()
-      : m_list_blocks(0), m_last_alloc(0), m_last_free(0)
+        : m_list_blocks(0), m_last_alloc(0), m_last_free(0)
     {
     }
-    
+
     ref_count_allocator::~ref_count_allocator()
     {
         // Just leak the blocks. It's ok, really.
@@ -161,7 +161,7 @@ namespace detail
         // outstanding, you can use the finalize()
         // method to force deallocation
     }
-    
+
     void ref_count_allocator::finalize()
     {
         lock l( g_critsec );
@@ -173,7 +173,7 @@ namespace detail
         m_last_alloc = 0;
         m_last_free = 0;
     }
-    
+
     long volatile *ref_count_allocator::alloc()
     {
         lock l( g_critsec );
@@ -199,7 +199,7 @@ namespace detail
         *refcount = val;
         return refcount;
     }
-    
+
     void ref_count_allocator::free( long volatile *refcount ) // throw()
     {
         // don't rearrange the order of these locals!
@@ -212,15 +212,15 @@ namespace detail
                 m_last_free && ! m_last_free->m_block.owns( refcount );
                 m_last_free = m_last_free->m_next );
         }
-        
+
         assert( m_last_free && m_last_free->m_block.owns( refcount ) );
         m_last_free->m_block.free( refcount, l );
-        
+
         if( m_last_free != m_list_blocks && m_last_free->m_block.empty() )
         {
             if( 0 != ( m_last_free->m_prev->m_next = m_last_free->m_next ) )
                 m_last_free->m_next->m_prev = m_last_free->m_prev;
-            
+
             if( ! m_list_blocks->m_block.empty() )
             {
                 m_last_free->m_next = m_list_blocks;

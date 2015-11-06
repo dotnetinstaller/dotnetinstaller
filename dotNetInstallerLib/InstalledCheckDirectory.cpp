@@ -11,10 +11,10 @@ InstalledCheckDirectory::InstalledCheckDirectory()
 void InstalledCheckDirectory::Load(TiXmlElement * node)
 {
     path = InstallerSession::Instance->ExpandVariables(DVLib::UTF8string2wstring(node->Attribute("path")));
-	LOG(L"Loaded 'directory' installed check '" << path << L"'");
+    LOG(L"Loaded 'directory' installed check '" << path << L"'");
 }
 
 bool InstalledCheckDirectory::IsInstalled() const
 {
-	return DVLib::DirectoryExists(path);
+    return DVLib::DirectoryExists(path);
 }

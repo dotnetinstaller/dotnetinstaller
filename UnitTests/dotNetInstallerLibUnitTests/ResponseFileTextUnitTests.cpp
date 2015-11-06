@@ -8,12 +8,12 @@ using namespace DVLib::UnitTests;
 
 void ResponseFileTextUnitTests::testExec()
 {
-	ResponseFileUnitTestsTestData testdata[] = 
-	{
-		{ "", "" },
-		{ "text", "text" },
-		{ "#GUID", DVLib::wstring2string(InstallerSession::Instance->ExpandVariables(L"#GUID")) },
-	};
+    ResponseFileUnitTestsTestData testdata[] = 
+    {
+        { "", "" },
+        { "text", "text" },
+        { "#GUID", DVLib::wstring2string(InstallerSession::Instance->ExpandVariables(L"#GUID")) },
+    };
 
-	ResponseFileUnitTests::testExec(testdata, ARRAYSIZE(testdata));
+    ResponseFileUnitTests::testExec(testdata, ARRAYSIZE(testdata));
 }

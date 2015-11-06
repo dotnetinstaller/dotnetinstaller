@@ -42,7 +42,7 @@ namespace InstallerEditor
                 if (Parser.ParseHelp(args))
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.AppendLine(string.Format("InstallerEditor: dotNetInstaller Configuration Editor ({0})", 
+                    sb.AppendLine(string.Format("InstallerEditor: dotNetInstaller Configuration Editor ({0})",
                         Assembly.GetExecutingAssembly().GetName().Version));
                     sb.AppendLine();
                     sb.AppendLine(Parser.ArgumentsUsage(typeof(InstallerEditorArguments)));

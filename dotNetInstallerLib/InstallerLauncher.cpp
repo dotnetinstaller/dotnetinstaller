@@ -11,44 +11,44 @@ InstallerLauncher::InstallerLauncher()
 
 std::wstring InstallerLauncher::GetCmd() const
 {
-	std::wstringstream cmd_s;
-	if (! launcherPath.empty())
-	{
-		cmd_s << L"\"" << launcherPath << L"\"";
-	}
-	else
-	{
-		cmd_s << L"\"" << DVLib::GetModuleFileNameW() << L"\"";
-	}
+    std::wstringstream cmd_s;
+    if (! launcherPath.empty())
+    {
+        cmd_s << L"\"" << launcherPath << L"\"";
+    }
+    else
+    {
+        cmd_s << L"\"" << DVLib::GetModuleFileNameW() << L"\"";
+    }
 
     if (__argc > 1)
     {
-		cmd_s << L" " << DVLib::trim((::GetCommandLineW() + wcslen(__targv[0]) + 
-			(::GetCommandLineW()[0] == '\"' ? 2 : 0)));
+        cmd_s << L" " << DVLib::trim((::GetCommandLineW() + wcslen(__targv[0]) + 
+            (::GetCommandLineW()[0] == '\"' ? 2 : 0)));
     }
 
-	if (! launcherArgs.empty())
-	{
-		cmd_s << L" " << launcherArgs;
-	}
+    if (! launcherArgs.empty())
+    {
+        cmd_s << L" " << launcherArgs;
+    }
 
-	return cmd_s.str();
+    return cmd_s.str();
 }
 
 std::wstring InstallerLauncher::GetCommandLine() const
 {
-	std::wstringstream cmd_s;
+    std::wstringstream cmd_s;
 
-	if (__argc > 1)
+    if (__argc > 1)
     {
-		cmd_s << L" " << DVLib::trim((::GetCommandLineW() + wcslen(__targv[0]) + 
-			(::GetCommandLineW()[0] == '\"' ? 2 : 0)));
+        cmd_s << L" " << DVLib::trim((::GetCommandLineW() + wcslen(__targv[0]) + 
+            (::GetCommandLineW()[0] == '\"' ? 2 : 0)));
     }
 
-	if (! launcherArgs.empty())
-	{
-		cmd_s << L" " << launcherArgs;
-	}
+    if (! launcherArgs.empty())
+    {
+        cmd_s << L" " << launcherArgs;
+    }
 
-	return cmd_s.str();
+    return cmd_s.str();
 }

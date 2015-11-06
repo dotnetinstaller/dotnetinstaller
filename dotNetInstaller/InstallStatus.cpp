@@ -3,7 +3,7 @@
 
 InstallStatusPtr InstallStatus::CreateStatus(const std::wstring& status)
 {
-	InstallStatusPtr param(new InstallStatus());
-	param->status = status;
-	return param;
+    InstallStatusPtr param(new InstallStatus());
+    param->status = status;
+    return param;
 }
