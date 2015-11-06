@@ -186,7 +186,7 @@ namespace InstallerEditorUnitTests
                 configFileNode.Select();
                 configFileNode.Collapse();
                 UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("View", "Refresh").Click();
-                configFileNode.Select();
+                configFileNode = configurationTree.SelectedNode;
                 Assert.IsTrue(configFileNode.IsExpanded());
             }
         }

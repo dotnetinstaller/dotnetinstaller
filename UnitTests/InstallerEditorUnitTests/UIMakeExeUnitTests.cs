@@ -54,6 +54,7 @@ namespace InstallerEditorUnitTests
                     TextBox filenameTextBox = saveAsWindow.Get<TextBox>("File name:");
                     filenameTextBox.BulkText = outputFilename;
                     saveAsWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
+                    saveAsWindow.WaitWhileBusy();
                     mainWindow.WaitWhileBusy();
                     Assert.IsTrue(File.Exists(outputFilename));
                     File.Delete(outputFilename);

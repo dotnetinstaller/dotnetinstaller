@@ -217,6 +217,7 @@ namespace InstallerEditorUnitTests
                     TextBox filenameTextBox = openWindow.Get<TextBox>("File name:");
                     filenameTextBox.Text = configFileName;
                     openWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
+                    openWindow.WaitWhileBusy();
                     mainWindow.WaitWhileBusy();
                     Assert.IsTrue(File.Exists(configFileName));
                     Assert.IsTrue(UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Save").Enabled);
@@ -278,6 +279,7 @@ namespace InstallerEditorUnitTests
                     TextBox filenameTextBox = openWindow.Get<TextBox>("File name:");
                     filenameTextBox.Text = configFileName;
                     openWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
+                    openWindow.WaitWhileBusy();
                     mainWindow.WaitWhileBusy();
                     Assert.IsTrue(File.Exists(configFileName));
                     string shortDisplayFileName = GetShortDisplayName(configFileName, 40);
