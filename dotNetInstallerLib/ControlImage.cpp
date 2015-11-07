@@ -5,7 +5,8 @@
 #include "InstallerLog.h"
 
 ControlImage::ControlImage()
-: Control(control_type_image)
+: Control(control_type_image),
+center(false)
 {
 
 }

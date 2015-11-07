@@ -5,8 +5,12 @@
 #include "InstallerSession.h"
 
 Control::Control(control_type t)
-: type(t)
-, has_value_disabled(false)
+: type(t),
+has_value_disabled(false),
+display_install(false),
+display_uninstall(false),
+check(control_check_enabled),
+enabled(false)
 {
 
 }

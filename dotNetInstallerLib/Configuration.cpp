@@ -5,7 +5,11 @@
 #include "XmlAttribute.h"
 
 Configuration::Configuration(configuration_type t)
-: type(t)
+: type(t),
+os_filter_min(DVLib::winNone),
+os_filter_max(DVLib::winNone),
+supports_install(false),
+supports_uninstall(false)
 {
 
 }

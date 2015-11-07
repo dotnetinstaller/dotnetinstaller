@@ -87,7 +87,7 @@ public:
     bool hide_component_if_installed;
 	// virtual functions specific for the type of component
 	virtual void Exec() = 0;
-	virtual void Wait(DWORD tt = 1000);
+	virtual void Wait(DWORD tt = INFINITE);
 	virtual bool IsRebootRequired() const;
 	virtual bool IsExecuting() const = 0;
 	virtual bool IsInstalled() const;

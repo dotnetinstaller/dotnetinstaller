@@ -37,7 +37,7 @@ public:
 	XmlAttribute install_directory;
 	void Exec();
 	void Load(TiXmlElement * node);
-	void Wait(DWORD tt = 1000);
+	void Wait(DWORD tt = INFINITE);
 	bool IsRebootRequired() const;
 private:
 	// functions that indicate whether a return code falls into a certain category

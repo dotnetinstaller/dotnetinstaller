@@ -7,8 +7,9 @@
 #include "Wow64NativeFS.h"
 
 OpenFileComponent::OpenFileComponent()
-: Component(component_type_openfile)
-, m_rc(0)
+: Component(component_type_openfile),
+m_rc(0),
+disable_wow64_fs_redirection(false)
 {
 }
 

@@ -301,7 +301,7 @@ void CmdComponentUnitTests::testMustReboot()
 {
     CmdComponent component;
     CPPUNIT_ASSERT(! component.IsRebootRequired());
-    component.mustreboot = L"True";
+    component.mustreboot = true;
     CPPUNIT_ASSERT(component.IsRebootRequired());
 }
 

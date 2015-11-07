@@ -31,7 +31,8 @@ os_filter_max(DVLib::winNone),
 show_progress_dialog(true),
 show_cab_dialog(true),
 installed(false),
-hide_component_if_installed(false)
+hide_component_if_installed(false),
+main_window(NULL)
 {
 
 }

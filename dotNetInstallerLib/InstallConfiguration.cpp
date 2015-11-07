@@ -19,20 +19,23 @@
 #include "ControlImage.h"
 
 InstallConfiguration::InstallConfiguration()
-: Configuration(configuration_install)
-, must_reboot_required(false)
-, prompt_for_optional_components(false)
-, auto_close_if_installed(false)
-, auto_close_on_error(false)
-, reload_on_error(true)
-, dialog_show_installed(false)
-, dialog_show_uninstalled(false)
-, dialog_show_required(false)
-, auto_start(false)
-, auto_continue_on_reboot(false)
-, wait_for_complete_command(true)
-, show_progress_dialog(true)
-, show_cab_dialog(true)
+: Configuration(configuration_install),
+must_reboot_required(false),
+prompt_for_optional_components(false),
+auto_close_if_installed(false),
+auto_close_on_error(false),
+reload_on_error(true),
+dialog_show_installed(false),
+dialog_show_uninstalled(false),
+dialog_show_required(false),
+auto_start(false),
+auto_continue_on_reboot(false),
+wait_for_complete_command(true),
+show_progress_dialog(true),
+show_cab_dialog(true),
+disable_wow64_fs_redirection(false),
+cab_path_autodelete(false),
+administrator_required(false)
 {
 
 }
@@ -109,7 +112,6 @@ void InstallConfiguration::Load(TiXmlElement * node)
     // progress options
     show_progress_dialog = XmlAttribute(node->Attribute("show_progress_dialog")).GetBoolValue(true);
     show_cab_dialog = XmlAttribute(node->Attribute("show_cab_dialog")).GetBoolValue(true);
-    disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
     disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
     // administrator required
     administrator_required = XmlAttribute(node->Attribute("administrator_required")).GetBoolValue(false);

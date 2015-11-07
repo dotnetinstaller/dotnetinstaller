@@ -5,7 +5,8 @@
 #include "InstallerLog.h"
 
 ControlLicense::ControlLicense()
-: ControlText(control_type_license)
+: ControlText(control_type_license),
+accepted(false)
 {
 
 }

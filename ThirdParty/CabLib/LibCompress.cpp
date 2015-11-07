@@ -260,8 +260,11 @@ _Exit:
     // private function
     void CabLib::Compress::RecursiveEnumFiles(ArrayList* i_FileList, String* s_Path, String* s_Filter, bool b_Subfolders)
     {
+        if (s_Path == NULL)
+            return;
+
         int Len = s_Path->Length;
-        if (!s_Path || Len == 0)
+        if (Len == 0)
             return;
 
         // Path must terminate with "\"

@@ -6,6 +6,7 @@
 #include <Version/Version.h>
 
 ConfigFiles::ConfigFiles()
+: saved_ui_level(InstallUILevelNotSet)
 {
 }
 

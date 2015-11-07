@@ -11,7 +11,8 @@
 
 ExeComponent::ExeComponent()
 : ProcessComponent(component_type_exe),
-execution_method(DVLib::CemCreateProcess)
+execution_method(DVLib::CemCreateProcess),
+disable_wow64_fs_redirection(false)
 {
 
 }
