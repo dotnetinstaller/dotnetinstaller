@@ -106,8 +106,8 @@ namespace Cabinet
                     cDataType* p_DataNew = new cDataType[ms32_Size];
                     if (!p_KeysNew || !p_DataNew) throw "Fatal error: Out of memory!"; // Required for older Visual Studio versions
 
-                    memcpy(p_KeysNew, mp_Keys, ms32_Count * sizeof(cKeyType));
-                    memcpy(p_DataNew, mp_Data, ms32_Count * sizeof(cDataType));
+                    memmove(p_KeysNew, mp_Keys, ms32_Count * sizeof(cKeyType));
+                    memmove(p_DataNew, mp_Data, ms32_Count * sizeof(cDataType));
 
                     delete mp_Keys;
                     delete mp_Data;

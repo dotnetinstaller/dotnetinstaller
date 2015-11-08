@@ -683,7 +683,7 @@ namespace Cabinet
                 // Decrypt data blocks of 8 Bytes
                 mi_Blowfish.CryptBlocks(FALSE, mu8_CryptBuf+s32_UnEncrypted, (s32_Count-s32_UnEncrypted)/8);
 
-                memcpy(memory, mu8_CryptBuf+s32_Offset, count);
+                memmove(memory, mu8_CryptBuf+s32_Offset, count);
 
                 // move filepointer to where Cabinet.dll expects it to be
                 Seek(fd, s32_CabPtr + count, SEEK_SET);

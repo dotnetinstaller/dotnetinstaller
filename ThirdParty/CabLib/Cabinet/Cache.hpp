@@ -129,7 +129,7 @@ namespace Cabinet
             CTrace::TraceW(L"  CMemBlock %s:  Copy Buf RelPos= %05d, Count= %05d", mu16_Name, s32_RelPos, s32_Count);
 #endif
 
-            memcpy(p_Buffer, mu8_Memory + s32_RelPos, s32_Count);
+            memmove(p_Buffer, mu8_Memory + s32_RelPos, s32_Count);
             return s32_Count;
         }
     };

@@ -499,6 +499,7 @@ namespace Cabinet
         {
             if (mu8_Mem) delete[] mu8_Mem;
             mu8_Mem = 0;
+            ms32_Size = 0;
         }
 
         void Allocate(int s32_Size)
@@ -533,7 +534,7 @@ namespace Cabinet
             if (ms32_Len + s32_Len > ms32_Size)
                 return FALSE;
 
-            memcpy(mu8_Mem + ms32_Len, u8_Data, s32_Len);
+            memmove(mu8_Mem + ms32_Len, u8_Data, s32_Len);
             ms32_Len += s32_Len;
             return TRUE;
         }
