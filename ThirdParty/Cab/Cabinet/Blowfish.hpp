@@ -171,7 +171,7 @@ namespace Cabinet
 
                     EncryptBlock(&mu64_Block);
 
-                    memcpy(u8_Crypt, &mu64_Block, 8);
+                    memmove(u8_Crypt, &mu64_Block, 8);
 
                     u8_Crypt      += 8;
                     *pu32_Written += 8;
@@ -384,8 +384,8 @@ namespace Cabinet
                 0x90d4f869, 0xa65cdea0, 0x3f09252d, 0xc208e69f, 0xb74e6132, 0xce77e25b, 0x578fdfe3, 0x3ac372e6
             };
 
-            memcpy(PArr, PArr_Init, sizeof(PArr));
-            memcpy(SBox, SBox_Init, sizeof(SBox));
+            memmove(PArr, PArr_Init, sizeof(PArr));
+            memmove(SBox, SBox_Init, sizeof(SBox));
         }
 
 

@@ -186,7 +186,7 @@ namespace Cabinet
             count = min((long)count, pk_Mem->s32_Size - pk_Mem->s32_Pos);
 
             // Copy the memory in the buffer
-            memcpy(buffer, (char*)(pk_Mem->p_Addr) + pk_Mem->s32_Pos, count);
+            memmove(buffer, (char*)(pk_Mem->p_Addr) + pk_Mem->s32_Pos, count);
 
             // Return the amount of bytes copied
             return count;

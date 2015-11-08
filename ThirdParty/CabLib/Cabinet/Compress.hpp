@@ -452,15 +452,29 @@ namespace Cabinet
             HANDLE h_File = FindFirstFileW(sw_Path, &k_Find);
 
             if (h_File == INVALID_HANDLE_VALUE)
-                return (GetLastError() == ERROR_FILE_NOT_FOUND);
+            {
+                DWORD u32_Err = GetLastError();
+                if (u32_Err == ERROR_FILE_NOT_FOUND)
+                    return TRUE; // The folder is empty
 
+                mi_Error.Set(0, u32_Err, 0);
+                return FALSE;
+            }
+
+            CStrW sw_File;
             do
             {
-                if (k_Find.cFileName[0] == '.') // directories "." and ".."
+                // skip directories "." and ".." but do not skip a diretory ".NET"
+                if (k_Find.cFileName[0] == '.' && 
+                    k_Find.cFileName[1] == 0)
                     continue;
 
-                CStrW sw_File = sw_Path;
+                if (k_Find.cFileName[0] == '.' && 
+                    k_Find.cFileName[1] == '.' && 
+                    k_Find.cFileName[2] == 0)
+                    continue;
 
+                sw_File = sw_Path;
                 sw_File[s32_Len] = 0;
                 sw_File += k_Find.cFileName;
 

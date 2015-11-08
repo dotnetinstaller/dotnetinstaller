@@ -160,6 +160,9 @@ namespace Cabinet
         // Server Port (Defaults HTTP:80, FTP:21, HTTPS:443, SOCKS:1080) 
         WORD  mu16_Port;
 
+        // INTERNET_SCHEME_HTTP(S) or INTERNET_SCHEME_FTP
+        DWORD mu32_Scheme;
+
         // INTERNET_SERVICE_HTTP or INTERNET_SERVICE_FTP
         DWORD mu32_Service;
 
@@ -254,8 +257,9 @@ namespace Cabinet
                 return GetInetError();
 
             mu16_Port = k_Comp.nPort;
+            mu32_Scheme = k_Comp.nScheme;
 
-            switch (k_Comp.nScheme)
+            switch (mu32_Scheme)
             {
             case INTERNET_SCHEME_FTP:   mu32_Service = INTERNET_SERVICE_FTP;  break;
             case INTERNET_SCHEME_HTTP:  mu32_Service = INTERNET_SERVICE_HTTP; break;
@@ -376,7 +380,7 @@ namespace Cabinet
             if (!mh_Connection)
                 return GetInetError();
 
-            if (ms_ProxyUser.Len() && ms_ProxyPass.Len())
+            if (ms_ProxyServer.Len() && ms_ProxyUser.Len() && ms_ProxyPass.Len())
             {
                 if (!WI().mf_SetOptionW(mh_Connection, INTERNET_OPTION_PROXY_USERNAME, ms_ProxyUser, ms_ProxyUser.Len()) ||
                     !WI().mf_SetOptionW(mh_Connection, INTERNET_OPTION_PROXY_PASSWORD, ms_ProxyPass, ms_ProxyPass.Len()))
@@ -414,6 +418,15 @@ namespace Cabinet
             // Required for Proxies that use AutoConfig! 
             // See http://msdn.microsoft.com/en-us/library/aa384220(VS.85).aspx
             mu32_ReqFlags |= INTERNET_FLAG_KEEP_CONNECTION; 
+
+            if (mu32_Scheme == INTERNET_SCHEME_HTTPS)
+            {
+                mu32_ReqFlags |= INTERNET_FLAG_SECURE; 
+
+                // Enable the following lines if you want to ignore invalid SSL cerificate host names or expired certificates
+                // mu32_ReqFlags |= INTERNET_FLAG_IGNORE_CERT_CN_INVALID; 
+                // mu32_ReqFlags |= INTERNET_FLAG_IGNORE_CERT_DATE_INVALID; 
+            }
 
             mh_InetFile = WI().mf_HttpOpenRequestW(mh_Connection, u16_Method, s_Url, L"HTTP/1.1", 0, 0, mu32_ReqFlags, 0);
             if (!mh_InetFile)
