@@ -7,9 +7,10 @@
 #include "InstallerLog.h"
 
 Configurations::Configurations()
-: lcidtype(DVLib::LcidUserExe)
-, uilevel(InstallUILevelNotSet)
-, log_enabled(false)
+: lcidtype(DVLib::LcidUserExe),
+uilevel(InstallUILevelNotSet),
+log_enabled(false),
+show_language_selector(false)
 {
 
 }

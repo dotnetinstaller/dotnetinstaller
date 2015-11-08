@@ -5,7 +5,11 @@
 #include "InstallerLog.h"
 
 ControlBrowse::ControlBrowse()
-: ControlText(control_type_browse)
+: ControlText(control_type_browse),
+folders_only(false),
+must_exist(false),
+hide_readonly(false),
+allow_edit(false)
 {
 
 }

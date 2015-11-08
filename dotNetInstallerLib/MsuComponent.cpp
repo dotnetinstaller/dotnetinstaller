@@ -8,7 +8,8 @@
 
 MsuComponent::MsuComponent()
 : ProcessComponent(component_type_msu),
-execution_method(DVLib::CemCreateProcess)
+execution_method(DVLib::CemCreateProcess),
+disable_wow64_fs_redirection(false)
 {
 
 }

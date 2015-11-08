@@ -220,7 +220,7 @@ namespace Cabinet
             mu32_ThreadID = GetCurrentThreadId();
         }
 
-        ~CExtract()
+        virtual ~CExtract()
         { 
 #if _TraceExtract
             CTrace::TraceW(L"Destructor ~CExtract()");

@@ -8,7 +8,9 @@
 
 CmdComponent::CmdComponent()
 : ProcessComponent(component_type_cmd),
-execution_method(DVLib::CemCreateProcess)
+execution_method(DVLib::CemCreateProcess),
+hide_window(false),
+disable_wow64_fs_redirection(false)
 {
 }
 

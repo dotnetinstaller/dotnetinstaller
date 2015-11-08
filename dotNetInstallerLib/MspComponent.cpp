@@ -7,7 +7,8 @@
 #include "InstallerSession.h"
 
 MspComponent::MspComponent()
-: ProcessComponent(component_type_msp)
+: ProcessComponent(component_type_msp),
+disable_wow64_fs_redirection(false)
 {
 
 }

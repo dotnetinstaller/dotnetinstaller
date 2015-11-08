@@ -15,7 +15,7 @@ public:
 	DVLib::CommandExecutionMethod execution_method;
 	void Exec();
 	void Load(TiXmlElement * node);
-	void Wait(DWORD tt = 1000);
+	void Wait(DWORD tt = INFINITE);
 	bool IsRebootRequired() const;
 };
 

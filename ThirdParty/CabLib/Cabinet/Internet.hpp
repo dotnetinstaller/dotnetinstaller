@@ -63,6 +63,21 @@ namespace Cabinet
 
             // Constructor
             kWinInet()
+                : mf_OpenW(NULL),
+                mf_ConnectW(NULL),
+                mf_CloseHandle(NULL),
+                mf_ReadFile(NULL),
+                mf_CrackUrlW(NULL),
+                mf_GetLastResponseW(NULL),
+                mf_GetConectedState(NULL),
+                mf_SetOptionW(NULL),
+                mf_HttpAddHeadersW(NULL),
+                mf_HttpOpenRequestW(NULL),
+                mf_HttpSendRequestW(NULL),
+                mf_HttpQueryInfoW(NULL),
+                mf_FtpOpenFileW(NULL),
+                mf_FtpCommandW(NULL),
+                mf_FtpGetFileSize(NULL)
             {
                 mh_WininetDll = 0;
             }

@@ -387,7 +387,7 @@ namespace Cabinet
                 mu16_Buf[0] = 0;
                 Allocate(mu32_Size * 2); // s32_Len = -1 -> Buffer too small, try again
             }
-            delete s8_Stack;
+            delete[] s8_Stack;
         }
 
 #endif

@@ -18,7 +18,7 @@ public:
 	// wow64 fs redirection
 	bool disable_wow64_fs_redirection; 
 	void Exec();
-	void Wait(DWORD tt = 1000);
+	void Wait(DWORD tt = INFINITE);
 	void Load(TiXmlElement * node);
 	bool IsRebootRequired() const;
 };

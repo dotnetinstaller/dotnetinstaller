@@ -7,7 +7,8 @@
 #include "InstallerSession.h"
 
 MsiComponent::MsiComponent()
-: ProcessComponent(component_type_msi)
+: ProcessComponent(component_type_msi),
+disable_wow64_fs_redirection(false)
 {
 
 }

@@ -38,14 +38,11 @@ bool ProcessComponent::IsExecuting() const
     }
 }
 
-void ProcessComponent::Wait(DWORD /* tt */)
+void ProcessComponent::Wait(DWORD tt)
 {
-    if (m_process_handle == NULL)
-    {
-        return;
-    }
+    CHECK_BOOL(m_process_handle != NULL, L"Invalid process handle")
 
-    CHECK_WIN32_BOOL(WAIT_OBJECT_0 == WaitForSingleObject(m_process_handle, INFINITE),
+    CHECK_WIN32_BOOL(WAIT_OBJECT_0 == WaitForSingleObject(m_process_handle, tt),
         L"WaitForSingleObject");
 }
 

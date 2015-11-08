@@ -5,7 +5,8 @@
 #include "InstallerLog.h"
 
 ControlText::ControlText(control_type type)
-: Control(type)
+: Control(type),
+font_size(0)
 {
 
 }

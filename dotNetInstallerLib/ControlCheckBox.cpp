@@ -5,7 +5,8 @@
 #include "InstallerLog.h"
 
 ControlCheckBox::ControlCheckBox()
-: ControlText(control_type_checkbox)
+: ControlText(control_type_checkbox),
+checked(false)
 {
 
 }

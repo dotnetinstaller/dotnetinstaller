@@ -21,9 +21,10 @@ static char BASED_CODE THIS_FILE[] = __FILE__;
 //   Splash Screen class
 
 BOOL        CSplashWnd::m_bShowSplashWnd;
-CSplashWnd* CSplashWnd::m_pSplashWnd;
+CSplashWnd* CSplashWnd::m_pSplashWnd = NULL;
 
 CSplashWnd::CSplashWnd()
+: m_pBitmap(NULL)
 {
 }
 

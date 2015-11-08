@@ -38,6 +38,7 @@ namespace Cabinet
             va_list  args;
             va_start(args, u16_Format);
             _vsnwprintf(u16_Buf+u32_Len, BUFLEN-u32_Len, u16_Format, args);
+            va_end(args);
 
             OutputDebugStringW(u16_Buf);
         }
