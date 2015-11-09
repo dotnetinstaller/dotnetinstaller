@@ -728,11 +728,11 @@ void InstallerUI::AddUserControls()
         switch(control->type)
         {
         case control_type_label:
-            AddControl(* (ControlLabel *) get(control));
+            AddControl(* static_cast<ControlLabel*>(get(control)));
             break;
         case control_type_checkbox:
             {
-                ControlCheckBox * control_checkbox = (ControlCheckBox *) get(control);
+                ControlCheckBox * control_checkbox = static_cast<ControlCheckBox*>(get(control));
                 std::map<std::wstring, std::wstring>::iterator value;
                 if ((value = InstallerSession::Instance->AdditionalControlArgs.find(control_checkbox->id)) != 
                     InstallerSession::Instance->AdditionalControlArgs.end())
@@ -757,7 +757,7 @@ void InstallerUI::AddUserControls()
             break;
         case control_type_edit:
             {
-                ControlEdit * control_edit = (ControlEdit *) get(control);
+                ControlEdit * control_edit = static_cast<ControlEdit*>(get(control));
                 std::map<std::wstring, std::wstring>::iterator value;
                 if ((value = InstallerSession::Instance->AdditionalControlArgs.find(control_edit->id)) != 
                     InstallerSession::Instance->AdditionalControlArgs.end())
@@ -770,7 +770,7 @@ void InstallerUI::AddUserControls()
             break;
         case control_type_browse:
             {
-                ControlBrowse * control_browse = (ControlBrowse *) get(control);
+                ControlBrowse * control_browse = static_cast<ControlBrowse*>(get(control));
                 std::map<std::wstring, std::wstring>::iterator value;
                 if ((value = InstallerSession::Instance->AdditionalControlArgs.find(control_browse->id)) != 
                     InstallerSession::Instance->AdditionalControlArgs.end())
@@ -787,7 +787,7 @@ void InstallerUI::AddUserControls()
             break;
         case control_type_license:
             {
-                ControlLicense * control_license = (ControlLicense *) get(control);
+                ControlLicense * control_license = static_cast<ControlLicense*>(get(control));
                 // extract license to temporary location
                 std::vector<char> license_buffer = DVLib::LoadResourceData<char>(NULL, control_license->resource_id, L"CUSTOM");
                 std::wstring license_file = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), InstallerSession::Instance->guid + L"_" + DVLib::GetFileNameW(control_license->license_file));
@@ -798,10 +798,10 @@ void InstallerUI::AddUserControls()
             }
             break;
         case control_type_hyperlink:
-            AddControl(* (ControlHyperlink *) get(control));
+            AddControl(* static_cast<ControlHyperlink*>(get(control)));
             break;
         case control_type_image:
-            AddControl(* (ControlImage *) get(control));
+            AddControl(* static_cast<ControlImage*>(get(control)));
             break;
         default:
             THROW_EX(L"Invalid control type: " << control->type);

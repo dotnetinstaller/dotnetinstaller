@@ -36,7 +36,7 @@ namespace Cabinet
     {
     public:
 
-        CBlowfish::CBlowfish()
+        CBlowfish()
         {
             mb_PasswordSet = FALSE;
             ms32_BlockPos  = -1;
@@ -51,7 +51,7 @@ namespace Cabinet
         // It is recommended not to pass the password directly to this function!
         // You should derive for example a HASH from the password and use this instead.
         // See http://en.wikipedia.org/wiki/Key_derivation_function
-        BOOL CBlowfish::SetPassword(void* p_Key, DWORD u32_KeyLen)
+        BOOL SetPassword(void* p_Key, DWORD u32_KeyLen)
         {
             mb_PasswordSet = FALSE;
             ms32_BlockPos  = -1;
@@ -98,7 +98,7 @@ namespace Cabinet
             return TRUE;
         }
 
-        BOOL CBlowfish::IsPasswordSet()
+        BOOL IsPasswordSet()
         {
             return mb_PasswordSet;
         }
@@ -107,7 +107,7 @@ namespace Cabinet
         // The output data overwrites input data in the same buffer.
         // Before calling this you must call SetPassword()!!
         // returns FALSE on error.
-        BOOL CBlowfish::CryptBlocks(BOOL     b_Encrypt,    // TRUE -> Encrypt, FALSE -> Decrypt
+        BOOL CryptBlocks(BOOL     b_Encrypt,    // TRUE -> Encrypt, FALSE -> Decrypt
             BYTE*   u8_Buffer,     // Input + Output data buffer
             DWORD  u32_BlockCount) // The number of blocks (8 Bytes each)
         {
@@ -116,7 +116,7 @@ namespace Cabinet
 
             while (u32_BlockCount > 0)
             {
-                Data64* pu64_Block = (Data64*) u8_Buffer;
+                Data64* pu64_Block = reinterpret_cast<Data64*>(u8_Buffer);
 
                 if (b_Encrypt) EncryptBlock(pu64_Block);
                 else           DecryptBlock(pu64_Block);
@@ -129,7 +129,7 @@ namespace Cabinet
 
         // Initializes for sequential stream encryption
         // Before calling this you must call SetPassword()!!
-        BOOL CBlowfish::EncryptStreamOpen()
+        BOOL EncryptStreamOpen()
         {
             if (!mb_PasswordSet)
                 return FALSE;
@@ -147,7 +147,7 @@ namespace Cabinet
         // Before calling this you must call SetPassword() and then EncryptStreamOpen() !!
         // After encrypting the last block you must call EncryptStreamClose() !!
         // returns FALSE on error.
-        BOOL CBlowfish::EncryptStreamData(BYTE*    u8_Data,     // Input data buffer
+        BOOL EncryptStreamData(BYTE*    u8_Data,     // Input data buffer
             DWORD   u32_DataLen,  // Length of input data (in Bytes)
             BYTE*    u8_Crypt,    // Output data buffer
             DWORD   u32_CryptLen, // Length of output buffer
@@ -185,7 +185,7 @@ namespace Cabinet
         // It is possible that the encrypted stream is up to 7 Bytes longer than the origional stream!
         // You must NOT truncate these extra bytes, otherwise you will not be able to decrypt the end of the stream!
         // returns FALSE on error.
-        BOOL CBlowfish::EncryptStreamClose(BYTE*    u8_Crypt,    // Output data buffer
+        BOOL EncryptStreamClose(BYTE*    u8_Crypt,    // Output data buffer
             DWORD   u32_CryptLen, // Length of output buffer
             DWORD* pu32_Written)  // the number of bytes written to output buffer are added up here
         {
@@ -203,7 +203,7 @@ namespace Cabinet
                 return FALSE;
             }
 
-            Data64* pu64_LastBlock = (Data64*) u8_Crypt;
+            Data64* pu64_LastBlock = reinterpret_cast<Data64*>(u8_Crypt);
             pu64_LastBlock->Val    = 0;
 
             // copy all remaining bytes which must still be encrypted
@@ -243,7 +243,7 @@ namespace Cabinet
         DWORD PArr[P_ARRAYS];             // 18-entry P-array
         DWORD SBox[S_BOXES][BOX_ENTRIES]; // 4 * 256-entry S-boxes
 
-        void CBlowfish::Initialize()
+        void Initialize()
         {
             const DWORD PArr_Init[P_ARRAYS] = // 18-entry P-array
             {
@@ -393,7 +393,7 @@ namespace Cabinet
 
 
         // This function is inline (for highest speed)
-        inline void CBlowfish::EncryptBlock(Data64* pu64_Block)
+        inline void EncryptBlock(Data64* pu64_Block)
         {
             Data32 Lo = pu64_Block->Uint[0];
             Data32 Hi = pu64_Block->Uint[1];
@@ -422,7 +422,7 @@ namespace Cabinet
         }
 
         // This function is inline (for highest speed)
-        inline void CBlowfish::DecryptBlock(Data64* pu64_Block)
+        inline void DecryptBlock(Data64* pu64_Block)
         {
             Data32 Lo = pu64_Block->Uint[0];
             Data32 Hi = pu64_Block->Uint[1];

@@ -245,7 +245,7 @@ BOOL InstallerWindow::on_mouse_dclick(HELEMENT /* he */, HELEMENT target,
 
 UINT InstallerWindow::RunComponentOnThread(LPVOID pParam)
 {
-    InstallerWindow * p_window = (InstallerWindow *) pParam;
+    InstallerWindow * p_window = static_cast<InstallerWindow*>(pParam);
 
     try
     {

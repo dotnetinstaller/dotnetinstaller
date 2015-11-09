@@ -78,7 +78,7 @@ namespace Cabinet
         {
             if (mi_Files.IsCabFile(fd))
             {
-                kMemory* pk_Mem = (kMemory*)fd;
+                kMemory* pk_Mem = reinterpret_cast<kMemory*>(fd);
                 int s32_Read = ReadMem(pk_Mem, buffer, count);
                 if (s32_Read > 0) pk_Mem->s32_Pos += s32_Read;
                 return s32_Read;
@@ -92,7 +92,7 @@ namespace Cabinet
         long Seek(INT_PTR fd, long offset, int origin)
         {
             if (mi_Files.IsCabFile(fd))
-                return SeekMem((kMemory*)fd, offset, origin);
+                return SeekMem(reinterpret_cast<kMemory*>(fd), offset, origin);
             else
                 return CExtract::Seek(fd, offset, origin);
         }
@@ -102,7 +102,7 @@ namespace Cabinet
         int Close(INT_PTR fd)
         {
             if (mi_Files.IsCabFile(fd))
-                return CloseMem((kMemory*)fd);
+                return CloseMem(reinterpret_cast<kMemory*>(fd));
             else
                 return CExtract::Close(fd);
         }

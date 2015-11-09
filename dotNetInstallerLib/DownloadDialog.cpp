@@ -79,7 +79,7 @@ int DownloadDialog::ExecOnThread()
                 callback->DownloadError(DVLib::string2wstring(ex.what()).c_str());
             }
 
-            throw ex;
+            throw;
         }
     }
 

@@ -208,7 +208,6 @@ void CDownloadDialog::Connecting(const std::wstring& host)
 
 void CDownloadDialog::SendingRequest(const std::wstring& host)
 {
-    std::wstring message = DVLib::FormatMessage(const_cast<wchar_t *>(m_MessageConnecting.c_str()), host.c_str());
     DownloadStatusPtr status(DownloadStatus::CreateProgress(m_MessageSendingRequest, 0, 0));
     ::PostMessage(m_hWnd, WM_USER_SETSTATUSDOWNLOAD, (WPARAM)(release(status)), 0L );
 }

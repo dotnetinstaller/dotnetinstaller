@@ -314,7 +314,7 @@ _Exit:
             VariantClear(pk_Args + i); // free BSTR if required
         }
 
-        delete pk_Args;
+        delete[] pk_Args;
         Marshal::FreeHGlobal(u16_Format);
 
         return new String(s_String);
@@ -382,7 +382,7 @@ _Exit:
         if (!p_Param) // May happen if destructor of CCompress calls DestroyFciContext()
             return 0;
 
-        cCallbackBridge* p_Bridge = (cCallbackBridge*)p_Param;
+        cCallbackBridge* p_Bridge = static_cast<cCallbackBridge*>(p_Param);
 
         // With this event you can display the progress of compression in your GUI
         if (!p_Bridge->mev_UpdateStatus) 
@@ -409,7 +409,7 @@ _Exit:
         if (!p_Param) // May happen if destructor of CCompress calls DestroyFciContext()
             return 0; 
 
-        cCallbackBridge* p_Bridge = (cCallbackBridge*)p_Param;
+        cCallbackBridge* p_Bridge = static_cast<cCallbackBridge*>(p_Param);
 
         // With this event you can display in your GUI the file which was added to the CAB
         if (!p_Bridge->mev_FilePlaced) 

@@ -671,37 +671,37 @@ namespace Cabinet
         { operator delete(memblock); }
 
         static INT_PTR FCIOpen(char* s8_File, int oflag, int pmode, int *err, void *pThis)
-        { return ((CCompress*)pThis)->FciOpenA(s8_File, oflag, pmode, err); }
+        { return static_cast<CCompress*>(pThis)->FciOpenA(s8_File, oflag, pmode, err); }
 
         static UINT FCIRead(INT_PTR fd, void *memory, UINT count, int *err, void *pThis)
-        { return ((CCompress*)pThis)->FciRead(fd, memory, count, err); }
+        { return static_cast<CCompress*>(pThis)->FciRead(fd, memory, count, err); }
 
         static UINT FCIWrite(INT_PTR fd, void *memory, UINT count, int *err, void *pThis)
-        { return ((CCompress*)pThis)->FciWrite(fd, memory, count, err); }
+        { return static_cast<CCompress*>(pThis)->FciWrite(fd, memory, count, err); }
 
         static int FCIClose(INT_PTR fd, int *err, void *pThis)
-        { return ((CCompress*)pThis)->FciClose(fd, err); }
+        { return static_cast<CCompress*>(pThis)->FciClose(fd, err); }
 
         static long FCISeek(INT_PTR fd, long offset, int seektype, int *err, void *pThis)
-        { return ((CCompress*)pThis)->FciSeek(fd, offset, seektype, err); }
+        { return static_cast<CCompress*>(pThis)->FciSeek(fd, offset, seektype, err); }
 
         static int FCIDelete(char *s8_File, int *err, void *pThis)
-        { return ((CCompress*)pThis)->FciDelete(s8_File, err); }
+        { return static_cast<CCompress*>(pThis)->FciDelete(s8_File, err); }
 
         static BOOL FCIGetTempFile(char *pszTempName, int cbTempName, void *pThis)
-        { return ((CCompress*)pThis)->FciGetTempFile(pszTempName, cbTempName); }
+        { return static_cast<CCompress*>(pThis)->FciGetTempFile(pszTempName, cbTempName); }
 
         static INT_PTR FCIGetAttribsAndDate(char *pszName, USHORT *pdate, USHORT *ptime, USHORT *pattribs, int *err, void *pThis)
-        { return ((CCompress*)pThis)->FciGetAttribsAndDate(pszName, pdate, ptime, pattribs, err); }
+        { return static_cast<CCompress*>(pThis)->FciGetAttribsAndDate(pszName, pdate, ptime, pattribs, err); }
 
         static int FCIFilePlaced(PCCAB pccab, char *s8_File, int s32_FileSize, BOOL fContinuation, void *pThis)
-        { return ((CCompress*)pThis)->FciFilePlaced(pccab, s8_File, s32_FileSize, fContinuation); }
+        { return static_cast<CCompress*>(pThis)->FciFilePlaced(pccab, s8_File, s32_FileSize, fContinuation); }
 
         static BOOL FCIGetNextCabinet(PCCAB pccab, ULONG cbPrevCab, void* pThis)
-        { return ((CCompress*)pThis)->FciGetNextCabinet(pccab, cbPrevCab); }
+        { return static_cast<CCompress*>(pThis)->FciGetNextCabinet(pccab, cbPrevCab); }
 
         static long FCIUpdateStatus(UINT typeStatus, ULONG cb1, ULONG cb2, void *pThis)
-        { return ((CCompress*)pThis)->FciUpdateStatus(typeStatus, cb1, cb2); }
+        { return static_cast<CCompress*>(pThis)->FciUpdateStatus(typeStatus, cb1, cb2); }
 
         // #################### MEMBER FCI CALLBACKS ########################
 

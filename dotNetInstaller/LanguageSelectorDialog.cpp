@@ -5,12 +5,12 @@
 IMPLEMENT_DYNAMIC(CLanguageSelectorDialog, CDialog)
 
 CLanguageSelectorDialog::CLanguageSelectorDialog(const ConfigFile& configfile, CWnd* pParent /*=NULL*/)
-: CDialog(CLanguageSelectorDialog::IDD, pParent)
+: CDialog(CLanguageSelectorDialog::IDD, pParent),
+m_Configurations(configfile),
+m_CancelText(configfile.language_selector_cancel),
+m_OKText(configfile.language_selector_ok),
+m_Title(configfile.language_selector_title)
 {
-    m_Configurations = configfile;
-    m_CancelText = configfile.language_selector_cancel;
-    m_OKText = configfile.language_selector_ok;
-    m_Title = configfile.language_selector_title;
 }
 
 void CLanguageSelectorDialog::DoDataExchange(CDataExchange* pDX)

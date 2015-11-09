@@ -23,7 +23,6 @@ void ExeComponent::Exec()
     std::wstring l_exeparameters;
     std::wstring l_responsefile_source;
     std::wstring l_responsefile_target;
-    std::wstring l_responsefile_processed;
 
     // make executable executable
     switch(InstallerSession::Instance->sequence)

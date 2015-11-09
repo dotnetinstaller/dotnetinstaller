@@ -336,10 +336,10 @@ void CKCBusyProgressCtrl::OnSize(UINT nType, int cx, int cy)
 
 void CKCBusyProgressCtrl::StepIt()
 {
-    int				nNumSteps = 0;
-
     if ( m_nMode & BPC_MODE_BUSY)
     {
+        int nNumSteps = 0;
+
         switch ( m_nBusyFill )
         {
         case	BPC_BUSYFILL_BLOCK:
@@ -438,7 +438,7 @@ void CKCBusyProgressCtrl::End()
 
 UINT CKCBusyProgressCtrl::thrdBusy(LPVOID pParam)
 {
-    CKCBusyProgressCtrl*			pThis = (CKCBusyProgressCtrl*) pParam;
+    CKCBusyProgressCtrl*			pThis = static_cast<CKCBusyProgressCtrl*>(pParam);
 
     if ( !pThis )
         return 0;

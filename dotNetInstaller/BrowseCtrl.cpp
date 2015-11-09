@@ -739,7 +739,7 @@ void CBrowseCtrl::SetPathName(LPCTSTR lpszPathName)
 int CBrowseCtrl::BrowseCallbackProc(HWND hwnd, UINT nMsg, LPARAM lParam, LPARAM lpData)
 {	
     lParam = 0; // Appeases VC6 warning level 4.
-    CBrowseCtrl* pCtrl = (CBrowseCtrl*)(lpData);
+    CBrowseCtrl* pCtrl = reinterpret_cast<CBrowseCtrl*>(lpData);
     if (pCtrl == NULL)
         return 0;
 

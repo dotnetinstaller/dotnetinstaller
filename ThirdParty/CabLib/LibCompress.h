@@ -90,6 +90,7 @@ namespace CabLib
 			// Not even the public events can be accessed from within the callbacks of the bridge class
 			cCallbackBridge(gcroot<delUpdateStatus*> ev_UpdateStatus,
 							gcroot<delFilePlaced*>   ev_FilePlaced)
+                            : mi_Compress(NULL)
 			{
 				mev_UpdateStatus = ev_UpdateStatus;
 				mev_FilePlaced   = ev_FilePlaced;

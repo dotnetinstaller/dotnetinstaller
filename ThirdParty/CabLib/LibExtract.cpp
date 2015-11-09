@@ -614,7 +614,7 @@ _Exit:
     // Return TRUE to extract the file or FALSE to skip the file.
     BOOL CabLib::Extract::cCallbackBridge::OnBeforeCopyFile(Cabinet::CExtract::kCabinetFileInfo *pk_Info, void* p_Param)
     { 
-        cCallbackBridge* p_Bridge = (cCallbackBridge*)p_Param;
+        cCallbackBridge* p_Bridge = static_cast<cCallbackBridge*>(p_Param);
 
         // Extract single file specified by user from the root folder in the CAB file
         if (p_Bridge->ms_SingleFile && p_Bridge->ms_SingleFile->Length)
@@ -649,7 +649,7 @@ _Exit:
     // If ExtractToMemory is not enabled, u8_ExtractMem is null
     void CabLib::Extract::cCallbackBridge::OnAfterCopyFile(WCHAR* u16_File, Cabinet::CMemory* pi_ExtractMem, void* p_Param)
     { 
-        cCallbackBridge* p_Bridge = (cCallbackBridge*)p_Param;
+        cCallbackBridge* p_Bridge = static_cast<cCallbackBridge*>(p_Param);
         if (!p_Bridge->mev_AfterCopyFile)
             return;
 
@@ -668,7 +668,7 @@ _Exit:
 
     void CabLib::Extract::cCallbackBridge::OnProgressInfo(Cabinet::CExtract::kProgressInfo* pk_Info, void* p_Param)
     { 
-        cCallbackBridge* p_Bridge = (cCallbackBridge*)p_Param;
+        cCallbackBridge* p_Bridge = static_cast<cCallbackBridge*>(p_Param);
         if (!p_Bridge->mev_ProgressInfo)
             return;
 
@@ -688,7 +688,7 @@ _Exit:
     // including continuation cabinets opened due to files which are spanning over cabinet boundaries. 
     void CabLib::Extract::cCallbackBridge::OnCabinetInfo(Cabinet::CExtract::kCabinetInfo* pk_Info, void* p_Param)
     {
-        cCallbackBridge* p_Bridge = (cCallbackBridge*)p_Param;
+        cCallbackBridge* p_Bridge = static_cast<cCallbackBridge*>(p_Param);
         if (!p_Bridge->mev_CabinetInfo) 
             return;
 
@@ -710,7 +710,7 @@ _Exit:
     // with the second parameter set to an error that describes the problem.
     void CabLib::Extract::cCallbackBridge::OnNextCabinet(Cabinet::CExtract::kCabinetInfo *pk_Info, int s32_FdiError, void* p_Param)
     { 
-        cCallbackBridge* p_Bridge = (cCallbackBridge*)p_Param;
+        cCallbackBridge* p_Bridge = static_cast<cCallbackBridge*>(p_Param);
         if (!p_Bridge->mev_NextCabinet)
             return;
 
@@ -735,13 +735,13 @@ _Exit:
 
     int CabLib::Extract::cCallbackBridge::OnStreamGetLen(void* p_Param)
     {
-        cCallbackBridge* p_Bridge = (cCallbackBridge*)p_Param;
+        cCallbackBridge* p_Bridge = static_cast<cCallbackBridge*>(p_Param);
         return (int)p_Bridge->mi_Stream->Length; 
     }
 
     int CabLib::Extract::cCallbackBridge::OnStreamRead(void* p_Buffer, int Pos, UINT u32_Count, void* p_Param)
     {
-        cCallbackBridge* p_Bridge = (cCallbackBridge*)p_Param;
+        cCallbackBridge* p_Bridge = static_cast<cCallbackBridge*>(p_Param);
         p_Bridge->mi_Stream->Position = Pos;
 
         System::Byte u8_ReadBuf[] = new System::Byte[u32_Count];
