@@ -56,7 +56,7 @@ BOOL CHtmlInstallerApp::InitInstance()
         while(arg != InstallerCommandLineInfo::Instance->componentCmdArgs.end())
         {
             LOG(L"Component arguments: \"" + arg->first + L"\": " << arg->second);
-            arg ++;
+            arg++;
         }
 
         // propagate command line arguments during execution

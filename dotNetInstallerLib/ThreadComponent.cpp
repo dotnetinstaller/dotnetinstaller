@@ -24,7 +24,7 @@ bool ThreadComponent::IsExecuting(DWORD dwTimeout) const
 
 UINT ThreadComponent::ExecuteThread(LPVOID pParam)
 {
-    ThreadComponent * pComponent = (ThreadComponent *) pParam;
+    ThreadComponent * pComponent = static_cast<ThreadComponent*>(pParam);
 
     try
     {

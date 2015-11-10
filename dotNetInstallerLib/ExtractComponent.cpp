@@ -83,7 +83,7 @@ BOOL ExtractComponent::OnBeforeCopyFile(Cabinet::CExtract::kCabinetFileInfo * k_
 {
     LOG(L"Extracting: " << k_FI->u16_FullPath);
 
-    ExtractComponent * extractComponent = (ExtractComponent *) p_Param;
+    ExtractComponent * extractComponent = static_cast<ExtractComponent*>(p_Param);
 
     extractComponent->OnStatus(std::wstring(k_FI->u16_File) + L" - " + DVLib::FormatBytesW(k_FI->s32_Size));
 
@@ -131,7 +131,7 @@ std::wstring ExtractComponent::GetResName(int currentIndex) const
 
 void ExtractComponent::OnProgressInfo(Cabinet::CExtract::kProgressInfo* pk_Progress, void* p_Param)
 {
-    ExtractComponent * extractComponent = (ExtractComponent *) p_Param;
+    ExtractComponent * extractComponent = static_cast<ExtractComponent*>(p_Param);
 
     extractComponent->OnStatus(std::wstring(pk_Progress->u16_RelPath) + L" - " + 
         DVLib::FormatMessage(L"%.f%%", pk_Progress->fl_Percent));

@@ -9,10 +9,11 @@ public:
 	{
 		std::basic_string<T> s(s_in);
 		std::basic_string<T>::size_type ii = 0;
-		int result = 0; // \todo: return number of replacements
 		
 		if (s.length() != 0 && from.length() != 0)
 		{
+			int result = 0; // \todo: return number of replacements
+			
 			while ((ii = s.find(from, ii)) != s.npos) 
 			{
 				s.replace(ii, from.length(), to);

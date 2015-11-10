@@ -182,6 +182,7 @@ namespace Cabinet
                 ms8_Buf[0] = 0;
                 Allocate(mu32_Size * 2); // s32_Len = -1 -> Buffer too small, try again
             }
+            va_end(args);
         }
 
         // Copy string content to external buffer
@@ -405,6 +406,7 @@ namespace Cabinet
                 mu16_Buf[0] = 0;
                 Allocate(mu32_Size * 2); // s32_Len = -1 -> Buffer too small, try again
             }
+            va_end(args);
         }
 
         // Copy string content to external buffer 

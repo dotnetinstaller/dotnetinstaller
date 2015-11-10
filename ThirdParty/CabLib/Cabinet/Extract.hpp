@@ -587,7 +587,7 @@ namespace Cabinet
                 if (!TlsSetValue(CStatic::mu32_ExtractTlsIndex, p_This))
                     return NULL;
             }
-            return (CExtract*)TlsGetValue(CStatic::mu32_ExtractTlsIndex);
+            return static_cast<CExtract*>(TlsGetValue(CStatic::mu32_ExtractTlsIndex));
         }
 
     private:

@@ -104,7 +104,7 @@ void CComponentsList::OnLButtonDblClk(UINT nFlags, CPoint point)
         UINT uiItem = ItemFromPoint(point, bOutside);
         if (! bOutside)
         {
-            ComponentPtr component = m_pConfiguration->GetComponentPtr((Component *) GetItemDataPtr(uiItem));
+            ComponentPtr component = m_pConfiguration->GetComponentPtr(static_cast<Component*>(GetItemDataPtr(uiItem)));
             Exec(component);
             if (m_pExecuteCallback)
             {
@@ -118,7 +118,7 @@ void CComponentsList::OnLButtonDblClk(UINT nFlags, CPoint point)
         UINT uiItem = ItemFromPoint(point, bOutside);
         if (! bOutside)
         {
-            ComponentPtr component = m_pConfiguration->GetComponentPtr((Component *) GetItemDataPtr(uiItem));			
+            ComponentPtr component = m_pConfiguration->GetComponentPtr(static_cast<Component*>(GetItemDataPtr(uiItem)));
             SetCheck(uiItem, ! GetCheck(uiItem));
         }
     }

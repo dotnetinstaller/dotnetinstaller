@@ -393,6 +393,6 @@ void HtmlWindow::DoModal(int cmd)
         DniMessageBox::Show(DVLib::string2wstring(ex.what()).c_str(), MB_OK|MB_ICONSTOP);
         m_modal = false;
         ::DestroyWindow(hwnd);
-        throw ex;
+        throw;
     }
 }

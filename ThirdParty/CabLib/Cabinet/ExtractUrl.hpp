@@ -294,7 +294,7 @@ namespace Cabinet
         // This function is called from the cache to read the next data block from the server into memory
         static int CacheCallback(void* p_Buffer, DWORD u32_Offset, DWORD u32_Count)
         {
-            CExtractUrl* p_This = (CExtractUrl*)This();
+            CExtractUrl* p_This = static_cast<CExtractUrl*>(This());
 
             DWORD u32_Read, u32_ApiErr, u32_Status;
             if (u32_ApiErr = p_This->mi_Internet.DownloadFilePartToMemory(p_Buffer, 

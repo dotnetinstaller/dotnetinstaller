@@ -194,7 +194,7 @@ void CdotNetInstallerDlg::SelectComponents()
 {
     for(int i = 0; i < m_ListBoxComponents.GetCount(); i++)
     {
-        Component * pComponent = (Component *) m_ListBoxComponents.GetItemDataPtr(i);
+        Component * pComponent = static_cast<Component*>(m_ListBoxComponents.GetItemDataPtr(i));
         pComponent->checked = (m_ListBoxComponents.GetCheck(i) == 1);
     }
 }
