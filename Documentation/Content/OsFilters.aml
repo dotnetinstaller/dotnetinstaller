@@ -36,7 +36,7 @@
         </para>
         <para>
           You can use the <literal>-</literal> sign to define a group of filters that specify the maximum OS value. For example,
-          <literal>-winVistaSp2,-winServer2008R2</literal> means installing on any operating system ealier than Windows Vista SP2 
+          <literal>-winVistaSp2,-winServer2008R2</literal> means installing on any operating system earlier than Windows Vista SP2 
           or earlier than Windows Server 2008 R2. As with the <literal>+</literal> operator each OS is only matched against a 
           matching OS.
         </para>
@@ -47,7 +47,7 @@
           </para>
         </alert>
         <para>
-          The <literal>os_filter_greater</literal> and <literal>os_filter_smaller</literal> pair allow to specify 
+          The <literal>os_filter_max</literal> and <literal>os_filter_min</literal> pair allow to specify 
           a bound or unbound range of operating system values. The operating system id must be within the range.
           If one of the bounds is not specified, the value must be greater or equal than <literal>os_filter_min</literal>
           or smaller or equal than <literal>os_filter_max</literal> respectively.
