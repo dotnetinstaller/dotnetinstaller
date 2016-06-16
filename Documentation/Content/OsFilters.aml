@@ -36,7 +36,7 @@
         </para>
         <para>
           You can use the <literal>-</literal> sign to define a group of filters that specify the maximum OS value. For example,
-          <literal>-winVistaSp2,-winServer2008R2</literal> means installing on any operating system ealier than Windows Vista SP2 
+          <literal>-winVistaSp2,-winServer2008R2</literal> means installing on any operating system earlier than Windows Vista SP2 
           or earlier than Windows Server 2008 R2. As with the <literal>+</literal> operator each OS is only matched against a 
           matching OS.
         </para>
