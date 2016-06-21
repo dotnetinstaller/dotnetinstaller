@@ -20,7 +20,7 @@ namespace DVLib
 			bool OnRunConfiguration(const ConfigurationPtr& configuration);
 			int GetRuns() const { return m_runs; }
 			int GetDownloads() const { return m_downloads; }
-			bool OnSelectLanguage() { return true; }
+			LanguageSelection OnSelectLanguage() { return LanguageSelection_Selected; }
 		};
 	}
 }
