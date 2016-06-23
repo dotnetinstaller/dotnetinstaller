@@ -72,17 +72,8 @@ ConfigFiles::LanguageSelection ConfigFileManager::OnSelectLanguage()
 			return LanguageSelection_Selected;
 		else
 			// Close or cancel of the setup process at the language selection 
-			// stage is a normal situation and it does not throw error!
+			// stage is a normal situation and it does not throw error.
 			return LanguageSelection_Cancel;
-		//else
-		//	ConfigFileManager::end();
-        //switch(lsdlg.DoModal())
-        //{
-        //case IDOK:
-        //   return true;
-        //case IDCANCEL:
-        //    THROW_EX(L"Language selection cancelled by user");
-        //}
     }
 
     return LanguageSelection_NotSelected;
