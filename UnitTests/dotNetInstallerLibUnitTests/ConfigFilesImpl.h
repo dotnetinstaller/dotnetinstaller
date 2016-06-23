@@ -21,7 +21,7 @@ namespace DVLib
 			bool OnRunConfiguration(const ConfigurationPtr& configuration);
 			int GetRuns() const { return m_runs; }
 			int GetDownloads() const { return m_downloads; }
-			void SetLanguageSelectionCancelled() { m_langselection = LanguageSelection_Cancel;}
+			void SetLanguageSelectionCancelled() { m_langselection = LanguageSelection_Cancel; }
 			LanguageSelection OnSelectLanguage() { return m_langselection; }
 		};
 	}

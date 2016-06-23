@@ -4,7 +4,7 @@ TBD
 Features
 --------
 
-* [#112](https://github.com/dblock/dotnetinstaller/pull/112) - Removed throwing an exception when the installation process is closed or canceled by user at language selection stage. Added unit test for testing canceling the setup at language selection stage. - [@genI3](https://github.com/genI3).
+* [#112](https://github.com/dblock/dotnetinstaller/pull/112) - Removed throwing an exception when the installation process is closed or canceled by user at language selection stage - [@genI3](https://github.com/genI3).
 * [#96](https://github.com/dblock/dotnetinstaller/issues/96) - Added the ability to hide a component if it's already installed - [@icnocop](https://github.com/icnocop).
 
 2.4 (9/9/2015)
