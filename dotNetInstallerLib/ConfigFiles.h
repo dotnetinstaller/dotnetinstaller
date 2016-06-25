@@ -10,11 +10,17 @@ private:
 	static const int max_levels = 10;
 	InstallUILevel saved_ui_level;
 protected:
+	enum LanguageSelection
+	{
+		LanguageSelection_Selected,
+		LanguageSelection_NotSelected,	
+		LanguageSelection_Cancel
+	};
 	virtual bool OnLoad() = 0;
 	virtual bool OnVersionError(const std::wstring& version, const std::wstring& filename) = 0;
 	virtual bool OnDownload(const ConfigurationPtr& config) = 0;
 	virtual bool OnRunConfiguration(const ConfigurationPtr& configuration) = 0;
-	virtual bool OnSelectLanguage() = 0;
+	virtual LanguageSelection OnSelectLanguage() = 0;
 	virtual std::vector<ConfigurationPtr> DownloadReferenceConfigurations(
 		LCID oslcid, const std::vector<ConfigurationPtr>&, int level = 0);
 public:

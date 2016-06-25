@@ -14,6 +14,7 @@ namespace DVLib
 			CPPUNIT_TEST( testSelectLanguageNoSelection );
 			CPPUNIT_TEST( testSelectLanguage1040 );
 			CPPUNIT_TEST( testSelectLanguageNot1040 );
+			CPPUNIT_TEST( testSelectLanguageCancelled );
 			CPPUNIT_TEST( testGetLanguages );
 			CPPUNIT_TEST( testNoMatchingConfiguration );
 			CPPUNIT_TEST_SUITE_END();
@@ -25,6 +26,7 @@ namespace DVLib
 			void testSelectLanguageNoSelection();
 			void testSelectLanguage1040();
 			void testSelectLanguageNot1040();
+			void testSelectLanguageCancelled();
 			void testGetLanguages();
 			void testNoMatchingConfiguration();
 		};

@@ -11,6 +11,7 @@ namespace DVLib
 			bool m_loaded;
 			long m_runs;
 			long m_downloads;
+			LanguageSelection m_langselection;
 		public:
 			bool IsLoaded() const { return m_loaded; }
 			ConfigFilesImpl(const std::wstring& configfile = L"");
@@ -20,7 +21,8 @@ namespace DVLib
 			bool OnRunConfiguration(const ConfigurationPtr& configuration);
 			int GetRuns() const { return m_runs; }
 			int GetDownloads() const { return m_downloads; }
-			bool OnSelectLanguage() { return true; }
+			void SetLanguageSelectionCancelled() { m_langselection = LanguageSelection_Cancel; }
+			LanguageSelection OnSelectLanguage() { return m_langselection; }
 		};
 	}
 }

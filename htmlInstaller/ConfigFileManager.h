@@ -15,7 +15,7 @@ protected:
 	bool OnDownload(const ConfigurationPtr& config);
 	bool OnRunConfiguration(const ConfigurationPtr& configuration);
 	bool OnLoad();
-	bool OnSelectLanguage();
+	LanguageSelection OnSelectLanguage();
 	std::vector<ConfigurationPtr> DownloadReferenceConfigurations(
 		LCID oslcid, const std::vector<ConfigurationPtr>&, int level);
 public:

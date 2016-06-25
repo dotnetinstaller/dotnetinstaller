@@ -79,15 +79,21 @@ void ConfigFiles::Load()
     LOG("Lcid type: " << DVLib::lcidtype2wstring(InstallerSession::Instance->lcidtype));
     InstallerSession::Instance->lcidtype = config.lcidtype;
 
-    if (OnSelectLanguage())
+    switch (OnSelectLanguage())
     {
-        // specific locale has been chosen
-        LOG(L"User selected language id: " << InstallerSession::Instance->languageid);
-    }
-    else
-    {
-        InstallerSession::Instance->languageid = DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype);
-        LOG(L"Operating system language id: " << InstallerSession::Instance->languageid);
+		case LanguageSelection_Selected:
+				// specific locale has been chosen
+				LOG(L"User selected language id: " << InstallerSession::Instance->languageid);
+				break;
+		case LanguageSelection_Cancel:
+				// canceling the setup process
+				return;
+		case LanguageSelection_NotSelected:
+			{
+				InstallerSession::Instance->languageid = DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype);
+				LOG(L"Operating system language id: " << InstallerSession::Instance->languageid);
+				break;
+			}		
     }
 
     // download reference configurations

@@ -59,25 +59,24 @@ int ConfigFileManager::Run()
     ConfigFiles::Run();
     return dlg.GetRecordedError();
 }
-
-bool ConfigFileManager::OnSelectLanguage()
+ 
+ConfigFiles::LanguageSelection ConfigFileManager::OnSelectLanguage()
 {
     if (InstallerCommandLineInfo::Instance->DisplayConfig())
-        return false;
+		return LanguageSelection_NotSelected;
 
     if (config.show_language_selector && ! InstallUILevelSetting::Instance->IsSilent())
     {
         CLanguageSelectorDialog lsdlg(config);
-        switch(lsdlg.DoModal())
-        {
-        case IDOK:
-            return true;
-        case IDCANCEL:
-            THROW_EX(L"Language selection cancelled by user");
-        }
+		if (lsdlg.DoModal() == IDOK)
+			return LanguageSelection_Selected;
+		else
+			// Close or cancel of the setup process at the language selection 
+			// stage is a normal situation and it does not throw error.
+			return LanguageSelection_Cancel;
     }
 
-    return false;
+    return LanguageSelection_NotSelected;
 }
 
 std::wstring ConfigFileManager::GetString() const

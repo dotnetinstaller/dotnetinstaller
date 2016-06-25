@@ -8,6 +8,7 @@ ConfigFilesImpl::ConfigFilesImpl(const std::wstring& configfile)
 , m_loaded(false)
 , m_runs(0)
 , m_downloads(0)
+, m_langselection(LanguageSelection_Selected)
 {
 }
 

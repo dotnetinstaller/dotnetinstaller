@@ -110,6 +110,19 @@ void ConfigFilesUnitTests::testSelectLanguageNot1040()
     CPPUNIT_ASSERT(cf[0]->lcid_filter == L"!1040");
 }
 
+void ConfigFilesUnitTests::testSelectLanguageCancelled()
+{
+    std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 
+        L"..\\..\\..\\Samples\\MultilingualSetup\\Configuration.xml");
+    CPPUNIT_ASSERT(DVLib::FileExists(configxml));
+    ConfigFilesImpl cf(configxml);
+    cf.SetLanguageSelectionCancelled();
+    cf.Load();
+    CPPUNIT_ASSERT(cf.IsLoaded());
+    // no one configuration is loaded because language selection was cancelled
+    CPPUNIT_ASSERT(cf.size() == 0);
+}
+
 void ConfigFilesUnitTests::testGetLanguages()
 {
     std::wstring configxml = DVLib::DirectoryCombine(DVLib::GetModuleDirectoryW(), 

@@ -131,10 +131,10 @@ void ConfigFileManager::Run()
     ConfigFiles::Run();
 }
 
-bool ConfigFileManager::OnSelectLanguage()
+ConfigFiles::LanguageSelection ConfigFileManager::OnSelectLanguage()
 {
     if (InstallerCommandLineInfo::Instance->DisplayConfig())
-        return false;
+        return LanguageSelection_NotSelected;
 
     if (config.show_language_selector && ! InstallUILevelSetting::Instance->IsSilent())
     {
@@ -150,7 +150,7 @@ bool ConfigFileManager::OnSelectLanguage()
         //}
     }
 
-    return false;
+    return LanguageSelection_NotSelected;
 }
 
 std::wstring ConfigFileManager::GetString() const
