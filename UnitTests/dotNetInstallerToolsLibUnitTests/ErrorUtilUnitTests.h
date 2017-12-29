@@ -4,19 +4,12 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class ErrorUtilUnitTests :  public CPPUNIT_NS::TestFixture
+        TEST_CLASS(ErrorUtilUnitTests)
 		{
-			CPPUNIT_TEST_SUITE( ErrorUtilUnitTests );
-			CPPUNIT_TEST( testDWORD );
-			CPPUNIT_TEST( testGetLastError );
-			CPPUNIT_TEST( testHRESULT );
-			CPPUNIT_TEST( testGetLastErrorComposite );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testDWORD();
-			void testGetLastError();
-			void testHRESULT();
-			void testGetLastErrorComposite();
+			TEST_METHOD( testDWORD );
+			TEST_METHOD( testGetLastError );
+			TEST_METHOD( testHRESULT );
+			TEST_METHOD( testGetLastErrorComposite );
 		};
 	}
 }

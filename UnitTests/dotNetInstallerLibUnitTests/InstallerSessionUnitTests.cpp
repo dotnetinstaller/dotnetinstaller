@@ -1,34 +1,33 @@
 #include "StdAfx.h"
 #include "InstallerSessionUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::InstallerSessionUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void InstallerSessionUnitTests::testExpandPathVariables()
 {
-    CPPUNIT_ASSERT(InstallerSession::Instance->GetSessionCabPath() == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH"));
-    CPPUNIT_ASSERT(DVLib::GetModuleDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#APPPATH"));
-    CPPUNIT_ASSERT(DVLib::GetSystemDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#SYSTEMPATH"));
-    CPPUNIT_ASSERT(DVLib::GetWindowsDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#WINDOWSPATH"));
-    CPPUNIT_ASSERT(DVLib::GetSystemWindowsDirectory() == InstallerSession::Instance->ExpandPathVariables(L"#SYSTEMWINDOWSPATH"));
-    CPPUNIT_ASSERT(DVLib::GetTemporaryDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#TEMPPATH"));
-    CPPUNIT_ASSERT(DVLib::GetModuleDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#STARTPATH"));
-    CPPUNIT_ASSERT(DVLib::GetModuleFileNameW() == InstallerSession::Instance->ExpandPathVariables(L"#STARTEXE"));
-    CPPUNIT_ASSERT(DVLib::GetFileNameW(DVLib::GetModuleFileNameW()) == InstallerSession::Instance->ExpandPathVariables(L"#STARTFILENAME"));
-    CPPUNIT_ASSERT(DVLib::towstring(::GetCurrentProcessId()) == InstallerSession::Instance->ExpandPathVariables(L"#PID"));
-    CPPUNIT_ASSERT(DVLib::GetTemporaryDirectoryW() + DVLib::GetTemporaryDirectoryW() == 
+    Assert::IsTrue(InstallerSession::Instance->GetSessionCabPath() == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH"));
+    Assert::IsTrue(DVLib::GetModuleDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#APPPATH"));
+    Assert::IsTrue(DVLib::GetSystemDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#SYSTEMPATH"));
+    Assert::IsTrue(DVLib::GetWindowsDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#WINDOWSPATH"));
+    Assert::IsTrue(DVLib::GetSystemWindowsDirectory() == InstallerSession::Instance->ExpandPathVariables(L"#SYSTEMWINDOWSPATH"));
+    Assert::IsTrue(DVLib::GetTemporaryDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#TEMPPATH"));
+    Assert::IsTrue(DVLib::GetModuleDirectoryW() == InstallerSession::Instance->ExpandPathVariables(L"#STARTPATH"));
+    Assert::IsTrue(DVLib::GetModuleFileNameW() == InstallerSession::Instance->ExpandPathVariables(L"#STARTEXE"));
+    Assert::IsTrue(DVLib::GetFileNameW(DVLib::GetModuleFileNameW()) == InstallerSession::Instance->ExpandPathVariables(L"#STARTFILENAME"));
+    Assert::IsTrue(DVLib::towstring(::GetCurrentProcessId()) == InstallerSession::Instance->ExpandPathVariables(L"#PID"));
+    Assert::IsTrue(DVLib::GetTemporaryDirectoryW() + DVLib::GetTemporaryDirectoryW() == 
         InstallerSession::Instance->ExpandPathVariables(L"#TEMPPATH#TEMPPATH"));
-    CPPUNIT_ASSERT(L"{" + DVLib::GetTemporaryDirectoryW() + L"|" + DVLib::GetTemporaryDirectoryW() + L"}" == 
+    Assert::IsTrue(L"{" + DVLib::GetTemporaryDirectoryW() + L"|" + DVLib::GetTemporaryDirectoryW() + L"}" == 
         InstallerSession::Instance->ExpandPathVariables(L"{#TEMPPATH|#TEMPPATH}"));
-    CPPUNIT_ASSERT(InstallUILevelSetting::ToString(InstallUILevelSetting::Instance->GetUILevel()) == 
+    Assert::IsTrue(InstallUILevelSetting::ToString(InstallUILevelSetting::Instance->GetUILevel()) == 
         InstallerSession::Instance->ExpandPathVariables(L"#UILEVEL"));
-    CPPUNIT_ASSERT(DVLib::towstring(InstallerSession::Instance->languageid) == 
+    Assert::IsTrue(DVLib::towstring(InstallerSession::Instance->languageid) == 
         InstallerSession::Instance->ExpandPathVariables(L"#LANGID"));
-    CPPUNIT_ASSERT(DVLib::towstring(DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype)) == 
+    Assert::IsTrue(DVLib::towstring(DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype)) == 
         InstallerSession::Instance->ExpandPathVariables(L"#OSLANGID"));
-    CPPUNIT_ASSERT(L"" == InstallerSession::Instance->ExpandPathVariables(L"#LANGUAGE"));
-    CPPUNIT_ASSERT(DVLib::GetISOLocale(DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype)) ==
+    Assert::IsTrue(L"" == InstallerSession::Instance->ExpandPathVariables(L"#LANGUAGE"));
+    Assert::IsTrue(DVLib::GetISOLocale(DVLib::GetOperatingSystemLCID(InstallerSession::Instance->lcidtype)) ==
         InstallerSession::Instance->ExpandPathVariables(L"#OSLOCALE"));
 }
 
@@ -44,11 +43,11 @@ void InstallerSessionUnitTests::testExpandPathVariablesBackslashes()
     std::wcout << std::endl << L"Subdir: " << path_without_bs_subdir;
     std::wstring path_without_bs_expanded = InstallerSession::Instance->ExpandPathVariables(L"#CABPATH\\s1\\s2");
     std::wcout << std::endl << L"Expanded: " << path_without_bs_expanded;
-    CPPUNIT_ASSERT(path_without_bs_subdir == path_without_bs_expanded);
+    Assert::IsTrue(path_without_bs_subdir == path_without_bs_expanded);
     // more without combinations
     InstallerSession::Instance->cabpath = path_without_bs;
-    CPPUNIT_ASSERT(path_without_bs == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH"));
-    CPPUNIT_ASSERT(path_with_bs == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH\\"));
+    Assert::IsTrue(path_without_bs == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH"));
+    Assert::IsTrue(path_with_bs == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH\\"));
     // with
     std::wcout << std::endl << L"Path: " << path_with_bs;
     InstallerSession::Instance->cabpath = path_with_bs;
@@ -56,42 +55,42 @@ void InstallerSessionUnitTests::testExpandPathVariablesBackslashes()
     std::wcout << std::endl << L"Subdir: " << path_with_bs_subdir;
     std::wstring path_with_bs_expanded = InstallerSession::Instance->ExpandPathVariables(L"#CABPATH\\s1\\s2");
     std::wcout << std::endl << L"Expanded: " << path_with_bs_expanded;
-    CPPUNIT_ASSERT(path_with_bs_subdir == path_with_bs_expanded);
+    Assert::IsTrue(path_with_bs_subdir == path_with_bs_expanded);
     // more with combinations
     InstallerSession::Instance->cabpath = path_with_bs;
-    CPPUNIT_ASSERT(path_with_bs == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH"));
-    CPPUNIT_ASSERT(path_with_bs == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH\\"));
+    Assert::IsTrue(path_with_bs == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH"));
+    Assert::IsTrue(path_with_bs == InstallerSession::Instance->ExpandPathVariables(L"#CABPATH\\"));
 }
 
 void InstallerSessionUnitTests::testExpandEnvironmentVariables()
 {
-    CPPUNIT_ASSERT(DVLib::GetWindowsDirectoryW() == InstallerSession::Instance->ExpandVariables(L"%SystemRoot%"));
-    CPPUNIT_ASSERT(DVLib::GetWindowsDirectoryW() + DVLib::GetWindowsDirectoryW() == 
+    Assert::IsTrue(DVLib::GetWindowsDirectoryW() == InstallerSession::Instance->ExpandVariables(L"%SystemRoot%"));
+    Assert::IsTrue(DVLib::GetWindowsDirectoryW() + DVLib::GetWindowsDirectoryW() == 
         InstallerSession::Instance->ExpandVariables(L"%SystemRoot%%SystemRoot%"));
-    CPPUNIT_ASSERT(L"{" + DVLib::GetWindowsDirectoryW() + L"|" + DVLib::GetWindowsDirectoryW() + L"}" == 
+    Assert::IsTrue(L"{" + DVLib::GetWindowsDirectoryW() + L"|" + DVLib::GetWindowsDirectoryW() + L"}" == 
         InstallerSession::Instance->ExpandVariables(L"{%SystemRoot%|%SystemRoot%}"));
 }
 
 void InstallerSessionUnitTests::testExpandUserVariablesEscapes()
 {
-    CPPUNIT_ASSERT(L"[]" == InstallerSession::Instance->ExpandUserVariables(L"[\\[][\\]]"));
+    Assert::IsTrue(L"[]" == InstallerSession::Instance->ExpandUserVariables(L"[\\[][\\]]"));
     InstallerSession::Instance->AdditionalControlArgs[L"test1"] = L"t1";
-    CPPUNIT_ASSERT(L"[t1]" == InstallerSession::Instance->ExpandUserVariables(L"[\\[][test1][\\]]"));
-    CPPUNIT_ASSERT(L"t1t1" == InstallerSession::Instance->ExpandUserVariables(L"[test1][test1]"));
+    Assert::IsTrue(L"[t1]" == InstallerSession::Instance->ExpandUserVariables(L"[\\[][test1][\\]]"));
+    Assert::IsTrue(L"t1t1" == InstallerSession::Instance->ExpandUserVariables(L"[test1][test1]"));
     InstallerSession::Instance->AdditionalControlArgs[L"test2"] = L"t2";
-    CPPUNIT_ASSERT(L"t1t2" == InstallerSession::Instance->ExpandUserVariables(L"[test1][test2]"));
+    Assert::IsTrue(L"t1t2" == InstallerSession::Instance->ExpandUserVariables(L"[test1][test2]"));
 }
 
 void InstallerSessionUnitTests::testExpandUserVariables()
 {
-    CPPUNIT_ASSERT(L"[]" == InstallerSession::Instance->ExpandUserVariables(L"[]"));
-    CPPUNIT_ASSERT(L"" == InstallerSession::Instance->ExpandUserVariables(L"[variable]"));
-    CPPUNIT_ASSERT(L"" == InstallerSession::Instance->ExpandUserVariables(L"[v1][v2]"));
+    Assert::IsTrue(L"[]" == InstallerSession::Instance->ExpandUserVariables(L"[]"));
+    Assert::IsTrue(L"" == InstallerSession::Instance->ExpandUserVariables(L"[variable]"));
+    Assert::IsTrue(L"" == InstallerSession::Instance->ExpandUserVariables(L"[v1][v2]"));
     InstallerSession::Instance->AdditionalControlArgs[L"test1"] = L"t1";
-    CPPUNIT_ASSERT(L"t1" == InstallerSession::Instance->ExpandUserVariables(L"[test1]"));
-    CPPUNIT_ASSERT(L"t1t1" == InstallerSession::Instance->ExpandUserVariables(L"[test1][test1]"));
+    Assert::IsTrue(L"t1" == InstallerSession::Instance->ExpandUserVariables(L"[test1]"));
+    Assert::IsTrue(L"t1t1" == InstallerSession::Instance->ExpandUserVariables(L"[test1][test1]"));
     InstallerSession::Instance->AdditionalControlArgs[L"test2"] = L"t2";
-    CPPUNIT_ASSERT(L"t1t2" == InstallerSession::Instance->ExpandUserVariables(L"[test1][test2]"));
+    Assert::IsTrue(L"t1t2" == InstallerSession::Instance->ExpandUserVariables(L"[test1][test2]"));
 }
 
 void InstallerSessionUnitTests::testExpandVariables()
@@ -99,7 +98,7 @@ void InstallerSessionUnitTests::testExpandVariables()
     InstallerSession::Instance->AdditionalControlArgs[L"test1"] = L"t1";
     InstallerSession::Instance->AdditionalControlArgs[L"test2"] = L"t2";
     // expand varialbes includes expanding user variables
-    CPPUNIT_ASSERT(L"t1t2" + DVLib::GetWindowsDirectoryW() + DVLib::GetTemporaryDirectoryW() == 
+    Assert::IsTrue(L"t1t2" + DVLib::GetWindowsDirectoryW() + DVLib::GetTemporaryDirectoryW() == 
         InstallerSession::Instance->ExpandVariables(L"[test1][test2]%SystemRoot%#TEMPPATH"));
 }
 
@@ -107,33 +106,33 @@ void InstallerSessionUnitTests::testExpandRegistryVariables()
 {
     std::wstring common_files_dir = DVLib::RegistryGetStringValue(
         HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion", L"CommonFilesDir");
-    CPPUNIT_ASSERT(common_files_dir == InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]"));
-    CPPUNIT_ASSERT(common_files_dir + common_files_dir == 
+    Assert::IsTrue(common_files_dir == InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]"));
+    Assert::IsTrue(common_files_dir + common_files_dir == 
         InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]"));
-    CPPUNIT_ASSERT(L"{" + common_files_dir + L"|" + common_files_dir + L"}" == 
+    Assert::IsTrue(L"{" + common_files_dir + L"|" + common_files_dir + L"}" == 
         InstallerSession::Instance->ExpandRegistryVariables(L"{@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]|@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]}"));
     // missing value, default is blank
-    CPPUNIT_ASSERT(L"" == InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\" + DVLib::GenerateGUIDStringW() + L"]"));
+    Assert::IsTrue(L"" == InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\" + DVLib::GenerateGUIDStringW() + L"]"));
     // with default
-    CPPUNIT_ASSERT(L"DefaultValue" == InstallerSession::Instance->ExpandRegistryVariables(
+    Assert::IsTrue(L"DefaultValue" == InstallerSession::Instance->ExpandRegistryVariables(
         L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\" + DVLib::GenerateGUIDStringW() + L",DefaultValue]"));
     // with two registry keys, one doesn't exist (in order)
-    CPPUNIT_ASSERT(common_files_dir == 
+    Assert::IsTrue(common_files_dir == 
         InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDirDoesntExist|HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir]"));
     // with two registry keys, one doesn't exist (out of order)
-    CPPUNIT_ASSERT(common_files_dir == 
+    Assert::IsTrue(common_files_dir == 
         InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir|HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDirDoesntExist]"));
     // with two registry keys, neither exist without default
-    CPPUNIT_ASSERT(L"" == 
+    Assert::IsTrue(L"" == 
         InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DoesntExist1|HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DoesntExist2]"));
     // with two registry keys, neither exist with default
-    CPPUNIT_ASSERT(L"DefaultValue" == 
+    Assert::IsTrue(L"DefaultValue" == 
         InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DoesntExist1|HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DoesntExist2,DefaultValue]"));
     // with two registry keys, both exist (in order)
-    CPPUNIT_ASSERT(common_files_dir == 
+    Assert::IsTrue(common_files_dir == 
         InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir|HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ProgramFilesDir]"));
     // with two registry keys, both exist, with default (in order)
-    CPPUNIT_ASSERT(common_files_dir == 
+    Assert::IsTrue(common_files_dir == 
         InstallerSession::Instance->ExpandRegistryVariables(L"@[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir|HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ProgramFilesDir,DefaultValue]"));
 }
 
@@ -143,11 +142,11 @@ void InstallerSessionUnitTests::testExpandRegistryVariable()
         HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion", L"CommonFilesDir");
     // value exists
     std::wstring value;
-    CPPUNIT_ASSERT(InstallerSession::Instance->ExpandRegistryVariable(
+    Assert::IsTrue(InstallerSession::Instance->ExpandRegistryVariable(
         L"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDir", value));
-    CPPUNIT_ASSERT(common_files_dir == value);
+    Assert::IsTrue(common_files_dir == value);
     // value doesn't exist
-    CPPUNIT_ASSERT(! InstallerSession::Instance->ExpandRegistryVariable(
+    Assert::IsTrue(! InstallerSession::Instance->ExpandRegistryVariable(
         L"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CommonFilesDirDoesntExist", value));
 }
 
@@ -161,12 +160,12 @@ void InstallerSessionUnitTests::testEnableRunOnReboot()
         DVLib::GetFileNameW(DVLib::GetModuleFileNameW()));
 
     std::wcout << std::endl << "Reboot cmd: " << registryRunCmd;
-    CPPUNIT_ASSERT(! registryRunCmd.empty());
-    CPPUNIT_ASSERT(registryRunCmd.find(L"/Reboot") != registryRunCmd.npos);
+    Assert::IsTrue(! registryRunCmd.empty());
+    Assert::IsTrue(registryRunCmd.find(L"/Reboot") != registryRunCmd.npos);
 
     InstallerSession::Instance->DisableRunOnReboot();
 
-    CPPUNIT_ASSERT(! DVLib::RegistryValueExists(
+    Assert::IsTrue(! DVLib::RegistryValueExists(
         HKEY_LOCAL_MACHINE,
         L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
         DVLib::GetFileNameW(DVLib::GetModuleFileNameW())));
@@ -183,9 +182,7 @@ void InstallerSessionUnitTests::testGetRebootCmd()
     };
 
     std::wstring module = L"\"" + DVLib::GetModuleFileNameW() + L"\"";
-    std::wstring args = DVLib::trim((::GetCommandLineW() + wcslen(__targv[0]) + 
-        (::GetCommandLineW()[0] == '\"' ? 2 : 0)));
-    if (! args.empty()) args = L" " + args;
+    std::wstring args = InstallerLauncher::Instance->GetCommandLine();
 
     TestData testdata[] = 
     {
@@ -205,7 +202,7 @@ void InstallerSessionUnitTests::testGetRebootCmd()
         InstallerLauncher::Instance->SetLauncherArgs(testdata[i].args);
         std::wstring cmd = InstallerSession::Instance->GetRebootCmd(testdata[i].add);
         std::wcout << std::endl << i << ": " << cmd;
-        CPPUNIT_ASSERT(cmd == testdata[i].cmd);
+        Assert::IsTrue(cmd == testdata[i].cmd);
     }
 }
 
@@ -218,15 +215,17 @@ void InstallerSessionUnitTests::testGetRestartCommandLine()
         std::wstring cmd;
     };
 
+    std::wstring commandLine = InstallerLauncher::Instance->GetCommandLine();
+
     TestData testdata[] = 
     {
-        { L"", L"/autostart", L" /autostart" },
-        { L"/autostart", L"/autostart", L" /autostart" },
-        { L"/nosplash", L"/autostart", L" /nosplash /autostart" },
-        { L"/q", L"/autostart", L" /q /autostart" },
-        { L"/qb", L"/autostart", L" /qb /autostart" },
-        { L"/qb /nosplash", L"/autostart", L" /qb /nosplash /autostart" },
-        { L"/q /nosplash", L"/autostart", L" /q /nosplash /autostart" },
+        { L"", L"/autostart", commandLine + L" /autostart" },
+        { L"/autostart", L"/autostart", commandLine + L" /autostart" },
+        { L"/nosplash", L"/autostart", commandLine + L" /nosplash /autostart" },
+        { L"/q", L"/autostart", commandLine + L" /q /autostart" },
+        { L"/qb", L"/autostart", commandLine + L" /qb /autostart" },
+        { L"/qb /nosplash", L"/autostart", commandLine + L" /qb /nosplash /autostart" },
+        { L"/q /nosplash", L"/autostart", commandLine + L" /q /nosplash /autostart" },
     };
 
     for (int i = 0; i < ARRAYSIZE(testdata); i++)
@@ -234,6 +233,6 @@ void InstallerSessionUnitTests::testGetRestartCommandLine()
         InstallerLauncher::Instance->SetLauncherArgs(testdata[i].args);
         std::wstring cmd = InstallerSession::Instance->GetRestartCommandLine(testdata[i].add);
         std::wcout << std::endl << i << ": " << cmd;
-        CPPUNIT_ASSERT(cmd == testdata[i].cmd);
+        Assert::IsTrue(cmd == testdata[i].cmd);
     }
 }

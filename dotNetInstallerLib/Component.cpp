@@ -76,7 +76,7 @@ bool Component::IsInstalled() const
     return installed;
 }
 
-void Component::Load(TiXmlElement * node)
+void Component::Load(tinyxml2::XMLElement * node)
 {
     id = node->Attribute("id");
     display_name = node->Attribute("display_name");
@@ -108,10 +108,9 @@ void Component::Load(TiXmlElement * node)
     show_cab_dialog = XmlAttribute(node->Attribute("show_cab_dialog")).GetBoolValue(true);
     hide_component_if_installed = XmlAttribute(node->Attribute("hide_component_if_installed")).GetBoolValue(false);
     // install checks, embed files, etc.
-    TiXmlNode * child = NULL;
-    while( (child = node->IterateChildren(child)) != NULL )
+    for (tinyxml2::XMLNode* child = node->FirstChildElement(); child; child = child->NextSibling())
     {
-        TiXmlElement * child_element = child->ToElement();
+        tinyxml2::XMLElement * child_element = child->ToElement();
 
         if (child_element == NULL)
             continue;

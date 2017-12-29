@@ -2,9 +2,8 @@
 #include "DownloadFileUnitTests.h"
 #include "DownloadCallbackImpl.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::DownloadFileUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void DownloadFileUnitTests::testDownload()
 {
@@ -17,12 +16,12 @@ void DownloadFileUnitTests::testDownload()
     file->destinationpath = DVLib::GetTemporaryDirectoryW();
     file->destinationfilename = DVLib::GenerateGUIDStringW();
     DownloadCallbackImpl callback;
-    CPPUNIT_ASSERT(! file->IsCopyRequired());
-    CPPUNIT_ASSERT(file->IsDownloadRequired());
+    Assert::IsTrue(! file->IsCopyRequired());
+    Assert::IsTrue(file->IsDownloadRequired());
     file->Exec(& callback);
     callback.DownloadComplete();
     std::wstring fullpath = DVLib::DirectoryCombine(file->destinationpath, file->destinationfilename);
-    CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
+    Assert::IsTrue(DVLib::FileExists(fullpath));
     DVLib::FileDelete(fullpath);
 }
 
@@ -37,12 +36,12 @@ void DownloadFileUnitTests::testCopyFromSource()
     file->destinationpath = DVLib::GetTemporaryDirectoryW();
     file->destinationfilename = DVLib::GenerateGUIDStringW();
     DownloadCallbackImpl callback;
-    CPPUNIT_ASSERT(file->IsCopyRequired());
-    CPPUNIT_ASSERT(! file->IsDownloadRequired());
+    Assert::IsTrue(file->IsCopyRequired());
+    Assert::IsTrue(! file->IsDownloadRequired());
     file->Exec(& callback);
     callback.DownloadComplete();
     std::wstring fullpath = DVLib::DirectoryCombine(file->destinationpath, file->destinationfilename);
-    CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
+    Assert::IsTrue(DVLib::FileExists(fullpath));
     DVLib::FileDelete(fullpath);
 }
 
@@ -50,7 +49,7 @@ void DownloadFileUnitTests::testClearCache()
 {
     DownloadFilePtr file(new DownloadFile());
     // by default clear_cache = false
-    CPPUNIT_ASSERT(! file->ClearCache());
+    Assert::IsTrue(! file->ClearCache());
     file->alwaysdownload = false;
     file->clear_cache = true;
     file->componentname = L"test download";
@@ -59,11 +58,12 @@ void DownloadFileUnitTests::testClearCache()
     file->destinationpath = DVLib::GetTemporaryDirectoryW();
     file->destinationfilename = DVLib::GenerateGUIDStringW();
     // file doesn't exist in cache
-    CPPUNIT_ASSERT(! file->ClearCache());
+    Assert::IsTrue(! file->ClearCache());
 }
 
 void DownloadFileUnitTests::testDownloadCache()
 {
+    // test can only run online, \todo: need a local web server
     DownloadFilePtr file(new DownloadFile());
     file->alwaysdownload = false;
     file->clear_cache = true;
@@ -73,12 +73,12 @@ void DownloadFileUnitTests::testDownloadCache()
     file->destinationpath = DVLib::GetTemporaryDirectoryW();
     file->destinationfilename = DVLib::GenerateGUIDStringW();
     DownloadCallbackImpl callback;
-    CPPUNIT_ASSERT(! file->IsCopyRequired());
-    CPPUNIT_ASSERT(file->IsDownloadRequired());
+    Assert::IsTrue(! file->IsCopyRequired());
+    Assert::IsTrue(file->IsDownloadRequired());
     file->Exec(& callback);
     callback.DownloadComplete();
     std::wstring fullpath = DVLib::DirectoryCombine(file->destinationpath, file->destinationfilename);
-    CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
+    Assert::IsTrue(DVLib::FileExists(fullpath));
     DVLib::FileDelete(fullpath);
-    CPPUNIT_ASSERT(file->ClearCache());
+    Assert::IsTrue(file->ClearCache());
 }

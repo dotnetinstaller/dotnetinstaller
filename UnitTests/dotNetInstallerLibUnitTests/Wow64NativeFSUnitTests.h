@@ -4,13 +4,9 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class Wow64NativeFSUnitTests :  public CPPUNIT_NS::TestFixture
+		TEST_CLASS(Wow64NativeFSUnitTests)
 		{
-			CPPUNIT_TEST_SUITE( Wow64NativeFSUnitTests );
-			CPPUNIT_TEST( testAuto );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testAuto();
+			TEST_METHOD( testAuto );
 		};
 	}
 }

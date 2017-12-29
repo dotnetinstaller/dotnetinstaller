@@ -2,8 +2,7 @@
 #include "DirectoryUtilUnitTests.h"
 
 using namespace DVLib::UnitTests;
-
-CPPUNIT_TEST_SUITE_REGISTRATION(DirectoryUtilUnitTests);
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void DirectoryUtilUnitTests::testDirectoryExists()
 {
@@ -13,17 +12,17 @@ void DirectoryUtilUnitTests::testDirectoryExists()
     std::string directory = DVLib::GetFileDirectoryA(path);
     std::cout << std::endl << "Directory: " << directory;
 
-    CPPUNIT_ASSERT(DVLib::DirectoryExists(directory));
-    CPPUNIT_ASSERT(! DVLib::DirectoryExists(path));		
+    Assert::IsTrue(DVLib::DirectoryExists(directory));
+    Assert::IsTrue(! DVLib::DirectoryExists(path));		
     DVLib::FileDelete(path);
 
-    CPPUNIT_ASSERT(DVLib::DirectoryExists("C:\\"));
-    CPPUNIT_ASSERT(! DVLib::DirectoryExists(""));
+    Assert::IsTrue(DVLib::DirectoryExists("C:\\"));
+    Assert::IsTrue(! DVLib::DirectoryExists(""));
 
     std::string filename = DVLib::GenerateGUIDStringA();
     std::string guidpath = "C:\\" + filename;
     std::cout << std::endl << "Guid path: " << guidpath;
-    CPPUNIT_ASSERT(! DVLib::DirectoryExists(guidpath));
+    Assert::IsTrue(! DVLib::DirectoryExists(guidpath));
 }
 
 void DirectoryUtilUnitTests::testDirectoryCreate()
@@ -33,19 +32,19 @@ void DirectoryUtilUnitTests::testDirectoryCreate()
     std::wstring guid = DVLib::GenerateGUIDStringW();
     std::wstring path1 = root + guid;
     std::wcout << std::endl << L"Creating: " << path1;
-    CPPUNIT_ASSERT(! DVLib::DirectoryExists(path1));
+    Assert::IsTrue(! DVLib::DirectoryExists(path1));
     std::wstring path1_created = DVLib::DirectoryCreate(path1);
-    CPPUNIT_ASSERT(DVLib::DirectoryExists(path1));
-    CPPUNIT_ASSERT(path1 == path1_created);
+    Assert::IsTrue(DVLib::DirectoryExists(path1));
+    Assert::IsTrue(path1 == path1_created);
     // check that we can create two more levels
     std::wstring path2 = path1 + L"\\" + guid;
     std::wstring path3 = path2 + L"\\" + guid;
     std::wcout << std::endl << L"Creating: " << path3;
-    CPPUNIT_ASSERT(! DVLib::DirectoryExists(path3));
+    Assert::IsTrue(! DVLib::DirectoryExists(path3));
     std::wstring path3_created = DVLib::DirectoryCreate(path3);
-    CPPUNIT_ASSERT(DVLib::DirectoryExists(path2));
+    Assert::IsTrue(DVLib::DirectoryExists(path2));
     // the first created directory is path2
-    CPPUNIT_ASSERT(path2 == path3_created);
+    Assert::IsTrue(path2 == path3_created);
     // delete the final result
     DVLib::DirectoryDelete(path1);
 }
@@ -61,17 +60,17 @@ void DirectoryUtilUnitTests::testDirectoryDelete()
     DVLib::DirectoryDelete(deeppath, DVLib::DELETE_DIRECTORY_FILES);
     // delete files in a directory that doesn't have any files, but has subdirectories
     DVLib::DirectoryDelete(newpath, DVLib::DELETE_DIRECTORY_FILES);
-    CPPUNIT_ASSERT(DVLib::DirectoryExists(newpath));
+    Assert::IsTrue(DVLib::DirectoryExists(newpath));
     // create two files
     std::wstring filename1 = newpath + L"\\" + guid + L"-1.tmp";
     std::wstring filename2 = newpath + L"\\" + guid + L"-2.tmp";
     DVLib::FileCreate(filename1);
     DVLib::FileCreate(filename2);
-    CPPUNIT_ASSERT(DVLib::FileExists(filename1));
-    CPPUNIT_ASSERT(DVLib::FileExists(filename2));
+    Assert::IsTrue(DVLib::FileExists(filename1));
+    Assert::IsTrue(DVLib::FileExists(filename2));
     // two directories + two files
     std::list<std::wstring> files = DVLib::GetFiles(newpath, L"*.*", DVLib::GET_FILES_ALL);
-    CPPUNIT_ASSERT(4 == files.size());
+    Assert::IsTrue(4 == files.size());
     // try to delete effectively nothing, this will fail
     try
     {
@@ -82,19 +81,19 @@ void DirectoryUtilUnitTests::testDirectoryDelete()
     {
         // expected exception, this directory can't be deleted since it has files in it
         std::cout << std::endl << "Expected exception: " << ex.what();
-        CPPUNIT_ASSERT(DVLib::FileExists(filename1));
-        CPPUNIT_ASSERT(DVLib::FileExists(filename2));
+        Assert::IsTrue(DVLib::FileExists(filename1));
+        Assert::IsTrue(DVLib::FileExists(filename2));
     }
     // make sure nothing was deleted
-    CPPUNIT_ASSERT(4 == DVLib::GetFiles(newpath, L"*.*", DVLib::GET_FILES_ALL).size());
+    Assert::IsTrue(4 == DVLib::GetFiles(newpath, L"*.*", DVLib::GET_FILES_ALL).size());
     // delete without deleting files, the empty subdirectories will be deleted, leaving us with 2 files
     DVLib::DirectoryDelete(newpath, DVLib::DELETE_DIRECTORY_EMPTY);
-    CPPUNIT_ASSERT(2 == DVLib::GetFiles(newpath, L"*.*", DVLib::GET_FILES_ALL).size());
+    Assert::IsTrue(2 == DVLib::GetFiles(newpath, L"*.*", DVLib::GET_FILES_ALL).size());
     // delete with file and non-empty subdirectories
     DVLib::DirectoryDelete(newpath);
-    CPPUNIT_ASSERT(! DVLib::FileExists(filename1));
-    CPPUNIT_ASSERT(! DVLib::FileExists(filename2));
-    CPPUNIT_ASSERT(! DVLib::DirectoryExists(newpath));
+    Assert::IsTrue(! DVLib::FileExists(filename1));
+    Assert::IsTrue(! DVLib::FileExists(filename2));
+    Assert::IsTrue(! DVLib::DirectoryExists(newpath));
 }
 
 void DirectoryUtilUnitTests::testGetFilesRecursive()
@@ -106,7 +105,7 @@ void DirectoryUtilUnitTests::testGetFilesRecursive()
     for each (const std::wstring& file in files)
         found |= (file == DVLib::GetModuleFileNameW());
 
-    CPPUNIT_ASSERT(found);
+    Assert::IsTrue(found);
 }
 
 void DirectoryUtilUnitTests::testGetFilesWithWildcard()
@@ -118,7 +117,7 @@ void DirectoryUtilUnitTests::testGetFilesWithWildcard()
     for each (const std::wstring& file in files)
         found |= (file == DVLib::GetModuleFileNameW());
 
-    CPPUNIT_ASSERT(found);
+    Assert::IsTrue(found);
 }
 
 void DirectoryUtilUnitTests::testGetFilesWithNoWildcard()
@@ -126,8 +125,8 @@ void DirectoryUtilUnitTests::testGetFilesWithNoWildcard()
     std::list<std::wstring> files = DVLib::GetFiles(
         DVLib::GetModuleFileNameW(), DVLib::GET_FILES_FILES);
 
-    CPPUNIT_ASSERT(files.size() == 1);
-    CPPUNIT_ASSERT(* files.begin() == DVLib::GetModuleFileNameW());
+    Assert::IsTrue(files.size() == 1);
+    Assert::IsTrue(* files.begin() == DVLib::GetModuleFileNameW());
 }
 
 void DirectoryUtilUnitTests::testGetFilesWithInvalidWildcard()
@@ -165,15 +164,15 @@ void DirectoryUtilUnitTests::testDirectoryCreateMultipleSlashes()
     std::wstring path_1 = root + L"\\" + guid;
     std::wstring path_2 = root + L"\\\\" + guid;
     std::wcout << std::endl << L"Creating: " << path_0;
-    CPPUNIT_ASSERT(! DVLib::DirectoryExists(path_0));
-    CPPUNIT_ASSERT(! DVLib::DirectoryExists(path_1));
-    CPPUNIT_ASSERT(! DVLib::DirectoryExists(path_2));
-    CPPUNIT_ASSERT(path_0 == DVLib::DirectoryCreate(path_0));
-    CPPUNIT_ASSERT(DVLib::DirectoryDelete(path_0));
-    CPPUNIT_ASSERT(path_0 == DVLib::DirectoryCreate(path_1));
-    CPPUNIT_ASSERT(DVLib::DirectoryDelete(path_1));
-    CPPUNIT_ASSERT(path_0 == DVLib::DirectoryCreate(path_2));
-    CPPUNIT_ASSERT(DVLib::DirectoryDelete(path_2));
+    Assert::IsTrue(! DVLib::DirectoryExists(path_0));
+    Assert::IsTrue(! DVLib::DirectoryExists(path_1));
+    Assert::IsTrue(! DVLib::DirectoryExists(path_2));
+    Assert::IsTrue(path_0 == DVLib::DirectoryCreate(path_0));
+    Assert::IsTrue(DVLib::DirectoryDelete(path_0));
+    Assert::IsTrue(path_0 == DVLib::DirectoryCreate(path_1));
+    Assert::IsTrue(DVLib::DirectoryDelete(path_1));
+    Assert::IsTrue(path_0 == DVLib::DirectoryCreate(path_2));
+    Assert::IsTrue(DVLib::DirectoryDelete(path_2));
 }
 
 void DirectoryUtilUnitTests::testDirectoryNormalize()
@@ -201,6 +200,6 @@ void DirectoryUtilUnitTests::testDirectoryNormalize()
     {
         std::wstring normalized_path = DVLib::DirectoryNormalize(testdata[i].path);
         std::wcout << std::endl << L" " << i << L": " << normalized_path;
-        CPPUNIT_ASSERT(normalized_path == testdata[i].expected);
+        Assert::IsTrue(normalized_path == testdata[i].expected);
     }
 }

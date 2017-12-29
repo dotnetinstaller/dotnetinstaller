@@ -18,7 +18,7 @@ namespace InstallerLib
         #region Configuration Properties
 
         private string m_os_filter;
-        [Description("Filter to install this configuration only on all operating systems equal or not equal to the value(s) specified. Separate multiple operating system ids with comma (','), use not symbol ('!') for NOT logic (eg. '!winNT4Max,!win2000' ), use symbol ('+') for 'AND GREATER THAN OR EQUAL TO' logic (eg. '+winXPsp3,+winServer2003sp2') or use symbol ('-') for 'OR LESS THAN' logic (eg. '-winXPsp3,-winServer2008R2').")]
+        [Description("Filter to install this configuration only on all operating systems equal or not equal to the value(s) specified. Separate multiple operating system ids with comma (','), use not symbol ('!') for NOT logic (eg. '!winXPMax,!winServer2003' ), use symbol ('+') for 'AND GREATER THAN OR EQUAL TO' logic (eg. '+winXPsp3,+winServer2003sp2') or use symbol ('-') for 'OR LESS THAN' logic (eg. '-winXPsp3,-winServer2008R2').")]
         [Category("Operating System")]
         public string os_filter
         {
@@ -28,7 +28,7 @@ namespace InstallerLib
 
         private OperatingSystem m_os_filter_min;
         [Category("Operating System")]
-        [Description("Filter to run this setup only on all operating systems greater or equal than the id value specified. For example to run this setup only on Windows 2000 or later choose 'win2000'.")]
+        [Description("Filter to run this setup only on all operating systems greater or equal than the id value specified. For example to run this setup only on Windows Server 2003 or later choose 'winServer2003'.")]
         public OperatingSystem os_filter_min
         {
             get { return m_os_filter_min; }
@@ -37,7 +37,7 @@ namespace InstallerLib
 
         private OperatingSystem m_os_filter_max;
         [Category("Operating System")]
-        [Description("Filter to run this setup only on all operating systems smaller or equal than the id value specified. For example to run this setup preceding Windows 2000 choose 'winNT4Max'.")]
+        [Description("Filter to run this setup only on all operating systems smaller or equal than the id value specified. For example to run this setup preceding Windows Server 2003 choose 'winXPMax'.")]
         public OperatingSystem os_filter_max
         {
             get { return m_os_filter_max; }

@@ -9,15 +9,14 @@ InstalledCheckOperator::InstalledCheckOperator()
 
 }
 
-void InstalledCheckOperator::Load(TiXmlElement * node)
+void InstalledCheckOperator::Load(tinyxml2::XMLElement * node)
 {
     type = DVLib::UTF8string2wstring(node->Attribute("type"));
     description = node->Attribute("description");
     // child install checks
-    TiXmlNode * child = NULL;
-    while( (child = node->IterateChildren(child)) != NULL )
+    for (tinyxml2::XMLNode* child = node->FirstChildElement(); child; child = child->NextSibling())
     {
-        TiXmlElement * child_element = child->ToElement();
+        tinyxml2::XMLElement * child_element = child->ToElement();
 
         if (child_element == NULL)
             continue;

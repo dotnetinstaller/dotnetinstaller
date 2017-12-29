@@ -21,9 +21,12 @@
 
 // The following value is used for Encryption and Decryption
 // It defines the position of the first byte in the CAB file that is encrypted
-// The bytes before this position are NOT encrypted (file header)
-// ATTENTION: This value must be a multiple of 8 !!!!
+// The bytes before this position are NOT encrypted (file BOM)
+// ATTENTION: This value must be a multiple of 8 and not zero!!!!
 // ATTENTION: This value must not be zero !!!!
+// NOTE: A value of 8 is recommended to detect securely wrong passwords when decrypting CAB files
+// --> CExtract::IsCabinetW() returns FALSE
+// ATTENTION: If you modify this value you cannot decrypt files that have been encrypted with another value.
 #define ENCRYPTION_START  0x38
 
 // -----------------------------------------------------------------------------------------------
@@ -48,7 +51,6 @@
 	#define COINIT_MULTITHREADED 0
 	WINOLEAPI CoInitializeEx(LPVOID pvReserved, DWORD dwCoInit);
 #endif
-
 
 // Compression:
 // When a folder has this much compressed data inside it, automatically flush the folder.

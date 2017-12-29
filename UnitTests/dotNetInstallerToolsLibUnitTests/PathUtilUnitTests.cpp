@@ -2,8 +2,7 @@
 #include "PathUtilUnitTests.h"
 
 using namespace DVLib::UnitTests;
-
-CPPUNIT_TEST_SUITE_REGISTRATION(PathUtilUnitTests);
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void PathUtilUnitTests::testGetFileDirectory()
 {
@@ -32,7 +31,7 @@ void PathUtilUnitTests::testGetFileDirectory()
     {
         std::wstring dir = DVLib::GetFileDirectoryW(testdata[i].path);
         std::wcout << std::endl << testdata[i].path << L" => " << dir;
-        CPPUNIT_ASSERT(dir == testdata[i].dir);
+        Assert::IsTrue(dir == testdata[i].dir);
     }
 }
 
@@ -64,7 +63,7 @@ void PathUtilUnitTests::testGetFileName()
     {
         std::wstring filename = DVLib::GetFileNameW(testdata[i].path);
         std::wcout << std::endl << testdata[i].path << L" => " << filename;
-        CPPUNIT_ASSERT(filename == testdata[i].filename);
+        Assert::IsTrue(filename == testdata[i].filename);
     }
 }
 
@@ -72,22 +71,22 @@ void PathUtilUnitTests::testGetModuleDirectory()
 {
     std::string path = DVLib::GetModuleDirectoryA();
     std::cout << std::endl << "Module: " << path;
-    CPPUNIT_ASSERT(path.length() > 0);
+    Assert::IsTrue(path.length() > 0);
     char moduleFileName[MAX_PATH];
-    CPPUNIT_ASSERT(::GetModuleFileNameA(NULL, moduleFileName, MAX_PATH));
+    Assert::IsTrue(::GetModuleFileNameA(NULL, moduleFileName, MAX_PATH));
     std::cout << std::endl << "Compare: " << moduleFileName;
-    // CPPUNIT_ASSERT(DVLib::startsWith(moduleFileName, path));
+    // Assert::IsTrue(DVLib::startsWith(moduleFileName, path));
 }
 
 void PathUtilUnitTests::testGetModuleFileName()
 {
     std::string path = DVLib::GetModuleFileNameA();
     std::cout << std::endl << "Module: " << path;
-    CPPUNIT_ASSERT(path.length() > 0);
+    Assert::IsTrue(path.length() > 0);
     char moduleFileName[MAX_PATH];
-    CPPUNIT_ASSERT(::GetModuleFileNameA(NULL, moduleFileName, MAX_PATH));
+    Assert::IsTrue(::GetModuleFileNameA(NULL, moduleFileName, MAX_PATH));
     std::cout << std::endl << "Compare: " << moduleFileName;
-    CPPUNIT_ASSERT(moduleFileName == path);
+    Assert::IsTrue(moduleFileName == path);
 }
 
 void PathUtilUnitTests::testDirectoryCombine()
@@ -111,7 +110,7 @@ void PathUtilUnitTests::testDirectoryCombine()
         std::wcout << std::endl << testdata[i].dir << L" + " << testdata[i].file;
         std::wstring result = DVLib::DirectoryCombine(testdata[i].dir, testdata[i].file);
         std::wcout << L" => " << result;
-        CPPUNIT_ASSERT(result == testdata[i].expected_result);
+        Assert::IsTrue(result == testdata[i].expected_result);
     }
 }
 
@@ -119,47 +118,47 @@ void PathUtilUnitTests::testGetTemporaryDirectory()
 {
     std::wstring directory = DVLib::GetTemporaryDirectoryW();
     std::wcout << std::endl << L"Temporary directory: " << directory;
-    CPPUNIT_ASSERT(directory.length() > 0);
-    CPPUNIT_ASSERT(DVLib::DirectoryExists(directory));
+    Assert::IsTrue(directory.length() > 0);
+    Assert::IsTrue(DVLib::DirectoryExists(directory));
 }
 
 void PathUtilUnitTests::testGetCurrentDirectory()
 {
     char expected_result[MAX_PATH];
-    CPPUNIT_ASSERT(0 < ::GetCurrentDirectoryA(MAX_PATH, expected_result));
+    Assert::IsTrue(0 < ::GetCurrentDirectoryA(MAX_PATH, expected_result));
     std::string curdir_a = DVLib::GetCurrentDirectoryA();
     std::wstring curdir_w = DVLib::GetCurrentDirectoryW();
     std::wcout << std::endl << "Unicode: " << curdir_w;
     std::cout << std::endl << "ANSI: " << curdir_a;
-    CPPUNIT_ASSERT(curdir_w.length() > 0);
-    CPPUNIT_ASSERT(curdir_w.length() == strlen(expected_result));
-    CPPUNIT_ASSERT(curdir_w.length() == curdir_a.length());
-    CPPUNIT_ASSERT(strcmp(curdir_a.c_str(), expected_result) == 0);
-    CPPUNIT_ASSERT(DVLib::DirectoryExists(curdir_w));
+    Assert::IsTrue(curdir_w.length() > 0);
+    Assert::IsTrue(curdir_w.length() == strlen(expected_result));
+    Assert::IsTrue(curdir_w.length() == curdir_a.length());
+    Assert::IsTrue(strcmp(curdir_a.c_str(), expected_result) == 0);
+    Assert::IsTrue(DVLib::DirectoryExists(curdir_w));
 }
 
 void PathUtilUnitTests::testGetSystemDirectory()
 {
     std::wstring directory = DVLib::GetSystemDirectoryW();
     std::wcout << std::endl << L"System directory: " << directory;
-    CPPUNIT_ASSERT(directory.length() > 0);
-    CPPUNIT_ASSERT(DVLib::DirectoryExists(directory));
+    Assert::IsTrue(directory.length() > 0);
+    Assert::IsTrue(DVLib::DirectoryExists(directory));
 }
 
 void PathUtilUnitTests::testGetWindowsDirectory()
 {
     std::wstring directory = DVLib::GetWindowsDirectoryW();
     std::wcout << std::endl << L"Windows directory: " << directory;
-    CPPUNIT_ASSERT(directory.length() > 0);
-    CPPUNIT_ASSERT(DVLib::DirectoryExists(directory));
+    Assert::IsTrue(directory.length() > 0);
+    Assert::IsTrue(DVLib::DirectoryExists(directory));
 }
 
 void PathUtilUnitTests::testGetSystemWindowsDirectory()
 {
     std::wstring directory = DVLib::GetSystemWindowsDirectoryW();
     std::wcout << std::endl << L"Windows system directory: " << directory;
-    CPPUNIT_ASSERT(directory.length() > 0);
-    CPPUNIT_ASSERT(DVLib::DirectoryExists(directory));
+    Assert::IsTrue(directory.length() > 0);
+    Assert::IsTrue(DVLib::DirectoryExists(directory));
 }
 
 void PathUtilUnitTests::testStripPathTerminator()
@@ -187,6 +186,6 @@ void PathUtilUnitTests::testStripPathTerminator()
     {
         std::wstring stripped_path = DVLib::StripPathTerminator(testdata[i].path);
         std::wcout << std::endl << testdata[i].path << L" => " << stripped_path;
-        CPPUNIT_ASSERT(stripped_path == testdata[i].stripped_path);
+        Assert::IsTrue(stripped_path == testdata[i].stripped_path);
     }
 }

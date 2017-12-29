@@ -2,8 +2,7 @@
 #include "ExceptionMacrosUnitTests.h"
 
 using namespace DVLib::UnitTests;
-
-CPPUNIT_TEST_SUITE_REGISTRATION(ExceptionMacrosUnitTests);
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void ExceptionMacrosUnitTests::testCHECK_WIN32_DWORD()
 {
@@ -15,7 +14,7 @@ void ExceptionMacrosUnitTests::testCHECK_WIN32_DWORD()
     catch(std::exception& ex)
     {
         std::cout << std::endl << ex.what();
-        CPPUNIT_ASSERT(0 == strcmp(ex.what(), "0x80070490 - ERROR_NOT_FOUND: Element not found."));
+        Assert::IsTrue(0 == strcmp(ex.what(), "0x80070490 - ERROR_NOT_FOUND: Element not found."));
     }
 }
 
@@ -30,7 +29,7 @@ void ExceptionMacrosUnitTests::testCHECK_WIN32_BOOL()
     catch(std::exception& ex)
     {
         std::cout << std::endl << ex.what();
-        CPPUNIT_ASSERT(0 == strcmp(ex.what(), "0x80070490 - ERROR_NOT_FOUND: Element not found."));
+        Assert::IsTrue(0 == strcmp(ex.what(), "0x80070490 - ERROR_NOT_FOUND: Element not found."));
     }
 }
 
@@ -44,7 +43,7 @@ void ExceptionMacrosUnitTests::testCHECK_BOOL()
     catch(std::exception& ex)
     {
         std::cout << std::endl << ex.what();
-        CPPUNIT_ASSERT(0 == strcmp(ex.what(), "ERROR_NOT_FOUND"));
+        Assert::IsTrue(0 == strcmp(ex.what(), "ERROR_NOT_FOUND"));
     }
 }
 
@@ -58,7 +57,7 @@ void ExceptionMacrosUnitTests::testTHROW_EX()
     catch(std::exception& ex)
     {
         std::cout << std::endl << ex.what();
-        CPPUNIT_ASSERT(0 == strcmp(ex.what(), "expected exception: test"));
+        Assert::IsTrue(0 == strcmp(ex.what(), "expected exception: test"));
     }
 }
 
@@ -72,7 +71,7 @@ void ExceptionMacrosUnitTests::testCHECK_HR()
     catch(std::exception& ex)
     {
         std::cout << std::endl << ex.what();
-        CPPUNIT_ASSERT(0 == strcmp(ex.what(), "0x80070490 - ERROR_NOT_FOUND: Element not found."));
+        Assert::IsTrue(0 == strcmp(ex.what(), "0x80070490 - ERROR_NOT_FOUND: Element not found."));
     }
 }
 
@@ -86,6 +85,6 @@ void ExceptionMacrosUnitTests::testCHECK_HR_DLL()
     catch(std::exception& ex)
     {
         std::cout << std::endl << ex.what();
-        CPPUNIT_ASSERT(0 == strcmp(ex.what(), "0x800c000e - INET_E_SECURITY_PROBLEM: A security problem occurred."));
+        Assert::IsTrue(0 == strcmp(ex.what(), "0x800c000e - INET_E_SECURITY_PROBLEM: A security problem occurred."));
     }
 }

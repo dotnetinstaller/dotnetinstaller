@@ -36,7 +36,7 @@ public:
 	// destination directory
 	XmlAttribute install_directory;
 	void Exec();
-	void Load(TiXmlElement * node);
+	void Load(tinyxml2::XMLElement * node);
 	void Wait(DWORD tt = INFINITE);
 	bool IsRebootRequired() const;
 private:

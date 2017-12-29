@@ -9,7 +9,7 @@ FileAttribute::FileAttribute()
 
 }
 
-void FileAttribute::Load(TiXmlElement * node)
+void FileAttribute::Load(tinyxml2::XMLElement * node)
 {
     CHECK_BOOL(node != NULL,
         L"Expected 'fileattribute' node");

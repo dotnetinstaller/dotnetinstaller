@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "CmdComponentUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::CmdComponentUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void CmdComponentUnitTests::testExecInstall()
 {
@@ -82,12 +81,12 @@ void CmdComponentUnitTests::testExecXCopy()
     std::wstring tofile = DVLib::DirectoryCombine(todir, DVLib::GetFileNameW(from));
     std::wcout << std::endl << tofile;
     DVLib::DirectoryCreate(todir);
-    CPPUNIT_ASSERT(! DVLib::FileExists(tofile));
+    Assert::IsTrue(! DVLib::FileExists(tofile));
     component.command = L"xcopy \"" + ::DVLib::GetModuleFileNameW() + L"\" \"" + todir + L"\" /Y";
     std::wcout << std::endl << component.command;
     component.Exec();
     component.Wait();
-    CPPUNIT_ASSERT(DVLib::FileExists(tofile));
+    Assert::IsTrue(DVLib::FileExists(tofile));
     DVLib::DirectoryDelete(todir);
 }
 
@@ -100,7 +99,7 @@ void CmdComponentUnitTests::testExecShell()
     CmdComponent component;
     component.command = filename;
     // default execution method is CreateProcess
-    CPPUNIT_ASSERT(component.execution_method == DVLib::CemCreateProcess);
+    Assert::IsTrue(component.execution_method == DVLib::CemCreateProcess);
     try
     {
         component.Exec();
@@ -109,8 +108,8 @@ void CmdComponentUnitTests::testExecShell()
     catch (std::exception& ex)
     {
         // expected - CreateProcess cannot run text files
-        CPPUNIT_ASSERT(strstr(ex.what(), "CreateProcess") != NULL);
-        CPPUNIT_ASSERT(strstr(ex.what(), "0x800700c1") != NULL);
+        Assert::IsTrue(strstr(ex.what(), "CreateProcess") != NULL);
+        Assert::IsTrue(strstr(ex.what(), "0x800700c1") != NULL);
     }
 
     component.execution_method = DVLib::CemShellExecute;
@@ -202,17 +201,17 @@ void CmdComponentUnitTests::testReturnCodeRebootRequired()
     component.command = L"cmd.exe /C exit /b 0";
     component.Exec();
     component.Wait();
-    CPPUNIT_ASSERT(! component.IsRebootRequired());
+    Assert::IsTrue(! component.IsRebootRequired());
     component.returncodes_reboot = L"0";
     component.Exec();
     component.Wait();
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
     component.command = L"cmd.exe /C exit /b 1053";
     component.returncodes_reboot = L"0,1053";
     component.Exec();
     component.Wait();
     // component will succeed, since this is a reboot return code
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 
     // component will fail since the return code is neither a default success (0) nor a reboot error code
     component.command = L"cmd.exe /C exit /b 1055";
@@ -226,7 +225,7 @@ void CmdComponentUnitTests::testReturnCodeRebootRequired()
     {
         // expected
     }
-    CPPUNIT_ASSERT(! component.IsRebootRequired());
+    Assert::IsTrue(! component.IsRebootRequired());
 
     // Test legacy method of handling 0x84BE0BC2
     component.command = L"cmd.exe /C exit /b -2067919934"; // 0x84BE0BC2
@@ -234,7 +233,7 @@ void CmdComponentUnitTests::testReturnCodeRebootRequired()
     component.Exec();
     component.Wait();
     // component will succeed, since this is a reboot return code
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 
     // Test hex code
     component.command = L"cmd.exe /C exit /b 3010"; // 0xBC2
@@ -242,7 +241,7 @@ void CmdComponentUnitTests::testReturnCodeRebootRequired()
     component.Exec();
     component.Wait();
     // component will succeed, since this is a reboot return code
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 
     // Test hex code
     component.command = L"cmd.exe /C exit /b -2067919934"; // 0x84BE0BC2
@@ -250,7 +249,7 @@ void CmdComponentUnitTests::testReturnCodeRebootRequired()
     component.Exec();
     component.Wait();
     // component will succeed, since this is a reboot return code
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 
     // Test hex code - E_FAIL 0x80004005
     component.command = L"cmd.exe /C exit /b 2147500037"; // 0x80004005
@@ -258,7 +257,7 @@ void CmdComponentUnitTests::testReturnCodeRebootRequired()
     component.Exec();
     component.Wait();
     // component will succeed, since this is a reboot return code
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 }
 
 void CmdComponentUnitTests::testReturnCodeSuccess()
@@ -300,23 +299,23 @@ void CmdComponentUnitTests::testReturnCodeSuccess()
 void CmdComponentUnitTests::testMustReboot()
 {
     CmdComponent component;
-    CPPUNIT_ASSERT(! component.IsRebootRequired());
+    Assert::IsTrue(! component.IsRebootRequired());
     component.mustreboot = true;
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 }
 
 void CmdComponentUnitTests::testLoad()
 {
-    TiXmlDocument doc;
+    tinyxml2::XMLDocument doc;
     doc.Parse("<component type=\"cmd\" \
               command=\"test install\" \
               uninstall_command=\"test uninstall\" \
               execution_method=\"ShellExecute\"/>");
     CmdComponent component;
     component.Load(doc.RootElement());
-    CPPUNIT_ASSERT(component.command.GetValue() == L"test install");
-    CPPUNIT_ASSERT(component.uninstall_command.GetValue() == L"test uninstall");
-    CPPUNIT_ASSERT(component.execution_method == DVLib::CemShellExecute);
+    Assert::IsTrue(component.command.GetValue() == L"test install");
+    Assert::IsTrue(component.uninstall_command.GetValue() == L"test uninstall");
+    Assert::IsTrue(component.execution_method == DVLib::CemShellExecute);
 }
 
 void CmdComponentUnitTests::testWithHiddenWindow()
@@ -326,5 +325,5 @@ void CmdComponentUnitTests::testWithHiddenWindow()
     component.hide_window = true;
     component.Exec();
     component.Wait();
-    CPPUNIT_ASSERT(0 == component.GetExitCode());
+    Assert::IsTrue(0 == component.GetExitCode());
 }

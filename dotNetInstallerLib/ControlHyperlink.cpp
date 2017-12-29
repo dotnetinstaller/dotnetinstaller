@@ -10,7 +10,7 @@ ControlHyperlink::ControlHyperlink()
 
 }
 
-void ControlHyperlink::Load(TiXmlElement * node)
+void ControlHyperlink::Load(tinyxml2::XMLElement * node)
 {
     uri = node->Attribute("uri");
     ControlText::Load(node);

@@ -9,7 +9,7 @@ InstalledCheckRegistry::InstalledCheckRegistry()
 
 }
 
-void InstalledCheckRegistry::Load(TiXmlElement * node)
+void InstalledCheckRegistry::Load(tinyxml2::XMLElement * node)
 {
     fieldname = node->Attribute("fieldname");
     fieldtype = DVLib::UTF8string2wstring(node->Attribute("fieldtype"));

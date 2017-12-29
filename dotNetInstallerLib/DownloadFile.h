@@ -2,6 +2,7 @@
 
 #include "DownloadCallback.h"
 #include "XmlAttribute.h"
+#include <tinyxml2.h>
 
 class DownloadFile : public IBindStatusCallback
 {
@@ -29,7 +30,7 @@ public:
 	std::wstring GetDestinationFileName() const;
 	DownloadFile();
 	virtual ~DownloadFile();
-	void Load(TiXmlElement * node);
+	void Load(tinyxml2::XMLElement * node);
 	void Exec(IDownloadCallback * callback);
 	std::wstring GetString(int indent = 0) const;
 	// delete downloaded file cache

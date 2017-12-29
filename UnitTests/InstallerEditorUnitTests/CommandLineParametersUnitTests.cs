@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using NUnit.Framework;
 using dotNetUnitTestsRunner;
 using System.Diagnostics;
@@ -10,10 +9,7 @@ using White.Core.Factory;
 using White.Core.UIItems;
 using White.Core.UIItems.WindowItems;
 using White.Core.UIItems.WindowStripControls;
-using White.Core.UIItems.MenuItems;
 using White.Core.UIItems.TreeItems;
-using White.Core.UIItems.Finders;
-using White.Core.WindowsAPI;
 using InstallerLib;
 using System.IO;
 

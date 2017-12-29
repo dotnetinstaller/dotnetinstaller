@@ -1,15 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using InstallerLib;
-using System.IO;
-using dotNetUnitTestsRunner;
-using System.Threading;
-using System.Xml;
+// <copyright file="ConfigurationUnitTests.cs" company="DevAge, Vestris Inc. &amp; Contributors">
+//   Copyright (c) DevAge, Vestris Inc. &amp; Contributors.
+// </copyright>
 
 namespace dotNetInstallerUnitTests
 {
+    using System;
+    using System.IO;
+    using System.Xml;
+    using dotNetUnitTestsRunner;
+    using InstallerLib;
+    using NUnit.Framework;
+
     [TestFixture]
     public class ConfigurationUnitTests
     {
@@ -22,6 +23,7 @@ namespace dotNetInstallerUnitTests
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
@@ -30,6 +32,7 @@ namespace dotNetInstallerUnitTests
             configXml.Load(configFilename);
             configXml.SelectSingleNode("/configurations/schema").Attributes["version"].Value = "bogus";
             configXml.Save(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);

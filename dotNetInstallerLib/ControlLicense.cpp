@@ -11,7 +11,7 @@ accepted(false)
 
 }
 
-void ControlLicense::Load(TiXmlElement * node)
+void ControlLicense::Load(tinyxml2::XMLElement * node)
 {
     resource_id = node->Attribute("resource_id");
     license_file = node->Attribute("license_file");

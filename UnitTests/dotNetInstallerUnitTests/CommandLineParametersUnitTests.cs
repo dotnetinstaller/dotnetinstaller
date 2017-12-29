@@ -1,14 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using InstallerLib;
-using System.IO;
-using dotNetUnitTestsRunner;
-using System.Threading;
+// <copyright file="CommandLineParametersUnitTests.cs" company="DevAge, Vestris Inc. &amp; Contributors">
+//   Copyright (c) DevAge, Vestris Inc. &amp; Contributors.
+// </copyright>
 
 namespace dotNetInstallerUnitTests
 {
+    using System;
+    using System.IO;
+    using dotNetUnitTestsRunner;
+    using InstallerLib;
+    using NUnit.Framework;
+
     [TestFixture]
     public class CommandLineParametersTests
     {
@@ -32,12 +33,14 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(setupConfiguration);
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute
             dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
             options.args = "/qb /DisplayConfig";
             options.log = false;
             options.quiet = false;
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(options));
+
             // cleanup
             File.Delete(configFilename);
         }
@@ -55,12 +58,14 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(webConfiguration);
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute
             dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
             options.args = "/qb /DisplayConfig";
             options.log = false;
             options.quiet = false;
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(options));
+
             // cleanup
             File.Delete(configFilename);
         }

@@ -9,7 +9,7 @@ InstalledCheckFile::InstalledCheckFile()
 {
 }
 
-void InstalledCheckFile::Load(TiXmlElement * node)
+void InstalledCheckFile::Load(tinyxml2::XMLElement * node)
 {
     filename = node->Attribute("filename");
     fileversion = node->Attribute("fileversion");

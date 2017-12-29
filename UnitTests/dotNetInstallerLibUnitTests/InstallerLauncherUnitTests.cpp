@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "InstallerLauncherUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::InstallerLauncherUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void InstallerLauncherUnitTests::testGetCmd()
 {
@@ -15,9 +14,7 @@ void InstallerLauncherUnitTests::testGetCmd()
     };
 
     std::wstring module = L"\"" + DVLib::GetModuleFileNameW() + L"\"";
-    std::wstring args = DVLib::trim((::GetCommandLineW() + wcslen(__targv[0]) + 
-        (::GetCommandLineW()[0] == '\"' ? 2 : 0)));
-    if (! args.empty()) args = L" " + args;
+    std::wstring args = InstallerLauncher::Instance->GetCommandLine();
 
     TestData testdata[] = 
     {
@@ -33,6 +30,6 @@ void InstallerLauncherUnitTests::testGetCmd()
         InstallerLauncher::Instance->SetLauncherArgs(testdata[i].args);
         std::wstring cmd = InstallerLauncher::Instance->GetCmd();
         std::wcout << std::endl << i << ": " << cmd;
-        CPPUNIT_ASSERT(cmd == testdata[i].cmd);
+        Assert::IsTrue(cmd == testdata[i].cmd);
     }
 }

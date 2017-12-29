@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "ExeComponentUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::ExeComponentUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void ExeComponentUnitTests::testExecInstall()
 {
@@ -44,9 +43,9 @@ void ExeComponentUnitTests::testExecInstallResponseFile()
     component.responsefile_format = L"ini"; // ResponseFileFormatNone;
     component.Exec();
     component.Wait();
-    CPPUNIT_ASSERT(DVLib::FileExists(responsefile_target));
+    Assert::IsTrue(DVLib::FileExists(responsefile_target));
     std::vector<char> data_s_target = DVLib::FileReadToEnd(responsefile_target);
-    CPPUNIT_ASSERT(std::string(data_s_target.begin(), data_s_target.end()) == 
+    Assert::IsTrue(std::string(data_s_target.begin(), data_s_target.end()) == 
         DVLib::wstring2string(InstallerSession::Instance->ExpandVariables(DVLib::string2wstring(data_s))));
     DVLib::FileDelete(responsefile_source);
     DVLib::FileDelete(responsefile_target);
@@ -64,14 +63,14 @@ void ExeComponentUnitTests::testExecInstallDir()
     component.uninstall_exeparameters = L"/C exit /b 0";
     component.Exec();
     component.Wait();
-    CPPUNIT_ASSERT(DVLib::DirectoryExists(install_dir));
+    Assert::IsTrue(DVLib::DirectoryExists(install_dir));
     DVLib::DirectoryDelete(install_dir);
     // uninstall
     InstallSequenceState state;
     InstallerSession::Instance->sequence = SequenceUninstall;
     component.Exec();
     component.Wait();
-    CPPUNIT_ASSERT(! DVLib::DirectoryExists(install_dir));
+    Assert::IsTrue(! DVLib::DirectoryExists(install_dir));
 }
 
 void ExeComponentUnitTests::testExecShell()
@@ -83,7 +82,7 @@ void ExeComponentUnitTests::testExecShell()
     ExeComponent component;
     component.executable = filename;
     // default execution method is CreateProcess
-    CPPUNIT_ASSERT(component.execution_method == DVLib::CemCreateProcess);
+    Assert::IsTrue(component.execution_method == DVLib::CemCreateProcess);
     try
     {
         component.Exec();
@@ -92,8 +91,8 @@ void ExeComponentUnitTests::testExecShell()
     catch (std::exception& ex)
     {
         // expected - CreateProcess cannot run text files
-        CPPUNIT_ASSERT(strstr(ex.what(), "CreateProcess") != NULL);
-        CPPUNIT_ASSERT(strstr(ex.what(), "0x800700c1") != NULL);
+        Assert::IsTrue(strstr(ex.what(), "CreateProcess") != NULL);
+        Assert::IsTrue(strstr(ex.what(), "0x800700c1") != NULL);
     }
 
     component.execution_method = DVLib::CemShellExecute;
@@ -107,9 +106,9 @@ void ExeComponentUnitTests::testExecShell()
 void ExeComponentUnitTests::testMustReboot()
 {
     ExeComponent component;
-    CPPUNIT_ASSERT(! component.IsRebootRequired());
+    Assert::IsTrue(! component.IsRebootRequired());
     component.mustreboot = true;
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 }
 
 void ExeComponentUnitTests::testReturnCodeRebootRequired()
@@ -121,11 +120,11 @@ void ExeComponentUnitTests::testReturnCodeRebootRequired()
     component.id = "execomponent";
     component.Exec();
     component.Wait();
-    CPPUNIT_ASSERT(! component.IsRebootRequired());
+    Assert::IsTrue(! component.IsRebootRequired());
     component.returncodes_reboot = L"0";
     component.Exec();
     component.Wait();
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
     component.executable = L"cmd.exe";
     component.exeparameters = L"/C exit /b 1053";
     component.id = "execomponent";
@@ -133,7 +132,7 @@ void ExeComponentUnitTests::testReturnCodeRebootRequired()
     component.Exec();
     component.Wait();
     // component will succeed, since this is a reboot return code
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 
     // component will fail since the return code is neither a default success (0) nor a reboot error code
     component.executable = L"cmd.exe";
@@ -149,7 +148,7 @@ void ExeComponentUnitTests::testReturnCodeRebootRequired()
     {
         // expected
     }
-    CPPUNIT_ASSERT(! component.IsRebootRequired());
+    Assert::IsTrue(! component.IsRebootRequired());
 
     // Test legacy method handling 0x84BE0BC2
     component.executable = L"cmd.exe";
@@ -159,7 +158,7 @@ void ExeComponentUnitTests::testReturnCodeRebootRequired()
     component.Exec();
     component.Wait();
     // component will succeed, since this is a reboot return code
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 
     // Test hex code
     component.executable = L"cmd.exe";
@@ -169,7 +168,7 @@ void ExeComponentUnitTests::testReturnCodeRebootRequired()
     component.Exec();
     component.Wait();
     // component will succeed, since this is a reboot return code
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 
     // Test hex code
     component.executable = L"cmd.exe";
@@ -178,7 +177,7 @@ void ExeComponentUnitTests::testReturnCodeRebootRequired()
     component.Exec();
     component.Wait();
     // component will succeed, since this is a reboot return code
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 }
 
 void ExeComponentUnitTests::testReturnCodeSuccess()
@@ -227,7 +226,7 @@ void ExeComponentUnitTests::testReturnCodeSuccess()
 
 void ExeComponentUnitTests::testLoad()
 {
-    TiXmlDocument doc;
+    tinyxml2::XMLDocument doc;
     doc.Parse("<component type=\"exe\" \
               executable=\"test-dir\\test.exe\" \
               exeparameters=\"/i\" \
@@ -236,9 +235,9 @@ void ExeComponentUnitTests::testLoad()
               execution_method=\"ShellExecute\"/>");
     ExeComponent component;
     component.Load(doc.RootElement());
-    CPPUNIT_ASSERT(component.executable.GetValue() == L"test-dir\\test.exe");
-    CPPUNIT_ASSERT(component.exeparameters.GetValue() == L"/i");
-    CPPUNIT_ASSERT(component.uninstall_executable.GetValue() == L"test-dir\\testu.exe");
-    CPPUNIT_ASSERT(component.uninstall_exeparameters.GetValue() == L"/u");
-    CPPUNIT_ASSERT(component.execution_method == DVLib::CemShellExecute);
+    Assert::IsTrue(component.executable.GetValue() == L"test-dir\\test.exe");
+    Assert::IsTrue(component.exeparameters.GetValue() == L"/i");
+    Assert::IsTrue(component.uninstall_executable.GetValue() == L"test-dir\\testu.exe");
+    Assert::IsTrue(component.uninstall_exeparameters.GetValue() == L"/u");
+    Assert::IsTrue(component.execution_method == DVLib::CemShellExecute);
 }

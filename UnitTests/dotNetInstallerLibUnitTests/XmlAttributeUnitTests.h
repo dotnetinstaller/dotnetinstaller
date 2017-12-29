@@ -1,18 +1,24 @@
 #pragma once
+#include "dotNetInstallerLibUnitTestFixture.h"
 
 namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class XmlAttributeUnitTests : public dotNetInstallerLibUnitTestFixture
+		TEST_CLASS(XmlAttributeUnitTests), public dotNetInstallerLibUnitTestFixture
 		{
-			CPPUNIT_TEST_SUITE( XmlAttributeUnitTests );
-			CPPUNIT_TEST( testEmpty );
-			CPPUNIT_TEST( testGetValue );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testEmpty();
-			void testGetValue();
+            TEST_METHOD_INITIALIZE( initialize )
+            {
+                setUp();
+            }
+
+            TEST_METHOD_CLEANUP( cleanup )
+            {
+                tearDown();
+            }
+
+			TEST_METHOD( testEmpty );
+			TEST_METHOD( testGetValue );
 		};
 	}
 }

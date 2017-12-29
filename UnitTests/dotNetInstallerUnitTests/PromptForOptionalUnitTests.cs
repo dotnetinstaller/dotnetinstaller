@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using InstallerLib;
-using dotNetUnitTestsRunner;
-using System.IO;
-using Microsoft.Win32;
-using System.Diagnostics;
+// <copyright file="PromptForOptionalUnitTests.cs" company="DevAge, Vestris Inc. &amp; Contributors">
+//   Copyright (c) DevAge, Vestris Inc. &amp; Contributors.
+// </copyright>
 
 namespace dotNetInstallerUnitTests
 {
+    using System;
+    using System.IO;
+    using dotNetUnitTestsRunner;
+    using InstallerLib;
+    using NUnit.Framework;
+
     [TestFixture]
     public class PromptForOptionalUnitTests
     {
@@ -20,7 +20,6 @@ namespace dotNetInstallerUnitTests
 
             // configuration with a required and optional component that will auto-start
             // and won't prompt or execute the optional component
-
             string markerFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
 
             ConfigFile configFile = new ConfigFile();
@@ -29,8 +28,8 @@ namespace dotNetInstallerUnitTests
             setupConfiguration.auto_start = true;
             setupConfiguration.auto_close_if_installed = true;
             setupConfiguration.prompt_for_optional_components = false;
-            setupConfiguration.installation_completed = "";
-            setupConfiguration.installation_none = "";
+            setupConfiguration.installation_completed = string.Empty;
+            setupConfiguration.installation_none = string.Empty;
             configFile.Children.Add(setupConfiguration);
 
             // dummy required component
@@ -41,7 +40,7 @@ namespace dotNetInstallerUnitTests
             component_required.command = "dummy";
 
             InstalledCheckRegistry check_required = new InstalledCheckRegistry();
-            check_required.fieldname = "";
+            check_required.fieldname = string.Empty;
             check_required.path = "SOFTWARE";
             check_required.comparison = installcheckregistry_comparison.exists;
             component_required.Children.Add(check_required);
@@ -80,7 +79,6 @@ namespace dotNetInstallerUnitTests
 
             // configuration with a required and optional component
             // will prompt for the optional component, auto-start and install it
-
             string markerFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
 
             ConfigFile configFile = new ConfigFile();
@@ -89,8 +87,8 @@ namespace dotNetInstallerUnitTests
             setupConfiguration.auto_start = true;
             setupConfiguration.auto_close_if_installed = true;
             setupConfiguration.prompt_for_optional_components = true;
-            setupConfiguration.installation_completed = "";
-            setupConfiguration.installation_none = "";
+            setupConfiguration.installation_completed = string.Empty;
+            setupConfiguration.installation_none = string.Empty;
             configFile.Children.Add(setupConfiguration);
 
             // dummy required component
@@ -101,7 +99,7 @@ namespace dotNetInstallerUnitTests
             component_required.command = "dummy";
 
             InstalledCheckRegistry check_required = new InstalledCheckRegistry();
-            check_required.fieldname = "";
+            check_required.fieldname = string.Empty;
             check_required.path = "SOFTWARE";
             check_required.comparison = installcheckregistry_comparison.exists;
             component_required.Children.Add(check_required);

@@ -14,7 +14,7 @@ public:
 	bool must_exist;
 	bool hide_readonly;
 	bool allow_edit;
-	void Load(TiXmlElement * node);
+	void Load(tinyxml2::XMLElement * node);
 	std::wstring GetString() const;
 };
 

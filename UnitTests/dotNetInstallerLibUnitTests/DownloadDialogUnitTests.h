@@ -1,32 +1,31 @@
 #pragma once
+#include "dotNetInstallerLibUnitTestFixture.h"
 
 namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class DownloadDialogUnitTests : public dotNetInstallerLibUnitTestFixture
+		TEST_CLASS(DownloadDialogUnitTests), public dotNetInstallerLibUnitTestFixture
 		{
-			CPPUNIT_TEST_SUITE( DownloadDialogUnitTests );
-			CPPUNIT_TEST( testIsCopyDownloadRequiredEmpty );
-			CPPUNIT_TEST( testIsCopyDownloadRequired );
-			CPPUNIT_TEST( testDownload );
-			CPPUNIT_TEST( testDownloadMultiple );
-			CPPUNIT_TEST( testDownloadMultipleError );
-			CPPUNIT_TEST( testCopyFromSource );
-			CPPUNIT_TEST( testShowDialogOnDownloadFile );
-			CPPUNIT_TEST( testShowDialogOnCopyFile );
-			CPPUNIT_TEST( testNoDialogOnNoDownloadOrCopy );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testIsCopyDownloadRequiredEmpty();
-			void testIsCopyDownloadRequired();
-			void testDownload();
-			void testDownloadMultiple();
-			void testDownloadMultipleError();
-			void testCopyFromSource();
-			void testShowDialogOnDownloadFile();
-			void testShowDialogOnCopyFile();
-			void testNoDialogOnNoDownloadOrCopy();
+            TEST_METHOD_INITIALIZE( initialize )
+            {
+                setUp();
+            }
+
+            TEST_METHOD_CLEANUP( cleanup )
+            {
+                tearDown();
+            }
+
+			TEST_METHOD( testIsCopyDownloadRequiredEmpty );
+			TEST_METHOD( testIsCopyDownloadRequired );
+			TEST_METHOD( testDownload );
+			TEST_METHOD( testDownloadMultiple );
+			TEST_METHOD( testDownloadMultipleError );
+			TEST_METHOD( testCopyFromSource );
+			TEST_METHOD( testShowDialogOnDownloadFile );
+			TEST_METHOD( testShowDialogOnCopyFile );
+			TEST_METHOD( testNoDialogOnNoDownloadOrCopy );
 		};
 	}
 }

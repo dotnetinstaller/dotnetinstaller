@@ -7,7 +7,7 @@ public:
     ControlHyperlink();
 public:
 	XmlAttribute uri;
-	void Load(TiXmlElement * node);
+	void Load(tinyxml2::XMLElement * node);
 	std::wstring GetString() const;
 };
 

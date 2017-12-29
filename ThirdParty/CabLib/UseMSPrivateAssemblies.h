@@ -37,19 +37,6 @@ __declspec(selectany) int _forceAtlDllManifestRTM;
 }						/* __cplusplus */
 #endif
 
-// We use crtassem.h with the defines there. It just gives us the
-// versions and name parts for the dependencies.
-// Note that there is also a MFCassem.h but this include file has the
-// manifest pragma's already in it. So we can't use it
-//
-// Three files are controlling this crtassem.h, MFCassem.h and atlassem.h!
-// Happily __LIBRARIES_ASSEMBLY_NAME_PREFIX is used in CRT, MFC and ATL!
-// Doing it right would need to use _MFC_ASSEMBLY_VERSION for the MFC
-// but in fact _CRT_ASSEMBLY_VERSION and _MFC_ASSEMBLY_VERSION and
-// _ATL_ASSEMBLY_VERSION are the same (VC-2005 SP1 MFC Security Update 8.0.50727.6195)
-
-#include <crtassem.h>
-
 // We don't have a seperate block for the Debug version. We just handle
 // this with a extra define here.
 #ifdef _DEBUG

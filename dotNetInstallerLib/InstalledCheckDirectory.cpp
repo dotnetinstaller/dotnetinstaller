@@ -8,7 +8,7 @@ InstalledCheckDirectory::InstalledCheckDirectory()
 {
 }
 
-void InstalledCheckDirectory::Load(TiXmlElement * node)
+void InstalledCheckDirectory::Load(tinyxml2::XMLElement * node)
 {
     path = InstallerSession::Instance->ExpandVariables(DVLib::UTF8string2wstring(node->Attribute("path")));
     LOG(L"Loaded 'directory' installed check '" << path << L"'");

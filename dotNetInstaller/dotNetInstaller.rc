@@ -19,6 +19,7 @@
 #ifdef _WIN32
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 #pragma code_page(1252)
+#include "afxres.rc"         // Shared components
 #endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
@@ -200,12 +201,6 @@ END
 #define _AFX_NO_OLE_RESOURCES
 #define _AFX_NO_TRACKER_RESOURCES
 #define _AFX_NO_PROPERTY_RESOURCES
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ITA)
-LANGUAGE 16, 1
-#pragma code_page(1252)
-#include "afxres.rc"         // Componenti standard
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED

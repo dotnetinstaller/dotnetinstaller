@@ -21,9 +21,4 @@
       <supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}"/>
     </application>
   </compatibility>
-  <dependency>
-    <dependentAssembly>
-      <assemblyIdentity type="win32" name="Microsoft.VC80.CRT" version="8.0.50727.6195" processorArchitecture="x86" />
-    </dependentAssembly>
-  </dependency>
 </assembly>

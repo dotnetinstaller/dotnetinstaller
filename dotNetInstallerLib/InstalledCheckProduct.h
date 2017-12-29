@@ -20,7 +20,7 @@ public:
 	XmlAttribute defaultvalue;
 public:
     InstalledCheckProduct();
-    void Load(TiXmlElement * node);
+    void Load(tinyxml2::XMLElement * node);
 	virtual bool IsInstalled() const;
 };
 

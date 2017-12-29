@@ -3,35 +3,34 @@
 #include "FindWindow.h"
 
 using namespace DVLib::UnitTests;
-
-CPPUNIT_TEST_SUITE_REGISTRATION(ShellUtilUnitTests);
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void ShellUtilUnitTests::testGetEnvironmentVariable()
 {
     wchar_t computername_s[MAX_COMPUTERNAME_LENGTH + 1];
     DWORD computername_size = ARRAYSIZE(computername_s);
-    CPPUNIT_ASSERT(::GetComputerNameW(computername_s, & computername_size));
+    Assert::IsTrue(::GetComputerNameW(computername_s, & computername_size));
     std::wstring computername = DVLib::GetEnvironmentVariable(L"COMPUTERNAME");
     std::wcout << std::endl << L"Computer name: " << computername;
-    CPPUNIT_ASSERT(computername.length() > 0);
-    CPPUNIT_ASSERT(computername.length() == wcslen(computername.c_str()));
-    CPPUNIT_ASSERT(computername == computername_s);
+    Assert::IsTrue(computername.length() > 0);
+    Assert::IsTrue(computername.length() == wcslen(computername.c_str()));
+    Assert::IsTrue(computername == computername_s);
 }
 
 void ShellUtilUnitTests::testExpandEnvironmentVariables()
 {
-    CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"") == L"");
-    CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%%") == L"%%");
-    CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%%%") == L"%%%");
+    Assert::IsTrue(DVLib::ExpandEnvironmentVariables(L"") == L"");
+    Assert::IsTrue(DVLib::ExpandEnvironmentVariables(L"%%") == L"%%");
+    Assert::IsTrue(DVLib::ExpandEnvironmentVariables(L"%%%") == L"%%%");
 
     std::wstring guid = DVLib::GenerateGUIDStringW();
-    CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%" + guid + L"%") == L"%" + guid + L"%");
-    CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%cd%") == L"%cd%");
-    CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%COMPUTERNAME%") == DVLib::GetEnvironmentVariableW(L"COMPUTERNAME"));
-    CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%COMPUTERNAME%%COMPUTERNAME%") == DVLib::GetEnvironmentVariableW(L"COMPUTERNAME") + DVLib::GetEnvironmentVariableW(L"COMPUTERNAME"));
-    CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"%COMPUTERNAME") == L"%COMPUTERNAME");
-    CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"COMPUTERNAME%") == L"COMPUTERNAME%");
-    CPPUNIT_ASSERT(DVLib::ExpandEnvironmentVariables(L"{%COMPUTERNAME%}") == L"{" + DVLib::GetEnvironmentVariableW(L"COMPUTERNAME") + L"}");
+    Assert::IsTrue(DVLib::ExpandEnvironmentVariables(L"%" + guid + L"%") == L"%" + guid + L"%");
+    Assert::IsTrue(DVLib::ExpandEnvironmentVariables(L"%cd%") == L"%cd%");
+    Assert::IsTrue(DVLib::ExpandEnvironmentVariables(L"%COMPUTERNAME%") == DVLib::GetEnvironmentVariableW(L"COMPUTERNAME"));
+    Assert::IsTrue(DVLib::ExpandEnvironmentVariables(L"%COMPUTERNAME%%COMPUTERNAME%") == DVLib::GetEnvironmentVariableW(L"COMPUTERNAME") + DVLib::GetEnvironmentVariableW(L"COMPUTERNAME"));
+    Assert::IsTrue(DVLib::ExpandEnvironmentVariables(L"%COMPUTERNAME") == L"%COMPUTERNAME");
+    Assert::IsTrue(DVLib::ExpandEnvironmentVariables(L"COMPUTERNAME%") == L"COMPUTERNAME%");
+    Assert::IsTrue(DVLib::ExpandEnvironmentVariables(L"{%COMPUTERNAME%}") == L"{" + DVLib::GetEnvironmentVariableW(L"COMPUTERNAME") + L"}");
 }
 
 void ShellUtilUnitTests::testDetachCmd()
@@ -39,24 +38,24 @@ void ShellUtilUnitTests::testDetachCmd()
     // test timer runs for 2 seconds
     std::wstring testTimerExe = DVLib::DirectoryCombine(
 #ifdef DEBUG
-        DVLib::GetModuleDirectoryW(), L"..\\..\\TestTimer\\bin\\Debug\\TestTimer.exe"
+        DVLib::GetCurrentModuleDirectoryW(), L"..\\..\\TestTimer\\bin\\Debug\\TestTimer.exe"
 #else
-        DVLib::GetModuleDirectoryW(), L"..\\..\\TestTimer\\bin\\Release\\TestTimer.exe"
+        DVLib::GetCurrentModuleDirectoryW(), L"..\\..\\TestTimer\\bin\\Release\\TestTimer.exe"
 #endif
         );
-    CPPUNIT_ASSERT(DVLib::FileExists(testTimerExe));
+    Assert::IsTrue(DVLib::FileExists(testTimerExe));
     // detach without pi
     DWORD c1 = ::GetTickCount();
     DVLib::DetachCmd(testTimerExe);
-    CPPUNIT_ASSERT((::GetTickCount() - c1) < 2 * 1000);
+    Assert::IsTrue((::GetTickCount() - c1) < 2 * 1000);
     // run with process information
     PROCESS_INFORMATION pi = { 0 };
     DWORD c2 = ::GetTickCount();
     DVLib::DetachCmd(testTimerExe, & pi);
     auto_handle pi_thread(pi.hThread);
     auto_handle pi_process(pi.hProcess);
-    CPPUNIT_ASSERT(pi.dwProcessId > 0);
-    CPPUNIT_ASSERT((::GetTickCount() - c2) < 2 * 1000);
+    Assert::IsTrue(pi.dwProcessId > 0);
+    Assert::IsTrue((::GetTickCount() - c2) < 2 * 1000);
 }
 
 void ShellUtilUnitTests::testRunCmd()
@@ -68,17 +67,17 @@ void ShellUtilUnitTests::testRunCmd()
     DVLib::RunCmd(L"cmd.exe /C exit /b 0", & pi);
     auto_handle pi_thread(pi.hThread);
     auto_handle pi_process(pi.hProcess);
-    CPPUNIT_ASSERT(pi.dwProcessId > 0);
-    CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(pi.hProcess, INFINITE));
+    Assert::IsTrue(pi.dwProcessId > 0);
+    Assert::IsTrue(WAIT_OBJECT_0 == ::WaitForSingleObject(pi.hProcess, INFINITE));
 }
 
 void ShellUtilUnitTests::testExecCmd()
 {
-    CPPUNIT_ASSERT(0 == DVLib::ExecCmd(L"cmd.exe /C"));
-    CPPUNIT_ASSERT(123 == DVLib::ExecCmd(L"cmd.exe /C exit /b 123"));
+    Assert::IsTrue(0 == DVLib::ExecCmd(L"cmd.exe /C"));
+    Assert::IsTrue(123 == DVLib::ExecCmd(L"cmd.exe /C exit /b 123"));
 
     // hide window
-    CPPUNIT_ASSERT(456 == DVLib::ExecCmd(L"cmd.exe /C exit /b 456", L"", SW_HIDE));
+    Assert::IsTrue(456 == DVLib::ExecCmd(L"cmd.exe /C exit /b 456", L"", SW_HIDE));
 }
 
 void ShellUtilUnitTests::testShellCmd()
@@ -88,8 +87,8 @@ void ShellUtilUnitTests::testShellCmd()
     HANDLE hProcess;
     DVLib::ShellCmd(L"\"cmd.exe\" /C dir", NULL, &hProcess);
     auto_handle pi_process(hProcess);
-    CPPUNIT_ASSERT(hProcess != NULL);
-    CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
+    Assert::IsTrue(hProcess != NULL);
+    Assert::IsTrue(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
 }
 
 void ShellUtilUnitTests::testRunCmdWithHiddenWindow()
@@ -104,9 +103,9 @@ void ShellUtilUnitTests::testRunCmdWithHiddenWindow()
     auto_handle pi_process(pi.hProcess);
 
     // Assert
-    CPPUNIT_ASSERT(pi.dwProcessId > 0);
-    CPPUNIT_ASSERT(NULL == FindWindow::FindWindowFromProcessId(pi.dwProcessId));
-    CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(pi.hProcess, INFINITE));
+    Assert::IsTrue(pi.dwProcessId > 0);
+    Assert::IsTrue(NULL == FindWindow::FindWindowFromProcessId(pi.dwProcessId));
+    Assert::IsTrue(WAIT_OBJECT_0 == ::WaitForSingleObject(pi.hProcess, INFINITE));
 }
 
 void ShellUtilUnitTests::testShellCmdWithHiddenWindow()
@@ -121,9 +120,9 @@ void ShellUtilUnitTests::testShellCmdWithHiddenWindow()
     auto_handle pi_process(hProcess);
 
     // Assert
-    CPPUNIT_ASSERT(hProcess != NULL);
-    CPPUNIT_ASSERT(NULL == FindWindow::FindWindowFromProcess(hProcess));
-    CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
+    Assert::IsTrue(hProcess != NULL);
+    Assert::IsTrue(NULL == FindWindow::FindWindowFromProcess(hProcess));
+    Assert::IsTrue(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
 }
 
 void ShellUtilUnitTests::testRunCmdWithoutWorkingDirectorySpecified()
@@ -142,13 +141,13 @@ void ShellUtilUnitTests::testRunCmdWithoutWorkingDirectorySpecified()
     auto_handle pi_process(pi.hProcess);
 
     // Assert
-    CPPUNIT_ASSERT(pi.dwProcessId > 0);
-    CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(pi.hProcess, INFINITE));
+    Assert::IsTrue(pi.dwProcessId > 0);
+    Assert::IsTrue(WAIT_OBJECT_0 == ::WaitForSingleObject(pi.hProcess, INFINITE));
 
     DWORD exitCode = 0;
     CHECK_WIN32_BOOL(::GetExitCodeProcess(pi.hProcess, &exitCode),
         L"GetExitCodeProcess");
-    CPPUNIT_ASSERT(exitCode == 0);
+    Assert::IsTrue(exitCode == 0);
 }
 
 void ShellUtilUnitTests::testRunCmdWithWorkingDirectorySpecified()
@@ -163,13 +162,13 @@ void ShellUtilUnitTests::testRunCmdWithWorkingDirectorySpecified()
     auto_handle pi_process(pi.hProcess);
 
     // Assert
-    CPPUNIT_ASSERT(pi.dwProcessId > 0);
-    CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(pi.hProcess, INFINITE));
+    Assert::IsTrue(pi.dwProcessId > 0);
+    Assert::IsTrue(WAIT_OBJECT_0 == ::WaitForSingleObject(pi.hProcess, INFINITE));
 
     DWORD exitCode = 0;
     CHECK_WIN32_BOOL(::GetExitCodeProcess(pi.hProcess, &exitCode),
         L"GetExitCodeProcess");
-    CPPUNIT_ASSERT(exitCode == 0);
+    Assert::IsTrue(exitCode == 0);
 }
 
 void ShellUtilUnitTests::testShellCmdWithoutWorkingDirectorySpecified()
@@ -187,13 +186,13 @@ void ShellUtilUnitTests::testShellCmdWithoutWorkingDirectorySpecified()
     auto_handle pi_process(hProcess);
 
     // Assert
-    CPPUNIT_ASSERT(hProcess != NULL);
-    CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
+    Assert::IsTrue(hProcess != NULL);
+    Assert::IsTrue(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
 
     DWORD exitCode = 0;
     CHECK_WIN32_BOOL(::GetExitCodeProcess(hProcess, &exitCode),
         L"GetExitCodeProcess");
-    CPPUNIT_ASSERT(exitCode == 0);
+    Assert::IsTrue(exitCode == 0);
 }
 
 void ShellUtilUnitTests::testShellCmdWithWorkingDirectorySpecified()
@@ -207,11 +206,11 @@ void ShellUtilUnitTests::testShellCmdWithWorkingDirectorySpecified()
     auto_handle pi_process(hProcess);
 
     // Assert
-    CPPUNIT_ASSERT(hProcess != NULL);
-    CPPUNIT_ASSERT(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
+    Assert::IsTrue(hProcess != NULL);
+    Assert::IsTrue(WAIT_OBJECT_0 == ::WaitForSingleObject(hProcess, INFINITE));
 
     DWORD exitCode = 0;
     CHECK_WIN32_BOOL(::GetExitCodeProcess(hProcess, &exitCode),
         L"GetExitCodeProcess");
-    CPPUNIT_ASSERT(exitCode == 0);
+    Assert::IsTrue(exitCode == 0);
 }

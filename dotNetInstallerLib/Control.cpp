@@ -19,7 +19,7 @@ Control::~Control(void)
 {
 }
 
-void Control::Load(TiXmlElement * node)
+void Control::Load(tinyxml2::XMLElement * node)
 {
     position.FromString(DVLib::UTF8string2wstring(node->Attribute("position")));
     enabled = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("enabled")));
@@ -28,10 +28,9 @@ void Control::Load(TiXmlElement * node)
     check = wstring2controlcheck(DVLib::UTF8string2wstring(node->Attribute("check")));
     has_value_disabled = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("has_value_disabled")));
     // install checks, embed files, etc.
-    TiXmlNode * child = NULL;
-    while( (child = node->IterateChildren(child)) != NULL )
+    for (tinyxml2::XMLNode* child = node->FirstChildElement(); child; child = child->NextSibling())
     {
-        TiXmlElement * child_element = child->ToElement();
+        tinyxml2::XMLElement * child_element = child->ToElement();
 
         if (child_element == NULL)
             continue;

@@ -2,16 +2,15 @@
 #include "DownloadDialogUnitTests.h"
 #include "DownloadCallbackImpl.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::DownloadDialogUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void DownloadDialogUnitTests::testIsCopyDownloadRequiredEmpty()
 {
     DownloadDialog dd;
     // empty dd, no copy required, but download is
-    CPPUNIT_ASSERT(! dd.IsCopyRequired());
-    CPPUNIT_ASSERT(! dd.IsDownloadRequired());	
+    Assert::IsTrue(! dd.IsCopyRequired());
+    Assert::IsTrue(! dd.IsDownloadRequired());	
 }
 
 void DownloadDialogUnitTests::testIsCopyDownloadRequired()
@@ -22,18 +21,18 @@ void DownloadDialogUnitTests::testIsCopyDownloadRequired()
     DownloadDialog dd;
     dd.downloadfiles.push_back(c);
     // component with no source path
-    CPPUNIT_ASSERT(! dd.IsCopyRequired());	
-    CPPUNIT_ASSERT(dd.IsDownloadRequired());
+    Assert::IsTrue(! dd.IsCopyRequired());	
+    Assert::IsTrue(dd.IsDownloadRequired());
     // component with both source and destination path, source path must exist
     c->sourcepath = DVLib::GetModuleFileNameW();
-    CPPUNIT_ASSERT(dd.IsCopyRequired());
-    CPPUNIT_ASSERT(! dd.IsDownloadRequired());
+    Assert::IsTrue(dd.IsCopyRequired());
+    Assert::IsTrue(! dd.IsDownloadRequired());
     DownloadFilePtr c2(new DownloadFile());	
     dd.downloadfiles.push_back(c2);
     c2->alwaysdownload = true;
     c2->sourceurl = L"http://download.microsoft.com/download/5/6/7/567758a3-759e-473e-bf8f-52154438565a/dotnetfx.exe";
-    CPPUNIT_ASSERT(dd.IsCopyRequired());
-    CPPUNIT_ASSERT(dd.IsDownloadRequired());
+    Assert::IsTrue(dd.IsCopyRequired());
+    Assert::IsTrue(dd.IsDownloadRequired());
 }
 
 void DownloadDialogUnitTests::testDownload()
@@ -52,7 +51,7 @@ void DownloadDialogUnitTests::testDownload()
     dd.downloadfiles.push_back(info);
     dd.Exec();
     std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
-    CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
+    Assert::IsTrue(DVLib::FileExists(fullpath));
     DVLib::FileDelete(fullpath);
 }
 
@@ -72,7 +71,7 @@ void DownloadDialogUnitTests::testCopyFromSource()
     dd.downloadfiles.push_back(info);
     dd.Exec();
     std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
-    CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
+    Assert::IsTrue(DVLib::FileExists(fullpath));
     DVLib::FileDelete(fullpath);
 }
 
@@ -102,12 +101,12 @@ void DownloadDialogUnitTests::testDownloadMultiple()
     dd.downloadfiles.push_back(info2);
     dd.Exec();
     std::wcout << std::endl << L"Complete count: " << callback.GetCompleteCount();
-    CPPUNIT_ASSERT(1 == callback.GetCompleteCount());
+    Assert::IsTrue(1 == callback.GetCompleteCount());
     std::wstring fullpath1 = DVLib::DirectoryCombine(info1->destinationpath, info1->destinationfilename);
-    CPPUNIT_ASSERT(DVLib::FileExists(fullpath1));
+    Assert::IsTrue(DVLib::FileExists(fullpath1));
     DVLib::FileDelete(fullpath1);
     std::wstring fullpath2 = DVLib::DirectoryCombine(info2->destinationpath, info2->destinationfilename);
-    CPPUNIT_ASSERT(DVLib::FileExists(fullpath2));
+    Assert::IsTrue(DVLib::FileExists(fullpath2));
     DVLib::FileDelete(fullpath2);
 }
 
@@ -146,7 +145,7 @@ void DownloadDialogUnitTests::testDownloadMultipleError()
 
     }
 
-    CPPUNIT_ASSERT(1 == callback.GetErrorCount());
+    Assert::IsTrue(1 == callback.GetErrorCount());
 }
 
 void DownloadDialogUnitTests::testShowDialogOnDownloadFile()
@@ -165,10 +164,10 @@ void DownloadDialogUnitTests::testShowDialogOnDownloadFile()
     dd.downloadfiles.push_back(info);
     dd.Exec();
     std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
-    CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
+    Assert::IsTrue(DVLib::FileExists(fullpath));
     DVLib::FileDelete(fullpath);
-    CPPUNIT_ASSERT(callback.IsDownloading());
-    CPPUNIT_ASSERT(! callback.IsCopying());
+    Assert::IsTrue(callback.IsDownloading());
+    Assert::IsTrue(! callback.IsCopying());
 }
 
 void DownloadDialogUnitTests::testShowDialogOnCopyFile()
@@ -187,10 +186,10 @@ void DownloadDialogUnitTests::testShowDialogOnCopyFile()
     dd.downloadfiles.push_back(info);
     dd.Exec();
     std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
-    CPPUNIT_ASSERT(DVLib::FileExists(fullpath));
+    Assert::IsTrue(DVLib::FileExists(fullpath));
     DVLib::FileDelete(fullpath);
-    CPPUNIT_ASSERT(! callback.IsDownloading());
-    CPPUNIT_ASSERT(callback.IsCopying());
+    Assert::IsTrue(! callback.IsDownloading());
+    Assert::IsTrue(callback.IsCopying());
 }
 
 void DownloadDialogUnitTests::testNoDialogOnNoDownloadOrCopy()
@@ -203,15 +202,15 @@ void DownloadDialogUnitTests::testNoDialogOnNoDownloadOrCopy()
     info->sourceurl = L"file://" + DVLib::GetModuleFileNameW();
     info->destinationpath = DVLib::GetModuleDirectoryW();
     info->destinationfilename = DVLib::GetFileNameW(DVLib::GetModuleFileNameW());
-    CPPUNIT_ASSERT(! info->IsDownloadRequired());
-    CPPUNIT_ASSERT(! info->IsCopyRequired());
+    Assert::IsTrue(! info->IsDownloadRequired());
+    Assert::IsTrue(! info->IsCopyRequired());
     DownloadCallbackImpl callback;
     DownloadDialog dd;
     dd.callback = & callback;
     dd.downloadfiles.push_back(info);
     dd.Exec();
     std::wstring fullpath = DVLib::DirectoryCombine(info->destinationpath, info->destinationfilename);
-    CPPUNIT_ASSERT(! callback.IsDownloading());
-    CPPUNIT_ASSERT(! callback.IsCopying());
+    Assert::IsTrue(! callback.IsDownloading());
+    Assert::IsTrue(! callback.IsCopying());
 }
 

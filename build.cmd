@@ -7,7 +7,7 @@ if "%~1"=="" (
  goto :EOF
 )
 
-%SystemRoot%\Microsoft.NET\Framework\v2.0.50727\msbuild.exe dni.proj /t:%* /l:FileLogger,Microsoft.Build.Engine;logfile="dni_%1.log"
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\msbuild.exe" dni.proj /t:%* /l:FileLogger,Microsoft.Build.Engine;logfile="dni_%1.log"
 
 popd
 endlocal

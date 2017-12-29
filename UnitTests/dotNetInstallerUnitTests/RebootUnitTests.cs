@@ -1,14 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using InstallerLib;
-using dotNetUnitTestsRunner;
-using System.IO;
-using Microsoft.Win32;
+// <copyright file="RebootUnitTests.cs" company="DevAge, Vestris Inc. &amp; Contributors">
+//   Copyright (c) DevAge, Vestris Inc. &amp; Contributors.
+// </copyright>
 
 namespace dotNetInstallerUnitTests
 {
+    using System;
+    using System.IO;
+    using dotNetUnitTestsRunner;
+    using InstallerLib;
+    using Microsoft.Win32;
+    using NUnit.Framework;
+
     [TestFixture]
     public class RebootUnitTests
     {
@@ -67,10 +69,9 @@ namespace dotNetInstallerUnitTests
         {
             Console.WriteLine("TestNoRunOnReboot");
 
-            //return reboot code 3010
-            //simulate passing /noRunOnReboot to dotNetInstaller on command line
-            //ensure RunOnReboot registry key is not written
-
+            // return reboot code 3010
+            // simulate passing /noRunOnReboot to dotNetInstaller on command line
+            // ensure RunOnReboot registry key is not written
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -99,7 +100,7 @@ namespace dotNetInstallerUnitTests
             }
             catch
             {
-                //remove RunOnReboot registry value if AssertionException is thrown
+                // remove RunOnReboot registry value if AssertionException is thrown
                 dotNetInstallerExeUtils.DisableRunOnReboot();
                 throw;
             }

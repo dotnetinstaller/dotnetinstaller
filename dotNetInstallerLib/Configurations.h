@@ -5,6 +5,7 @@
 #include "InstallUILevel.h"
 #include "FileAttributes.h"
 #include "InstallSequence.h"
+#include <tinyxml2.h>
 
 class Configurations : public std::vector< ConfigurationPtr >
 {
@@ -28,7 +29,7 @@ public:
 public:
 	Configurations();
 	virtual ~Configurations();
-	virtual void Load(TiXmlElement * node);
+	virtual void Load(tinyxml2::XMLElement * node);
 	// returns configurations that match current platform, lcid and processor architecture
 	std::vector<ConfigurationPtr> GetSupportedConfigurations(LCID lcid, InstallSequence sequence) const;
 	std::vector<std::wstring> GetLanguages() const;

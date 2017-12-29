@@ -1,24 +1,23 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{401947AE-AA1F-4FB3-8949-14C91A9504E4}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
+		appveyor.Debug.yml = appveyor.Debug.yml
+		appveyor.Release.yml = appveyor.Release.yml
 		build.cmd = build.cmd
 		CHANGELOG.md = CHANGELOG.md
+		dni.debug.props = dni.debug.props
+		dni.debug.vsprops = dni.debug.vsprops
 		dni.proj = dni.proj
+		dni.props = dni.props
 		dni.vsprops = dni.vsprops
 		Version.proj = Version.proj
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{2F6E6EC2-78ED-4D9F-A549-FDBB92E10C1A}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		CHANGELOG.md = CHANGELOG.md
 		Documentation\Dni.content = Documentation\Dni.content
@@ -28,16 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{2F6E6EC2-78E
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{C5E3E607-AA22-4796-B113-E9A1BAA374E9}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StandaloneSetup", "StandaloneSetup", "{7A7F3F3A-C319-4E83-AB2F-95C8B7C85614}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Samples\StandaloneSetup\banner.bmp = Samples\StandaloneSetup\banner.bmp
 		Samples\StandaloneSetup\configuration.xml = Samples\StandaloneSetup\configuration.xml
@@ -45,10 +36,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StandaloneSetup", "Standalo
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PackagedSetup", "PackagedSetup", "{AA6599BC-B3BA-4EC0-980D-5B66336A1350}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Samples\PackagedSetup\banner.bmp = Samples\PackagedSetup\banner.bmp
 		Samples\PackagedSetup\Configuration.xml = Samples\PackagedSetup\Configuration.xml
@@ -57,10 +44,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PackagedSetup", "PackagedSe
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InstallCheckOperators", "InstallCheckOperators", "{F4D5A955-C6B7-4989-9DC7-6565035D0ECF}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Samples\InstallCheckOperators\banner.bmp = Samples\InstallCheckOperators\banner.bmp
 		Samples\InstallCheckOperators\Configuration.xml = Samples\InstallCheckOperators\Configuration.xml
@@ -69,10 +52,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InstallCheckOperators", "In
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA2111-8FFF-42BC-AB3B-1B6549E5EFCE}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Documentation\Content\BuildingStandaloneSetupForDotNet.aml = Documentation\Content\BuildingStandaloneSetupForDotNet.aml
 		Documentation\Content\BuildingWebSetupForDotNet.aml = Documentation\Content\BuildingWebSetupForDotNet.aml
@@ -110,10 +89,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{64CA
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{02C1E614-3F23-4363-B899-920ECE2DD56E}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Documentation\Images\dotNetInstaller.jpg = Documentation\Images\dotNetInstaller.jpg
 		Documentation\Images\dotNetInstallerConfigurationAttributes.jpg = Documentation\Images\dotNetInstallerConfigurationAttributes.jpg
@@ -129,84 +104,113 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{02C1E6
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit tests", "unit tests", "{E1BC9224-5EAE-4C49-B54D-39210DA8C43C}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rd party", "3rd party", "{810198E0-3014-4F44-92B5-DF78730E1FDC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InstallCheckProduct", "InstallCheckProduct", "{22893B7A-F27F-4083-A4C1-DF98927A694A}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\InstallCheckProduct\Configuration.xml = Samples\InstallCheckProduct\Configuration.xml
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstaller", "dotNetInstaller\dotNetInstaller.vcproj", "{F4E74CF8-37CD-4023-8B89-05EF4B34D363}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OsFilters", "OsFilters", "{F691A44A-8753-4E95-AA4C-7C58A271A214}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\OsFilters\Configuration.xml = Samples\OsFilters\Configuration.xml
 	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
-		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8} = {8185F399-F6DE-40B3-ADD6-42FC5F330CA8}
-		{173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43} = {173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43}
-		{04DC59CF-750E-431F-A834-FB60BE03545C} = {04DC59CF-750E-431F-A834-FB60BE03545C}
-		{6A9AD5E1-624C-478F-9921-8400B3AD84A8} = {6A9AD5E1-624C-478F-9921-8400B3AD84A8}
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MultilingualSetup", "MultilingualSetup", "{57C3C23E-F287-4E9B-9A18-FF5E7430DD8E}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\MultilingualSetup\Configuration.xml = Samples\MultilingualSetup\Configuration.xml
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Invalid", "Invalid", "{1C3980EC-E9FD-4DD1-BB0B-1CF4AC9601B4}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\Invalid\NoMatchingOSFilter.xml = Samples\Invalid\NoMatchingOSFilter.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CustomInputSetup", "CustomInputSetup", "{72F4AC32-5C06-4ABA-9453-DA10AF36647D}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\CustomInputSetup\Configuration.xml = Samples\CustomInputSetup\Configuration.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LicenseAgreement", "LicenseAgreement", "{71B70102-7C55-49CF-92BB-9341752986E4}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\LicenseAgreement\Configuration.xml = Samples\LicenseAgreement\Configuration.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PatchSetup", "PatchSetup", "{D5B76C04-B265-4416-A4B1-F1C5B95F7A61}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\PatchSetup\Configuration.xml = Samples\PatchSetup\Configuration.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExeSetup", "ExeSetup", "{1F971F63-F0D9-4E48-BAC0-37959E44FDE0}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\ExeSetup\Configuration.xml = Samples\ExeSetup\Configuration.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MultipleSetup", "MultipleSetup", "{18EBB4B9-ED75-43E0-881B-DAA19C621589}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\MultipleSetup\Configuration.xml = Samples\MultipleSetup\Configuration.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HtmlSetup", "HtmlSetup", "{DCE563E3-05E7-456C-AC45-97173CED2F7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BasicWorkflow", "BasicWorkflow", "{0ECB908D-645A-48B6-8849-A0C608C9B3D3}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\HtmlSetup\BasicWorkflow\index.html = Samples\HtmlSetup\BasicWorkflow\index.html
+		Samples\HtmlSetup\BasicWorkflow\setup.html = Samples\HtmlSetup\BasicWorkflow\setup.html
+		Samples\HtmlSetup\BasicWorkflow\style.css = Samples\HtmlSetup\BasicWorkflow\style.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Picture", "Picture", "{CB16FD2C-784F-4385-9FB4-CE0EA0081D3C}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\HtmlSetup\Picture\index.html = Samples\HtmlSetup\Picture\index.html
+		Samples\HtmlSetup\Picture\picture.jpg = Samples\HtmlSetup\Picture\picture.jpg
+		Samples\HtmlSetup\Picture\style.css = Samples\HtmlSetup\Picture\style.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DownloadSetup", "DownloadSetup", "{DA2F3B93-F800-4AD0-BABE-F84B0C5128E0}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\DownloadSetup\Configuration.xml = Samples\DownloadSetup\Configuration.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Start64", "Start64", "{7C6A69A7-33E5-44B0-AD58-FA70F5A2905D}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\Start64\Configuration.xml = Samples\Start64\Configuration.xml
+		Samples\Start64\Readme.txt = Samples\Start64\Readme.txt
+		Samples\Start64\test.cmd = Samples\Start64\test.cmd
+		Samples\Start64\test.txt = Samples\Start64\test.txt
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstaller", "dotNetInstaller\dotNetInstaller.vcxproj", "{F4E74CF8-37CD-4023-8B89-05EF4B34D363}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerEditor", "InstallerEditor\InstallerEditor.csproj", "{170AAA63-64CE-404F-8FDE-D0D64DA9214F}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Version", "Version\Version.csproj", "{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Simple", "Samples\PackagedSetup\Simple\Simple.vdproj", "{5DDA5610-5927-404B-9B03-76071159F8BE}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerLinker", "InstallerLinker\InstallerLinker.csproj", "{E1B1FD8B-23FE-46CC-A675-BAA6FFBF16F7}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerLib", "InstallerLib\InstallerLib.csproj", "{E19C2177-78F8-4C52-81FE-F49E157D647F}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerLibUnitTests", "UnitTests\InstallerLibUnitTests\InstallerLibUnitTests.csproj", "{49A3BD48-D506-4108-8F47-7CD7081C046C}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{6E0789A6-234C-4B1C-AEB7-8C51BD754458} = {6E0789A6-234C-4B1C-AEB7-8C51BD754458}
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerConfig", "InstallerConfig\InstallerConfig.csproj", "{6E0789A6-234C-4B1C-AEB7-8C51BD754458}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallerMsi", "InstallerMsi\InstallerMsi.wixproj", "{E9CBA0F0-543D-4076-8D9C-10C2348665A5}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{170AAA63-64CE-404F-8FDE-D0D64DA9214F} = {170AAA63-64CE-404F-8FDE-D0D64DA9214F}
 		{E19C2177-78F8-4C52-81FE-F49E157D647F} = {E19C2177-78F8-4C52-81FE-F49E157D647F}
@@ -216,281 +220,39 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallerMsi", "InstallerMs
 		{F4E74CF8-37CD-4023-8B89-05EF4B34D363} = {F4E74CF8-37CD-4023-8B89-05EF4B34D363}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerLibUnitTests", "UnitTests\dotNetInstallerLibUnitTests\dotNetInstallerLibUnitTests.vcproj", "{48FFB2FD-215B-4DEE-8C38-EC1DB518477F}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{6542C25E-A71E-401E-A818-71910821444C} = {6542C25E-A71E-401E-A818-71910821444C}
-		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
-		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8} = {8185F399-F6DE-40B3-ADD6-42FC5F330CA8}
-		{173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43} = {173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43}
-		{04DC59CF-750E-431F-A834-FB60BE03545C} = {04DC59CF-750E-431F-A834-FB60BE03545C}
-		{6A9AD5E1-624C-478F-9921-8400B3AD84A8} = {6A9AD5E1-624C-478F-9921-8400B3AD84A8}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerLibUnitTests", "UnitTests\dotNetInstallerLibUnitTests\dotNetInstallerLibUnitTests.vcxproj", "{48FFB2FD-215B-4DEE-8C38-EC1DB518477F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppUnitTestsRunner", "UnitTests\CppUnitTestsRunner\CppUnitTestsRunner.vcproj", "{6542C25E-A71E-401E-A818-71910821444C}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerLib", "dotNetInstallerLib\dotNetInstallerLib.vcxproj", "{04DC59CF-750E-431F-A834-FB60BE03545C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerLib", "dotNetInstallerLib\dotNetInstallerLib.vcproj", "{04DC59CF-750E-431F-A834-FB60BE03545C}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerToolsLib", "dotNetInstallerToolsLib\dotNetInstallerToolsLib.vcxproj", "{173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerToolsLib", "dotNetInstallerToolsLib\dotNetInstallerToolsLib.vcproj", "{173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerToolsLibUnitTests", "UnitTests\dotNetInstallerToolsLibUnitTests\dotNetInstallerToolsLibUnitTests.vcxproj", "{56390342-5DE6-4FE4-A7A6-3EC30CF4B34F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstallerToolsLibUnitTests", "UnitTests\dotNetInstallerToolsLibUnitTests\dotNetInstallerToolsLibUnitTests.vcproj", "{56390342-5DE6-4FE4-A7A6-3EC30CF4B34F}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{6A9AD5E1-624C-478F-9921-8400B3AD84A8} = {6A9AD5E1-624C-478F-9921-8400B3AD84A8}
-		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
-		{173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43} = {173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43}
-		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8} = {8185F399-F6DE-40B3-ADD6-42FC5F330CA8}
-		{7ECDE788-34F9-447D-9AA7-5B1C277A3896} = {7ECDE788-34F9-447D-9AA7-5B1C277A3896}
-		{6542C25E-A71E-401E-A818-71910821444C} = {6542C25E-A71E-401E-A818-71910821444C}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cab", "ThirdParty\Cab\Cab.vcxproj", "{6A9AD5E1-624C-478F-9921-8400B3AD84A8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cab", "ThirdParty\Cab\Cab.vcproj", "{6A9AD5E1-624C-478F-9921-8400B3AD84A8}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rd party", "3rd party", "{810198E0-3014-4F44-92B5-DF78730E1FDC}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SmartPtr", "ThirdParty\SmartPtr\SmartPtr.vcproj", "{8185F399-F6DE-40B3-ADD6-42FC5F330CA8}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InstallCheckProduct", "InstallCheckProduct", "{22893B7A-F27F-4083-A4C1-DF98927A694A}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		Samples\InstallCheckProduct\Configuration.xml = Samples\InstallCheckProduct\Configuration.xml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OsFilters", "OsFilters", "{F691A44A-8753-4E95-AA4C-7C58A271A214}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		Samples\OsFilters\Configuration.xml = Samples\OsFilters\Configuration.xml
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SmartPtr", "ThirdParty\SmartPtr\SmartPtr.vcxproj", "{8185F399-F6DE-40B3-ADD6-42FC5F330CA8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNetInstallerUnitTests", "UnitTests\dotNetInstallerUnitTests\dotNetInstallerUnitTests.csproj", "{23B25369-53E1-4819-ADA2-EEE0A772BD02}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MultilingualSetup", "MultilingualSetup", "{57C3C23E-F287-4E9B-9A18-FF5E7430DD8E}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		Samples\MultilingualSetup\Configuration.xml = Samples\MultilingualSetup\Configuration.xml
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNetUnitTestsRunner", "UnitTests\dotNetUnitTestsRunner\dotNetUnitTestsRunner.csproj", "{6436DA79-B04A-4B9A-BEA9-46933ADBBB7D}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{7ECDE788-34F9-447D-9AA7-5B1C277A3896} = {7ECDE788-34F9-447D-9AA7-5B1C277A3896}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Invalid", "Invalid", "{1C3980EC-E9FD-4DD1-BB0B-1CF4AC9601B4}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		Samples\Invalid\NoMatchingOSFilter.xml = Samples\Invalid\NoMatchingOSFilter.xml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTimer", "UnitTests\TestTimer\TestTimer.csproj", "{7ECDE788-34F9-447D-9AA7-5B1C277A3896}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CustomInputSetup", "CustomInputSetup", "{72F4AC32-5C06-4ABA-9453-DA10AF36647D}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		Samples\CustomInputSetup\Configuration.xml = Samples\CustomInputSetup\Configuration.xml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LicenseAgreement", "LicenseAgreement", "{71B70102-7C55-49CF-92BB-9341752986E4}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		Samples\LicenseAgreement\Configuration.xml = Samples\LicenseAgreement\Configuration.xml
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerEditorUnitTests", "UnitTests\InstallerEditorUnitTests\InstallerEditorUnitTests.csproj", "{97E729E6-0C6A-4772-B2DF-18C89DAA61C0}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{170AAA63-64CE-404F-8FDE-D0D64DA9214F} = {170AAA63-64CE-404F-8FDE-D0D64DA9214F}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PatchSetup", "PatchSetup", "{D5B76C04-B265-4416-A4B1-F1C5B95F7A61}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		Samples\PatchSetup\Configuration.xml = Samples\PatchSetup\Configuration.xml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExeSetup", "ExeSetup", "{1F971F63-F0D9-4E48-BAC0-37959E44FDE0}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		Samples\ExeSetup\Configuration.xml = Samples\ExeSetup\Configuration.xml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MultipleSetup", "MultipleSetup", "{18EBB4B9-ED75-43E0-881B-DAA19C621589}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		Samples\MultipleSetup\Configuration.xml = Samples\MultipleSetup\Configuration.xml
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "htmlInstaller", "htmlInstaller\htmlInstaller.vcproj", "{A71D6A97-B4C9-4AD3-8150-5314129C58CC}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
-		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8} = {8185F399-F6DE-40B3-ADD6-42FC5F330CA8}
-		{173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43} = {173FEB9A-C058-4E3F-B6A1-2D8AE7E44F43}
-		{04DC59CF-750E-431F-A834-FB60BE03545C} = {04DC59CF-750E-431F-A834-FB60BE03545C}
-		{6A9AD5E1-624C-478F-9921-8400B3AD84A8} = {6A9AD5E1-624C-478F-9921-8400B3AD84A8}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HtmlSetup", "HtmlSetup", "{DCE563E3-05E7-456C-AC45-97173CED2F7F}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BasicWorkflow", "BasicWorkflow", "{0ECB908D-645A-48B6-8849-A0C608C9B3D3}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		Samples\HtmlSetup\BasicWorkflow\index.html = Samples\HtmlSetup\BasicWorkflow\index.html
-		Samples\HtmlSetup\BasicWorkflow\setup.html = Samples\HtmlSetup\BasicWorkflow\setup.html
-		Samples\HtmlSetup\BasicWorkflow\style.css = Samples\HtmlSetup\BasicWorkflow\style.css
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Picture", "Picture", "{CB16FD2C-784F-4385-9FB4-CE0EA0081D3C}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		Samples\HtmlSetup\Picture\index.html = Samples\HtmlSetup\Picture\index.html
-		Samples\HtmlSetup\Picture\picture.jpg = Samples\HtmlSetup\Picture\picture.jpg
-		Samples\HtmlSetup\Picture\style.css = Samples\HtmlSetup\Picture\style.css
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "htmlInstaller", "htmlInstaller\htmlInstaller.vcxproj", "{A71D6A97-B4C9-4AD3-8150-5314129C58CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerDocLib", "InstallerDocLib\InstallerDocLib.csproj", "{ADBA9E1B-677C-4399-823A-B8DFF471ECC3}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabLib", "ThirdParty\CabLib\CabLib.vcproj", "{96A9878C-7B75-41F7-AA11-7268672C16DD}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabLib", "ThirdParty\CabLib\CabLib.vcxproj", "{96A9878C-7B75-41F7-AA11-7268672C16DD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DownloadSetup", "DownloadSetup", "{DA2F3B93-F800-4AD0-BABE-F84B0C5128E0}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		Samples\DownloadSetup\Configuration.xml = Samples\DownloadSetup\Configuration.xml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Start64", "Start64", "{7C6A69A7-33E5-44B0-AD58-FA70F5A2905D}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		Samples\Start64\Configuration.xml = Samples\Start64\Configuration.xml
-		Samples\Start64\Readme.txt = Samples\Start64\Readme.txt
-		Samples\Start64\test.cmd = Samples\Start64\test.cmd
-		Samples\Start64\test.txt = Samples\Start64\test.txt
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VisualStudioCRT", "VisualStudioCRT", "{016A7130-F319-4A05-8CF3-E04F5D796268}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Debug", "Debug", "{4C44E872-DEBE-4CA7-B0FE-0780C3FE1C4E}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		ThirdParty\VisualStudioCRT\Debug\Microsoft.VC80.DebugCRT.manifest = ThirdParty\VisualStudioCRT\Debug\Microsoft.VC80.DebugCRT.manifest
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Release", "Release", "{2A50C8E6-72F8-4D47-8837-B861654666CD}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		ThirdParty\VisualStudioCRT\Release\Microsoft.VC80.CRT.manifest = ThirdParty\VisualStudioCRT\Release\Microsoft.VC80.CRT.manifest
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tinyxml2", "ThirdParty\tinyxml2-6.0.0\tinyxml2\tinyxml2.vcxproj", "{D1C528B6-AA02-4D29-9D61-DC08E317A70D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -534,10 +296,6 @@ Global
 		{48FFB2FD-215B-4DEE-8C38-EC1DB518477F}.Debug|Win32.Build.0 = Debug|Win32
 		{48FFB2FD-215B-4DEE-8C38-EC1DB518477F}.Release|Win32.ActiveCfg = Release|Win32
 		{48FFB2FD-215B-4DEE-8C38-EC1DB518477F}.Release|Win32.Build.0 = Release|Win32
-		{6542C25E-A71E-401E-A818-71910821444C}.Debug|Win32.ActiveCfg = Debug|Win32
-		{6542C25E-A71E-401E-A818-71910821444C}.Debug|Win32.Build.0 = Debug|Win32
-		{6542C25E-A71E-401E-A818-71910821444C}.Release|Win32.ActiveCfg = Release|Win32
-		{6542C25E-A71E-401E-A818-71910821444C}.Release|Win32.Build.0 = Release|Win32
 		{04DC59CF-750E-431F-A834-FB60BE03545C}.Debug|Win32.ActiveCfg = Debug|Win32
 		{04DC59CF-750E-431F-A834-FB60BE03545C}.Debug|Win32.Build.0 = Debug|Win32
 		{04DC59CF-750E-431F-A834-FB60BE03545C}.Release|Win32.ActiveCfg = Release|Win32
@@ -586,16 +344,20 @@ Global
 		{96A9878C-7B75-41F7-AA11-7268672C16DD}.Debug|Win32.Build.0 = Debug|Win32
 		{96A9878C-7B75-41F7-AA11-7268672C16DD}.Release|Win32.ActiveCfg = Release|Win32
 		{96A9878C-7B75-41F7-AA11-7268672C16DD}.Release|Win32.Build.0 = Release|Win32
+		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug|Win32.ActiveCfg = Debug-Lib|Win32
+		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug|Win32.Build.0 = Debug-Lib|Win32
+		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release|Win32.ActiveCfg = Release-Lib|Win32
+		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Release|Win32.Build.0 = Release-Lib|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{64CA2111-8FFF-42BC-AB3B-1B6549E5EFCE} = {2F6E6EC2-78ED-4D9F-A549-FDBB92E10C1A}
-		{02C1E614-3F23-4363-B899-920ECE2DD56E} = {2F6E6EC2-78ED-4D9F-A549-FDBB92E10C1A}
 		{7A7F3F3A-C319-4E83-AB2F-95C8B7C85614} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{AA6599BC-B3BA-4EC0-980D-5B66336A1350} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{F4D5A955-C6B7-4989-9DC7-6565035D0ECF} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
+		{64CA2111-8FFF-42BC-AB3B-1B6549E5EFCE} = {2F6E6EC2-78ED-4D9F-A549-FDBB92E10C1A}
+		{02C1E614-3F23-4363-B899-920ECE2DD56E} = {2F6E6EC2-78ED-4D9F-A549-FDBB92E10C1A}
 		{22893B7A-F27F-4083-A4C1-DF98927A694A} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{F691A44A-8753-4E95-AA4C-7C58A271A214} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{57C3C23E-F287-4E9B-9A18-FF5E7430DD8E} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
@@ -606,24 +368,21 @@ Global
 		{1F971F63-F0D9-4E48-BAC0-37959E44FDE0} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{18EBB4B9-ED75-43E0-881B-DAA19C621589} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{DCE563E3-05E7-456C-AC45-97173CED2F7F} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
+		{0ECB908D-645A-48B6-8849-A0C608C9B3D3} = {DCE563E3-05E7-456C-AC45-97173CED2F7F}
+		{CB16FD2C-784F-4385-9FB4-CE0EA0081D3C} = {DCE563E3-05E7-456C-AC45-97173CED2F7F}
 		{DA2F3B93-F800-4AD0-BABE-F84B0C5128E0} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{7C6A69A7-33E5-44B0-AD58-FA70F5A2905D} = {C5E3E607-AA22-4796-B113-E9A1BAA374E9}
 		{5DDA5610-5927-404B-9B03-76071159F8BE} = {AA6599BC-B3BA-4EC0-980D-5B66336A1350}
 		{49A3BD48-D506-4108-8F47-7CD7081C046C} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{48FFB2FD-215B-4DEE-8C38-EC1DB518477F} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
-		{6542C25E-A71E-401E-A818-71910821444C} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{56390342-5DE6-4FE4-A7A6-3EC30CF4B34F} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
+		{6A9AD5E1-624C-478F-9921-8400B3AD84A8} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
+		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 		{23B25369-53E1-4819-ADA2-EEE0A772BD02} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{6436DA79-B04A-4B9A-BEA9-46933ADBBB7D} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{7ECDE788-34F9-447D-9AA7-5B1C277A3896} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{97E729E6-0C6A-4772-B2DF-18C89DAA61C0} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
-		{6A9AD5E1-624C-478F-9921-8400B3AD84A8} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
-		{8185F399-F6DE-40B3-ADD6-42FC5F330CA8} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 		{96A9878C-7B75-41F7-AA11-7268672C16DD} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
-		{016A7130-F319-4A05-8CF3-E04F5D796268} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
-		{0ECB908D-645A-48B6-8849-A0C608C9B3D3} = {DCE563E3-05E7-456C-AC45-97173CED2F7F}
-		{CB16FD2C-784F-4385-9FB4-CE0EA0081D3C} = {DCE563E3-05E7-456C-AC45-97173CED2F7F}
-		{4C44E872-DEBE-4CA7-B0FE-0780C3FE1C4E} = {016A7130-F319-4A05-8CF3-E04F5D796268}
-		{2A50C8E6-72F8-4D47-8837-B861654666CD} = {016A7130-F319-4A05-8CF3-E04F5D796268}
+		{D1C528B6-AA02-4D29-9D61-DC08E317A70D} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 	EndGlobalSection
 EndGlobal

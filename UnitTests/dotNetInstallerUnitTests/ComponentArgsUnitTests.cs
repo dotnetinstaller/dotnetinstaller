@@ -1,14 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using InstallerLib;
-using dotNetUnitTestsRunner;
-using System.IO;
-using System.Diagnostics;
+// <copyright file="ComponentArgsUnitTests.cs" company="DevAge, Vestris Inc. &amp; Contributors">
+//   Copyright (c) DevAge, Vestris Inc. &amp; Contributors.
+// </copyright>
 
 namespace dotNetInstallerUnitTests
 {
+    using System;
+    using System.IO;
+    using dotNetUnitTestsRunner;
+    using InstallerLib;
+    using NUnit.Framework;
+
     [TestFixture]
     public class ComponentArgsUnitTests
     {
@@ -18,6 +19,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestComponentArgCmd");
 
             ConfigFile configFile = new ConfigFile();
+
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -42,6 +44,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestComponentNameArgCmd");
 
             ConfigFile configFile = new ConfigFile();
+
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -66,6 +69,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestComponentNameArgQuotes");
 
             ConfigFile configFile = new ConfigFile();
+
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -90,6 +94,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestAllArgCmd");
 
             ConfigFile configFile = new ConfigFile();
+
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -120,6 +125,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestComponentIdAndNameArgCmd");
 
             ConfigFile configFile = new ConfigFile();
+
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -144,6 +150,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestComponentArgCmd2");
 
             ConfigFile configFile = new ConfigFile();
+
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -168,6 +175,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestComponentArgIgnored");
 
             ConfigFile configFile = new ConfigFile();
+
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);

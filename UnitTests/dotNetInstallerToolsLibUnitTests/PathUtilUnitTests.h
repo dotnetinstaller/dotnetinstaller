@@ -4,33 +4,19 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class PathUtilUnitTests :  public CPPUNIT_NS::TestFixture
+		TEST_CLASS(PathUtilUnitTests)
 		{
-			CPPUNIT_TEST_SUITE( PathUtilUnitTests );
-			CPPUNIT_TEST( testGetFileDirectory );
-			CPPUNIT_TEST( testGetFileName );
-			CPPUNIT_TEST( testGetModuleDirectory );
-			CPPUNIT_TEST( testGetModuleFileName );
-			CPPUNIT_TEST( testDirectoryCombine );
-			CPPUNIT_TEST( testGetTemporaryDirectory );
-			CPPUNIT_TEST( testGetCurrentDirectory );
-			CPPUNIT_TEST( testGetSystemDirectory );
-			CPPUNIT_TEST( testGetWindowsDirectory );
-			CPPUNIT_TEST( testGetSystemWindowsDirectory );
-			CPPUNIT_TEST( testStripPathTerminator );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testGetFileDirectory();
-			void testGetFileName();
-			void testGetModuleDirectory();
-			void testGetModuleFileName();
-			void testDirectoryCombine();
-			void testGetTemporaryDirectory();
-			void testGetCurrentDirectory();
-			void testGetSystemDirectory();
-			void testGetWindowsDirectory();
-			void testGetSystemWindowsDirectory();
-			void testStripPathTerminator();
+			TEST_METHOD( testGetFileDirectory );
+			TEST_METHOD( testGetFileName );
+			TEST_METHOD( testGetModuleDirectory );
+			TEST_METHOD( testGetModuleFileName );
+			TEST_METHOD( testDirectoryCombine );
+			TEST_METHOD( testGetTemporaryDirectory );
+			TEST_METHOD( testGetCurrentDirectory );
+			TEST_METHOD( testGetSystemDirectory );
+			TEST_METHOD( testGetWindowsDirectory );
+			TEST_METHOD( testGetSystemWindowsDirectory );
+			TEST_METHOD( testStripPathTerminator );
 		};
 	}
 }

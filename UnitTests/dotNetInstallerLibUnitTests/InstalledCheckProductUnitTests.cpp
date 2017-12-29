@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "InstalledCheckProductUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::InstalledCheckProductUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void InstalledCheckProductUnitTests::testProductCode()
 {
@@ -24,7 +23,7 @@ void InstalledCheckProductUnitTests::testProductCode()
 
         std::vector<DVLib::MsiProductInfo> relatedproducts = DVLib::MsiGetRelatedProducts(
             DVLib::string2guid(data[i].pszGuid));
-        CPPUNIT_ASSERT(relatedproducts.size() > 0);
+        Assert::IsTrue(relatedproducts.size() > 0);
         for each(const DVLib::MsiProductInfo& product in relatedproducts)
         {
             std::wcout << std::endl << L" " << product.GetProductName() << L": " << product.GetVersionString();
@@ -34,27 +33,27 @@ void InstalledCheckProductUnitTests::testProductCode()
             check->propertyname = L"VersionString";
             check->propertyvalue = L"1.0.0.0";
             check->comparison = L"exists";
-            CPPUNIT_ASSERT(check->IsInstalled());
+            Assert::IsTrue(check->IsInstalled());
             check->comparison = L"contains";
-            CPPUNIT_ASSERT(! check->IsInstalled());
+            Assert::IsTrue(! check->IsInstalled());
             check->comparison = L"match";
-            CPPUNIT_ASSERT(! check->IsInstalled());
+            Assert::IsTrue(! check->IsInstalled());
             check->propertyvalue = product.GetVersionString();
-            CPPUNIT_ASSERT(check->IsInstalled());
+            Assert::IsTrue(check->IsInstalled());
             check->comparison = L"contains";
-            CPPUNIT_ASSERT(check->IsInstalled());
+            Assert::IsTrue(check->IsInstalled());
             check->comparison = L"version";
-            CPPUNIT_ASSERT(check->IsInstalled());
+            Assert::IsTrue(check->IsInstalled());
             check->comparison = L"version_eq";
-            CPPUNIT_ASSERT(check->IsInstalled());
+            Assert::IsTrue(check->IsInstalled());
             check->comparison = L"version_lt";
-            CPPUNIT_ASSERT(! check->IsInstalled());
+            Assert::IsTrue(! check->IsInstalled());
             check->comparison = L"version_le";
-            CPPUNIT_ASSERT(check->IsInstalled());
+            Assert::IsTrue(check->IsInstalled());
             check->comparison = L"version_gt";
-            CPPUNIT_ASSERT(! check->IsInstalled());
+            Assert::IsTrue(! check->IsInstalled());
             check->comparison = L"version_ge";
-            CPPUNIT_ASSERT(check->IsInstalled());
+            Assert::IsTrue(check->IsInstalled());
         }
     }
 }
@@ -82,25 +81,25 @@ void InstalledCheckProductUnitTests::testUpgradeCode()
         check->propertyname = L"VersionString";
         check->propertyvalue = L"1.0.0.0";
         check->comparison = L"exists";
-        CPPUNIT_ASSERT(check->IsInstalled());
+        Assert::IsTrue(check->IsInstalled());
         check->comparison = L"contains";
-        CPPUNIT_ASSERT(! check->IsInstalled());
+        Assert::IsTrue(! check->IsInstalled());
         check->comparison = L"match";
-        CPPUNIT_ASSERT(! check->IsInstalled());
+        Assert::IsTrue(! check->IsInstalled());
         check->comparison = L"contains";
-        CPPUNIT_ASSERT(! check->IsInstalled());
+        Assert::IsTrue(! check->IsInstalled());
         check->comparison = L"version";
-        CPPUNIT_ASSERT(check->IsInstalled());
+        Assert::IsTrue(check->IsInstalled());
         check->comparison = L"version_eq";
-        CPPUNIT_ASSERT(! check->IsInstalled());
+        Assert::IsTrue(! check->IsInstalled());
         check->comparison = L"version_lt";
-        CPPUNIT_ASSERT(! check->IsInstalled());
+        Assert::IsTrue(! check->IsInstalled());
         check->comparison = L"version_le";
-        CPPUNIT_ASSERT(! check->IsInstalled());
+        Assert::IsTrue(! check->IsInstalled());
         check->comparison = L"version_gt";
-        CPPUNIT_ASSERT(check->IsInstalled());
+        Assert::IsTrue(check->IsInstalled());
         check->comparison = L"version_ge";
-        CPPUNIT_ASSERT(check->IsInstalled());
+        Assert::IsTrue(check->IsInstalled());
     }
 }
 
@@ -135,6 +134,6 @@ void InstalledCheckProductUnitTests::testDefaultValue()
     {
         check->comparison = data[i].comparison;
         check->defaultvalue = (data[i].defaultvalue ? L"True" : L"False");
-        CPPUNIT_ASSERT(data[i].expected_result == check->IsInstalled());
+        Assert::IsTrue(data[i].expected_result == check->IsInstalled());
     }
 }

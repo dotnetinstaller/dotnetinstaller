@@ -10,7 +10,7 @@ EmbedFile::EmbedFile()
 
 }
 
-void EmbedFile::Load(TiXmlElement * node)
+void EmbedFile::Load(tinyxml2::XMLElement * node)
 {
     CHECK_BOOL(node != NULL,
         L"Expected 'embedfile' node");

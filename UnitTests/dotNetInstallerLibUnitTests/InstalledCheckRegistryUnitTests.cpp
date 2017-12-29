@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "InstalledCheckRegistryUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::InstalledCheckRegistryUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void InstalledCheckRegistryUnitTests::setUp()
 {
@@ -124,6 +123,6 @@ void InstalledCheckRegistryUnitTests::testIsInstalled()
             << check.rootkey << L"\\" << check.path << L"\\" << check.fieldname << L"\\" << check.fieldvalue 
             << L" (" << check.fieldtype << L") - " << check.comparison
             << L": " << (isinstalled ? L"yes" : L"no");
-        CPPUNIT_ASSERT(isinstalled == testdata[i].expected_isinstalled);
+        Assert::IsTrue(isinstalled == testdata[i].expected_isinstalled);
     }
 }

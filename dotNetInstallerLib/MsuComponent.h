@@ -14,7 +14,7 @@ public:
 	bool disable_wow64_fs_redirection; 
 	DVLib::CommandExecutionMethod execution_method;
 	void Exec();
-	void Load(TiXmlElement * node);
+	void Load(tinyxml2::XMLElement * node);
 	void Wait(DWORD tt = INFINITE);
 	bool IsRebootRequired() const;
 };

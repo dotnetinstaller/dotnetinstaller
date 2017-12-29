@@ -16,12 +16,11 @@ ReferenceConfiguration::~ReferenceConfiguration()
 
 }
 
-void ReferenceConfiguration::Load(TiXmlElement * node)
+void ReferenceConfiguration::Load(tinyxml2::XMLElement * node)
 {
-    TiXmlNode * child = NULL;
-    while( (child = node->IterateChildren(child)) != NULL )
+    for (tinyxml2::XMLNode* child = node->FirstChildElement(); child; child = child->NextSibling())
     {
-        TiXmlElement * child_element = child->ToElement();
+        tinyxml2::XMLElement * child_element = child->ToElement();
 
         if (child_element == NULL)
             continue;

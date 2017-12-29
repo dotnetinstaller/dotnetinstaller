@@ -11,7 +11,7 @@ checked(false)
 
 }
 
-void ControlCheckBox::Load(TiXmlElement * node)
+void ControlCheckBox::Load(tinyxml2::XMLElement * node)
 {
     checked = XmlAttribute(node->Attribute("checked")).GetBoolValue(false);
     id = node->Attribute("id");

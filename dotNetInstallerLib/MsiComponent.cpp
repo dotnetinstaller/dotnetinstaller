@@ -70,7 +70,7 @@ void MsiComponent::Exec()
     ProcessComponent::ExecCmd(command, DVLib::CemCreateProcess, disable_wow64_fs_redirection);
 }
 
-void MsiComponent::Load(TiXmlElement * node)
+void MsiComponent::Load(tinyxml2::XMLElement * node)
 {
     package = node->Attribute("package");
     cmdparameters = node->Attribute("cmdparameters");

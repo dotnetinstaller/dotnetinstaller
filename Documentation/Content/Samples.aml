@@ -13,8 +13,6 @@
         <para>
           The Standalone setup is configured to correctly install the following components:
           <list class="bullet">
-            <listItem>Windows NT4 Sp6</listItem>
-            <listItem>Windows 2000 Sp4</listItem>
             <listItem>MDAC 2.8</listItem>
             <listItem>Jet 4.0 Sp8</listItem>
             <listItem>.NET Framework 1.1</listItem>
@@ -22,11 +20,6 @@
           </list>
           on these operating systems:
           <list class="bullet">
-            <listItem>Windows 98</listItem>
-            <listItem>Windows 98SE</listItem>
-            <listItem>Windows ME</listItem>
-            <listItem>Windows NT4</listItem>
-            <listItem>Windows 2000</listItem>
             <listItem>Windows XP</listItem>
             <listItem>Windows Server 2003</listItem>
           </list>

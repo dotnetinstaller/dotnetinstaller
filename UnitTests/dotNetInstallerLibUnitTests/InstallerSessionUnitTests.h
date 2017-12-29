@@ -1,36 +1,33 @@
 #pragma once
+#include "dotNetInstallerLibUnitTestFixture.h"
 
 namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class InstallerSessionUnitTests : public dotNetInstallerLibUnitTestFixture
+        TEST_CLASS(InstallerSessionUnitTests), public dotNetInstallerLibUnitTestFixture
 		{
-			CPPUNIT_TEST_SUITE( InstallerSessionUnitTests );
-			CPPUNIT_TEST( testExpandVariables );
-			CPPUNIT_TEST( testExpandPathVariables );
-			CPPUNIT_TEST( testExpandEnvironmentVariables );
-			CPPUNIT_TEST( testExpandRegistryVariables );
-			CPPUNIT_TEST( testExpandRegistryVariable );
-			CPPUNIT_TEST( testExpandUserVariables );
-			CPPUNIT_TEST( testExpandUserVariablesEscapes );
-			CPPUNIT_TEST( testGetRebootCmd );
-			CPPUNIT_TEST( testGetRestartCommandLine );
-			CPPUNIT_TEST( testEnableRunOnReboot );
-			CPPUNIT_TEST( testExpandPathVariablesBackslashes );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testExpandVariables();
-			void testExpandPathVariablesBackslashes();
-			void testExpandPathVariables();
-			void testExpandEnvironmentVariables();
-			void testExpandRegistryVariables();
-			void testExpandRegistryVariable();
-			void testEnableRunOnReboot();
-			void testGetRebootCmd();
-			void testGetRestartCommandLine();
-			void testExpandUserVariables();
-			void testExpandUserVariablesEscapes();
+            TEST_METHOD_INITIALIZE( initialize )
+            {
+                setUp();
+            }
+
+            TEST_METHOD_CLEANUP( cleanup )
+            {
+                tearDown();
+            }
+
+			TEST_METHOD( testExpandVariables );
+			TEST_METHOD( testExpandPathVariables );
+			TEST_METHOD( testExpandEnvironmentVariables );
+			TEST_METHOD( testExpandRegistryVariables );
+			TEST_METHOD( testExpandRegistryVariable );
+			TEST_METHOD( testExpandUserVariables );
+			TEST_METHOD( testExpandUserVariablesEscapes );
+			TEST_METHOD( testGetRebootCmd );
+			TEST_METHOD( testGetRestartCommandLine );
+			TEST_METHOD( testEnableRunOnReboot );
+			TEST_METHOD( testExpandPathVariablesBackslashes );
 		};
 	}
 }

@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "MsiComponentUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::MsiComponentUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void MsiComponentUnitTests::testExecInstall()
 {
@@ -19,7 +18,7 @@ void MsiComponentUnitTests::testExecInstall()
     catch(std::exception& /* ex */)
     {
         // msi file cannot be opened
-        CPPUNIT_ASSERT(1619 == component.GetProcessExitCode());
+        Assert::IsTrue(1619 == component.GetProcessExitCode());
     }
 }
 
@@ -38,7 +37,7 @@ void MsiComponentUnitTests::testExecInstallSilent()
     catch(std::exception& /* ex */)
     {
         // msi file cannot be opened
-        CPPUNIT_ASSERT(1619 == component.GetProcessExitCode());
+        Assert::IsTrue(1619 == component.GetProcessExitCode());
     }
 }
 
@@ -80,7 +79,7 @@ void MsiComponentUnitTests::testGetCommandLine()
         component.uninstall_package = testdata[i].uninstall_package;
         std::wstring command = component.GetCommandLine();
         std::wcout << std::endl << L" " << command;
-        CPPUNIT_ASSERT(testdata[i].command == command);
+        Assert::IsTrue(testdata[i].command == command);
     }
 }
 
@@ -100,7 +99,7 @@ void MsiComponentUnitTests::testExecUninstall()
     catch(std::exception& /* ex */)
     {
         // msi file cannot be opened
-        CPPUNIT_ASSERT(1619 == component.GetProcessExitCode());
+        Assert::IsTrue(1619 == component.GetProcessExitCode());
     }
 }
 
@@ -120,14 +119,14 @@ void MsiComponentUnitTests::testExecUninstallSilent()
     catch(std::exception& /* ex */)
     {
         // msi file cannot be opened
-        CPPUNIT_ASSERT(1619 == component.GetProcessExitCode());
+        Assert::IsTrue(1619 == component.GetProcessExitCode());
     }
 }
 
 void MsiComponentUnitTests::testMustReboot()
 {
     MsiComponent component;
-    CPPUNIT_ASSERT(! component.IsRebootRequired());
+    Assert::IsTrue(! component.IsRebootRequired());
     component.mustreboot = true;
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 }

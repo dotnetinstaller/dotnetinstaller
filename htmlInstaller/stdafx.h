@@ -10,7 +10,7 @@
 
 #include <windowsx.h>
 
-#include <ThirdParty/TinyXml/include/Xml.h>
+#include <tinyxml2.h>
 #include <ThirdParty/SmartPtr/SmartPtr.h>
 #include <dotNetInstallerToolsLib/Tools.h>
 #include <ThirdParty/Cab/Cab.h>

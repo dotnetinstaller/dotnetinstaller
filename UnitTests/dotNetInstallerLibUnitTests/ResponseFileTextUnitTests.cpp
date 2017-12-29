@@ -2,8 +2,6 @@
 #include "ResponseFileTextUnitTests.h"
 #include "ResponseFileUnitTests.cpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::ResponseFileTextUnitTests);
-
 using namespace DVLib::UnitTests;
 
 void ResponseFileTextUnitTests::testExec()

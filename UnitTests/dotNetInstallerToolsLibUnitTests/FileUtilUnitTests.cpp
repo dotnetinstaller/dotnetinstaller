@@ -2,8 +2,7 @@
 #include "FileUtilUnitTests.h"
 
 using namespace DVLib::UnitTests;
-
-CPPUNIT_TEST_SUITE_REGISTRATION(FileUtilUnitTests);
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void FileUtilUnitTests::testFileExists()
 {
@@ -13,17 +12,17 @@ void FileUtilUnitTests::testFileExists()
     std::string directory = DVLib::GetFileDirectoryA(path);
     std::cout << std::endl << "Directory: " << directory;
 
-    CPPUNIT_ASSERT(! DVLib::FileExists(directory));
-    CPPUNIT_ASSERT(DVLib::FileExists(path));
+    Assert::IsTrue(! DVLib::FileExists(directory));
+    Assert::IsTrue(DVLib::FileExists(path));
     DVLib::FileDelete(path);
 
-    CPPUNIT_ASSERT(! DVLib::FileExists("C:\\"));	
-    CPPUNIT_ASSERT(! DVLib::FileExists(""));
+    Assert::IsTrue(! DVLib::FileExists("C:\\"));	
+    Assert::IsTrue(! DVLib::FileExists(""));
 
     std::string filename = DVLib::GenerateGUIDStringA();
     std::string guidpath = "C:\\" + filename;
     std::cout << std::endl << "Guid path: " << guidpath;
-    CPPUNIT_ASSERT(! DVLib::FileExists(guidpath));
+    Assert::IsTrue(! DVLib::FileExists(guidpath));
 }
 
 void FileUtilUnitTests::testGetTemporaryFileName()
@@ -32,39 +31,39 @@ void FileUtilUnitTests::testGetTemporaryFileName()
     std::cout << std::endl << "Temporary filename: " << path;
     std::string directory = DVLib::GetFileDirectoryA(path);
     std::cout << std::endl << "Directory: " << directory;
-    CPPUNIT_ASSERT(directory.length() > 0);
+    Assert::IsTrue(directory.length() > 0);
     std::string filename = DVLib::GetFileNameA(path);
     std::cout << std::endl << "File: " << filename;
-    CPPUNIT_ASSERT(filename.length() > 0);
+    Assert::IsTrue(filename.length() > 0);
     std::stringstream s_path;
     s_path << directory << filename;
     std::cout << std::endl << "Joined directory: " << s_path.str();
-    CPPUNIT_ASSERT(path == s_path.str());
-    CPPUNIT_ASSERT(DVLib::FileExists(path));
+    Assert::IsTrue(path == s_path.str());
+    Assert::IsTrue(DVLib::FileExists(path));
     DVLib::FileDelete(path);
-    CPPUNIT_ASSERT(! DVLib::FileExists(path));
+    Assert::IsTrue(! DVLib::FileExists(path));
 }
 
 void FileUtilUnitTests::testFileDelete()
 {
     std::string path = DVLib::GetTemporaryFileNameA();
     std::cout << std::endl << "Temporary filename: " << path;
-    CPPUNIT_ASSERT(DVLib::FileExists(path));
-    CPPUNIT_ASSERT(::PathFileExistsA(path.c_str()));
+    Assert::IsTrue(DVLib::FileExists(path));
+    Assert::IsTrue(::PathFileExistsA(path.c_str()));
     DVLib::FileDelete(path);
-    CPPUNIT_ASSERT(! DVLib::FileExists(path));
-    CPPUNIT_ASSERT(FALSE == ::PathFileExistsA(path.c_str()));
+    Assert::IsTrue(! DVLib::FileExists(path));
+    Assert::IsTrue(FALSE == ::PathFileExistsA(path.c_str()));
 }
 
 void FileUtilUnitTests::testFileCopy()
 {
     std::string path = DVLib::GetTemporaryFileNameA();
     std::cout << std::endl << "Temporary filename: " << path;
-    CPPUNIT_ASSERT(DVLib::FileExists(path));
+    Assert::IsTrue(DVLib::FileExists(path));
     std::string path_copy = path + ".copy";
-    CPPUNIT_ASSERT(! DVLib::FileExists(path_copy));
+    Assert::IsTrue(! DVLib::FileExists(path_copy));
     DVLib::FileCopy(path, path_copy, true);
-    CPPUNIT_ASSERT(DVLib::FileExists(path_copy));
+    Assert::IsTrue(DVLib::FileExists(path_copy));
     DVLib::FileDelete(path);
     DVLib::FileDelete(path_copy);
 }
@@ -73,12 +72,12 @@ void FileUtilUnitTests::testFileMove()
 {
     std::string path = DVLib::GetTemporaryFileNameA();
     std::cout << std::endl << "Temporary filename: " << path;
-    CPPUNIT_ASSERT(DVLib::FileExists(path));
+    Assert::IsTrue(DVLib::FileExists(path));
     std::string path_copy = path + ".move";
-    CPPUNIT_ASSERT(! DVLib::FileExists(path_copy));
+    Assert::IsTrue(! DVLib::FileExists(path_copy));
     DVLib::FileMove(path, path_copy);
-    CPPUNIT_ASSERT(! DVLib::FileExists(path));
-    CPPUNIT_ASSERT(DVLib::FileExists(path_copy));
+    Assert::IsTrue(! DVLib::FileExists(path));
+    Assert::IsTrue(DVLib::FileExists(path_copy));
     DVLib::FileDelete(path_copy);
 }
 
@@ -90,7 +89,7 @@ void FileUtilUnitTests::testGetFileSize()
     {
         long size = DVLib::GetFileSize(file);
         std::wcout << std::endl << L" " << file << L": " << DVLib::towstring(size) << L" byte(s)";
-        CPPUNIT_ASSERT(size >= 0);
+        Assert::IsTrue(size >= 0);
     }
 }
 
@@ -103,7 +102,7 @@ void FileUtilUnitTests::testFileWrite()
     std::vector<char> write_data;
     DVLib::FileWrite(tmpfile, write_data);
     std::vector<char> read_data = DVLib::FileReadToEnd(tmpfile);
-    CPPUNIT_ASSERT(read_data.size() == 0); // temporary files are created empty
+    Assert::IsTrue(read_data.size() == 0); // temporary files are created empty
     // some data
     std::string write_guid = DVLib::GenerateGUIDStringA();
     std::cout << std::endl << "Write GUID: " << write_guid;
@@ -111,11 +110,11 @@ void FileUtilUnitTests::testFileWrite()
     DVLib::FileWrite(tmpfile, write_guid_vector);
     std::vector<char> read_guid = DVLib::FileReadToEnd(tmpfile);
     std::wcout << std::endl << L"Size: " << read_guid.size();    
-    CPPUNIT_ASSERT(read_guid.size() > 0);
-    CPPUNIT_ASSERT(static_cast<long>(read_guid.size()) == DVLib::GetFileSize(tmpfile));
+    Assert::IsTrue(read_guid.size() > 0);
+    Assert::IsTrue(static_cast<long>(read_guid.size()) == DVLib::GetFileSize(tmpfile));
     std::string read_guid_string(read_guid.begin(), read_guid.end());
     std::cout << std::endl << "Read GUID: " << read_guid_string;
-    CPPUNIT_ASSERT(write_guid == read_guid_string);
+    Assert::IsTrue(write_guid == read_guid_string);
     // delete temp file
     DVLib::FileDelete(tmpfile);
 }
@@ -125,18 +124,18 @@ void FileUtilUnitTests::testFileCreate()
     std::wstring tmpfile = DVLib::DirectoryCombine(
         DVLib::GetTemporaryDirectoryW(), DVLib::GenerateGUIDStringW());
     std::wcout << std::endl << L"Temporary filename: " << tmpfile;
-    CPPUNIT_ASSERT(! DVLib::FileExists(tmpfile));
+    Assert::IsTrue(! DVLib::FileExists(tmpfile));
     // create the file
     DVLib::FileCreate(tmpfile);
-    CPPUNIT_ASSERT(DVLib::GetFileSize(tmpfile) == 0);
+    Assert::IsTrue(DVLib::GetFileSize(tmpfile) == 0);
     // populate the temp file with data, then re-create, ensure that it is empty
     std::vector<char> data;
     data.push_back('x');
     DVLib::FileWrite(tmpfile, data);
-    CPPUNIT_ASSERT(DVLib::GetFileSize(tmpfile) == 1);
+    Assert::IsTrue(DVLib::GetFileSize(tmpfile) == 1);
     DVLib::FileCreate(tmpfile);
-    CPPUNIT_ASSERT(DVLib::FileExists(tmpfile));
-    CPPUNIT_ASSERT(DVLib::GetFileSize(tmpfile) == 0);
+    Assert::IsTrue(DVLib::FileExists(tmpfile));
+    Assert::IsTrue(DVLib::GetFileSize(tmpfile) == 0);
     DVLib::FileDelete(tmpfile);
 }
 
@@ -144,9 +143,9 @@ void FileUtilUnitTests::testFileReadToEnd()
 {
     std::wstring tmpfile = DVLib::GetTemporaryFileNameW();
     std::wcout << std::endl << L"Temporary filename: " << tmpfile;
-    CPPUNIT_ASSERT(DVLib::FileExists(tmpfile));
+    Assert::IsTrue(DVLib::FileExists(tmpfile));
     std::vector<char> data = DVLib::FileReadToEnd(tmpfile);
-    CPPUNIT_ASSERT(data.size() == 0); // temporary files are created empty
+    Assert::IsTrue(data.size() == 0); // temporary files are created empty
     // ansi data
     std::string guid = DVLib::GenerateGUIDStringA();
     std::ofstream f(DVLib::wstring2string(tmpfile).c_str());
@@ -155,8 +154,8 @@ void FileUtilUnitTests::testFileReadToEnd()
     // read as byte data
     std::vector<char> guiddata = DVLib::FileReadToEnd(tmpfile);
     std::wcout << std::endl << L"Size: " << guiddata.size();    
-    CPPUNIT_ASSERT(guiddata.size() > 0);
-    CPPUNIT_ASSERT(static_cast<long>(guiddata.size()) == DVLib::GetFileSize(tmpfile));
+    Assert::IsTrue(guiddata.size() > 0);
+    Assert::IsTrue(static_cast<long>(guiddata.size()) == DVLib::GetFileSize(tmpfile));
     // delete temp file
     DVLib::FileDelete(tmpfile);
 }
@@ -170,32 +169,33 @@ void FileUtilUnitTests::testGetFileVersionInfo()
         << LOWORD(versioninfo.fixed_info.dwFileVersionMS) << L"."
         << HIWORD(versioninfo.fixed_info.dwFileVersionLS) << L"."
         << LOWORD(versioninfo.fixed_info.dwFileVersionLS);
-    CPPUNIT_ASSERT(versioninfo.fixed_info.dwFileVersionMS > 0);
+    Assert::IsTrue(versioninfo.fixed_info.dwFileVersionMS > 0);
     std::wcout << std::endl << L"user.exe cp/language: "
         << versioninfo.translation_info.wCodePage << L":" << versioninfo.translation_info.wLanguage;
-    CPPUNIT_ASSERT(versioninfo.translation_info.wCodePage > 256);
-    CPPUNIT_ASSERT(versioninfo.translation_info.wLanguage > 256);
+    Assert::IsTrue(versioninfo.translation_info.wCodePage > 256);
+    Assert::IsTrue(versioninfo.translation_info.wLanguage > 256);
 }
 
 void FileUtilUnitTests::testGetFileVersion()
 {
     std::wstring userexepath = DVLib::DirectoryCombine(DVLib::GetSystemDirectoryW(), L"user.exe");
     std::wstring version = DVLib::GetFileVersion(userexepath);
-    CPPUNIT_ASSERT(version.length());
-    CPPUNIT_ASSERT(DVLib::split(version, L".").size() == 4);	
+    Assert::IsTrue(version.length());
+    Assert::IsTrue(DVLib::split(version, L".").size() == 4);	
 }
 
 void FileUtilUnitTests::testLoadResourceData()
 {
-    std::vector<char> data = DVLib::LoadResourceData<char>(NULL, L"RES_TEST", L"CUSTOM");
-    CPPUNIT_ASSERT(data.size() == 3390);
+    std::vector<char> data = DVLib::LoadResourceData<char>(GetCurrentModuleHandle(), L"RES_TEST", L"CUSTOM");
+    Assert::IsTrue(data.size() == 3390);
 }
 
 void FileUtilUnitTests::testResourceExists()
 {
-    CPPUNIT_ASSERT(DVLib::ResourceExists(NULL, L"RES_TEST", L"CUSTOM"));
-    CPPUNIT_ASSERT(! DVLib::ResourceExists(NULL, L"RES_TEST", L"TypeDoesntExist"));
-    CPPUNIT_ASSERT(! DVLib::ResourceExists(NULL, L"ResourceDoesntExist", L"CUSTOM"));
+    HMODULE hm = GetCurrentModuleHandle();
+    Assert::IsTrue(DVLib::ResourceExists(hm, L"RES_TEST", L"CUSTOM"));
+    Assert::IsTrue(! DVLib::ResourceExists(hm, L"RES_TEST", L"TypeDoesntExist"));
+    Assert::IsTrue(! DVLib::ResourceExists(hm, L"ResourceDoesntExist", L"CUSTOM"));
 }
 
 void FileUtilUnitTests::testwstring2fileversion()
@@ -223,17 +223,17 @@ void FileUtilUnitTests::testwstring2fileversion()
         std::wcout << std::endl << testdata[i].version_s << L" => "
             << version.major << L"." << version.minor << L"." 
             << version.build << L"." << version.rev;
-        CPPUNIT_ASSERT(version.major == testdata[i].version.major);
-        CPPUNIT_ASSERT(version.minor == testdata[i].version.minor);
-        CPPUNIT_ASSERT(version.build == testdata[i].version.build);
-        CPPUNIT_ASSERT(version.rev == testdata[i].version.rev);
+        Assert::IsTrue(version.major == testdata[i].version.major);
+        Assert::IsTrue(version.minor == testdata[i].version.minor);
+        Assert::IsTrue(version.build == testdata[i].version.build);
+        Assert::IsTrue(version.rev == testdata[i].version.rev);
     }
 }
 
 void FileUtilUnitTests::testfileversion2wstring()
 {
     FileVersion zero = { 0, 0, 0, 0};
-    CPPUNIT_ASSERT(DVLib::fileversion2wstring(zero) == L"0.0.0.0");
+    Assert::IsTrue(DVLib::fileversion2wstring(zero) == L"0.0.0.0");
     FileVersion notzero = { 12, 345, 6789, 100};
-    CPPUNIT_ASSERT(DVLib::fileversion2wstring(notzero) == L"12.345.6789.100");
+    Assert::IsTrue(DVLib::fileversion2wstring(notzero) == L"12.345.6789.100");
 }

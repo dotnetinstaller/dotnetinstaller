@@ -1,20 +1,25 @@
 #pragma once
+#include "dotNetInstallerLibUnitTestFixture.h"
 
 namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class ExtractComponentUnitTests : public dotNetInstallerLibUnitTestFixture
+		TEST_CLASS(ExtractComponentUnitTests), public dotNetInstallerLibUnitTestFixture
 		{
-			CPPUNIT_TEST_SUITE( ExtractComponentUnitTests );
-			CPPUNIT_TEST( testExtractWithoutComponentId );
-			CPPUNIT_TEST( testExtractWithComponentId );
-			CPPUNIT_TEST( testExtractWithStatus );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testExtractWithoutComponentId();
-			void testExtractWithComponentId();
-			void testExtractWithStatus();
+            TEST_METHOD_INITIALIZE( initialize )
+            {
+                setUp();
+            }
+
+            TEST_METHOD_CLEANUP( cleanup )
+            {
+                tearDown();
+            }
+
+			TEST_METHOD( testExtractWithoutComponentId );
+			TEST_METHOD( testExtractWithComponentId );
+			TEST_METHOD( testExtractWithStatus );
 		};
 	}
 }

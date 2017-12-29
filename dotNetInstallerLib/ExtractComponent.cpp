@@ -70,7 +70,9 @@ void ExtractComponent::ExtractFromResource()
     CHECK_BOOL(extract.CreateFDIContext(),
         L"Error initializing cabinet.dll: " << extract.LastErrorW());
 
-    CHECK_BOOL(extract.ExtractResourceW(L"", Cabinet::CStrW(resname.c_str()), L"RES_CAB", Cabinet::CStrW(resolved_cab_path.c_str()), this), 
+    std::wstring module = DVLib::GetModuleFileNameW(m_h);
+
+    CHECK_BOOL(extract.ExtractResourceW(Cabinet::CStrW(module.c_str()), Cabinet::CStrW(resname.c_str()), L"RES_CAB", Cabinet::CStrW(resolved_cab_path.c_str()), this),
         L"Error extracting '" << resname << L"': " << extract.LastErrorW());
 }
 

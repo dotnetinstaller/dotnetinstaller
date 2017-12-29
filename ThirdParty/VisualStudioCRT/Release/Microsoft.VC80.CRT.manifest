@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
-    <noInheritable />
-    <assemblyIdentity type="win32" name="Microsoft.VC80.CRT" version="8.0.50727.6195" processorArchitecture="x86" />
-    <file name="msvcr80.dll" />
-    <file name="msvcp80.dll" />
-    <file name="msvcm80.dll" />
-</assembly>

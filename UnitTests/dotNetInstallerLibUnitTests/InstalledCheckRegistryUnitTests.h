@@ -1,23 +1,29 @@
 #pragma once
+#include "dotNetInstallerLibUnitTestFixture.h"
 
 namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class InstalledCheckRegistryUnitTests : public dotNetInstallerLibUnitTestFixture
+        TEST_CLASS(InstalledCheckRegistryUnitTests), public dotNetInstallerLibUnitTestFixture
 		{
-			CPPUNIT_TEST_SUITE( InstalledCheckRegistryUnitTests );
-			CPPUNIT_TEST( testIsInstalled );
+            TEST_METHOD_INITIALIZE( initialize )
+            {
+                setUp();
+            }
+
+            TEST_METHOD_CLEANUP( cleanup )
+            {
+                tearDown();
+            }
+
+			TEST_METHOD( testIsInstalled );
 			// \todo: WOW options tests
-			// CPPUNIT_TEST( testWOW64_64 );
-			// CPPUNIT_TEST( testWOW64_32 );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			// void testWOW64_64();
-			// void testWOW64_32();
-			void testIsInstalled();
-			void setUp();
-			void tearDown();
+			// TEST_METHOD( testWOW64_64 );
+			// TEST_METHOD( testWOW64_32 );
+
+            void setUp();
+            void tearDown();
 		};
 	}
 }

@@ -90,7 +90,7 @@ void MspComponent::Exec()
     ProcessComponent::ExecCmd(command, DVLib::CemCreateProcess, disable_wow64_fs_redirection);
 }
 
-void MspComponent::Load(TiXmlElement * node)
+void MspComponent::Load(tinyxml2::XMLElement * node)
 {
     patch = node->Attribute("patch");
     package = node->Attribute("package");

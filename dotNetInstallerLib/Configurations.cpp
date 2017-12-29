@@ -19,7 +19,7 @@ Configurations::~Configurations()
 {
 }
 
-void Configurations::Load(TiXmlElement * node)
+void Configurations::Load(tinyxml2::XMLElement * node)
 {
     CHECK_BOOL(node != NULL,
         L"Expected 'configurations' node");
@@ -42,10 +42,9 @@ void Configurations::Load(TiXmlElement * node)
     // no matching configuration message
     configuration_no_match_message = DVLib::UTF8string2wstring(node->Attribute("configuration_no_match_message"));
 
-    TiXmlNode * child = NULL;
-    while( (child = node->IterateChildren(child)) != NULL )
+    for (tinyxml2::XMLNode* child = node->FirstChildElement(); child; child = child->NextSibling())
     {
-        TiXmlElement * child_element = child->ToElement();
+        tinyxml2::XMLElement * child_element = child->ToElement();
 
         if (child_element == NULL)
             continue;

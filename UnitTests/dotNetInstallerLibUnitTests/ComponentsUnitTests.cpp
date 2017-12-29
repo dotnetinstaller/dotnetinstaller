@@ -2,9 +2,8 @@
 #include "ComponentsUnitTests.h"
 #include "ExecuteComponentCallbackImpl.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::ComponentsUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void ComponentsUnitTests::testAdd()
 {
@@ -15,28 +14,28 @@ void ComponentsUnitTests::testAdd()
     component2->id = DVLib::GenerateGUIDStringW();
     components.add(component1);
     components.add(component2);
-    CPPUNIT_ASSERT(components.size() == 2);
-    CPPUNIT_ASSERT(components.contains(component1->id));
-    CPPUNIT_ASSERT(components.contains(component2->id));
-    CPPUNIT_ASSERT(! components.contains(DVLib::GenerateGUIDStringW()));
+    Assert::IsTrue(components.size() == 2);
+    Assert::IsTrue(components.contains(component1->id));
+    Assert::IsTrue(components.contains(component2->id));
+    Assert::IsTrue(! components.contains(DVLib::GenerateGUIDStringW()));
 }
 
 void ComponentsUnitTests::testOsFilters()
 {
     Components components;
     ComponentPtr component1(new MsiComponent());
-    component1->os_filter = L"!win95";
+    component1->os_filter = L"!winXP";
     ComponentPtr component2(new MsiComponent());
-    component2->os_filter = L"win95osr2";
+    component2->os_filter = L"winXPsp1";
     ComponentPtr component3(new MsiComponent());
-    component3->os_filter = L"win95";
+    component3->os_filter = L"winXP";
     ComponentPtr component4(new MsiComponent());
     components.add(component1);
     components.add(component2);
     components.add(component3);
     components.add(component4);
-    CPPUNIT_ASSERT(components.size() == 4);
-    CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 2);
+    Assert::IsTrue(components.size() == 4);
+    Assert::IsTrue(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 2);
 }
 
 void ComponentsUnitTests::testOsFiltersGreaterSmaller()
@@ -44,18 +43,18 @@ void ComponentsUnitTests::testOsFiltersGreaterSmaller()
     Components components;
     ComponentPtr component1(new MsiComponent());
     component1->os_filter_min = winNone;
-    component1->os_filter_max = win95Max;
+    component1->os_filter_max = winXPMax;
     ComponentPtr component2(new MsiComponent());
-    component2->os_filter_min = win98;
-    component2->os_filter_max = win2000Max;
+    component2->os_filter_min = winXP;
+    component2->os_filter_max = winServer2003Max;
     ComponentPtr component3(new MsiComponent());
     component3->os_filter_min = winXP;
     component3->os_filter_max = winNone;
     components.add(component1);
     components.add(component2);
     components.add(component3);
-    CPPUNIT_ASSERT(components.size() == 3);
-    CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 1);
+    Assert::IsTrue(components.size() == 3);
+    Assert::IsTrue(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 1);
 }
 
 void ComponentsUnitTests::testLcidFilters()
@@ -67,8 +66,8 @@ void ComponentsUnitTests::testLcidFilters()
     component_anotherlcid->os_filter_lcid = L"!1040";
     components.add(component_currentlcid);
     components.add(component_anotherlcid);
-    CPPUNIT_ASSERT(components.size() == 2);
-    CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 1);
+    Assert::IsTrue(components.size() == 2);
+    Assert::IsTrue(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 1);
 }
 
 void ComponentsUnitTests::testPAFilters()
@@ -80,9 +79,9 @@ void ComponentsUnitTests::testPAFilters()
     component_anotherpa->processor_architecture_filter = L"x86,x64";
     components.add(component_currentpa);
     components.add(component_anotherpa);
-    CPPUNIT_ASSERT(components.size() == 2);
-    CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 1);
-    CPPUNIT_ASSERT(get(components.GetSupportedComponents(LcidUser, SequenceInstall)[0]) == get(component_anotherpa));
+    Assert::IsTrue(components.size() == 2);
+    Assert::IsTrue(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 1);
+    Assert::IsTrue(get(components.GetSupportedComponents(LcidUser, SequenceInstall)[0]) == get(component_anotherpa));
 }
 
 void ComponentsUnitTests::testExecNoCallback()
@@ -91,11 +90,11 @@ void ComponentsUnitTests::testExecNoCallback()
     CmdComponent * component1 = new CmdComponent();
     component1->id = DVLib::GenerateGUIDStringW();
     std::wstring check_file = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), component1->id);
-    CPPUNIT_ASSERT(! DVLib::FileExists(check_file));
+    Assert::IsTrue(! DVLib::FileExists(check_file));
     component1->command = L"cmd.exe /C dir > \"" + check_file + L"\"";
     components.add(ComponentPtr(component1));
     components.Exec(NULL);
-    CPPUNIT_ASSERT(DVLib::FileExists(check_file));
+    Assert::IsTrue(DVLib::FileExists(check_file));
     DVLib::FileDelete(check_file);
 }
 
@@ -105,18 +104,18 @@ void ComponentsUnitTests::testExecWithCallback()
     CmdComponent * component1 = new CmdComponent();
     component1->id = DVLib::GenerateGUIDStringW();
     std::wstring check_file = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), component1->id);
-    CPPUNIT_ASSERT(! DVLib::FileExists(check_file));
+    Assert::IsTrue(! DVLib::FileExists(check_file));
     component1->command = L"cmd.exe /C dir > \"" + check_file + L"\"";
     components.add(ComponentPtr(component1));
     ExecuteComponentCallbackImpl callback;
     components.Exec(& callback);
-    CPPUNIT_ASSERT(DVLib::FileExists(check_file));
+    Assert::IsTrue(DVLib::FileExists(check_file));
     DVLib::FileDelete(check_file);
-    CPPUNIT_ASSERT(1 == callback.starts);
-    CPPUNIT_ASSERT(1 == callback.begins);
-    CPPUNIT_ASSERT(1 == callback.waits);
-    CPPUNIT_ASSERT(1 == callback.successes);
-    CPPUNIT_ASSERT(0 == callback.errors);
+    Assert::IsTrue(1 == callback.starts);
+    Assert::IsTrue(1 == callback.begins);
+    Assert::IsTrue(1 == callback.waits);
+    Assert::IsTrue(1 == callback.successes);
+    Assert::IsTrue(0 == callback.errors);
 }
 
 void ComponentsUnitTests::testExecWithError()
@@ -128,11 +127,11 @@ void ComponentsUnitTests::testExecWithError()
     components.add(ComponentPtr(component1));
     ExecuteComponentCallbackImpl callback;
     components.Exec(& callback);
-    CPPUNIT_ASSERT(1 == callback.starts);
-    CPPUNIT_ASSERT(1 == callback.begins);
-    CPPUNIT_ASSERT(0 == callback.waits);
-    CPPUNIT_ASSERT(0 == callback.successes);
-    CPPUNIT_ASSERT(1 == callback.errors);
+    Assert::IsTrue(1 == callback.starts);
+    Assert::IsTrue(1 == callback.begins);
+    Assert::IsTrue(0 == callback.waits);
+    Assert::IsTrue(0 == callback.successes);
+    Assert::IsTrue(1 == callback.errors);
 }
 
 void ComponentsUnitTests::testLoadUninstallSequence()
@@ -144,12 +143,12 @@ void ComponentsUnitTests::testLoadUninstallSequence()
     CmdComponent * component2 = new CmdComponent();
     component2->id = DVLib::GenerateGUIDStringW();
     components.add(ComponentPtr(component2));
-    CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 2);
-    CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall)[0]->id == component1->id);
-    CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceInstall)[1]->id == component2->id);
-    CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceUninstall).size() == 2);
-    CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceUninstall)[0]->id == component2->id);
-    CPPUNIT_ASSERT(components.GetSupportedComponents(LcidUser, SequenceUninstall)[1]->id == component1->id);
+    Assert::IsTrue(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 2);
+    Assert::IsTrue(components.GetSupportedComponents(LcidUser, SequenceInstall)[0]->id == component1->id);
+    Assert::IsTrue(components.GetSupportedComponents(LcidUser, SequenceInstall)[1]->id == component2->id);
+    Assert::IsTrue(components.GetSupportedComponents(LcidUser, SequenceUninstall).size() == 2);
+    Assert::IsTrue(components.GetSupportedComponents(LcidUser, SequenceUninstall)[0]->id == component2->id);
+    Assert::IsTrue(components.GetSupportedComponents(LcidUser, SequenceUninstall)[1]->id == component1->id);
 }
 
 void ComponentsUnitTests::testSequenceInstalled()
@@ -158,7 +157,7 @@ void ComponentsUnitTests::testSequenceInstalled()
     InstallSequenceState state;
     InstallerSession::Instance->sequence = SequenceInstall;
     CmdComponent cmd;
-    CPPUNIT_ASSERT(! cmd.IsInstalled());
+    Assert::IsTrue(! cmd.IsInstalled());
     InstallerSession::Instance->sequence = SequenceUninstall;
-    CPPUNIT_ASSERT(cmd.IsInstalled());
+    Assert::IsTrue(cmd.IsInstalled());
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include <tinyxml2.h>
 
 class Schema
 {
@@ -7,6 +8,6 @@ public:
 	std::wstring generator;
 public:
 	Schema();
-	virtual void Load(TiXmlElement * node);
+	virtual void Load(tinyxml2::XMLElement * node);
 };
 

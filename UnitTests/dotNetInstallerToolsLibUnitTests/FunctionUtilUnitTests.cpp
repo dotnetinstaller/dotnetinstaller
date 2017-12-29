@@ -2,17 +2,16 @@
 #include "FunctionUtilUnitTests.h"
 
 using namespace DVLib::UnitTests;
-
-CPPUNIT_TEST_SUITE_REGISTRATION(FunctionUtilUnitTests);
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void FunctionUtilUnitTests::testDllFunctionExists()
 {
     typedef HGLOBAL (WINAPI * pGlobalAlloc) (UINT flags, SIZE_T bytes);
     DllFunction<pGlobalAlloc> myGlobalAlloc(L"kernel32.dll", "GlobalAlloc");
-    CPPUNIT_ASSERT(NULL != myGlobalAlloc);
+    Assert::IsTrue(NULL != myGlobalAlloc);
     HGLOBAL h = myGlobalAlloc(GMEM_FIXED, 123);
-    CPPUNIT_ASSERT(NULL != h);
-    CPPUNIT_ASSERT(GMEM_FIXED == ::GlobalFlags(h));
+    Assert::IsTrue(NULL != h);
+    Assert::IsTrue(GMEM_FIXED == ::GlobalFlags(h));
     ::GlobalFree(h);
 }
 
@@ -20,7 +19,7 @@ void FunctionUtilUnitTests::testDllFunctionDoesntExist()
 {
     typedef HGLOBAL (WINAPI * pGlobalAlloc) (UINT flags, SIZE_T bytes);
     DllFunction<pGlobalAlloc> invalidFunction(L"kernel32.dll", "GlobalAllocDoesntExist");
-    CPPUNIT_ASSERT(NULL == invalidFunction);
+    Assert::IsTrue(NULL == invalidFunction);
     DllFunction<pGlobalAlloc> invalidDll(L"kernel32doesntexist.dll", "GlobalAlloc");
-    CPPUNIT_ASSERT(NULL == invalidDll);
+    Assert::IsTrue(NULL == invalidDll);
 }

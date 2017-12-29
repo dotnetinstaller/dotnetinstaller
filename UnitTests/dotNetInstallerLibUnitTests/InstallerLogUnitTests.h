@@ -1,14 +1,21 @@
 #pragma once
+#include "dotNetInstallerLibUnitTestFixture.h"
 
 namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class InstallerLogUnitTests : public dotNetInstallerLibUnitTestFixture
+        TEST_CLASS(InstallerLogUnitTests), public dotNetInstallerLibUnitTestFixture
 		{
-			CPPUNIT_TEST_SUITE( InstallerLogUnitTests );
-			CPPUNIT_TEST_SUITE_END();
-		public:
+            TEST_METHOD_INITIALIZE( initialize )
+            {
+                setUp();
+            }
+
+            TEST_METHOD_CLEANUP( cleanup )
+            {
+                tearDown();
+            }
 		};
 	}
 }

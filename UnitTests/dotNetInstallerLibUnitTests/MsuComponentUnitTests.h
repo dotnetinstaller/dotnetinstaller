@@ -1,28 +1,29 @@
 #pragma once
+#include "dotNetInstallerLibUnitTestFixture.h"
 
 namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class MsuComponentUnitTests : public dotNetInstallerLibUnitTestFixture
+        TEST_CLASS(MsuComponentUnitTests), public dotNetInstallerLibUnitTestFixture
 		{
-			CPPUNIT_TEST_SUITE( MsuComponentUnitTests );
-			CPPUNIT_TEST( testExecInstall );
-			CPPUNIT_TEST( testExecInstallSilent );
-			CPPUNIT_TEST( testExecUninstall );
-			CPPUNIT_TEST( testExecUninstallSilent );
-			CPPUNIT_TEST( testExecShell );
-			CPPUNIT_TEST( testMustReboot );
-			CPPUNIT_TEST( testLoad );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testExecInstall();
-			void testExecInstallSilent();
-			void testExecUninstall();
-			void testExecUninstallSilent();
-			void testExecShell();
-			void testMustReboot();
-			void testLoad();
+            TEST_METHOD_INITIALIZE( initialize )
+            {
+                setUp();
+            }
+
+            TEST_METHOD_CLEANUP( cleanup )
+            {
+                tearDown();
+            }
+
+			TEST_METHOD( testExecInstall );
+			TEST_METHOD( testExecInstallSilent );
+			TEST_METHOD( testExecUninstall );
+			TEST_METHOD( testExecUninstallSilent );
+			TEST_METHOD( testExecShell );
+			TEST_METHOD( testMustReboot );
+			TEST_METHOD( testLoad );
 		};
 	}
 }

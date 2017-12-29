@@ -54,7 +54,7 @@ void MsuComponent::Exec()
     ProcessComponent::ExecCmd(l_command, execution_method, disable_wow64_fs_redirection);
 }
 
-void MsuComponent::Load(TiXmlElement * node)
+void MsuComponent::Load(tinyxml2::XMLElement * node)
 {
     package = node->Attribute("package");
     cmdparameters = node->Attribute("cmdparameters");
