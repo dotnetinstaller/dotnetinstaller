@@ -5,19 +5,19 @@
 #endif
 
 #ifndef WINVER
-#define WINVER 0x0400
+#define WINVER 0x0501
 #endif
 
 #ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0400
+#define _WIN32_WINNT _WIN32_WINNT_WINXP
 #endif						
 
 #ifndef _WIN32_WINDOWS
-#define _WIN32_WINDOWS 0x0410
+#define _WIN32_WINDOWS 0x0501
 #endif
 
 #ifndef _WIN32_IE
-#define _WIN32_IE 0x0400
+#define _WIN32_IE 0x0600
 #endif
 
 #ifndef _WIN32_MSI
@@ -47,6 +47,8 @@
 
 #include <winnls.h>
 
+#include <iostream>
+#include <fstream>
 #include <ostream>
 #include <string>
 #include <vector>

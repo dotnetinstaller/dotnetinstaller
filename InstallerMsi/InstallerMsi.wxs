@@ -34,7 +34,7 @@
             <Component Id="InstallerLib" Guid="5D5B5920-D2DF-48e0-BE89-DD1A77E705BB">
               <File Id="InstallerLib.dll" Source="..\InstallerLib\bin\$(var.Configuration)\InstallerLib.dll" />
               <File Id="CabLib.dll" Source="..\ThirdParty\CabLib\$(var.Configuration)\CabLib.dll" />
-              <File Id="Vestris.ResourceLib.dll" Source="..\ThirdParty\ResourceLib\Vestris.ResourceLib.dll" />
+              <File Id="Vestris.ResourceLib.dll" Source="..\packages\Vestris.ResourceLib.1.6.422\lib\Vestris.ResourceLib.dll" />
             </Component>
             <Component Id="InstallerEditor" Guid="B28C748A-5834-48f6-AC9D-6976B33EC922">
               <File Id="InstallerEditor.exe" Source="..\InstallerEditor\bin\$(var.Configuration)\InstallerEditor.exe" />
@@ -51,15 +51,6 @@
             <Component Id="htmlInstaller" Guid="4B2C6C2B-7A9E-49fe-A63B-BB2EACE39BFD">
               <File Id="htmlInstaller.exe" Source="..\htmlInstaller\$(var.Configuration)\htmlInstaller.exe" />
               <File Id="htmlInstaller.pdb" Source="..\htmlInstaller\$(var.Configuration)\htmlInstaller.pdb" />
-            </Component>
-            <Component Id="MSLU" Guid="95984BB5-05F2-4db4-AFE7-C017411EB7AA">
-              <File Id="unicows.dll" Source="..\ThirdParty\Mslu\Unicows.dll" />
-            </Component>
-            <Component Id="VisualStudioCRT" Guid="82F19F42-3D97-482a-AFBF-C9E5AD854672">
-              <File Id="Microsoft.VC80.CRT.manifest" Source="..\ThirdParty\VisualStudioCRT\Release\Microsoft.VC80.CRT.manifest" />
-              <File Id="msvcm80.dll" Source="..\ThirdParty\VisualStudioCRT\Release\msvcm80.dll" />
-              <File Id="msvcp80.dll" Source="..\ThirdParty\VisualStudioCRT\Release\msvcp80.dll" />
-              <File Id="msvcr80.dll" Source="..\ThirdParty\VisualStudioCRT\Release\msvcr80.dll" />
             </Component>
           </Directory>
           <Directory Id="doc" Name="doc">
@@ -90,8 +81,6 @@
       <ComponentRef Id="InstallerLinker" />
       <ComponentRef Id="dotNetInstaller" />
       <ComponentRef Id="htmlInstaller" />
-      <ComponentRef Id="MSLU" />
-      <ComponentRef Id="VisualStudioCRT" />
       <ComponentRef Id="Documentation" />
       <ComponentRef Id="DotNetInstallerMenuShortcuts" />
       <Feature Id="SamplesFeature" Title="Samples" Level="1">

@@ -11,7 +11,7 @@ FileAttributes::~FileAttributes()
 {
 }
 
-void FileAttributes::Load(TiXmlElement * node)
+void FileAttributes::Load(tinyxml2::XMLElement * node)
 {
     CHECK_BOOL(node != NULL,
         L"Expected 'fileattributes' node");
@@ -19,10 +19,9 @@ void FileAttributes::Load(TiXmlElement * node)
     CHECK_BOOL(0 == strcmp(node->Value(), "fileattributes"),
         L"Expected 'fileattributes' node, got '" << DVLib::string2wstring(node->Value()) << L"'");
 
-    TiXmlNode * child = NULL;
-    while( (child = node->IterateChildren(child)) != NULL )
+    for (tinyxml2::XMLNode* child = node->FirstChildElement(); child; child = child->NextSibling())
     {
-        TiXmlElement * child_element = child->ToElement();
+        tinyxml2::XMLElement * child_element = child->ToElement();
 
         if (child_element == NULL)
             continue;

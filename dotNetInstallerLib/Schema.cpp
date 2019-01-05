@@ -9,7 +9,7 @@ Schema::Schema()
 
 }
 
-void Schema::Load(TiXmlElement * node)
+void Schema::Load(tinyxml2::XMLElement * node)
 {
     CHECK_BOOL(node != NULL,
         L"Expected 'schema' node");

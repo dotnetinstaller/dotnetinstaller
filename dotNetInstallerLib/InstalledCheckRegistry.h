@@ -23,7 +23,7 @@ public:
 	XmlAttribute defaultvalue;
 public:
     InstalledCheckRegistry();
-    void Load(TiXmlElement * node);
+    void Load(tinyxml2::XMLElement * node);
 	bool IsInstalled() const;
 private:
 	DWORD GetKeyOption() const;

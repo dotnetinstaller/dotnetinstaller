@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "InstalledCheckFileUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::InstalledCheckFileUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void InstalledCheckFileUnitTests::testIsInstalled()
 {
@@ -55,6 +54,6 @@ void InstalledCheckFileUnitTests::testIsInstalled()
         std::wcout << std::endl 
             << check.filename << L" (" << check.fileversion << L") - " << check.comparison
             << L": " << (isinstalled ? L"yes" : L"no");
-        CPPUNIT_ASSERT(isinstalled == testdata[i].expected_isinstalled);
+        Assert::IsTrue(isinstalled == testdata[i].expected_isinstalled);
     }
 }

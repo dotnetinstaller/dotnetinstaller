@@ -4,35 +4,20 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class ShellUtilUnitTests :  public CPPUNIT_NS::TestFixture
+		TEST_CLASS(ShellUtilUnitTests)
 		{
-			CPPUNIT_TEST_SUITE( ShellUtilUnitTests );
-			CPPUNIT_TEST( testGetEnvironmentVariable );
-			CPPUNIT_TEST( testExpandEnvironmentVariables );
-			CPPUNIT_TEST( testDetachCmd );
-			CPPUNIT_TEST( testRunCmd );
-			CPPUNIT_TEST( testExecCmd );
-			CPPUNIT_TEST( testShellCmd );
-			CPPUNIT_TEST( testRunCmdWithHiddenWindow );
-			CPPUNIT_TEST( testShellCmdWithHiddenWindow );
-			CPPUNIT_TEST( testRunCmdWithoutWorkingDirectorySpecified );
-			CPPUNIT_TEST( testRunCmdWithWorkingDirectorySpecified );
-			CPPUNIT_TEST( testShellCmdWithoutWorkingDirectorySpecified );
-			CPPUNIT_TEST( testShellCmdWithWorkingDirectorySpecified );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testGetEnvironmentVariable();
-			void testExpandEnvironmentVariables();
-			void testDetachCmd();
-			void testExecCmd();
-			void testShellCmd();
-			void testRunCmd();
-			void testRunCmdWithHiddenWindow();
-			void testShellCmdWithHiddenWindow();
-			void testRunCmdWithoutWorkingDirectorySpecified();
-			void testRunCmdWithWorkingDirectorySpecified();
-			void testShellCmdWithoutWorkingDirectorySpecified();
-			void testShellCmdWithWorkingDirectorySpecified();
+			TEST_METHOD( testGetEnvironmentVariable );
+			TEST_METHOD( testExpandEnvironmentVariables );
+			TEST_METHOD( testDetachCmd );
+			TEST_METHOD( testRunCmd );
+			TEST_METHOD( testExecCmd );
+			TEST_METHOD( testShellCmd );
+			TEST_METHOD( testRunCmdWithHiddenWindow );
+			TEST_METHOD( testShellCmdWithHiddenWindow );
+			TEST_METHOD( testRunCmdWithoutWorkingDirectorySpecified );
+			TEST_METHOD( testRunCmdWithWorkingDirectorySpecified );
+			TEST_METHOD( testShellCmdWithoutWorkingDirectorySpecified );
+			TEST_METHOD( testShellCmdWithWorkingDirectorySpecified );
 		};
 	}
 }

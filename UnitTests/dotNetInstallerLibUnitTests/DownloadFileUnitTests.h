@@ -1,23 +1,26 @@
 #pragma once
+#include "dotNetInstallerLibUnitTestFixture.h"
 
 namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class DownloadFileUnitTests : public dotNetInstallerLibUnitTestFixture
+        TEST_CLASS(DownloadFileUnitTests), public dotNetInstallerLibUnitTestFixture
 		{
-			CPPUNIT_TEST_SUITE( DownloadFileUnitTests );
-			CPPUNIT_TEST( testDownload );
-			CPPUNIT_TEST( testCopyFromSource );
-			CPPUNIT_TEST( testClearCache );
-			// test can only run online, \todo: need a local web server
-			// CPPUNIT_TEST( testDownloadCache );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testDownload();
-			void testCopyFromSource();
-			void testClearCache();
-			void testDownloadCache();
+            TEST_METHOD_INITIALIZE( initialize )
+            {
+                setUp();
+            }
+
+            TEST_METHOD_CLEANUP( cleanup )
+            {
+                tearDown();
+            }
+
+			TEST_METHOD( testDownload );
+			TEST_METHOD( testCopyFromSource );
+			TEST_METHOD( testClearCache );
+			TEST_METHOD( testDownloadCache );
 		};
 	}
 }

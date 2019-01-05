@@ -133,17 +133,19 @@ namespace InstallerLib
             Dictionary<String, EmbedFileCollection> c_files = new Dictionary<String, EmbedFileCollection>();
             foreach (XmlClass c in Children)
             {
-                Dictionary<String, EmbedFileCollection>.Enumerator enumerator = c.GetFiles(parentid, supportdir).GetEnumerator();
-                while (enumerator.MoveNext())
+                using (Dictionary<String, EmbedFileCollection>.Enumerator enumerator = c.GetFiles(parentid, supportdir).GetEnumerator())
                 {
-                    EmbedFileCollection coll = null;
-                    if (!c_files.TryGetValue(enumerator.Current.Key, out coll))
+                    while (enumerator.MoveNext())
                     {
-                        coll = new EmbedFileCollection(supportdir);
-                        c_files.Add(enumerator.Current.Key, coll);
-                    }
+                        EmbedFileCollection coll = null;
+                        if (!c_files.TryGetValue(enumerator.Current.Key, out coll))
+                        {
+                            coll = new EmbedFileCollection(supportdir);
+                            c_files.Add(enumerator.Current.Key, coll);
+                        }
 
-                    coll.AddRange(enumerator.Current.Value);
+                        coll.AddRange(enumerator.Current.Value);
+                    }
                 }
             }
             return c_files;

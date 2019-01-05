@@ -9,7 +9,7 @@ public:
 	XmlAttribute resource_id;
 	XmlAttribute image_file;
 	bool center;
-	void Load(TiXmlElement * node);
+	void Load(tinyxml2::XMLElement * node);
 	std::wstring GetString() const;
 };
 

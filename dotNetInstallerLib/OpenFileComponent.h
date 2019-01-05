@@ -13,7 +13,7 @@ public:
 	bool disable_wow64_fs_redirection; 
 	void Exec();
 	bool IsExecuting() const;
-	void Load(TiXmlElement * node);
+	void Load(tinyxml2::XMLElement * node);
 	int GetExitCode() const;
 };
 

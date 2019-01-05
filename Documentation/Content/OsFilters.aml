@@ -14,16 +14,16 @@
         <para>
           The <literal>os_filter</literal> value specifies a filter to install a configuration or component on. 
           The operating system must be equal to any of the values specified. Separate multiple operating system ids 
-          with commas. For example, <literal>win2000</literal> means only to install a configuration on Windows 2000, 
-          <literal>win2000,win2000sp1,winServer2008</literal> means Windows 2000, Windows 2000 SP1 or Windows 2008. 
+          with commas. For example, <literal>winServer2003</literal> means only to install a configuration on Windows 2003, 
+          <literal>winServer2003,winServer2003sp1,winServer2008</literal> means Windows 2003, Windows 2003 SP1 or Windows 2008. 
         </para>
         <para>
-          You can use the <literal>!</literal> sign to define a NOT operator. For example, <literal>!win2000,!win2000sp1</literal> 
-          means installing on any operating system except Windows 2000 and Windows 2000 SP1.
+          You can use the <literal>!</literal> sign to define a NOT operator. For example, <literal>!winServer2003,!winServer2003sp1</literal> 
+          means installing on any operating system except Windows 2003 and Windows 2003 SP1.
         </para>
         <para>
           You can use the <literal>+</literal> sign to define a greater than or equal operator. For example, 
-          <literal>+winXPsp3,+win2003sp1</literal> means installing on any operating system later than Windows XP SP3 and 
+          <literal>+winXPsp3,+winServer2003sp1</literal> means installing on any operating system later than Windows XP SP3 and 
           later than Windows 2003 SP1.
         </para>
         <para>
@@ -43,7 +43,7 @@
         <alert class="note">
           <para>
             You cannot mix positive, negative, greater than or less than operating system filters as it would produce an ambiguous filter. 
-            For example, <literal>!win2000sp1,winServer2008</literal> is an invalid filter and the installer will fail with an error.
+            For example, <literal>!winServer2003sp1,winServer2008</literal> is an invalid filter and the installer will fail with an error.
           </para>
         </alert>
         <para>
@@ -63,58 +63,6 @@
                 <entry>Enumerator</entry>
               </row>
             </tableHeader>
-            <row>
-              <entry>Windows 95</entry>
-              <entry>win95</entry>
-            </row>
-            <row>
-              <entry>Windows 95 OSR2</entry>
-              <entry>win95osr2</entry>
-            </row>
-            <row>
-              <entry>Windows 98</entry>
-              <entry>win98</entry>
-            </row>
-            <row>
-              <entry>Windows 98 Second Edition</entry>
-              <entry>win98se</entry>
-            </row>
-            <row>
-              <entry>Windows Millennium</entry>
-              <entry>winME</entry>
-            </row>
-            <row>
-              <entry>Windows NT4</entry>
-              <entry>winNT4</entry>
-            </row>
-            <row>
-              <entry>Windows NT4 Service Pack 6</entry>
-              <entry>winNT4sp6</entry>
-            </row>
-            <row>
-              <entry>Windows NT4 Service Pack 6a</entry>
-              <entry>winNT4sp6a</entry>
-            </row>
-            <row>
-              <entry>Windows 2000</entry>
-              <entry>win2000</entry>
-            </row>
-            <row>
-              <entry>Windows 2000 Service Pack 1</entry>
-              <entry>win2000sp1</entry>
-            </row>
-            <row>
-              <entry>Windows 2000 Service Pack 2</entry>
-              <entry>win2000sp2</entry>
-            </row>
-            <row>
-              <entry>Windows 2000 Service Pack 3</entry>
-              <entry>win2000sp3</entry>
-            </row>
-            <row>
-              <entry>Windows 2000 Service Pack 4</entry>
-              <entry>win2000sp4</entry>
-            </row>
             <row>
               <entry>Windows XP</entry>
               <entry>winXP</entry>

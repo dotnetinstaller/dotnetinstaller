@@ -86,12 +86,18 @@
           <content>
             <para>
               Optionally install:
-              <para>Visual Studio 2005 for an Integrated Development Environment (IDE).</para>
+              <para>Visual Studio 2015 for an Integrated Development Environment (IDE).</para>
               <para>
                 <externalLink>
-                  <linkText>WiX Toolset v3.5 (v3.5.2519.0)</linkText>
-                  <linkUri>http://wix.codeplex.com/releases/view/60102</linkUri>
+                  <linkText>Wix Toolset Visual Studio 2015 Extension</linkText>
+                  <linkUri>https://marketplace.visualstudio.com/items?itemName=RobMensching.WixToolsetVisualStudio2015Extension</linkUri>
                 </externalLink> for WiX integration within the IDE.
+              </para>
+              <para>
+                <externalLink>
+                  <linkText>Microsoft Visual Studio 2015 Installer Projects Extension</linkText>
+                  <linkUri>https://marketplace.visualstudio.com/items?itemName=VisualStudioProductTeam.MicrosoftVisualStudio2015InstallerProjects</linkUri>
+                </externalLink> for WiX project integration within the IDE.
               </para>
               <para>
                 <externalLink>
@@ -101,8 +107,8 @@
               </para>
               <para>
                 <externalLink>
-                  <linkText>NUnit</linkText>
-                  <linkUri>http://www.nunit.org/</linkUri>
+                  <linkText>NUnit 2 Test Adapter</linkText>
+                  <linkUri>https://marketplace.visualstudio.com/items?itemName=NUnitDevelopers.NUnitTestAdapter</linkUri>
                 </externalLink> for unit test integration within the IDE.
               </para>
             </para>

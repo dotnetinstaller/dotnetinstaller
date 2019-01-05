@@ -17,8 +17,8 @@ void ConfigFile::LoadFile(const std::wstring& filename)
     if (xml.size() == 0) THROW_EX(L"Error loading file: " << filename << L", file is empty");
     m_XmlDocument.Parse(& * xml.begin());
     CHECK_BOOL(! m_XmlDocument.Error(),
-        L"Error loading configuration: " << DVLib::string2wstring(m_XmlDocument.ErrorDesc())
-        << L" at " << m_XmlDocument.ErrorRow() << L":" << m_XmlDocument.ErrorCol());
+        L"Error loading configuration: " << DVLib::string2wstring(m_XmlDocument.ErrorStr())
+        << L" at line " << m_XmlDocument.ErrorLineNum());
     Load(m_XmlDocument.FirstChildElement());
     m_filename = filename;
 }
@@ -29,8 +29,8 @@ void ConfigFile::LoadResource(HMODULE h, const std::wstring& res_name, const std
     data.push_back(0); // null-terminate
     m_XmlDocument.Parse(& * data.begin());
     CHECK_BOOL(! m_XmlDocument.Error(),
-        L"Error parsing '" << res_name << L" resource: " << DVLib::string2wstring(m_XmlDocument.ErrorDesc())
-        << L" at " << m_XmlDocument.ErrorRow() << L":" << m_XmlDocument.ErrorCol());
+        L"Error parsing '" << res_name << L" resource: " << DVLib::string2wstring(m_XmlDocument.ErrorStr())
+        << L" at line " << m_XmlDocument.ErrorLineNum());
     LOG(L"Loaded configuration from embedded resource '" << res_name << L"'");
     Load(m_XmlDocument.FirstChildElement());
     m_filename = L"Resource: " + res_name;

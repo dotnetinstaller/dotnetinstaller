@@ -19,7 +19,7 @@ Configuration::~Configuration()
 
 }
 
-void Configuration::Load(TiXmlElement * node)
+void Configuration::Load(tinyxml2::XMLElement * node)
 {
     CHECK_BOOL(node != NULL,
         L"Expected 'configuration' node");

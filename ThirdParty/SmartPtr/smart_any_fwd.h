@@ -981,7 +981,7 @@ typedef close_fun<pfn_free_t,static_cast<pfn_free_t>(&free)>                clos
 #ifdef _RAS_H_
 # undef  DECLARE_SMART_ANY_TYPEDEFS_RAS
 # define DECLARE_SMART_ANY_TYPEDEFS_RAS(prefix)                                                                         \
-  typedef prefix ## _any<HRASCONN,close_hrasconn>                                 prefix ## _hrasconn
+  typedef prefix ## _any<HRASCONN,close_hrasconn>                                 prefix ## _hrasconn;
 #endif
 
 #ifdef __RPCDCE_H__

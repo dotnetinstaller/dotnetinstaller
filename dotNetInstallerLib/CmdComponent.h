@@ -1,5 +1,6 @@
 #pragma once
 #include "ProcessComponent.h"
+#include <tinyxml2.h>
 
 class CmdComponent : public ProcessComponent
 {
@@ -23,7 +24,7 @@ public:
 	XmlAttribute returncodes_success;
 	XmlAttribute returncodes_reboot;
 	void Exec();
-	void Load(TiXmlElement * node);
+	void Load(tinyxml2::XMLElement * node);
 	void Wait(DWORD tt = INFINITE);
 	bool IsRebootRequired() const;
 private:

@@ -33,29 +33,6 @@ namespace DVLib
 	{
 		winNone = -1,
 
-		win95 = 5,
-		win95osr2 = 10,
-		win95Max = 14,
-
-		win98 = 15,
-		win98se = 20,
-		win98Max = 24,
-
-		winME = 25,
-		winMEMax = 29,
-
-		winNT4 = 30,
-		winNT4sp6 = 35,
-		winNT4sp6a = 40,
-		winNT4Max = 44,
-
-		win2000 = 45,
-		win2000sp1 = 50,
-		win2000sp2 = 55,
-		win2000sp3 = 60,
-		win2000sp4 = 65,
-		win2000Max = 74,
-
 		winXP = 75,
 		winXPsp1 = 80, 
 		winXPsp2 = 82,
@@ -111,24 +88,6 @@ namespace DVLib
 
 	static const Os2StringMapEntry Os2StringMap[] =
 	{
-		{ win95, L"win95", L"Windows 95" },
-		{ win95osr2, L"win95osr2", L"Windows 95 OSR2" },
-		{ win95Max, L"win95Max", L"Windows 95+" },
-		{ win98, L"win98", L"Windows 98" },
-		{ win98se, L"win98se", L"Windows 98 Second Edition" },
-		{ win98Max, L"win98Max", L"Windows 98+" },
-		{ winME, L"winME", L"Windows ME" },
-		{ winMEMax, L"winMEMax", L"Windows ME+" },
-		{ winNT4, L"winNT4", L"Windows NT 4" },
-		{ winNT4sp6, L"winNT4sp6", L"Windows NT 4 SP6" },
-		{ winNT4sp6a, L"winNT4sp6a", L"Windows NT 4 SP6a" },
-		{ winNT4Max, L"winNT4Max", L"Windows NT 4+" },
-		{ win2000, L"win2000", L"Windows 2000" },
-		{ win2000sp1, L"win2000sp1", L"Windows 2000 SP1" },
-		{ win2000sp2, L"win2000sp2", L"Windows 2000 SP2" },
-		{ win2000sp3, L"win2000sp3", L"Windows 2000 SP3" },
-		{ win2000sp4, L"win2000sp4", L"Windows 2000 SP4" },
-		{ win2000Max, L"win2000Max", L"Windows 2000+" },
 		{ winXP, L"winXP", L"Windows XP" },
 		{ winXPsp1, L"winXPsp1", L"Windows XP SP1" },
 		{ winXPsp2, L"winXPsp2", L"Windows XP SP2" },

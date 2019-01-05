@@ -2,8 +2,7 @@
 #include "Wow64NativeFSUnitTests.h"
 
 using namespace DVLib::UnitTests;
-
-CPPUNIT_TEST_SUITE_REGISTRATION(Wow64NativeFSUnitTests);
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void Wow64NativeFSUnitTests::testAuto()
 {
@@ -13,20 +12,20 @@ void Wow64NativeFSUnitTests::testAuto()
 
         {
             auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
-            CPPUNIT_ASSERT(wow64_native_fs->IsDisabled());
-            CPPUNIT_ASSERT(DVLib::Wow64DisableWow64FsRedirection(& old_value));
-            CPPUNIT_ASSERT(old_value != NULL);
+            Assert::IsTrue(wow64_native_fs->IsDisabled());
+            Assert::IsTrue(DVLib::Wow64DisableWow64FsRedirection(& old_value));
+            Assert::IsTrue(old_value != NULL);
             // will revert automatically
         }
 
-        CPPUNIT_ASSERT(DVLib::Wow64DisableWow64FsRedirection(& old_value));
-        CPPUNIT_ASSERT(old_value == NULL);
-        CPPUNIT_ASSERT(DVLib::Wow64RevertWow64FsRedirection(old_value));
+        Assert::IsTrue(DVLib::Wow64DisableWow64FsRedirection(& old_value));
+        Assert::IsTrue(old_value == NULL);
+        Assert::IsTrue(DVLib::Wow64RevertWow64FsRedirection(old_value));
     }
     else
     {
         auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
-        CPPUNIT_ASSERT(! wow64_native_fs->IsDisabled());
+        Assert::IsTrue(! wow64_native_fs->IsDisabled());
     }
 }
 

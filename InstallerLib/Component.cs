@@ -46,7 +46,7 @@ namespace InstallerLib
         }
 
         private OperatingSystem m_os_filter_min;
-        [Description("Filter to install this component only on all operating systems greater or equal to the id value specified. For example to install a component only in Windows 2000 or later use 'win2000'.")]
+        [Description("Filter to install this component only on all operating systems greater or equal to the id value specified. For example to install a component only in Windows Server 2003 or later use 'winServer2003'.")]
         [Category("Operating System")]
         public OperatingSystem os_filter_min
         {
@@ -55,7 +55,7 @@ namespace InstallerLib
         }
 
         private OperatingSystem m_os_filter_max;
-        [Description("Filter to install this component only on all operating systems smaller or equal to the id value specified. For example to install a component preceding Windows 2000 use 'winNT4sp6a'.")]
+        [Description("Filter to install this component only on all operating systems smaller or equal to the id value specified. For example to install a component preceding Windows Server 2003 use 'winXPMax'.")]
         [Category("Operating System")]
         public OperatingSystem os_filter_max
         {

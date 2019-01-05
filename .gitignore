@@ -16,3 +16,12 @@ assembly
 *.aps
 StyleCop.Cache
 *.user
+*.cache
+*.db
+*.ipch
+*.log
+*.obj
+*.tlog
+*.idb
+*.pdb
+*.ipch

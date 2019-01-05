@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "InstallerCommandLineInfoUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::InstallerCommandLineInfoUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void InstallerCommandLineInfoUnitTests::ParseCommandLineInfo(int argc, wchar_t ** argv, CCommandLineInfo& rCmdInfo)
 {
@@ -36,8 +35,8 @@ void InstallerCommandLineInfoUnitTests::testGetCmd()
 
     InstallerCommandLineInfo cmdinfo;
     ParseCommandLineInfo(ARRAYSIZE(cmd), cmd, cmdinfo);
-    CPPUNIT_ASSERT_MESSAGE("DisplayConfig", cmdinfo.DisplayConfig());
-    CPPUNIT_ASSERT_MESSAGE("ConfigFile", cmdinfo.configFile == L"test.config");
-    CPPUNIT_ASSERT_MESSAGE("componentArgs: a1", cmdinfo.componentCmdArgs[L"a1"] == L"a1");
-    CPPUNIT_ASSERT_MESSAGE("componentArgs: a2", cmdinfo.componentCmdArgs[L"a2"] == L"a2 a2");
+    Assert::IsTrue(cmdinfo.DisplayConfig(), L"DisplayConfig");
+    Assert::IsTrue(cmdinfo.configFile == L"test.config", L"ConfigFile");
+    Assert::IsTrue(cmdinfo.componentCmdArgs[L"a1"] == L"a1", L"componentArgs: a1");
+    Assert::IsTrue(cmdinfo.componentCmdArgs[L"a2"] == L"a2 a2", L"componentArgs: a2");
 }

@@ -16,7 +16,7 @@ public:
 	XmlAttribute defaultvalue; 
 public:
     InstalledCheckFile();
-    void Load(TiXmlElement * node);
+    void Load(tinyxml2::XMLElement * node);
 	virtual bool IsInstalled() const;
 };
 

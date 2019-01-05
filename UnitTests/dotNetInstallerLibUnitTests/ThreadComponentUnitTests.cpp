@@ -1,8 +1,6 @@
 #include "StdAfx.h"
 #include "ThreadComponentUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::ThreadComponentUnitTests);
-
 using namespace DVLib::UnitTests;
 
 class ThreadComponentImpl : public ThreadComponent

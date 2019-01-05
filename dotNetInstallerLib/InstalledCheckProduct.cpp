@@ -9,7 +9,7 @@ InstalledCheckProduct::InstalledCheckProduct()
 {
 }
 
-void InstalledCheckProduct::Load(TiXmlElement * node)
+void InstalledCheckProduct::Load(tinyxml2::XMLElement * node)
 {
     id_type = DVLib::UTF8string2wstring(node->Attribute("id_type"));
     id = node->Attribute("id");

@@ -8,7 +8,7 @@ public:
 	std::wstring path;
 public:
     InstalledCheckDirectory();
-    void Load(TiXmlElement * node);
+    void Load(tinyxml2::XMLElement * node);
 	virtual bool IsInstalled() const;
 };
 

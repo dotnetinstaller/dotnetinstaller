@@ -3,7 +3,7 @@ dotNetInstaller Setup Bootstrapper
 
 ![dotNetInstaller](https://github.com/dblock/dotnetinstaller/raw/master/Documentation/Images/Logo.gif)
 
-dotNetInstaller is a widely used, general-purpose setup bootstrapper for Microsoft Windows 95, 98, 2000, XP, 2003, Vista, 2008, 7, 8, 2012, 8.1, and 10.
+dotNetInstaller is a widely used, general-purpose setup bootstrapper for Microsoft Windows XP, 2003, Vista, 2008, 7, 8, 2012, 8.1, and 10.
 
 Essentials
 ----------

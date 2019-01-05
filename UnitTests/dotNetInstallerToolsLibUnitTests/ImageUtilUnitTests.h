@@ -4,17 +4,11 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class ImageUtilUnitTests :  public CPPUNIT_NS::TestFixture
+        TEST_CLASS(ImageUtilUnitTests)
 		{
-			CPPUNIT_TEST_SUITE( ImageUtilUnitTests );
-			CPPUNIT_TEST(testLoadBitmapFromFile);
-			CPPUNIT_TEST(testLoadBitmapFromBuffer);
-			CPPUNIT_TEST(testLoadBitmapFromResource);
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testLoadBitmapFromFile();
-			void testLoadBitmapFromBuffer();
-			void testLoadBitmapFromResource();
+			TEST_METHOD(testLoadBitmapFromFile);
+			TEST_METHOD(testLoadBitmapFromBuffer);
+			TEST_METHOD(testLoadBitmapFromResource);
 		};
 	}
 }

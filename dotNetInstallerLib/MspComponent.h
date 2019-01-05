@@ -23,7 +23,7 @@ public:
 	bool disable_wow64_fs_redirection; 
 	void Exec();
 	void Wait(DWORD tt = INFINITE);
-	void Load(TiXmlElement * node);
+	void Load(tinyxml2::XMLElement * node);
 	bool IsRebootRequired() const;
 };
 

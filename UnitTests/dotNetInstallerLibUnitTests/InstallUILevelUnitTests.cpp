@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "InstallUILevelUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::InstallUILevelUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void InstallUILevelUnitTests::testGetCommand()
 {
@@ -41,7 +40,7 @@ void InstallUILevelUnitTests::testGetCommand()
         std::wstring command = InstallUILevelSetting::Instance->GetCommand(
             testdata[i].full, testdata[i].basic, testdata[i].silent);
         std::wcout << std::endl << i << ": " << command;
-        CPPUNIT_ASSERT(command == testdata[i].command);
+        Assert::IsTrue(command == testdata[i].command);
     }
 }
 
@@ -87,9 +86,9 @@ void InstallUILevelUnitTests::testIsAnything()
         InstallUILevelSetting::Instance->SetConfigLevel(testdata[i].configLevel);
         InstallUILevelSetting::Instance->SetRuntimeLevel(testdata[i].runtimeLevel);
         std::wcout << std::endl << i << ": " << testdata[i].configLevel << L" + " << testdata[i].runtimeLevel;
-        CPPUNIT_ASSERT(testdata[i].level == InstallUILevelSetting::Instance->GetUILevel());
-        CPPUNIT_ASSERT(testdata[i].isAnyUI == InstallUILevelSetting::Instance->IsAnyUI());
-        CPPUNIT_ASSERT(testdata[i].isSilent == InstallUILevelSetting::Instance->IsSilent());
+        Assert::IsTrue(testdata[i].level == InstallUILevelSetting::Instance->GetUILevel());
+        Assert::IsTrue(testdata[i].isAnyUI == InstallUILevelSetting::Instance->IsAnyUI());
+        Assert::IsTrue(testdata[i].isSilent == InstallUILevelSetting::Instance->IsSilent());
     }
 }
 
@@ -114,6 +113,6 @@ void InstallUILevelUnitTests::testToFromString()
     {
         std::wstring label = InstallUILevelSetting::ToString(testdata[i].level);
         std::wcout << std::endl << testdata[i].level << L": " << testdata[i].expected_value << L" => " << label;
-        CPPUNIT_ASSERT(testdata[i].expected_value == label);
+        Assert::IsTrue(testdata[i].expected_value == label);
     }
 }

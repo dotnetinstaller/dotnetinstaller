@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "OpenFileComponentUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::OpenFileComponentUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void OpenFileComponentUnitTests::testExec()
 {
@@ -15,7 +14,7 @@ void OpenFileComponentUnitTests::testExec()
 void OpenFileComponentUnitTests::testMustReboot()
 {
     OpenFileComponent component;
-    CPPUNIT_ASSERT(! component.IsRebootRequired());
+    Assert::IsTrue(! component.IsRebootRequired());
     component.mustreboot = true;
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 }

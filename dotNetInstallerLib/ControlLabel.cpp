@@ -10,7 +10,7 @@ ControlLabel::ControlLabel()
 
 }
 
-void ControlLabel::Load(TiXmlElement * node)
+void ControlLabel::Load(tinyxml2::XMLElement * node)
 {
     ControlText::Load(node);
 }

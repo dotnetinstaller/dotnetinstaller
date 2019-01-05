@@ -1,14 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using InstallerLib;
-using dotNetUnitTestsRunner;
-using System.IO;
-using System.Diagnostics;
+// <copyright file="AutoStartUnitTests.cs" company="DevAge, Vestris Inc. &amp; Contributors">
+//   Copyright (c) DevAge, Vestris Inc. &amp; Contributors.
+// </copyright>
 
 namespace dotNetInstallerUnitTests
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using dotNetUnitTestsRunner;
+    using InstallerLib;
+    using NUnit.Framework;
+
     [TestFixture]
     public class AutoStartUnitTests
     {
@@ -18,6 +20,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestAutoStart");
 
             ConfigFile configFile = new ConfigFile();
+
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             setupConfiguration.auto_start = true;
@@ -25,8 +28,10 @@ namespace dotNetInstallerUnitTests
             setupConfiguration.installation_completed = string.Empty;
             setupConfiguration.installation_none = string.Empty;
             configFile.Children.Add(setupConfiguration);
+
             // marker that makes installed check succeeed after installation
             string markerFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+
             // dummy component
             ComponentCmd component = new ComponentCmd();
             setupConfiguration.Children.Add(component);
@@ -35,6 +40,7 @@ namespace dotNetInstallerUnitTests
             check.filename = markerFilename;
             check.comparison = installcheckfile_comparison.exists;
             component.Children.Add(check);
+
             // configuration
             component.installcompletemessage = string.Empty;
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -55,6 +61,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestAutoStartCmdLine");
 
             ConfigFile configFile = new ConfigFile();
+
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             setupConfiguration.auto_start = false;
@@ -62,8 +69,10 @@ namespace dotNetInstallerUnitTests
             setupConfiguration.installation_completed = string.Empty;
             setupConfiguration.installation_none = string.Empty;
             configFile.Children.Add(setupConfiguration);
+
             // marker that makes installed check succeeed after installation
             string markerFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+
             // dummy component
             ComponentCmd component = new ComponentCmd();
             setupConfiguration.Children.Add(component);
@@ -72,6 +81,7 @@ namespace dotNetInstallerUnitTests
             check.filename = markerFilename;
             check.comparison = installcheckfile_comparison.exists;
             component.Children.Add(check);
+
             // configuration
             component.installcompletemessage = string.Empty;
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -93,11 +103,13 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestNoAutoStart");
 
             ConfigFile configFile = new ConfigFile();
+
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             setupConfiguration.auto_start = false;
             setupConfiguration.installation_completed = string.Empty;
             configFile.Children.Add(setupConfiguration);
+
             // dummy component
             ComponentCmd component = new ComponentCmd();
             setupConfiguration.Children.Add(component);
@@ -121,6 +133,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestAutoContinueOnReboot");
 
             ConfigFile configFile = new ConfigFile();
+
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             setupConfiguration.auto_start = false;
@@ -129,8 +142,10 @@ namespace dotNetInstallerUnitTests
             setupConfiguration.installation_completed = string.Empty;
             setupConfiguration.installation_none = string.Empty;
             configFile.Children.Add(setupConfiguration);
+
             // marker that makes installed check succeeed after installation
             string markerFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+
             // dummy component
             ComponentCmd component = new ComponentCmd();
             setupConfiguration.Children.Add(component);
@@ -158,12 +173,14 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestNoAutoContinueOnReboot");
 
             ConfigFile configFile = new ConfigFile();
+
             // setup configuration
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             setupConfiguration.auto_start = true;
             setupConfiguration.auto_continue_on_reboot = false;
             setupConfiguration.installation_completed = string.Empty;
             configFile.Children.Add(setupConfiguration);
+
             // dummy component
             ComponentCmd component = new ComponentCmd();
             setupConfiguration.Children.Add(component);

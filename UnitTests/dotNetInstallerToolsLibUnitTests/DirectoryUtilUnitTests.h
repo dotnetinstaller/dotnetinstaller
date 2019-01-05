@@ -4,29 +4,17 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class DirectoryUtilUnitTests :  public CPPUNIT_NS::TestFixture
+		TEST_CLASS(DirectoryUtilUnitTests)
 		{
-			CPPUNIT_TEST_SUITE( DirectoryUtilUnitTests );
-			CPPUNIT_TEST( testDirectoryNormalize );
-			CPPUNIT_TEST( testDirectoryExists );
-			CPPUNIT_TEST( testDirectoryCreate );
-			CPPUNIT_TEST( testDirectoryDelete );
-			CPPUNIT_TEST( testGetFilesRecursive );
-			CPPUNIT_TEST( testGetFilesWithWildcard );
-			CPPUNIT_TEST( testGetFilesWithNoWildcard );
-			CPPUNIT_TEST( testGetFilesWithInvalidWildcard );
-			CPPUNIT_TEST( testDirectoryCreateMultipleSlashes );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testDirectoryNormalize();
-			void testDirectoryExists();
-			void testDirectoryCreate();
-			void testDirectoryDelete();
-			void testGetFilesRecursive();
-			void testGetFilesWithWildcard();
-			void testGetFilesWithNoWildcard();
-			void testGetFilesWithInvalidWildcard();
-			void testDirectoryCreateMultipleSlashes();
+			TEST_METHOD( testDirectoryNormalize );
+			TEST_METHOD( testDirectoryExists );
+			TEST_METHOD( testDirectoryCreate );
+			TEST_METHOD( testDirectoryDelete );
+			TEST_METHOD( testGetFilesRecursive );
+			TEST_METHOD( testGetFilesWithWildcard );
+			TEST_METHOD( testGetFilesWithNoWildcard );
+			TEST_METHOD( testGetFilesWithInvalidWildcard );
+			TEST_METHOD( testDirectoryCreateMultipleSlashes );
 		};
 	}
 }

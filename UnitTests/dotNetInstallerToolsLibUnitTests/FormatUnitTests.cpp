@@ -2,15 +2,14 @@
 #include "FormatUnitTests.h"
 
 using namespace DVLib::UnitTests;
-
-CPPUNIT_TEST_SUITE_REGISTRATION(FormatUnitTests);
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void FormatUnitTests::testFormatMessageA()
 {
     std::string result = DVLib::FormatMessage(
         "Error executing: %s. Error Code: %d", "MessageFormatter", 100);	
 
-    CPPUNIT_ASSERT(result.compare("Error executing: MessageFormatter. Error Code: 100") == 0);
+    Assert::IsTrue(result.compare("Error executing: MessageFormatter. Error Code: 100") == 0);
 }
 
 void FormatUnitTests::testFormatMessageW()
@@ -18,15 +17,16 @@ void FormatUnitTests::testFormatMessageW()
     std::wstring result = DVLib::FormatMessage(
         L"Error executing: %s. Error Code: %d", L"MessageFormatter", 100);	
 
-    CPPUNIT_ASSERT(result.compare(L"Error executing: MessageFormatter. Error Code: 100") == 0);
+    Assert::IsTrue(result.compare(L"Error executing: MessageFormatter. Error Code: 100") == 0);
 }
 
 void FormatUnitTests::testFormatMessageFromLastErrorCodeA()
 {
     std::string expected = "The remote server has been paused or is in the process of being started.";
     DWORD errorCode = ERROR_SHARING_PAUSED; // The remote server has been paused or is in the process of being started.
-    std::string result = DVLib::FormatMessageFromLastErrorCodeA(errorCode);	
-    CPPUNIT_ASSERT_MESSAGE(result, result.compare(expected) == 0 );
+    std::string result = DVLib::FormatMessageFromLastErrorCodeA(errorCode);
+    std::wstring assertMessage = DVLib::FormatMessageFromLastErrorCodeW(errorCode);
+    Assert::IsTrue(result.compare(expected) == 0, assertMessage.c_str());
 }
 
 void FormatUnitTests::testFormatMessageFromLastErrorCodeW()
@@ -34,19 +34,19 @@ void FormatUnitTests::testFormatMessageFromLastErrorCodeW()
     std::wstring expected = L"The remote server has been paused or is in the process of being started.";
     DWORD errorCode = ERROR_SHARING_PAUSED; // The remote server has been paused or is in the process of being started.
     std::wstring result = DVLib::FormatMessageFromLastErrorCodeW(errorCode);	
-    CPPUNIT_ASSERT(result.compare(expected) == 0 );
+    Assert::IsTrue(result.compare(expected) == 0 );
 }
 
 void FormatUnitTests::testFormatMessageFromHRA()
 {
-    CPPUNIT_ASSERT(DVLib::FormatMessageFromHRA(S_OK) == "The operation completed successfully.");
-    CPPUNIT_ASSERT(DVLib::FormatMessageFromHRA(INET_E_SECURITY_PROBLEM, "urlmon.dll") == "A security problem occurred.");
+    Assert::IsTrue(DVLib::FormatMessageFromHRA(S_OK) == "The operation completed successfully.");
+    Assert::IsTrue(DVLib::FormatMessageFromHRA(INET_E_SECURITY_PROBLEM, "urlmon.dll") == "A security problem occurred.");
 }
 
 void FormatUnitTests::testFormatMessageFromHRW()
 {
-    CPPUNIT_ASSERT(DVLib::FormatMessageFromHRW(S_OK) == L"The operation completed successfully.");
-    CPPUNIT_ASSERT(DVLib::FormatMessageFromHRW(INET_E_SECURITY_PROBLEM, L"urlmon.dll") == L"A security problem occurred.");
+    Assert::IsTrue(DVLib::FormatMessageFromHRW(S_OK) == L"The operation completed successfully.");
+    Assert::IsTrue(DVLib::FormatMessageFromHRW(INET_E_SECURITY_PROBLEM, L"urlmon.dll") == L"A security problem occurred.");
 }
 
 void FormatUnitTests::testFormatBytes()
@@ -75,12 +75,12 @@ void FormatUnitTests::testFormatBytes()
         {
             std::wstring result = DVLib::FormatBytesW(testData[i].bytes);
             std::wcout << std::endl << testData[i].bytes << L" => " << result;
-            CPPUNIT_ASSERT(testData[i].expected_result == result);
+            Assert::IsTrue(testData[i].expected_result == result);
         }
         {
             std::string result = DVLib::FormatBytesA(testData[i].bytes);
             std::cout << std::endl << testData[i].bytes << " => " << result;
-            CPPUNIT_ASSERT(testData[i].expected_result == DVLib::string2wstring(result));
+            Assert::IsTrue(testData[i].expected_result == DVLib::string2wstring(result));
         }
     }
 }
@@ -88,13 +88,13 @@ void FormatUnitTests::testFormatBytes()
 void FormatUnitTests::testFormatDateTime()
 {
     // set the current time-zone to UTC to make FormatDateTime predictable
-    CPPUNIT_ASSERT(ERROR_SUCCESS == _putenv_s( "TZ", "UTC" ));
+    Assert::IsTrue(ERROR_SUCCESS == _putenv_s( "TZ", "UTC" ));
     _tzset();
     // formatting of 0 time is the number of seconds since 1970-01-01, hence 0
-    CPPUNIT_ASSERT(DVLib::FormatDateTimeA(0) == "1970-01-01 00:00:00");
-    CPPUNIT_ASSERT("1970" == DVLib::FormatDateTimeA(0, "%Y"));
-    CPPUNIT_ASSERT(DVLib::FormatDateTimeW(0) == L"1970-01-01 00:00:00");
-    CPPUNIT_ASSERT(L"1970" == DVLib::FormatDateTimeW(0, L"%Y"));
+    Assert::IsTrue(DVLib::FormatDateTimeA(0) == "1970-01-01 00:00:00");
+    Assert::IsTrue("1970" == DVLib::FormatDateTimeA(0, "%Y"));
+    Assert::IsTrue(DVLib::FormatDateTimeW(0) == L"1970-01-01 00:00:00");
+    Assert::IsTrue(L"1970" == DVLib::FormatDateTimeW(0, L"%Y"));
 }
 
 void FormatUnitTests::testFormatCurrentDateTime()
@@ -102,20 +102,20 @@ void FormatUnitTests::testFormatCurrentDateTime()
     {
         std::wstring current_time = DVLib::FormatCurrentDateTimeW();
         std::wcout << std::endl << current_time;
-        CPPUNIT_ASSERT(! current_time.empty());
+        Assert::IsTrue(! current_time.empty());
     }
 
     {
         std::string current_time = DVLib::FormatCurrentDateTimeA();
         std::cout << std::endl << current_time;
-        CPPUNIT_ASSERT(! current_time.empty());
+        Assert::IsTrue(! current_time.empty());
     }
 
     time_t t = 0;
     time(& t);
     struct tm tt = { 0 };
     localtime_s(& tt, &t);
-    CPPUNIT_ASSERT(DVLib::towstring(tt.tm_year + 1900) == DVLib::FormatCurrentDateTimeW(L"%Y"));
-    CPPUNIT_ASSERT(DVLib::tostring(tt.tm_year + 1900) == DVLib::FormatCurrentDateTimeA("%Y"));
+    Assert::IsTrue(DVLib::towstring(tt.tm_year + 1900) == DVLib::FormatCurrentDateTimeW(L"%Y"));
+    Assert::IsTrue(DVLib::tostring(tt.tm_year + 1900) == DVLib::FormatCurrentDateTimeA("%Y"));
 }
 

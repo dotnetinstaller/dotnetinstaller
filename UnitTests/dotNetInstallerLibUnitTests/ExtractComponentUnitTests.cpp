@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "ExtractComponentUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::ExtractComponentUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 class ExtractComponentStdOut : public ExtractComponent
 {
@@ -26,22 +25,22 @@ public:
 
 void ExtractComponentUnitTests::testExtractWithoutComponentId()
 {
-    ExtractComponentStdOut extract(::GetModuleHandle(NULL), L"");
+    ExtractComponentStdOut extract(GetCurrentModuleHandle(), L"");
     extract.Exec();
     std::wstring readmetxt = DVLib::DirectoryCombine(InstallerSession::Instance->GetSessionCabPath(), L"readme.txt");
-    CPPUNIT_ASSERT(DVLib::FileExists(readmetxt));
-    CPPUNIT_ASSERT(DVLib::GetFileSize(readmetxt) == 18);
+    Assert::IsTrue(DVLib::FileExists(readmetxt));
+    Assert::IsTrue(DVLib::GetFileSize(readmetxt) == 18);
     std::wcout << std::endl << readmetxt << L" - " << DVLib::FormatBytesW(DVLib::GetFileSize(readmetxt));
     DVLib::DirectoryDelete(InstallerSession::Instance->GetSessionCabPath());
 }
 
 void ExtractComponentUnitTests::testExtractWithComponentId()
 {
-    ExtractComponentStdOut extract(::GetModuleHandle(NULL), L"TEST");
+    ExtractComponentStdOut extract(GetCurrentModuleHandle(), L"TEST");
     extract.Exec();
     std::wstring readmetxt = DVLib::DirectoryCombine(InstallerSession::Instance->GetSessionCabPath(), L"readme.txt");
-    CPPUNIT_ASSERT(DVLib::FileExists(readmetxt));
-    CPPUNIT_ASSERT(DVLib::GetFileSize(readmetxt) == 18);
+    Assert::IsTrue(DVLib::FileExists(readmetxt));
+    Assert::IsTrue(DVLib::GetFileSize(readmetxt) == 18);
     std::wcout << std::endl << readmetxt << L" - " << DVLib::FormatBytesW(DVLib::GetFileSize(readmetxt));
     DVLib::DirectoryDelete(InstallerSession::Instance->GetSessionCabPath());
 }
@@ -49,9 +48,9 @@ void ExtractComponentUnitTests::testExtractWithComponentId()
 
 void ExtractComponentUnitTests::testExtractWithStatus()
 {
-    ExtractComponentStdOut extract(::GetModuleHandle(NULL), L"");
+    ExtractComponentStdOut extract(GetCurrentModuleHandle(), L"");
     extract.status_interval = 0;
     extract.Exec();
     DVLib::DirectoryDelete(InstallerSession::Instance->GetSessionCabPath());
-    CPPUNIT_ASSERT(extract.last_status == L"readme.txt - 100%");
+    Assert::IsTrue(extract.last_status == L"readme.txt - 100%");
 }

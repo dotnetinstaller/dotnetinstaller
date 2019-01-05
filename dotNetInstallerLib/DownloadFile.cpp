@@ -18,7 +18,7 @@ DownloadFile::~DownloadFile()
 
 }
 
-void DownloadFile::Load(TiXmlElement * node)
+void DownloadFile::Load(tinyxml2::XMLElement * node)
 {
     CHECK_BOOL(node != NULL,
         L"Expected 'download' node");

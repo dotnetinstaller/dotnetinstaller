@@ -46,7 +46,7 @@ public:
 	// visible
 	bool IsVisible() const;
 	// load a control from an xml node
-	virtual void Load(TiXmlElement * node);
+	virtual void Load(tinyxml2::XMLElement * node);
 	// string representation of the control
 	virtual std::wstring GetString() const;
 	// convert a string into a check type

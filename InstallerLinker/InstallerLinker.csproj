@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,7 +13,7 @@
     <StartupObject>InstallerLinker.InstallerLinker</StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <OldToolsVersion>2.0</OldToolsVersion>
+    <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <SccProjectName>
@@ -23,6 +24,8 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,6 +49,9 @@
     <PlatformTarget>x86</PlatformTarget>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>InstallerLinker.exe.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -65,8 +71,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="InstallerLinker.exe.Debug.manifest" />
-    <None Include="InstallerLinker.exe.Release.manifest" />
+    <None Include="app.config" />
+    <None Include="InstallerLinker.exe.manifest" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -77,8 +83,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"..\..\..\ThirdParty\Microsoft\Visual Studio 8\Common7\Tools\Bin\mt.exe" -manifest “$(ProjectDir)$(TargetFileName).$(ConfigurationName).manifest” -outputresource:"$(TargetPath)";#1
-copy "$(ProjectDir)..\ThirdParty\VisualStudioCRT\$(ConfigurationName)\*.*" "$(TargetDir)" /y
+    <PostBuildEvent>if '$(ConfigurationName)'=='Debug' copy "$(ProjectDir)..\ThirdParty\Microsoft\Visual Studio 14.0\VC\redist\debug_nonredist\x86\Microsoft.VC140.DebugCRT\*.*" "$(TargetDir)" /y
+if '$(ConfigurationName)'=='Release' copy "$(ProjectDir)..\ThirdParty\Microsoft\Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\*.*" "$(TargetDir)" /y
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

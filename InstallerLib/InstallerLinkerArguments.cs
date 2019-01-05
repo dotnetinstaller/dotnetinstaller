@@ -39,8 +39,6 @@ namespace InstallerLib
         public string icon;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Embed manifest", LongName = "Manifest", ShortName = "m")]
         public string manifest;
-        [Argument(ArgumentType.AtMostOnce, HelpText = "Embed MSLU unicows.dll", LongName = "Mslu", ShortName = "u", DefaultValue = false)]
-        public bool mslu;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Link only components that match a processor architecture filter", LongName = "ProcessorArchitecture", ShortName = "p")]
         public string processorArchitecture;
 

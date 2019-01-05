@@ -4,6 +4,7 @@ TBD
 Features
 --------
 
+* [#109](https://github.com/dblock/dotnetinstaller/issues/109) - Migrated code to Visual Studio 2015 and .NET 4.0 (Deprecated support for Windows 95, 98, ME, NT4, and 2000) - [@icnocop](https://github.com/icnocop).
 * [#112](https://github.com/dblock/dotnetinstaller/pull/112) - Removed throwing an exception when the installation process is closed or canceled by user at language selection stage - [@genI3](https://github.com/genI3).
 * [#96](https://github.com/dblock/dotnetinstaller/issues/96) - Added the ability to hide a component if it's already installed - [@icnocop](https://github.com/icnocop).
 

@@ -12,7 +12,7 @@ public:
 	XmlAttribute font_name;
 	// font point size
 	int font_size;
-	void Load(TiXmlElement * node);
+	void Load(tinyxml2::XMLElement * node);
 	std::wstring GetString() const;
 };
 

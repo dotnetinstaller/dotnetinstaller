@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using InstallerLib;
-using System.IO;
-using dotNetUnitTestsRunner;
-using System.Threading;
-using System.Xml;
-using System.Globalization;
+// <copyright file="LanguageUnitTests.cs" company="DevAge, Vestris Inc. &amp; Contributors">
+//   Copyright (c) DevAge, Vestris Inc. &amp; Contributors.
+// </copyright>
 
 namespace dotNetInstallerUnitTests
 {
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using dotNetUnitTestsRunner;
+    using InstallerLib;
+    using NUnit.Framework;
+
     [TestFixture]
     public class LanguageUnitTests
     {
@@ -21,6 +21,7 @@ namespace dotNetInstallerUnitTests
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
+
             // current lcid
             string currentLcidFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             ComponentCmd cmdCurrentLcid = new ComponentCmd();
@@ -29,12 +30,14 @@ namespace dotNetInstallerUnitTests
             cmdCurrentLcid.command = string.Format("cmd.exe /C dir > \"{0}\"", currentLcidFilename);
             cmdCurrentLcid.required_install = true;
             setupConfiguration.Children.Add(cmdCurrentLcid);
+
             // empty lcid
             string emptyLcidFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             ComponentCmd cmdEmptyLcid = new ComponentCmd();
             cmdEmptyLcid.command = string.Format("cmd.exe /C dir > \"{0}\"", emptyLcidFilename);
             cmdEmptyLcid.required_install = true;
             setupConfiguration.Children.Add(cmdEmptyLcid);
+
             // another lcid
             string anotherLcidFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             ComponentCmd cmdAnotherLcid = new ComponentCmd();
@@ -43,10 +46,12 @@ namespace dotNetInstallerUnitTests
             cmdAnotherLcid.command = string.Format("cmd.exe /C dir > \"{0}\"", anotherLcidFilename);
             cmdAnotherLcid.required_install = true;
             setupConfiguration.Children.Add(cmdAnotherLcid);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             Assert.IsTrue(File.Exists(currentLcidFilename));
@@ -62,6 +67,7 @@ namespace dotNetInstallerUnitTests
         {
             // a configuration with one component
             ConfigFile configFile = new ConfigFile();
+
             // current lcid setup configuration
             SetupConfiguration currentLcidConfiguration = new SetupConfiguration();
             currentLcidConfiguration.lcid_filter = CultureInfo.CurrentUICulture.LCID.ToString();
@@ -72,6 +78,7 @@ namespace dotNetInstallerUnitTests
             cmdCurrentLcid.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 0", currentLcidFilename);
             cmdCurrentLcid.required_install = true;
             currentLcidConfiguration.Children.Add(cmdCurrentLcid);
+
             // empty lcid setup configuration
             SetupConfiguration emptyLcidConfiguration = new SetupConfiguration();
             configFile.Children.Add(emptyLcidConfiguration);
@@ -80,6 +87,7 @@ namespace dotNetInstallerUnitTests
             cmdEmptyLcid.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 0", emptyLcidFilename);
             cmdEmptyLcid.required_install = true;
             emptyLcidConfiguration.Children.Add(cmdEmptyLcid);
+
             // another lcid setup configuration
             SetupConfiguration anotherLcidConfiguration = new SetupConfiguration();
             anotherLcidConfiguration.lcid_filter = (CultureInfo.CurrentCulture.LCID + 1).ToString();
@@ -90,10 +98,12 @@ namespace dotNetInstallerUnitTests
             cmdAnotherLcid.command = string.Format("cmd.exe /C dir > \"{0}\" & exit /b 0", anotherLcidFilename);
             cmdAnotherLcid.required_install = true;
             anotherLcidConfiguration.Children.Add(cmdAnotherLcid);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             Assert.IsTrue(File.Exists(currentLcidFilename));

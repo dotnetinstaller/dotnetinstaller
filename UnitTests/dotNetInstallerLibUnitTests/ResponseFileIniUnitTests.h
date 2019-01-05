@@ -6,13 +6,19 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class ResponseFileIniUnitTests : public ResponseFileUnitTests<ResponseFileIni>
+        TEST_CLASS(ResponseFileIniUnitTests), public ResponseFileUnitTests<ResponseFileIni>
 		{
-			CPPUNIT_TEST_SUITE( ResponseFileIniUnitTests );
-			CPPUNIT_TEST( testExec );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testExec();
+            TEST_METHOD_INITIALIZE( initialize )
+            {
+                setUp();
+            }
+
+            TEST_METHOD_CLEANUP( cleanup )
+            {
+                tearDown();
+            }
+
+			TEST_METHOD( testExec );
 		};
 	}
 }

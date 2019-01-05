@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{48FFB2FD-215B-4DEE-8C38-EC1DB518477F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>dotNetInstallerLibUnitTests</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\dni.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\dni.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseFullPaths>true</UseFullPaths>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseFullPaths>true</UseFullPaths>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CmdComponentUnitTests.cpp" />
+    <ClCompile Include="ComponentsStatusUnitTests.cpp" />
+    <ClCompile Include="ComponentsUnitTests.cpp" />
+    <ClCompile Include="ComponentUnitTests.cpp" />
+    <ClCompile Include="ConfigFilesImpl.cpp" />
+    <ClCompile Include="ConfigFilesUnitTests.cpp" />
+    <ClCompile Include="ConfigFileUnitTests.cpp" />
+    <ClCompile Include="dotNetInstallerLibUnitTestFixture.cpp" />
+    <ClCompile Include="DownloadCallbackImpl.cpp" />
+    <ClCompile Include="DownloadDialogUnitTests.cpp" />
+    <ClCompile Include="DownloadFileUnitTests.cpp" />
+    <ClCompile Include="ExeComponentUnitTests.cpp" />
+    <ClCompile Include="ExecuteComponentCallbackImpl.cpp" />
+    <ClCompile Include="ExtractComponentUnitTests.cpp" />
+    <ClCompile Include="InstalledCheckDirectoryUnitTests.cpp" />
+    <ClCompile Include="InstalledCheckFileUnitTests.cpp" />
+    <ClCompile Include="InstalledCheckOperatorUnitTests.cpp" />
+    <ClCompile Include="InstalledCheckProductUnitTests.cpp" />
+    <ClCompile Include="InstalledCheckRegistryUnitTests.cpp" />
+    <ClCompile Include="InstallerCommandLineInfoUnitTests.cpp" />
+    <ClCompile Include="InstallerLauncherUnitTests.cpp" />
+    <ClCompile Include="InstallerLogUnitTests.cpp" />
+    <ClCompile Include="InstallerSessionUnitTests.cpp" />
+    <ClCompile Include="InstallUILevelUnitTests.cpp" />
+    <ClCompile Include="MsiComponentUnitTests.cpp" />
+    <ClCompile Include="MspComponentUnitTests.cpp" />
+    <ClCompile Include="MsuComponentUnitTests.cpp" />
+    <ClCompile Include="OpenFileComponentUnitTests.cpp" />
+    <ClCompile Include="ResponseFileIniUnitTests.cpp" />
+    <ClCompile Include="ResponseFileTextUnitTests.cpp" />
+    <ClCompile Include="ResponseFileUnitTests.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="ThreadComponentUnitTests.cpp" />
+    <ClCompile Include="Wow64NativeFSUnitTests.cpp" />
+    <ClCompile Include="XmlAttributeUnitTests.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CmdComponentUnitTests.h" />
+    <ClInclude Include="ComponentsStatusUnitTests.h" />
+    <ClInclude Include="ComponentsUnitTests.h" />
+    <ClInclude Include="ComponentUnitTests.h" />
+    <ClInclude Include="ConfigFilesImpl.h" />
+    <ClInclude Include="ConfigFilesUnitTests.h" />
+    <ClInclude Include="ConfigFileUnitTests.h" />
+    <ClInclude Include="dotNetInstallerLibUnitTestFixture.h" />
+    <ClInclude Include="DownloadCallbackImpl.h" />
+    <ClInclude Include="DownloadDialogUnitTests.h" />
+    <ClInclude Include="DownloadFileUnitTests.h" />
+    <ClInclude Include="ExeComponentUnitTests.h" />
+    <ClInclude Include="ExecuteComponentCallbackImpl.h" />
+    <ClInclude Include="ExtractComponentUnitTests.h" />
+    <ClInclude Include="InstalledCheckDirectoryUnitTests.h" />
+    <ClInclude Include="InstalledCheckFileUnitTests.h" />
+    <ClInclude Include="InstalledCheckOperatorUnitTests.h" />
+    <ClInclude Include="InstalledCheckProductUnitTests.h" />
+    <ClInclude Include="InstalledCheckRegistryUnitTests.h" />
+    <ClInclude Include="InstallerCommandLineInfoUnitTests.h" />
+    <ClInclude Include="InstallerLauncherUnitTests.h" />
+    <ClInclude Include="InstallerLogUnitTests.h" />
+    <ClInclude Include="InstallerSessionUnitTests.h" />
+    <ClInclude Include="InstallUILevelUnitTests.h" />
+    <ClInclude Include="MsiComponentUnitTests.h" />
+    <ClInclude Include="MspComponentUnitTests.h" />
+    <ClInclude Include="MsuComponentUnitTests.h" />
+    <ClInclude Include="OpenFileComponentUnitTests.h" />
+    <ClInclude Include="ResponseFileIniUnitTests.h" />
+    <ClInclude Include="ResponseFileTextUnitTests.h" />
+    <ClInclude Include="ResponseFileUnitTests.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ThreadComponentUnitTests.h" />
+    <ClInclude Include="Wow64NativeFSUnitTests.h" />
+    <ClInclude Include="XmlAttributeUnitTests.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="dotNetInstallerLibUnitTests.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\dotNetInstallerLib\dotNetInstallerLib.vcxproj">
+      <Project>{04dc59cf-750e-431f-a834-fb60be03545c}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\dotNetInstallerToolsLib\dotNetInstallerToolsLib.vcxproj">
+      <Project>{173feb9a-c058-4e3f-b6a1-2d8ae7e44f43}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ThirdParty\Cab\Cab.vcxproj">
+      <Project>{6a9ad5e1-624c-478f-9921-8400b3ad84a8}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ThirdParty\SmartPtr\SmartPtr.vcxproj">
+      <Project>{8185f399-f6de-40b3-add6-42fc5f330ca8}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ThirdParty\tinyxml2-6.0.0\tinyxml2\tinyxml2.vcxproj">
+      <Project>{d1c528b6-aa02-4d29-9d61-dc08e317a70d}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Version\Version.csproj">
+      <Project>{1f40bf7e-4b2f-4d54-b615-1c4a4bfeb324}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

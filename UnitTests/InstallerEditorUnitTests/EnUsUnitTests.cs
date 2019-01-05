@@ -1,4 +1,3 @@
-using System;
 using NUnit.Framework;
 using System.Threading;
 using System.Globalization;

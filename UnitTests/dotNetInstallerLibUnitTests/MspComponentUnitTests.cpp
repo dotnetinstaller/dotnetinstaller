@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "MspComponentUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::MspComponentUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void MspComponentUnitTests::testExecInstall()
 {
@@ -19,7 +18,7 @@ void MspComponentUnitTests::testExecInstall()
     catch(std::exception&)
     {
         // msp file cannot be opened
-        CPPUNIT_ASSERT(ERROR_INSTALL_PACKAGE_OPEN_FAILED == component.GetProcessExitCode());
+        Assert::IsTrue(ERROR_INSTALL_PACKAGE_OPEN_FAILED == component.GetProcessExitCode());
     }
 }
 
@@ -38,7 +37,7 @@ void MspComponentUnitTests::testExecInstallSilent()
     catch(std::exception&)
     {
         // msu file cannot be opened
-        CPPUNIT_ASSERT(ERROR_INSTALL_PACKAGE_OPEN_FAILED == component.GetProcessExitCode());
+        Assert::IsTrue(ERROR_INSTALL_PACKAGE_OPEN_FAILED == component.GetProcessExitCode());
     }
 }
 
@@ -170,14 +169,14 @@ void MspComponentUnitTests::testGetCommandLine()
         component.reinstallmode = testdata[i].reinstallmode;
         std::wstring command = component.GetCommandLine();
         std::wcout << std::endl << L" " << command;
-        CPPUNIT_ASSERT(testdata[i].command == command);
+        Assert::IsTrue(testdata[i].command == command);
     }
 }
 
 void MspComponentUnitTests::testMustReboot()
 {
     MspComponent component;
-    CPPUNIT_ASSERT(! component.IsRebootRequired());
+    Assert::IsTrue(! component.IsRebootRequired());
     component.mustreboot = true;
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 }

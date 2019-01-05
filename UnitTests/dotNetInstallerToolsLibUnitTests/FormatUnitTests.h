@@ -4,29 +4,17 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class FormatUnitTests :  public CPPUNIT_NS::TestFixture
+		TEST_CLASS(FormatUnitTests)
 		{
-			CPPUNIT_TEST_SUITE( FormatUnitTests );
-			CPPUNIT_TEST(testFormatMessageA);
-			CPPUNIT_TEST(testFormatMessageW);
-			CPPUNIT_TEST(testFormatMessageFromLastErrorCodeA);
-			CPPUNIT_TEST(testFormatMessageFromLastErrorCodeW);
-			CPPUNIT_TEST(testFormatMessageFromHRA);
-			CPPUNIT_TEST(testFormatMessageFromHRW);
-			CPPUNIT_TEST(testFormatBytes);
-			CPPUNIT_TEST(testFormatDateTime);
-			CPPUNIT_TEST(testFormatCurrentDateTime);
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testFormatMessageA();
-			void testFormatMessageW();
-			void testFormatMessageFromLastErrorCodeA();
-			void testFormatMessageFromLastErrorCodeW();
-			void testFormatMessageFromHRA();
-			void testFormatMessageFromHRW();
-			void testFormatBytes();
-			void testFormatDateTime();
-			void testFormatCurrentDateTime();
+			TEST_METHOD(testFormatMessageA);
+			TEST_METHOD(testFormatMessageW);
+			TEST_METHOD(testFormatMessageFromLastErrorCodeA);
+			TEST_METHOD(testFormatMessageFromLastErrorCodeW);
+			TEST_METHOD(testFormatMessageFromHRA);
+			TEST_METHOD(testFormatMessageFromHRW);
+			TEST_METHOD(testFormatBytes);
+			TEST_METHOD(testFormatDateTime);
+			TEST_METHOD(testFormatCurrentDateTime);
 		};
 	}
 }

@@ -113,7 +113,7 @@ void ExeComponent::Exec()
     ProcessComponent::ExecCmd(l_command, execution_method, disable_wow64_fs_redirection);
 };
 
-void ExeComponent::Load(TiXmlElement * node)
+void ExeComponent::Load(tinyxml2::XMLElement * node)
 {
     executable = node->Attribute("executable");
     executable_silent = node->Attribute("executable_silent");

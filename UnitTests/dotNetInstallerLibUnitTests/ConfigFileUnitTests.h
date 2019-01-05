@@ -1,44 +1,37 @@
 #pragma once
+#include "dotNetInstallerLibUnitTestFixture.h"
 
 namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class ConfigFileUnitTests : public dotNetInstallerLibUnitTestFixture
+        TEST_CLASS(ConfigFileUnitTests), public dotNetInstallerLibUnitTestFixture
 		{
-			CPPUNIT_TEST_SUITE( ConfigFileUnitTests );
-			CPPUNIT_TEST( testLoadPackagedSetup );
-			CPPUNIT_TEST( testLoadInstallCheckOperators );
-			CPPUNIT_TEST( testLoadStandaloneSetup );
-			CPPUNIT_TEST( testLoadDownloadSetup );
-			CPPUNIT_TEST( testLoadReferenceSetup );
-			CPPUNIT_TEST( testLoadInstallCheckProductSetup );
-			CPPUNIT_TEST( testLoadOsFiltersSetup );
-			CPPUNIT_TEST( testLoadResource );
-			CPPUNIT_TEST( testLoadMultilingualSetup );
-			CPPUNIT_TEST( testLoadLicenseAgreement );
-			CPPUNIT_TEST( testGetSupportedConfigurations );
-			CPPUNIT_TEST( testLoadCustomInputSetup );
-			CPPUNIT_TEST( testLoadMultipleSetup );
-			CPPUNIT_TEST( testLoadPatchSetup );
-			CPPUNIT_TEST( testLoadExeSetup );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testLoadPackagedSetup();
-			void testLoadInstallCheckOperators();
-			void testLoadInstallCheckProductSetup();
-			void testLoadStandaloneSetup();
-			void testLoadDownloadSetup();
-			void testLoadReferenceSetup();
-			void testLoadOsFiltersSetup();
-			void testLoadResource();
-			void testGetSupportedConfigurations();
-			void testLoadMultilingualSetup();
-			void testLoadLicenseAgreement();
-			void testLoadCustomInputSetup();
-			void testLoadMultipleSetup();
-			void testLoadPatchSetup();
-			void testLoadExeSetup();
+            TEST_METHOD_INITIALIZE( initialize )
+            {
+                setUp();
+            }
+
+            TEST_METHOD_CLEANUP( cleanup )
+            {
+                tearDown();
+            }
+
+			TEST_METHOD( testLoadPackagedSetup );
+			TEST_METHOD( testLoadInstallCheckOperators );
+			TEST_METHOD( testLoadStandaloneSetup );
+			TEST_METHOD( testLoadDownloadSetup );
+			TEST_METHOD( testLoadReferenceSetup );
+			TEST_METHOD( testLoadInstallCheckProductSetup );
+			TEST_METHOD( testLoadOsFiltersSetup );
+			TEST_METHOD( testLoadResource );
+			TEST_METHOD( testLoadMultilingualSetup );
+			TEST_METHOD( testLoadLicenseAgreement );
+			TEST_METHOD( testGetSupportedConfigurations );
+			TEST_METHOD( testLoadCustomInputSetup );
+			TEST_METHOD( testLoadMultipleSetup );
+			TEST_METHOD( testLoadPatchSetup );
+			TEST_METHOD( testLoadExeSetup );
 		};
 	}
 }

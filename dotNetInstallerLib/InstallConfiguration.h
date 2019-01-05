@@ -90,7 +90,7 @@ public:
 	XmlAttribute administrator_required_message;
 public:
 	InstallConfiguration();
-	virtual void Load(TiXmlElement * node);
+	virtual void Load(tinyxml2::XMLElement * node);
 	// returns components that match current platform and processor architecture
 	Components GetSupportedComponents(DVLib::LcidType lcidtype, InstallSequence sequence) const;
 	ComponentPtr GetComponentPtr(Component * pc) const;

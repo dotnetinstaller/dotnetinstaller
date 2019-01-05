@@ -1,18 +1,24 @@
 #pragma once
+#include "dotNetInstallerLibUnitTestFixture.h"
 
 namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class ThreadComponentUnitTests : public dotNetInstallerLibUnitTestFixture
+		TEST_CLASS(ThreadComponentUnitTests), public dotNetInstallerLibUnitTestFixture
 		{
-			CPPUNIT_TEST_SUITE( ThreadComponentUnitTests );
-			CPPUNIT_TEST( testExec );
-			CPPUNIT_TEST( testExecWithError );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testExec();
-			void testExecWithError();
+            TEST_METHOD_INITIALIZE( initialize )
+            {
+                setUp();
+            }
+
+            TEST_METHOD_CLEANUP( cleanup )
+            {
+                tearDown();
+            }
+
+			TEST_METHOD( testExec );
+			TEST_METHOD( testExecWithError );
 		};
 	}
 }

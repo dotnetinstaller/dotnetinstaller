@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{04DC59CF-750E-431F-A834-FB60BE03545C}</ProjectGuid>
+    <RootNamespace>dotNetInstallerLib</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\dni.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\dni.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.25431.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MinSpace</Optimization>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CmdComponent.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Components.cpp" />
+    <ClCompile Include="ComponentStatus.cpp" />
+    <ClCompile Include="ConfigFile.cpp" />
+    <ClCompile Include="ConfigFiles.cpp" />
+    <ClCompile Include="Configuration.cpp" />
+    <ClCompile Include="Configurations.cpp" />
+    <ClCompile Include="Control.cpp" />
+    <ClCompile Include="ControlBrowse.cpp" />
+    <ClCompile Include="ControlCheckBox.cpp" />
+    <ClCompile Include="ControlEdit.cpp" />
+    <ClCompile Include="ControlHyperlink.cpp" />
+    <ClCompile Include="ControlImage.cpp" />
+    <ClCompile Include="ControlLabel.cpp" />
+    <ClCompile Include="ControlLicense.cpp" />
+    <ClCompile Include="ControlText.cpp" />
+    <ClCompile Include="DialogButton.cpp" />
+    <ClCompile Include="DniMessageBox.cpp" />
+    <ClCompile Include="DownloadDialog.cpp" />
+    <ClCompile Include="DownloadFile.cpp" />
+    <ClCompile Include="EmbedFile.cpp" />
+    <ClCompile Include="EmbedFolder.cpp" />
+    <ClCompile Include="ExeComponent.cpp" />
+    <ClCompile Include="ExtractComponent.cpp" />
+    <ClCompile Include="FileAttribute.cpp" />
+    <ClCompile Include="FileAttributes.cpp" />
+    <ClCompile Include="InstallConfiguration.cpp" />
+    <ClCompile Include="InstalledCheck.cpp" />
+    <ClCompile Include="InstalledCheckDirectory.cpp" />
+    <ClCompile Include="InstalledCheckFile.cpp" />
+    <ClCompile Include="InstalledCheckOperator.cpp" />
+    <ClCompile Include="InstalledCheckProduct.cpp" />
+    <ClCompile Include="InstalledCheckRegistry.cpp" />
+    <ClCompile Include="InstallerCommandLineInfo.cpp" />
+    <ClCompile Include="InstallerLauncher.cpp" />
+    <ClCompile Include="InstallerLog.cpp" />
+    <ClCompile Include="InstallerSession.cpp" />
+    <ClCompile Include="InstallerUI.cpp" />
+    <ClCompile Include="InstallSequence.cpp" />
+    <ClCompile Include="InstallUILevel.cpp" />
+    <ClCompile Include="MsiComponent.cpp" />
+    <ClCompile Include="MspComponent.cpp" />
+    <ClCompile Include="MsuComponent.cpp" />
+    <ClCompile Include="OpenFileComponent.cpp" />
+    <ClCompile Include="ProcessComponent.cpp" />
+    <ClCompile Include="ReferenceConfiguration.cpp" />
+    <ClCompile Include="ResponseFile.cpp" />
+    <ClCompile Include="ResponseFileIni.cpp" />
+    <ClCompile Include="ResponseFileNone.cpp" />
+    <ClCompile Include="ResponseFileText.cpp" />
+    <ClCompile Include="Schema.cpp" />
+    <ClCompile Include="SplashWnd.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="ThreadComponent.cpp" />
+    <ClCompile Include="WidgetPosition.cpp" />
+    <ClCompile Include="Wow64NativeFS.cpp" />
+    <ClCompile Include="XmlAttribute.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CmdComponent.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Components.h" />
+    <ClInclude Include="ComponentsStatus.h" />
+    <ClInclude Include="ConfigFile.h" />
+    <ClInclude Include="ConfigFiles.h" />
+    <ClInclude Include="Configuration.h" />
+    <ClInclude Include="Configurations.h" />
+    <ClInclude Include="Control.h" />
+    <ClInclude Include="ControlBrowse.h" />
+    <ClInclude Include="ControlCheckBox.h" />
+    <ClInclude Include="ControlEdit.h" />
+    <ClInclude Include="ControlHyperlink.h" />
+    <ClInclude Include="ControlImage.h" />
+    <ClInclude Include="ControlLabel.h" />
+    <ClInclude Include="ControlLicense.h" />
+    <ClInclude Include="Controls.h" />
+    <ClInclude Include="ControlText.h" />
+    <ClInclude Include="DialogButton.h" />
+    <ClInclude Include="DisableWnd.h" />
+    <ClInclude Include="DniMessageBox.h" />
+    <ClInclude Include="dotNetInstallerLib.h" />
+    <ClInclude Include="DownloadCallback.h" />
+    <ClInclude Include="DownloadDialog.h" />
+    <ClInclude Include="DownloadFile.h" />
+    <ClInclude Include="EmbedFile.h" />
+    <ClInclude Include="EmbedFolder.h" />
+    <ClInclude Include="ExeComponent.h" />
+    <ClInclude Include="ExecuteCallback.h" />
+    <ClInclude Include="ExtractComponent.h" />
+    <ClInclude Include="FileAttribute.h" />
+    <ClInclude Include="FileAttributes.h" />
+    <ClInclude Include="InstallConfiguration.h" />
+    <ClInclude Include="InstalledCheck.h" />
+    <ClInclude Include="InstalledCheckDirectory.h" />
+    <ClInclude Include="InstalledCheckFile.h" />
+    <ClInclude Include="InstalledCheckOperator.h" />
+    <ClInclude Include="InstalledCheckProduct.h" />
+    <ClInclude Include="InstalledCheckRegistry.h" />
+    <ClInclude Include="InstallerCommandLineInfo.h" />
+    <ClInclude Include="InstallerLauncher.h" />
+    <ClInclude Include="InstallerLog.h" />
+    <ClInclude Include="InstallerSession.h" />
+    <ClInclude Include="InstallerUI.h" />
+    <ClInclude Include="InstallSequence.h" />
+    <ClInclude Include="InstallUILevel.h" />
+    <ClInclude Include="MsiComponent.h" />
+    <ClInclude Include="MspComponent.h" />
+    <ClInclude Include="MsuComponent.h" />
+    <ClInclude Include="OpenFileComponent.h" />
+    <ClInclude Include="ProcessComponent.h" />
+    <ClInclude Include="ReferenceConfiguration.h" />
+    <ClInclude Include="ResponseFile.h" />
+    <ClInclude Include="ResponseFileIni.h" />
+    <ClInclude Include="ResponseFileNone.h" />
+    <ClInclude Include="ResponseFileText.h" />
+    <ClInclude Include="Schema.h" />
+    <ClInclude Include="SplashWnd.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ThreadComponent.h" />
+    <ClInclude Include="WidgetPosition.h" />
+    <ClInclude Include="Wow64NativeFS.h" />
+    <ClInclude Include="XmlAttribute.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

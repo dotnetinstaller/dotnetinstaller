@@ -12,7 +12,7 @@
         dotNetInstaller enables developers to define the application prerequisites and install the correct version(s) of
         these components in a predictable order based on the processor architecture, user operating system type or language.
         It allows the user to download components from the web, install these components directly from a single packaged setup,
-        local media or both. dotNetInstaller is very feature rich and runs on all known Windows operating systems since Windows 95
+        local media or both. dotNetInstaller is very feature rich and runs on all modern Windows operating systems since Windows XP
         with a very tiny footprint.
       </para>
       <para>

@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using InstallerLib;
-using System.IO;
-using dotNetUnitTestsRunner;
+// <copyright file="LoggingUnitTests.cs" company="DevAge, Vestris Inc. &amp; Contributors">
+//   Copyright (c) DevAge, Vestris Inc. &amp; Contributors.
+// </copyright>
 
 namespace dotNetInstallerUnitTests
 {
+    using System;
+    using System.IO;
+    using dotNetUnitTestsRunner;
+    using InstallerLib;
+    using NUnit.Framework;
+
     [TestFixture]
     public class LoggingUnitTests
     {
@@ -17,7 +19,10 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestNoLogging");
 
             if (File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile))
+            {
                 File.Delete(dotNetInstallerExeUtils.RunOptions.DefaultLogFile);
+            }
+
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
@@ -38,12 +43,18 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestLogConfigSpecified");
 
             if (File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile))
+            {
                 File.Delete(dotNetInstallerExeUtils.RunOptions.DefaultLogFile);
+            }
+
             ConfigFile configFile = new ConfigFile();
             configFile.log_enabled = true;
             configFile.log_file = Path.Combine(Path.GetTempPath(), "TestLogConfigSpecified.log");
             if (File.Exists(configFile.log_file))
+            {
                 File.Delete(configFile.log_file);
+            }
+
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -65,12 +76,18 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestLogCommandLineOverwritesConfigFile");
 
             if (File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile))
+            {
                 File.Delete(dotNetInstallerExeUtils.RunOptions.DefaultLogFile);
+            }
+
             ConfigFile configFile = new ConfigFile();
             configFile.log_enabled = true;
             configFile.log_file = Path.Combine(Path.GetTempPath(), "TestLogConfigSpecified.log");
             if (File.Exists(configFile.log_file))
+            {
                 File.Delete(configFile.log_file);
+            }
+
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
@@ -93,9 +110,15 @@ namespace dotNetInstallerUnitTests
 
             string resolved_logfile = Path.Combine(Path.GetTempPath(), "TestLogAcceptsPathVariables.log");
             if (File.Exists(dotNetInstallerExeUtils.RunOptions.DefaultLogFile))
+            {
                 File.Delete(dotNetInstallerExeUtils.RunOptions.DefaultLogFile);
+            }
+
             if (File.Exists(resolved_logfile))
+            {
                 File.Delete(resolved_logfile);
+            }
+
             ConfigFile configFile = new ConfigFile();
             configFile.log_enabled = true;
             configFile.log_file = @"#TEMPPATH\TestLogAcceptsPathVariables.log";

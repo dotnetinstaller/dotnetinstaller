@@ -2,8 +2,7 @@
 #include "MsiUtilUnitTests.h"
 
 using namespace DVLib::UnitTests;
-
-CPPUNIT_TEST_SUITE_REGISTRATION(MsiUtilUnitTests);
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 // MSBuild Community Tasks required to build this project
 #define WELLKNOWN_UPGRADECODE "{F289AA13-BBAF-4EA2-97C8-BAEC7E5B743E}"
@@ -11,17 +10,17 @@ CPPUNIT_TEST_SUITE_REGISTRATION(MsiUtilUnitTests);
 void MsiUtilUnitTests::testGetInstalledProducts()
 {
     std::vector<DVLib::MsiProductInfo> installedproducts = DVLib::MsiGetInstalledProducts();
-    CPPUNIT_ASSERT(installedproducts.size() > 0);
+    Assert::IsTrue(installedproducts.size() > 0);
     for each(const DVLib::MsiProductInfo& product in installedproducts)
     {
         // std::wcout << std::endl << DVLib::guid2wstring(product.product_id);
         // std::wcout << std::endl << L" Name: " << product.GetProductName();
         // std::wcout << std::endl << L" Version: " << product.GetVersionString();
         // std::wcout << std::endl << L" Package: " << product.GetProperty(L"LocalPackage");
-        CPPUNIT_ASSERT(wcslen(product.GetProductName().c_str()) == product.GetProductName().length());
+        Assert::IsTrue(wcslen(product.GetProductName().c_str()) == product.GetProductName().length());
         if (product.HasProperty(INSTALLPROPERTY_VERSIONSTRING))
         {
-            CPPUNIT_ASSERT(wcslen(product.GetVersionString().c_str()) == product.GetVersionString().length());
+            Assert::IsTrue(wcslen(product.GetVersionString().c_str()) == product.GetVersionString().length());
         }
     }
 }
@@ -55,7 +54,7 @@ void MsiUtilUnitTests::testGetRelatedProducts()
 {
     std::vector<DVLib::MsiProductInfo> relatedproducts = DVLib::MsiGetRelatedProducts(
         DVLib::string2guid(WELLKNOWN_UPGRADECODE));
-    CPPUNIT_ASSERT(relatedproducts.size() >= 1);
+    Assert::IsTrue(relatedproducts.size() >= 1);
     for each(const DVLib::MsiProductInfo& product in relatedproducts)
     {		
         std::wcout << std::endl << DVLib::guid2wstring(product.product_id);
@@ -71,9 +70,9 @@ void MsiUtilUnitTests::testIsProductInstalled()
         DVLib::string2guid(WELLKNOWN_UPGRADECODE));
     for each(const DVLib::MsiProductInfo& product in relatedproducts)
     {
-        CPPUNIT_ASSERT(DVLib::MsiIsProductInstalled(product.product_id));
+        Assert::IsTrue(DVLib::MsiIsProductInstalled(product.product_id));
     }
-    CPPUNIT_ASSERT(! DVLib::MsiIsProductInstalled(DVLib::string2guid(L"{00000000-0000-0000-0000-000000000000}")));
+    Assert::IsTrue(! DVLib::MsiIsProductInstalled(DVLib::string2guid(L"{00000000-0000-0000-0000-000000000000}")));
 }
 
 void MsiUtilUnitTests::testGetQuotedPathOrGuid()
@@ -94,7 +93,7 @@ void MsiUtilUnitTests::testGetQuotedPathOrGuid()
     for (int i = 0; i < ARRAYSIZE(testdata); i++)
     {
         std::wcout << std::endl << testdata[i].package;
-        CPPUNIT_ASSERT(testdata[i].expected_result == DVLib::GetQuotedPathOrGuid(testdata[i].package));
+        Assert::IsTrue(testdata[i].expected_result == DVLib::GetQuotedPathOrGuid(testdata[i].package));
     }
 }
 
@@ -102,7 +101,7 @@ void MsiUtilUnitTests::testGetUpgradeCodes()
 {
     GUID wellknown_upgradecode = DVLib::string2guid(WELLKNOWN_UPGRADECODE);
     std::vector<DVLib::MsiProductInfo> products = DVLib::MsiGetRelatedProducts(wellknown_upgradecode);
-    CPPUNIT_ASSERT(products.size() > 0);
+    Assert::IsTrue(products.size() > 0);
     bool found = false;
     for each(const DVLib::MsiProductInfo& product in products)
     {
@@ -117,38 +116,15 @@ void MsiUtilUnitTests::testGetUpgradeCodes()
             std::wcout << std::endl << L"  " << DVLib::guid2wstring(upgrade_code);
         }
     }
-    CPPUNIT_ASSERT(found);
+    Assert::IsTrue(found);
 }
 
 void MsiUtilUnitTests::testGetRelatedInstalledProducts()
 {
-    std::vector<DVLib::MsiProductInfo> installedproducts = DVLib::MsiGetInstalledProducts();
-    CPPUNIT_ASSERT(installedproducts.size() > 0);
-    for each(const DVLib::MsiProductInfo& product in installedproducts)
-    {
-        std::wcout << std::endl << L"-----------------------------------------------------------------------------";
-        std::wcout << std::endl << DVLib::guid2wstring(product.product_id) << L": " << product.GetProductName()
-            << L" (" << product.GetLocalPackage() << L")";
-        try
-        {
-            std::vector<GUID> upgrade_codes = product.GetUpgradeCodes();
-            for each(const GUID& upgrade_code in upgrade_codes)
-            {
-                std::wcout << std::endl << L" * Upgrade code: " << DVLib::guid2wstring(upgrade_code);
-                std::vector<DVLib::MsiProductInfo> related_products = DVLib::MsiGetRelatedProducts(upgrade_code);
-                for each(const DVLib::MsiProductInfo& related_product in related_products)
-                {					
-                    if (related_product.product_id == product.product_id)
-                        continue;
-
-                    std::wcout << std::endl << L"  - Related product: " << DVLib::guid2wstring(product.product_id) << 
-                        L": " << related_product.GetProductName();
-                }
-            }
-        }
-        catch(std::exception& ex)
-        {
-            std::cout << std::endl << " ERROR:" << ex.what();
-        }
-    }
+    GUID wellknown_upgradecode = DVLib::string2guid( WELLKNOWN_UPGRADECODE );
+    std::vector<DVLib::MsiProductInfo> related_products = DVLib::MsiGetRelatedProducts( wellknown_upgradecode );
+    Assert::AreEqual((size_t)1, related_products.size());
+    const DVLib::MsiProductInfo& related_product = related_products.at(0);
+    Assert::AreEqual("{4281E664-2261-4602-A4F8-0AE0B3BD4A93}", DVLib::guid2string(related_product.product_id).c_str());
+    Assert::AreEqual(L"MSBuild Community Tasks 1.4", related_product.GetProductName().c_str());
 }

@@ -4,6 +4,7 @@
 #include "EmbedFile.h"
 #include "EmbedFolder.h"
 #include "InstalledCheck.h"
+#include <tinyxml2.h>
 
 enum component_type
 {
@@ -92,7 +93,7 @@ public:
 	virtual bool IsExecuting() const = 0;
 	virtual bool IsInstalled() const;
 	// load a component from an xml node
-	virtual void Load(TiXmlElement * node);
+	virtual void Load(tinyxml2::XMLElement * node);
 	// returns true if this component is supported on this operating system/lcid
 	virtual bool IsSupported(LCID lcid) const;
 	virtual bool IsRequired() const;

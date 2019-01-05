@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using InstallerLib;
-using dotNetUnitTestsRunner;
-using System.IO;
+// <copyright file="UninstallUnitTests.cs" company="DevAge, Vestris Inc. &amp; Contributors">
+//   Copyright (c) DevAge, Vestris Inc. &amp; Contributors.
+// </copyright>
 
 namespace dotNetInstallerUnitTests
 {
+    using System;
+    using System.IO;
+    using dotNetUnitTestsRunner;
+    using InstallerLib;
+    using NUnit.Framework;
+
     [TestFixture]
     public class UninstallUnitTests
     {
@@ -22,10 +24,12 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(setupConfiguration);
             setupConfiguration.supports_install = false;
             setupConfiguration.supports_uninstall = false;
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreNotEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -42,12 +46,15 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(setupConfiguration);
             setupConfiguration.supports_install = true;
             setupConfiguration.supports_uninstall = false;
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
+
             // uninstall is not supported
             dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
             options.uninstall = true;
@@ -66,12 +73,15 @@ namespace dotNetInstallerUnitTests
             configFile.Children.Add(setupConfiguration);
             setupConfiguration.supports_install = false;
             setupConfiguration.supports_uninstall = true;
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreNotEqual(0, dotNetInstallerExeUtils.Run(configFilename));
+
             // uninstall is not supported
             dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
             options.uninstall = true;
@@ -97,6 +107,7 @@ namespace dotNetInstallerUnitTests
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute uninstall
             dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
             options.uninstall = false;
@@ -126,6 +137,7 @@ namespace dotNetInstallerUnitTests
             cmd.Children.Add(check);
             check.comparison = installcheckfile_comparison.exists;
             check.filename = dotNetInstallerExeUtils.Executable;
+
             // a second component that doesn't support uninstall
             ComponentCmd cmd2 = new ComponentCmd();
             setupConfiguration.Children.Add(cmd2);
@@ -138,6 +150,7 @@ namespace dotNetInstallerUnitTests
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // will fallback to uninstall since all components are installed
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -157,7 +170,7 @@ namespace dotNetInstallerUnitTests
                 configFile.Children.Add(setupConfiguration);
                 ComponentMsi msi = new ComponentMsi();
                 msi.package = "msidoesntexist.msi";
-                msi.uninstall_cmdparameters = "";
+                msi.uninstall_cmdparameters = string.Empty;
                 msi.uninstall_cmdparameters_basic = "/qb-";
                 msi.uninstall_cmdparameters_silent = "/qb-";
                 InstalledCheckFile self = new InstalledCheckFile();
@@ -165,12 +178,15 @@ namespace dotNetInstallerUnitTests
                 self.comparison = installcheckfile_comparison.exists;
                 msi.Children.Add(self);
                 setupConfiguration.Children.Add(msi);
+
                 // silent install, no dialog messages
                 configFile.ui_level = uilevel;
+
                 // save config file
                 string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
                 Console.WriteLine("Writing '{0}'", configFilename);
                 configFile.SaveAs(configFilename);
+
                 // execute dotNetInstaller
                 dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
                 options.uninstall = true;
@@ -193,7 +209,7 @@ namespace dotNetInstallerUnitTests
                 configFile.Children.Add(setupConfiguration);
                 ComponentMsp msp = new ComponentMsp();
                 msp.package = "mspdoesntexist.msp";
-                msp.uninstall_cmdparameters = "";
+                msp.uninstall_cmdparameters = string.Empty;
                 msp.uninstall_cmdparameters_basic = "/qb-";
                 msp.uninstall_cmdparameters_silent = "/qb-";
                 InstalledCheckFile self = new InstalledCheckFile();
@@ -201,12 +217,15 @@ namespace dotNetInstallerUnitTests
                 self.comparison = installcheckfile_comparison.exists;
                 msp.Children.Add(self);
                 setupConfiguration.Children.Add(msp);
+
                 // silent install, no dialog messages
                 configFile.ui_level = uilevel;
+
                 // save config file
                 string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
                 Console.WriteLine("Writing '{0}'", configFilename);
                 configFile.SaveAs(configFilename);
+
                 // execute dotNetInstaller
                 dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions(configFilename);
                 options.uninstall = true;
@@ -235,6 +254,7 @@ namespace dotNetInstallerUnitTests
             cmd.Children.Add(check);
             check.comparison = installcheckfile_comparison.exists;
             check.filename = dotNetInstallerExeUtils.Executable;
+
             // a second component that is optional
             ComponentCmd cmd2 = new ComponentCmd();
             setupConfiguration.Children.Add(cmd2);
@@ -248,6 +268,7 @@ namespace dotNetInstallerUnitTests
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // will fallback to uninstall since all required components are installed
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);

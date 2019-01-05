@@ -11,7 +11,7 @@ public:
 public:
 	ReferenceConfiguration();
 	~ReferenceConfiguration();
-	virtual void Load(TiXmlElement * node);
+	virtual void Load(tinyxml2::XMLElement * node);
 	void Exec();
 	std::wstring GetString(int indent = 0) const;
 };

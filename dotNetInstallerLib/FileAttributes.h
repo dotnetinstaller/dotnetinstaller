@@ -12,6 +12,6 @@ public:
 	FileAttributePtr& operator[](const std::wstring& name);
 	FileAttributes();
 	virtual ~FileAttributes();
-	virtual void Load(TiXmlElement * node);
+	virtual void Load(tinyxml2::XMLElement * node);
 };
 

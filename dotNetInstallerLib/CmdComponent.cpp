@@ -46,7 +46,7 @@ void CmdComponent::Exec()
     ProcessComponent::ExecCmd(l_command, execution_method, disable_wow64_fs_redirection, working_directory, hide_window ? SW_HIDE : SW_SHOWNORMAL);
 };
 
-void CmdComponent::Load(TiXmlElement * node)
+void CmdComponent::Load(tinyxml2::XMLElement * node)
 {
     command = node->Attribute("command");
     command_silent = node->Attribute("command_silent");

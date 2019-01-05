@@ -10,7 +10,7 @@ ControlEdit::ControlEdit()
 
 }
 
-void ControlEdit::Load(TiXmlElement * node)
+void ControlEdit::Load(tinyxml2::XMLElement * node)
 {
     id = node->Attribute("id");
     ControlText::Load(node);

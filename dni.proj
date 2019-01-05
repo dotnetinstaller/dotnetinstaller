@@ -1,253 +1,255 @@
-<Project DefaultTargets="all" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
-    <PropertyGroup>
-        <MSBuildCommunityTasksPath>..\..\ThirdParty\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
-    </PropertyGroup>
-    <Import Project="ThirdParty\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
-    <Import Project="Version.proj"/>
-    <PropertyGroup Condition="'$(Configuration)'==''">
-        <Configuration>Debug</Configuration>
-    </PropertyGroup>
-    <PropertyGroup>
-        <ProductName>dotNetInstaller</ProductName>
-        <CompanyName>DevAge, Vestris Inc. &amp; Contributors</CompanyName>
-        <Copyright>Copyright (c) $(CompanyName)</Copyright>
-        <Trademark>All Rights Reserved</Trademark>
-        <ReleaseDir>target\$(Configuration)</ReleaseDir>
-        <MajorVersion>2</MajorVersion>
-        <MinorVersion>4</MinorVersion>
-        <RevisionVersion>0</RevisionVersion>
-    </PropertyGroup>
-    <PropertyGroup>
-        <MSBuild_4_0_ExeFilePath>%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe</MSBuild_4_0_ExeFilePath>
-        <NUnitToolPath>ThirdParty\NUnit\bin\net-2.0</NUnitToolPath>
-    </PropertyGroup>
-    <ItemGroup>
-        <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.txt" />
-        <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.xml" />
-        <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.bmp" />
-        <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.ico" />
-    </ItemGroup>
-    <ItemGroup>
-        <PackagedSetupSample Include="Samples/PackagedSetup/**/*.txt" />
-        <PackagedSetupSample Include="Samples/PackagedSetup/**/*.xml" />
-        <PackagedSetupSample Include="Samples/PackagedSetup/**/*.bmp" />
-        <PackagedSetupSample Include="Samples/PackagedSetup/**/*.ico" />
-        <PackagedSetupSample Include="Samples/PackagedSetup/**/*.msi" />
-        <PackagedSetupSample Include="Samples/PackagedSetup/**/*.manifest" />
-    </ItemGroup>
-    <ItemGroup>
-        <CustomInputSetupSample Include="Samples/CustomInputSetup/**/*.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.txt" />
-        <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.xml" />
-        <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.bmp" />
-        <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.ico" />
-    </ItemGroup>
-    <ItemGroup>
-        <LicenseAgreementSample Include="Samples/LicenseAgreement/**/*.xml" />
-        <LicenseAgreementSample Include="Samples/LicenseAgreement/**/*.txt" />
-    </ItemGroup>
-    <ItemGroup>
-        <MultilingualSetupSample Include="Samples/MultilingualSetup/**/*.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <DownloadSetupSample Include="Samples/DownloadSetup/**/*.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <ReferenceSetupSample Include="Samples/ReferenceSetup/**/*.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <InstallCheckProductSample Include="Samples/InstallCheckProduct/**/*.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <PatchSetupSample Include="Samples/PatchSetup/**/*.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <Documentation Include="Documentation/$(Configuration)/dotNetInstaller.chm" />
-    </ItemGroup>
-    <ItemGroup>
-        <SupportFiles Include="Samples/SupportFiles/**/*.txt" />
-    </ItemGroup>
-    <ItemGroup>
-        <ExeSetupSample Include="Samples/ExeSetup/**/*.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <ReferenceSetupSample Include="Samples/ReferenceSetup/**/*.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <OsFiltersSetupSample Include="Samples/OsFilters/**/*.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <PAFilterSetupSample Include="Samples/PAFilter/**/*.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <OptionalComponentsSetupSample Include="Samples/OptionalComponents/**/*.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" />
-        <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.pdb" />
-        <Binaries Include="htmlInstaller\$(Configuration)\htmlInstaller.exe" />
-        <Binaries Include="htmlInstaller\$(Configuration)\htmlInstaller.pdb" />
-        <Binaries Include="InstallerEditor\bin\$(Configuration)\InstallerEditor.exe" />
-        <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceLibrary.dll" />
-        <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceGrid2.dll" />
-        <Binaries Include="ThirdParty\CabLib\$(Configuration)\CabLib.dll" />
-        <Binaries Include="ThirdParty\ResourceLib\Vestris.ResourceLib.dll" />
-        <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
-        <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
-        <Binaries Include="ThirdParty\Mslu\unicows.dll" />
-    </ItemGroup>
-    <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\Microsoft.VC80.DebugCRT.manifest" />
-        <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcm80d.dll" />
-        <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcp80d.dll" />
-        <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcr80d.dll" />
-    </ItemGroup>
-    <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
-        <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\Microsoft.VC80.CRT.manifest" />
-        <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcm80.dll" />
-        <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcp80.dll" />
-        <Binaries Include="ThirdParty\VisualStudioCRT\$(Configuration)\msvcr80.dll" />
-    </ItemGroup>
-    <ItemGroup>
-        <NUnitFiles Include="$(NUnitToolPath)/**/*" />
-        <VisualStudioCRTFiles Include="ThirdParty\VisualStudioCRT\$(Configuration)\*" />
-    </ItemGroup>
-    <Target Name="all">
-        <Message Importance="high" Text="Building project ..." />
-        <CallTarget Targets="clean" />
-        <CallTarget Targets="version" />
-        <CallTarget Targets="build" />
-        <CallTarget Targets="doc" />
-        <CallTarget Targets="rewritesamples" />
-        <CallTarget Targets="rewritewizardxmls" />
-        <CallTarget Targets="release" />
-        <CallTarget Targets="zip" />
-        <CallTarget Targets="installer" />
-        <CallTarget Targets="unittests" />
-        <CallTarget Targets="built" />
-    </Target>
-    <Target Name="built" DependsOnTargets="version">
-        <Message Text="Built version: $(Major).$(Minor).$(Build).$(Revision)"/>
-    </Target>
-    <Target Name="clean">
-        <MSBuild Projects="Dni.sln" Targets="Clean" />
-        <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Clean" />
-        <DeleteTree Directories="Documentation\Content\Generated" />
-        <DeleteTree Directories="$(ReleaseDir)" />
-        <DeleteTree Directories=".\**\obj" Recursive="true" ContinueOnError="true" />
-        <DeleteTree Directories=".\*Installer*\$(Configuration)" Recursive="true" ContinueOnError="true" />
-        <Delete Files="Version\Version.h;Version\Version.wxi;Version\GlobalAssemblyInfo.cs" />
-    </Target>
-    <Target Name="build" DependsOnTargets="version">
-        <MSBuild Projects="Dni.sln" Targets="Build" />
-    </Target>
-    <Target Name="release" DependsOnTargets="version">
-        <Message Importance="high" Text="Collecting release files ..." />
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)" />
-        <!-- Binaries -->
-        <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Bin" />
-        <!-- Documentation -->
-        <Copy SourceFiles="@(Documentation)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Doc" />
-        <!-- Samples -->
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples" />
-        <!-- Sample: StandaloneSetup -->
-        <Copy SourceFiles="@(StandaloneSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\%(RecursiveDir)" />
-        <Copy SourceFiles="@(SupportFiles)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\SupportFiles\%(RecursiveDir)" />
-        <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup" />
-        <!-- Sample: PackagedSetup -->
-        <CallTarget Targets="packagedsetupsample" />
-        <!-- Sample: InstallCheckOperators -->
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
-        <Copy SourceFiles="@(InstallCheckOperatorsSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators\%(RecursiveDir)" />
-        <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
-        <!-- Sample: DownloadSetup -->
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\DownloadSetup" />
-        <Copy SourceFiles="@(DownloadSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\DownloadSetup\%(RecursiveDir)" />
-        <!-- Sample: MultilingualSetup -->
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\MultilingualSetup" />
-        <Copy SourceFiles="@(MultilingualSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\MultilingualSetup\%(RecursiveDir)" />
-        <!-- Sample: LicenseAgreement -->
-        <CallTarget Targets="licenseagreementsetupsample" />
-        <!-- Sample: CustomInputSetup -->
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\CustomInputSetup" />
-        <Copy SourceFiles="@(CustomInputSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\CustomInputSetup\%(RecursiveDir)" />
-        <!-- Sample: InstallCheckProduct -->
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckProduct" />
-        <Copy SourceFiles="@(InstallCheckProductSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckProduct\%(RecursiveDir)" />
-        <!-- Sample: OsFiltersSetup -->
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup" />
-        <Copy SourceFiles="@(OsFiltersSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup\%(RecursiveDir)" />
-        <!-- Sample: OptionalComponentsSetup -->
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PAFilterSetup" />
-        <Copy SourceFiles="@(PAFilterSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PAFilterSetup\%(RecursiveDir)" />
-        <!-- Sample: OptionalComponentsSetup -->
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OptionalComponentsSetup" />
-        <Copy SourceFiles="@(OptionalComponentsSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OptionalComponentsSetup\%(RecursiveDir)" />
-        <!-- Sample: PatchSetup -->
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PatchSetup" />
-        <Copy SourceFiles="@(PatchSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PatchSetup\%(RecursiveDir)" />
-        <!-- Sample: ExeSetup -->
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ExeSetup" />
-        <Copy SourceFiles="@(ExeSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ExeSetup\%(RecursiveDir)" />
-        <!-- Sample: ReferenceSetup -->
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ReferenceSetup" />
-        <Copy SourceFiles="@(ReferenceSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ReferenceSetup\%(RecursiveDir)" />
-    </Target>
-    <Target Name="doclib" DependsOnTargets="version">
-        <Exec Command="InstallerDocLib\bin\$(Configuration)\InstallerDocLib.exe /Output:&quot;Documentation\Content\Generated&quot;"/>
-    </Target>
-    <Target Name="doc" DependsOnTargets="version">
-        <CallTarget Targets="doclib" />
-        <Delete Files="Documentation\$(Configuration)\dotNetInstaller.chm" />
-        <Exec Command="$(MSBuild_4_0_ExeFilePath) Documentation\Dni.shfbproj /p:Configuration=$(Configuration)" />
-        <Error Condition="Exists('Documentation\$(Configuration)\LastBuild.log')" Text="Documentation build failed, check Documentation\$(Configuration)\LastBuild.log" />
-    </Target>
-    <ItemGroup>
-        <CppUnitTests Include="UnitTests\dotNetInstallerLibUnitTests\$(Configuration)\dotNetInstallerLibUnitTests.exe" />
-        <CppUnitTests Include="UnitTests\dotNetInstallerToolsLibUnitTests\$(Configuration)\dotNetInstallerToolsLibUnitTests.exe" />
-    </ItemGroup>
-    <ItemGroup>
-        <UIDrivers Include="htmlInstaller\$(Configuration)\htmlInstaller.exe" />
-        <UIDrivers Include="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" />
-    </ItemGroup>
-    <Target Name="uitests" Inputs="@(UIDrivers)" Outputs="%(UIDrivers.Identity).out">
-        <Message Text="Testing %(UIDrivers.Identity)" />
-        <MakeDir Directories="$(ReleaseDir)" />
-        <CreateItem Include="TestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\%(UIDrivers.Identity)">
-            <Output TaskParameter="Include" ItemName="UITestExecutables"/>
-        </CreateItem>
-        <TemplateFile Template="UnitTests\dotNetInstallerUnitTests\App.config"
-         OutputFilename="bin\$(Configuration)\dotNetInstallerUnitTests.dll.config"
-         Tokens="@(UITestExecutables)" />
-        <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\dotNetInstallerUnitTests.dll"
-        Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName).xml" />
-    </Target>
-    <Target Name="editortests">
-        <CreateItem Include="EditorTestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\dotNetInstaller\$(Configuration)\dotNetInstaller.exe">
-            <Output TaskParameter="Include" ItemName="EditorTestExecutables"/>
-        </CreateItem>
-        <TemplateFile Template="UnitTests\InstallerEditorUnitTests\App.config"
-         OutputFilename="bin\$(Configuration)\InstallerEditorUnitTests.dll.config"
-         Tokens="@(EditorTestExecutables)" />
-        <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\InstallerEditorUnitTests.dll"
-        Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
-    </Target>
-    <PropertyGroup>
-        <GenerateGuid>
-        <![CDATA[
+<Project DefaultTargets="all" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <MSBuildCommunityTasksPath>..\..\ThirdParty\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+  <Import Project="ThirdParty\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+  <Import Project="Version.proj"/>
+  <PropertyGroup Condition="'$(Configuration)'==''">
+    <Configuration>Debug</Configuration>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ProductName>dotNetInstaller</ProductName>
+    <CompanyName>DevAge, Vestris Inc. &amp; Contributors</CompanyName>
+    <Copyright>Copyright (c) $(CompanyName)</Copyright>
+    <Trademark>All Rights Reserved</Trademark>
+    <ReleaseDir>target\$(Configuration)</ReleaseDir>
+    <MajorVersion>3</MajorVersion>
+    <MinorVersion>0</MinorVersion>
+    <RevisionVersion>0</RevisionVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MSBuild_4_0_ExeFilePath>%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe</MSBuild_4_0_ExeFilePath>
+    <NUnitToolPath>ThirdParty\NUnit\bin\net-2.0</NUnitToolPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.txt" />
+    <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.xml" />
+    <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.bmp" />
+    <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.txt" />
+    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.xml" />
+    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.bmp" />
+    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.ico" />
+    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.msi" />
+    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomInputSetupSample Include="Samples/CustomInputSetup/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.txt" />
+    <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.xml" />
+    <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.bmp" />
+    <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <LicenseAgreementSample Include="Samples/LicenseAgreement/**/*.xml" />
+    <LicenseAgreementSample Include="Samples/LicenseAgreement/**/*.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <MultilingualSetupSample Include="Samples/MultilingualSetup/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <DownloadSetupSample Include="Samples/DownloadSetup/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ReferenceSetupSample Include="Samples/ReferenceSetup/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <InstallCheckProductSample Include="Samples/InstallCheckProduct/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PatchSetupSample Include="Samples/PatchSetup/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Documentation Include="Documentation/$(Configuration)/dotNetInstaller.chm" />
+  </ItemGroup>
+  <ItemGroup>
+    <SupportFiles Include="Samples/SupportFiles/**/*.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ExeSetupSample Include="Samples/ExeSetup/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ReferenceSetupSample Include="Samples/ReferenceSetup/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <OsFiltersSetupSample Include="Samples/OsFilters/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PAFilterSetupSample Include="Samples/PAFilter/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <OptionalComponentsSetupSample Include="Samples/OptionalComponents/**/*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" />
+    <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.pdb" />
+    <Binaries Include="htmlInstaller\$(Configuration)\htmlInstaller.exe" />
+    <Binaries Include="htmlInstaller\$(Configuration)\htmlInstaller.pdb" />
+    <Binaries Include="InstallerEditor\bin\$(Configuration)\InstallerEditor.exe" />
+    <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceLibrary.dll" />
+    <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceGrid2.dll" />
+    <Binaries Include="ThirdParty\CabLib\$(Configuration)\CabLib.dll" />
+    <Binaries Include="packages\Vestris.ResourceLib.1.6.422\lib\Vestris.ResourceLib.dll" />
+    <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
+    <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <NUnitFiles Include="$(NUnitToolPath)/**/*" />
+  </ItemGroup>
+  <Target Name="all">
+    <Message Importance="high" Text="Building project ..." />
+    <CallTarget Targets="clean" />
+    <CallTarget Targets="version" />
+    <CallTarget Targets="build" />
+    <CallTarget Targets="doc" />
+    <CallTarget Targets="rewritesamples" />
+    <CallTarget Targets="rewritewizardxmls" />
+    <CallTarget Targets="release" />
+    <CallTarget Targets="zip" />
+    <CallTarget Targets="installer" />
+    <CallTarget Targets="unittests" />
+    <CallTarget Targets="built" />
+  </Target>
+  <Target Name="built" DependsOnTargets="version">
+    <Message Text="Built version: $(Major).$(Minor).$(Build).$(Revision)"/>
+  </Target>
+  <Target Name="clean">
+    <MSBuild Projects="Dni.sln" Targets="Clean" />
+    <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Clean" />
+    <DeleteTree Directories="Documentation\Content\Generated" />
+    <DeleteTree Directories="$(ReleaseDir)" />
+    <DeleteTree Directories=".\**\obj" Recursive="true" ContinueOnError="true" />
+    <DeleteTree Directories=".\*Installer*\$(Configuration)" Recursive="true" ContinueOnError="true" />
+    <Delete Files="Version\Version.h;Version\Version.wxi;Version\GlobalAssemblyInfo.cs" />
+  </Target>
+  <Target Name="restore">
+    <Exec Command="ThirdParty\NuGet\NuGet.exe restore Dni.sln" />
+  </Target>
+  <Target Name="build" DependsOnTargets="version;restore">
+    <MSBuild Projects="Dni.sln" Targets="Build" />
+  </Target>
+  <Target Name="release" DependsOnTargets="version">
+    <Message Importance="high" Text="Collecting release files ..." />
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)" />
+    <!-- Binaries -->
+    <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Bin" />
+    <!-- Documentation -->
+    <Copy SourceFiles="@(Documentation)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Doc" />
+    <!-- Samples -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples" />
+    <!-- Sample: StandaloneSetup -->
+    <Copy SourceFiles="@(StandaloneSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\%(RecursiveDir)" />
+    <Copy SourceFiles="@(SupportFiles)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\SupportFiles\%(RecursiveDir)" />
+    <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup" />
+    <!-- Sample: PackagedSetup -->
+    <CallTarget Targets="packagedsetupsample" />
+    <!-- Sample: InstallCheckOperators -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
+    <Copy SourceFiles="@(InstallCheckOperatorsSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators\%(RecursiveDir)" />
+    <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
+    <!-- Sample: DownloadSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\DownloadSetup" />
+    <Copy SourceFiles="@(DownloadSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\DownloadSetup\%(RecursiveDir)" />
+    <!-- Sample: MultilingualSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\MultilingualSetup" />
+    <Copy SourceFiles="@(MultilingualSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\MultilingualSetup\%(RecursiveDir)" />
+    <!-- Sample: LicenseAgreement -->
+    <CallTarget Targets="licenseagreementsetupsample" />
+    <!-- Sample: CustomInputSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\CustomInputSetup" />
+    <Copy SourceFiles="@(CustomInputSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\CustomInputSetup\%(RecursiveDir)" />
+    <!-- Sample: InstallCheckProduct -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckProduct" />
+    <Copy SourceFiles="@(InstallCheckProductSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckProduct\%(RecursiveDir)" />
+    <!-- Sample: OsFiltersSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup" />
+    <Copy SourceFiles="@(OsFiltersSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup\%(RecursiveDir)" />
+    <!-- Sample: OptionalComponentsSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PAFilterSetup" />
+    <Copy SourceFiles="@(PAFilterSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PAFilterSetup\%(RecursiveDir)" />
+    <!-- Sample: OptionalComponentsSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OptionalComponentsSetup" />
+    <Copy SourceFiles="@(OptionalComponentsSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OptionalComponentsSetup\%(RecursiveDir)" />
+    <!-- Sample: PatchSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PatchSetup" />
+    <Copy SourceFiles="@(PatchSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PatchSetup\%(RecursiveDir)" />
+    <!-- Sample: ExeSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ExeSetup" />
+    <Copy SourceFiles="@(ExeSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ExeSetup\%(RecursiveDir)" />
+    <!-- Sample: ReferenceSetup -->
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ReferenceSetup" />
+    <Copy SourceFiles="@(ReferenceSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ReferenceSetup\%(RecursiveDir)" />
+  </Target>
+  <Target Name="doclib" DependsOnTargets="version">
+    <Exec Command="InstallerDocLib\bin\$(Configuration)\InstallerDocLib.exe /Output:&quot;Documentation\Content\Generated&quot;"/>
+  </Target>
+  <Target Name="doc" DependsOnTargets="version">
+    <CallTarget Targets="doclib" />
+    <Delete Files="Documentation\$(Configuration)\dotNetInstaller.chm" />
+    <Exec
+      Command="(set SHFBROOT=) &amp; $(MSBuild_4_0_ExeFilePath) Documentation\Dni.shfbproj /p:Configuration=$(Configuration)"
+      ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ExitCode"/>
+    </Exec>
+    <ReadLinesFromFile
+      File="Documentation\$(Configuration)\LastBuild.log"
+      Condition="$(ExitCode)!=0 And Exists('Documentation\$(Configuration)\LastBuild.log')">
+      <Output
+        TaskParameter="Lines"
+        ItemName="LastBuildLogFileContents" />
+    </ReadLinesFromFile>
+    <Message Condition="$(ExitCode)!=0 And '@(LastBuildLogFileContents)' != ''" Importance="high" Text="'Documentation\$(Configuration)\LastBuild.log' file contents:" />
+    <Message Condition="$(ExitCode)!=0 And '@(LastBuildLogFileContents)' != ''" Importance="high" Text="%(LastBuildLogFileContents.Identity)" />
+    <Error Condition="$(ExitCode)!=0" Text="Documentation build failed" />
+  </Target>
+  <ItemGroup>
+    <CppUnitTests Include="UnitTests\dotNetInstallerLibUnitTests\$(Configuration)\dotNetInstallerLibUnitTests.dll" />
+    <CppUnitTests Include="UnitTests\dotNetInstallerToolsLibUnitTests\$(Configuration)\dotNetInstallerToolsLibUnitTests.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <UIDrivers Include="htmlInstaller\$(Configuration)\htmlInstaller.exe" />
+    <UIDrivers Include="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" />
+  </ItemGroup>
+  <Target Name="uitests" Inputs="@(UIDrivers)" Outputs="%(UIDrivers.Identity).out">
+    <Message Text="Testing %(UIDrivers.Identity)" />
+    <MakeDir Directories="$(ReleaseDir)" />
+    <CreateItem Include="TestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\%(UIDrivers.Identity)">
+      <Output TaskParameter="Include" ItemName="UITestExecutables"/>
+    </CreateItem>
+    <TemplateFile Template="UnitTests\dotNetInstallerUnitTests\App.config"
+     OutputFilename="bin\$(Configuration)\dotNetInstallerUnitTests.dll.config"
+     Tokens="@(UITestExecutables)" />
+    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\dotNetInstallerUnitTests.dll"
+    Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName).xml" />
+  </Target>
+  <Target Name="editortests">
+    <CreateItem Include="EditorTestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\dotNetInstaller\$(Configuration)\dotNetInstaller.exe">
+      <Output TaskParameter="Include" ItemName="EditorTestExecutables"/>
+    </CreateItem>
+    <TemplateFile Template="UnitTests\InstallerEditorUnitTests\App.config"
+     OutputFilename="bin\$(Configuration)\InstallerEditorUnitTests.dll.config"
+     Tokens="@(EditorTestExecutables)" />
+    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\InstallerEditorUnitTests.dll"
+    Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
+  </Target>
+  <PropertyGroup>
+    <GenerateGuid>
+      <![CDATA[
 public static string ScriptMain() {
 return System.Guid.NewGuid().ToString().ToUpper();
 }
 ]]>
-        </GenerateGuid>
-    </PropertyGroup>
-    <Target Name="libtests" Inputs="@(UIDrivers)" Outputs="%(UIDrivers.Identity).out">
-        <Message Text="Testing %(UIDrivers.Identity)" />
-        <MakeDir Directories="$(ReleaseDir)" />
-        <CreateItem Include="TestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\%(UIDrivers.Identity)">
-            <Output TaskParameter="Include" ItemName="LibTestExecutables"/>
+    </GenerateGuid>
+  </PropertyGroup>
+  <Target Name="libtests" Inputs="@(UIDrivers)" Outputs="%(UIDrivers.Identity).out">
+    <Message Text="Testing %(UIDrivers.Identity)" />
+    <MakeDir Directories="$(ReleaseDir)" />
+    <CreateItem Include="TestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\%(UIDrivers.Identity)">
+      <Output TaskParameter="Include" ItemName="LibTestExecutables"/>
     </CreateItem>
     <TemplateFile Template="UnitTests\InstallerLibUnitTests\App.config"
      OutputFilename="bin\$(Configuration)\InstallerLibUnitTests.dll.config"
@@ -259,67 +261,66 @@ return System.Guid.NewGuid().ToString().ToUpper();
     <Message Text="Guid: $(NewGuid)" />
     <MakeDir Directories="$(TEMP)\$(NewGuid)" />
     <Copy SourceFiles="@(NUnitFiles)" DestinationFolder="$(TEMP)\$(NewGuid)/%(NUnitFiles.RecursiveDir)" />
-    <Copy SourceFiles="@(VisualStudioCRTFiles)" DestinationFolder="$(TEMP)\$(NewGuid)" />
     <!-- the manifest file must be a relative path -->
     <Exec Command="&quot;$(ProjectDir)ThirdParty\Microsoft\Visual Studio 8\VC\bin\mt.exe&quot; -manifest UnitTests\InstallerLibUnitTests\nunit-console-x86.exe.$(Configuration).manifest -outputresource:&quot;$(TEMP)\$(NewGuid)\nunit-console-x86.exe&quot;;#1" />
     <NUnit ToolPath="$(TEMP)\$(NewGuid)" Assemblies="UnitTests\InstallerLibUnitTests\bin\$(Configuration)\InstallerLibUnitTests.dll"
     Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName).xml" />
     <DeleteTree Directories="$(TEMP)\$(NewGuid)" />
   </Target>
-    <Target Name="unittests" DependsOnTargets="version">
-        <Message Text="Running %(CppUnitTests.Identity) ..." />
-        <Exec Command="%(CppUnitTests.Identity)" />
-        <MakeDir Directories="$(ReleaseDir)" />
+  <Target Name="unittests" DependsOnTargets="version">
+    <Message Text="Running %(CppUnitTests.Identity) ..." />
+    <Exec Command="&quot;C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe&quot; &quot;%(CppUnitTests.Identity)&quot; /Platform:x86" />
+    <MakeDir Directories="$(ReleaseDir)" />
     <CallTarget Targets="libtests" />
-        <CallTarget Targets="uitests" />
-        <CallTarget Targets="editortests" />
-    </Target>
-    <Target Name="zip" DependsOnTargets="version">
-        <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip;$(ReleaseDir)\UnitTests.xml;$(ReleaseDir)\*.msi">
-            <Output TaskParameter="Include" ItemName="PackageFiles" />
-        </CreateItem>
-        <Zip WorkingDirectory="target\$(Configuration)" ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).zip" Files="@(PackageFiles)" />
-    </Target>
-    <Target Name="installer" DependsOnTargets="version">
-        <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Build" />
-        <Copy SourceFiles="InstallerMsi\bin\$(Configuration)\en-us\dotNetInstaller.msi" DestinationFiles="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).msi" />
-    </Target>
-    <!-- rewrite configuration samples to the current configuration format -->
-    <ItemGroup>
-        <SampleXmls Include="Samples/**/*.xml" />
-    </ItemGroup>
-    <Target Name="rewritesamples" Inputs="@(SampleXmls)" Outputs="%(SampleXmls.Identity).output">
-        <Message Text="%(SampleXmls.Identity)" />
-        <Attrib Files="%(SampleXmls.Identity)" ReadOnly="False" />
-        <Exec Command="InstallerConfig\bin\$(Configuration)\InstallerConfig.exe /ConfigFile:%(SampleXmls.Identity)" />
-    </Target>
-    <!-- rewrite the InstallerEditor/wizardcomponents.xml to current configuration format -->
-    <ItemGroup>
-        <WizardXmls Include="InstallerEditor/*.xml" />
-    </ItemGroup>
-    <Target Name="rewritewizardxmls" Inputs="@(WizardXmls)" Outputs="%(WizardXmls.Identity).output">
-        <Message Text="%(WizardXmls.Identity)" />
-        <XslTransform ToolPath="$(ProjectDir)ThirdParty\Sandcastle 2.6.1062.1\ProductionTools" XmlFile="%(WizardXmls.Identity)" XsltFiles="InstallerEditor\xsl\wizard2config.xsl" OutputFile="%(WizardXmls.Identity).config" />
-        <Exec Command="InstallerConfig\bin\$(Configuration)\InstallerConfig.exe /ConfigFile:%(WizardXmls.Identity).config" />
-        <XslTransform ToolPath="$(ProjectDir)ThirdParty\Sandcastle 2.6.1062.1\ProductionTools" XmlFile="%(WizardXmls.Identity).config" XsltFiles="InstallerEditor\xsl\config2wizard.xsl" OutputFile="%(WizardXmls.Identity)" />
-        <Delete Files="%(WizardXmls.Identity).config" />
-    </Target>
-    <Target Name="packagedsetupsample" DependsOnTargets="version">
-        <MakeDir Directories="Samples\PackagedSetup\bin\$(Configuration)" />
-        <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Splash:Samples\PackagedSetup\splash.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Manifest:Samples\PackagedSetup\PackagedSetup.manifest"/>
-        <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\HtmlSetup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Splash:Samples\PackagedSetup\splash.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:htmlInstaller\$(Configuration)\htmlInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Manifest:Samples\PackagedSetup\PackagedSetup.manifest /EmbedHtml:htmlInstaller\html\index.html /EmbedHtml:htmlInstaller\html\style.css"/>
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
-        <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
-        <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\HtmlSetup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
-        <Copy SourceFiles="@(PackagedSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Source\%(RecursiveDir)" />
-    </Target>
-    <Target Name="licenseagreementsetupsample" DependsOnTargets="version">
-        <MakeDir Directories="Samples\LicenseAgreement\bin\$(Configuration)" />
-        <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\LicenseAgreement\bin\$(Configuration)\Setup.exe&quot; /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\LicenseAgreement\Configuration.xml /AppPath:Samples\LicenseAgreement"/>
-        <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\LicenseAgreement\bin\$(Configuration)\HtmlSetup.exe&quot; /Template:htmlInstaller\$(Configuration)\htmlInstaller.exe /Configuration:Samples\LicenseAgreement\Configuration.xml /AppPath:Samples\LicenseAgreement"/>
-        <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
-        <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
-        <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\HtmlSetup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
-        <Copy SourceFiles="@(LicenseAgreementSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement\%(RecursiveDir)" />
-    </Target>
+    <CallTarget Targets="uitests" />
+    <CallTarget Targets="editortests" />
+  </Target>
+  <Target Name="zip" DependsOnTargets="version">
+    <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip;$(ReleaseDir)\UnitTests.xml;$(ReleaseDir)\*.msi">
+      <Output TaskParameter="Include" ItemName="PackageFiles" />
+    </CreateItem>
+    <Zip WorkingDirectory="target\$(Configuration)" ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).zip" Files="@(PackageFiles)" />
+  </Target>
+  <Target Name="installer" DependsOnTargets="version">
+    <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Build" />
+    <Copy SourceFiles="InstallerMsi\bin\$(Configuration)\en-us\dotNetInstaller.msi" DestinationFiles="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).msi" />
+  </Target>
+  <!-- rewrite configuration samples to the current configuration format -->
+  <ItemGroup>
+    <SampleXmls Include="Samples/**/*.xml" />
+  </ItemGroup>
+  <Target Name="rewritesamples" Inputs="@(SampleXmls)" Outputs="%(SampleXmls.Identity).output">
+    <Message Text="%(SampleXmls.Identity)" />
+    <Attrib Files="%(SampleXmls.Identity)" ReadOnly="False" />
+    <Exec Command="InstallerConfig\bin\$(Configuration)\InstallerConfig.exe /ConfigFile:%(SampleXmls.Identity)" />
+  </Target>
+  <!-- rewrite the InstallerEditor/wizardcomponents.xml to current configuration format -->
+  <ItemGroup>
+    <WizardXmls Include="InstallerEditor/*.xml" />
+  </ItemGroup>
+  <Target Name="rewritewizardxmls" Inputs="@(WizardXmls)" Outputs="%(WizardXmls.Identity).output">
+    <Message Text="%(WizardXmls.Identity)" />
+    <XslTransform ToolPath="$(ProjectDir)ThirdParty\Sandcastle 2.6.1062.1\ProductionTools" XmlFile="%(WizardXmls.Identity)" XsltFiles="InstallerEditor\xsl\wizard2config.xsl" OutputFile="%(WizardXmls.Identity).config" />
+    <Exec Command="InstallerConfig\bin\$(Configuration)\InstallerConfig.exe /ConfigFile:%(WizardXmls.Identity).config" />
+    <XslTransform ToolPath="$(ProjectDir)ThirdParty\Sandcastle 2.6.1062.1\ProductionTools" XmlFile="%(WizardXmls.Identity).config" XsltFiles="InstallerEditor\xsl\config2wizard.xsl" OutputFile="%(WizardXmls.Identity)" />
+    <Delete Files="%(WizardXmls.Identity).config" />
+  </Target>
+  <Target Name="packagedsetupsample" DependsOnTargets="version">
+    <MakeDir Directories="Samples\PackagedSetup\bin\$(Configuration)" />
+    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Splash:Samples\PackagedSetup\splash.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Manifest:Samples\PackagedSetup\PackagedSetup.manifest"/>
+    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\HtmlSetup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Splash:Samples\PackagedSetup\splash.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:htmlInstaller\$(Configuration)\htmlInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Manifest:Samples\PackagedSetup\PackagedSetup.manifest /EmbedHtml:htmlInstaller\html\index.html /EmbedHtml:htmlInstaller\html\style.css"/>
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
+    <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
+    <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\HtmlSetup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
+    <Copy SourceFiles="@(PackagedSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Source\%(RecursiveDir)" />
+  </Target>
+  <Target Name="licenseagreementsetupsample" DependsOnTargets="version">
+    <MakeDir Directories="Samples\LicenseAgreement\bin\$(Configuration)" />
+    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\LicenseAgreement\bin\$(Configuration)\Setup.exe&quot; /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\LicenseAgreement\Configuration.xml /AppPath:Samples\LicenseAgreement"/>
+    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\LicenseAgreement\bin\$(Configuration)\HtmlSetup.exe&quot; /Template:htmlInstaller\$(Configuration)\htmlInstaller.exe /Configuration:Samples\LicenseAgreement\Configuration.xml /AppPath:Samples\LicenseAgreement"/>
+    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
+    <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
+    <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\HtmlSetup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
+    <Copy SourceFiles="@(LicenseAgreementSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement\%(RecursiveDir)" />
+  </Target>
 </Project>

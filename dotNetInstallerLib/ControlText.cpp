@@ -11,7 +11,7 @@ font_size(0)
 
 }
 
-void ControlText::Load(TiXmlElement * node)
+void ControlText::Load(tinyxml2::XMLElement * node)
 {
     text = node->Attribute("text");
     font_name = node->Attribute("font_name");

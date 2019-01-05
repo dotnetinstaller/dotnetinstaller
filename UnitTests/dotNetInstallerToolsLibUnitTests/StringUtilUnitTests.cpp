@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "StringUtilUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::String::StringUtilUnitTests);
-
 using namespace DVLib::UnitTests::String;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void StringUtilUnitTests::testtrim(void)
 {
@@ -28,13 +27,13 @@ void StringUtilUnitTests::testtrim(void)
     for( unsigned int i = 0; i < ARRAYSIZE(testData); i++ )
     {
         std::string s = DVLib::trim(testData[i].testIn, testData[i].testWhitespace);
-        CPPUNIT_ASSERT(s == testData[i].testOut);
+        Assert::IsTrue(s == testData[i].testOut);
 
         std::string sL = DVLib::trimleft(testData[i].testIn, testData[i].testWhitespace);
-        CPPUNIT_ASSERT(sL == testData[i].testOutL);
+        Assert::IsTrue(sL == testData[i].testOutL);
 
         std::string sR = DVLib::trimright(testData[i].testIn, testData[i].testWhitespace);
-        CPPUNIT_ASSERT(sR == testData[i].testOutR);
+        Assert::IsTrue(sR == testData[i].testOutR);
     }
 }
 
@@ -84,10 +83,10 @@ void StringUtilUnitTests::teststring2long(void)
     for (unsigned int i = 0; i < ARRAYSIZE(testData); i++)
     {
         long result = DVLib::string2long(testData[i].testIn, testData[i].base);
-        std::stringstream s;
+        std::wstringstream s;
         s << "[" << (testData[i].testIn ? testData[i].testIn : "NULL") << "] => [" << result << "] (expected: " 
             << testData[i].testOut << ", base: " << testData[i].base << ")";
-        CPPUNIT_ASSERT_MESSAGE(s.str().c_str(), result == testData[i].testOut);
+        Assert::IsTrue(result == testData[i].testOut, s.str().c_str());
     }
 
     // Test exceptions
@@ -112,10 +111,10 @@ void StringUtilUnitTests::teststring2long(void)
             // expected
             continue;
         }
-        std::stringstream s;
+        std::wstringstream s;
         s << "[" << exceptionTestData[i].testIn << "] => [" << result << "], base: " 
             << exceptionTestData[i].base << " - expected: std::exception";
-        CPPUNIT_FAIL(s.str().c_str());
+        Assert::Fail(s.str().c_str());
     }
 }
 
@@ -159,10 +158,10 @@ void StringUtilUnitTests::teststring2ulong(void)
     for (unsigned int i = 0; i < ARRAYSIZE(testData); i++)
     {
         unsigned long result = DVLib::string2ulong(testData[i].testIn, testData[i].base);
-        std::stringstream s;
+        std::wstringstream s;
         s << "[" << (testData[i].testIn ? testData[i].testIn : "NULL") << "] => [" << result << "] (expected: " 
             << testData[i].testOut << ", base: " << testData[i].base << ")";
-        CPPUNIT_ASSERT_MESSAGE(s.str().c_str(), result == testData[i].testOut);
+        Assert::IsTrue(result == testData[i].testOut, s.str().c_str());
     }
 
     // Test exceptions
@@ -186,10 +185,10 @@ void StringUtilUnitTests::teststring2ulong(void)
             // expected
             continue;
         }
-        std::stringstream s;
+        std::wstringstream s;
         s << "[" << exceptionTestData[i].testIn << "] => [" << result << "], base: " 
             << exceptionTestData[i].base << " - expected: std::exception";
-        CPPUNIT_FAIL(s.str().c_str());
+        Assert::Fail(s.str().c_str());
     }
 }
 
@@ -222,10 +221,10 @@ void StringUtilUnitTests::testsplitjoin(void)
     for( int i = 0; i < sizeof(testData)/sizeof(TokenizeTestData); i++ )
     {
         std::vector<std::string> parts = DVLib::split(testData[i].testStr, testData[i].testDelim, testData[i].maxParts);
-        CPPUNIT_ASSERT_MESSAGE(testData[i].testStr, parts.size() == testData[i].numParts);
+        Assert::IsTrue(parts.size() == testData[i].numParts, DVLib::string2wstring(testData[i].testStr).c_str());
         std::string s = DVLib::join(parts, testData[i].testDelim);
         std::cout << std::endl << testData[i].testStr << " vs. " << s.c_str();
-        CPPUNIT_ASSERT_MESSAGE(s.c_str(), s == testData[i].testStr);
+        Assert::IsTrue(s == testData[i].testStr, DVLib::string2wstring(s).c_str());
     }
 
     //Test that correct tokens are returned
@@ -237,24 +236,24 @@ void StringUtilUnitTests::testsplitjoin(void)
 
     std::vector<std::string> parts = DVLib::split( sTest, delim1 );
 
-    CPPUNIT_ASSERT( parts[0] == "ServerName;WINGMAN;InstanceName;APPSECINC;IsClustered;No;Version;8.00.194;tcp;1091;np;\\\\WINGMAN\\pipe\\MSSQL$APPSECINC\\sql\\query" );
-    CPPUNIT_ASSERT( parts[1] == "" );
+    Assert::IsTrue( parts[0] == "ServerName;WINGMAN;InstanceName;APPSECINC;IsClustered;No;Version;8.00.194;tcp;1091;np;\\\\WINGMAN\\pipe\\MSSQL$APPSECINC\\sql\\query" );
+    Assert::IsTrue( parts[1] == "" );
 
     sTest = parts[0];
     parts = DVLib::split( sTest, delim2 );
 
-    CPPUNIT_ASSERT( parts[0] == "ServerName" );
-    CPPUNIT_ASSERT( parts[1] == "WINGMAN" );
-    CPPUNIT_ASSERT( parts[2] == "InstanceName" );
-    CPPUNIT_ASSERT( parts[3] == "APPSECINC" );
-    CPPUNIT_ASSERT( parts[4] == "IsClustered" );
-    CPPUNIT_ASSERT( parts[5] == "No" );
-    CPPUNIT_ASSERT( parts[6] == "Version" );
-    CPPUNIT_ASSERT( parts[7] == "8.00.194" );
-    CPPUNIT_ASSERT( parts[8] == "tcp" );
-    CPPUNIT_ASSERT( parts[9] == "1091" );
-    CPPUNIT_ASSERT( parts[10] == "np" );
-    CPPUNIT_ASSERT( parts[11] == "\\\\WINGMAN\\pipe\\MSSQL$APPSECINC\\sql\\query" );
+    Assert::IsTrue( parts[0] == "ServerName" );
+    Assert::IsTrue( parts[1] == "WINGMAN" );
+    Assert::IsTrue( parts[2] == "InstanceName" );
+    Assert::IsTrue( parts[3] == "APPSECINC" );
+    Assert::IsTrue( parts[4] == "IsClustered" );
+    Assert::IsTrue( parts[5] == "No" );
+    Assert::IsTrue( parts[6] == "Version" );
+    Assert::IsTrue( parts[7] == "8.00.194" );
+    Assert::IsTrue( parts[8] == "tcp" );
+    Assert::IsTrue( parts[9] == "1091" );
+    Assert::IsTrue( parts[10] == "np" );
+    Assert::IsTrue( parts[11] == "\\\\WINGMAN\\pipe\\MSSQL$APPSECINC\\sql\\query" );
 }
 
 void StringUtilUnitTests::testreplace()
@@ -283,7 +282,7 @@ void StringUtilUnitTests::testreplace()
 
     for( unsigned int i = 0; i < ARRAYSIZE(testData); i++ )
     {
-        std::stringstream message;
+        std::wstringstream message;
         message << "'" << testData[i].testIn << "'.replace('" << 
             testData[i].testFrom << "', '" << testData[i].testTo << "') didn't return '" << 
             testData[i].testExpectedResult << "'";
@@ -293,10 +292,10 @@ void StringUtilUnitTests::testreplace()
 
         message << "'" << testData[i].testIn << "'.replace('" << 
             testData[i].testFrom << "', '" << testData[i].testTo << "') didn't return '" << 
-            testData[i].testExpectedOutput << "' (returned '" << output << "')";
+            testData[i].testExpectedOutput << "' (returned '" << DVLib::string2wstring(output) << "')";
 
-        CPPUNIT_ASSERT_MESSAGE(message.str().c_str(),
-            testData[i].testExpectedOutput == output);
+        Assert::IsTrue(testData[i].testExpectedOutput == output,
+            message.str().c_str());
     }
 }
 
@@ -317,14 +316,14 @@ void StringUtilUnitTests::testwstring2string(void)
 
     for( unsigned int i = 0; i < ARRAYSIZE(testData); i++ )
     {
-        std::stringstream message;
+        std::wstringstream message;
         USES_CONVERSION;
         message << "wstring2string('" << W2A(testData[i].testIn) << "')" << 
             " != '" << testData[i].testOut << "'";
 
         std::string output = DVLib::wstring2string(testData[i].testIn);
-        CPPUNIT_ASSERT_MESSAGE(message.str().c_str(), strlen(testData[i].testOut) == output.length());
-        CPPUNIT_ASSERT_MESSAGE(message.str().c_str(), testData[i].testOut == output);
+        Assert::IsTrue(strlen(testData[i].testOut) == output.length(), message.str().c_str());
+        Assert::IsTrue(testData[i].testOut == output, message.str().c_str());
     }
 }
 
@@ -345,14 +344,14 @@ void StringUtilUnitTests::teststring2wstring(void)
 
     for( unsigned int i = 0; i < ARRAYSIZE(testData); i++ )
     {
-        std::stringstream message;
+        std::wstringstream message;
         USES_CONVERSION;
         message << "string2wstring('" << testData[i].testIn << "')" << 
             " != '" << W2A(testData[i].testOut) << "'";
 
         std::wstring output = DVLib::string2wstring(testData[i].testIn);
-        CPPUNIT_ASSERT_MESSAGE(message.str().c_str(), wcslen(testData[i].testOut) == output.length());
-        CPPUNIT_ASSERT_MESSAGE(message.str().c_str(), testData[i].testOut == output);
+        Assert::IsTrue(wcslen(testData[i].testOut) == output.length(), message.str().c_str());
+        Assert::IsTrue(testData[i].testOut == output, message.str().c_str());
     }
 }
 
@@ -377,7 +376,7 @@ void StringUtilUnitTests::testlong2string(void)
     {
         std::string number = DVLib::tostring(testData[i].testIn);
         std::cout << std::endl << testData[i].testIn << " => " << number << " (expecting " << testData[i].testOut << ")";
-        CPPUNIT_ASSERT(testData[i].testOut == number);
+        Assert::IsTrue(testData[i].testOut == number);
     }
 }
 
@@ -402,18 +401,18 @@ void StringUtilUnitTests::testlong2wstring(void)
     {
         std::wstring number = DVLib::towstring(testData[i].testIn);
         std::cout << std::endl << testData[i].testIn << " => " << DVLib::wstring2string(number) << " (expecting " << DVLib::wstring2string(testData[i].testOut) << ")";
-        CPPUNIT_ASSERT(testData[i].testOut == number);
+        Assert::IsTrue(testData[i].testOut == number);
     }
 }
 
 void StringUtilUnitTests::testtostring(void)
 {
-    CPPUNIT_ASSERT(DVLib::tostring(0) == "0");
+    Assert::IsTrue(DVLib::tostring(0) == "0");
 }
 
 void StringUtilUnitTests::testtowstring(void)
 {
-    CPPUNIT_ASSERT(DVLib::towstring(0) == L"0");
+    Assert::IsTrue(DVLib::towstring(0) == L"0");
 }
 
 void StringUtilUnitTests::teststartswith()
@@ -441,14 +440,14 @@ void StringUtilUnitTests::teststartswith()
 
     for( unsigned int i = 0; i < ARRAYSIZE(testData); i++ )
     {
-        std::stringstream message;
+        std::wstringstream message;
         message << "'" << testData[i].testIn << "'.startswith('" << 
             testData[i].testWhat << "') didn't return '" << 
             (testData[i].testExpectedResult ? "true" : "false") << "'";
 
-        CPPUNIT_ASSERT_MESSAGE(message.str().c_str(),
-            testData[i].testExpectedResult == DVLib::startswith(
-            testData[i].testIn, testData[i].testWhat));
+        Assert::IsTrue(testData[i].testExpectedResult == DVLib::startswith(
+            testData[i].testIn, testData[i].testWhat),
+            message.str().c_str());
     }
 }
 
@@ -479,14 +478,14 @@ void StringUtilUnitTests::testendswith()
 
     for( unsigned int i = 0; i < ARRAYSIZE(testData); i++ )
     {
-        std::stringstream message;
+        std::wstringstream message;
         message << "'" << testData[i].testIn << "'.endswith('" << 
             testData[i].testWhat << "') didn't return '" << 
             (testData[i].testExpectedResult ? "true" : "false") << "'";
 
-        CPPUNIT_ASSERT_MESSAGE(message.str().c_str(),
-            testData[i].testExpectedResult == DVLib::endswith(
-            testData[i].testIn, testData[i].testWhat));
+        Assert::IsTrue(testData[i].testExpectedResult == DVLib::endswith(
+            testData[i].testIn, testData[i].testWhat),
+            message.str().c_str());
     }
 }
 
@@ -507,6 +506,6 @@ void StringUtilUnitTests::testUTF82wstring()
     for( unsigned int i = 0; i < ARRAYSIZE(testData); i++ )
     {
         std::wstring output = DVLib::UTF8string2wstring(testData[i].testIn);
-        CPPUNIT_ASSERT(output.length() == testData[i].len);
+        Assert::IsTrue(output.length() == testData[i].len);
     }
 }

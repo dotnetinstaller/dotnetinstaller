@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PropertySheetDisplayName>dni</_PropertySheetDisplayName>
+    <OutDir>$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\atlmfc\include;$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\include;$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\PlatformSDK\Include;$(SolutionDir)\ThirdParty\tinyxml2-6.0.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/nod:kernel32.lib /nod:advapi32.lib /nod:user32.lib /nod:gdi32.lib /nod:shell32.lib /nod:comdlg32.lib /nod:version.lib /nod:mpr.lib /nod:rasapi32.lib /nod:winmm.lib /nod:winspool Kernel32.lib Advapi32.lib User32.lib Gdi32.lib Shell32.lib Comdlg32.lib Version.lib Mpr.lib Rasapi32.lib Winmm.lib Winspool.lib Vfw32.lib Secur32.lib Oleacc.lib Oledlg.lib Sensapi.lib Msi.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(SolutionDir)\ThirdParty\Msi\lib;$(SolutionDir)\ThirdParty\Microsoft\Visual Studio 14.0\VC\PlatformSDK\Lib;$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\lib;$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\atlmfc\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(IntDir);$(SolutionDir);$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\atlmfc\include;$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\include;$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\PlatformSDK\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

@@ -4,25 +4,15 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class MsiUtilUnitTests :  public CPPUNIT_NS::TestFixture
+        TEST_CLASS(MsiUtilUnitTests)
 		{
-			CPPUNIT_TEST_SUITE( MsiUtilUnitTests );
-			CPPUNIT_TEST( testGetInstalledProducts );
-			CPPUNIT_TEST( testGetAnyInstalledProducts );
-			CPPUNIT_TEST( testGetRelatedProducts );
-			CPPUNIT_TEST( testIsProductInstalled );
-			CPPUNIT_TEST( testGetQuotedPathOrGuid );
-			CPPUNIT_TEST( testGetUpgradeCodes );
-			// CPPUNIT_TEST( testGetRelatedInstalledProducts );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testGetInstalledProducts();
-			void testGetAnyInstalledProducts();
-			void testGetRelatedProducts();
-			void testIsProductInstalled();
-			void testGetQuotedPathOrGuid();
-			void testGetUpgradeCodes();
-			void testGetRelatedInstalledProducts();
+			TEST_METHOD( testGetInstalledProducts );
+			TEST_METHOD( testGetAnyInstalledProducts );
+			TEST_METHOD( testGetRelatedProducts );
+			TEST_METHOD( testIsProductInstalled );
+			TEST_METHOD( testGetQuotedPathOrGuid );
+			TEST_METHOD( testGetUpgradeCodes );
+			TEST_METHOD( testGetRelatedInstalledProducts );
 		};
 	}
 }

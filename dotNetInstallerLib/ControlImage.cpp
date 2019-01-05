@@ -11,7 +11,7 @@ center(false)
 
 }
 
-void ControlImage::Load(TiXmlElement * node)
+void ControlImage::Load(tinyxml2::XMLElement * node)
 {
     resource_id = node->Attribute("resource_id");
     image_file = node->Attribute("image_file");

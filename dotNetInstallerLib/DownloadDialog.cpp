@@ -13,7 +13,7 @@ DownloadDialog::DownloadDialog(const std::wstring& id)
 
 }
 
-void DownloadDialog::Load(TiXmlElement * node)
+void DownloadDialog::Load(tinyxml2::XMLElement * node)
 {
     CHECK_BOOL(node != NULL,
         L"Expected 'downloaddialog' node");
@@ -31,10 +31,9 @@ void DownloadDialog::Load(TiXmlElement * node)
     cancel_caption = node->Attribute("buttoncancel_caption");
     auto_start = DVLib::wstring2bool(DVLib::UTF8string2wstring(node->Attribute("autostartdownload")), false);
 
-    TiXmlNode * child = NULL;
-    while ( (child = node->IterateChildren(child)) != NULL)
+    for (tinyxml2::XMLNode* child = node->FirstChildElement(); child; child = child->NextSibling())
     {
-        TiXmlElement * node_element = child->ToElement();
+        tinyxml2::XMLElement * node_element = child->ToElement();
         if (node_element == NULL)
             continue;
 

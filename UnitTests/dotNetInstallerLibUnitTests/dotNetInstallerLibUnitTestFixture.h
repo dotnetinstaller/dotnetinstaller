@@ -1,6 +1,6 @@
 #pragma once
 
-class dotNetInstallerLibUnitTestFixture : public CPPUNIT_NS::TestFixture
+class dotNetInstallerLibUnitTestFixture
 {
 public:
 	void setUp();

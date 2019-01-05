@@ -2,6 +2,7 @@
 #include "ResponseFileUnitTests.h"
 
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 template <class T>
 void ResponseFileUnitTests<T>::testExec(ResponseFileUnitTestsTestData testdata[], int size)
@@ -16,10 +17,10 @@ void ResponseFileUnitTests<T>::testExec(ResponseFileUnitTestsTestData testdata[]
         DVLib::FileWrite(s, source_data);
         T r(s, t);
         r.Exec();
-        CPPUNIT_ASSERT(DVLib::FileExists(t));
+        Assert::IsTrue(DVLib::FileExists(t));
         std::vector<char> written_data = DVLib::FileReadToEnd(t);
         std::string written_data_s(written_data.begin(), written_data.end());
-        CPPUNIT_ASSERT(written_data_s == testdata[i].expected);
+        Assert::IsTrue(written_data_s == testdata[i].expected);
         DVLib::FileDelete(s);
         DVLib::FileDelete(t);
     }

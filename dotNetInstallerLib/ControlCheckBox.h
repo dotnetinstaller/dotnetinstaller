@@ -1,5 +1,6 @@
 #pragma once
 #include "ControlText.h"
+#include <tinyxml2.h>
 
 class ControlCheckBox : public ControlText
 {
@@ -13,7 +14,7 @@ public:
 	// values
 	XmlAttribute checked_value;
 	XmlAttribute unchecked_value;
-	void Load(TiXmlElement * node);
+	void Load(tinyxml2::XMLElement * node);
 	std::wstring GetString() const;
 };
 

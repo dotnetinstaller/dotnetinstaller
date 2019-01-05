@@ -1,20 +1,25 @@
 #pragma once
+#include "dotNetInstallerLibUnitTestFixture.h"
 
 namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class InstalledCheckProductUnitTests : public dotNetInstallerLibUnitTestFixture
+        TEST_CLASS(InstalledCheckProductUnitTests), public dotNetInstallerLibUnitTestFixture
 		{
-			CPPUNIT_TEST_SUITE( InstalledCheckProductUnitTests );
-			CPPUNIT_TEST( testProductCode );
-			CPPUNIT_TEST( testUpgradeCode );
-			CPPUNIT_TEST( testDefaultValue );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testProductCode();
-			void testUpgradeCode();
-			void testDefaultValue();
+            TEST_METHOD_INITIALIZE( initialize )
+            {
+                setUp();
+            }
+
+            TEST_METHOD_CLEANUP( cleanup )
+            {
+                tearDown();
+            }
+
+			TEST_METHOD( testProductCode );
+			TEST_METHOD( testUpgradeCode );
+			TEST_METHOD( testDefaultValue );
 		};
 	}
 }

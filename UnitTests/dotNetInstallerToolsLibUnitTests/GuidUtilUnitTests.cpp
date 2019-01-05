@@ -2,8 +2,7 @@
 #include "GuidUtilUnitTests.h"
 
 using namespace DVLib::UnitTests;
-
-CPPUNIT_TEST_SUITE_REGISTRATION(GuidUtilUnitTests);
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void GuidUtilUnitTests::testguid2wstring()
 {
@@ -27,9 +26,9 @@ void GuidUtilUnitTests::testguid2wstring()
 
         std::wstring wstring_fromguid2 = DVLib::guid2wstring(data[i].clsid);
         std::string string_fromguid2 = DVLib::guid2string(data[i].clsid);
-        CPPUNIT_ASSERT(wstring_fromguid2 == DVLib::makeguid(data[i].pszGuid));
-        CPPUNIT_ASSERT(wstring_fromguid2 == DVLib::string2wstring(string_fromguid2));
-        CPPUNIT_ASSERT(DVLib::string2guid(data[i].pszGuid) == data[i].clsid);
+        Assert::IsTrue(wstring_fromguid2 == DVLib::makeguid(data[i].pszGuid));
+        Assert::IsTrue(wstring_fromguid2 == DVLib::string2wstring(string_fromguid2));
+        Assert::IsTrue(DVLib::string2guid(data[i].pszGuid) == data[i].clsid);
     }
 }
 
@@ -54,7 +53,7 @@ void GuidUtilUnitTests::testisguid()
     for (int i = 0; i < ARRAYSIZE(data); i++)
     {
         std::wcout << std::endl << L"Guid?: " << data[i].pszGuid;
-        CPPUNIT_ASSERT(DVLib::isguid(data[i].pszGuid) == data[i].guid);
+        Assert::IsTrue(DVLib::isguid(data[i].pszGuid) == data[i].guid);
     }
 }
 
@@ -64,27 +63,27 @@ void GuidUtilUnitTests::testGenerateGUIDString()
     std::wcout << std::endl << wstring_guid;
     std::string string_guid = DVLib::GenerateGUIDStringA();
     std::cout << std::endl << string_guid;
-    CPPUNIT_ASSERT(wstring_guid != DVLib::string2wstring(string_guid));
-    CPPUNIT_ASSERT(wstring_guid.length() == string_guid.length());
-    CPPUNIT_ASSERT(wstring_guid.length() == 38);
+    Assert::IsTrue(wstring_guid != DVLib::string2wstring(string_guid));
+    Assert::IsTrue(wstring_guid.length() == string_guid.length());
+    Assert::IsTrue(wstring_guid.length() == 38);
     for (unsigned int i = 0; i < wstring_guid.length(); i++)
     {
         switch(i)
         {
         case 0:
-            CPPUNIT_ASSERT(wstring_guid[i] == L'{');
+            Assert::IsTrue(wstring_guid[i] == L'{');
             break;
         case 37:
-            CPPUNIT_ASSERT(wstring_guid[i] == L'}');
+            Assert::IsTrue(wstring_guid[i] == L'}');
             break;
         case 9:
         case 14:
         case 19:
         case 24:
-            CPPUNIT_ASSERT(wstring_guid[i] == L'-');
+            Assert::IsTrue(wstring_guid[i] == L'-');
             break;
         default:
-            CPPUNIT_ASSERT(::iswalnum(wstring_guid[i]));
+            Assert::IsTrue(::iswalnum(wstring_guid[i]));
             break;
         }
     }
@@ -116,6 +115,6 @@ void GuidUtilUnitTests::testmakeguid()
     for (int i = 0; i < ARRAYSIZE(data); i++)
     {
         std::wcout << std::endl << L"MakeGuid: " << data[i].input;
-        CPPUNIT_ASSERT(DVLib::makeguid(data[i].input) == data[i].expected_output);
+        Assert::IsTrue(DVLib::makeguid(data[i].input) == data[i].expected_output);
     }
 }

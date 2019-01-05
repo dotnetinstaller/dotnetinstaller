@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include "MsuComponentUnitTests.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(DVLib::UnitTests::MsuComponentUnitTests);
-
 using namespace DVLib::UnitTests;
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 void MsuComponentUnitTests::testExecInstall()
 {
@@ -26,7 +25,7 @@ void MsuComponentUnitTests::testExecInstall()
     catch(std::exception&)
     {
         // msu file cannot be opened
-        CPPUNIT_ASSERT(ERROR_FILE_NOT_FOUND == component.GetProcessExitCode());
+        Assert::IsTrue(ERROR_FILE_NOT_FOUND == component.GetProcessExitCode());
     }
 }
 
@@ -52,7 +51,7 @@ void MsuComponentUnitTests::testExecInstallSilent()
     catch(std::exception&)
     {
         // msu file cannot be opened
-        CPPUNIT_ASSERT(ERROR_FILE_NOT_FOUND == component.GetProcessExitCode());
+        Assert::IsTrue(ERROR_FILE_NOT_FOUND == component.GetProcessExitCode());
     }
 }
 
@@ -123,7 +122,7 @@ void MsuComponentUnitTests::testExecShell()
     component.package = L"msidoesntexist.msu"; 
     component.cmdparameters = L"/quiet";
     // default execution method is CreateProcess
-    CPPUNIT_ASSERT(component.execution_method == DVLib::CemCreateProcess);
+    Assert::IsTrue(component.execution_method == DVLib::CemCreateProcess);
     component.execution_method = DVLib::CemShellExecute;
     component.Exec();
     try
@@ -134,28 +133,28 @@ void MsuComponentUnitTests::testExecShell()
     catch(std::exception&)
     {
         // msu file cannot be opened
-        CPPUNIT_ASSERT(ERROR_FILE_NOT_FOUND == component.GetProcessExitCode());
+        Assert::IsTrue(ERROR_FILE_NOT_FOUND == component.GetProcessExitCode());
     }
 }
 
 void MsuComponentUnitTests::testMustReboot()
 {
     MsuComponent component;
-    CPPUNIT_ASSERT(! component.IsRebootRequired());
+    Assert::IsTrue(! component.IsRebootRequired());
     component.mustreboot = true;
-    CPPUNIT_ASSERT(component.IsRebootRequired());
+    Assert::IsTrue(component.IsRebootRequired());
 }
 
 void MsuComponentUnitTests::testLoad()
 {
-    TiXmlDocument doc;
+    tinyxml2::XMLDocument doc;
     doc.Parse("<component type=\"msu\" \
               package=\"test-dir\\test.msu\" \
               cmdparameters=\"/forcereboot\" \
               execution_method=\"ShellExecute\"/>");
     MsuComponent component;
     component.Load(doc.RootElement());
-    CPPUNIT_ASSERT(component.package.GetValue() == L"test-dir\\test.msu");
-    CPPUNIT_ASSERT(component.cmdparameters.GetValue() == L"/forcereboot");
-    CPPUNIT_ASSERT(component.execution_method == DVLib::CemShellExecute);
+    Assert::IsTrue(component.package.GetValue() == L"test-dir\\test.msu");
+    Assert::IsTrue(component.cmdparameters.GetValue() == L"/forcereboot");
+    Assert::IsTrue(component.execution_method == DVLib::CemShellExecute);
 }

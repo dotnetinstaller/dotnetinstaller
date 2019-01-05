@@ -34,7 +34,7 @@ bool OpenFileComponent::IsExecuting() const
     return false;
 }
 
-void OpenFileComponent::Load(TiXmlElement * node)
+void OpenFileComponent::Load(tinyxml2::XMLElement * node)
 {
     file = node->Attribute("file");
     disable_wow64_fs_redirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);

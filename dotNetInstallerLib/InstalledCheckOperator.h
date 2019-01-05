@@ -13,7 +13,7 @@ public:
 public:	
     InstalledCheckOperator();
 	bool IsInstalled() const;
-    void Load(TiXmlElement * node);
+    void Load(tinyxml2::XMLElement * node);
 };
 
 typedef shared_any<InstalledCheckOperator *, close_delete> InstalledCheckOperatorPtr;

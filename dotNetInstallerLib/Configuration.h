@@ -4,6 +4,7 @@ class Component;
 
 #include "WidgetPosition.h"
 #include "XmlAttribute.h"
+#include <tinyxml2.h>
 
 enum configuration_type
 {
@@ -35,7 +36,7 @@ public:
 public:
 	Configuration(configuration_type t);
 	virtual ~Configuration();
-	virtual void Load(TiXmlElement * node);
+	virtual void Load(tinyxml2::XMLElement * node);
 	// returns true if this configuration is supported on this operating system/lcid
 	virtual bool IsSupported(LCID lcid) const;
 	virtual std::wstring GetLanguageString() const;

@@ -2,12 +2,13 @@
 
 #include "FileAttributes.h"
 #include "Configurations.h"
+#include <tinyxml2.h>
 
 class ConfigFile : public Configurations
 {
 private:
 	std::wstring m_filename;
-    TiXmlDocument m_XmlDocument;
+    tinyxml2::XMLDocument m_XmlDocument;
 public:
 	ConfigFile();
 	void LoadFile(const std::wstring& filename);

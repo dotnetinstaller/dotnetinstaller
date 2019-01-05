@@ -21,11 +21,18 @@ std::wstring InstallerLauncher::GetCmd() const
         cmd_s << L"\"" << DVLib::GetModuleFileNameW() << L"\"";
     }
 
-    if (__argc > 1)
+    int argCount;
+    LPWSTR *szArgList = CommandLineToArgvW(::GetCommandLineW(), &argCount);
+    if (szArgList != NULL)
     {
-        cmd_s << L" " << DVLib::trim((::GetCommandLineW() + wcslen(__targv[0]) + 
-            (::GetCommandLineW()[0] == '\"' ? 2 : 0)));
+        if (argCount > 1)
+        {
+            cmd_s << L" " << DVLib::trim( ( ::GetCommandLineW() + wcslen(szArgList[0]) +
+                ( ::GetCommandLineW()[0] == '\"' ? 2 : 0 ) ) );
+        }
     }
+
+    LocalFree(szArgList);
 
     if (! launcherArgs.empty())
     {
@@ -39,11 +46,18 @@ std::wstring InstallerLauncher::GetCommandLine() const
 {
     std::wstringstream cmd_s;
 
-    if (__argc > 1)
+    int argCount;
+    LPWSTR *szArgList = CommandLineToArgvW(::GetCommandLineW(), &argCount);
+    if (szArgList != NULL)
     {
-        cmd_s << L" " << DVLib::trim((::GetCommandLineW() + wcslen(__targv[0]) + 
-            (::GetCommandLineW()[0] == '\"' ? 2 : 0)));
+        if (argCount > 1)
+        {
+            cmd_s << L" " << DVLib::trim( ( ::GetCommandLineW() + wcslen(szArgList[0]) +
+                ( ::GetCommandLineW()[0] == '\"' ? 2 : 0 ) ) );
+        }
     }
+
+    LocalFree(szArgList);
 
     if (! launcherArgs.empty())
     {

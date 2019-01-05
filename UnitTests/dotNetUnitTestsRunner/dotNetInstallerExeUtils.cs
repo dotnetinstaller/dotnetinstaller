@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Web;
 using System.IO;
-using System.Reflection;
 using NUnit.Framework;
 using System.Diagnostics;
 using System.Configuration;
@@ -25,7 +21,6 @@ namespace dotNetUnitTestsRunner
             public string args;
             public bool noreboot = true;
             public bool noRunOnReboot = false;
-            public bool loadMSLU = false;
 
             public RunOptions()
             {
@@ -60,7 +55,6 @@ namespace dotNetUnitTestsRunner
                     if (autostart) result += " /autostart";
                     if (noreboot) result += " /noreboot";
                     if (noRunOnReboot) result += " /noRunOnReboot";
-                    if (loadMSLU) result += " /loadMSLU";
                     if (log)
                     {
                         result += " /Log";

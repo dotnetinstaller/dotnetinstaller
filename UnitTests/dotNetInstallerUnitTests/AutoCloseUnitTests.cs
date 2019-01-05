@@ -1,15 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using InstallerLib;
-using dotNetUnitTestsRunner;
-using System.IO;
-using Microsoft.Win32;
-using System.Diagnostics;
+// <copyright file="AutoCloseUnitTests.cs" company="DevAge, Vestris Inc. &amp; Contributors">
+//   Copyright (c) DevAge, Vestris Inc. &amp; Contributors.
+// </copyright>
 
 namespace dotNetInstallerUnitTests
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using dotNetUnitTestsRunner;
+    using InstallerLib;
+    using NUnit.Framework;
+
     [TestFixture]
     public class AutoCloseUnitTests
     {
@@ -62,7 +63,6 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestNotAutoClosesAfterInstallWhenComponentInstallFails");
 
             // configuration with a component that will run and fail and so dni will not auto close
-
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             setupConfiguration.auto_start = true;

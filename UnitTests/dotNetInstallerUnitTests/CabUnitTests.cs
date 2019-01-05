@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using InstallerLib;
-using System.IO;
-using dotNetUnitTestsRunner;
+// <copyright file="CabUnitTests.cs" company="DevAge, Vestris Inc. &amp; Contributors">
+//   Copyright (c) DevAge, Vestris Inc. &amp; Contributors.
+// </copyright>
 
 namespace dotNetInstallerUnitTests
 {
+    using System;
+    using System.IO;
+    using dotNetUnitTestsRunner;
+    using InstallerLib;
+    using NUnit.Framework;
+
     [TestFixture]
     public class CabUnitTests
     {
@@ -26,6 +28,7 @@ namespace dotNetInstallerUnitTests
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -49,6 +52,7 @@ namespace dotNetInstallerUnitTests
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -76,8 +80,10 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("Linking '{0}'", args.output);
             InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, "/ExtractCab"));
+
             // this should have created a directory called SupportFiles in the current directory
             string supportFilesPath = Path.Combine(Path.GetDirectoryName(args.output), "SupportFiles");
             Console.WriteLine("Checking {0}", supportFilesPath);
@@ -99,6 +105,7 @@ namespace dotNetInstallerUnitTests
             args.apppath = Path.GetTempPath();
             args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
             args.template = dotNetInstallerExeUtils.Executable;
+
             // create a self-extracting bootstrapper
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -113,8 +120,10 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("Linking '{0}'", args.output);
             InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, "/ExtractCab"));
+
             // this should have created a directory called SupportFiles in the current directory
             string supportFilesPath = Path.Combine(Path.GetDirectoryName(args.output), "SupportFiles");
             Console.WriteLine("Checking {0}", supportFilesPath);
@@ -136,6 +145,7 @@ namespace dotNetInstallerUnitTests
             args.apppath = Path.GetTempPath();
             args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
             args.template = dotNetInstallerExeUtils.Executable;
+
             // create a self-extracting bootstrapper
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -154,6 +164,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("Linking '{0}'", args.output);
             InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
+
             // execute dotNetInstaller
             string logfile = Path.Combine(Path.GetTempPath(), "testExtractAndRunCabPerComponent.log");
             Console.WriteLine("Log: {0}", logfile);
@@ -184,12 +195,14 @@ namespace dotNetInstallerUnitTests
             configFile.SaveAs(args.config);
             args.embed = true;
             args.apppath = Path.GetTempPath();
+
             // args.embedFiles = new string[] { Path.GetFileName(args.config) };
             args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
             args.template = dotNetInstallerExeUtils.Executable;
             Console.WriteLine("Linking '{0}'", args.output);
             InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, "/DisplayCab /qb"));
             File.Delete(args.config);
@@ -208,6 +221,7 @@ namespace dotNetInstallerUnitTests
             args.apppath = Path.GetTempPath();
             args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
             args.template = dotNetInstallerExeUtils.Executable;
+
             // create a self-extracting bootstrapper
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -228,8 +242,10 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("Linking '{0}'", args.output);
             InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(args.output, "/ExtractCab"));
+
             // this should have created a directory called SupportFiles in the current directory
             string supportFilesPath = Path.Combine(Path.GetDirectoryName(args.output), "SupportFiles");
             Console.WriteLine("Checking {0}", supportFilesPath);

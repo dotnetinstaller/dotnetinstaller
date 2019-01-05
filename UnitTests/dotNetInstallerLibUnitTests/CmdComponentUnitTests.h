@@ -1,46 +1,38 @@
 #pragma once
+#include "dotNetInstallerLibUnitTestFixture.h"
 
 namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class CmdComponentUnitTests : public dotNetInstallerLibUnitTestFixture
+        TEST_CLASS(CmdComponentUnitTests), public dotNetInstallerLibUnitTestFixture
 		{
-			CPPUNIT_TEST_SUITE( CmdComponentUnitTests );
-			CPPUNIT_TEST( testExecInstall );
-			CPPUNIT_TEST( testExecUninstall );
-			CPPUNIT_TEST( testExecUISilent );
-			CPPUNIT_TEST( testExecUIBasic );
-			CPPUNIT_TEST( testExecXCopy );
-			CPPUNIT_TEST( testExecShell );
-			CPPUNIT_TEST( testReturnCodeZero );
-			CPPUNIT_TEST( testReturnCodeNone );
-			CPPUNIT_TEST( testReturnCodeAll );
-			CPPUNIT_TEST( testReturnCodeNonZero );
-			CPPUNIT_TEST( testReturnCodeNonValue );
-			CPPUNIT_TEST( testReturnCodeRebootRequired );
-			CPPUNIT_TEST( testReturnCodeSuccess );
-			CPPUNIT_TEST( testMustReboot );
-			CPPUNIT_TEST( testLoad );
-			CPPUNIT_TEST( testWithHiddenWindow );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testExecInstall();
-			void testExecUninstall();
-			void testExecUISilent();
-			void testExecUIBasic();
-			void testExecXCopy();
-			void testExecShell();
-			void testReturnCodeZero();
-			void testReturnCodeNone();
-			void testReturnCodeAll();
-			void testReturnCodeNonZero();
-			void testReturnCodeNonValue();
-			void testReturnCodeRebootRequired();
-			void testReturnCodeSuccess();
-			void testMustReboot();
-			void testLoad();
-			void testWithHiddenWindow();
+            TEST_METHOD_INITIALIZE( initialize )
+            {
+                setUp();
+            }
+
+            TEST_METHOD_CLEANUP( cleanup )
+            {
+                tearDown();
+            }
+
+			TEST_METHOD( testExecInstall );
+			TEST_METHOD( testExecUninstall );
+			TEST_METHOD( testExecUISilent );
+			TEST_METHOD( testExecUIBasic );
+			TEST_METHOD( testExecXCopy );
+			TEST_METHOD( testExecShell );
+			TEST_METHOD( testReturnCodeZero );
+			TEST_METHOD( testReturnCodeNone );
+			TEST_METHOD( testReturnCodeAll );
+			TEST_METHOD( testReturnCodeNonZero );
+			TEST_METHOD( testReturnCodeNonValue );
+			TEST_METHOD( testReturnCodeRebootRequired );
+			TEST_METHOD( testReturnCodeSuccess );
+			TEST_METHOD( testMustReboot );
+			TEST_METHOD( testLoad );
+			TEST_METHOD( testWithHiddenWindow );
 		};
 	}
 }

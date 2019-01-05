@@ -40,7 +40,7 @@ administrator_required(false)
 
 }
 
-void InstallConfiguration::Load(TiXmlElement * node)
+void InstallConfiguration::Load(tinyxml2::XMLElement * node)
 {
     CHECK_BOOL(node != NULL,
         L"Expected 'configuration' node");
@@ -117,10 +117,9 @@ void InstallConfiguration::Load(TiXmlElement * node)
     administrator_required = XmlAttribute(node->Attribute("administrator_required")).GetBoolValue(false);
     administrator_required_message = node->Attribute("administrator_required_message");
     // components
-    TiXmlNode * child = NULL;
-    while ( (child = node->IterateChildren("component", child)) != NULL)
+    for ( tinyxml2::XMLNode* child = node->FirstChildElement("component"); child; child = child->NextSiblingElement("component") )
     {
-        TiXmlElement * node_component = child->ToElement();
+        tinyxml2::XMLElement * node_component = child->ToElement();
         if (node_component == NULL)
             continue;
 
@@ -143,9 +142,9 @@ void InstallConfiguration::Load(TiXmlElement * node)
     }
 
     // controls
-    while ( (child = node->IterateChildren("control", child)) != NULL)
+    for ( tinyxml2::XMLNode* child = node->FirstChildElement("control"); child; child = child->NextSiblingElement("control") )
     {
-        TiXmlElement * node_control = child->ToElement();
+        tinyxml2::XMLElement * node_control = child->ToElement();
         if (node_control == NULL)
             continue;
 

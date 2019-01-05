@@ -24,10 +24,9 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
     SYSTEM_INFO si = { 0 };
     ::GetSystemInfo(& si);
 
-    switch (osvi.dwPlatformId)
+    if (osvi.dwPlatformId == VER_PLATFORM_WIN32_NT)
     {
-        // Test for the Windows NT product family.
-    case VER_PLATFORM_WIN32_NT:
+        // Windows NT product family.
         // Newer Windows version
         if ((osvi.dwMajorVersion == 10 && osvi.dwMinorVersion > 0) || (osvi.dwMajorVersion > 10))
         {
@@ -142,61 +141,6 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
             else if (osvi.wServicePackMajor >= 3)
                 os = winXPsp3;
         }
-        // Windows 2000 versions
-        else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0 )
-        {
-            os = win2000;
-
-            if (osvi.wServicePackMajor == 1)
-                os = win2000sp1;
-            else if (osvi.wServicePackMajor == 2)
-                os = win2000sp2;
-            else if (osvi.wServicePackMajor == 3)
-                os = win2000sp3;
-            else if (osvi.wServicePackMajor >= 4)
-                os = win2000sp4;
-        }
-        // Windows NT versions
-        else if ( osvi.dwMajorVersion == 4 )
-        {
-            os = winNT4;
-            // check if Sp6a
-            if(0 == _wcsicmp(osvi.szCSDVersion, L"Service Pack 6"))
-            {
-                // Test for SP6 versus SP6a.
-                if (DVLib::RegistryKeyExists(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Hotfix\\Q246009"))
-                {
-                    os = winNT4sp6a;
-                }
-                else // Windows NT 4.0 prior to SP6a
-                {
-                    os = winNT4sp6;
-                }
-            }
-        }
-
-        break;
-        // Test for the Windows 95 product family.
-    case VER_PLATFORM_WIN32_WINDOWS:
-        if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 90)
-        {
-            os = winME;
-        }
-        else if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 10)
-        {
-            os = win98;
-            //test windows 98 se
-            if ( osvi.szCSDVersion[1] == 'A' )
-                os = win98se;
-        }
-        else if (osvi.dwMajorVersion == 4 && osvi.dwMinorVersion == 0)
-        {
-            os = win95;
-            //test Win95 osr2
-            if ( osvi.szCSDVersion[1] == 'C' || osvi.szCSDVersion[1] == 'B' )
-                os = win95osr2;
-        } 
-        break;
     }
 
     CHECK_BOOL(os != winNone, 
@@ -256,7 +200,17 @@ LCID DVLib::GetOperatingSystemLCID(LcidType lcidtype)
     case LcidUserExe:
     default:
         // see http://support.microsoft.com/kb/q181604/
-        std::wstring userexepath = DVLib::DirectoryCombine(DVLib::GetSystemDirectoryW(), L"user.exe");
+        std::wstring systemDirectory;
+        if ( DVLib::IsWow64() )
+        {
+            systemDirectory = DVLib::GetSystemWow64Directory();
+        }
+        else
+        {
+            systemDirectory = DVLib::GetSystemDirectoryW();
+        }
+
+        std::wstring userexepath = DVLib::DirectoryCombine(systemDirectory, L"user.exe");
         DVLib::FileVersionInfo versioninfo = DVLib::GetFileVersionInfo(userexepath);
         return versioninfo.translation_info.wLanguage;
     }
@@ -396,18 +350,6 @@ bool DVLib::IsOperatingSystemID(OperatingSystem os_in, const std::wstring& filte
             case winNone:
                 THROW_EX(L"Unsupported OS filter: " << filter);
                 break;
-            case winNT4:
-                if (OperatingSystemType(os) == winNT4 && os_in >= os)
-                {
-                    match = true;
-                }
-                break;
-            case win2000:
-                if (OperatingSystemType(os) == win2000 && os_in >= os)
-                {
-                    match = true;
-                }
-                break;
             case winXP:
                 if (OperatingSystemType(os) == winXP && os_in >= os)
                 {
@@ -486,18 +428,6 @@ bool DVLib::IsOperatingSystemID(OperatingSystem os_in, const std::wstring& filte
             {
             case winNone:
                 THROW_EX(L"Unsupported OS filter: " << filter);
-                break;
-            case winNT4:
-                if (OperatingSystemType(os) == winNT4 && os_in < os)
-                {
-                    match = true;
-                }
-                break;
-            case win2000:
-                if (OperatingSystemType(os) == win2000 && os_in < os)
-                {
-                    match = true;
-                }
                 break;
             case winXP:
                 if (OperatingSystemType(os) == winXP && os_in < os)
@@ -581,15 +511,7 @@ bool DVLib::IsOperatingSystemID(OperatingSystem os_in, const std::wstring& filte
 // Get the operating system type
 DVLib::OperatingSystem DVLib::OperatingSystemType(OperatingSystem os)
 {
-    if (os >= winNT4 && os <= winNT4Max)
-    {
-        return winNT4;
-    }
-    else if (os >= win2000 && os <= win2000Max)
-    {
-        return win2000;
-    }
-    else if (os >= winXP && os <= winXPMax)
+    if (os >= winXP && os <= winXPMax)
     {
         return winXP;
     }
@@ -690,19 +612,6 @@ bool DVLib::IsWow64()
 #else
     return false;
 #endif
-}
-
-bool GetNativeSystemInfo(LPSYSTEM_INFO p)
-{
-    typedef void (WINAPI * LPFN_GETSYSTEMINFO)(LPSYSTEM_INFO);
-    LPFN_GETSYSTEMINFO fnGetNativeSystemInfo = (LPFN_GETSYSTEMINFO) GetProcAddress(
-        GetModuleHandle(TEXT("kernel32.dll")), "GetNativeSystemInfo");
-
-    if (NULL == fnGetNativeSystemInfo)
-        return false;
-
-    fnGetNativeSystemInfo(p);
-    return true;
 }
 
 WORD DVLib::GetProcessorArchitecture()

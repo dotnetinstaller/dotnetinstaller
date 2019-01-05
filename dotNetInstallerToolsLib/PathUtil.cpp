@@ -76,6 +76,38 @@ std::wstring DVLib::GetModuleFileNameW(HINSTANCE h)
     return moduleFileName;
 }
 
+HMODULE DVLib::GetCurrentModuleHandle()
+{
+    HMODULE hm = NULL;
+
+    CHECK_WIN32_BOOL( ::GetModuleHandleExW( GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+        GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+        (LPCWSTR)GetCurrentModuleHandle,
+        &hm ), L"GetModuleHandleExW" );
+
+    return hm;
+}
+
+std::string DVLib::GetCurrentModuleDirectoryA()
+{
+    char path[MAX_PATH] = { 0 };
+    HMODULE hm = GetCurrentModuleHandle();
+
+    GetModuleFileNameA( hm, path, sizeof( path ) );
+
+    return GetFileDirectoryA(path);
+}
+
+std::wstring DVLib::GetCurrentModuleDirectoryW()
+{
+    wchar_t path[MAX_PATH] = { 0 };
+    HMODULE hm = GetCurrentModuleHandle();
+
+    GetModuleFileNameW( hm, path, sizeof( path ) );
+
+    return GetFileDirectoryW(path);
+}
+
 std::wstring DVLib::DirectoryCombine(const std::wstring& dir, const std::wstring& file)
 {
     wchar_t buffer[MAX_PATH] = { 0 };
@@ -131,6 +163,14 @@ std::wstring DVLib::GetSystemDirectoryW()
     wchar_t td[MAX_PATH] = { 0 };
     CHECK_WIN32_BOOL(::GetSystemDirectoryW(td, MAX_PATH),
         L"GetSystemDirectoryW");
+    return td;
+}
+
+std::wstring DVLib::GetSystemWow64Directory()
+{
+    wchar_t td[MAX_PATH] = { 0 };
+    CHECK_WIN32_BOOL( ::GetSystemWow64Directory( td, MAX_PATH ),
+        L"GetSystemWow64Directory" );
     return td;
 }
 

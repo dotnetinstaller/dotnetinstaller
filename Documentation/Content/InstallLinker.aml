@@ -31,7 +31,6 @@ InstallerLinker: dotNetInstaller Packager
 /EmbedResourceSize:<int>         Max size, in bytes, of each embedded resource Default value:'131072000' (short form /z)
 /Icon:<string>                   Icon for the executable (short form /i)
 /Manifest:<string>               Embed manifest (short form /m)
-/Mslu[+|-]                       Embed MSLU unicows.dll Default value:'-' (short form /u)
 /ProcessorArchitecture:<string>  Link only components that match a processor architecture filter (short form /p)
 @<file>                          Read response file for more options
 ]]>

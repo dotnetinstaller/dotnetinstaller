@@ -18,18 +18,7 @@
             <linkText>http://sourceforge.net/projects/tinyxml</linkText>
             <linkUri>http://sourceforge.net/projects/tinyxml</linkUri>
           </externalLink> for more information.
-          <code language="text" source="..\ThirdParty\TinyXml\license.txt" />
-        </para>
-      </content>
-    </section>
-    <section address="mslulicense">
-      <title>Microsoft Layer for Unicode</title>
-      <content>
-        <para>
-          Running dotNetInstaller on a Windows 95 or 98 system requires the Microsoft Layer for Unicode.
-          The redistributable is embedded within the application.
-          <code language="text" source="..\ThirdParty\MSLU\license.txt" />
-          <code language="text" source="..\ThirdParty\MSLU\redist.txt" />
+          <code language="text" source="..\ThirdParty\tinyxml2-6.0.0\license.txt" />
         </para>
       </content>
     </section>

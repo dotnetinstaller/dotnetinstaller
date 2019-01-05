@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using InstallerLib;
-using System.IO;
-using dotNetUnitTestsRunner;
-using System.Threading;
-using System.Xml;
+// <copyright file="UserControlUnitTests.cs" company="DevAge, Vestris Inc. &amp; Contributors">
+//   Copyright (c) DevAge, Vestris Inc. &amp; Contributors.
+// </copyright>
 
 namespace dotNetInstallerUnitTests
 {
+    using System;
+    using System.IO;
+    using dotNetUnitTestsRunner;
+    using InstallerLib;
+    using NUnit.Framework;
+
     [TestFixture]
     public class UserControlUnitTests
     {
@@ -22,6 +22,7 @@ namespace dotNetInstallerUnitTests
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
+
             // a checkbox that changes the return value
             ControlCheckBox checkbox = new ControlCheckBox();
             checkbox.UncheckedValue = "3";
@@ -33,10 +34,12 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [checkbox1]";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(4, dotNetInstallerExeUtils.Run(configFilename));
             checkbox.Checked = false;
@@ -58,6 +61,7 @@ namespace dotNetInstallerUnitTests
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
+
             // a checkbox that changes are return value
             ControlCheckBox checkbox = new ControlCheckBox();
             checkbox.UncheckedValue = "3";
@@ -65,20 +69,24 @@ namespace dotNetInstallerUnitTests
             checkbox.Checked = true;
             checkbox.Id = "checkbox1";
             setupConfiguration.Children.Add(checkbox);
+
             // an installed check that is always false
             InstalledCheckRegistry check = new InstalledCheckRegistry();
             check.path = @"SOFTWARE\KeyDoesntExist";
             check.comparison = installcheckregistry_comparison.exists;
             checkbox.Children.Add(check);
+
             // command that depends on the value of checkbox1
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b [checkbox1]5";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller, this checkbox is disabled, so all runs ignore checkbox1 value
             Assert.AreEqual(5, dotNetInstallerExeUtils.Run(configFilename));
             checkbox.Checked = false;
@@ -108,10 +116,12 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [edit1]";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(4, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -131,6 +141,7 @@ namespace dotNetInstallerUnitTests
             edit.Id = "edit1";
             edit.Check = ControlCheckType.both;
             setupConfiguration.Children.Add(edit);
+
             // an installed check that is always false
             InstalledCheckRegistry check = new InstalledCheckRegistry();
             check.path = @"SOFTWARE\KeyDoesntExist";
@@ -140,10 +151,12 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [edit1]5";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(5, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -164,6 +177,7 @@ namespace dotNetInstallerUnitTests
             edit.Check = ControlCheckType.enabled; // control will be disabled, but has a value when disabled
             edit.HasValueDisabled = true;
             setupConfiguration.Children.Add(edit);
+
             // an installed check that is always false
             InstalledCheckRegistry check = new InstalledCheckRegistry();
             check.path = @"SOFTWARE\KeyDoesntExist";
@@ -173,10 +187,12 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [edit1]5";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(45, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -197,6 +213,7 @@ namespace dotNetInstallerUnitTests
             edit.Check = ControlCheckType.enabled; // control will be disabled, but has a value when disabled
             edit.HasValueDisabled = false;
             setupConfiguration.Children.Add(edit);
+
             // an installed check that is always false
             InstalledCheckRegistry check = new InstalledCheckRegistry();
             check.path = @"SOFTWARE\KeyDoesntExist";
@@ -206,10 +223,12 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [edit1]5";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(5, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -229,6 +248,7 @@ namespace dotNetInstallerUnitTests
             edit.Id = "edit1";
             edit.Check = ControlCheckType.display;
             setupConfiguration.Children.Add(edit);
+
             // an installed check that is always false
             InstalledCheckRegistry check = new InstalledCheckRegistry();
             check.path = @"SOFTWARE\KeyDoesntExist";
@@ -238,10 +258,12 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [edit1]5";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(5, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -262,10 +284,12 @@ namespace dotNetInstallerUnitTests
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C exit /b 0";
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -287,10 +311,12 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [browse1]";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(4, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -311,10 +337,12 @@ namespace dotNetInstallerUnitTests
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C if \"[browse1]\"==\"42\" ( exit /b 0 ) else ( exit /b 1 )";
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -335,10 +363,12 @@ namespace dotNetInstallerUnitTests
             ComponentCmd cmd = new ComponentCmd();
             cmd.command = "cmd.exe /C if \"[browse1]\"==\"C:\\\" ( exit /b 0 ) else ( exit /b 1 )";
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -374,6 +404,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestUserControlLicense");
 
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
+
             // a configuration with a license agreement control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
@@ -387,9 +418,11 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [MY_RES_LICENSE]";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // create a setup with the license file
             InstallerLinkerArguments args = new InstallerLinkerArguments();
             args.config = configFilename;
@@ -398,6 +431,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("Linking '{0}'", args.output);
             InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
+
             // execute dotNetInstaller
             Assert.AreEqual(1, dotNetInstallerExeUtils.Run(args.output, "/q"));
             File.Delete(args.config);
@@ -417,10 +451,12 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [doesntexist]5[doesntexist]";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(5, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -435,6 +471,7 @@ namespace dotNetInstallerUnitTests
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             configFile.Children.Add(setupConfiguration);
+
             // a checkbox that changes are return value
             ControlCheckBox checkbox = new ControlCheckBox();
             checkbox.UncheckedValue = "3";
@@ -446,19 +483,24 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [checkbox1]";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions();
             options.configFile = configFilename;
+
             // unchecked value
             options.args = "/controlArgs checkbox1:3";
             Assert.AreEqual(3, dotNetInstallerExeUtils.Run(options));
+
             // checked value
             options.args = "/controlArgs checkbox1:4";
             Assert.AreEqual(4, dotNetInstallerExeUtils.Run(options));
+
             // invalid value
             options.args = "/controlArgs checkbox1:5";
             Assert.AreEqual(-1, dotNetInstallerExeUtils.Run(options));
@@ -482,13 +524,16 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [edit1]";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions();
             options.configFile = configFilename;
+
             // edit value
             options.args = "/controlArgs edit1:4";
             Assert.AreEqual(4, dotNetInstallerExeUtils.Run(options));
@@ -501,13 +546,16 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestUserControlEditHtmlValues");
 
             bool usingHtmlInstaller = dotNetInstallerExeUtils.Executable.EndsWith("htmlInstaller.exe");
-            if (!usingHtmlInstaller) return;
+            if (!usingHtmlInstaller)
+            {
+                return;
+            }
 
             // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             setupConfiguration.auto_start = true;
-            setupConfiguration.failed_exec_command_continue = "";
+            setupConfiguration.failed_exec_command_continue = string.Empty;
             setupConfiguration.auto_close_on_error = true;
             configFile.Children.Add(setupConfiguration);
             ControlEdit edit = new ControlEdit();
@@ -518,20 +566,24 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [edit1]1";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             InstallerLinkerArguments args = new InstallerLinkerArguments();
             args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", args.config);
             configFile.SaveAs(args.config);
+
             // create HTML directory
             string htmlPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             Directory.CreateDirectory(htmlPath);
             string htmlIndexFilename = Path.Combine(htmlPath, "index.html");
-            File.WriteAllText(htmlIndexFilename,
+            File.WriteAllText(
+                htmlIndexFilename,
                               @"<html><head><title></title></head><body>
                                 <input type=""text"" id=""edit1"" value=""4"" />
                                 <input id=""button_install"" type=""button"" value=""Install"" />
                                 </body></html>");
+
             // link the install executable
             args.htmlFiles = new string[] { htmlPath };
             args.embed = true;
@@ -542,6 +594,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("Linking '{0}'", args.output);
             InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
+
             // execute dotNetInstaller
             dotNetInstallerExeUtils.RunOptions runOptions = new dotNetInstallerExeUtils.RunOptions();
             runOptions.autostart = true;
@@ -557,13 +610,16 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("TestUserControlRadioButtonHtmlValues");
 
             bool usingHtmlInstaller = dotNetInstallerExeUtils.Executable.EndsWith("htmlInstaller.exe");
-            if (!usingHtmlInstaller) return;
+            if (!usingHtmlInstaller)
+            {
+                return;
+            }
 
             // a configuration with a checkbox control
             ConfigFile configFile = new ConfigFile();
             SetupConfiguration setupConfiguration = new SetupConfiguration();
             setupConfiguration.auto_start = true;
-            setupConfiguration.failed_exec_command_continue = "";
+            setupConfiguration.failed_exec_command_continue = string.Empty;
             setupConfiguration.auto_close_on_error = true;
             configFile.Children.Add(setupConfiguration);
             ControlEdit edit = new ControlEdit();
@@ -574,21 +630,25 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [edit1]1";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             InstallerLinkerArguments args = new InstallerLinkerArguments();
             args.config = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", args.config);
             configFile.SaveAs(args.config);
+
             // create HTML directory
             string htmlPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             Directory.CreateDirectory(htmlPath);
             string htmlIndexFilename = Path.Combine(htmlPath, "index.html");
-            File.WriteAllText(htmlIndexFilename,
+            File.WriteAllText(
+                htmlIndexFilename,
                               @"<html><head><title></title></head><body>
                                 <input type=""radio"" id=""edit1"" name=""edit1"" value=""4"" checked=""checked"" />
                                 <input type=""radio"" id=""edit1"" name=""edit1"" value=""2"" />
                                 <input id=""button_install"" type=""button"" value=""Install"" />
                                 </body></html>");
+
             // link the install executable
             args.htmlFiles = new string[] { htmlPath };
             args.embed = true;
@@ -599,6 +659,7 @@ namespace dotNetInstallerUnitTests
             Console.WriteLine("Linking '{0}'", args.output);
             InstallerLinkerExeUtils.CreateInstaller(args);
             Assert.IsTrue(File.Exists(args.output));
+
             // execute dotNetInstaller
             dotNetInstallerExeUtils.RunOptions runOptions = new dotNetInstallerExeUtils.RunOptions();
             runOptions.autostart = true;
@@ -625,10 +686,12 @@ namespace dotNetInstallerUnitTests
             cmd.command = "cmd.exe /C exit /b [browse1]";
             cmd.required_install = true;
             setupConfiguration.Children.Add(cmd);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions();
             options.configFile = configFilename;

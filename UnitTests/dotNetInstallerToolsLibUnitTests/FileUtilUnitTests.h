@@ -4,41 +4,23 @@ namespace DVLib
 {
 	namespace UnitTests 
 	{
-		class FileUtilUnitTests :  public CPPUNIT_NS::TestFixture
+		TEST_CLASS(FileUtilUnitTests)
 		{
-			CPPUNIT_TEST_SUITE( FileUtilUnitTests );
-			CPPUNIT_TEST( testFileExists );
-			CPPUNIT_TEST( testGetTemporaryFileName );
-			CPPUNIT_TEST( testFileDelete );
-			CPPUNIT_TEST( testFileCopy );
-			CPPUNIT_TEST( testFileMove );
-			CPPUNIT_TEST( testGetFileSize );
-			CPPUNIT_TEST( testFileWrite );
-			CPPUNIT_TEST( testFileCreate );
-			CPPUNIT_TEST( testFileReadToEnd );
-			CPPUNIT_TEST( testGetFileVersionInfo );
-			CPPUNIT_TEST( testGetFileVersion );
-			CPPUNIT_TEST( testLoadResourceData );
-			CPPUNIT_TEST( testResourceExists );
-			CPPUNIT_TEST( testwstring2fileversion );
-			CPPUNIT_TEST( testfileversion2wstring );
-			CPPUNIT_TEST_SUITE_END();
-		public:
-			void testFileExists();
-			void testGetTemporaryFileName();
-			void testFileDelete();
-			void testFileCopy();
-			void testFileMove();
-			void testGetFileSize();
-			void testFileWrite();
-			void testFileCreate();
-			void testFileReadToEnd();
-			void testGetFileVersionInfo();
-			void testGetFileVersion();
-			void testLoadResourceData();
-			void testResourceExists();
-			void testwstring2fileversion();
-			void testfileversion2wstring();
+			TEST_METHOD( testFileExists );
+			TEST_METHOD( testGetTemporaryFileName );
+			TEST_METHOD( testFileDelete );
+			TEST_METHOD( testFileCopy );
+			TEST_METHOD( testFileMove );
+			TEST_METHOD( testGetFileSize );
+			TEST_METHOD( testFileWrite );
+			TEST_METHOD( testFileCreate );
+			TEST_METHOD( testFileReadToEnd );
+			TEST_METHOD( testGetFileVersionInfo );
+			TEST_METHOD( testGetFileVersion );
+			TEST_METHOD( testLoadResourceData );
+			TEST_METHOD( testResourceExists );
+			TEST_METHOD( testwstring2fileversion );
+			TEST_METHOD( testfileversion2wstring );
 		};
 	}
 }

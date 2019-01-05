@@ -14,7 +14,7 @@ allow_edit(false)
 
 }
 
-void ControlBrowse::Load(TiXmlElement * node)
+void ControlBrowse::Load(tinyxml2::XMLElement * node)
 {
     id = node->Attribute("id");
     filter = node->Attribute("filter");

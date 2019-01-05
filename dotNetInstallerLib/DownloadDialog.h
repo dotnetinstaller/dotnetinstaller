@@ -33,7 +33,7 @@ public:
 	bool IsDownloadRequired() const;
 	bool IsRequired() const;
 	DownloadDialog(const std::wstring& name = L"");
-	void Load(TiXmlElement * node);
+	void Load(tinyxml2::XMLElement * node);
 	int ExecOnThread();
 	std::wstring GetString(int indent = 0) const;
 };

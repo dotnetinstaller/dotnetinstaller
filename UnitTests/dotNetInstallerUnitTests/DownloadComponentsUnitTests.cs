@@ -1,15 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Reflection;
-using System.Web;
-using NUnit.Framework;
-using InstallerLib;
-using dotNetUnitTestsRunner;
+// <copyright file="DownloadComponentsUnitTests.cs" company="DevAge, Vestris Inc. &amp; Contributors">
+//   Copyright (c) DevAge, Vestris Inc. &amp; Contributors.
+// </copyright>
 
 namespace dotNetInstallerUnitTests
 {
+    using System;
+    using System.IO;
+    using System.Reflection;
+    using dotNetUnitTestsRunner;
+    using InstallerLib;
+    using NUnit.Framework;
+
     [TestFixture]
     public class DownloadComponentsUnitTests
     {
@@ -41,10 +42,12 @@ namespace dotNetInstallerUnitTests
             component1download2.destinationpath = Path.GetTempPath();
             component1download2.destinationfilename = Guid.NewGuid().ToString();
             component1downloaddialog.Children.Add(component1download2);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             Assert.AreEqual(0, dotNetInstallerExeUtils.Run(configFilename));
             File.Delete(configFilename);
@@ -79,10 +82,12 @@ namespace dotNetInstallerUnitTests
             download.destinationfilename = Guid.NewGuid().ToString();
             download.alwaysdownload = false;
             cmddownloaddialog.Children.Add(download);
+
             // save config file
             string configFilename = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFilename);
             configFile.SaveAs(configFilename);
+
             // execute dotNetInstaller
             dotNetInstallerExeUtils.RunOptions options = new dotNetInstallerExeUtils.RunOptions();
             options.configFile = configFilename;

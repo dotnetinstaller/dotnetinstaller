@@ -130,68 +130,69 @@ namespace InstallerLib
                     Dictionary<string, EmbedFileCollection> all_files = configfile.GetFiles(string.Empty, supportdir);
                     // ensure at least one for additional command-line parameters
                     if (all_files.Count == 0) all_files.Add(string.Empty, new EmbedFileCollection(supportdir));
-                    Dictionary<string, EmbedFileCollection>.Enumerator enumerator = all_files.GetEnumerator();
-
-                    while (enumerator.MoveNext())
+                    using (Dictionary<string, EmbedFileCollection>.Enumerator enumerator = all_files.GetEnumerator())
                     {
-                        EmbedFileCollection c_files = enumerator.Current.Value;
-
-                        // add additional command-line files to the root CAB
-                        if (string.IsNullOrEmpty(enumerator.Current.Key))
+                        while (enumerator.MoveNext())
                         {
-                            if (args.embedFiles != null)
+                            EmbedFileCollection c_files = enumerator.Current.Value;
+
+                            // add additional command-line files to the root CAB
+                            if (string.IsNullOrEmpty(enumerator.Current.Key))
                             {
-                                foreach (string filename in args.embedFiles)
+                                if (args.embedFiles != null)
                                 {
-                                    string fullpath = Path.Combine(args.apppath, filename);
-                                    c_files.Add(new EmbedFilePair(fullpath, filename));
+                                    foreach (string filename in args.embedFiles)
+                                    {
+                                        string fullpath = Path.Combine(args.apppath, filename);
+                                        c_files.Add(new EmbedFilePair(fullpath, filename));
+                                    }
+                                }
+
+                                if (args.embedFolders != null)
+                                {
+                                    foreach (string folder in args.embedFolders)
+                                    {
+                                        c_files.AddDirectory(folder);
+                                    }
                                 }
                             }
 
-                            if (args.embedFolders != null)
+                            if (c_files.Count == 0)
+                                continue;
+
+                            c_files.CheckFilesExist(args);
+                            c_files.CheckFileAttributes(args);
+
+                            ArrayList files = c_files.GetFilePairs();
+
+                            // compress new CABs
+                            string cabname = string.IsNullOrEmpty(enumerator.Current.Key)
+                                ? Path.Combine(cabtemp, "SETUP_%d.CAB")
+                                : Path.Combine(cabtemp, string.Format("SETUP_{0}_%d.CAB", enumerator.Current.Key));
+
+                            Compress cab = new Compress();
+                            long currentSize = 0;
+                            cab.evFilePlaced += delegate(string s_File, int s32_FileSize, bool bContinuation)
                             {
-                                foreach (string folder in args.embedFolders)
+                                if (!bContinuation)
                                 {
-                                    c_files.AddDirectory(folder);
+                                    totalSize += s32_FileSize;
+                                    currentSize += s32_FileSize;
+                                    args.WriteLine(String.Format(" {0} - {1}", s_File, EmbedFileCollection.FormatBytes(s32_FileSize)));
                                 }
-                            }
+
+                                return 0;
+                            };
+                            cab.CompressFileList(files, cabname, true, true, args.embedResourceSize);
+
+                            StringBuilder fileslist = new StringBuilder();
+                            fileslist.AppendLine(string.Format("{0} CAB size: {1}",
+                                string.IsNullOrEmpty(enumerator.Current.Key) ? "*" : enumerator.Current.Key,
+                                EmbedFileCollection.FormatBytes(currentSize)));
+
+                            fileslist.Append(" " + String.Join("\r\n ", c_files.GetFileValuesWithSize(2)));
+                            allFilesList.Add(fileslist.ToString());
                         }
-
-                        if (c_files.Count == 0)
-                            continue;
-
-                        c_files.CheckFilesExist(args);
-                        c_files.CheckFileAttributes(args);
-
-                        ArrayList files = c_files.GetFilePairs();
-
-                        // compress new CABs
-                        string cabname = string.IsNullOrEmpty(enumerator.Current.Key)
-                            ? Path.Combine(cabtemp, "SETUP_%d.CAB")
-                            : Path.Combine(cabtemp, string.Format("SETUP_{0}_%d.CAB", enumerator.Current.Key));
-
-                        Compress cab = new Compress();
-                        long currentSize = 0;
-                        cab.evFilePlaced += delegate(string s_File, int s32_FileSize, bool bContinuation)
-                        {
-                            if (!bContinuation)
-                            {
-                                totalSize += s32_FileSize;
-                                currentSize += s32_FileSize;
-                                args.WriteLine(String.Format(" {0} - {1}", s_File, EmbedFileCollection.FormatBytes(s32_FileSize)));
-                            }
-
-                            return 0;
-                        };
-                        cab.CompressFileList(files, cabname, true, true, args.embedResourceSize);
-
-                        StringBuilder fileslist = new StringBuilder();
-                        fileslist.AppendLine(string.Format("{0} CAB size: {1}",
-                            string.IsNullOrEmpty(enumerator.Current.Key) ? "*" : enumerator.Current.Key,
-                            EmbedFileCollection.FormatBytes(currentSize)));
-
-                        fileslist.Append(" " + String.Join("\r\n ", c_files.GetFileValuesWithSize(2)));
-                        allFilesList.Add(fileslist.ToString());
                     }
                 }
                 #endregion
@@ -244,19 +245,21 @@ namespace InstallerLib
                     }
                 }
 
-                IEnumerator<EmbedFilePair> html_files_enumerator = html_files.GetEnumerator();
-                while (html_files_enumerator.MoveNext())
+                using (IEnumerator<EmbedFilePair> html_files_enumerator = html_files.GetEnumerator())
                 {
-                    EmbedFilePair pair = html_files_enumerator.Current;
-                    String id = "";
-                    for (int i = 0; i < pair.relativepath.Length; i++)
+                    while (html_files_enumerator.MoveNext())
                     {
-                        id += Char.IsLetterOrDigit(pair.relativepath[i]) ? pair.relativepath[i] : '_';
-                    }
+                        EmbedFilePair pair = html_files_enumerator.Current;
+                        String id = "";
+                        for (int i = 0; i < pair.relativepath.Length; i++)
+                        {
+                            id += Char.IsLetterOrDigit(pair.relativepath[i]) ? pair.relativepath[i] : '_';
+                        }
 
-                    args.WriteLine(string.Format("Embedding HTML resource \"{0}\": {1}", id, pair.fullpath));
-                    ResourceUpdate.WriteFile(h, new ResourceId("HTM"), new ResourceId(id.ToUpper()),
-                        ResourceUtil.NEUTRALLANGID, pair.fullpath);
+                        args.WriteLine(string.Format("Embedding HTML resource \"{0}\": {1}", id, pair.fullpath));
+                        ResourceUpdate.WriteFile(h, new ResourceId("HTM"), new ResourceId(id.ToUpper()),
+                            ResourceUtil.NEUTRALLANGID, pair.fullpath);
+                    }
                 }
 
                 #endregion
@@ -295,22 +298,6 @@ namespace InstallerLib
                     args.WriteLine(string.Format("Embedding resource \"{0}\": {1}", r_pair.id, r_pair.path));
                     ResourceUpdate.WriteFile(h, new ResourceId("CUSTOM"), new ResourceId(r_pair.id),
                         ResourceUtil.NEUTRALLANGID, r_pair.path);
-                }
-
-                if (args.mslu)
-                {
-                    args.WriteLine("Embedding MSLU unicows.dll");
-
-                    string unicowsdll = Path.Combine(templatepath, "unicows.dll");
-                    if (!File.Exists(unicowsdll)) unicowsdll = Path.Combine(supportdir, "unicows.dll");
-                    if (!File.Exists(unicowsdll)) unicowsdll = Path.Combine(Environment.CurrentDirectory, "unicows.dll");
-                    if (!File.Exists(unicowsdll))
-                    {
-                        throw new Exception(string.Format("Error locating \"{0}\\unicows.dll\"", templatepath));
-                    }
-
-                    ResourceUpdate.WriteFile(h, new ResourceId("CUSTOM"), new ResourceId("RES_UNICOWS"),
-                        ResourceUtil.NEUTRALLANGID, unicowsdll);
                 }
 
                 args.WriteLine(string.Format("Writing {0}", EmbedFileCollection.FormatBytes(totalSize)));

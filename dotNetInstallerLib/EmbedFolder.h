@@ -1,4 +1,5 @@
 #pragma once
+#include <tinyxml2.h>
 
 class EmbedFolder
 {
@@ -7,7 +8,7 @@ public:
 	XmlAttribute targetfolderpath;
 public:
 	EmbedFolder();
-	virtual void Load(TiXmlElement * node);
+	virtual void Load(tinyxml2::XMLElement * node);
 };
 
 typedef shared_any<EmbedFolder *, close_delete> EmbedFolderPtr;

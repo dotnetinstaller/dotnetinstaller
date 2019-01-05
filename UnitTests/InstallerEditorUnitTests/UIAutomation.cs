@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Automation;
-using System.Reflection;
-using White.Core.UIItems.MenuItems;
 using White.Core.Factory;
 using White.Core.UIItems;
 
