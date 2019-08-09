@@ -3,10 +3,10 @@
 
 namespace DVLib
 {
-	namespace UnitTests 
-	{
+    namespace UnitTests 
+    {
         TEST_CLASS(InstalledCheckFileUnitTests), public dotNetInstallerLibUnitTestFixture
-		{
+        {
             TEST_METHOD_INITIALIZE( initialize )
             {
                 setUp();
@@ -17,7 +17,20 @@ namespace DVLib
                 tearDown();
             }
 
-			TEST_METHOD( testIsInstalled );
-		};
-	}
+            TEST_METHOD( testIsInstalled );
+
+        private:
+            struct TestData
+            {
+                LPCWSTR filename;
+                LPCWSTR fileversion; // the version of attrib.exe is being compared to this version
+                LPCWSTR comparison;
+                bool defaultvalue;
+                bool expected_isinstalled;
+                bool disableWow64FsRedirection;
+            };
+
+            void testIsInstalled(TestData testdata, bool disableWow64FsRedirection);
+        };
+    }
 }
