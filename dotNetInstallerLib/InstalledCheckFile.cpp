@@ -4,8 +4,10 @@
 #include "InstallerLog.h"
 #include "InstallConfiguration.h"
 #include "InstallerSession.h"
+#include "Wow64NativeFS.h"
 
 InstalledCheckFile::InstalledCheckFile()
+    : disableWow64FsRedirection(false)
 {
 }
 
@@ -15,6 +17,7 @@ void InstalledCheckFile::Load(tinyxml2::XMLElement * node)
     fileversion = node->Attribute("fileversion");
     comparison = DVLib::UTF8string2wstring(node->Attribute("comparison"));
     defaultvalue = node->Attribute("defaultvalue");
+    disableWow64FsRedirection = XmlAttribute(node->Attribute("disable_wow64_fs_redirection")).GetBoolValue(false);
     LOG(L"Loaded 'file' installed check '" << filename << L"'");
 }
 
@@ -22,6 +25,19 @@ bool InstalledCheckFile::IsInstalled() const
 {
     LOG(L"Checking file: " << filename);
 
+    if (disableWow64FsRedirection)
+    {
+        auto_any<Wow64NativeFS *, close_delete> wow64_native_fs(new Wow64NativeFS());
+        return IsInstalledInternal();
+    }
+    else
+    {
+        return IsInstalledInternal();
+    }
+}
+
+bool InstalledCheckFile::IsInstalledInternal() const
+{
     if (comparison == TEXT("exists"))
     {
         return DVLib::FileExists(filename);
@@ -31,7 +47,7 @@ bool InstalledCheckFile::IsInstalled() const
 
     if (DVLib::FileExists(filename))
     {
-        if (! fileversion.empty())
+        if (!fileversion.empty())
         {
             std::wstring fileversion_current = DVLib::GetFileVersion(filename);
             LOG(L"File version: " << filename << L" - " << fileversion_current);

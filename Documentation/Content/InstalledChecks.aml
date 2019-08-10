@@ -56,6 +56,12 @@
               definition. This is true in examples where the file doesn't exist and the comparison type is <literal>version</literal>. 
               In this case the check returns <newTerm>defaultvalue</newTerm>.
             </para>
+            <para>
+              dotNetInstaller is a 32-bit application and file system access is redirected on a 64-bit operating system by default.
+              To disable file system redirection so that dotNetInstaller can access files in their native location on a 64-bit operating system, set the
+              <newTerm>disable_wow64_fs_redirection</newTerm> attribute to <literal>true</literal>.
+              On 32-bit systems, the <newTerm>disable_wow64_fs_redirection</newTerm> attribute is ignored.
+            </para>
           </content>
         </section>
         <section address="checktypesdirectory">

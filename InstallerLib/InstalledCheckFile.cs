@@ -66,12 +66,22 @@ namespace InstallerLib
             set { m_defaultvalue = value; }
         }
 
+        private bool m_disable_wow64_fs_redirection = false;
+        [Description("Indicates whether to disable wow64 file system redirection on x64 systems. Setting this option to 'true' forces the check to execute in the native x64 environment.")]
+        [Required]
+        public bool disable_wow64_fs_redirection
+        {
+            get { return m_disable_wow64_fs_redirection; }
+            set { m_disable_wow64_fs_redirection = value; }
+        }
+
         protected override void OnXmlWriteTag(XmlWriterEventArgs e)
         {
             e.XmlWriter.WriteAttributeString("filename", m_filename);
             e.XmlWriter.WriteAttributeString("fileversion", m_fileversion);
             e.XmlWriter.WriteAttributeString("comparison", m_comparison.ToString());
             e.XmlWriter.WriteAttributeString("defaultvalue", m_defaultvalue.ToString());
+            e.XmlWriter.WriteAttributeString("disable_wow64_fs_redirection", m_disable_wow64_fs_redirection.ToString());
             base.OnXmlWriteTag(e);
         }
 
@@ -81,6 +91,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "fileversion", ref m_fileversion);
             ReadAttributeValue(e, "comparison", ref m_comparison);
             ReadAttributeValue(e, "defaultvalue", ref m_defaultvalue);
+            ReadAttributeValue(e, "disable_wow64_fs_redirection", ref m_disable_wow64_fs_redirection);
             base.OnXmlReadTag(e);
         }
     }
