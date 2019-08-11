@@ -1,7 +1,7 @@
 dotNetInstaller Setup Bootstrapper
 ==================================
 
-![dotNetInstaller](https://github.com/dblock/dotnetinstaller/raw/master/Documentation/Images/Logo.gif)
+![dotNetInstaller](https://github.com/dotnetinstaller/dotnetinstaller/raw/master/Documentation/Images/Logo.gif)
 
 dotNetInstaller is a widely used, general-purpose setup bootstrapper for Microsoft Windows XP, 2003, Vista, 2008, 7, 8, 2012, 8.1, 10, 2016, and 2019.
 
@@ -9,9 +9,9 @@ Essentials
 ----------
 
 * [Need Help? Google Group](http://groups.google.com/group/dotnetinstaller)
-* Download Version 2.4
-  [[installer](https://github.com/dblock/dotnetinstaller/releases/download/2.4/dotNetInstaller.2.4.msi)]
-  [[zip](https://github.com/dblock/dotnetinstaller/releases/download/2.4/dotNetInstaller.2.4.zip)]
+* Download Version 3.0.812
+  [[installer](https://github.com/dotnetinstaller/dotnetinstaller/releases/download/3.0.812/dotNetInstaller.3.0.msi)]
+  [[zip](https://github.com/dotnetinstaller/dotnetinstaller/releases/download/3.0.812/dotNetInstaller.3.0.zip)]
 * [Older Versions on CodePlex](http://dotnetinstaller.codeplex.com/).
 
 Bootstrapper
@@ -64,12 +64,12 @@ Build Status
 Project History
 ---------------
 
-This project began as a [CodeProject article](http://www.codeproject.com/KB/install/dotNetInstaller.aspx) and was maintained on the [DevAge website](http://www.devage.com/) and [SourceForge](https://sourceforge.net/projects/dotnetinstaller) by [Davide Icardi](https://github.com/davideicardi). It continued its journey through [CodePlex](http://dotnetinstaller.codeplex.com) and is now officially maintained on [Github](https://github.com/dblock/dotnetinstaller).
+This project began as a [CodeProject article](http://www.codeproject.com/KB/install/dotNetInstaller.aspx) and was maintained on the [DevAge website](http://www.devage.com/) and [SourceForge](https://sourceforge.net/projects/dotnetinstaller) by [Davide Icardi](https://github.com/davideicardi). It continued its journey through [CodePlex](http://dotnetinstaller.codeplex.com) and is now officially maintained on [Github](https://github.com/dotnetinstaller/dotnetinstaller).
 
 License and Copyright
 ---------------------
 
 Copyright (c) 2009-2012 Davide Icardi, Daniel Doubrovkine and Contributors.
 
-This project is licensed under the [MIT License](https://github.com/dblock/dotnetinstaller/blob/master/LICENSE).
+This project is licensed under the [MIT License](https://github.com/dotnetinstaller/dotnetinstaller/blob/master/LICENSE).
 

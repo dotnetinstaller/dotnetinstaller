@@ -1,13 +1,13 @@
-TBD
-===
+3.0.812 (8/12/2019)
+===================
 
 Features
 --------
 
-* [#124](https://github.com/dblock/dotnetinstaller/issues/124) - Added ability to disable WOW64 file system redirection on x64 systems when checking if a file is installed - [@icnocop](https://github.com/icnocop).
-* [#109](https://github.com/dblock/dotnetinstaller/issues/109) - Migrated code to Visual Studio 2015 and .NET 4.0 (Deprecated support for Windows 95, 98, ME, NT4, and 2000) - [@icnocop](https://github.com/icnocop).
-* [#112](https://github.com/dblock/dotnetinstaller/pull/112) - Removed throwing an exception when the installation process is closed or canceled by user at language selection stage - [@genI3](https://github.com/genI3).
-* [#96](https://github.com/dblock/dotnetinstaller/issues/96) - Added the ability to hide a component if it's already installed - [@icnocop](https://github.com/icnocop).
+* [#124](https://github.com/dotnetinstaller/dotnetinstaller/issues/124) - Added ability to disable WOW64 file system redirection on x64 systems when checking if a file is installed - [@icnocop](https://github.com/icnocop).
+* [#109](https://github.com/dotnetinstaller/dotnetinstaller/issues/109) - Migrated code to Visual Studio 2015 and .NET 4.0 (Deprecated support for Windows 95, 98, ME, NT4, and 2000) - [@icnocop](https://github.com/icnocop).
+* [#112](https://github.com/dotnetinstaller/dotnetinstaller/pull/112) - Removed throwing an exception when the installation process is closed or canceled by user at language selection stage - [@genI3](https://github.com/genI3).
+* [#96](https://github.com/dotnetinstaller/dotnetinstaller/issues/96) - Added the ability to hide a component if it's already installed - [@icnocop](https://github.com/icnocop).
 
 2.4 (9/9/2015)
 ==============
