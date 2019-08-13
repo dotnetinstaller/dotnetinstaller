@@ -5,7 +5,7 @@
 #endif
 
 #ifndef WINVER
-#define WINVER 0x0501
+#define WINVER _WIN32_WINNT_WINXP
 #endif
 
 #ifndef _WIN32_WINNT
@@ -13,11 +13,11 @@
 #endif						
 
 #ifndef _WIN32_WINDOWS
-#define _WIN32_WINDOWS 0x0501
+#define _WIN32_WINDOWS _WIN32_WINNT_WINXP
 #endif
 
 #ifndef _WIN32_IE
-#define _WIN32_IE 0x0600
+#define _WIN32_IE _WIN32_IE_XP
 #endif
 
 #ifndef _WIN32_MSI
