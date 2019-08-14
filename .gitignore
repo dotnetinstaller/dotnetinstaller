@@ -3,8 +3,8 @@ Version/Version.h
 Version/Version.wxi
 bin
 obj
-Debug
-Release
+Debug*
+Release*
 dni*.log
 Documentation/Content/Generated
 assembly
@@ -25,3 +25,5 @@ StyleCop.Cache
 *.idb
 *.pdb
 *.ipch
+.vs
+packages

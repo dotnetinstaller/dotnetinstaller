@@ -117,4 +117,9 @@
   <ItemGroup>
     <Manifest Include="htmlInstaller.exe.manifest" />
   </ItemGroup>
+  <ItemGroup>
+    <MASM Include="..\BackwardsCompatibility\BackwardsCompatibility_i386.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+  </ItemGroup>
 </Project>

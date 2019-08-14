@@ -1,3 +1,11 @@
+3.0.814 (8/14/2019)
+===================
+
+Features
+--------
+
+* [#130](https://github.com/dotnetinstaller/dotnetinstaller/issues/130) - Added backwards compatibility support for Windows XP - [@icnocop](https://github.com/icnocop).
+
 3.0.812 (8/12/2019)
 ===================
 
