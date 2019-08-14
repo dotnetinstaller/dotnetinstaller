@@ -134,55 +134,55 @@
   </Target>
   <Target Name="release" DependsOnTargets="version">
     <Message Importance="high" Text="Collecting release files ..." />
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)" />
+    <MakeDir Directories="$(ReleaseDir)" />
     <!-- Binaries -->
-    <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Bin" />
+    <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\Bin" />
     <!-- Documentation -->
-    <Copy SourceFiles="@(Documentation)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Doc" />
+    <Copy SourceFiles="@(Documentation)" DestinationFolder="$(ReleaseDir)\Doc" />
     <!-- Samples -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples" />
+    <MakeDir Directories="$(ReleaseDir)\Samples" />
     <!-- Sample: StandaloneSetup -->
-    <Copy SourceFiles="@(StandaloneSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\%(RecursiveDir)" />
-    <Copy SourceFiles="@(SupportFiles)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup\SupportFiles\%(RecursiveDir)" />
-    <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\StandaloneSetup" />
+    <Copy SourceFiles="@(StandaloneSetupSample)" DestinationFolder="$(ReleaseDir)\Samples\StandaloneSetup\%(RecursiveDir)" />
+    <Copy SourceFiles="@(SupportFiles)" DestinationFolder="$(ReleaseDir)\Samples\StandaloneSetup\SupportFiles\%(RecursiveDir)" />
+    <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\Samples\StandaloneSetup" />
     <!-- Sample: PackagedSetup -->
     <CallTarget Targets="packagedsetupsample" />
     <!-- Sample: InstallCheckOperators -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
-    <Copy SourceFiles="@(InstallCheckOperatorsSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators\%(RecursiveDir)" />
-    <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckOperators" />
+    <MakeDir Directories="$(ReleaseDir)\Samples\InstallCheckOperators" />
+    <Copy SourceFiles="@(InstallCheckOperatorsSample)" DestinationFolder="$(ReleaseDir)\Samples\InstallCheckOperators\%(RecursiveDir)" />
+    <Copy SourceFiles="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" DestinationFolder="$(ReleaseDir)\Samples\InstallCheckOperators" />
     <!-- Sample: DownloadSetup -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\DownloadSetup" />
-    <Copy SourceFiles="@(DownloadSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\DownloadSetup\%(RecursiveDir)" />
+    <MakeDir Directories="$(ReleaseDir)\Samples\DownloadSetup" />
+    <Copy SourceFiles="@(DownloadSetupSample)" DestinationFolder="$(ReleaseDir)\Samples\DownloadSetup\%(RecursiveDir)" />
     <!-- Sample: MultilingualSetup -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\MultilingualSetup" />
-    <Copy SourceFiles="@(MultilingualSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\MultilingualSetup\%(RecursiveDir)" />
+    <MakeDir Directories="$(ReleaseDir)\Samples\MultilingualSetup" />
+    <Copy SourceFiles="@(MultilingualSetupSample)" DestinationFolder="$(ReleaseDir)\Samples\MultilingualSetup\%(RecursiveDir)" />
     <!-- Sample: LicenseAgreement -->
     <CallTarget Targets="licenseagreementsetupsample" />
     <!-- Sample: CustomInputSetup -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\CustomInputSetup" />
-    <Copy SourceFiles="@(CustomInputSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\CustomInputSetup\%(RecursiveDir)" />
+    <MakeDir Directories="$(ReleaseDir)\Samples\CustomInputSetup" />
+    <Copy SourceFiles="@(CustomInputSetupSample)" DestinationFolder="$(ReleaseDir)\Samples\CustomInputSetup\%(RecursiveDir)" />
     <!-- Sample: InstallCheckProduct -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckProduct" />
-    <Copy SourceFiles="@(InstallCheckProductSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\InstallCheckProduct\%(RecursiveDir)" />
+    <MakeDir Directories="$(ReleaseDir)\Samples\InstallCheckProduct" />
+    <Copy SourceFiles="@(InstallCheckProductSample)" DestinationFolder="$(ReleaseDir)\Samples\InstallCheckProduct\%(RecursiveDir)" />
     <!-- Sample: OsFiltersSetup -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup" />
-    <Copy SourceFiles="@(OsFiltersSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OsFiltersSetup\%(RecursiveDir)" />
+    <MakeDir Directories="$(ReleaseDir)\Samples\OsFiltersSetup" />
+    <Copy SourceFiles="@(OsFiltersSetupSample)" DestinationFolder="$(ReleaseDir)\Samples\OsFiltersSetup\%(RecursiveDir)" />
     <!-- Sample: OptionalComponentsSetup -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PAFilterSetup" />
-    <Copy SourceFiles="@(PAFilterSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PAFilterSetup\%(RecursiveDir)" />
+    <MakeDir Directories="$(ReleaseDir)\Samples\PAFilterSetup" />
+    <Copy SourceFiles="@(PAFilterSetupSample)" DestinationFolder="$(ReleaseDir)\Samples\PAFilterSetup\%(RecursiveDir)" />
     <!-- Sample: OptionalComponentsSetup -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OptionalComponentsSetup" />
-    <Copy SourceFiles="@(OptionalComponentsSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\OptionalComponentsSetup\%(RecursiveDir)" />
+    <MakeDir Directories="$(ReleaseDir)\Samples\OptionalComponentsSetup" />
+    <Copy SourceFiles="@(OptionalComponentsSetupSample)" DestinationFolder="$(ReleaseDir)\Samples\OptionalComponentsSetup\%(RecursiveDir)" />
     <!-- Sample: PatchSetup -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PatchSetup" />
-    <Copy SourceFiles="@(PatchSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PatchSetup\%(RecursiveDir)" />
+    <MakeDir Directories="$(ReleaseDir)\Samples\PatchSetup" />
+    <Copy SourceFiles="@(PatchSetupSample)" DestinationFolder="$(ReleaseDir)\Samples\PatchSetup\%(RecursiveDir)" />
     <!-- Sample: ExeSetup -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ExeSetup" />
-    <Copy SourceFiles="@(ExeSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ExeSetup\%(RecursiveDir)" />
+    <MakeDir Directories="$(ReleaseDir)\Samples\ExeSetup" />
+    <Copy SourceFiles="@(ExeSetupSample)" DestinationFolder="$(ReleaseDir)\Samples\ExeSetup\%(RecursiveDir)" />
     <!-- Sample: ReferenceSetup -->
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ReferenceSetup" />
-    <Copy SourceFiles="@(ReferenceSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\ReferenceSetup\%(RecursiveDir)" />
+    <MakeDir Directories="$(ReleaseDir)\Samples\ReferenceSetup" />
+    <Copy SourceFiles="@(ReferenceSetupSample)" DestinationFolder="$(ReleaseDir)\Samples\ReferenceSetup\%(RecursiveDir)" />
   </Target>
   <Target Name="doclib" DependsOnTargets="version">
     <Exec Command="InstallerDocLib\bin\$(Configuration)\InstallerDocLib.exe /Output:&quot;Documentation\Content\Generated&quot;"/>
@@ -309,18 +309,18 @@ return System.Guid.NewGuid().ToString().ToUpper();
     <MakeDir Directories="Samples\PackagedSetup\bin\$(Configuration)" />
     <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Splash:Samples\PackagedSetup\splash.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Manifest:Samples\PackagedSetup\PackagedSetup.manifest"/>
     <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\HtmlSetup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Splash:Samples\PackagedSetup\splash.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:htmlInstaller\$(Configuration)\htmlInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Manifest:Samples\PackagedSetup\PackagedSetup.manifest /EmbedHtml:htmlInstaller\html\index.html /EmbedHtml:htmlInstaller\html\style.css"/>
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
-    <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
-    <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\HtmlSetup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Package" />
-    <Copy SourceFiles="@(PackagedSetupSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\PackagedSetup\Source\%(RecursiveDir)" />
+    <MakeDir Directories="$(ReleaseDir)\Samples\PackagedSetup\Package" />
+    <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\Samples\PackagedSetup\Package" />
+    <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\HtmlSetup.exe" DestinationFolder="$(ReleaseDir)\Samples\PackagedSetup\Package" />
+    <Copy SourceFiles="@(PackagedSetupSample)" DestinationFolder="$(ReleaseDir)\Samples\PackagedSetup\Source\%(RecursiveDir)" />
   </Target>
   <Target Name="licenseagreementsetupsample" DependsOnTargets="version">
     <MakeDir Directories="Samples\LicenseAgreement\bin\$(Configuration)" />
     <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\LicenseAgreement\bin\$(Configuration)\Setup.exe&quot; /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\LicenseAgreement\Configuration.xml /AppPath:Samples\LicenseAgreement"/>
     <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\LicenseAgreement\bin\$(Configuration)\HtmlSetup.exe&quot; /Template:htmlInstaller\$(Configuration)\htmlInstaller.exe /Configuration:Samples\LicenseAgreement\Configuration.xml /AppPath:Samples\LicenseAgreement"/>
-    <MakeDir Directories="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
-    <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
-    <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\HtmlSetup.exe" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement" />
-    <Copy SourceFiles="@(LicenseAgreementSample)" DestinationFolder="$(ReleaseDir)\dotNetInstaller $(Major).$(Minor)\Samples\LicenseAgreement\%(RecursiveDir)" />
+    <MakeDir Directories="$(ReleaseDir)\Samples\LicenseAgreement" />
+    <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\Samples\LicenseAgreement" />
+    <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\HtmlSetup.exe" DestinationFolder="$(ReleaseDir)\Samples\LicenseAgreement" />
+    <Copy SourceFiles="@(LicenseAgreementSample)" DestinationFolder="$(ReleaseDir)\Samples\LicenseAgreement\%(RecursiveDir)" />
   </Target>
 </Project>
