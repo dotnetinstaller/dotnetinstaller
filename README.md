@@ -9,9 +9,9 @@ Essentials
 ----------
 
 * [Need Help? Google Group](http://groups.google.com/group/dotnetinstaller)
-* Download Version 3.0.812
-  [[installer](https://github.com/dotnetinstaller/dotnetinstaller/releases/download/3.0.812/dotNetInstaller.3.0.msi)]
-  [[zip](https://github.com/dotnetinstaller/dotnetinstaller/releases/download/3.0.812/dotNetInstaller.3.0.zip)]
+* Download Version 3.0.814
+  [[installer](https://github.com/dotnetinstaller/dotnetinstaller/releases/download/3.0.814/dotNetInstaller.3.0.814.0.msi)]
+  [[zip](https://github.com/dotnetinstaller/dotnetinstaller/releases/download/3.0.814/dotNetInstaller.3.0.814.0.zip)]
 * [Older Versions on CodePlex](http://dotnetinstaller.codeplex.com/).
 
 Bootstrapper
