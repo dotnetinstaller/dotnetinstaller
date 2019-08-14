@@ -279,11 +279,11 @@ return System.Guid.NewGuid().ToString().ToUpper();
     <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip;$(ReleaseDir)\UnitTests.xml;$(ReleaseDir)\*.msi">
       <Output TaskParameter="Include" ItemName="PackageFiles" />
     </CreateItem>
-    <Zip WorkingDirectory="target\$(Configuration)" ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).zip" Files="@(PackageFiles)" />
+    <Zip WorkingDirectory="target\$(Configuration)" ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).$(Build).$(Revision).zip" Files="@(PackageFiles)" />
   </Target>
   <Target Name="installer" DependsOnTargets="version">
     <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Build" />
-    <Copy SourceFiles="InstallerMsi\bin\$(Configuration)\en-us\dotNetInstaller.msi" DestinationFiles="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).msi" />
+    <Copy SourceFiles="InstallerMsi\bin\$(Configuration)\en-us\dotNetInstaller.msi" DestinationFiles="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).$(Build).$(Revision).msi" />
   </Target>
   <!-- rewrite configuration samples to the current configuration format -->
   <ItemGroup>
