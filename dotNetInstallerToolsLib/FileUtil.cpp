@@ -221,15 +221,17 @@ DVLib::FileVersion DVLib::wstring2fileversion(const std::wstring& version)
 {
     FileVersion result = { 0, 0, 0, 0 };
 
+    bool const hasLeadingV = !version.empty() && (version[0] == 'v' || version[0] == 'V');
+
     for (size_t i = 0; i < version.length(); i++)
     {
-        CHECK_BOOL(version[i] == '.' || isdigit(version[i]),
+        CHECK_BOOL(version[i] == '.' || isdigit(version[i]) || (i == 0 && hasLeadingV),
             L"Invalid version format: '" << version << L"'");
     }
 
-    if (! version.empty())
+    if (! version.empty() && !(version.size() == 1 && hasLeadingV))
     {
-        std::vector<std::wstring> parts_l = DVLib::split(version, L".", 4);
+        std::vector<std::wstring> parts_l = DVLib::split(hasLeadingV ? version.substr(1) : version, L".", 4);
         result.major = ((parts_l.size() >= 1) ? DVLib::wstring2long(parts_l[0]) : 0);
         result.minor = ((parts_l.size() >= 2) ? DVLib::wstring2long(parts_l[1]) : 0);
         result.build = ((parts_l.size() >= 3) ? DVLib::wstring2long(parts_l[2]) : 0);
