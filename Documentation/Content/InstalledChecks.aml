@@ -161,6 +161,14 @@
               versions, because the patch should not be installed when neither version of the product is installed. In this case
               set <newTerm>defaultValue</newTerm> to <newTerm>true</newTerm>.
             </para>
+            <para>
+               <alert class="note">
+                  <para>
+                     When checking for version, the version string can have the form <literal>major.minor.build.revision</literal>, with <literal>major</literal> being the only field that is required. 
+                     Examples include "1", "1.2", "1.2.0", or "1.2.0.100". A leading <literal>v</literal> or <literal>V</literal> is also supported, such as in "v1.2.0" or "V1.2.0.100".
+                  </para>
+               </alert>
+            </para>
           </content>
         </section>
         <section address="checktypesproduct">
