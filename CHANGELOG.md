@@ -1,3 +1,11 @@
+3.1.415 (4/15/2021)
+===================
+
+Features
+--------
+
+* [#141](https://github.com/dotnetinstaller/dotnetinstaller/pull/141) - Added support for `v[version]` format for version numbers (with a leading `v` or `V`);  e.g. `v3.1.415` - [@mariusbancila](https://github.com/mariusbancila).
+
 3.0.814 (8/14/2019)
 ===================
 

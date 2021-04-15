@@ -217,9 +217,12 @@ bool DVLib::ResourceExists(HMODULE h, const std::wstring& resource, const std::w
     return (NULL != ::FindResource(h, resource.c_str(), type.c_str()));
 }
 
-DVLib::FileVersion DVLib::wstring2fileversion(const std::wstring& version)
+DVLib::FileVersion DVLib::wstring2fileversion(std::wstring version)
 {
     FileVersion result = { 0, 0, 0, 0 };
+
+    if (!version.empty() && (version[0] == 'v' || version[0] == 'V'))
+       version.erase(0, 1);
 
     for (size_t i = 0; i < version.length(); i++)
     {
