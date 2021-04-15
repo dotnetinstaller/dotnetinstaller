@@ -69,7 +69,7 @@ namespace DVLib
 		int rev;
 	};
 
-	FileVersion wstring2fileversion(const std::wstring& version);
+	FileVersion wstring2fileversion(std::wstring version);
 	std::wstring fileversion2wstring(const FileVersion& version);
 	// compare a Windows-specific 4-part version
 	int CompareVersion(const std::wstring& l, const std::wstring& r);

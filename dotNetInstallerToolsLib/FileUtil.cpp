@@ -217,23 +217,22 @@ bool DVLib::ResourceExists(HMODULE h, const std::wstring& resource, const std::w
     return (NULL != ::FindResource(h, resource.c_str(), type.c_str()));
 }
 
-DVLib::FileVersion DVLib::wstring2fileversion(const std::wstring& version)
+DVLib::FileVersion DVLib::wstring2fileversion(std::wstring version)
 {
     FileVersion result = { 0, 0, 0, 0 };
 
-    bool const hasLeadingV = !version.empty() && (version[0] == 'v' || version[0] == 'V');
-
-    CHECK_BOOL(!(version.size() == 1 && hasLeadingV), L"Invalid version format: '" << version << L"'");
+    if (!version.empty() && (version[0] == 'v' || version[0] == 'V'))
+       version.erase(0, 1);
 
     for (size_t i = 0; i < version.length(); i++)
     {
-        CHECK_BOOL(version[i] == '.' || isdigit(version[i]) || (i == 0 && hasLeadingV),
+        CHECK_BOOL(version[i] == '.' || isdigit(version[i]),
             L"Invalid version format: '" << version << L"'");
     }
 
-    if (! version.empty() && !(version.size() == 1 && hasLeadingV))
+    if (! version.empty())
     {
-        std::vector<std::wstring> parts_l = DVLib::split(hasLeadingV ? version.substr(1) : version, L".", 4);
+        std::vector<std::wstring> parts_l = DVLib::split(version, L".", 4);
         result.major = ((parts_l.size() >= 1) ? DVLib::wstring2long(parts_l[0]) : 0);
         result.minor = ((parts_l.size() >= 2) ? DVLib::wstring2long(parts_l[1]) : 0);
         result.build = ((parts_l.size() >= 3) ? DVLib::wstring2long(parts_l[2]) : 0);
