@@ -5,6 +5,13 @@ dotNetInstaller Setup Bootstrapper
 
 dotNetInstaller is a widely used, general-purpose setup bootstrapper for Microsoft Windows XP, 2003, Vista, 2008, 7, 8, 2012, 8.1, 10, 2016, and 2019.
 
+Build Status
+------------
+
+| Debug | Release |
+| ----- | ------- |
+| [![Build status](https://ci.appveyor.com/api/projects/status/4jptnl22eo25bk87/branch/master?svg=true)](https://ci.appveyor.com/project/icnocop/dotnetinstaller-ixoxv/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/u1eixadj1nrfywo0/branch/master?svg=true)](https://ci.appveyor.com/project/icnocop/dotnetinstaller/branch/master) |
+
 Essentials
 ----------
 
@@ -53,13 +60,6 @@ This project consists of the following elements:
 * *InstallerEditor*: an application for editing configuration files and bootstrapper resources, written in C# for the .NET Framework 2.0. The editor is also capable of importing older versions of dotNetInstaller configuration files and converting them into the current/newer format. 
 * *InstallerLinker*: a command-line bootstrapper linker that can be used in a build process, written in C# for the .NET Framework 2.0. 
 Several samples and dependency templates that can be reused as-is and that demonstrate sometimes complex checks which verify whether, for example, MDAC or .NET framework are already installed. 
-
-Build Status
-------------
-
-| Debug | Release |
-| ----- | ------- |
-| [![Build status](https://ci.appveyor.com/api/projects/status/4jptnl22eo25bk87/branch/master?svg=true)](https://ci.appveyor.com/project/icnocop/dotnetinstaller-ixoxv/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/u1eixadj1nrfywo0/branch/master?svg=true)](https://ci.appveyor.com/project/icnocop/dotnetinstaller/branch/master) |
 
 Project History
 ---------------
