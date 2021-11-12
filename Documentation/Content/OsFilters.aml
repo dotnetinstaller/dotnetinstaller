@@ -144,12 +144,12 @@
               <entry>win8</entry>
             </row>
             <row>
-              <entry>Windows Server 2012</entry>
-              <entry>win8Server</entry>
-            </row>
-            <row>
               <entry>Windows 8.1</entry>
               <entry>win8_1</entry>
+            </row>
+            <row>
+              <entry>Windows Server 2012</entry>
+              <entry>win8Server</entry>
             </row>
             <row>
               <entry>Windows Server 2012 R2</entry>
