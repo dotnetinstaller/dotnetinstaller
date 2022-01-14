@@ -8,9 +8,7 @@ dotNetInstaller is a widely used, general-purpose setup bootstrapper for Microso
 Build Status
 ------------
 
-| Debug | Release |
-| ----- | ------- |
-| [![Build status](https://ci.appveyor.com/api/projects/status/4jptnl22eo25bk87/branch/master?svg=true)](https://ci.appveyor.com/project/icnocop/dotnetinstaller-ixoxv/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/u1eixadj1nrfywo0/branch/master?svg=true)](https://ci.appveyor.com/project/icnocop/dotnetinstaller/branch/master) |
+[![Build status](https://github.com/dotnetinstaller/dotnetinstaller/actions/workflows/build.yml/badge.svg?branch=master&event=push)](https://github.com/dotnetinstaller/dotnetinstaller/actions/workflows/build.yml)
 
 Essentials
 ----------
