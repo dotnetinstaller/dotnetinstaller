@@ -63,12 +63,12 @@
           </listItem>
           <listItem>
             <application>InstallerEditor</application>: an application for editing configuration files and dotNetInstaller.exe
-            resources, written in C# for the .NET Framework 2.0. The editor is also capable of importing older
+            resources, written in C# for the .NET Framework 4.0. The editor is also capable of importing older
             versions of dotNetInstaller configuration files and converting them into the current/newer format.
           </listItem>
           <listItem>
             <application>InstallerLinker</application>: a command-line bootstrapper linker that can be used in a build process,
-            written in C# for the .NET Framework 2.0.
+            written in C# for the .NET Framework 4.0.
           </listItem>
           <listItem>
             Several samples and dependency templates that can be reused as-is and that demonstrate sometimes complex checks which
@@ -91,10 +91,10 @@
           <linkUri>https://sourceforge.net/projects/dotnetinstaller</linkUri>
           <linkText>SourceForge</linkText>
         </externalLink> by David Icardi.
-        It's now fully open-sourced and maintained on CodePlex at
+        It continued its journey through CodePlex and is now officially maintained on Github at
         <externalLink>
-          <linkUri>http://dotnetinstaller.codeplex.com/</linkUri>
-          <linkText>http://dotnetinstaller.codeplex.com/</linkText>
+          <linkUri>https://github.com/dotnetinstaller/dotnetinstaller</linkUri>
+          <linkText>https://github.com/dotnetinstaller/dotnetinstaller</linkText>
         </externalLink> by a community of developers that use dotNetInstaller in their own projects.
       </para>
     </introduction>

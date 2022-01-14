@@ -17,7 +17,7 @@ Essentials
 * Download Version 3.1.415
   [[installer](https://github.com/dotnetinstaller/dotnetinstaller/releases/download/3.1.415/dotNetInstaller.3.1.415.0.msi)]
   [[zip](https://github.com/dotnetinstaller/dotnetinstaller/releases/download/3.1.415/dotNetInstaller.3.1.415.0.zip)]
-* [Older Versions on CodePlex](http://dotnetinstaller.codeplex.com/).
+* [Older Versions](https://github.com/dotnetinstaller/dotnetinstaller/releases).
 
 Bootstrapper
 ------------
@@ -55,14 +55,14 @@ dotNetInstaller Components
 This project consists of the following elements: 
 
 * *dotNetInstaller* and *htmlInstaller*: main bootstrapper applications, written in C++. This is the raw setup which presents a GUI in front of the user that displays which components to install depending on which components are already installed on the operating system. The bootstrapper is statically linked with the CRT and has no prerequisites. 
-* *InstallerEditor*: an application for editing configuration files and bootstrapper resources, written in C# for the .NET Framework 2.0. The editor is also capable of importing older versions of dotNetInstaller configuration files and converting them into the current/newer format. 
-* *InstallerLinker*: a command-line bootstrapper linker that can be used in a build process, written in C# for the .NET Framework 2.0. 
+* *InstallerEditor*: an application for editing configuration files and bootstrapper resources, written in C# for the .NET Framework 4.0. The editor is also capable of importing older versions of dotNetInstaller configuration files and converting them into the current/newer format. 
+* *InstallerLinker*: a command-line bootstrapper linker that can be used in a build process, written in C# for the .NET Framework 4.0. 
 Several samples and dependency templates that can be reused as-is and that demonstrate sometimes complex checks which verify whether, for example, MDAC or .NET framework are already installed. 
 
 Project History
 ---------------
 
-This project began as a [CodeProject article](http://www.codeproject.com/KB/install/dotNetInstaller.aspx) and was maintained on the [DevAge website](http://www.devage.com/) and [SourceForge](https://sourceforge.net/projects/dotnetinstaller) by [Davide Icardi](https://github.com/davideicardi). It continued its journey through [CodePlex](http://dotnetinstaller.codeplex.com) and is now officially maintained on [Github](https://github.com/dotnetinstaller/dotnetinstaller).
+This project began as a [CodeProject article](http://www.codeproject.com/KB/install/dotNetInstaller.aspx) and was maintained on the [DevAge website](http://www.devage.com/) and [SourceForge](https://sourceforge.net/projects/dotnetinstaller) by [Davide Icardi](https://github.com/davideicardi). It continued its journey through CodePlex and is now officially maintained on [Github](https://github.com/dotnetinstaller/dotnetinstaller).
 
 License and Copyright
 ---------------------
