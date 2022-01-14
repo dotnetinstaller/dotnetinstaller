@@ -41,15 +41,36 @@ namespace InstallerLib
         win8_1 = 131,
         win8Max = 139,
 
-        win8Server = 140,
-        win8ServerR2 = 141,
+        win8Server = 140, // Windows Server 2012
+        win8ServerR2 = 141, // Windows Server 2012 R2
         win8ServerMax = 149,
 
-        win10 = 150,
-        win10Max = 159,
+        win10 = 150, // build 1507
+        win10_1511 = 151,
+        win10_1607 = 152,
+        win10_1703 = 153,
+        win10_1709 = 154,
+        win10_1803 = 155,
+        win10_1809 = 156,
+        win10_1903 = 157,
+        win10_1909 = 158,
+        win10_2004 = 159,
+        win10_20H2 = 160,
+        win10_21H1 = 161,
+        win10_21H2 = 162,
+        win10Max = 169,
 
-        win10Server = 160,
-        win10ServerMax = 169,
+        win10Server = 170, // Windows Server 2016
+        win10ServerMax = 179,
+
+        winServer2019 = 180,
+        winServer2019Max = 189,
+
+        winServer2022 = 190,
+        winServer2022Max = 199,
+
+        win11 = 200,
+        win11Max = 209,
 
         winMax = 255,
     }

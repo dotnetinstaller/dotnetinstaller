@@ -1,3 +1,12 @@
+TBD
+===
+
+Features
+--------
+
+* [#146](https://github.com/dotnetinstaller/dotnetinstaller/pull/146) - Added support for specific Windows 10 versions, Windows 11, Windows Server 2019, and Windows Server 2022 - [@icnocop](https://github.com/icnocop).
+* [#144](https://github.com/dotnetinstaller/dotnetinstaller/issues/144) - Fix: OSinfo not displaying correctly if server 2016 or 2019 - [@icnocop](https://github.com/icnocop).
+
 3.1.415 (4/15/2021)
 ===================
 

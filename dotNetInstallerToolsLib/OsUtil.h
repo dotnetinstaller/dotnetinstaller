@@ -66,15 +66,36 @@ namespace DVLib
 		win8_1 = 131,
 		win8Max = 139,
 		
-		win8Server = 140,
-		win8ServerR2 = 141,
+		win8Server = 140, // Windows Server 2012
+		win8ServerR2 = 141, // Windows Server 2012 R2
 		win8ServerMax = 149,
 
-		win10 = 150,
-		win10Max = 159,
+		win10 = 150, // build 1507
+		win10_1511 = 151,
+		win10_1607 = 152,
+		win10_1703 = 153,
+		win10_1709 = 154,
+		win10_1803 = 155,
+		win10_1809 = 156,
+		win10_1903 = 157,
+		win10_1909 = 158,
+		win10_2004 = 159,
+		win10_20H2 = 160,
+		win10_21H1 = 161,
+		win10_21H2 = 162,
+		win10Max = 169,
 
-		win10Server = 160,
-		win10ServerMax = 169,
+		win10Server = 170, // Windows Server 2016
+		win10ServerMax = 179,
+
+		winServer2019 = 180,
+		winServer2019Max = 189,
+
+		winServer2022 = 190,
+		winServer2022Max = 199,
+
+		win11 = 200,
+		win11Max = 209,
 
 		winMax = 255, // This value should always be last
 	};
@@ -119,9 +140,27 @@ namespace DVLib
 		{ win8ServerR2, L"win8ServerR2", L"Windows Server 2012 R2" },
 		{ win8ServerMax, L"win8ServerMax", L"Windows Server 2012+" },
 		{ win10, L"win10", L"Windows 10" },
+		{ win10_1511, L"win10_1511", L"Windows 10 Version 1511" },
+		{ win10_1607, L"win10_1607", L"Windows 10 Version 1607" },
+		{ win10_1703, L"win10_1703", L"Windows 10 Version 1703" },
+		{ win10_1709, L"win10_1709", L"Windows 10 Version 1709" },
+		{ win10_1803, L"win10_1803", L"Windows 10 Version 1803" },
+		{ win10_1809, L"win10_1809", L"Windows 10 Version 1809" },
+		{ win10_1903, L"win10_1903", L"Windows 10 Version 1903" },
+		{ win10_1909, L"win10_1909", L"Windows 10 Version 1909" },
+		{ win10_2004, L"win10_2004", L"Windows 10 Version 2004" },
+		{ win10_20H2, L"win10_20H2", L"Windows 10 Version 20H2" },
+		{ win10_21H1, L"win10_21H1", L"Windows 10 Version 21H1" },
+		{ win10_21H2, L"win10_21H2", L"Windows 10 Version 21H2" },
 		{ win10Max, L"win10Max", L"Windows 10+" },
-		{ win10Server, L"win10Server", L"Windows Server 10" },
-		{ win10ServerMax, L"win10ServerMax", L"Windows Server 10+" },
+		{ win10Server, L"win10Server", L"Windows Server 2016" },
+		{ win10ServerMax, L"win10ServerMax", L"Windows Server 2016+" },
+		{ winServer2019, L"winServer2019", L"Windows Server 2019" },
+		{ winServer2019Max, L"winServer2019Max", L"Windows Server 2019+" },
+		{ winServer2022, L"winServer2022", L"Windows Server 2022" },
+		{ winServer2022Max, L"winServer2022Max", L"Windows Server 2022+" },
+		{ win11, L"win11", L"Windows 11" },
+		{ win11Max, L"win11Max", L"Windows 11+" },
 		{ winMax, L"winMax", L"Windows Latest" },
 	};
 

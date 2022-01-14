@@ -1,13 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{401947AE-AA1F-4FB3-8949-14C91A9504E4}"
 	ProjectSection(SolutionItems) = preProject
-		appveyor.Debug.yml = appveyor.Debug.yml
-		appveyor.Release.yml = appveyor.Release.yml
 		build.cmd = build.cmd
+		.github\workflows\build.yml = .github\workflows\build.yml
 		CHANGELOG.md = CHANGELOG.md
 		dni.debug.props = dni.debug.props
 		dni.debug.vsprops = dni.debug.vsprops
@@ -384,5 +383,8 @@ Global
 		{97E729E6-0C6A-4772-B2DF-18C89DAA61C0} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{96A9878C-7B75-41F7-AA11-7268672C16DD} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7D1286D-5E09-4B3E-8F39-F449FB21E8C0}
 	EndGlobalSection
 EndGlobal

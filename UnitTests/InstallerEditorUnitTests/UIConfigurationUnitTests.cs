@@ -15,6 +15,7 @@ using White.Core.WindowsAPI;
 using System.IO;
 using InstallerLib;
 using System.Runtime.InteropServices;
+using Microsoft.Win32;
 
 namespace InstallerEditorUnitTests
 {
@@ -312,12 +313,27 @@ namespace InstallerEditorUnitTests
                     UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Edit With Notepad").Click();
                     Thread.Sleep(1000);
                     string windowText = string.Format("{0} -", Path.GetFileName(configFileName));
-                    string moduleName = "NOTEPAD.EXE";
+
+                    using (RegistryKey currentUserKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64))
+                    {
+                        using (RegistryKey key = currentUserKey.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"))
+                        {
+                            object hideFileExt = key.GetValue("HideFileExt");
+                            if ((int)hideFileExt == 1)
+                            {
+                                // file extensions are hidden
+                                windowText = string.Format("{0} -", Path.GetFileNameWithoutExtension(configFileName));
+                            }
+                        }
+                    }
+
                     Console.WriteLine(windowText);
                     bool foundNotepad = false;
-                    foreach (Process p in Process.GetProcesses())
+                    foreach (Process p in Process.GetProcessesByName("notepad"))
                     {
-                        if ((p.MainWindowTitle.StartsWith(windowText)) && (p.MainModule.ModuleName == moduleName))
+                        Console.WriteLine($"Found process with id {p.Id} with main window title '{p.MainWindowTitle}'.");
+
+                        if (p.MainWindowTitle.StartsWith(windowText))
                         {
                             p.CloseMainWindow();
                             foundNotepad = true;

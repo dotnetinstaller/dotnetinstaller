@@ -20,6 +20,11 @@
   <PropertyGroup>
     <MSBuild_4_0_ExeFilePath>%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe</MSBuild_4_0_ExeFilePath>
     <NUnitToolPath>ThirdParty\NUnit\bin\net-2.0</NUnitToolPath>
+    <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
+    <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
+    <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
+    <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
+    <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'==''">C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
   </PropertyGroup>
   <ItemGroup>
     <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.txt" />
@@ -269,7 +274,7 @@ return System.Guid.NewGuid().ToString().ToUpper();
   </Target>
   <Target Name="unittests" DependsOnTargets="version">
     <Message Text="Running %(CppUnitTests.Identity) ..." />
-    <Exec Command="&quot;C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe&quot; &quot;%(CppUnitTests.Identity)&quot; /Platform:x86" />
+    <Exec Command="&quot;$(VsTestConsoleExeFilePath)&quot; &quot;%(CppUnitTests.Identity)&quot; /Platform:x86" />
     <MakeDir Directories="$(ReleaseDir)" />
     <CallTarget Targets="libtests" />
     <CallTarget Targets="uitests" />

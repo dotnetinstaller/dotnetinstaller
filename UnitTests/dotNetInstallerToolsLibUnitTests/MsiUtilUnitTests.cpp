@@ -4,8 +4,12 @@
 using namespace DVLib::UnitTests;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-// MSBuild Community Tasks required to build this project
-#define WELLKNOWN_UPGRADECODE "{F289AA13-BBAF-4EA2-97C8-BAEC7E5B743E}"
+// Microsoft Visual C++ 2010 x64 Redistributable - 10.0.40219
+// Microsoft Visual C++ Redistributables MSI Product Codes (2005 – 2017)
+// https://qtechbabble.wordpress.com/2017/08/08/microsoft-visual-c-redistributables-msi-product-codes/
+// How to extract the upgrade code for a known product code from the registry.
+// https://stackoverflow.com/a/17936065/90287
+#define WELLKNOWN_UPGRADECODE "{5b75f761-bac8-33bc-a381-464dddd813a3}"
 
 void MsiUtilUnitTests::testGetInstalledProducts()
 {
@@ -38,8 +42,13 @@ void MsiUtilUnitTests::testGetAnyInstalledProducts()
             CHECK_WIN32_DWORD(rc, L"MsiEnumProducts");
 
             MsiProductInfo product(DVLib::string2guid(& * buffer.begin()));
-            std::wcout << std::endl << index << L" - " << DVLib::guid2wstring(product.product_id) 
-                << L": " << product.GetProductName() << L" (" << product.GetLocalPackage() << L")";
+            std::wcout << std::endl << index << L" - " << DVLib::guid2wstring(product.product_id)
+                << L": " << product.GetProductName();
+            
+            if (product.HasProperty(INSTALLPROPERTY_LOCALPACKAGE))
+            {
+                std::wcout << L" (" << product.GetLocalPackage() << L")";
+            }
         }
         catch(std::exception& ex)
         {
@@ -125,6 +134,6 @@ void MsiUtilUnitTests::testGetRelatedInstalledProducts()
     std::vector<DVLib::MsiProductInfo> related_products = DVLib::MsiGetRelatedProducts( wellknown_upgradecode );
     Assert::AreEqual((size_t)1, related_products.size());
     const DVLib::MsiProductInfo& related_product = related_products.at(0);
-    Assert::AreEqual("{4281E664-2261-4602-A4F8-0AE0B3BD4A93}", DVLib::guid2string(related_product.product_id).c_str());
-    Assert::AreEqual(L"MSBuild Community Tasks 1.4", related_product.GetProductName().c_str());
+    Assert::AreEqual("{1D8E6291-B0D5-35EC-8441-6616F567A0F7}", DVLib::guid2string(related_product.product_id).c_str());
+    Assert::AreEqual(L"Microsoft Visual C++ 2010  x64 Redistributable - 10.0.40219", related_product.GetProductName().c_str());
 }
