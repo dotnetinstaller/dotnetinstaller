@@ -2,9 +2,11 @@ name: Build
 
 on:
   push:
-    branches: [ master ]
+    branches-ignore:    
+      - 'gh-pages'
   pull_request:
-    branches: [ master ]
+    branches-ignore:    
+      - 'gh-pages'
 
 env:
   # set RestoreUseSkipNonexistentTargets=false so running "nuget.exe restore dni.sln" returns a successful exit code (0).
