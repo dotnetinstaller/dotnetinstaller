@@ -14,7 +14,7 @@
     <Trademark>All Rights Reserved</Trademark>
     <ReleaseDir>target\$(Configuration)</ReleaseDir>
     <MajorVersion>3</MajorVersion>
-    <MinorVersion>1</MinorVersion>
+    <MinorVersion>2</MinorVersion>
     <RevisionVersion>0</RevisionVersion>
   </PropertyGroup>
   <PropertyGroup>
