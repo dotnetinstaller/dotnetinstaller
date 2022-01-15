@@ -36,6 +36,7 @@ void Configuration::Load(tinyxml2::XMLElement * node)
     os_filter = node->Attribute("os_filter");
     os_filter_min = DVLib::oscode2os(XmlAttribute(node->Attribute("os_filter_min")).GetValue());
     os_filter_max = DVLib::oscode2os(XmlAttribute(node->Attribute("os_filter_max")).GetValue());
+    os_type_filter = node->Attribute("os_type_filter");
     // processor architecture filter
     processor_architecture_filter = XmlAttribute(node->Attribute("processor_architecture_filter"));
     // install modes
@@ -47,7 +48,8 @@ bool Configuration::IsSupported(LCID lcid) const
 {
     return DVLib::IsOperatingSystemLCIDValue(lcid, lcid_filter) &&
         DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), processor_architecture_filter) &&
-        DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter, os_filter_min, os_filter_max);
+        DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter, os_filter_min, os_filter_max) &&
+        DVLib::IsOperatingSystemProductType(DVLib::GetOperatingSystemProductType(), os_type_filter);
 }
 
 std::wstring Configuration::GetLanguageString() const
@@ -72,5 +74,7 @@ std::wstring Configuration::GetString(int /* indent */) const
         ss << L", os_filter_min=" << DVLib::os2wstring(os_filter_min);
     if (os_filter_max != DVLib::winNone)
         ss << L", os_filter_max=" << DVLib::os2wstring(os_filter_max);
+    if (!os_type_filter.empty())
+        ss << L", os_type=" << os_type_filter;
     return ss.str();
 }

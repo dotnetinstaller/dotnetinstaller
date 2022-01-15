@@ -18,7 +18,7 @@ env:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2016
 
     strategy:
       matrix:
@@ -29,6 +29,30 @@ jobs:
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Check Win8.1 SDK Cache
+      id: check-win81-sdk-cache
+      uses: actions/cache@v2
+      with:
+        path: C:\win81sdk
+        key: win81sdk
+    - name: Download Win8.1 SDK
+      run: |
+        md C:\win81sdk
+        Invoke-WebRequest -Method Get -Uri https://go.microsoft.com/fwlink/p/?LinkId=323507 -OutFile C:\win81sdk\sdksetup.exe -UseBasicParsing
+      shell: powershell
+      if: steps.check-win81-sdk-cache.outputs.cache-hit != 'true'
+    - name: Install Win8.1 SDK
+      run: |
+        Start-Process -Wait C:\win81sdk\sdksetup.exe -ArgumentList "/q", "/norestart", "/features", "OptionId.WindowsDesktopSoftwareDevelopmentKit", "OptionId.NetFxSoftwareDevelopmentKit"
+      shell: powershell
+      if: steps.check-win81-sdk-cache.outputs.cache-hit != 'true'
+
+      
+    - name: Install Microsoft Visual C++ 2010 Runtime 10.0.40219
+      # This is required for the test method 'testGetRelatedInstalledProducts' in 'dotNetInstallerToolsLibUnitTests\MsiUtilUnitTests.cpp' to succeed.
+      # The windows-2016 virtual environment has an older version, Microsoft Visual C++ 2010 Runtime 10.0.30319.
+      run: choco install vcredist2010 --version=10.0.40219.32503
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}

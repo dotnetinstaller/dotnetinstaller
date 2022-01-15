@@ -87,6 +87,7 @@ void Component::Load(tinyxml2::XMLElement * node)
     os_filter = node->Attribute("os_filter");
     os_filter_min = DVLib::oscode2os(XmlAttribute(node->Attribute("os_filter_min")).GetValue());
     os_filter_max = DVLib::oscode2os(XmlAttribute(node->Attribute("os_filter_max")).GetValue());
+    os_type_filter = node->Attribute("os_type_filter");
     os_filter_lcid = node->Attribute("os_filter_lcid");
     installcompletemessage = node->Attribute("installcompletemessage");
     uninstallcompletemessage = node->Attribute("uninstallcompletemessage");
@@ -170,7 +171,8 @@ bool Component::IsSupported(LCID lcid) const
 {
     return DVLib::IsOperatingSystemLCIDValue(lcid, os_filter_lcid) &&
         DVLib::IsProcessorArchitecture(DVLib::GetProcessorArchitecture(), processor_architecture_filter) &&
-        DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter, os_filter_min, os_filter_max);
+        DVLib::IsInOperatingSystemInRange(DVLib::GetOperatingSystemVersion(), os_filter, os_filter_min, os_filter_max) &&
+        DVLib::IsOperatingSystemProductType(DVLib::GetOperatingSystemProductType(), os_type_filter);
 }
 
 std::wstring Component::GetString(int indent) const
@@ -188,6 +190,8 @@ std::wstring Component::GetString(int indent) const
         ss << L", os_filter_min=" << DVLib::os2wstring(os_filter_min);
     if (os_filter_max != DVLib::winNone)
         ss << L", os_filter_max=" << DVLib::os2wstring(os_filter_max);
+    if (!os_type_filter.empty())
+        ss << L", os_type=" << os_type_filter;
     return ss.str();
 }
 

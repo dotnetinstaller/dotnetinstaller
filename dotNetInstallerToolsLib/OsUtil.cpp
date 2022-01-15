@@ -12,7 +12,7 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
     DVLib::OperatingSystem os = winNone;
     OSVERSIONINFOEX osvi = { 0 };
 
-    // use GetVersionEx, fallback on GetVersion when unavaialble
+    // use GetVersionEx, fallback on GetVersion when unavailable
     osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
     if(! ::GetVersionEx(reinterpret_cast<LPOSVERSIONINFO>(& osvi)))
     {
@@ -219,6 +219,116 @@ bool DVLib::IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& o
     }
 
     return true;
+}
+
+DVLib::OperatingSystemProductType DVLib::GetOperatingSystemProductType()
+{
+    DVLib::OperatingSystemProductType osProductType = DVLib::osNone;
+    OSVERSIONINFOEX osvi = { 0 };
+
+    // use GetVersionEx, fallback on GetVersion when unavailable
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+    if (!::GetVersionEx(reinterpret_cast<LPOSVERSIONINFO>(&osvi)))
+    {
+        osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+        CHECK_WIN32_BOOL(GetVersionEx(reinterpret_cast<LPOSVERSIONINFO>(&osvi)),
+            L"GetVersionEx");
+    }
+
+    switch (osvi.wProductType)
+    {
+    case VER_NT_WORKSTATION:
+        osProductType = DVLib::Workstation;
+        break;
+    case VER_NT_SERVER:
+        osProductType = DVLib::Server;
+        break;
+    case VER_NT_DOMAIN_CONTROLLER:
+        osProductType = DVLib::DomainController;
+        break;
+    }
+
+    CHECK_BOOL(osProductType != DVLib::osNone,
+        L"Unsupported operating system type " << osvi.wProductType);
+
+    return osProductType;
+}
+
+bool DVLib::IsOperatingSystemProductType(BYTE osProductType_in, const std::wstring& filter)
+{
+    if (filter.empty())
+    {
+        return true;
+    }
+
+    std::vector<std::wstring> osProductTypes = DVLib::split(filter, L",");
+
+    size_t filters = 0;
+    std::vector<int> osProductType_or;
+    std::vector<int> osProductType_andnot;
+
+    for (size_t i = 0; i < osProductTypes.size(); i++)
+    {
+        if (osProductTypes[i].empty())
+        {
+            continue; // tolerate an empty value
+        }
+
+        filters++; // Total number of filters (excluding empty ones)
+
+        if (osProductTypes[i][0] == L'!')
+        {
+            osProductType_andnot.push_back(DVLib::wstring2osType(osProductTypes[i].substr(1)));
+        }
+        else
+        {
+            osProductType_or.push_back(DVLib::wstring2osType(osProductTypes[i]));
+        }
+    }
+
+    if ((osProductType_or.size() > 0 && osProductType_or.size() != filters) ||
+        (osProductType_andnot.size() > 0 && osProductType_andnot.size() != filters))
+    {
+        THROW_EX(L"Ambiguous operating system product type filter: " << filter);
+    }
+
+    if (osProductType_or.size() > 0)
+    {
+        for each (int osProductType in osProductType_or)
+        {
+            if (osProductType == osProductType_in)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    else
+    {
+        for each (int osProductType in osProductType_andnot)
+        {
+            if (osProductType == osProductType_in)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+WORD DVLib::wstring2osType(const std::wstring& osProductType)
+{
+    for (int i = 0; i < ARRAYSIZE(DVLib::operating_system_product_types); i++)
+    {
+        if (osProductType == DVLib::operating_system_product_types[i].name)
+        {
+            return DVLib::operating_system_product_types[i].productType;
+        }
+    }
+
+    THROW_EX("Invalid operating system product type: " << osProductType);
 }
 
 LCID DVLib::GetOperatingSystemLCID(LcidType lcidtype)

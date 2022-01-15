@@ -174,6 +174,35 @@ namespace DVLib
 	bool IsOperatingSystemID(OperatingSystem os, const std::wstring& os_filter);
 	bool IsInOperatingSystemInRange(OperatingSystem os, const std::wstring& os_filter, 
 		OperatingSystem l, OperatingSystem r);
+
+	// operating system product type
+
+	enum OperatingSystemProductType
+	{
+		osNone = -1,
+
+		Workstation = 1,
+		DomainController = 2,
+		Server = 3
+	};
+
+	OperatingSystemProductType GetOperatingSystemProductType();
+	bool IsOperatingSystemProductType(BYTE osProductType_in, const std::wstring& filter);
+	WORD wstring2osType(const std::wstring& osProductType);
+
+	struct OPERATING_SYSTEM_PRODUCT_TYPE
+	{
+		LPCWSTR name;
+		BYTE productType;
+	};
+
+	static const OPERATING_SYSTEM_PRODUCT_TYPE operating_system_product_types[] =
+	{
+		{ L"workstation", VER_NT_WORKSTATION },
+		{ L"server", VER_NT_SERVER },
+		{ L"domainController", VER_NT_DOMAIN_CONTROLLER },
+	};
+
 	// get the operating system LCID
 	LCID GetOperatingSystemLCID(LcidType lcidtype);
 	std::wstring GetLocale(LCID lcid, int format = LOCALE_SISO639LANGNAME);
@@ -206,7 +235,7 @@ namespace DVLib
 		{ L"ia32onwin64", PROCESSOR_ARCHITECTURE_IA32_ON_WIN64 }
 	};
 
-	// get current processor architecutre
+	// get current processor architecture
 	WORD GetProcessorArchitecture();
 	// returns the numerical representation of the processor architecture
 	WORD wstring2pa(const std::wstring& pa);

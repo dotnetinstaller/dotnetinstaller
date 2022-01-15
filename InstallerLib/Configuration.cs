@@ -44,6 +44,15 @@ namespace InstallerLib
             set { m_os_filter_max = value; }
         }
 
+        private string m_os_type_filter;
+        [Description("Filter to install this configuration only on all operating system product types equal or not equal to the value(s) specified. Separate multiple operating system types with a comma (',') and use the not symbol ('!') for NOT logic (ex. '!workstation,!server' ).")]
+        [Category("Operating System")]
+        public string os_type_filter
+        {
+            get { return m_os_type_filter; }
+            set { m_os_type_filter = value; }
+        }
+
         // filter for processor architecture
         private string m_processor_architecture_filter;
         [Description("Type of processor architecture (x86, mips, alpha, ppc, shx, arm, ia64, alpha64, msil, x64, ia32onwin64). Separate by commas and use the NOT sign ('!') to exclude. (eg. 'x86,x64' or '!x86').")]
@@ -139,6 +148,7 @@ namespace InstallerLib
             ReadAttributeValue(e, "language", ref m_language);
             ReadAttributeValue(e, "language_id", ref m_language_id);
             ReadAttributeValue(e, "os_filter", ref m_os_filter);
+            ReadAttributeValue(e, "os_type_filter", ref m_os_type_filter);
             string os_filter_greater = string.Empty;
             if (ReadAttributeValue(e, "os_filter_greater", ref os_filter_greater) && !String.IsNullOrEmpty(os_filter_greater))
                 m_os_filter_min = (OperatingSystem)(int.Parse(os_filter_greater) + 1);
@@ -159,6 +169,7 @@ namespace InstallerLib
             e.XmlWriter.WriteAttributeString("language_id", m_language_id);
             e.XmlWriter.WriteAttributeString("language", m_language);
             e.XmlWriter.WriteAttributeString("os_filter", m_os_filter);
+            e.XmlWriter.WriteAttributeString("os_type_filter", m_os_type_filter);
             e.XmlWriter.WriteAttributeString("os_filter_min", (m_os_filter_min == OperatingSystem.winNone
                 ? "" : Enum.GetName(typeof(OperatingSystem), m_os_filter_min)));
             e.XmlWriter.WriteAttributeString("os_filter_max", (m_os_filter_max == OperatingSystem.winNone

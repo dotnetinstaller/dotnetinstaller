@@ -76,6 +76,7 @@ Components Components::GetSupportedComponents(DVLib::LcidType lcidtype, InstallS
             << L", os_filter=" << component->os_filter
             << L", os_filter_min=" << DVLib::os2wstring(component->os_filter_min)
             << L", os_filter_max=" << DVLib::os2wstring(component->os_filter_max)
+            << L", os_type_filter=" << component->os_type_filter
             << L", processor_architecture_filter=" << component->processor_architecture_filter
             << L"): " << (supported ? L"LOADED" : L"SKIPPED"));
     }

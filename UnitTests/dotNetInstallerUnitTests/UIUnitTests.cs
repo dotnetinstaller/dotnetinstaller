@@ -12,12 +12,12 @@ namespace dotNetInstallerUnitTests
     using dotNetUnitTestsRunner;
     using InstallerLib;
     using NUnit.Framework;
-    using White.Core;
-    using White.Core.Factory;
-    using White.Core.UIItems;
-    using White.Core.UIItems.Finders;
-    using White.Core.UIItems.ListBoxItems;
-    using White.Core.UIItems.WindowItems;
+    using TestStack.White;
+    using TestStack.White.Factory;
+    using TestStack.White.UIItems;
+    using TestStack.White.UIItems.Finders;
+    using TestStack.White.UIItems.ListBoxItems;
+    using TestStack.White.UIItems.WindowItems;
 
     /// <summary>
     /// UI unit tests
@@ -71,7 +71,7 @@ namespace dotNetInstallerUnitTests
                 if (usingHtmlInstaller)
                 {
                     // get all the checkboxes in the window
-                    IUIItem[] checkBoxes = mainWindow.GetMultiple(SearchCriteria.ByControlType(typeof(CheckBox)));
+                    IUIItem[] checkBoxes = mainWindow.GetMultiple(SearchCriteria.ByControlType(System.Windows.Automation.ControlType.CheckBox));
 
                     // assert that there's only one checkbox
                     Assert.AreEqual(1, checkBoxes.Length);

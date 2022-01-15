@@ -4,14 +4,14 @@ using NUnit.Framework;
 using dotNetUnitTestsRunner;
 using System.Diagnostics;
 using System.Threading;
-using White.Core;
-using White.Core.Factory;
-using White.Core.UIItems;
-using White.Core.UIItems.WindowItems;
-using White.Core.UIItems.WindowStripControls;
-using White.Core.UIItems.MenuItems;
-using White.Core.UIItems.TreeItems;
-using White.Core.WindowsAPI;
+using TestStack.White;
+using TestStack.White.Factory;
+using TestStack.White.UIItems;
+using TestStack.White.UIItems.WindowItems;
+using TestStack.White.UIItems.WindowStripControls;
+using TestStack.White.UIItems.MenuItems;
+using TestStack.White.UIItems.TreeItems;
+using TestStack.White.WindowsAPI;
 using System.IO;
 using InstallerLib;
 using System.Runtime.InteropServices;
@@ -28,8 +28,7 @@ namespace InstallerEditorUnitTests
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
                 Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
-                UIAutomation.Find<MenuBar>(mainWindow, "Application").TopLevelMenu.Find("File").Click();
-                UIAutomation.Find<MenuBar>(mainWindow, "Application").TopLevelMenu.Find("File").ChildMenus.Find("New").Click();
+                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
                 // status says "Ready"
                 StatusStrip statusStrip = UIAutomation.Find<StatusStrip>(mainWindow, "statusStrip");
                 WinFormTextBox statusLabel = (WinFormTextBox)statusStrip.Items[0];
@@ -140,7 +139,11 @@ namespace InstallerEditorUnitTests
                 using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
                 {
                     Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
-                    UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Open...").Click();
+                    Menu menu = UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Open...");
+                    // explicitly use clickable point; otherwise, the following error may occur:
+                    // TestStack.White.UIItems.UIActionException : Window didn't respond, after waiting for 5000 ms
+                    // ----> System.Exception : Timeout occured, after waiting for 5000 ms
+                    TestStack.White.InputDevices.Mouse.Instance.Click(menu.ClickablePoint);
                     Window openWindow = mainWindow.ModalWindow("Open");
                     TextBox filenameTextBox = openWindow.Get<TextBox>("File name:");
                     filenameTextBox.Text = configFileName;
@@ -207,8 +210,7 @@ namespace InstallerEditorUnitTests
                     UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
                     UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
                     Menu mainMenuFile = UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File");
-                    mainMenuFile.Click();
-                    Assert.IsFalse(mainMenuFile.ChildMenus.Find("Save").Enabled);
+                    Assert.IsFalse(mainMenuFile.SubMenu("Save").Enabled);
                     mainMenuFile.ChildMenus.Find("Save As...").Click();
                     Window openWindow = mainWindow.ModalWindow("Save As");
                     TextBox filenameTextBox = openWindow.Get<TextBox>("File name:");
@@ -269,9 +271,7 @@ namespace InstallerEditorUnitTests
                     Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
                     UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
                     UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
-                    Menu mainMenuFile = UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File");
-                    mainMenuFile.Click();
-                    mainMenuFile.ChildMenus.Find("Save As...").Click();
+                    UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Save As...").Click();
                     Window openWindow = mainWindow.ModalWindow("Save As");
                     TextBox filenameTextBox = openWindow.Get<TextBox>("File name:");
                     filenameTextBox.Text = configFileName;

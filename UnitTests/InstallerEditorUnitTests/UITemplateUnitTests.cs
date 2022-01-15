@@ -2,15 +2,15 @@ using System;
 using NUnit.Framework;
 using dotNetUnitTestsRunner;
 using System.Windows.Automation;
-using White.Core;
-using White.Core.Factory;
-using White.Core.UIItems;
-using White.Core.UIItems.WindowItems;
-using White.Core.UIItems.WindowStripControls;
-using White.Core.UIItems.MenuItems;
-using White.Core.UIItems.TreeItems;
-using White.Core.UIItems.TableItems;
-using White.Core.WindowsAPI;
+using TestStack.White;
+using TestStack.White.Factory;
+using TestStack.White.UIItems;
+using TestStack.White.UIItems.WindowItems;
+using TestStack.White.UIItems.WindowStripControls;
+using TestStack.White.UIItems.MenuItems;
+using TestStack.White.UIItems.TreeItems;
+using TestStack.White.UIItems.TableItems;
+using TestStack.White.WindowsAPI;
 
 namespace InstallerEditorUnitTests
 {
@@ -34,7 +34,7 @@ namespace InstallerEditorUnitTests
                     UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Tools", "Template For New Item", language).Click();
                     UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
                     Panel propertyGrid = UIAutomation.Find<Panel>(mainWindow, "propertyGrid");
-                    TableHeader cancelCaptionItem = UIAutomation.Find<TableHeader>(propertyGrid, "cancel_caption");
+                    TestStack.White.UIItems.Custom.CustomUIItem cancelCaptionItem = UIAutomation.Find<TestStack.White.UIItems.Custom.CustomUIItem>(propertyGrid, "cancel_caption");
                     ValuePattern cancelCaptionValuePattern = (ValuePattern)cancelCaptionItem.AutomationElement.GetCurrentPattern(ValuePattern.Pattern);
                     string currentCancelCaptionValue = cancelCaptionValuePattern.Current.Value;
                     Console.WriteLine(" {0}: {1}", language, currentCancelCaptionValue);

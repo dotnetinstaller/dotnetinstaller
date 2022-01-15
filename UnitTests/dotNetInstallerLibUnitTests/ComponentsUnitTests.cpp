@@ -84,6 +84,24 @@ void ComponentsUnitTests::testPAFilters()
     Assert::IsTrue(get(components.GetSupportedComponents(LcidUser, SequenceInstall)[0]) == get(component_anotherpa));
 }
 
+void ComponentsUnitTests::testOsTypeFilters()
+{
+    Components components;
+    ComponentPtr component1(new MsiComponent());
+    component1->os_type_filter = L"domainController";
+    ComponentPtr component2(new MsiComponent());
+    component2->os_type_filter = L"workstation";
+    ComponentPtr component3(new MsiComponent());
+    component3->os_type_filter = L"server";
+    ComponentPtr component4(new MsiComponent());
+    components.add(component1);
+    components.add(component2);
+    components.add(component3);
+    components.add(component4);
+    Assert::IsTrue(components.size() == 4);
+    Assert::IsTrue(components.GetSupportedComponents(LcidUser, SequenceInstall).size() == 2);
+}
+
 void ComponentsUnitTests::testExecNoCallback()
 {
     Components components;
