@@ -348,8 +348,11 @@ void OsUtilUnitTests::testoscode2os()
         L"win7", L"win7sp1", L"win7Max",
         L"win8", L"win8_1", L"win8Max",
         L"win8Server", L"win8ServerR2", L"win8ServerMax",
-        L"win10", L"win10Max",
+        L"win10", L"win10_1511", L"win10_1607", L"win10_1703", L"win10_1709", L"win10_1803", L"win10_1809", L"win10_1903", L"win10_1909", L"win10_2004", L"win10_20H2", L"win10_21H1", L"win10_21H2", L"win10Max",
         L"win10Server", L"win10ServerMax",
+        L"winServer2019", L"winServer2019Max",
+        L"winServer2022", L"winServer2022Max",
+        L"win11", L"win11Max",
         L"winMax"
     };
 
@@ -377,8 +380,11 @@ void OsUtilUnitTests::testos2wstring()
         win7, win7sp1, win7Max,
         win8, win8_1, win8Max,
         win8Server, win8ServerR2, win8ServerMax,
-        win10, win10Max,
+        win10, win10_1511, win10_1607, win10_1703, win10_1709, win10_1803, win10_1809, win10_1903, win10_1909, win10_2004, win10_20H2, win10_21H1, win10_21H2, win10Max,
         win10Server, win10ServerMax,
+        winServer2019, winServer2019Max,
+        winServer2022, winServer2022Max,
+        win11, win11Max,
         winMax,
     };
 
@@ -407,37 +413,65 @@ void OsUtilUnitTests::testOperatingSystemType()
     Assert::IsTrue(DVLib::OperatingSystemType(winXPsp1) == winXP);
     Assert::IsTrue(DVLib::OperatingSystemType(winXPsp2) == winXP);
     Assert::IsTrue(DVLib::OperatingSystemType(winXPsp3) == winXP);
+    Assert::IsTrue(DVLib::OperatingSystemType(winXPMax) == winXP);
 
     Assert::IsTrue(DVLib::OperatingSystemType(winServer2003) == winServer2003);
     Assert::IsTrue(DVLib::OperatingSystemType(winServer2003sp1) == winServer2003);
     Assert::IsTrue(DVLib::OperatingSystemType(winServer2003sp2) == winServer2003);
-
     Assert::IsTrue(DVLib::OperatingSystemType(winServer2003R2) == winServer2003R2);
     Assert::IsTrue(DVLib::OperatingSystemType(winServer2003R2sp1) == winServer2003R2);
     Assert::IsTrue(DVLib::OperatingSystemType(winServer2003R2sp2) == winServer2003R2);
-
     Assert::IsTrue(DVLib::OperatingSystemType(winServer2003Max) == winServer2003);
 
     Assert::IsTrue(DVLib::OperatingSystemType(winVista) == winVista);
     Assert::IsTrue(DVLib::OperatingSystemType(winVistaSp1) == winVista);
     Assert::IsTrue(DVLib::OperatingSystemType(winVistaSp1) == winVista);
+    Assert::IsTrue(DVLib::OperatingSystemType(winVistaMax) == winVista);
 
     Assert::IsTrue(DVLib::OperatingSystemType(winServer2008) == winServer2008);
     Assert::IsTrue(DVLib::OperatingSystemType(winServer2008sp2) == winServer2008);
     Assert::IsTrue(DVLib::OperatingSystemType(winServer2008R2) == winServer2008);
     Assert::IsTrue(DVLib::OperatingSystemType(winServer2008R2sp1) == winServer2008);
+    Assert::IsTrue(DVLib::OperatingSystemType(winServer2008Max) == winServer2008);
 
     Assert::IsTrue(DVLib::OperatingSystemType(win7) == win7);
     Assert::IsTrue(DVLib::OperatingSystemType(win7sp1) == win7);
+    Assert::IsTrue(DVLib::OperatingSystemType(win7Max) == win7);
 
     Assert::IsTrue(DVLib::OperatingSystemType(win8) == win8);
     Assert::IsTrue(DVLib::OperatingSystemType(win8_1) == win8);
+    Assert::IsTrue(DVLib::OperatingSystemType(win8Max) == win8);
 
     Assert::IsTrue(DVLib::OperatingSystemType(win8Server) == win8Server);
-    Assert::IsTrue(DVLib::OperatingSystemType(win8ServerR2) == win8Server);	
+    Assert::IsTrue(DVLib::OperatingSystemType(win8ServerR2) == win8Server);
+    Assert::IsTrue(DVLib::OperatingSystemType(win8ServerMax) == win8Server);
 
     Assert::IsTrue(DVLib::OperatingSystemType(win10) == win10);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10_1511) == win10);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10_1607) == win10);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10_1703) == win10);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10_1709) == win10);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10_1803) == win10);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10_1809) == win10);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10_1903) == win10);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10_1909) == win10);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10_2004) == win10);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10_20H2) == win10);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10_21H1) == win10);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10_21H2) == win10);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10Max) == win10);
+
     Assert::IsTrue(DVLib::OperatingSystemType(win10Server) == win10Server);
+    Assert::IsTrue(DVLib::OperatingSystemType(win10ServerMax) == win10Server);
+
+    Assert::IsTrue(DVLib::OperatingSystemType(winServer2019) == winServer2019);
+    Assert::IsTrue(DVLib::OperatingSystemType(winServer2019Max) == winServer2019);
+
+    Assert::IsTrue(DVLib::OperatingSystemType(winServer2022) == winServer2022);
+    Assert::IsTrue(DVLib::OperatingSystemType(winServer2022Max) == winServer2022);
+
+    Assert::IsTrue(DVLib::OperatingSystemType(win11) == win11);
+    Assert::IsTrue(DVLib::OperatingSystemType(win11Max) == win11);
 
     Assert::IsTrue(DVLib::OperatingSystemType(winMax) == winMax);
 }

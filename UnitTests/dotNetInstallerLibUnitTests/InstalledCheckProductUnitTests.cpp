@@ -13,8 +13,9 @@ void InstalledCheckProductUnitTests::testProductCode()
 
     TestData data[] = 
     {
-        { L"F289AA13-BBAF-4EA2-97C8-BAEC7E5B743E" }, // MSBuild Community Tasks
-        { L"{F289AA13-BBAF-4EA2-97C8-BAEC7E5B743E}" }, // MSBuild Community Tasks		
+        // Microsoft Visual C++ 2010 x64 Redistributable - 10.0.40219 Upgrade Code
+        { L"5b75f761-bac8-33bc-a381-464dddd813a3" },
+        { L"{5b75f761-bac8-33bc-a381-464dddd813a3}" },
     };
 
     for (int i = 0; i < ARRAYSIZE(data); i++)
@@ -67,8 +68,9 @@ void InstalledCheckProductUnitTests::testUpgradeCode()
 
     TestData data[] = 
     {
-        { L"F289AA13-BBAF-4EA2-97C8-BAEC7E5B743E" }, // MSBuild Community Tasks
-        { L"{F289AA13-BBAF-4EA2-97C8-BAEC7E5B743E}" }, // MSBuild Community Tasks		
+        // Microsoft Visual C++ 2010 x64 Redistributable - 10.0.40219 Upgrade Code
+        { L"5b75f761-bac8-33bc-a381-464dddd813a3" },
+        { L"{5b75f761-bac8-33bc-a381-464dddd813a3}" },
     };
 
     for (int i = 0; i < ARRAYSIZE(data); i++)

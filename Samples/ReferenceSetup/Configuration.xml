@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configurations lcid_type="UserExe" show_language_selector="False" language_selector_title="" language_selector_ok="OK" language_selector_cancel="Cancel" configuration_no_match_message="" ui_level="full" fileversion="1.0.0.0" productversion="1.0.0.0" log_enabled="False" log_file="#TEMPPATH\dotNetInstallerLog.txt">
-  <schema version="3.0.814.0" generator="dotNetInstaller InstallerEditor" />
+  <schema version="3.1.113.0" generator="dotNetInstaller InstallerEditor" />
   <configuration type="reference" lcid_filter="" language_id="" language="" os_filter="" os_filter_min="" os_filter_max="" processor_architecture_filter="" supports_install="True" supports_uninstall="True">
     <configfile filename="#TEMPPATH\dotNetInstallerReferenceSample\configuration.xml" />
     <downloaddialog dialog_caption="Download Reference Configuration" dialog_message="Press 'Start' to download the required components for installing COMPONENT_NAME." dialog_message_downloading="Download in progress. Wait..." dialog_message_copying="Copying ..." dialog_message_connecting="Connecting ..." dialog_message_sendingrequest="Sending request ..." autostartdownload="True" buttonstart_caption="Start" buttoncancel_caption="Cancel">

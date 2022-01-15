@@ -27,20 +27,54 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
     if (osvi.dwPlatformId == VER_PLATFORM_WIN32_NT)
     {
         // Windows NT product family.
+        // Windows Versions
+        // http://www.svenbergemann.de/2017/09/18/266
         // Newer Windows version
         if ((osvi.dwMajorVersion == 10 && osvi.dwMinorVersion > 0) || (osvi.dwMajorVersion > 10))
         {
             os = winMax;
         }
-        // Windows 10
+        // Windows 10 or 11
         else if ( osvi.dwMajorVersion == 10 && osvi.dwMinorVersion == 0 && osvi.wProductType == VER_NT_WORKSTATION)
         {
-            os = win10;
+            os = win10; // build 1507
+
+            if (osvi.dwBuildNumber == 10586)
+                os = win10_1511;
+            else if (osvi.dwBuildNumber == 14393)
+                os = win10_1607;
+            else if (osvi.dwBuildNumber == 15063)
+                os = win10_1703;
+            else if (osvi.dwBuildNumber == 16299)
+                os = win10_1709;
+            else if (osvi.dwBuildNumber == 17134)
+                os = win10_1803;
+            else if (osvi.dwBuildNumber == 17763)
+                os = win10_1809;
+            else if (osvi.dwBuildNumber == 18362)
+                os = win10_1903;
+            else if (osvi.dwBuildNumber == 18363)
+                os = win10_1909;
+            else if (osvi.dwBuildNumber == 19041)
+                os = win10_2004;
+            else if (osvi.dwBuildNumber == 19042)
+                os = win10_20H2;
+            else if (osvi.dwBuildNumber == 19043)
+                os = win10_21H1;
+            else if ((osvi.dwBuildNumber >= 19044) && (osvi.dwBuildNumber < 22000))
+                os = win10_21H2;
+            else if (osvi.dwBuildNumber >= 22000)
+                os = win11;
         }
-        // Windows Server 10
+        // Windows Server 2016, 2019, or 2022
         else if ( osvi.dwMajorVersion == 10 && osvi.dwMinorVersion == 0 && osvi.wProductType != VER_NT_WORKSTATION)
         {
-            os = win10Server;
+            os = win10Server; // Windows Server 2016
+
+            if ((osvi.dwBuildNumber >= 17763) && (osvi.dwBuildNumber < 20148))
+                os = winServer2019; // Windows Server 2019
+            else if (osvi.dwBuildNumber >= 20148)
+                os = winServer2022; // Windows Server 2022
         }
         // Windows Server 2012 R2
         else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 3 && osvi.wProductType != VER_NT_WORKSTATION)
@@ -86,6 +120,7 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
             if (osvi.wServicePackMajor >= 2)
                 os = winServer2008sp2;
         }
+        // Windows Vista
         else if ( osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType == VER_NT_WORKSTATION)
         {
             os = winVista;
@@ -106,6 +141,7 @@ DVLib::OperatingSystem DVLib::GetOperatingSystemVersion()
             else if (osvi.wServicePackMajor >= 2)
                 os = winServer2003sp2;
         }
+        // Windows Server 2003 R2
         else if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2 && 
             osvi.wProductType != VER_NT_WORKSTATION && GetSystemMetrics(89 /* SM_SERVERR2 */) != 0)
         {
@@ -550,7 +586,7 @@ DVLib::OperatingSystem DVLib::OperatingSystemType(OperatingSystem os)
     }
     else if (os >= win8Server && os <= win8ServerMax)
     {
-        return win8Server;
+        return win8Server; // Windows Server 2012
     }
     else if (os >= win10 && os <= win10Max)
     {
@@ -558,9 +594,21 @@ DVLib::OperatingSystem DVLib::OperatingSystemType(OperatingSystem os)
     }
     else if (os >= win10Server && os <= win10ServerMax)
     {
-        return win10Server;
+        return win10Server; // Windows Server 2016
     }
-    else if (os > win10Server)
+    else if (os >= winServer2019 && os <= winServer2019Max)
+    {
+        return winServer2019;
+    }
+    else if (os >= winServer2022 && os <= winServer2022Max)
+    {
+        return winServer2022;
+    }
+    else if (os >= win11 && os <= win11Max)
+    {
+        return win11;
+    }
+    else if (os > win11)
     {
         return winMax;
     }

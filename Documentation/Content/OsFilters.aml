@@ -53,6 +53,10 @@
           or smaller or equal than <literal>os_filter_max</literal> respectively.
         </para>
         <para>
+          You cannot use <literal>os_filter_max</literal>, <literal>os_filter_min</literal>, and <literal>os_filter</literal>.
+          If <literal>os_filter</literal> is set, then <literal>os_filter_max</literal> and <literal>os_filter_min</literal> must be empty.
+        </para>
+        <para>
           The following operating system table values can be used for <literal>os_filter</literal>, 
           <literal>os_filter_min</literal> and <literal>os_filter_max</literal>.
           <table>
@@ -156,15 +160,75 @@
               <entry>win8ServerR2</entry>
             </row>
             <row>
-            <entry>Windows 10</entry>
+              <entry>Windows 10</entry>
               <entry>win10</entry>
             </row>
             <row>
-              <entry>Windows Server 10</entry>
+              <entry>Windows 10 Version 1511</entry>
+              <entry>win10_1511</entry>
+            </row>
+            <row>
+              <entry>Windows 10 Version 1607</entry>
+              <entry>win10_1607</entry>
+            </row>
+            <row>
+              <entry>Windows 10 Version 1703</entry>
+              <entry>win10_1703</entry>
+            </row>
+            <row>
+              <entry>Windows 10 Version 1709</entry>
+              <entry>win10_1709</entry>
+            </row>
+            <row>
+              <entry>Windows 10 Version</entry>
+              <entry>win10_1803</entry>
+            </row>
+            <row>
+              <entry>Windows 10 Version 1809</entry>
+              <entry>win10_1809</entry>
+            </row>
+            <row>
+              <entry>Windows 10 Version 1903</entry>
+              <entry>win10_1903</entry>
+            </row>
+            <row>
+              <entry>Windows 10 Version 1909</entry>
+              <entry>win10_1909</entry>
+            </row>
+            <row>
+              <entry>Windows 10 Version 2004</entry>
+              <entry>win10_2004</entry>
+            </row>
+            <row>
+              <entry>Windows 10 Version 20H2</entry>
+              <entry>win10_20H2</entry>
+            </row>
+            <row>
+              <entry>Windows 10 Version 21H1</entry>
+              <entry>win10_21H1</entry>
+            </row>
+            <row>
+              <entry>Windows 10 Version 21H2</entry>
+              <entry>win10_21H2</entry>
+            </row>
+            <row>
+              <entry>Windows Server 2016</entry>
               <entry>win10Server</entry>
             </row>
             <row>
-              <entry>Windows newer than 10</entry>
+              <entry>Windows Server 2019</entry>
+              <entry>winServer2019</entry>
+            </row>
+            <row>
+              <entry>Windows Server 2022</entry>
+              <entry>winServer2022</entry>
+            </row>
+            <row>
+              <entry>Windows 11</entry>
+              <entry>win11</entry>
+            </row>
+            <row>
+              <entry>Windows newer than 10 or Server 2016</entry>
               <entry>winMax</entry>
             </row>
           </table>

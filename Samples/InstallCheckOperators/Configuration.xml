@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configurations lcid_type="UserExe" show_language_selector="False" language_selector_title="" language_selector_ok="OK" language_selector_cancel="Cancel" configuration_no_match_message="" ui_level="full" fileversion="1.0.0.0" productversion="1.0.0.0" log_enabled="True" log_file="#TEMPPATH\#GUID.log">
-  <schema version="3.0.814.0" generator="dotNetInstaller InstallerEditor" />
+  <schema version="3.1.113.0" generator="dotNetInstaller InstallerEditor" />
   <fileattributes>
     <fileattribute name="FileDescription" value="InstallCheckOperators setup sample" />
   </fileattributes>

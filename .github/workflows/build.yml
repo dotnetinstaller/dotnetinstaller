@@ -1,0 +1,44 @@
+name: Build
+
+on:
+  push:
+    branches-ignore:    
+      - 'gh-pages'
+  pull_request:
+    branches-ignore:    
+      - 'gh-pages'
+
+env:
+  # set RestoreUseSkipNonexistentTargets=false so running "nuget.exe restore dni.sln" returns a successful exit code (0).
+  # Otherwise, the following errors occur:
+  # .\Samples\PackagedSetup\Simple\Simple.vdproj(1,1): error MSB4025: The project file could not be loaded. Data at the root level is invalid. Line 1, position 1. [dni.proj]
+  # EXEC : warning : Error reading msbuild project information, ensure that your input solution or project file is valid. NETCore and UAP projects will be skipped, only packages.config files will be restored. [dni.proj]
+  # dni.proj(130,5): error MSB3073: The command "ThirdParty\NuGet\NuGet.exe restore Dni.sln" exited with code -1.
+  RestoreUseSkipNonexistentTargets: false
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        Configuration: [Debug, Release]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: msbuild /t:all /m /p:Configuration=${{ matrix.Configuration }} .\dni.proj
+    
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: ${{ matrix.Configuration }}
+        path: |
+          .\target\${{ matrix.Configuration }}\dotNetInstaller.*.zip
+          .\target\${{ matrix.Configuration }}\dotNetInstaller.*.msi
+        if-no-files-found: error
