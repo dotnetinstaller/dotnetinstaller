@@ -22,8 +22,8 @@
     <NUnitToolPath>ThirdParty\NUnit\bin\net-2.0</NUnitToolPath>
     <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
     <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
-    <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
-    <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
+    <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
+    <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
     <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'==''">C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
   </PropertyGroup>
   <ItemGroup>
@@ -270,7 +270,7 @@ return System.Guid.NewGuid().ToString().ToUpper();
     <Exec Command="&quot;$(ProjectDir)ThirdParty\Microsoft\Visual Studio 8\VC\bin\mt.exe&quot; -manifest UnitTests\InstallerLibUnitTests\nunit-console-x86.exe.$(Configuration).manifest -outputresource:&quot;$(TEMP)\$(NewGuid)\nunit-console-x86.exe&quot;;#1" />
     <NUnit ToolPath="$(TEMP)\$(NewGuid)" Assemblies="UnitTests\InstallerLibUnitTests\bin\$(Configuration)\InstallerLibUnitTests.dll"
     Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName).xml" />
-    <DeleteTree Directories="$(TEMP)\$(NewGuid)" />
+    <DeleteTree Directories="$(TEMP)\$(NewGuid)" Retries="5" />
   </Target>
   <Target Name="unittests" DependsOnTargets="version">
     <Message Text="Running %(CppUnitTests.Identity) ..." />

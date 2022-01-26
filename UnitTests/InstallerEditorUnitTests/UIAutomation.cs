@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Automation;
-using White.Core.Factory;
-using White.Core.UIItems;
+using TestStack.White.Factory;
+using TestStack.White.UIItems;
 
 namespace InstallerEditorUnitTests
 {

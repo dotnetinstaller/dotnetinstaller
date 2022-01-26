@@ -172,6 +172,7 @@ void InstallConfiguration::Load(tinyxml2::XMLElement * node)
         << L", os_filter=" << os_filter
         << L", os_filter_min=" << DVLib::os2wstring(os_filter_min)
         << L", os_filter_max=" << DVLib::os2wstring(os_filter_max)
+        << L", os_type_filter=" << os_type_filter
         << L", processor_architecture_filter=" << processor_architecture_filter
         << L")");
 }

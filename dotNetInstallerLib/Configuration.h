@@ -26,6 +26,8 @@ public:
 	// operating system filter range
 	DVLib::OperatingSystem os_filter_min;
 	DVLib::OperatingSystem os_filter_max;
+	// operating system product type filter
+	XmlAttribute os_type_filter;
 	// filter for processor architecture
 	XmlAttribute processor_architecture_filter;
 	// configuration type

@@ -134,6 +134,6 @@ void MsiUtilUnitTests::testGetRelatedInstalledProducts()
     std::vector<DVLib::MsiProductInfo> related_products = DVLib::MsiGetRelatedProducts( wellknown_upgradecode );
     Assert::AreEqual((size_t)1, related_products.size());
     const DVLib::MsiProductInfo& related_product = related_products.at(0);
-    Assert::AreEqual("{1D8E6291-B0D5-35EC-8441-6616F567A0F7}", DVLib::guid2string(related_product.product_id).c_str());
     Assert::AreEqual(L"Microsoft Visual C++ 2010  x64 Redistributable - 10.0.40219", related_product.GetProductName().c_str());
+    Assert::AreEqual("{1D8E6291-B0D5-35EC-8441-6616F567A0F7}", DVLib::guid2string(related_product.product_id).c_str());
 }

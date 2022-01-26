@@ -4,12 +4,12 @@ using NUnit.Framework;
 using dotNetUnitTestsRunner;
 using System.Diagnostics;
 using System.Threading;
-using White.Core;
-using White.Core.Factory;
-using White.Core.UIItems;
-using White.Core.UIItems.WindowItems;
-using White.Core.UIItems.WindowStripControls;
-using White.Core.UIItems.TreeItems;
+using TestStack.White;
+using TestStack.White.Factory;
+using TestStack.White.UIItems;
+using TestStack.White.UIItems.WindowItems;
+using TestStack.White.UIItems.WindowStripControls;
+using TestStack.White.UIItems.TreeItems;
 using InstallerLib;
 using System.IO;
 

@@ -27,3 +27,4 @@ StyleCop.Cache
 *.ipch
 .vs
 packages
+/temp

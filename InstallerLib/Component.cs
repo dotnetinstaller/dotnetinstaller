@@ -63,6 +63,15 @@ namespace InstallerLib
             set { m_os_filter_max = value; }
         }
 
+        private string m_os_type_filter;
+        [Description("Filter to install this component only on all operating system product types equal or not equal to the value(s) specified. Separate multiple operating system types with a comma (',') and use the not symbol ('!') for NOT logic (ex. '!workstation,!server' ).")]
+        [Category("Operating System")]
+        public string os_type_filter
+        {
+            get { return m_os_type_filter; }
+            set { m_os_type_filter = value; }
+        }
+
         private string m_os_filter_lcid;
         [Description("Filter to install this component only on all operating system languages equal or not equal to the LCID specified. Separate multiple LCID with comma (',') and use not symbol ('!') for NOT logic (eg. '1044,1033,!1038' ).")]
         [Category("Operating System")]
@@ -343,6 +352,7 @@ namespace InstallerLib
                 ? "" : Enum.GetName(typeof(OperatingSystem), m_os_filter_min)));
             e.XmlWriter.WriteAttributeString("os_filter_max", (m_os_filter_max == OperatingSystem.winNone
                 ? "" : Enum.GetName(typeof(OperatingSystem), m_os_filter_max)));
+            e.XmlWriter.WriteAttributeString("os_type_filter", m_os_type_filter);
             e.XmlWriter.WriteAttributeString("os_filter_lcid", m_os_filter_lcid);
             e.XmlWriter.WriteAttributeString("type", m_type);
             e.XmlWriter.WriteAttributeString("installcompletemessage", m_installcompletemessage);
@@ -398,6 +408,7 @@ namespace InstallerLib
                 m_selected_uninstall = m_selected_install;
             // filters
             ReadAttributeValue(e, "os_filter", ref m_os_filter);
+            ReadAttributeValue(e, "os_type_filter", ref m_os_type_filter);
             ReadAttributeValue(e, "os_filter_lcid", ref m_os_filter_lcid);
             string os_filter_greater = string.Empty;
             if (ReadAttributeValue(e, "os_filter_greater", ref os_filter_greater) && !String.IsNullOrEmpty(os_filter_greater))

@@ -40,6 +40,8 @@ public:
 	// operating system filter range
 	DVLib::OperatingSystem os_filter_min;
 	DVLib::OperatingSystem os_filter_max;
+	// operating system product type filter
+	XmlAttribute os_type_filter;
 	// filtro che indica il filtro per lingua del sistema operativo (es. Italy = 1040, English - United Kingdom = 2057, English - United States = 1033)
 	XmlAttribute os_filter_lcid;
 	// testo da visualizzare a fine installazione (se vuoto non visualizza niente)

@@ -5,7 +5,7 @@
       <para>
         A component may not be required for a specific operating system or may be required for a specific operating 
         system only. These behaviors can be achieved with <newTerm>operating system filters</newTerm>, specifically 
-        <literal>os_filter</literal>, <literal>os_filter_min</literal> and <literal>os_filter_max</literal>.
+        <literal>os_filter</literal>, <literal>os_filter_min</literal>, <literal>os_filter_max</literal>, and <literal>os_type_filter</literal>.
       </para>
     </introduction>
     <section address="operatingsystemfilters">
@@ -244,6 +244,35 @@
             identifier. This is set if the OS is greater than the maximum known OS, currently Windows 10.
           </para>
         </alert>
+        <para>
+          The <literal>os_type_filter</literal> value specifies a filter to install a configuration or component on.
+          The operating system product type must be equal to any of the values specified. Separate multiple operating system product types
+          with commas. For example, <literal>workstation</literal> means only to install a configuration on Windows XP, Vista, 7, 8, 10, or 11.
+        </para>
+        <para>
+          The following operating system product type table values can be used for <literal>os_type_filter</literal>.
+          <table>
+            <title>Operating System Product Type Values</title>
+            <tableHeader>
+              <row>
+                <entry>Operating System Product Type Name</entry>
+                <entry>Enumerator</entry>
+              </row>
+            </tableHeader>
+            <row>
+              <entry>Workstation</entry>
+              <entry>workstation</entry>
+            </row>
+            <row>
+              <entry>Server</entry>
+              <entry>server</entry>
+            </row>
+            <row>
+              <entry>Domain Controller</entry>
+              <entry>domainController</entry>
+            </row>
+          </table>
+        </para>
       </content>
     </section>
   </developerConceptualDocument>

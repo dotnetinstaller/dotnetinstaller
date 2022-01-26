@@ -22,6 +22,7 @@ namespace DVLib
             TEST_METHOD( testOsFiltersGreaterSmaller );
 			TEST_METHOD( testLcidFilters );
 			TEST_METHOD( testPAFilters );
+			TEST_METHOD( testOsTypeFilters );
 			TEST_METHOD( testExecNoCallback );
 			TEST_METHOD( testExecWithCallback );
 			TEST_METHOD( testExecWithError );
