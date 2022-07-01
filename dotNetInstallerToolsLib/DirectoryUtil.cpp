@@ -140,7 +140,7 @@ bool DVLib::DirectoryDelete(const std::wstring& full_path, int flags)
     {
     case ERROR_PATH_NOT_FOUND: // directory not found in FindFirstFile
     case ERROR_FILE_NOT_FOUND: // file not found in FindFirstFile
-    case ERROR_NO_MORE_FILES: // more more files in FindNextFile
+    case ERROR_NO_MORE_FILES: // no more files in FindNextFile
         break;
     default:
         CHECK_WIN32_DWORD(rc, "Error in FindFirst/NextFile");
@@ -215,7 +215,7 @@ std::list<std::wstring> DVLib::GetDirectoryFiles(const std::wstring& full_path, 
     {
     case ERROR_PATH_NOT_FOUND: // directory not found in FindFirstFile
     case ERROR_FILE_NOT_FOUND: // file not found in FindFirstFile
-    case ERROR_NO_MORE_FILES: // more more files in FindNextFile
+    case ERROR_NO_MORE_FILES: // no more files in FindNextFile
         break;
     default:
         CHECK_WIN32_DWORD(rc, "Error in FindFirst/NextFile");
@@ -266,7 +266,7 @@ std::list<std::wstring> DVLib::GetFiles(const std::wstring& full_path, const std
     {
     case ERROR_PATH_NOT_FOUND: // directory not found in FindFirstFile
     case ERROR_FILE_NOT_FOUND: // file not found in FindFirstFile
-    case ERROR_NO_MORE_FILES: // more more files in FindNextFile
+    case ERROR_NO_MORE_FILES: // no more files in FindNextFile
         break;
     default:
         CHECK_WIN32_DWORD(rc, "Error in FindFirst/NextFile");
@@ -281,6 +281,45 @@ std::list<std::wstring> DVLib::GetFiles(const std::wstring& full_path, const std
         {
             result.push_back(DirectoryCombine(path, file));
         }
+    }
+
+    return result;
+}
+
+std::list<std::wstring> DVLib::GetDirectories(const std::wstring& full_path, const std::wstring& wildcard)
+{
+    std::wstring path = DirectoryNormalize(full_path);
+    std::list<std::wstring> result;
+
+    WIN32_FIND_DATA data = { 0 };
+
+    auto_hfind h(::FindFirstFileW((path + L"\\" + wildcard).c_str(), &data));
+
+    if (get(h) != INVALID_HANDLE_VALUE)
+    {
+        do
+        {
+            std::wstring filename = data.cFileName;
+
+            if (filename == L"." || filename == L"..")
+                continue;
+
+            if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+            {
+                result.push_back(filename);
+            }
+
+        } while (::FindNextFile(get(h), &data));
+    }
+
+    switch (DWORD rc = ::GetLastError())
+    {
+    case ERROR_PATH_NOT_FOUND: // directory not found in FindFirstFile
+    case ERROR_FILE_NOT_FOUND: // file not found in FindFirstFile
+    case ERROR_NO_MORE_FILES: // no more files in FindNextFile
+        break;
+    default:
+        CHECK_WIN32_DWORD(rc, "Error in FindFirst/NextFile");
     }
 
     return result;

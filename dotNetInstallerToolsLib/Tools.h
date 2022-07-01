@@ -16,3 +16,4 @@
 #include "MsiUtil.h"
 #include "FunctionUtil.h"
 #include "UACElevation.h"
+#include "VersionUtil.h"

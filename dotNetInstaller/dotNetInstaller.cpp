@@ -31,6 +31,8 @@ BOOL CdotNetInstallerApp::InitInstance()
         reset(InstallerSession::Instance, new InstallerSession());
         reset(InstallUILevelSetting::Instance, new InstallUILevelSetting());
 
+        DVLib::LoggerManager::Register(* get(InstallerLog::Instance));
+
         ParseCommandLine(* get(InstallerCommandLineInfo::Instance));
 
         CSplashWnd::EnableSplashScreen(InstallerCommandLineInfo::Instance->DisplaySplash());

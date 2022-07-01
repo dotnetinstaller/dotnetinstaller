@@ -19,8 +19,6 @@ namespace DVLib
 			TEST_METHOD( testGetFileVersion );
 			TEST_METHOD( testLoadResourceData );
 			TEST_METHOD( testResourceExists );
-			TEST_METHOD( testwstring2fileversion );
-			TEST_METHOD( testfileversion2wstring );
 		};
 	}
 }

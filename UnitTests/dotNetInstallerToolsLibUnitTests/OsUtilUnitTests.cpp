@@ -190,49 +190,6 @@ void OsUtilUnitTests::testGetISOLocale()
     Assert::IsTrue(DVLib::GetISOLocale(MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US)) == L"en-US");
 }
 
-void OsUtilUnitTests::testCompareVersion()
-{
-    struct TestData
-    {
-        LPCWSTR l;
-        LPCWSTR r;
-        int cmp;
-    };
-
-    TestData testdata[] = 
-    {
-        { L"", L"", 0 },
-        { L"1", L"", 1 },
-        { L"", L"1", -1 },
-        { L"1.0", L"0.9", 1 },
-        { L"0.1", L"0.9", -1 },
-        { L"1.1", L"1.0", 1 },
-        { L"1.1", L"1.1", 0 },
-        { L"1.0", L"1.1", -1 },
-        { L"1.0.0", L"1", 0 },
-        { L"1.0.0.0", L"1", 0 },
-        { L"1.0.0.0", L"1.0.0.1", -1 },
-
-        { L"v1", L"", 1 },
-        { L"", L"v1", -1 },
-        { L"v1.0", L"0.9", 1 },
-        { L"0.1", L"v0.9", -1 },
-        { L"1.1", L"v1.0", 1 },
-        { L"1.1", L"V1.1", 0 },
-        { L"1.0", L"V1.1", -1 },
-        { L"V1.0.0", L"1", 0 },
-        { L"v1.0.0.0", L"V1", 0 },
-        { L"V1.0.0.0", L"v1.0.0.1", -1 },
-    };
-
-    for(int i = 0; i < ARRAYSIZE(testdata); i++)
-    {
-        int cmp = DVLib::CompareVersion(testdata[i].l, testdata[i].r);
-        std::wcout << std::endl << testdata[i].l << L" vs. " << testdata[i].r << L" => " << cmp;
-        Assert::IsTrue(cmp == testdata[i].cmp);
-    }
-}
-
 void OsUtilUnitTests::testGetProcessorArchitecture()
 {
     WORD pa = DVLib::GetProcessorArchitecture();

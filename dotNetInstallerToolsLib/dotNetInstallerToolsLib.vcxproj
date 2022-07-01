@@ -66,12 +66,22 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\ThirdParty\semver\Semver200_comparator.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\semver\Semver200_modifier.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\semver\Semver200_parser.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="DirectoryUtil.cpp" />
     <ClCompile Include="ErrorUtil.cpp" />
     <ClCompile Include="FileUtil.cpp" />
     <ClCompile Include="FormatUtil.cpp" />
     <ClCompile Include="GuidUtil.cpp" />
     <ClCompile Include="ImageUtil.cpp" />
+    <ClCompile Include="LoggerManager.cpp" />
     <ClCompile Include="MsiUtil.cpp" />
     <ClCompile Include="OsUtil.cpp" />
     <ClCompile Include="PathUtil.cpp" />
@@ -83,8 +93,11 @@
     </ClCompile>
     <ClCompile Include="StringUtil.cpp" />
     <ClCompile Include="UACElevation.cpp" />
+    <ClCompile Include="VersionUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ThirdParty\semver\semver200.h" />
+    <ClInclude Include="..\ThirdParty\semver\version.h" />
     <ClInclude Include="DirectoryUtil.h" />
     <ClInclude Include="ErrorUtil.h" />
     <ClInclude Include="ExceptionMacros.h" />
@@ -94,6 +107,8 @@
     <ClInclude Include="FunctionUtil.h" />
     <ClInclude Include="GuidUtil.h" />
     <ClInclude Include="ImageUtil.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="LoggerManager.h" />
     <ClInclude Include="MsiUtil.h" />
     <ClInclude Include="OsUtil.h" />
     <ClInclude Include="PathUtil.h" />
@@ -104,6 +119,10 @@
     <ClInclude Include="StringUtilImpl.h" />
     <ClInclude Include="Tools.h" />
     <ClInclude Include="UACElevation.h" />
+    <ClInclude Include="VersionUtil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ThirdParty\semver\version.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

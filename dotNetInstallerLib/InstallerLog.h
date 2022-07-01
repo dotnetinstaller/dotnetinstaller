@@ -1,6 +1,8 @@
 #pragma once
 
-class InstallerLog
+#include <dotNetInstallerToolsLib/Logger.h>
+
+class InstallerLog : public DVLib::Logger
 {
 public:
 	InstallerLog();
@@ -12,6 +14,9 @@ public:
 	void SetLogFile(const std::wstring& filename);
 	void Write(const std::wstring& message);
 	void CloseLog();
+
+	void Log(const std::wstring& message) override { Write(message); }
+
 	static shared_any<InstallerLog *, close_delete> Instance;
 private:
 	bool m_enabled;

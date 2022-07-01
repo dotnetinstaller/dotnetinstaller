@@ -34,7 +34,9 @@ BOOL CHtmlInstallerApp::InitInstance()
 
         HtmlWindow::RegisterClass(m_hInstance);
 
-        ParseCommandLine(* get(InstallerCommandLineInfo::Instance));
+        DVLib::LoggerManager::Register(*get(InstallerLog::Instance));
+
+        ParseCommandLine(*get(InstallerCommandLineInfo::Instance));
 
         CSplashWnd::EnableSplashScreen(InstallerCommandLineInfo::Instance->DisplaySplash());
 

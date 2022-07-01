@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\atlmfc\include;$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\include;$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\PlatformSDK\Include;$(SolutionDir)\ThirdParty\tinyxml2-6.0.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\atlmfc\include;$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\include;$(SolutionDir)ThirdParty\Microsoft\Visual Studio 14.0\VC\PlatformSDK\Include;$(SolutionDir)\ThirdParty\tinyxml2-6.0.0;$(SolutionDir)\ThirdParty\semver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>

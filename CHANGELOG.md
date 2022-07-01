@@ -5,6 +5,7 @@ Features
 --------
 
 * [#114](https://github.com/dotnetinstaller/dotnetinstaller/issues/114) - Added support for operating system product type filters - [@icnocop](https://github.com/icnocop).
+* [#153](https://github.com/dotnetinstaller/dotnetinstaller/issues/153) - Added support for sub-directory installed check comparison using semantic versioning - [@icnocop](https://github.com/icnocop).
 
 3.2.115 (1/15/2022)
 ===================
