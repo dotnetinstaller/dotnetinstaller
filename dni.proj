@@ -16,6 +16,7 @@
     <MajorVersion>3</MajorVersion>
     <MinorVersion>2</MinorVersion>
     <RevisionVersion>0</RevisionVersion>
+    <FirstBuildYear>2021</FirstBuildYear>
   </PropertyGroup>
   <PropertyGroup>
     <MSBuild_4_0_ExeFilePath>%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe</MSBuild_4_0_ExeFilePath>
