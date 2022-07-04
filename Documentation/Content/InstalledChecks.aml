@@ -206,7 +206,7 @@
           <title>check_product</title>
           <content>
             <para>
-              Query the MSI database for a given product by product id or upgrade code. The following properties are availble
+              Query the MSI database for a given product by product id or upgrade code. The following properties are available
               in the check.
               <definitionTable>
                 <definedTerm>description</definedTerm>
