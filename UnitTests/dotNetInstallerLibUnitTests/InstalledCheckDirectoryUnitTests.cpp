@@ -235,3 +235,55 @@ void InstalledCheckDirectoryUnitTests::testIsInstalled_semver()
 
     DVLib::DirectoryDelete(tempDir, DELETE_DIRECTORY_FLAGS::DELETE_DIRECTORY_EMPTY);
 }
+
+void InstalledCheckDirectoryUnitTests::testIsInstalled_semver_invalid()
+{
+    std::wstring tempDir = DVLib::DirectoryCombine(DVLib::GetTemporaryDirectoryW(), DVLib::GenerateGUIDStringW());
+    DVLib::DirectoryCreate(tempDir);
+
+    InstalledCheckDirectory check;
+    check.path = tempDir;
+
+    TestDataException testdata[] =
+    {
+        // directoryNames, comparison, version, expectedException
+        { {L"invalid"}, L"semver", L"1.2.3", "invalid character encountered: i" },
+        { {L"unknown"}, L"semver", L"1.2.3", "invalid character encountered: u" },
+        { {L"_"}, L"semver_eq", L"1.2.3", "invalid character encountered: _" },
+        { {L"+"}, L"semver_lt", L"1.2.3", "invalid character encountered: +" },
+        { {L";"}, L"semver_le", L"1.2.3", "invalid character encountered: ;" },
+        { {L"-"}, L"semver_gt", L"1.2.3", "invalid character encountered: -" },
+        { {L"="}, L"semver_ge", L"1.2.3", "invalid character encountered: =" },
+    };
+
+    for (int i = 0; i < ARRAYSIZE(testdata); i++)
+    {
+        for each (const std::wstring & directoryName in testdata[i].directoryNames)
+        {
+            std::wstring subDirectory = DVLib::DirectoryCombine(tempDir, directoryName);
+            DVLib::DirectoryCreate(subDirectory);
+        }
+
+        check.comparison = testdata[i].comparison;
+        check.version = testdata[i].version;
+
+        try
+        {
+            check.IsInstalled();
+
+            Assert::Fail(L"Expected exception.");
+        }
+        catch (std::exception& ex)
+        {
+            Assert::AreEqual(testdata[i].expectedException, ex.what());
+        }
+
+        for each (const std::wstring & directoryName in testdata[i].directoryNames)
+        {
+            std::wstring subDirectory = DVLib::DirectoryCombine(tempDir, directoryName);
+            DVLib::DirectoryDelete(subDirectory, DELETE_DIRECTORY_FLAGS::DELETE_DIRECTORY_EMPTY);
+        }
+    }
+
+    DVLib::DirectoryDelete(tempDir, DELETE_DIRECTORY_FLAGS::DELETE_DIRECTORY_EMPTY);
+}

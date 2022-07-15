@@ -165,6 +165,20 @@ void VersionUtilUnitTests::testCompareSemanticVersion()
     }
 }
 
+void VersionUtilUnitTests::testCompareSemanticVersion_invalid()
+{
+    try
+    {
+        DVLib::CompareSemanticVersion(L"unknown", L"invalid");
+
+        Assert::Fail(L"Expected exception.");
+    }
+    catch (std::exception& ex)
+    {
+        Assert::AreEqual("invalid character encountered: u", ex.what());
+    }
+}
+
 void VersionUtilUnitTests::testCompareVersion_unknown()
 {
     std::list<std::wstring> valuesToCompare;

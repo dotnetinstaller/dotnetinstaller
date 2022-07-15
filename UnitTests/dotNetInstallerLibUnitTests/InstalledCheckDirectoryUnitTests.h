@@ -22,6 +22,7 @@ namespace DVLib
             TEST_METHOD( testIsInstalled_version );
             TEST_METHOD( testIsInstalled_semver_with_non_existent_directory );
             TEST_METHOD( testIsInstalled_semver );
+            TEST_METHOD( testIsInstalled_semver_invalid );
 
         private:
             struct TestData
@@ -30,6 +31,14 @@ namespace DVLib
                 LPCWSTR comparison;
                 LPCWSTR version;
                 bool expected;
+            };
+
+            struct TestDataException
+            {
+                std::list<std::wstring> directoryNames;
+                LPCWSTR comparison;
+                LPCWSTR version;
+                LPCSTR expectedException;
             };
 		};
 	}

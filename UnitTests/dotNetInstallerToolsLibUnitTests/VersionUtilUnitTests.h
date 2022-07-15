@@ -16,6 +16,7 @@ namespace DVLib
 			TEST_METHOD(testCompareVersion_version_le);
 			TEST_METHOD(testCompareVersion_version_gt);
 			TEST_METHOD(testCompareSemanticVersion);
+			TEST_METHOD(testCompareSemanticVersion_invalid);
 		};
 	}
 }
