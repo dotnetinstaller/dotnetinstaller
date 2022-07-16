@@ -133,5 +133,18 @@
         </para>
       </content>
     </section>
+    <section address="semver">
+      <title>semver</title>
+      <content>
+        <para>
+          C++ library to parse and compare strings with Semantic Versioning 2.0.0.
+          See <externalLink>
+            <linkText>https://github.com/zmarko/semver</linkText>
+            <linkUri>https://github.com/zmarko/semver</linkUri>
+          </externalLink> for more information.
+          <code language="text" source="..\ThirdParty\semver\LICENSE" />
+        </para>
+      </content>
+    </section>
   </developerConceptualDocument>
 </topic>

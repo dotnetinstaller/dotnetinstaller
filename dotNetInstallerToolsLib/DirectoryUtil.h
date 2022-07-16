@@ -38,5 +38,7 @@ namespace DVLib
 	std::list<std::wstring> GetFiles(const std::wstring& path_and_wildcard, int flags);
 	// get a list of file names (without the full path) in a given directory
 	std::list<std::wstring> GetDirectoryFiles(const std::wstring& path, const std::wstring& wildcard = L"*.*");
+	// get a list of sub-directories (without the full path) in a given directory
+	std::list<std::wstring> GetDirectories(const std::wstring& path, const std::wstring& wildcard = L"*");
 }
 

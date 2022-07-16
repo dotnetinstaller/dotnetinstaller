@@ -16,6 +16,12 @@
     <CreateProperty Value="$(Month)$(Day)">
       <Output TaskParameter="Value" PropertyName="Build" />
     </CreateProperty>
+    <!--
+    if the build number becomes less than the last build number because of the new year, add 1200 to it
+    -->
+    <PropertyGroup>
+      <Build>$([MSBuild]::Add($(Build), $([MSBuild]::Multiply($([MSBuild]::Subtract($(Year), $(FirstBuildYear))), 1200))))</Build>
+    </PropertyGroup>
     <CreateItem Include="Major" AdditionalMetadata="ReplacementValue=$(Major)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
     <CreateItem Include="Minor" AdditionalMetadata="ReplacementValue=$(Minor)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>
     <CreateItem Include="SchemaRevision" AdditionalMetadata="ReplacementValue=$(SchemaRevision)"><Output TaskParameter="Include" ItemName="AssemblyInfoTokens"/></CreateItem>

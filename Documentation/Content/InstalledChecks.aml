@@ -68,8 +68,39 @@
           <title>check_directory</title>
           <content>
             <para>
-              Check whether a specific directory exists.
-            </para>            
+              Check whether a specific directory exists or if a sub directory exists with a specific version.
+            </para>
+            <para>
+              The following comparison types are available.
+              <definitionTable>
+                <definedTerm>exists</definedTerm>
+                <definition>Check whether the directory exists.</definition>
+                <definedTerm>version</definedTerm>
+                <definition>Check whether the name of a sub directory, parsed as a version number, is greater or equal to the check value.</definition>
+                <definedTerm>version_eq</definedTerm>
+                <definition>Check whether the name of a sub directory, parsed as a version number, is equal to the check value.</definition>
+                <definedTerm>version_lt</definedTerm>
+                <definition>Check whether the name of a sub directory, parsed as a version number, is lesser than the check value.</definition>
+                <definedTerm>version_le</definedTerm>
+                <definition>Check whether the name of a sub directory, parsed as a version number, is lesser or equal than the check value.</definition>
+                <definedTerm>version_gt</definedTerm>
+                <definition>Check whether the name of a sub directory, parsed as a version number, is greater than the check value.</definition>
+                <definedTerm>version_ge</definedTerm>
+                <definition>Check whether the name of a sub directory, parsed as a version number, is greater or equal than the check value.</definition>
+                <definedTerm>semver</definedTerm>
+                <definition>Check whether the name of a sub directory, parsed as a semantic version number, is greater or equal to the check value.</definition>
+                <definedTerm>semver_eq</definedTerm>
+                <definition>Check whether the name of a sub directory, parsed as a semantic version number, is equal to the check value.</definition>
+                <definedTerm>semver_lt</definedTerm>
+                <definition>Check whether the name of a sub directory, parsed as a semantic version number, is lesser than the check value.</definition>
+                <definedTerm>semver_le</definedTerm>
+                <definition>Check whether the name of a sub directory, parsed as a semantic version number, is lesser or equal than the check value.</definition>
+                <definedTerm>semver_gt</definedTerm>
+                <definition>Check whether the name of a sub directory, parsed as a semantic version number, is greater than the check value.</definition>
+                <definedTerm>semver_ge</definedTerm>
+                <definition>Check whether the name of a sub directory, parsed as a semantic version number, is greater or equal than the check value.</definition>
+              </definitionTable>
+            </para>
           </content>
         </section>
         <section address="checktypesregistry">
@@ -175,7 +206,7 @@
           <title>check_product</title>
           <content>
             <para>
-              Query the MSI database for a given product by product id or upgrade code. The following properties are availble
+              Query the MSI database for a given product by product id or upgrade code. The following properties are available
               in the check.
               <definitionTable>
                 <definedTerm>description</definedTerm>

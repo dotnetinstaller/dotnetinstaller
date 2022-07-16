@@ -15,3 +15,4 @@
 #include <dotNetInstallerToolsLib/Tools.h>
 #include <ThirdParty/Cab/Cab.h>
 #include <dotNetInstallerLib/dotNetInstallerLib.h>
+#include <dotNetInstallerToolsLib/LoggerManager.h>

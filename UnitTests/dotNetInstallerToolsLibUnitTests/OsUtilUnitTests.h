@@ -15,7 +15,6 @@ namespace DVLib
             TEST_METHOD( testGetLocale );
             TEST_METHOD( testGetISOLocale );
             TEST_METHOD( testIsOperatingSystemLCIDValue );
-            TEST_METHOD( testCompareVersion );
             TEST_METHOD( testGetProcessorArchitecture );
             TEST_METHOD( testProcessorArchitectureToFromString );
             TEST_METHOD( testIsProcessorArchitecture );
