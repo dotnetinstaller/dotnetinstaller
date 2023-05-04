@@ -98,10 +98,11 @@
     <Binaries Include="InstallerEditor\bin\$(Configuration)\InstallerEditor.exe" />
     <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceLibrary.dll" />
     <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceGrid2.dll" />
-    <Binaries Include="ThirdParty\CabLib\$(Configuration)\CabLib.dll" />
+    <Binaries Include="ThirdParty\CabLib\Win32\$(Configuration)\CabLib.dll" />
     <Binaries Include="packages\Vestris.ResourceLib.1.6.422\lib\Vestris.ResourceLib.dll" />
     <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
     <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
+    <Binaries64 Include="ThirdParty\CabLib\x64\$(Configuration)\CabLib.dll" />
   </ItemGroup>
   <ItemGroup>
     <NUnitFiles Include="$(NUnitToolPath)/**/*" />
@@ -136,13 +137,15 @@
     <Exec Command="ThirdParty\NuGet\NuGet.exe restore Dni.sln" />
   </Target>
   <Target Name="build" DependsOnTargets="version;restore">
-    <MSBuild Projects="Dni.sln" Targets="Build" />
+    <MSBuild Projects="Dni.sln" Targets="Build" Properties="Configuration=$(Configuration);Platform=Win32" />
+    <MSBuild Projects="Dni.sln" Targets="Build" Properties="Configuration=$(Configuration);Platform=x64" />
   </Target>
   <Target Name="release" DependsOnTargets="version">
     <Message Importance="high" Text="Collecting release files ..." />
     <MakeDir Directories="$(ReleaseDir)" />
     <!-- Binaries -->
     <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\Bin" />
+    <Copy SourceFiles="@(Binaries64)" DestinationFolder="$(ReleaseDir)\Bin\x64" />
     <!-- Documentation -->
     <Copy SourceFiles="@(Documentation)" DestinationFolder="$(ReleaseDir)\Doc" />
     <!-- Samples -->

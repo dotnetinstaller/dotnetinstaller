@@ -33,7 +33,7 @@
             </Component>
             <Component Id="InstallerLib" Guid="5D5B5920-D2DF-48e0-BE89-DD1A77E705BB">
               <File Id="InstallerLib.dll" Source="..\InstallerLib\bin\$(var.Configuration)\InstallerLib.dll" />
-              <File Id="CabLib.dll" Source="..\ThirdParty\CabLib\$(var.Configuration)\CabLib.dll" />
+              <File Id="CabLib.dll" Source="..\ThirdParty\CabLib\Win32\$(var.Configuration)\CabLib.dll" />
               <File Id="Vestris.ResourceLib.dll" Source="..\packages\Vestris.ResourceLib.1.6.422\lib\Vestris.ResourceLib.dll" />
             </Component>
             <Component Id="InstallerEditor" Guid="B28C748A-5834-48f6-AC9D-6976B33EC922">
@@ -52,6 +52,11 @@
               <File Id="htmlInstaller.exe" Source="..\htmlInstaller\$(var.Configuration)\htmlInstaller.exe" />
               <File Id="htmlInstaller.pdb" Source="..\htmlInstaller\$(var.Configuration)\htmlInstaller.pdb" />
             </Component>
+            <Directory Id="bin_x64" Name="x64">
+              <Component Id="CabLib.dll" Guid="565C3213-3489-4303-9677-23D65DFE5026">
+                <File Id="CabLib.dll_x64" Source="..\ThirdParty\CabLib\x64\$(var.Configuration)\CabLib.dll" />
+              </Component>
+            </Directory>
           </Directory>
           <Directory Id="doc" Name="doc">
             <Component Id="Documentation" Guid="00A1CB0D-BCE4-43a4-8AAC-7563F90B3E7C">
@@ -81,6 +86,7 @@
       <ComponentRef Id="InstallerLinker" />
       <ComponentRef Id="dotNetInstaller" />
       <ComponentRef Id="htmlInstaller" />
+      <ComponentRef Id="CabLib.dll" />
       <ComponentRef Id="Documentation" />
       <ComponentRef Id="DotNetInstallerMenuShortcuts" />
       <Feature Id="SamplesFeature" Title="Samples" Level="1">
