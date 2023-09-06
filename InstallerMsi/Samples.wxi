@@ -46,6 +46,11 @@
             <File Id="InstallCheckProduct.Configuration.xml" Name="Configuration.xml" Source="..\Samples\InstallCheckProduct\Configuration.xml" />
           </Component>
         </Directory>
+        <Directory Id="InstallCheckWmiFolder" Name="InstallCheckWmi">
+          <Component Id="InstallCheckWmiSample" Guid="BB194EF6-F31A-4F8C-B0A4-CD27A040E849">
+            <File Id="InstallCheckWmi.Configuration.xml" Name="Configuration.xml" Source="..\Samples\InstallCheckWmi\Configuration.xml" />
+          </Component>
+        </Directory>
         <Directory Id="ReferenceSetupFolder" Name="ReferenceSetup">
           <Component Id="ReferenceSetupSample" Guid="09F467BB-686D-47a3-B30B-53A959D24199">
             <File Id="ReferenceSetup.Configuration.xml" Name="Configuration.xml" Source="..\Samples\ReferenceSetup\Configuration.xml" />

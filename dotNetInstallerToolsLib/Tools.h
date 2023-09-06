@@ -17,3 +17,4 @@
 #include "FunctionUtil.h"
 #include "UACElevation.h"
 #include "VersionUtil.h"
+#include "WmiUtil.h"

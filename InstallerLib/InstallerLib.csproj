@@ -107,6 +107,7 @@
     <Compile Include="InstalledCheckOperator.cs" />
     <Compile Include="InstalledCheckProduct.cs" />
     <Compile Include="InstalledCheckRegistry.cs" />
+    <Compile Include="InstalledCheckWmi.cs" />
     <Compile Include="InstallerLinker.cs" />
     <Compile Include="InstallerLinkerArguments.cs" />
     <Compile Include="Lcid.cs" />

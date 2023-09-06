@@ -120,6 +120,9 @@
     <ClCompile Include="XmlAttributeUnitTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="InstalledCheckWmiUnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CmdComponentUnitTests.h">
@@ -225,6 +228,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dotNetInstallerLibUnitTestFixture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstalledCheckWmiUnitTests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
