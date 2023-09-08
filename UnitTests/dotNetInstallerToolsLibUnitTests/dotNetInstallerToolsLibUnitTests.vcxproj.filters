@@ -69,6 +69,9 @@
     <ClCompile Include="VersionUtilUnitTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WmiUtilUnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectoryUtilUnitTests.h">
@@ -123,6 +126,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VersionUtilUnitTests.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WmiUtilUnitTests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
