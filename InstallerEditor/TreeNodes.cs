@@ -1,7 +1,6 @@
 using System;
 using System.Windows.Forms;
 using InstallerLib;
-using System.Text;
 using System.IO;
 
 namespace InstallerEditor

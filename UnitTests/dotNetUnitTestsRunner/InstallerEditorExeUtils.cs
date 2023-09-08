@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Web;
 using System.IO;
 using System.Reflection;
@@ -71,7 +69,7 @@ namespace dotNetUnitTestsRunner
                     // locate dotnetinstaller.exe
                     Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
                     _location = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(HttpUtility.UrlDecode(uri.AbsolutePath)),
-                        string.Format(@"..\..\..\..\InstallerEditor\bin\{0}\", configuration)));
+                        string.Format(@"..\..\..\..\..\InstallerEditor\bin\{0}\net40", configuration)));
                 }
 
                 return _location;

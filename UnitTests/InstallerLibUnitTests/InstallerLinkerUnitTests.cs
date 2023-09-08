@@ -15,6 +15,12 @@ namespace InstallerLibUnitTests
     [TestFixture]
     public class InstallerLinkerTests
     {
+        [SetUp]
+        public void SetUp()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += InstallerLinker.ResolveAssembly;
+        }
+
         [Test]
         public void TestLinkBasics()
         {
@@ -463,6 +469,5 @@ namespace InstallerLibUnitTests
                     File.Delete(args.output);
             }
         }
-
     }
 }

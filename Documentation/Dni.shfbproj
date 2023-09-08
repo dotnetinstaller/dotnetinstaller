@@ -35,8 +35,8 @@
     <PresentationStyle>Prototype</PresentationStyle>
     <HelpFileVersion>1.0.0.0</HelpFileVersion>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\InstallerLib\bin\$(Configuration)\InstallerLib.dll" xmlns="" />
-      <DocumentationSource sourceFile="..\InstallerLib\bin\$(Configuration)\InstallerLib.xml" xmlns="" />
+      <DocumentationSource sourceFile="..\InstallerLib\bin\$(Configuration)\net40\InstallerLib.dll" xmlns="" />
+      <DocumentationSource sourceFile="..\InstallerLib\bin\$(Configuration)\net40\InstallerLib.xml" xmlns="" />
     </DocumentationSources>
     <KeepLogFile>False</KeepLogFile>
     <CopyrightText>$(Copyright)</CopyrightText>

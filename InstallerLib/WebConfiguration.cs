@@ -1,7 +1,5 @@
-using System;
 using System.Xml;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 
 namespace InstallerLib
 {

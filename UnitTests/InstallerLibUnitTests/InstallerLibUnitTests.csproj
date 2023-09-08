@@ -1,94 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{49A3BD48-D506-4108-8F47-7CD7081C046C}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>InstallerLibUnitTests</RootNamespace>
-    <AssemblyName>InstallerLibUnitTests</AssemblyName>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <TargetFramework>net40</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
+  <Import Project="..\..\CopyCabLib.targets"/>
   <ItemGroup>
     <Reference Include="nunit.framework, Version=2.4.7.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
       <HintPath>..\..\ThirdParty\NUnit\bin\net-2.0\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Vestris.ResourceLib, Version=1.6.422.0, Culture=neutral, PublicKeyToken=ec632d8ba5e5750d, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Vestris.ResourceLib.1.6.422\lib\Vestris.ResourceLib.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Version\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ComponentEmbedFolderTests.cs" />
-    <Compile Include="ComponentExeTests.cs" />
-    <Compile Include="ComponentMsiTests.cs" />
-    <Compile Include="ComponentMspTests.cs" />
-    <Compile Include="ComponentMsuTests.cs" />
-    <Compile Include="ComponentOpenFileTests.cs" />
-    <Compile Include="ConfigFileTests.cs" />
-    <Compile Include="ControlLicenseUnitTests.cs" />
-    <Compile Include="DownloadTests.cs" />
-    <Compile Include="ComponentEmbedFileTests.cs" />
-    <Compile Include="InstallerLinkerUnitTests.cs" />
-    <Compile Include="SamplesUnitTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XmlFilterUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\InstallerLib\InstallerLib.csproj">
-      <Project>{E19C2177-78F8-4C52-81FE-F49E157D647F}</Project>
-      <Name>InstallerLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\dotNetUnitTestsRunner\dotNetUnitTestsRunner.csproj">
-      <Project>{6436DA79-B04A-4B9A-BEA9-46933ADBBB7D}</Project>
-      <Name>dotNetUnitTestsRunner</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\..\InstallerLib\InstallerLib.csproj" />
+    <ProjectReference Include="..\dotNetUnitTestsRunner\dotNetUnitTestsRunner.csproj" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\..\Samples\InstallCheckOperators\Configuration.xml">
@@ -156,26 +90,15 @@
     <None Include="..\..\Samples\ExeSetup\Setup.rsp">
       <Link>Samples\ExeSetup\Setup.rsp</Link>
     </None>
-    <None Include="App.config" />
-    <None Include="nunit-console-x86.exe.Debug.manifest" />
-    <None Include="nunit-console-x86.exe.Release.manifest" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <PackageReference Include="Vestris.ResourceLib" Version="1.6.422" />
+  </ItemGroup>
   <PropertyGroup>
-    <PreBuildEvent>"$(SolutionDir)\build.cmd" rewritesamples /p:Configuration=$(ConfigurationName)
-</PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PreBuildEvent>"$(SolutionDir)\build.cmd" rewritesamples /p:Configuration=$(Configuration)
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

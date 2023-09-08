@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Reflection;
 using InstallerLib;
-using System.ComponentModel;
 using System.Xml;
 using System.IO;
 

@@ -8,6 +8,7 @@ using CabLib;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Xml;
+using System.Reflection;
 
 namespace InstallerLib
 {
@@ -324,6 +325,28 @@ namespace InstallerLib
 
             args.WriteLine(string.Format("Successfully created \"{0}\" ({1})",
                 args.output, EmbedFileCollection.FormatBytes(new FileInfo(args.output).Length)));
+        }
+
+        public static Assembly ResolveAssembly(object sender, ResolveEventArgs args)
+        {
+            if (!args.Name.StartsWith("CabLib"))
+            {
+                return null;
+            }
+
+            var platformDirectoryName = Environment.Is64BitProcess ? "x64" : "x86";
+            var platformPath = Path.Combine(
+                    AppDomain.CurrentDomain.SetupInformation.ApplicationBase,
+                    platformDirectoryName);
+            var assemblyFileName = "CabLib.dll";
+            var assemblyFilePath = Path.Combine(platformPath, assemblyFileName);
+
+            if (!File.Exists(assemblyFilePath))
+            {
+                throw new FileNotFoundException(assemblyFilePath);
+            }
+
+            return Assembly.LoadFrom(assemblyFilePath);
         }
     }
 }

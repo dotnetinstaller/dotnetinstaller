@@ -95,14 +95,14 @@
     <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.pdb" />
     <Binaries Include="htmlInstaller\$(Configuration)\htmlInstaller.exe" />
     <Binaries Include="htmlInstaller\$(Configuration)\htmlInstaller.pdb" />
-    <Binaries Include="InstallerEditor\bin\$(Configuration)\InstallerEditor.exe" />
-    <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceLibrary.dll" />
-    <Binaries Include="InstallerEditor\bin\$(Configuration)\SourceGrid2.dll" />
-    <Binaries Include="ThirdParty\CabLib\Win32\$(Configuration)\CabLib.dll" />
-    <Binaries Include="packages\Vestris.ResourceLib.1.6.422\lib\Vestris.ResourceLib.dll" />
-    <Binaries Include="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe" />
-    <Binaries Include="InstallerLib\bin\$(Configuration)\InstallerLib.dll" />
-    <Binaries64 Include="ThirdParty\CabLib\x64\$(Configuration)\CabLib.dll" />
+    <Binaries Include="InstallerEditor\bin\$(Configuration)\net40\InstallerEditor.exe" />
+    <Binaries Include="InstallerEditor\bin\$(Configuration)\net40\SourceLibrary.dll" />
+    <Binaries Include="InstallerEditor\bin\$(Configuration)\net40\SourceGrid2.dll" />
+    <Binaries Include="InstallerLinker\bin\$(Configuration)\net40\InstallerLinker.exe" />
+    <Binaries Include="InstallerLib\bin\$(Configuration)\net40\InstallerLib.dll" />
+    <Binaries Include="InstallerLib\bin\$(Configuration)\net40\Vestris.ResourceLib.dll" />
+    <BinariesX86 Include="ThirdParty\CabLib\Win32\$(Configuration)\CabLib.dll" />
+    <BinariesX64 Include="ThirdParty\CabLib\x64\$(Configuration)\CabLib.dll" />
   </ItemGroup>
   <ItemGroup>
     <NUnitFiles Include="$(NUnitToolPath)/**/*" />
@@ -134,18 +134,19 @@
     <Delete Files="Version\Version.h;Version\Version.wxi;Version\GlobalAssemblyInfo.cs" />
   </Target>
   <Target Name="restore">
-    <Exec Command="ThirdParty\NuGet\NuGet.exe restore Dni.sln" />
+    <MSBuild Projects="Dni.sln" Targets="Restore" />
   </Target>
   <Target Name="build" DependsOnTargets="version;restore">
-    <MSBuild Projects="Dni.sln" Targets="Build" Properties="Configuration=$(Configuration);Platform=Win32" />
     <MSBuild Projects="Dni.sln" Targets="Build" Properties="Configuration=$(Configuration);Platform=x64" />
+    <MSBuild Projects="Dni.sln" Targets="Build" Properties="Configuration=$(Configuration);Platform=Win32" />
   </Target>
   <Target Name="release" DependsOnTargets="version">
     <Message Importance="high" Text="Collecting release files ..." />
     <MakeDir Directories="$(ReleaseDir)" />
     <!-- Binaries -->
     <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\Bin" />
-    <Copy SourceFiles="@(Binaries64)" DestinationFolder="$(ReleaseDir)\Bin\x64" />
+    <Copy SourceFiles="@(BinariesX86)" DestinationFolder="$(ReleaseDir)\Bin\x86" />
+    <Copy SourceFiles="@(BinariesX64)" DestinationFolder="$(ReleaseDir)\Bin\x64" />
     <!-- Documentation -->
     <Copy SourceFiles="@(Documentation)" DestinationFolder="$(ReleaseDir)\Doc" />
     <!-- Samples -->
@@ -194,7 +195,7 @@
     <Copy SourceFiles="@(ReferenceSetupSample)" DestinationFolder="$(ReleaseDir)\Samples\ReferenceSetup\%(RecursiveDir)" />
   </Target>
   <Target Name="doclib" DependsOnTargets="version">
-    <Exec Command="InstallerDocLib\bin\$(Configuration)\InstallerDocLib.exe /Output:&quot;Documentation\Content\Generated&quot;"/>
+    <Exec Command="InstallerDocLib\bin\$(Configuration)\net40\InstallerDocLib.exe /Output:&quot;Documentation\Content\Generated&quot;"/>
   </Target>
   <Target Name="doc" DependsOnTargets="version">
     <CallTarget Targets="doclib" />
@@ -230,20 +231,28 @@
       <Output TaskParameter="Include" ItemName="UITestExecutables"/>
     </CreateItem>
     <TemplateFile Template="UnitTests\dotNetInstallerUnitTests\App.config"
-     OutputFilename="bin\$(Configuration)\dotNetInstallerUnitTests.dll.config"
+     OutputFilename="bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll.config"
      Tokens="@(UITestExecutables)" />
-    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\dotNetInstallerUnitTests.dll"
-    Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName).xml" />
+    <Message Text="&quot;$(NUnitToolPath)\nunit-console-x86.exe&quot; UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll" />
+    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll"
+     Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName)-32bit.xml" />
+    <Message Text="&quot;$(NUnitToolPath)\nunit-console.exe&quot; UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll" />
+    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll"
+     Force32Bit="false" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName)-64bit.xml" />
   </Target>
   <Target Name="editortests">
     <CreateItem Include="EditorTestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\dotNetInstaller\$(Configuration)\dotNetInstaller.exe">
       <Output TaskParameter="Include" ItemName="EditorTestExecutables"/>
     </CreateItem>
     <TemplateFile Template="UnitTests\InstallerEditorUnitTests\App.config"
-     OutputFilename="bin\$(Configuration)\InstallerEditorUnitTests.dll.config"
+     OutputFilename="bin\$(Configuration)\net40\InstallerEditorUnitTests.dll.config"
      Tokens="@(EditorTestExecutables)" />
-    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\InstallerEditorUnitTests.dll"
-    Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests.xml" />
+    <Message Text="&quot;$(NUnitToolPath)\nunit-console-x86.exe&quot; UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll" />
+    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll"
+     Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-32bit.xml" />
+    <Message Text="&quot;$(NUnitToolPath)\nunit-console.exe&quot; UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll" />
+    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll"
+     Force32Bit="false" OutputXmlFile="$(ReleaseDir)\UnitTests-64bit.xml" />
   </Target>
   <PropertyGroup>
     <GenerateGuid>
@@ -261,7 +270,7 @@ return System.Guid.NewGuid().ToString().ToUpper();
       <Output TaskParameter="Include" ItemName="LibTestExecutables"/>
     </CreateItem>
     <TemplateFile Template="UnitTests\InstallerLibUnitTests\App.config"
-     OutputFilename="bin\$(Configuration)\InstallerLibUnitTests.dll.config"
+     OutputFilename="bin\$(Configuration)\net40\InstallerLibUnitTests.dll.config"
      Tokens="@(LibTestExecutables)" />
     <!-- make a copy of nunit assemblies so that we can embed our custom manifest file in it so that it can successfully load the Microsoft VC++ runtime assemblies -->
     <Script Language="C#" Code="$(GenerateGuid)">
@@ -272,8 +281,13 @@ return System.Guid.NewGuid().ToString().ToUpper();
     <Copy SourceFiles="@(NUnitFiles)" DestinationFolder="$(TEMP)\$(NewGuid)/%(NUnitFiles.RecursiveDir)" />
     <!-- the manifest file must be a relative path -->
     <Exec Command="&quot;$(ProjectDir)ThirdParty\Microsoft\Visual Studio 8\VC\bin\mt.exe&quot; -manifest UnitTests\InstallerLibUnitTests\nunit-console-x86.exe.$(Configuration).manifest -outputresource:&quot;$(TEMP)\$(NewGuid)\nunit-console-x86.exe&quot;;#1" />
-    <NUnit ToolPath="$(TEMP)\$(NewGuid)" Assemblies="UnitTests\InstallerLibUnitTests\bin\$(Configuration)\InstallerLibUnitTests.dll"
-    Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName).xml" />
+    <Exec Command="&quot;$(ProjectDir)ThirdParty\Microsoft\Visual Studio 8\VC\bin\mt.exe&quot; -manifest UnitTests\InstallerLibUnitTests\nunit-console-x86.exe.$(Configuration).manifest -outputresource:&quot;$(TEMP)\$(NewGuid)\nunit-console.exe&quot;;#1" />
+    <Message Text="&quot;$(NUnitToolPath)\nunit-console-x86.exe&quot; UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll" />
+    <NUnit ToolPath="$(TEMP)\$(NewGuid)" Assemblies="UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll"
+     Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName)-32bit.xml" />
+    <Message Text="&quot;$(NUnitToolPath)\nunit-console.exe&quot; UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll" />
+    <NUnit ToolPath="$(TEMP)\$(NewGuid)" Assemblies="UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll"
+     Force32Bit="false" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName)-64bit.xml" />
     <DeleteTree Directories="$(TEMP)\$(NewGuid)" Retries="5" />
   </Target>
   <Target Name="unittests" DependsOnTargets="version">
@@ -301,7 +315,7 @@ return System.Guid.NewGuid().ToString().ToUpper();
   <Target Name="rewritesamples" Inputs="@(SampleXmls)" Outputs="%(SampleXmls.Identity).output">
     <Message Text="%(SampleXmls.Identity)" />
     <Attrib Files="%(SampleXmls.Identity)" ReadOnly="False" />
-    <Exec Command="InstallerConfig\bin\$(Configuration)\InstallerConfig.exe /ConfigFile:%(SampleXmls.Identity)" />
+    <Exec Command="InstallerConfig\bin\$(Configuration)\net40\InstallerConfig.exe /ConfigFile:%(SampleXmls.Identity)" />
   </Target>
   <!-- rewrite the InstallerEditor/wizardcomponents.xml to current configuration format -->
   <ItemGroup>
@@ -310,26 +324,26 @@ return System.Guid.NewGuid().ToString().ToUpper();
   <Target Name="rewritewizardxmls" Inputs="@(WizardXmls)" Outputs="%(WizardXmls.Identity).output">
     <Message Text="%(WizardXmls.Identity)" />
     <XslTransform ToolPath="$(ProjectDir)ThirdParty\Sandcastle 2.6.1062.1\ProductionTools" XmlFile="%(WizardXmls.Identity)" XsltFiles="InstallerEditor\xsl\wizard2config.xsl" OutputFile="%(WizardXmls.Identity).config" />
-    <Exec Command="InstallerConfig\bin\$(Configuration)\InstallerConfig.exe /ConfigFile:%(WizardXmls.Identity).config" />
+    <Exec Command="InstallerConfig\bin\$(Configuration)\net40\InstallerConfig.exe /ConfigFile:%(WizardXmls.Identity).config" />
     <XslTransform ToolPath="$(ProjectDir)ThirdParty\Sandcastle 2.6.1062.1\ProductionTools" XmlFile="%(WizardXmls.Identity).config" XsltFiles="InstallerEditor\xsl\config2wizard.xsl" OutputFile="%(WizardXmls.Identity)" />
     <Delete Files="%(WizardXmls.Identity).config" />
   </Target>
   <Target Name="packagedsetupsample" DependsOnTargets="version">
-    <MakeDir Directories="Samples\PackagedSetup\bin\$(Configuration)" />
-    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Splash:Samples\PackagedSetup\splash.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Manifest:Samples\PackagedSetup\PackagedSetup.manifest"/>
-    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\HtmlSetup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Splash:Samples\PackagedSetup\splash.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:htmlInstaller\$(Configuration)\htmlInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Manifest:Samples\PackagedSetup\PackagedSetup.manifest /EmbedHtml:htmlInstaller\html\index.html /EmbedHtml:htmlInstaller\html\style.css"/>
+    <MakeDir Directories="Samples\PackagedSetup\bin\$(Configuration)\net40" />
+    <Exec Command="InstallerLinker\bin\$(Configuration)\net40\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\net40\Setup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Splash:Samples\PackagedSetup\splash.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Manifest:Samples\PackagedSetup\PackagedSetup.manifest"/>
+    <Exec Command="InstallerLinker\bin\$(Configuration)\net40\InstallerLinker.exe /Verbose /Output:&quot;Samples\PackagedSetup\bin\$(Configuration)\net40\HtmlSetup.exe&quot; /Banner:Samples\PackagedSetup\banner.bmp /Splash:Samples\PackagedSetup\splash.bmp /Icon:Samples\PackagedSetup\icon.ico /Template:htmlInstaller\$(Configuration)\htmlInstaller.exe /Configuration:Samples\PackagedSetup\Configuration.xml /AppPath:Samples\PackagedSetup /EmbedFile:Readme.txt /Manifest:Samples\PackagedSetup\PackagedSetup.manifest /EmbedHtml:htmlInstaller\html\index.html /EmbedHtml:htmlInstaller\html\style.css"/>
     <MakeDir Directories="$(ReleaseDir)\Samples\PackagedSetup\Package" />
-    <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\Samples\PackagedSetup\Package" />
-    <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\HtmlSetup.exe" DestinationFolder="$(ReleaseDir)\Samples\PackagedSetup\Package" />
+    <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\net40\Setup.exe" DestinationFolder="$(ReleaseDir)\Samples\PackagedSetup\Package" />
+    <Copy SourceFiles="Samples\PackagedSetup\bin\$(Configuration)\net40\HtmlSetup.exe" DestinationFolder="$(ReleaseDir)\Samples\PackagedSetup\Package" />
     <Copy SourceFiles="@(PackagedSetupSample)" DestinationFolder="$(ReleaseDir)\Samples\PackagedSetup\Source\%(RecursiveDir)" />
   </Target>
   <Target Name="licenseagreementsetupsample" DependsOnTargets="version">
-    <MakeDir Directories="Samples\LicenseAgreement\bin\$(Configuration)" />
-    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\LicenseAgreement\bin\$(Configuration)\Setup.exe&quot; /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\LicenseAgreement\Configuration.xml /AppPath:Samples\LicenseAgreement"/>
-    <Exec Command="InstallerLinker\bin\$(Configuration)\InstallerLinker.exe /Verbose /Output:&quot;Samples\LicenseAgreement\bin\$(Configuration)\HtmlSetup.exe&quot; /Template:htmlInstaller\$(Configuration)\htmlInstaller.exe /Configuration:Samples\LicenseAgreement\Configuration.xml /AppPath:Samples\LicenseAgreement"/>
+    <MakeDir Directories="Samples\LicenseAgreement\bin\$(Configuration)\net40" />
+    <Exec Command="InstallerLinker\bin\$(Configuration)\net40\InstallerLinker.exe /Verbose /Output:&quot;Samples\LicenseAgreement\bin\$(Configuration)\net40\Setup.exe&quot; /Template:dotNetInstaller\$(Configuration)\dotNetInstaller.exe /Configuration:Samples\LicenseAgreement\Configuration.xml /AppPath:Samples\LicenseAgreement"/>
+    <Exec Command="InstallerLinker\bin\$(Configuration)\net40\InstallerLinker.exe /Verbose /Output:&quot;Samples\LicenseAgreement\bin\$(Configuration)\net40\HtmlSetup.exe&quot; /Template:htmlInstaller\$(Configuration)\htmlInstaller.exe /Configuration:Samples\LicenseAgreement\Configuration.xml /AppPath:Samples\LicenseAgreement"/>
     <MakeDir Directories="$(ReleaseDir)\Samples\LicenseAgreement" />
-    <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\Setup.exe" DestinationFolder="$(ReleaseDir)\Samples\LicenseAgreement" />
-    <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\HtmlSetup.exe" DestinationFolder="$(ReleaseDir)\Samples\LicenseAgreement" />
+    <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\net40\Setup.exe" DestinationFolder="$(ReleaseDir)\Samples\LicenseAgreement" />
+    <Copy SourceFiles="Samples\LicenseAgreement\bin\$(Configuration)\net40\HtmlSetup.exe" DestinationFolder="$(ReleaseDir)\Samples\LicenseAgreement" />
     <Copy SourceFiles="@(LicenseAgreementSample)" DestinationFolder="$(ReleaseDir)\Samples\LicenseAgreement\%(RecursiveDir)" />
   </Target>
 </Project>

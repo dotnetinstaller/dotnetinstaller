@@ -38,9 +38,9 @@ void ShellUtilUnitTests::testDetachCmd()
     // test timer runs for 2 seconds
     std::wstring testTimerExe = DVLib::DirectoryCombine(
 #ifdef DEBUG
-        DVLib::GetCurrentModuleDirectoryW(), L"..\\..\\TestTimer\\bin\\Debug\\TestTimer.exe"
+        DVLib::GetCurrentModuleDirectoryW(), L"..\\..\\TestTimer\\bin\\Debug\\net20\\TestTimer.exe"
 #else
-        DVLib::GetCurrentModuleDirectoryW(), L"..\\..\\TestTimer\\bin\\Release\\TestTimer.exe"
+        DVLib::GetCurrentModuleDirectoryW(), L"..\\..\\TestTimer\\bin\\Release\\net20\\TestTimer.exe"
 #endif
         );
     Assert::IsTrue(DVLib::FileExists(testTimerExe));
