@@ -1,7 +1,10 @@
 using System;
 using System.Windows.Automation;
+using NUnit.Framework;
 using TestStack.White.Factory;
 using TestStack.White.UIItems;
+using TestStack.White.UIItems.Finders;
+using TestStack.White.UIItems.WindowItems;
 
 namespace InstallerEditorUnitTests
 {
@@ -20,6 +23,14 @@ namespace InstallerEditorUnitTests
         public static void DumpControl(AutomationElement el, bool recurse)
         {
             DumpControl(el, recurse, 0);
+        }
+
+        public static void FailWithErrorMessageFromErrorDialog(Window window)
+        {
+            Window errorDialog = window.ModalWindow(SearchCriteria.ByAutomationId("ErrorDialog"));
+            Label errorMessageLabel = errorDialog.Get<Label>("lblErrorMessage");
+            string errorMessage = errorMessageLabel.Text;
+            Assert.Fail(errorMessage);
         }
 
         private static void DumpControl(AutomationElement el, bool recurse, int level)

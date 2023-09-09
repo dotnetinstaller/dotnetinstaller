@@ -11,6 +11,7 @@ using TestStack.White.UIItems.WindowStripControls;
 using TestStack.White.WindowsAPI;
 using System.IO;
 using InstallerLib;
+using TestStack.White.UIItems.Finders;
 
 namespace InstallerEditorUnitTests
 {
@@ -46,7 +47,12 @@ namespace InstallerEditorUnitTests
                     saveAsWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
                     saveAsWindow.WaitWhileBusy();
                     mainWindow.WaitWhileBusy();
-                    Assert.IsTrue(File.Exists(outputFilename));
+
+                    if (!File.Exists(outputFilename))
+                    {
+                        UIAutomation.FailWithErrorMessageFromErrorDialog(createExeWindow);
+                    }
+
                     File.Delete(outputFilename);
                 }
             }
