@@ -9,7 +9,7 @@ namespace InstallerEditorUnitTests
         CultureInfo mUICulture;
         CultureInfo mCulture;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public virtual void SetUp()
         {
             mUICulture = Thread.CurrentThread.CurrentUICulture;
@@ -18,7 +18,7 @@ namespace InstallerEditorUnitTests
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public virtual void TearDown()
         {
             Thread.CurrentThread.CurrentUICulture = mUICulture;

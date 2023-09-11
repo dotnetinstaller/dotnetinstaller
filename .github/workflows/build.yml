@@ -49,7 +49,25 @@ jobs:
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /t:all /m /p:Configuration=${{ matrix.Configuration }} .\dni.proj
-    
+
+    - name: Publish Failed Test Results Report
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: Tests
+        path: TestResults/*.trx
+        reporter: dotnet-trx
+        list-suites: 'failed'
+        list-tests: 'failed'
+        max-annotations: 50
+
+    - name: Upload Test Result Files
+      uses: actions/upload-artifact@v2.3.1
+      if: always()
+      with:
+        name: TestResults-${{ matrix.Configuration }}
+        path: .\TestResults\**\*.*
+
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v2.3.1
       with:

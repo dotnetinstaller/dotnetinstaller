@@ -11,7 +11,6 @@ using TestStack.White.UIItems.WindowStripControls;
 using TestStack.White.WindowsAPI;
 using System.IO;
 using InstallerLib;
-using TestStack.White.UIItems.Finders;
 
 namespace InstallerEditorUnitTests
 {

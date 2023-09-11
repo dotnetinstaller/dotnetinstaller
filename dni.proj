@@ -20,7 +20,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <MSBuild_4_0_ExeFilePath>%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe</MSBuild_4_0_ExeFilePath>
-    <NUnitToolPath>ThirdParty\NUnit\bin\net-2.0</NUnitToolPath>
+    <NUnitTestAdapterPath>$(UserProfile)\.nuget\packages\nunit3testadapter\4.5.0\build\net462</NUnitTestAdapterPath>
     <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
     <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
     <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
@@ -103,9 +103,6 @@
     <Binaries Include="InstallerLib\bin\$(Configuration)\net40\Vestris.ResourceLib.dll" />
     <BinariesX86 Include="ThirdParty\CabLib\Win32\$(Configuration)\CabLib.dll" />
     <BinariesX64 Include="ThirdParty\CabLib\x64\$(Configuration)\CabLib.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <NUnitFiles Include="$(NUnitToolPath)/**/*" />
   </ItemGroup>
   <Target Name="all">
     <Message Importance="high" Text="Building project ..." />
@@ -226,19 +223,16 @@
   </ItemGroup>
   <Target Name="uitests" Inputs="@(UIDrivers)" Outputs="%(UIDrivers.Identity).out">
     <Message Text="Testing %(UIDrivers.Identity)" />
-    <MakeDir Directories="$(ReleaseDir)" />
     <CreateItem Include="TestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\%(UIDrivers.Identity)">
       <Output TaskParameter="Include" ItemName="UITestExecutables"/>
     </CreateItem>
     <TemplateFile Template="UnitTests\dotNetInstallerUnitTests\App.config"
      OutputFilename="bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll.config"
      Tokens="@(UITestExecutables)" />
-    <Message Text="&quot;$(NUnitToolPath)\nunit-console-x86.exe&quot; UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll" />
-    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll"
-     Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName)-32bit.xml" />
-    <Message Text="&quot;$(NUnitToolPath)\nunit-console.exe&quot; UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll" />
-    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll"
-     Force32Bit="false" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName)-64bit.xml" />
+    <Message Text="&quot;C:\Program Files (x86)\dotnet\dotnet.exe&quot; vstest UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=dotNetInstallerUnitTests-%(UIDrivers.FileName)-32bit.trx" />
+    <Exec Command="&quot;C:\Program Files (x86)\dotnet\dotnet.exe&quot; vstest UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=dotNetInstallerUnitTests-%(UIDrivers.FileName)-32bit.trx" />
+    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; vstest UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=dotNetInstallerUnitTests-%(UIDrivers.FileName)-64bit.trx" />
+    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; vstest UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=dotNetInstallerUnitTests-%(UIDrivers.FileName)-64bit.trx" />
   </Target>
   <Target Name="editortests">
     <CreateItem Include="EditorTestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\dotNetInstaller\$(Configuration)\dotNetInstaller.exe">
@@ -247,48 +241,23 @@
     <TemplateFile Template="UnitTests\InstallerEditorUnitTests\App.config"
      OutputFilename="bin\$(Configuration)\net40\InstallerEditorUnitTests.dll.config"
      Tokens="@(EditorTestExecutables)" />
-    <Message Text="&quot;$(NUnitToolPath)\nunit-console-x86.exe&quot; UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll" />
-    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll"
-     Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-32bit.xml" />
-    <Message Text="&quot;$(NUnitToolPath)\nunit-console.exe&quot; UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll" />
-    <NUnit ToolPath="$(NUnitToolPath)" Assemblies="UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll"
-     Force32Bit="false" OutputXmlFile="$(ReleaseDir)\UnitTests-64bit.xml" />
+    <Message Text="&quot;C:\Program Files (x86)\dotnet\dotnet.exe&quot; vstest UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerEditorUnitTests-32bit.trx" />
+    <Exec Command="&quot;C:\Program Files (x86)\dotnet\dotnet.exe&quot; vstest UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerEditorUnitTests-32bit.trx" />
+    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; vstest UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerEditorUnitTests-64bit.trx" />
+    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; vstest UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerEditorUnitTests-64bit.trx" />
   </Target>
-  <PropertyGroup>
-    <GenerateGuid>
-      <![CDATA[
-public static string ScriptMain() {
-return System.Guid.NewGuid().ToString().ToUpper();
-}
-]]>
-    </GenerateGuid>
-  </PropertyGroup>
   <Target Name="libtests" Inputs="@(UIDrivers)" Outputs="%(UIDrivers.Identity).out">
     <Message Text="Testing %(UIDrivers.Identity)" />
-    <MakeDir Directories="$(ReleaseDir)" />
     <CreateItem Include="TestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\%(UIDrivers.Identity)">
       <Output TaskParameter="Include" ItemName="LibTestExecutables"/>
     </CreateItem>
     <TemplateFile Template="UnitTests\InstallerLibUnitTests\App.config"
      OutputFilename="bin\$(Configuration)\net40\InstallerLibUnitTests.dll.config"
      Tokens="@(LibTestExecutables)" />
-    <!-- make a copy of nunit assemblies so that we can embed our custom manifest file in it so that it can successfully load the Microsoft VC++ runtime assemblies -->
-    <Script Language="C#" Code="$(GenerateGuid)">
-      <Output TaskParameter="ReturnValue" PropertyName="NewGuid" />
-    </Script>
-    <Message Text="Guid: $(NewGuid)" />
-    <MakeDir Directories="$(TEMP)\$(NewGuid)" />
-    <Copy SourceFiles="@(NUnitFiles)" DestinationFolder="$(TEMP)\$(NewGuid)/%(NUnitFiles.RecursiveDir)" />
-    <!-- the manifest file must be a relative path -->
-    <Exec Command="&quot;$(ProjectDir)ThirdParty\Microsoft\Visual Studio 8\VC\bin\mt.exe&quot; -manifest UnitTests\InstallerLibUnitTests\nunit-console-x86.exe.$(Configuration).manifest -outputresource:&quot;$(TEMP)\$(NewGuid)\nunit-console-x86.exe&quot;;#1" />
-    <Exec Command="&quot;$(ProjectDir)ThirdParty\Microsoft\Visual Studio 8\VC\bin\mt.exe&quot; -manifest UnitTests\InstallerLibUnitTests\nunit-console-x86.exe.$(Configuration).manifest -outputresource:&quot;$(TEMP)\$(NewGuid)\nunit-console.exe&quot;;#1" />
-    <Message Text="&quot;$(NUnitToolPath)\nunit-console-x86.exe&quot; UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll" />
-    <NUnit ToolPath="$(TEMP)\$(NewGuid)" Assemblies="UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll"
-     Force32Bit="true" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName)-32bit.xml" />
-    <Message Text="&quot;$(NUnitToolPath)\nunit-console.exe&quot; UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll" />
-    <NUnit ToolPath="$(TEMP)\$(NewGuid)" Assemblies="UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll"
-     Force32Bit="false" OutputXmlFile="$(ReleaseDir)\UnitTests-%(UIDrivers.FileName)-64bit.xml" />
-    <DeleteTree Directories="$(TEMP)\$(NewGuid)" Retries="5" />
+    <Message Text="&quot;C:\Program Files (x86)\dotnet\dotnet.exe&quot; vstest UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerLibUnitTests-%(UIDrivers.FileName)-32bit.trx" />
+    <Exec Command="&quot;C:\Program Files (x86)\dotnet\dotnet.exe&quot; vstest UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerLibUnitTests-%(UIDrivers.FileName)-32bit.trx" />
+    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; vstest UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerLibUnitTests-%(UIDrivers.FileName)-64bit.trx" />
+    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; vstest UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerLibUnitTests-%(UIDrivers.FileName)-64bit.trx" />
   </Target>
   <Target Name="unittests" DependsOnTargets="version">
     <Message Text="Running %(CppUnitTests.Identity) ..." />
