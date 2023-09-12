@@ -150,7 +150,8 @@ namespace InstallerEditorUnitTests
                     Window openWindow = mainWindow.ModalWindow("Open");
                     TextBox filenameTextBox = openWindow.Get<TextBox>("File name:");
                     filenameTextBox.Text = configFileName;
-                    openWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
+                    Button openButton = openWindow.Get<Button>("Open");
+                    openButton.Click();
                     mainWindow.WaitWhileBusy();
                     Tree configurationTree = UIAutomation.Find<Tree>(mainWindow, "configurationTree");
                     Assert.AreEqual("Config File", configurationTree.SelectedNode.Name);
@@ -218,7 +219,8 @@ namespace InstallerEditorUnitTests
                     Window openWindow = mainWindow.ModalWindow("Save As");
                     TextBox filenameTextBox = openWindow.Get<TextBox>("File name:");
                     filenameTextBox.Text = configFileName;
-                    openWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
+                    Button saveButton = openWindow.Get<Button>("Save");
+                    saveButton.Click();
                     openWindow.WaitWhileBusy();
                     mainWindow.WaitWhileBusy();
                     Assert.IsTrue(File.Exists(configFileName));
@@ -278,7 +280,8 @@ namespace InstallerEditorUnitTests
                     Window openWindow = mainWindow.ModalWindow("Save As");
                     TextBox filenameTextBox = openWindow.Get<TextBox>("File name:");
                     filenameTextBox.Text = configFileName;
-                    openWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
+                    Button saveButton = openWindow.Get<Button>("Save");
+                    saveButton.Click();
                     openWindow.WaitWhileBusy();
                     mainWindow.WaitWhileBusy();
                     Assert.IsTrue(File.Exists(configFileName));

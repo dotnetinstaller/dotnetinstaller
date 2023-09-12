@@ -52,7 +52,8 @@ namespace InstallerEditorUnitTests
                             Window saveAsWindow = createExeWindow.ModalWindow("Save As");
                             TextBox filenameTextBox = saveAsWindow.Get<TextBox>("File name:");
                             filenameTextBox.BulkText = outputFilename;
-                            saveAsWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
+                            Button saveButton = saveAsWindow.Get<Button>("Save");
+                            saveButton.Click();
                             saveAsWindow.WaitWhileBusy();
                             mainWindow.WaitWhileBusy();
                             Assert.IsTrue(FileExistsWithin5Seconds(outputFilename));
