@@ -46,7 +46,12 @@ jobs:
       # The windows-2016 virtual environment has an older version, Microsoft Visual C++ 2010 Runtime 10.0.30319.
       run: choco install vcredist2010 --version=10.0.40219.32503
 
-    - name: Install .NET 6 Runtime
+    - name: Install .NET 6 SDK (x64)
+      uses: crazy-max/ghaction-chocolatey@v3
+      with:
+        args: install dotnet-6.0-sdk
+
+    - name: Install .NET 6 Runtime (x86 and x64)
       uses: crazy-max/ghaction-chocolatey@v3
       with:
         args: install dotnet-6.0-runtime
