@@ -25,6 +25,10 @@ jobs:
         Configuration: [Debug, Release]
 
     steps:
+    - name: Disable Windows Defender Real-time Monitoring
+      run: Set-MpPreference -DisableRealtimeMonitoring $true
+      shell: powershell
+
     - uses: actions/checkout@v2
 
     - name: Add MSBuild to PATH
