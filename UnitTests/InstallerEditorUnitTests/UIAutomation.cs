@@ -43,6 +43,7 @@ namespace InstallerEditorUnitTests
                 string pngFilePath = Path.Combine(TestContext.CurrentContext.WorkDirectory, $"{TestContext.CurrentContext.Test.FullName}-{TestContext.CurrentContext.Test.ID}.png");
                 Desktop.TakeScreenshot(pngFilePath, System.Drawing.Imaging.ImageFormat.Png);
                 Console.WriteLine($"Saved screenshot to \"{pngFilePath}\".");
+                TestContext.AddTestAttachment(pngFilePath);
             }
         }
 
