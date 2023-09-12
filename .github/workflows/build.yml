@@ -49,8 +49,8 @@ jobs:
     - name: Install .NET 6 SDK
       run: |
         Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
-        .\dotnet-install.ps1 -Version 6.0.413 -Architecture "x64" -Verbose
-        .\dotnet-install.ps1 -Version 6.0.413 -Architecture "x86" -Verbose
+        .\dotnet-install.ps1 -Version 6.0.413 -Architecture "x64" -InstallDir "C:\Program Files\dotnet" -NoPath -Verbose
+        .\dotnet-install.ps1 -Version 6.0.413 -Architecture "x86" -InstallDir "C:\Program Files (x86)\dotnet" -NoPath -Verbose
 
     - name: dotnet version and info (x64)
       shell: cmd
