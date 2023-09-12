@@ -56,6 +56,16 @@ jobs:
       with:
         args: install dotnet-6.0-runtime
 
+    - name: dotnet version and info (x64)
+      run: |
+        "C:\Program Files\dotnet\dotnet.exe" --version
+        "C:\Program Files\dotnet\dotnet.exe" --info
+
+    - name: dotnet version and info (x86)
+      run: |
+        "C:\Program Files (x86)\dotnet\dotnet.exe" --version
+        "C:\Program Files (x86)\dotnet\dotnet.exe" --info
+
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /t:all /m /p:Configuration=${{ matrix.Configuration }} .\dni.proj
