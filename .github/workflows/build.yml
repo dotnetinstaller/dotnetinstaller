@@ -57,11 +57,13 @@ jobs:
         args: install dotnet-6.0-runtime
 
     - name: dotnet version and info (x64)
+      shell: cmd
       run: |
         "C:\Program Files\dotnet\dotnet.exe" --version
         "C:\Program Files\dotnet\dotnet.exe" --info
 
     - name: dotnet version and info (x86)
+      shell: cmd
       run: |
         "C:\Program Files (x86)\dotnet\dotnet.exe" --version
         "C:\Program Files (x86)\dotnet\dotnet.exe" --info
