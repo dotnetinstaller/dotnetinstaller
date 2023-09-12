@@ -20,6 +20,15 @@ jobs:
   build:
     runs-on: windows-2019
 
+    # Assign permissions for unit tests to be reported.
+    # See https://github.com/dorny/test-reporter/issues/168
+    permissions:
+      statuses: write
+      checks: write
+      contents: write
+      pull-requests: write
+      actions: write
+
     strategy:
       matrix:
         Configuration: [Debug, Release]
@@ -84,7 +93,7 @@ jobs:
       if: always()
       with:
         name: TestResults-${{ matrix.Configuration }}
-        path: .\TestResults\**\*.*
+        path: .\**\TestResults\**\*.*
 
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v2.3.1
