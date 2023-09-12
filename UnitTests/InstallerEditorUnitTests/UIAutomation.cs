@@ -1,12 +1,7 @@
 using System;
-using System.IO;
 using System.Windows.Automation;
-using NUnit.Framework;
-using TestStack.White;
 using TestStack.White.Factory;
 using TestStack.White.UIItems;
-using TestStack.White.UIItems.Finders;
-using TestStack.White.UIItems.WindowItems;
 
 namespace InstallerEditorUnitTests
 {
@@ -25,26 +20,6 @@ namespace InstallerEditorUnitTests
         public static void DumpControl(AutomationElement el, bool recurse)
         {
             DumpControl(el, recurse, 0);
-        }
-
-        public static void FailWithErrorMessageFromErrorDialog(Window window)
-        {
-            try
-            {
-                Window errorDialog = window.ModalWindow(SearchCriteria.ByAutomationId("ErrorDialog"));
-                Label errorMessageLabel = errorDialog.Get<Label>("lblErrorMessage");
-                string errorMessage = errorMessageLabel.Text;
-
-                // TODO: get and include exception details
-                Assert.Fail(errorMessage);
-            }
-            finally
-            {
-                string pngFilePath = Path.Combine(TestContext.CurrentContext.WorkDirectory, $"{TestContext.CurrentContext.Test.FullName}-{TestContext.CurrentContext.Test.ID}.png");
-                Desktop.TakeScreenshot(pngFilePath, System.Drawing.Imaging.ImageFormat.Png);
-                Console.WriteLine($"Saved screenshot to \"{pngFilePath}\".");
-                TestContext.AddTestAttachment(pngFilePath);
-            }
         }
 
         private static void DumpControl(AutomationElement el, bool recurse, int level)

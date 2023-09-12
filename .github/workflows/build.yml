@@ -20,15 +20,6 @@ jobs:
   build:
     runs-on: windows-2019
 
-    # Assign permissions for unit tests to be reported.
-    # See https://github.com/dorny/test-reporter/issues/168
-    permissions:
-      statuses: write
-      checks: write
-      contents: write
-      pull-requests: write
-      actions: write
-
     strategy:
       matrix:
         Configuration: [Debug, Release]
@@ -78,8 +69,8 @@ jobs:
       run: msbuild /t:all /m /p:Configuration=${{ matrix.Configuration }} .\dni.proj
 
     - name: Publish Failed Test Results Report
+      if: github.event_name != 'pull_request'
       uses: dorny/test-reporter@v1
-      if: always()
       with:
         name: Tests
         path: TestResults/*.trx
@@ -89,8 +80,8 @@ jobs:
         max-annotations: 50
 
     - name: Upload Test Result Files
-      uses: actions/upload-artifact@v2.3.1
       if: always()
+      uses: actions/upload-artifact@v2.3.1
       with:
         name: TestResults-${{ matrix.Configuration }}
         path: .\**\TestResults\**\*.*
