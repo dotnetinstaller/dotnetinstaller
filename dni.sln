@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{401947AE
 		dni.proj = dni.proj
 		dni.props = dni.props
 		dni.vsprops = dni.vsprops
+		Test.runsettings = Test.runsettings
 		Version.proj = Version.proj
 	EndProjectSection
 EndProject

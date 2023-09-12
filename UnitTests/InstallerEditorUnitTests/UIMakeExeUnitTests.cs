@@ -55,7 +55,7 @@ namespace InstallerEditorUnitTests
                             saveAsWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
                             saveAsWindow.WaitWhileBusy();
                             mainWindow.WaitWhileBusy();
-                            Assert.IsTrue(File.Exists(outputFilename));
+                            Assert.IsTrue(FileExistsWithin5Seconds(outputFilename));
 
                             File.Delete(outputFilename);
                         });

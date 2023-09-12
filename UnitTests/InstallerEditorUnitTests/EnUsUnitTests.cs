@@ -31,13 +31,31 @@ namespace InstallerEditorUnitTests
             Thread.CurrentThread.CurrentCulture = mCulture;
         }
 
+        protected static bool FileExistsWithin5Seconds(string filePath)
+        {
+            DateTime startTime = DateTime.Now;
+            TimeSpan timeout = TimeSpan.FromSeconds(5);
+
+            while (DateTime.Now - startTime < timeout)
+            {
+                if (File.Exists(filePath))
+                {
+                    return true;
+                }
+
+                Thread.Sleep(100);
+            }
+
+            return false;
+        }
+
         protected static void GetErrorMessageFromErrorDialogOnFailure(Window window, Action action)
         {
             try
             {
                 action();
             }
-            catch (Exception ex)
+            catch
             {
                 try
                 {
@@ -55,7 +73,7 @@ namespace InstallerEditorUnitTests
                     Console.WriteLine(ex2);
                 }
 
-                throw ex;
+                throw;
             }
         }
 
@@ -65,7 +83,7 @@ namespace InstallerEditorUnitTests
             {
                 action();
             }
-            catch (Exception ex)
+            catch
             {
                 try
                 {
@@ -81,7 +99,7 @@ namespace InstallerEditorUnitTests
                     Console.WriteLine(ex2);
                 }
 
-                throw ex;
+                throw;
             }
         }
     }
