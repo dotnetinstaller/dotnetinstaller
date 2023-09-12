@@ -29,6 +29,10 @@ jobs:
       run: Set-MpPreference -DisableRealtimeMonitoring $true
       shell: powershell
 
+    - name: Disable Windows Defender Smart Screen
+      run: Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' -Name 'EnableSmartScreen' -Type DWord -Value 0
+      shell: powershell
+
     - uses: actions/checkout@v2
 
     - name: Add MSBuild to PATH
