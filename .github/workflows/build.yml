@@ -99,12 +99,14 @@ jobs:
         name: TestResults-${{ matrix.Configuration }}
         path: .\**\TestResults\**\*.*
 
-    - name: Upload Temp Logs
+    - name: Upload Temp File
       if: failure()
       uses: actions/upload-artifact@v2.3.1
       with:
         name: TempLogs-${{ matrix.Configuration }}
-        path: C:\Users\runneradmin\AppData\Local\Temp\*.log
+        path: |
+            C:\Users\runneradmin\AppData\Local\Temp\*.log
+            C:\Users\runneradmin\AppData\Local\Temp\*.xml
 
     - name: Export Windows Event Logs
       if: failure()
