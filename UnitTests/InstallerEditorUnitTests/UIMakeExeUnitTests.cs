@@ -49,6 +49,8 @@ namespace InstallerEditorUnitTests
 
                             string outputFilename = Path.Combine(Path.GetTempPath(), string.Format("{0}.exe", Guid.NewGuid()));
 
+                            Console.WriteLine($"Saving file as \"{outputFilename}\"...");
+
                             Window saveAsWindow = createExeWindow.ModalWindow("Save As");
                             TextBox filenameTextBox = saveAsWindow.Get<TextBox>("File name:");
                             filenameTextBox.BulkText = outputFilename;
