@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{401947AE
 		dni.proj = dni.proj
 		dni.props = dni.props
 		dni.vsprops = dni.vsprops
+		build\ProcessRunner.ps1 = build\ProcessRunner.ps1
 		Test.runsettings = Test.runsettings
 		Version.proj = Version.proj
 	EndProjectSection
@@ -255,6 +256,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabLib", "ThirdParty\CabLib
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tinyxml2", "ThirdParty\tinyxml2-6.0.0\tinyxml2\tinyxml2.vcxproj", "{D1C528B6-AA02-4D29-9D61-DC08E317A70D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TeamViewer", "TeamViewer", "{6E2414C8-E08C-415F-93AA-149CFF9D9595}"
+	ProjectSection(SolutionItems) = preProject
+		build\TeamViewer\EnableRemoteConnection.ps1 = build\TeamViewer\EnableRemoteConnection.ps1
+		build\TeamViewer\TeamViewer_Settings.reg = build\TeamViewer\TeamViewer_Settings.reg
+		build\TeamViewer\WaitForRemoteConnection.ps1 = build\TeamViewer\WaitForRemoteConnection.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -437,6 +445,7 @@ Global
 		{97E729E6-0C6A-4772-B2DF-18C89DAA61C0} = {E1BC9224-5EAE-4C49-B54D-39210DA8C43C}
 		{96A9878C-7B75-41F7-AA11-7268672C16DD} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D} = {810198E0-3014-4F44-92B5-DF78730E1FDC}
+		{6E2414C8-E08C-415F-93AA-149CFF9D9595} = {401947AE-AA1F-4FB3-8949-14C91A9504E4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7D1286D-5E09-4B3E-8F39-F449FB21E8C0}
