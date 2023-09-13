@@ -94,6 +94,21 @@ jobs:
         name: TestResults-${{ matrix.Configuration }}
         path: .\**\TestResults\**\*.*
 
+    - name: Export Windows Event Logs
+      if: failure()
+      shell: cmd
+      run: |
+        wevtutil epl Application Application.evtx
+        wevtutil epl Security Security.evtx
+        wevtutil epl System System.evtx
+
+    - name: Upload Windows Event Logs
+      if: failure()
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: WindowsEventLogs-${{ matrix.Configuration }}
+        path: .\*.evtx
+
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v2.3.1
       with:
