@@ -104,9 +104,19 @@ jobs:
         name: TestResults-${{ matrix.Configuration }}
         path: |
             .\**\TestResults\**\*.*
+            .\*.evtx
+
+      # Upload the temp files separately.
+      # Otherwise the following error occurs:
+      # The rootDirectory: "D:\a\dotnetinstaller\dotnetinstaller" is not a parent directory of the file: "C:\Users\runneradmin\AppData\Local\Temp\33fcd148-d0c7-46cd-8333-9b21a22d2d2c.xml"
+    - name: Upload Temp File
+      if: failure()
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: TempLogs-${{ matrix.Configuration }}
+        path: |
             C:\Users\runneradmin\AppData\Local\Temp\*.log
             C:\Users\runneradmin\AppData\Local\Temp\*.xml
-            .\*.evtx
 
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v2.3.1
