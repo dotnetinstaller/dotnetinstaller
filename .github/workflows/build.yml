@@ -35,9 +35,9 @@ jobs:
 
     - uses: actions/checkout@v2
 
-    - name: Enable remote connection
-      shell: powershell
-      run: .\build\TeamViewer\EnableRemoteConnection.ps1
+    #- name: Enable remote connection
+    #  shell: powershell
+    #  run: .\build\TeamViewer\EnableRemoteConnection.ps1
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
@@ -62,19 +62,12 @@ jobs:
       run: |
         Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
         .\dotnet-install.ps1 -Version 6.0.413 -Architecture "x64" -InstallDir "C:\Program Files\dotnet" -NoPath -Verbose
-        .\dotnet-install.ps1 -Version 6.0.413 -Architecture "x86" -InstallDir "C:\Program Files (x86)\dotnet" -NoPath -Verbose
 
-    - name: dotnet version and info (x64)
+    - name: dotnet version and info
       shell: cmd
       run: |
         "C:\Program Files\dotnet\dotnet.exe" --version
         "C:\Program Files\dotnet\dotnet.exe" --info
-
-    - name: dotnet version and info (x86)
-      shell: cmd
-      run: |
-        "C:\Program Files (x86)\dotnet\dotnet.exe" --version
-        "C:\Program Files (x86)\dotnet\dotnet.exe" --info
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -136,7 +129,7 @@ jobs:
           .\target\${{ matrix.Configuration }}\dotNetInstaller.*.msi
         if-no-files-found: error
 
-    - name: 'Wait for remote connection'
-      if: failure()
-      shell: powershell
-      run: .\build\TeamViewer\WaitForRemoteConnection.ps1
+    #- name: 'Wait for remote connection'
+    #  if: failure()
+    #  shell: powershell
+    #  run: .\build\TeamViewer\WaitForRemoteConnection.ps1
