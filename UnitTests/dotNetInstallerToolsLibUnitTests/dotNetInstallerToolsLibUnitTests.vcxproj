@@ -107,6 +107,7 @@
     <ClCompile Include="StringUtilUnitTests.cpp" />
     <ClCompile Include="UACElevationUnitTests.cpp" />
     <ClCompile Include="VersionUtilUnitTests.cpp" />
+    <ClCompile Include="WmiUtilUnitTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectoryUtilUnitTests.h" />
@@ -127,6 +128,7 @@
     <ClInclude Include="StringUtilUnitTests.h" />
     <ClInclude Include="UACElevationUnitTests.h" />
     <ClInclude Include="VersionUtilUnitTests.h" />
+    <ClInclude Include="WmiUtilUnitTests.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="dotNetInstallerToolsLibUnitTests.rc" />

@@ -94,10 +94,12 @@
     <ClCompile Include="StringUtil.cpp" />
     <ClCompile Include="UACElevation.cpp" />
     <ClCompile Include="VersionUtil.cpp" />
+    <ClCompile Include="WmiUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ThirdParty\semver\semver200.h" />
     <ClInclude Include="..\ThirdParty\semver\version.h" />
+    <ClInclude Include="ComInitializer.h" />
     <ClInclude Include="DirectoryUtil.h" />
     <ClInclude Include="ErrorUtil.h" />
     <ClInclude Include="ExceptionMacros.h" />
@@ -120,6 +122,7 @@
     <ClInclude Include="Tools.h" />
     <ClInclude Include="UACElevation.h" />
     <ClInclude Include="VersionUtil.h" />
+    <ClInclude Include="WmiUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ThirdParty\semver\version.inl" />

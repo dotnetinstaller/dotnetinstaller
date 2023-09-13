@@ -267,6 +267,26 @@
             </para>
           </content>
         </section>
+        <section address="checktypeswmi">
+          <title>check_wmi</title>
+          <content>
+            <para>
+              Query the WMI repository with the specified statement.
+              The following properties are available in the check.
+              <definitionTable>
+                <definedTerm>description</definedTerm>
+                <definition>A free-formed description of the check, appears in the logs.</definition>
+                <definedTerm>query</definedTerm>
+                <definition>
+                  The WMI Query Language (WQL) statement to execute.
+                </definition>
+              </definitionTable>
+            </para>
+            <para>
+              The component is determined to be installed if any records are returned as a result of executing the statement.
+            </para>
+          </content>
+        </section>
       </sections>
     </section>
     <section address="checkoperators">
