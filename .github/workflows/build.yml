@@ -76,6 +76,11 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /t:all /m /p:Configuration=${{ matrix.Configuration }} .\dni.proj
 
+    - name: Dump environment variables
+      if: always()
+      shell: cmd
+      run: set
+
     - name: Publish Failed Test Results Report
       if: github.event_name != 'pull_request'
       uses: dorny/test-reporter@v1
