@@ -94,6 +94,13 @@ jobs:
         name: TestResults-${{ matrix.Configuration }}
         path: .\**\TestResults\**\*.*
 
+    - name: Upload Temp Logs
+      if: failure()
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: TempLogs-${{ matrix.Configuration }}
+        path: ${{ env.TEMP }}\*.log
+
     - name: Export Windows Event Logs
       if: failure()
       shell: cmd
