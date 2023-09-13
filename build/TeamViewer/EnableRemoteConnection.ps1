@@ -4,7 +4,7 @@
 # Set a flag to force verbose as a default
 $VerbosePreference ='Continue' # equiv to -verbose
 
-..\ProcessRunner.ps1
+.\..\ProcessRunner.ps1
 
 $exitCode = Run-Process -FilePath "reg.exe" -ArgumentList "import "".\build\TeamViewer\TeamViewer_Settings.reg"""
 if ($exitCode -ne 0)
