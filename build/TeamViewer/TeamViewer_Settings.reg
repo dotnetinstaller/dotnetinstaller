@@ -1,0 +1,5 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\TeamViewer\Temp]
+"SecurityPasswordExported"=hex:dc,ae,d3,6e,d0,e6,4b,6d,93,22,0c,fb,99,07,31,8c,69,ce,50,39,de,ee,97,11,d5,26,8b,92,a5,d8,81,c9
+

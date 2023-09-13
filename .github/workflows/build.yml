@@ -25,15 +25,19 @@ jobs:
         Configuration: [Debug, Release]
 
     steps:
-    - name: Disable Windows Defender Real-time Monitoring
-      run: Set-MpPreference -DisableRealtimeMonitoring $true
-      shell: powershell
+    #- name: Disable Windows Defender Real-time Monitoring
+    #  run: Set-MpPreference -DisableRealtimeMonitoring $true
+    #  shell: powershell
 
-    - name: Disable Windows Defender Smart Screen
-      run: Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' -Name 'EnableSmartScreen' -Type DWord -Value 0
-      shell: powershell
+    #- name: Disable Windows Defender Smart Screen
+    #  run: Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' -Name 'EnableSmartScreen' -Type DWord -Value 0
+    #  shell: powershell
 
     - uses: actions/checkout@v2
+
+    - name: Enable remote connection
+      shell: powershell
+      run: .\build\TeamViewer\EnableRemoteConnection.ps1
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
@@ -131,3 +135,8 @@ jobs:
           .\target\${{ matrix.Configuration }}\dotNetInstaller.*.zip
           .\target\${{ matrix.Configuration }}\dotNetInstaller.*.msi
         if-no-files-found: error
+
+    - name: 'Wait for remote connection'
+      if: failure()
+      shell: powershell
+      run: .\build\TeamViewer\WaitForRemoteConnection.ps1
