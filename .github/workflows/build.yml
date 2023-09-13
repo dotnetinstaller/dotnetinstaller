@@ -104,7 +104,7 @@ jobs:
       uses: actions/upload-artifact@v2.3.1
       with:
         name: TempLogs-${{ matrix.Configuration }}
-        path: ${{ env.TEMP }}\*.log
+        path: ${{ runner.temp }}\*.log
 
     - name: Export Windows Event Logs
       if: failure()
