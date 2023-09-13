@@ -14,6 +14,7 @@
 #include "InstalledCheckOperator.h"
 #include "InstalledCheckRegistry.h"
 #include "InstalledCheckProduct.h"
+#include "InstalledCheckWmi.h"
 #include "InstallerLog.h"
 #include "Configuration.h"
 #include "InstallUILevel.h"

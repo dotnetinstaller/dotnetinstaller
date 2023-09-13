@@ -99,6 +99,7 @@
         <ComponentGroupRef Id="StandaloneSetupSample" />
         <ComponentGroupRef Id="PackagedSetupSample" />
         <ComponentRef Id="InstallCheckProductSample" />
+        <ComponentRef Id="InstallCheckWmiSample" />
         <ComponentRef Id="CustomInputSetupSample" />
         <ComponentRef Id="ReferenceSetupSample" />
         <ComponentRef Id="OsFiltersSetupSample" />

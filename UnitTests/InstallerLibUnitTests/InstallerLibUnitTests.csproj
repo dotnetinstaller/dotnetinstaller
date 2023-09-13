@@ -29,33 +29,21 @@
     <EmbeddedResource Include="..\..\Samples\StandaloneSetup\configuration.xml">
       <Link>Samples\StandaloneSetup\configuration.xml</Link>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="..\..\Samples\DownloadSetup\Configuration.xml">
       <Link>Samples\DownloadSetup\Configuration.xml</Link>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="..\..\Samples\ReferenceSetup\Configuration.xml">
       <Link>Samples\ReferenceSetup\Configuration.xml</Link>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="..\..\Samples\InstallCheckProduct\Configuration.xml">
       <Link>Samples\InstallCheckProduct\Configuration.xml</Link>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="..\..\Samples\OsFilters\Configuration.xml">
       <Link>Samples\OsFilters\Configuration.xml</Link>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="..\..\Samples\MultilingualSetup\Configuration.xml">
       <Link>Samples\MultilingualSetup\Configuration.xml</Link>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="..\..\Samples\CustomInputSetup\Configuration.xml">
       <Link>Samples\CustomInputSetup\Configuration.xml</Link>
     </EmbeddedResource>
@@ -76,6 +64,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\..\Samples\PatchSetup\Configuration.xml">
       <Link>Samples\PatchSetup\Configuration.xml</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\Samples\InstallCheckWmi\Configuration.xml">
+      <Link>Samples\InstallCheckWmi\Configuration.xml</Link>
     </EmbeddedResource>
     <Content Include="Manifests\asInvoker.manifest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
