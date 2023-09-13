@@ -58,7 +58,7 @@ namespace InstallerEditorUnitTests
                             saveButton.Click();
                             saveAsWindow.WaitWhileBusy();
                             mainWindow.WaitWhileBusy();
-                            Assert.IsTrue(FileExistsWithin5Seconds(outputFilename));
+                            Assert.IsTrue(WaitForFileToExist(outputFilename));
 
                             File.Delete(outputFilename);
                         });

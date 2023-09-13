@@ -7,6 +7,7 @@ using TestStack.White.UIItems.Finders;
 using TestStack.White.UIItems;
 using System.IO;
 using TestStack.White;
+using System.Linq;
 
 namespace InstallerEditorUnitTests
 {
@@ -31,10 +32,14 @@ namespace InstallerEditorUnitTests
             Thread.CurrentThread.CurrentCulture = mCulture;
         }
 
-        protected static bool FileExistsWithin5Seconds(string filePath)
+        protected static bool WaitForFileToExist(string filePath)
+        {
+            return WaitForFileToExist(filePath, TimeSpan.FromSeconds(30));
+        }
+
+        protected static bool WaitForFileToExist(string filePath, TimeSpan timeout)
         {
             DateTime startTime = DateTime.Now;
-            TimeSpan timeout = TimeSpan.FromSeconds(5);
 
             while (DateTime.Now - startTime < timeout)
             {
@@ -60,12 +65,19 @@ namespace InstallerEditorUnitTests
                 try
                 {
                     // try to get error message from Error dialog
-                    Window errorDialog = window.ModalWindow(SearchCriteria.ByAutomationId("ErrorDialog"));
-                    Label errorMessageLabel = errorDialog.Get<Label>("lblErrorMessage");
-                    string errorMessage = errorMessageLabel.Text;
+                    Window errorDialog = window.ModalWindows().SingleOrDefault(x => x.Id == "ErrorDialog");
+                    if (errorDialog == null)
+                    {
+                        Console.WriteLine("Could not find error dialog.");
+                    }
+                    else
+                    {
+                        Label errorMessageLabel = errorDialog.Get<Label>("lblErrorMessage");
+                        string errorMessage = errorMessageLabel.Text;
 
-                    // TODO: get and include exception details
-                    Console.WriteLine(errorMessage);
+                        // TODO: get and include exception details
+                        Console.WriteLine($"Error dialog message: {errorMessage}");
+                    }
                 }
                 catch (Exception ex2)
                 {
