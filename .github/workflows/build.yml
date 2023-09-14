@@ -69,6 +69,16 @@ jobs:
         "C:\Program Files\dotnet\dotnet.exe" --version
         "C:\Program Files\dotnet\dotnet.exe" --info
 
+    - name: Configure Windows Error Reporting
+      shell: cmd
+      run: |
+        reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps" /t REG_EXPAND_SZ /v DumpFolder /d "${{ github.workspace }}\CrashDumps" /f
+        reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps" /t REG_DWORD /v DumpCount /d 10 /f
+        reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps" /t REG_DWORD /v DumpType /d 2 /f
+        reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\Windows Error Reporting\LocalDumps" /t REG_EXPAND_SZ /v DumpFolder /d "${{ github.workspace }}\CrashDumps" /f
+        reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\Windows Error Reporting\LocalDumps" /t REG_DWORD /v DumpCount /d 10 /f
+        reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\Windows Error Reporting\LocalDumps" /t REG_DWORD /v DumpType /d 2 /f
+
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /t:all /m /p:Configuration=${{ matrix.Configuration }} .\dni.proj
@@ -103,9 +113,10 @@ jobs:
       with:
         name: TestResults-${{ matrix.Configuration }}
         path: |
-            .\**\TestResults\**\*.*
+            .\**\TestResults\**\*
             .\InstallerEditor\**\*.png
             .\*.evtx
+            .\CrashDumps\**\*
 
       # Upload the temp files separately.
       # Otherwise the following error occurs:
