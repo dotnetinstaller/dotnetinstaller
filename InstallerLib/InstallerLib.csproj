@@ -2,8 +2,6 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net40</TargetFramework>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>dni.snk</AssemblyOriginatorKeyFile>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
