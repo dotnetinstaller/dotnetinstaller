@@ -115,8 +115,14 @@ jobs:
       with:
         name: TempLogs-${{ matrix.Configuration }}
         path: |
+            C:\Users\runneradmin\AppData\Local\Temp\*.exe
             C:\Users\runneradmin\AppData\Local\Temp\*.log
             C:\Users\runneradmin\AppData\Local\Temp\*.xml
+
+    - name: List temp files
+      if: failure()
+      shell: cmd
+      run: dir /S C:\Users\runneradmin\AppData\Local\Temp
 
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v2.3.1
