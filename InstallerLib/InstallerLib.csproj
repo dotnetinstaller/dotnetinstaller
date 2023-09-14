@@ -30,6 +30,6 @@
     <ProjectReference Include="..\ThirdParty\CabLib\CabLib.vcxproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Vestris.ResourceLib" Version="1.6.422" />
+    <PackageReference Include="Vestris.ResourceLib" Version="2.1.0" />
   </ItemGroup>
 </Project>
