@@ -117,6 +117,7 @@ jobs:
         path: |
             C:\Users\runneradmin\AppData\Local\Temp\*.exe
             C:\Users\runneradmin\AppData\Local\Temp\*.log
+            C:\Users\runneradmin\AppData\Local\Temp\*.txt
             C:\Users\runneradmin\AppData\Local\Temp\*.xml
 
     - name: List temp files

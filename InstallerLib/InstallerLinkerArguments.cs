@@ -40,6 +40,8 @@ namespace InstallerLib
         [Argument(ArgumentType.AtMostOnce, HelpText = "Link only components that match a processor architecture filter", LongName = "ProcessorArchitecture", ShortName = "p")]
         public string processorArchitecture;
 
+        private string logFilePath = Path.Combine(Path.GetTempPath(), "InstallerLinker.txt");
+
         public void Validate()
         {
             // template
@@ -109,12 +111,16 @@ namespace InstallerLib
             if (verbose)
             {
                 Console.WriteLine(s);
+
+                File.AppendAllText(logFilePath, s);
             }
         }
 
         public void WriteError(string s)
         {
             Console.Error.WriteLine(s);
+
+            File.AppendAllText(logFilePath, s);
         }
     }
 }

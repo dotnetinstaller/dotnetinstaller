@@ -308,6 +308,7 @@ namespace InstallerEditor
                     args.embed = chkEmbed.Checked;
                     args.manifest = txtManifest.Text;
                     args.splash = txtSplashBitmap.Text;
+                    args.verbose = true;
                     InstallerLinker.CreateInstaller(args);
                     m_OutputFileName = l_dg.FileName;
                     DialogResult = DialogResult.OK;
