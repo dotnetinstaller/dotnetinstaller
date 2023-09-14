@@ -132,6 +132,11 @@ jobs:
             C:\Users\runneradmin\AppData\Local\Temp\*.txt
             C:\Users\runneradmin\AppData\Local\Temp\*.xml
 
+    - name: List files
+      if: failure()
+      shell: cmd
+      run: dir /S ${{ github.workspace }}
+
     - name: List temp files
       if: failure()
       shell: cmd
