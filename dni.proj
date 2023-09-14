@@ -229,10 +229,10 @@
     <TemplateFile Template="UnitTests\dotNetInstallerUnitTests\App.config"
      OutputFilename="bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll.config"
      Tokens="@(UITestExecutables)" />
-    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=dotNetInstallerUnitTests-%(UIDrivers.FileName)-32bit.trx /Settings:Test.runsettings /Platform:x86" />
-    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=dotNetInstallerUnitTests-%(UIDrivers.FileName)-32bit.trx /Settings:Test.runsettings /Platform:x86" />
-    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=dotNetInstallerUnitTests-%(UIDrivers.FileName)-64bit.trx /Settings:Test.runsettings /Platform:x64" />
-    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=dotNetInstallerUnitTests-%(UIDrivers.FileName)-64bit.trx /Settings:Test.runsettings /Platform:x64" />
+    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=dotNetInstallerUnitTests-%(UIDrivers.FileName)-32bit.trx /Platform:x86" />
+    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=dotNetInstallerUnitTests-%(UIDrivers.FileName)-32bit.trx /Platform:x86" />
+    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=dotNetInstallerUnitTests-%(UIDrivers.FileName)-64bit.trx /Platform:x64" />
+    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\dotNetInstallerUnitTests\bin\$(Configuration)\net40\dotNetInstallerUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=dotNetInstallerUnitTests-%(UIDrivers.FileName)-64bit.trx /Platform:x64" />
   </Target>
   <Target Name="editortests">
     <CreateItem Include="EditorTestExecutable" AdditionalMetadata="ReplacementValue=$(MSBuildProjectDirectory)\dotNetInstaller\$(Configuration)\dotNetInstaller.exe">
@@ -241,10 +241,10 @@
     <TemplateFile Template="UnitTests\InstallerEditorUnitTests\App.config"
      OutputFilename="bin\$(Configuration)\net40\InstallerEditorUnitTests.dll.config"
      Tokens="@(EditorTestExecutables)" />
-    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerEditorUnitTests-32bit.trx /Settings:Test.runsettings /Platform:x86" />
-    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerEditorUnitTests-32bit.trx /Settings:Test.runsettings /Platform:x86" />
-    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerEditorUnitTests-64bit.trx /Settings:Test.runsettings /Platform:x64" />
-    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerEditorUnitTests-64bit.trx /Settings:Test.runsettings /Platform:x64" />
+    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerEditorUnitTests-32bit.trx /Platform:x86" />
+    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerEditorUnitTests-32bit.trx /Platform:x86" />
+    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerEditorUnitTests-64bit.trx /Platform:x64" />
+    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerEditorUnitTests\bin\$(Configuration)\net40\InstallerEditorUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerEditorUnitTests-64bit.trx /Platform:x64" />
   </Target>
   <Target Name="libtests" Inputs="@(UIDrivers)" Outputs="%(UIDrivers.Identity).out">
     <Message Text="Testing %(UIDrivers.Identity)" />
@@ -254,10 +254,10 @@
     <TemplateFile Template="UnitTests\InstallerLibUnitTests\App.config"
      OutputFilename="bin\$(Configuration)\net40\InstallerLibUnitTests.dll.config"
      Tokens="@(LibTestExecutables)" />
-    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerLibUnitTests-%(UIDrivers.FileName)-32bit.trx /Settings:Test.runsettings /Platform:x86" />
-    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerLibUnitTests-%(UIDrivers.FileName)-32bit.trx /Settings:Test.runsettings /Platform:x86" />
-    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerLibUnitTests-%(UIDrivers.FileName)-64bit.trx /Settings:Test.runsettings /Platform:x64" />
-    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerLibUnitTests-%(UIDrivers.FileName)-64bit.trx /Settings:Test.runsettings /Platform:x64" />
+    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerLibUnitTests-%(UIDrivers.FileName)-32bit.trx /Platform:x86" />
+    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerLibUnitTests-%(UIDrivers.FileName)-32bit.trx /Platform:x86" />
+    <Message Text="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerLibUnitTests-%(UIDrivers.FileName)-64bit.trx /Platform:x64" />
+    <Exec Command="&quot;C:\Program Files\dotnet\dotnet.exe&quot; test UnitTests\InstallerLibUnitTests\bin\$(Configuration)\net40\InstallerLibUnitTests.dll /TestAdapterPath:$(NUnitTestAdapterPath) /Logger:trx;logfilename=InstallerLibUnitTests-%(UIDrivers.FileName)-64bit.trx /Platform:x64" />
   </Target>
   <Target Name="unittests" DependsOnTargets="version">
     <Message Text="Running %(CppUnitTests.Identity) ..." />

@@ -112,7 +112,7 @@ namespace InstallerLib
             {
                 Console.WriteLine(s);
 
-                File.AppendAllText(logFilePath, s);
+                File.AppendAllText(logFilePath, s + Environment.NewLine);
             }
         }
 
@@ -120,7 +120,7 @@ namespace InstallerLib
         {
             Console.Error.WriteLine(s);
 
-            File.AppendAllText(logFilePath, s);
+            File.AppendAllText(logFilePath, s + Environment.NewLine);
         }
     }
 }

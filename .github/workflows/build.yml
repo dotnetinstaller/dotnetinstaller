@@ -104,6 +104,7 @@ jobs:
         name: TestResults-${{ matrix.Configuration }}
         path: |
             .\**\TestResults\**\*.*
+            .\InstallerEditor\**\*.png
             .\*.evtx
 
       # Upload the temp files separately.
