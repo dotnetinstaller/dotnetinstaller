@@ -25,50 +25,46 @@ namespace InstallerEditorUnitTests
             string configFileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".xml");
             Console.WriteLine("Writing '{0}'", configFileName);
             configFile.SaveAs(configFileName);
-            try
-            {
-                ProcessStartInfo pi = new ProcessStartInfo(InstallerEditorExeUtils.Executable, "\"" + configFileName + "\"");
 
-                using (Application installerEditor = Application.Launch(pi))
+            ProcessStartInfo pi = new ProcessStartInfo(InstallerEditorExeUtils.Executable, "\"" + configFileName + "\"");
+
+            using (Application installerEditor = Application.Launch(pi))
+            {
+                ScreenshotOnFailure(() =>
                 {
-                    ScreenshotOnFailure(() =>
+                    Window mainWindow = installerEditor.GetWindow(string.Format("Installer Editor - {0}", configFileName), InitializeOption.NoCache);
+
+                    // create exe dialog
+                    UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Create Exe...").Click();
+                    Window createExeWindow = mainWindow.ModalWindow("Create Executable");
+
+                    GetErrorMessageFromErrorDialogOnFailure(createExeWindow, () =>
                     {
-                        Window mainWindow = installerEditor.GetWindow(string.Format("Installer Editor - {0}", configFileName), InitializeOption.NoCache);
+                        Console.WriteLine(dotNetInstallerExeUtils.Executable);
+                        UIAutomation.Find<TextBox>(createExeWindow, "txtTemplateFile").BulkText = dotNetInstallerExeUtils.Executable;
 
-                        // create exe dialog
-                        UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "Create Exe...").Click();
-                        Window createExeWindow = mainWindow.ModalWindow("Create Executable");
+                        // opens a Save As dialog
+                        UIAutomation.Find<Button>(createExeWindow, "btMake").Click();
 
-                        GetErrorMessageFromErrorDialogOnFailure(createExeWindow, () =>
-                        {
-                            Console.WriteLine(dotNetInstallerExeUtils.Executable);
-                            UIAutomation.Find<TextBox>(createExeWindow, "txtTemplateFile").BulkText = dotNetInstallerExeUtils.Executable;
+                        string outputFilename = Path.Combine(Path.GetTempPath(), string.Format("{0}.exe", Guid.NewGuid()));
 
-                            // opens a Save As dialog
-                            UIAutomation.Find<Button>(createExeWindow, "btMake").Click();
+                        Console.WriteLine($"Saving file as \"{outputFilename}\"...");
 
-                            string outputFilename = Path.Combine(Path.GetTempPath(), string.Format("{0}.exe", Guid.NewGuid()));
+                        Window saveAsWindow = createExeWindow.ModalWindow("Save As");
+                        TextBox filenameTextBox = saveAsWindow.Get<TextBox>("File name:");
+                        filenameTextBox.BulkText = outputFilename;
+                        Button saveButton = saveAsWindow.Get<Button>("Save");
+                        saveButton.Click();
+                        saveAsWindow.WaitWhileBusy();
+                        mainWindow.WaitWhileBusy();
+                        Assert.IsTrue(WaitForFileToExist(outputFilename));
 
-                            Console.WriteLine($"Saving file as \"{outputFilename}\"...");
-
-                            Window saveAsWindow = createExeWindow.ModalWindow("Save As");
-                            TextBox filenameTextBox = saveAsWindow.Get<TextBox>("File name:");
-                            filenameTextBox.BulkText = outputFilename;
-                            Button saveButton = saveAsWindow.Get<Button>("Save");
-                            saveButton.Click();
-                            saveAsWindow.WaitWhileBusy();
-                            mainWindow.WaitWhileBusy();
-                            Assert.IsTrue(WaitForFileToExist(outputFilename));
-
-                            File.Delete(outputFilename);
-                        });
+                        File.Delete(outputFilename);
                     });
-                }
+                });
             }
-            finally
-            {
-                File.Delete(configFileName);
-            }
+
+            File.Delete(configFileName);
         }
     }
 }
