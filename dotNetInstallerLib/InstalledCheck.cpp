@@ -4,6 +4,7 @@
 #include "InstalledCheckFile.h"
 #include "InstalledCheckDirectory.h"
 #include "InstalledCheckProduct.h"
+#include "InstalledCheckWmi.h"
 
 InstalledCheck::InstalledCheck()
 {
@@ -32,6 +33,10 @@ InstalledCheckPtr InstalledCheck::Create(const std::wstring& installedcheck_type
     else if (installedcheck_type == L"check_product")
     {
         return InstalledCheckPtr(new InstalledCheckProduct());
+    }
+    else if (installedcheck_type == L"check_wmi")
+    {
+        return InstalledCheckPtr(new InstalledCheckWmi());
     }
     else
     {

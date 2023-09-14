@@ -97,6 +97,7 @@ namespace InstallerEditor
             else if (item is InstalledCheckRegistry) node = new TreeNodenstalledCheckRegistry(item as InstalledCheckRegistry);
             else if (item is InstalledCheckOperator) node = new TreeNodeInstalledCheckOperator(item as InstalledCheckOperator);
             else if (item is InstalledCheckProduct) node = new TreeNodeInstalledCheckProduct(item as InstalledCheckProduct);
+            else if (item is InstalledCheckWmi) node = new TreeNodeInstalledCheckWmi(item as InstalledCheckWmi);
             else if (item is ControlCheckBox) node = new TreeNodeControlCheckbox(item as ControlCheckBox);
             else if (item is ControlLabel) node = new TreeNodeControlLabel(item as ControlLabel);
             else if (item is ControlEdit) node = new TreeNodeControlEdit(item as ControlEdit);
@@ -544,6 +545,16 @@ namespace InstallerEditor
         {
             ImageIndex = 10;
             SelectedImageIndex = 10;
+        }
+    }
+
+    public class TreeNodeInstalledCheckWmi : TreeNodeInstalledCheck<InstalledCheckWmi>
+    {
+        public TreeNodeInstalledCheckWmi(InstalledCheckWmi value)
+            : base(value)
+        {
+            ImageIndex = 8;
+            SelectedImageIndex = 8;
         }
     }
 

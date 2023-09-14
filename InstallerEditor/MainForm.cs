@@ -98,6 +98,7 @@ namespace InstallerEditor
         private RegistryKey m_makeExeRegistry;
         private MenuItem mnAddImageControl;
         private RegistryKey m_settingsRegistry;
+        private MenuItem mnAddInstalledCheckWmi;
         private FileSystemWatcher m_configFileWatcher;
 
         public MainForm()
@@ -206,6 +207,7 @@ namespace InstallerEditor
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtComment = new System.Windows.Forms.TextBox();
             this.mnAddImageControl = new System.Windows.Forms.MenuItem();
+            this.mnAddInstalledCheckWmi = new System.Windows.Forms.MenuItem();
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
@@ -439,7 +441,8 @@ namespace InstallerEditor
             this.mnAddInstalledCheckFile,
             this.mnAddInstalledCheckDirectory,
             this.mnAddInstalledCheckOperator,
-            this.mnAddInstalledCheckProduct});
+            this.mnAddInstalledCheckProduct,
+            this.mnAddInstalledCheckWmi});
             this.menuChecks.Text = "Chec&ks";
             // 
             // mnAddInstalledCheckRegistry
@@ -813,6 +816,12 @@ namespace InstallerEditor
             this.mnAddImageControl.Index = 5;
             this.mnAddImageControl.Text = "&Image";
             this.mnAddImageControl.Click += new System.EventHandler(this.mnAddImageControl_Click);
+            // 
+            // mnAddInstalledCheckWmi
+            // 
+            this.mnAddInstalledCheckWmi.Index = 5;
+            this.mnAddInstalledCheckWmi.Text = "Installed Check WMI";
+            this.mnAddInstalledCheckWmi.Click += new System.EventHandler(this.mnAddInstalledCheckWmi_Click);
             // 
             // MainForm
             // 
@@ -1204,6 +1213,7 @@ namespace InstallerEditor
                 mnAddInstalledCheckDirectory.Enabled = (item.Children.CanAdd(typeof(InstalledCheckDirectory)));
                 mnAddInstalledCheckRegistry.Enabled = (item.Children.CanAdd(typeof(InstalledCheckRegistry)));
                 mnAddInstalledCheckProduct.Enabled = (item.Children.CanAdd(typeof(InstalledCheckProduct)));
+                mnAddInstalledCheckWmi.Enabled = (item.Children.CanAdd(typeof(InstalledCheckWmi)));
                 mnAddInstalledCheckOperator.Enabled = (item.Children.CanAdd(typeof(InstalledCheckOperator)));
                 mnAddComponentWizard2.Enabled = (item is SetupConfiguration);
                 mnMoveUp.Enabled = (configurationTree.SelectedNode.PrevNode != null);
@@ -1234,6 +1244,7 @@ namespace InstallerEditor
                 mnAddInstalledCheckDirectory.Enabled = false;
                 mnAddInstalledCheckRegistry.Enabled = false;
                 mnAddInstalledCheckProduct.Enabled = false;
+                mnAddInstalledCheckWmi.Enabled = false;
                 mnAddInstalledCheckOperator.Enabled = false;
                 mnAddComponentWizard2.Enabled = false;
                 mnMove.Enabled = false;
@@ -1406,6 +1417,11 @@ namespace InstallerEditor
         private void mnAddImageControl_Click(object sender, EventArgs e)
         {
             AddTreeNode_Click<ControlImage>();
+        }
+
+        private void mnAddInstalledCheckWmi_Click(object sender, EventArgs e)
+        {
+            AddTreeNode_Click<InstalledCheckWmi>();
         }
 
         #endregion

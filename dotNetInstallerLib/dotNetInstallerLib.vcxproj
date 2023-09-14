@@ -100,6 +100,7 @@
     <ClCompile Include="InstalledCheckOperator.cpp" />
     <ClCompile Include="InstalledCheckProduct.cpp" />
     <ClCompile Include="InstalledCheckRegistry.cpp" />
+    <ClCompile Include="InstalledCheckWmi.cpp" />
     <ClCompile Include="InstallerCommandLineInfo.cpp" />
     <ClCompile Include="InstallerLauncher.cpp" />
     <ClCompile Include="InstallerLog.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="InstalledCheckOperator.h" />
     <ClInclude Include="InstalledCheckProduct.h" />
     <ClInclude Include="InstalledCheckRegistry.h" />
+    <ClInclude Include="InstalledCheckWmi.h" />
     <ClInclude Include="InstallerCommandLineInfo.h" />
     <ClInclude Include="InstallerLauncher.h" />
     <ClInclude Include="InstallerLog.h" />

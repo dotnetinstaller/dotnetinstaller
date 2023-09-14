@@ -111,6 +111,7 @@
     <ClCompile Include="InstalledCheckOperatorUnitTests.cpp" />
     <ClCompile Include="InstalledCheckProductUnitTests.cpp" />
     <ClCompile Include="InstalledCheckRegistryUnitTests.cpp" />
+    <ClCompile Include="InstalledCheckWmiUnitTests.cpp" />
     <ClCompile Include="InstallerCommandLineInfoUnitTests.cpp" />
     <ClCompile Include="InstallerLauncherUnitTests.cpp" />
     <ClCompile Include="InstallerLogUnitTests.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="InstalledCheckOperatorUnitTests.h" />
     <ClInclude Include="InstalledCheckProductUnitTests.h" />
     <ClInclude Include="InstalledCheckRegistryUnitTests.h" />
+    <ClInclude Include="InstalledCheckWmiUnitTests.h" />
     <ClInclude Include="InstallerCommandLineInfoUnitTests.h" />
     <ClInclude Include="InstallerLauncherUnitTests.h" />
     <ClInclude Include="InstallerLogUnitTests.h" />
