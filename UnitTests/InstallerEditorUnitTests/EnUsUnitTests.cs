@@ -3,7 +3,6 @@ using System.Threading;
 using System.Globalization;
 using System;
 using TestStack.White.UIItems.WindowItems;
-using TestStack.White.UIItems.Finders;
 using TestStack.White.UIItems;
 using System.IO;
 using TestStack.White;
@@ -13,11 +12,13 @@ namespace InstallerEditorUnitTests
 {
     public class EnUsUnitTests
     {
-        CultureInfo mUICulture;
-        CultureInfo mCulture;
+        private CultureInfo mUICulture;
+        private CultureInfo mCulture;
+        private readonly string dotNetInstallerLogFilePath = Path.Combine(Path.GetTempPath(), "dotNetInstallerLog.txt");
+        private readonly string installerLinkerLogFilePath = Path.Combine(Path.GetTempPath(), "InstallerLinker.txt");
 
         [OneTimeSetUp]
-        public virtual void SetUp()
+        public virtual void OneTimeSetUp()
         {
             mUICulture = Thread.CurrentThread.CurrentUICulture;
             mCulture = Thread.CurrentThread.CurrentCulture;
@@ -25,8 +26,36 @@ namespace InstallerEditorUnitTests
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
         }
 
+        [SetUp]
+        public void SetUp()
+        {
+            if (File.Exists(dotNetInstallerLogFilePath))
+            {
+                File.Delete(dotNetInstallerLogFilePath);
+            }
+
+            if (File.Exists(installerLinkerLogFilePath))
+            {
+                File.Delete(installerLinkerLogFilePath);
+            }
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            if (File.Exists(dotNetInstallerLogFilePath))
+            {
+                TestContext.AddTestAttachment(dotNetInstallerLogFilePath);
+            }
+
+            if (File.Exists(installerLinkerLogFilePath))
+            {
+                TestContext.AddTestAttachment(installerLinkerLogFilePath);
+            }
+        }
+
         [OneTimeTearDown]
-        public virtual void TearDown()
+        public virtual void OneTimeTearDown()
         {
             Thread.CurrentThread.CurrentUICulture = mUICulture;
             Thread.CurrentThread.CurrentCulture = mCulture;

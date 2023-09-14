@@ -8,7 +8,6 @@ using TestStack.White.Factory;
 using TestStack.White.UIItems;
 using TestStack.White.UIItems.WindowItems;
 using TestStack.White.UIItems.WindowStripControls;
-using TestStack.White.WindowsAPI;
 using System.IO;
 using InstallerLib;
 
