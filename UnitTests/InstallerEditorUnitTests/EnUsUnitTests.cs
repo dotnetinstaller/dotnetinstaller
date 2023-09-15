@@ -46,11 +46,13 @@ namespace InstallerEditorUnitTests
             if (File.Exists(dotNetInstallerLogFilePath))
             {
                 TestContext.AddTestAttachment(dotNetInstallerLogFilePath);
+                File.Delete(dotNetInstallerLogFilePath);
             }
 
             if (File.Exists(installerLinkerLogFilePath))
             {
                 TestContext.AddTestAttachment(installerLinkerLogFilePath);
+                File.Delete(installerLinkerLogFilePath);
             }
         }
 
