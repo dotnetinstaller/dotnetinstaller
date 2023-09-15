@@ -128,11 +128,7 @@ namespace InstallerEditorUnitTests
             {
                 try
                 {
-                    // take a screenshot
-                    string pngFilePath = Path.Combine(TestContext.CurrentContext.WorkDirectory, $"{TestContext.CurrentContext.Test.FullName}-{TestContext.CurrentContext.Test.ID}.png");
-                    Desktop.TakeScreenshot(pngFilePath, System.Drawing.Imaging.ImageFormat.Png);
-                    Console.WriteLine($"Saved screenshot to \"{pngFilePath}\".");
-                    TestContext.AddTestAttachment(pngFilePath);
+                    TakeScreenshot();
                 }
                 catch (Exception ex2)
                 {
@@ -142,6 +138,26 @@ namespace InstallerEditorUnitTests
 
                 throw;
             }
+        }
+
+        protected static void TakeScreenshot()
+        {
+            TakeScreenshotWithSuffix(string.Empty);
+        }
+
+        protected static void TakeScreenshot(string id)
+        {
+            TakeScreenshotWithSuffix($"-{id}");
+        }
+
+        private static void TakeScreenshotWithSuffix(string suffix)
+        {
+            string pngFilePath = Path.Combine(
+                TestContext.CurrentContext.WorkDirectory,
+                $"{TestContext.CurrentContext.Test.FullName}-{TestContext.CurrentContext.Test.ID}{suffix}.png");
+            Desktop.TakeScreenshot(pngFilePath, System.Drawing.Imaging.ImageFormat.Png);
+            Console.WriteLine($"Saved screenshot to \"{pngFilePath}\".");
+            TestContext.AddTestAttachment(pngFilePath);
         }
     }
 }

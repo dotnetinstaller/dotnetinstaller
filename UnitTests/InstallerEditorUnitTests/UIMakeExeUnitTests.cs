@@ -53,9 +53,21 @@ namespace InstallerEditorUnitTests
                         TextBox filenameTextBox = saveAsWindow.Get<TextBox>("File name:");
                         filenameTextBox.BulkText = outputFilename;
                         Button saveButton = saveAsWindow.Get<Button>("Save");
+
+                        TakeScreenshot("Saving 1");
+
                         saveButton.Click();
+
+                        TakeScreenshot("Saving 2");
+
                         saveAsWindow.WaitWhileBusy();
+
+                        TakeScreenshot("Saving 3");
+
                         mainWindow.WaitWhileBusy();
+
+                        TakeScreenshot("Saving 4");
+
                         Assert.IsTrue(WaitForFileToExist(outputFilename));
 
                         File.Delete(outputFilename);
