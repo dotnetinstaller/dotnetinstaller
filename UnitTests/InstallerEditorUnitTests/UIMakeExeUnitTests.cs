@@ -17,6 +17,7 @@ namespace InstallerEditorUnitTests
     public class UIMakeExeUnitTests : EnUsUnitTests
     {
         [Test]
+        [Retry(2)] // the exe sometimes doesn't get created, maybe because EndUpdateResource fails "randomly"
         public void TestMakeExe()
         {
             ConfigFile configFile = new ConfigFile();

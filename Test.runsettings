@@ -3,6 +3,6 @@
   <NUnit>
     <!--<WorkDirectory>.\TestResults</WorkDirectory>-->
     <!-- stop running tests after the first test fails -->
-    <StopOnError>true</StopOnError>
+    <!--<StopOnError>true</StopOnError>-->
   </NUnit>
 </RunSettings>

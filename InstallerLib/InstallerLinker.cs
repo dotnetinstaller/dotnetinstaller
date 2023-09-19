@@ -22,8 +22,8 @@ namespace InstallerLib
             args.Validate();
 
             args.WriteLine(string.Format("Creating \"{0}\" from \"{1}\"", args.output, args.template));
-            System.IO.File.Copy(args.template, args.output, true);
-            System.IO.File.SetAttributes(args.output, System.IO.FileAttributes.Normal);
+            File.Copy(args.template, args.output, true);
+            File.SetAttributes(args.output, FileAttributes.Normal);
 
             string configFilename = args.config;
 
@@ -316,7 +316,8 @@ namespace InstallerLib
                     Directory.Delete(cabtemp, true);
                 }
 
-                if (!string.IsNullOrEmpty(configTemp))
+                if ((!string.IsNullOrEmpty(configTemp))
+                    && File.Exists(configTemp))
                 {
                     args.WriteLine(string.Format("Cleaning up \"{0}\"", configTemp));
                     File.Delete(configTemp);
