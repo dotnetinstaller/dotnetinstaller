@@ -12,7 +12,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class AutoCloseUnitTests
+    public class AutoCloseUnitTests : UnitTestsBase
     {
         [Test]
         public void TestAutoClosesAfterInstallWhenComponentInstallSucceeds()

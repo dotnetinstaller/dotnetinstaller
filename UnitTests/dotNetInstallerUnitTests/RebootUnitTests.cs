@@ -12,7 +12,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class RebootUnitTests
+    public class RebootUnitTests : UnitTestsBase
     {
         [Test]
         public void TestRebootRequired()

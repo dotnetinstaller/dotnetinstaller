@@ -12,7 +12,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class AutoStartUnitTests
+    public class AutoStartUnitTests : UnitTestsBase
     {
         [Test]
         public void TestAutoStart()

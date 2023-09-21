@@ -12,7 +12,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class DownloadComponentsUnitTests
+    public class DownloadComponentsUnitTests : UnitTestsBase
     {
         [Test]
         public void TestDownloadConfiguration()

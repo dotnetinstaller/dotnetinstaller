@@ -12,7 +12,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class ConfigurationUnitTests
+    public class ConfigurationUnitTests : UnitTestsBase
     {
         [Test]
         public void TestInvalidVersionContinues()

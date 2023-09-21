@@ -463,6 +463,5 @@ namespace InstallerLibUnitTests
                     File.Delete(args.output);
             }
         }
-
     }
 }

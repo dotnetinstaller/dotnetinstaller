@@ -12,7 +12,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class LanguageUnitTests
+    public class LanguageUnitTests : UnitTestsBase
     {
         [Test]
         public void TestComponentLcid()

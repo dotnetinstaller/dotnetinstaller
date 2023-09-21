@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Web;
 using System.IO;
 using System.Reflection;
 using NUnit.Framework;
-using System.Diagnostics;
 
 namespace dotNetUnitTestsRunner
 {
@@ -32,7 +29,7 @@ namespace dotNetUnitTestsRunner
                     // locate dotnetinstaller.exe
                     Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
                     _location = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(HttpUtility.UrlDecode(uri.AbsolutePath)),
-                        @"..\..\..\..\InstallerLib\"));
+                        @"..\..\..\..\..\InstallerLib\"));
                 }
                 return _location;
             }

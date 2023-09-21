@@ -11,7 +11,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class CabUnitTests
+    public class CabUnitTests : UnitTestsBase
     {
         [Test]
         public void TestCabPathAutoDeleteFalse()
@@ -78,7 +78,7 @@ namespace dotNetInstallerUnitTests
             args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
             args.template = dotNetInstallerExeUtils.Executable;
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinkerExeUtils.CreateInstaller(args);
+            Assert.AreEqual(0, InstallerLinkerExeUtils.CreateInstaller(args));
             Assert.IsTrue(File.Exists(args.output));
 
             // execute dotNetInstaller
@@ -118,7 +118,7 @@ namespace dotNetInstallerUnitTests
             component.Children.Add(embedfile);
             configFile.SaveAs(args.config);
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinkerExeUtils.CreateInstaller(args);
+            Assert.AreEqual(0, InstallerLinkerExeUtils.CreateInstaller(args));
             Assert.IsTrue(File.Exists(args.output));
 
             // execute dotNetInstaller
@@ -162,7 +162,7 @@ namespace dotNetInstallerUnitTests
             component.Children.Add(embedfile);
             configFile.SaveAs(args.config);
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinkerExeUtils.CreateInstaller(args);
+            Assert.AreEqual(0, InstallerLinkerExeUtils.CreateInstaller(args));
             Assert.IsTrue(File.Exists(args.output));
 
             // execute dotNetInstaller
@@ -200,7 +200,7 @@ namespace dotNetInstallerUnitTests
             args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
             args.template = dotNetInstallerExeUtils.Executable;
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinkerExeUtils.CreateInstaller(args);
+            Assert.AreEqual(0, InstallerLinkerExeUtils.CreateInstaller(args));
             Assert.IsTrue(File.Exists(args.output));
 
             // execute dotNetInstaller
@@ -240,7 +240,7 @@ namespace dotNetInstallerUnitTests
 
             configFile.SaveAs(args.config);
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinkerExeUtils.CreateInstaller(args);
+            Assert.AreEqual(0, InstallerLinkerExeUtils.CreateInstaller(args));
             Assert.IsTrue(File.Exists(args.output));
 
             // execute dotNetInstaller

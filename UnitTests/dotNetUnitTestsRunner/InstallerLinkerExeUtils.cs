@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Web;
 using System.IO;
 using System.Reflection;
 using NUnit.Framework;
 using System.Diagnostics;
-using System.Threading;
 using InstallerLib;
 
 namespace dotNetUnitTestsRunner
@@ -72,7 +70,7 @@ namespace dotNetUnitTestsRunner
                     // locate dotnetinstaller.exe
                     Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
                     _location = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(HttpUtility.UrlDecode(uri.AbsolutePath)),
-                        string.Format(@"..\..\..\..\InstallerLinker\bin\{0}\", configuration)));
+                        string.Format(@"..\..\..\..\..\InstallerLinker\bin\{0}\net40\", configuration)));
                 }
 
                 return _location;
@@ -93,12 +91,12 @@ namespace dotNetUnitTestsRunner
             p.StartInfo.WorkingDirectory = Path.GetDirectoryName(filename);
             p.StartInfo.FileName = filename;
             p.StartInfo.Arguments = args;
-            p.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             p.Start();
             return p;
         }
 
-        public static void CreateInstaller(InstallerLinkerArguments args)
+        public static int CreateInstaller(InstallerLinkerArguments args)
         {
             List<String> cmd = new List<string>();
             cmd.Add(string.Format("/Configuration:\"{0}\"", args.config));
@@ -125,7 +123,7 @@ namespace dotNetUnitTestsRunner
                 foreach (string folder in args.htmlFiles)
                     cmd.Add(string.Format("/EmbedHtml:\"{0}\"", folder));
             }
-            Run(InstallerLinkerExeUtils.Executable, string.Join(" ", cmd.ToArray()));
+            return Run(InstallerLinkerExeUtils.Executable, string.Join(" ", cmd.ToArray()));
         }
     }
 }

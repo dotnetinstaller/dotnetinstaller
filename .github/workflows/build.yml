@@ -46,10 +46,80 @@ jobs:
       # The windows-2016 virtual environment has an older version, Microsoft Visual C++ 2010 Runtime 10.0.30319.
       run: choco install vcredist2010 --version=10.0.40219.32503
 
+    - name: Install .NET 6 SDK
+      run: |
+        Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
+        .\dotnet-install.ps1 -Version 6.0.413 -Architecture "x64" -InstallDir "C:\Program Files\dotnet" -NoPath -Verbose
+
+    - name: dotnet version and info
+      shell: cmd
+      run: |
+        "C:\Program Files\dotnet\dotnet.exe" --version
+        "C:\Program Files\dotnet\dotnet.exe" --info
+
+    - name: Configure Windows Error Reporting
+      shell: cmd
+      run: |
+        reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps" /t REG_EXPAND_SZ /v DumpFolder /d "${{ github.workspace }}\CrashDumps" /f
+        reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps" /t REG_DWORD /v DumpCount /d 10 /f
+        reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps" /t REG_DWORD /v DumpType /d 2 /f
+        reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\Windows Error Reporting\LocalDumps" /t REG_EXPAND_SZ /v DumpFolder /d "${{ github.workspace }}\CrashDumps" /f
+        reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\Windows Error Reporting\LocalDumps" /t REG_DWORD /v DumpCount /d 10 /f
+        reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\Windows Error Reporting\LocalDumps" /t REG_DWORD /v DumpType /d 2 /f
+
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /t:all /m /p:Configuration=${{ matrix.Configuration }} .\dni.proj
-    
+
+    - name: Dump environment variables
+      if: always()
+      shell: cmd
+      run: set
+
+    - name: Publish Failed Test Results Report
+      if: github.event_name != 'pull_request'
+      uses: dorny/test-reporter@v1
+      with:
+        name: Tests
+        path: TestResults/*.trx
+        reporter: dotnet-trx
+        list-suites: 'failed'
+        list-tests: 'failed'
+        max-annotations: 50
+
+    - name: Export Windows Event Logs
+      if: failure()
+      shell: cmd
+      run: |
+        wevtutil epl Application Application.evtx
+        wevtutil epl Security Security.evtx
+        wevtutil epl System System.evtx
+
+    - name: Upload Test Result Files
+      if: always()
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: TestResults-${{ matrix.Configuration }}
+        path: |
+            .\**\TestResults\**\*
+            .\InstallerEditor\**\*.png
+            .\*.evtx
+            .\CrashDumps\**\*
+
+      # Upload the temp files separately.
+      # Otherwise the following error occurs:
+      # The rootDirectory: "D:\a\dotnetinstaller\dotnetinstaller" is not a parent directory of the file: "C:\Users\runneradmin\AppData\Local\Temp\33fcd148-d0c7-46cd-8333-9b21a22d2d2c.xml"
+    - name: Upload Temp File
+      if: failure()
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: TempLogs-${{ matrix.Configuration }}
+        path: |
+            C:\Users\runneradmin\AppData\Local\Temp\*.exe
+            C:\Users\runneradmin\AppData\Local\Temp\*.log
+            C:\Users\runneradmin\AppData\Local\Temp\*.txt
+            C:\Users\runneradmin\AppData\Local\Temp\*.xml
+
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v2.3.1
       with:

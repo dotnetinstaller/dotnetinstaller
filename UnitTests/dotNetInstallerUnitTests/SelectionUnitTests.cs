@@ -11,7 +11,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class SelectionUnitTests
+    public class SelectionUnitTests : UnitTestsBase
     {
         [Test]
         public void TestDefaultSelectionInstall()

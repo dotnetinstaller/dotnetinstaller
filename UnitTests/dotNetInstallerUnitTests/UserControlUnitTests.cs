@@ -11,7 +11,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class UserControlUnitTests
+    public class UserControlUnitTests : UnitTestsBase
     {
         [Test]
         public void TestUserControlCheckbox()
@@ -429,7 +429,7 @@ namespace dotNetInstallerUnitTests
             args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
             args.template = dotNetInstallerExeUtils.Executable;
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinkerExeUtils.CreateInstaller(args);
+            Assert.AreEqual(0, InstallerLinkerExeUtils.CreateInstaller(args));
             Assert.IsTrue(File.Exists(args.output));
 
             // execute dotNetInstaller
@@ -592,7 +592,7 @@ namespace dotNetInstallerUnitTests
             args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
             args.template = dotNetInstallerExeUtils.Executable;
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinkerExeUtils.CreateInstaller(args);
+            Assert.AreEqual(0, InstallerLinkerExeUtils.CreateInstaller(args));
             Assert.IsTrue(File.Exists(args.output));
 
             // execute dotNetInstaller
@@ -601,6 +601,7 @@ namespace dotNetInstallerUnitTests
             runOptions.quiet = false;
             Assert.AreEqual(41, dotNetInstallerExeUtils.Run(args.output, runOptions.CommandLineArgs));
             File.Delete(args.config);
+            File.Delete(args.output);
             Directory.Delete(args.htmlFiles[0], true);
         }
 
@@ -657,7 +658,7 @@ namespace dotNetInstallerUnitTests
             args.output = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".exe");
             args.template = dotNetInstallerExeUtils.Executable;
             Console.WriteLine("Linking '{0}'", args.output);
-            InstallerLinkerExeUtils.CreateInstaller(args);
+            Assert.AreEqual(0, InstallerLinkerExeUtils.CreateInstaller(args));
             Assert.IsTrue(File.Exists(args.output));
 
             // execute dotNetInstaller
@@ -666,6 +667,7 @@ namespace dotNetInstallerUnitTests
             runOptions.quiet = false;
             Assert.AreEqual(41, dotNetInstallerExeUtils.Run(args.output, runOptions.CommandLineArgs));
             File.Delete(args.config);
+            File.Delete(args.output);
             Directory.Delete(args.htmlFiles[0], true);
         }
 

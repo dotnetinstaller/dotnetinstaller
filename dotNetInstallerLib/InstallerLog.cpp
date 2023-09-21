@@ -28,6 +28,38 @@ void InstallerLog::Write(const std::wstring& message)
         reset(m_hFile, ::CreateFile(m_logfile.c_str(), GENERIC_WRITE, FILE_SHARE_READ, 
             NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL));
 
+        if (!m_hFile)
+        {
+            // if a sharing violation occurred, get the process which has locked the file
+            DWORD error = GetLastError();
+            if (error == ERROR_SHARING_VIOLATION)
+            {
+                auto_handle hFileMapping;
+                reset(hFileMapping, ::CreateFileMapping(get(m_hFile), NULL, PAGE_READONLY, 0, 1, NULL));
+
+                CHECK_WIN32_BOOL(hFileMapping,
+                    L"Failed to create file mapping \"" << m_logfile << L"\"");
+
+                BY_HANDLE_FILE_INFORMATION fileInfo;
+                CHECK_WIN32_BOOL(::GetFileInformationByHandle(get(m_hFile), &fileInfo),
+                    L"Failed to retrieve file information \"" << m_logfile << L"\"");
+
+                auto_handle hProcess;
+                reset(hProcess, ::OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, fileInfo.dwVolumeSerialNumber));
+                CHECK_WIN32_BOOL(hProcess,
+                    L"Failed to retrieve process information \"" << m_logfile << L"\"");
+
+                DWORD processId = ::GetProcessId(get(hProcess));
+
+                // query WMI for process information
+                std::wstring wmiQuery = L"SELECT Name FROM Win32_Process WHERE ProcessId = " + std::to_wstring(processId);
+                std::wstring processName = DVLib::WmiUtil::Get(wmiQuery, L"Name");
+
+                CHECK_WIN32_BOOL(m_hFile,
+                    L"Error creating or opening \"" << m_logfile << L"\": The file is being used by \"" << processName << "\" (PID: " << processId << ").");
+            }
+        }
+
         CHECK_WIN32_BOOL(m_hFile,
             L"Error creating or opening \"" << m_logfile << L"\"");
 
