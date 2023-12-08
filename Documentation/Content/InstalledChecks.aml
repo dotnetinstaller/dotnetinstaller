@@ -18,8 +18,8 @@
       <title>Installed Check Types</title>
       <content>
         <para>
-          There are four types of installed checks: <newTerm>check_file</newTerm>, <newTerm>check_directory</newTerm>,
-          <newTerm>check_registry_value</newTerm> and <newTerm>check_product</newTerm>. These can also be added under
+          There are different types of installed checks: <newTerm>check_file</newTerm>, <newTerm>check_directory</newTerm>,
+          <newTerm>check_registry_value</newTerm>, <newTerm>check_product</newTerm>, and <newTerm>check_wmi</newTerm>. These can also be added under
           installed check operators.
         </para>
       </content>
