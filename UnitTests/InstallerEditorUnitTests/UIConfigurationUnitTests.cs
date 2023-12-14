@@ -83,29 +83,32 @@ namespace InstallerEditorUnitTests
         {
             using (Application installerEditor = Application.Launch(InstallerEditorExeUtils.Executable))
             {
-                Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
-                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
-                Tree configurationTree = UIAutomation.Find<Tree>(mainWindow, "configurationTree");
-                Assert.AreEqual(1, configurationTree.Nodes.Count);
-                string[] componentsMenuItems = { "Msi Component", "Command Component", "Msu Component", "Msp Component", "OpenFile Component" };
-                string[] checksMenuItems = { "Installed Check Registry", "Installed Check File", "Installed Check Directory", 
-                    "Installed Check Operator", "Installed Check ProductCode" };
-                UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
-                TreeNode configurationNode = configurationTree.SelectedNode;
-                foreach (string componentMenuItem in componentsMenuItems)
+                ScreenshotOnFailure(() =>
                 {
-                    configurationNode.Select();
-                    UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Components", componentMenuItem).Click();
-                    TreeNode componentNode = configurationTree.SelectedNode;
-                    foreach (string checksMenuItem in checksMenuItems)
+                    Window mainWindow = installerEditor.GetWindow("Installer Editor", InitializeOption.NoCache);
+                    UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("File", "New").Click();
+                    Tree configurationTree = UIAutomation.Find<Tree>(mainWindow, "configurationTree");
+                    Assert.AreEqual(1, configurationTree.Nodes.Count);
+                    string[] componentsMenuItems = { "Msi Component", "Command Component", "Msu Component", "Msp Component", "OpenFile Component" };
+                    string[] checksMenuItems = { "Installed Check Registry", "Installed Check File", "Installed Check Directory",
+                    "Installed Check Operator", "Installed Check ProductCode" };
+                    UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Configurations", "Setup Configuration").Click();
+                    TreeNode configurationNode = configurationTree.SelectedNode;
+                    foreach (string componentMenuItem in componentsMenuItems)
                     {
-                        componentNode.Select();
-                        UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Checks", checksMenuItem).Click();
-                    }
+                        configurationNode.Select();
+                        UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Components", componentMenuItem).Click();
+                        TreeNode componentNode = configurationTree.SelectedNode;
+                        foreach (string checksMenuItem in checksMenuItems)
+                        {
+                            componentNode.Select();
+                            UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Add", "Checks", checksMenuItem).Click();
+                        }
 
-                    componentNode.Select();
-                    UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Delete").Click();
-                }
+                        componentNode.Select();
+                        UIAutomation.Find<MenuBar>(mainWindow, "Application").MenuItem("Edit", "Delete").Click();
+                    }
+                });
             }
         }
 
@@ -147,7 +150,8 @@ namespace InstallerEditorUnitTests
                     Window openWindow = mainWindow.ModalWindow("Open");
                     TextBox filenameTextBox = openWindow.Get<TextBox>("File name:");
                     filenameTextBox.Text = configFileName;
-                    openWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
+                    Button openButton = openWindow.Get<Button>("Open");
+                    openButton.Click();
                     mainWindow.WaitWhileBusy();
                     Tree configurationTree = UIAutomation.Find<Tree>(mainWindow, "configurationTree");
                     Assert.AreEqual("Config File", configurationTree.SelectedNode.Name);
@@ -215,7 +219,8 @@ namespace InstallerEditorUnitTests
                     Window openWindow = mainWindow.ModalWindow("Save As");
                     TextBox filenameTextBox = openWindow.Get<TextBox>("File name:");
                     filenameTextBox.Text = configFileName;
-                    openWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
+                    Button saveButton = openWindow.Get<Button>("Save");
+                    saveButton.Click();
                     openWindow.WaitWhileBusy();
                     mainWindow.WaitWhileBusy();
                     Assert.IsTrue(File.Exists(configFileName));
@@ -275,7 +280,8 @@ namespace InstallerEditorUnitTests
                     Window openWindow = mainWindow.ModalWindow("Save As");
                     TextBox filenameTextBox = openWindow.Get<TextBox>("File name:");
                     filenameTextBox.Text = configFileName;
-                    openWindow.KeyIn(KeyboardInput.SpecialKeys.RETURN);
+                    Button saveButton = openWindow.Get<Button>("Save");
+                    saveButton.Click();
                     openWindow.WaitWhileBusy();
                     mainWindow.WaitWhileBusy();
                     Assert.IsTrue(File.Exists(configFileName));

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using CommandLine;
 using System.IO;
 
@@ -41,6 +39,8 @@ namespace InstallerLib
         public string manifest;
         [Argument(ArgumentType.AtMostOnce, HelpText = "Link only components that match a processor architecture filter", LongName = "ProcessorArchitecture", ShortName = "p")]
         public string processorArchitecture;
+
+        private string logFilePath = Path.Combine(Path.GetTempPath(), "InstallerLinker.txt");
 
         public void Validate()
         {
@@ -111,12 +111,16 @@ namespace InstallerLib
             if (verbose)
             {
                 Console.WriteLine(s);
+
+                File.AppendAllText(logFilePath, s + Environment.NewLine);
             }
         }
 
         public void WriteError(string s)
         {
             Console.Error.WriteLine(s);
+
+            File.AppendAllText(logFilePath, s + Environment.NewLine);
         }
     }
 }

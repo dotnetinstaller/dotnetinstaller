@@ -9,7 +9,6 @@ using TestStack.White.UIItems.WindowItems;
 using TestStack.White.UIItems.WindowStripControls;
 using TestStack.White.UIItems.MenuItems;
 using TestStack.White.UIItems.TreeItems;
-using TestStack.White.UIItems.TableItems;
 using TestStack.White.WindowsAPI;
 
 namespace InstallerEditorUnitTests

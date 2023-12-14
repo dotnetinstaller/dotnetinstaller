@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using InstallerLib;
 using System.IO;
 using NUnit.Framework;

@@ -8,6 +8,7 @@ Features
 * [#153](https://github.com/dotnetinstaller/dotnetinstaller/issues/153) - Added support for sub-directory installed check comparison using semantic versioning - [@icnocop](https://github.com/icnocop).
 * [#156](https://github.com/dotnetinstaller/dotnetinstaller/pull/156) - Building and distributing 64-bit version of CabLib.dll for reference by 64-bit processes - [@icnocop](https://github.com/icnocop).
 * [#157](https://github.com/dotnetinstaller/dotnetinstaller/issues/157) - Added Installed Check Type which queries WMI - [@icnocop](https://github.com/icnocop).
+* [#159](https://github.com/dotnetinstaller/dotnetinstaller/issues/159) - Updated InstallerLib, InstallerEditor, and InstallerLinker to target "Any CPU" and dynamically loading 32-bit or 64-bit CabLib.dll depending on the process architecture - [@icnocop](https://github.com/icnocop).
 
 3.2.115 (1/15/2022)
 ===================

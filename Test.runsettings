@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <NUnit>
+    <!--<WorkDirectory>.\TestResults</WorkDirectory>-->
+    <!-- stop running tests after the first test fails -->
+    <!--<StopOnError>true</StopOnError>-->
+  </NUnit>
+</RunSettings>

@@ -1,8 +1,5 @@
-using System;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Xml;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Design;
 

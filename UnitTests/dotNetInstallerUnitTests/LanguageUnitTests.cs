@@ -63,6 +63,7 @@ namespace dotNetInstallerUnitTests
         }
 
         [Test]
+        [Retry(2)] // htmlInstaller.exe sometimes crashes
         public void TestConfigurationLcid()
         {
             // a configuration with one component

@@ -1,7 +1,6 @@
 using System;
 using System.Xml;
 using System.ComponentModel;
-using System.Collections.Generic;
 
 namespace InstallerLib
 {

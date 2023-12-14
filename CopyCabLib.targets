@@ -1,0 +1,19 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+  <Target Name="CopyCabLib" AfterTargets="PostBuildEvent">
+    <ItemGroup>
+      <CabLibFiles Include="$(OutDir)CabLib.dll" />
+      <CabLibFiles Include="$(OutDir)CabLib.pdb" />
+      <CabLib32BitFiles Include="$(MSBuildThisFileDirectory)ThirdParty\CabLib\Win32\$(Configuration)\CabLib.dll" />
+      <CabLib32BitFiles Include="$(MSBuildThisFileDirectory)ThirdParty\CabLib\Win32\$(Configuration)\CabLib.pdb" />
+      <CabLib64BitFiles Include="$(MSBuildThisFileDirectory)ThirdParty\CabLib\x64\$(Configuration)\CabLib.dll" />
+      <CabLib64BitFiles Include="$(MSBuildThisFileDirectory)ThirdParty\CabLib\x64\$(Configuration)\CabLib.pdb" />
+    </ItemGroup>
+    <Delete Files="@(CabLibFiles)" />
+    <Copy
+      SourceFiles="@(CabLib32BitFiles)"
+      DestinationFolder="$(OutDir)x86" />
+    <Copy
+      SourceFiles="@(CabLib64BitFiles)"
+      DestinationFolder="$(OutDir)x64" />
+  </Target>
+</Project>

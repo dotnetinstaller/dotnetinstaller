@@ -8,6 +8,7 @@ using CabLib;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Xml;
+using System.Reflection;
 
 namespace InstallerLib
 {
@@ -21,8 +22,8 @@ namespace InstallerLib
             args.Validate();
 
             args.WriteLine(string.Format("Creating \"{0}\" from \"{1}\"", args.output, args.template));
-            System.IO.File.Copy(args.template, args.output, true);
-            System.IO.File.SetAttributes(args.output, System.IO.FileAttributes.Normal);
+            File.Copy(args.template, args.output, true);
+            File.SetAttributes(args.output, FileAttributes.Normal);
 
             string configFilename = args.config;
 
@@ -315,7 +316,8 @@ namespace InstallerLib
                     Directory.Delete(cabtemp, true);
                 }
 
-                if (!string.IsNullOrEmpty(configTemp))
+                if ((!string.IsNullOrEmpty(configTemp))
+                    && File.Exists(configTemp))
                 {
                     args.WriteLine(string.Format("Cleaning up \"{0}\"", configTemp));
                     File.Delete(configTemp);
@@ -324,6 +326,28 @@ namespace InstallerLib
 
             args.WriteLine(string.Format("Successfully created \"{0}\" ({1})",
                 args.output, EmbedFileCollection.FormatBytes(new FileInfo(args.output).Length)));
+        }
+
+        public static Assembly ResolveAssembly(object sender, ResolveEventArgs args)
+        {
+            if (!args.Name.StartsWith("CabLib"))
+            {
+                return null;
+            }
+
+            var platformDirectoryName = Environment.Is64BitProcess ? "x64" : "x86";
+            var platformPath = Path.Combine(
+                    AppDomain.CurrentDomain.SetupInformation.ApplicationBase,
+                    platformDirectoryName);
+            var assemblyFileName = "CabLib.dll";
+            var assemblyFilePath = Path.Combine(platformPath, assemblyFileName);
+
+            if (!File.Exists(assemblyFilePath))
+            {
+                throw new FileNotFoundException(assemblyFilePath);
+            }
+
+            return Assembly.LoadFrom(assemblyFilePath);
         }
     }
 }

@@ -1,9 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using InstallerLib;
 using CommandLine;
 using System.Reflection;
@@ -15,6 +10,8 @@ namespace InstallerLinker
         [STAThread]
         public static int Main(string[] args)
         {
+            AppDomain.CurrentDomain.AssemblyResolve += InstallerLib.InstallerLinker.ResolveAssembly;
+
             int rc = 0;
 
             Console.WriteLine("InstallerLinker: dotNetInstaller Packager ({0})", Assembly.GetExecutingAssembly().GetName().Version);

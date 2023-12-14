@@ -32,17 +32,16 @@
               </RegistryKey>
             </Component>
             <Component Id="InstallerLib" Guid="5D5B5920-D2DF-48e0-BE89-DD1A77E705BB">
-              <File Id="InstallerLib.dll" Source="..\InstallerLib\bin\$(var.Configuration)\InstallerLib.dll" />
-              <File Id="CabLib.dll" Source="..\ThirdParty\CabLib\Win32\$(var.Configuration)\CabLib.dll" />
-              <File Id="Vestris.ResourceLib.dll" Source="..\packages\Vestris.ResourceLib.1.6.422\lib\Vestris.ResourceLib.dll" />
+              <File Id="InstallerLib.dll" Source="..\InstallerLib\bin\$(var.Configuration)\net40\InstallerLib.dll" />
+              <File Id="Vestris.ResourceLib.dll" Source="..\InstallerLib\bin\$(var.Configuration)\net40\Vestris.ResourceLib.dll" />
             </Component>
             <Component Id="InstallerEditor" Guid="B28C748A-5834-48f6-AC9D-6976B33EC922">
-              <File Id="InstallerEditor.exe" Source="..\InstallerEditor\bin\$(var.Configuration)\InstallerEditor.exe" />
-              <File Id="SourceGrid2.dll" Source="..\InstallerEditor\References\SourceGrid2.dll" />
-              <File Id="SourceLibrary.dll" Source="..\InstallerEditor\References\SourceLibrary.dll" />
+              <File Id="InstallerEditor.exe" Source="..\InstallerEditor\bin\$(var.Configuration)\net40\InstallerEditor.exe" />
+              <File Id="SourceGrid2.dll" Source="..\InstallerEditor\bin\$(var.Configuration)\net40\SourceGrid2.dll" />
+              <File Id="SourceLibrary.dll" Source="..\InstallerEditor\bin\$(var.Configuration)\net40\SourceLibrary.dll" />
             </Component>
             <Component Id="InstallerLinker" Guid="{F06F3A32-DAB8-4e31-B35C-6F4FB9EBC36E}">
-              <File Id="InstallerLinker.exe" Source="..\InstallerLinker\bin\$(var.Configuration)\InstallerLinker.exe" />
+              <File Id="InstallerLinker.exe" Source="..\InstallerLinker\bin\$(var.Configuration)\net40\InstallerLinker.exe" />
             </Component>
             <Component Id="dotNetInstaller" Guid="E28F4986-00F0-489f-99A3-99745FEC243D">
               <File Id="dotNetInstaller.exe" Source="..\dotNetInstaller\$(var.Configuration)\dotNetInstaller.exe" />
@@ -52,8 +51,13 @@
               <File Id="htmlInstaller.exe" Source="..\htmlInstaller\$(var.Configuration)\htmlInstaller.exe" />
               <File Id="htmlInstaller.pdb" Source="..\htmlInstaller\$(var.Configuration)\htmlInstaller.pdb" />
             </Component>
+            <Directory Id="bin_x86" Name="x86">
+              <Component Id="CabLib.dll_x86" Guid="86E274D0-DB5A-4FCD-91E9-FC26C1096A2F">
+                <File Id="CabLib.dll_x86" Source="..\ThirdParty\CabLib\Win32\$(var.Configuration)\CabLib.dll" />
+              </Component>
+            </Directory>
             <Directory Id="bin_x64" Name="x64">
-              <Component Id="CabLib.dll" Guid="565C3213-3489-4303-9677-23D65DFE5026">
+              <Component Id="CabLib.dll_x64" Guid="565C3213-3489-4303-9677-23D65DFE5026">
                 <File Id="CabLib.dll_x64" Source="..\ThirdParty\CabLib\x64\$(var.Configuration)\CabLib.dll" />
               </Component>
             </Directory>
@@ -86,7 +90,8 @@
       <ComponentRef Id="InstallerLinker" />
       <ComponentRef Id="dotNetInstaller" />
       <ComponentRef Id="htmlInstaller" />
-      <ComponentRef Id="CabLib.dll" />
+      <ComponentRef Id="CabLib.dll_x86" />
+      <ComponentRef Id="CabLib.dll_x64" />
       <ComponentRef Id="Documentation" />
       <ComponentRef Id="DotNetInstallerMenuShortcuts" />
       <Feature Id="SamplesFeature" Title="Samples" Level="1">

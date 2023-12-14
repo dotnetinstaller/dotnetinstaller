@@ -601,6 +601,7 @@ namespace dotNetInstallerUnitTests
             runOptions.quiet = false;
             Assert.AreEqual(41, dotNetInstallerExeUtils.Run(args.output, runOptions.CommandLineArgs));
             File.Delete(args.config);
+            File.Delete(args.output);
             Directory.Delete(args.htmlFiles[0], true);
         }
 
@@ -666,6 +667,7 @@ namespace dotNetInstallerUnitTests
             runOptions.quiet = false;
             Assert.AreEqual(41, dotNetInstallerExeUtils.Run(args.output, runOptions.CommandLineArgs));
             File.Delete(args.config);
+            File.Delete(args.output);
             Directory.Delete(args.htmlFiles[0], true);
         }
 
