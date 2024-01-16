@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml;
-using System.Drawing;
 using System.Drawing.Design;
 using System.ComponentModel.Design;
-using System.Collections.Specialized;
 using System.IO;
 using System.Text;
-using System.Reflection;
 
 namespace InstallerLib
 {

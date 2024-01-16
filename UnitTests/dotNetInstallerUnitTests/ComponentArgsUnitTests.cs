@@ -11,7 +11,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class ComponentArgsUnitTests
+    public class ComponentArgsUnitTests : UnitTestsBase
     {
         [Test]
         public void TestComponentArgCmd()

@@ -11,7 +11,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class UninstallUnitTests
+    public class UninstallUnitTests : UnitTestsBase
     {
         [Test]
         public void TestSupportsNone()

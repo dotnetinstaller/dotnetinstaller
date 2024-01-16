@@ -11,7 +11,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class ContinueOnErrorTests
+    public class ContinueOnErrorTests : UnitTestsBase
     {
         [Test]
         public void TestContinueOnError()

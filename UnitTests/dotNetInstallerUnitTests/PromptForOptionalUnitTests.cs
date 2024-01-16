@@ -11,7 +11,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class PromptForOptionalUnitTests
+    public class PromptForOptionalUnitTests : UnitTestsBase
     {
         [Test]
         public void TestPromptForOptionalNotSet()

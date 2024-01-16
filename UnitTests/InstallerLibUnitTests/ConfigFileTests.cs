@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using NUnit.Framework;
 using InstallerLib;
 using System.Reflection;
-using System.ComponentModel;
 using System.Drawing;
 using System.Xml;
 using System.IO;

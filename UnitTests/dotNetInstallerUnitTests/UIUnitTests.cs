@@ -23,7 +23,7 @@ namespace dotNetInstallerUnitTests
     /// UI unit tests
     /// </summary>
     [TestFixture]
-    public class UIUnitTests
+    public class UIUnitTests : UnitTestsBase
     {
         /// <summary>
         /// Asserts that hiding a component if it's already installed during the install sequence hides the component.

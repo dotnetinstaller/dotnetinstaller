@@ -10,6 +10,33 @@
 
 bool DVLib::WmiUtil::Any(const std::wstring& query)
 {
+    CComPtr<IWbemClassObject> pclsObj = nullptr;
+    ULONG uReturn = FirstOrNull(query, pclsObj.p);
+
+    return (uReturn > 0);
+}
+
+std::wstring DVLib::WmiUtil::Get(const std::wstring& query, const std::wstring& propertyName)
+{
+    CComPtr<IWbemClassObject> pclsObj = nullptr;
+    ULONG uReturn = FirstOrNull(query, pclsObj.p);
+    if (uReturn == 0)
+    {
+        // no entries found
+        return L"";
+    }
+
+    _variant_t vtProp;
+
+    // get the value of the specified property
+    CHECK_HR(pclsObj->Get(propertyName.c_str(), 0, &vtProp, 0, 0),
+        L"Error getting value for property '" << propertyName << L"'");
+
+    return vtProp.bstrVal;
+}
+
+ULONG DVLib::WmiUtil::FirstOrNull(const std::wstring& query, IWbemClassObject*& pclsObj)
+{
     // initialize COM
     ComInitializer comInitializer;
 
@@ -66,7 +93,6 @@ bool DVLib::WmiUtil::Any(const std::wstring& query)
     }
 
     // get the first object, if any
-    CComPtr<IWbemClassObject> pclsObj = nullptr;
     ULONG uReturn = 0;
 
     CHECK_HR(pEnumerator->Next(
@@ -76,5 +102,5 @@ bool DVLib::WmiUtil::Any(const std::wstring& query)
         &uReturn),   // Count of returned objects
         L"Failed to get the WMI class object.");
 
-    return (uReturn > 0);
+    return uReturn;
 }

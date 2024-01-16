@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
-using System.IO;
 using NUnit.Framework;
 using InstallerLib;
-using System.Reflection;
 
 namespace InstallerLibUnitTests
 {

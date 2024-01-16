@@ -11,7 +11,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class CompleteCommandTests
+    public class CompleteCommandTests : UnitTestsBase
     {
         [Test]
         public void TestNoComponents()

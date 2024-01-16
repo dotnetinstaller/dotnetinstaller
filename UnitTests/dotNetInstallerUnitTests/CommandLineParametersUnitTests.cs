@@ -11,7 +11,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class CommandLineParametersTests
+    public class CommandLineParametersTests : UnitTestsBase
     {
         [Test]
         public void TestHelp()

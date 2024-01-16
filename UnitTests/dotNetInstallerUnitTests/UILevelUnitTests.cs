@@ -11,7 +11,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class UILevelUnitTests
+    public class UILevelUnitTests : UnitTestsBase
     {
         [Test]
         public void TestSilentMode()

@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using System.Collections.Specialized;
 using SourceLibrary.IO.IsolatedStorage;
 using System.IO.IsolatedStorage;

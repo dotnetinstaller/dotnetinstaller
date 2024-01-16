@@ -11,7 +11,7 @@ namespace dotNetInstallerUnitTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class ExitCodeUnitTests
+    public class ExitCodeUnitTests : UnitTestsBase
     {
         [Test]
         public void TestNoComponentsSuccess()

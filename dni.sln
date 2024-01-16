@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{401947AE
 		dni.proj = dni.proj
 		dni.props = dni.props
 		dni.vsprops = dni.vsprops
+		Test.runsettings = Test.runsettings
 		Version.proj = Version.proj
 	EndProjectSection
 EndProject
@@ -182,32 +183,32 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Start64", "Start64", "{7C6A
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dotNetInstaller", "dotNetInstaller\dotNetInstaller.vcxproj", "{F4E74CF8-37CD-4023-8B89-05EF4B34D363}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerEditor", "InstallerEditor\InstallerEditor.csproj", "{170AAA63-64CE-404F-8FDE-D0D64DA9214F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstallerEditor", "InstallerEditor\InstallerEditor.csproj", "{170AAA63-64CE-404F-8FDE-D0D64DA9214F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Version", "Version\Version.csproj", "{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Version", "Version\Version.csproj", "{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Simple", "Samples\PackagedSetup\Simple\Simple.vdproj", "{5DDA5610-5927-404B-9B03-76071159F8BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerLinker", "InstallerLinker\InstallerLinker.csproj", "{E1B1FD8B-23FE-46CC-A675-BAA6FFBF16F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstallerLinker", "InstallerLinker\InstallerLinker.csproj", "{E1B1FD8B-23FE-46CC-A675-BAA6FFBF16F7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerLib", "InstallerLib\InstallerLib.csproj", "{E19C2177-78F8-4C52-81FE-F49E157D647F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstallerLib", "InstallerLib\InstallerLib.csproj", "{E19C2177-78F8-4C52-81FE-F49E157D647F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerLibUnitTests", "UnitTests\InstallerLibUnitTests\InstallerLibUnitTests.csproj", "{49A3BD48-D506-4108-8F47-7CD7081C046C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstallerLibUnitTests", "UnitTests\InstallerLibUnitTests\InstallerLibUnitTests.csproj", "{49A3BD48-D506-4108-8F47-7CD7081C046C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6E0789A6-234C-4B1C-AEB7-8C51BD754458} = {6E0789A6-234C-4B1C-AEB7-8C51BD754458}
 		{1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324} = {1F40BF7E-4B2F-4D54-B615-1C4A4BFEB324}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerConfig", "InstallerConfig\InstallerConfig.csproj", "{6E0789A6-234C-4B1C-AEB7-8C51BD754458}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstallerConfig", "InstallerConfig\InstallerConfig.csproj", "{6E0789A6-234C-4B1C-AEB7-8C51BD754458}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallerMsi", "InstallerMsi\InstallerMsi.wixproj", "{E9CBA0F0-543D-4076-8D9C-10C2348665A5}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -231,23 +232,23 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cab", "ThirdParty\Cab\Cab.v
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SmartPtr", "ThirdParty\SmartPtr\SmartPtr.vcxproj", "{8185F399-F6DE-40B3-ADD6-42FC5F330CA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNetInstallerUnitTests", "UnitTests\dotNetInstallerUnitTests\dotNetInstallerUnitTests.csproj", "{23B25369-53E1-4819-ADA2-EEE0A772BD02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotNetInstallerUnitTests", "UnitTests\dotNetInstallerUnitTests\dotNetInstallerUnitTests.csproj", "{23B25369-53E1-4819-ADA2-EEE0A772BD02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNetUnitTestsRunner", "UnitTests\dotNetUnitTestsRunner\dotNetUnitTestsRunner.csproj", "{6436DA79-B04A-4B9A-BEA9-46933ADBBB7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotNetUnitTestsRunner", "UnitTests\dotNetUnitTestsRunner\dotNetUnitTestsRunner.csproj", "{6436DA79-B04A-4B9A-BEA9-46933ADBBB7D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7ECDE788-34F9-447D-9AA7-5B1C277A3896} = {7ECDE788-34F9-447D-9AA7-5B1C277A3896}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTimer", "UnitTests\TestTimer\TestTimer.csproj", "{7ECDE788-34F9-447D-9AA7-5B1C277A3896}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestTimer", "UnitTests\TestTimer\TestTimer.csproj", "{7ECDE788-34F9-447D-9AA7-5B1C277A3896}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerEditorUnitTests", "UnitTests\InstallerEditorUnitTests\InstallerEditorUnitTests.csproj", "{97E729E6-0C6A-4772-B2DF-18C89DAA61C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstallerEditorUnitTests", "UnitTests\InstallerEditorUnitTests\InstallerEditorUnitTests.csproj", "{97E729E6-0C6A-4772-B2DF-18C89DAA61C0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{170AAA63-64CE-404F-8FDE-D0D64DA9214F} = {170AAA63-64CE-404F-8FDE-D0D64DA9214F}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "htmlInstaller", "htmlInstaller\htmlInstaller.vcxproj", "{A71D6A97-B4C9-4AD3-8150-5314129C58CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallerDocLib", "InstallerDocLib\InstallerDocLib.csproj", "{ADBA9E1B-677C-4399-823A-B8DFF471ECC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstallerDocLib", "InstallerDocLib\InstallerDocLib.csproj", "{ADBA9E1B-677C-4399-823A-B8DFF471ECC3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabLib", "ThirdParty\CabLib\CabLib.vcxproj", "{96A9878C-7B75-41F7-AA11-7268672C16DD}"
 EndProject
