@@ -5,6 +5,7 @@
 #include "FormatUtil.h"
 #include "LoggerManager.h"
 #include "semver200.h"
+#include "cpp-semver.hpp"
 
 DVLib::Version DVLib::wstring2version(std::wstring version)
 {
@@ -75,6 +76,14 @@ int DVLib::CompareSemanticVersion(const std::wstring& l, const std::wstring& r)
         return 1;
 
     return 0;
+}
+
+bool DVLib::CompareSemanticVersionRange(const std::wstring& version, const std::wstring& range)
+{
+    std::string l_v(DVLib::wstring2string(version));
+    std::string r_v(DVLib::wstring2string(range));
+
+    return semver::satisfies(l_v, r_v);
 }
 
 bool DVLib::CompareVersion(const std::wstring& comparison, const std::list<std::wstring>& valuesToCompare, const std::wstring& checkValue)
@@ -194,6 +203,24 @@ bool DVLib::CompareVersion(const std::wstring& comparison, const std::list<std::
             else
             {
                 LoggerManager::Log(L"Check value '" + checkValue + L"' version no greater or equal match to '" + valueToCompare + L"'");
+            }
+        }
+
+        return false;
+    }
+    else if (comparison == L"semver_range")
+    {
+        for each (const std::wstring & valueToCompare in valuesToCompare)
+        {
+            bool result = DVLib::CompareSemanticVersionRange(valueToCompare, checkValue);
+            if (result)
+            {
+                LoggerManager::Log(L"Check value '" + checkValue + L"' version is within range '" + valueToCompare + L"'");
+                return true;
+            }
+            else
+            {
+                LoggerManager::Log(L"Check value '" + checkValue + L"' version is not within range '" + valueToCompare + L"'");
             }
         }
 

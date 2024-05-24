@@ -99,6 +99,8 @@
                 <definition>Check whether the name of a sub directory, parsed as a semantic version number, is greater than the check value.</definition>
                 <definedTerm>semver_ge</definedTerm>
                 <definition>Check whether the name of a sub directory, parsed as a semantic version number, is greater or equal than the check value.</definition>
+                <definedTerm>semver_range</definedTerm>
+                <definition>Check whether the name of a sub directory, parsed as a semantic version number, is within range of the check value.</definition>
               </definitionTable>
             </para>
           </content>

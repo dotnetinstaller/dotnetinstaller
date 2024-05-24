@@ -16,4 +16,5 @@ namespace DVLib
 	int CompareVersion(const std::wstring& l, const std::wstring& r);
 	int CompareSemanticVersion(const std::wstring& l, const std::wstring& r);
 	bool CompareVersion(const std::wstring& comparison, const std::list<std::wstring>& valuesToCompare, const std::wstring& checkValue);
+	bool CompareSemanticVersionRange(const std::wstring& version, const std::wstring& range);
 }
