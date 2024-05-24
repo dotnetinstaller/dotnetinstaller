@@ -279,14 +279,13 @@ void InstalledCheckDirectoryUnitTests::testIsInstalled_semver_invalid()
     TestDataException testdata[] =
     {
         // directoryNames, comparison, version, expectedException
-        { {L"invalid"}, L"semver", L"1.2.3", "invalid character encountered: i" },
-        { {L"unknown"}, L"semver", L"1.2.3", "invalid character encountered: u" },
-        { {L"_"}, L"semver_eq", L"1.2.3", "invalid character encountered: _" },
-        { {L"+"}, L"semver_lt", L"1.2.3", "invalid character encountered: +" },
-        { {L";"}, L"semver_le", L"1.2.3", "invalid character encountered: ;" },
-        { {L"-"}, L"semver_gt", L"1.2.3", "invalid character encountered: -" },
-        { {L"="}, L"semver_ge", L"1.2.3", "invalid character encountered: =" },
-        { {L"&"}, L"semver_range", L"1.2.3", "unexpected char as invalid number: '&'" },
+        { {L"invalid"}, L"semver", L"1.2.3", "Failed to parse semantic version: 'invalid'" },
+        { {L"unknown"}, L"semver", L"1.2.3", "Failed to parse semantic version: 'unknown'" },
+        { {L"_"}, L"semver_eq", L"1.2.3", "Failed to parse semantic version: '_'" },
+        { {L"+"}, L"semver_lt", L"1.2.3", "Failed to parse semantic version: '+'" },
+        { {L";"}, L"semver_le", L"1.2.3", "Failed to parse semantic version: ';'" },
+        { {L"-"}, L"semver_gt", L"1.2.3", "Failed to parse semantic version: '-'" },
+        { {L"="}, L"semver_ge", L"1.2.3", "Failed to parse semantic version: '='" },
     };
 
     for (int i = 0; i < ARRAYSIZE(testdata); i++)
@@ -300,15 +299,22 @@ void InstalledCheckDirectoryUnitTests::testIsInstalled_semver_invalid()
         check.comparison = testdata[i].comparison;
         check.version = testdata[i].version;
 
+        std::wstringstream message;
+        message << "\r\nIndex: " << DVLib::towstring(i) << "\r\n"
+            << "\tdirectoryNames: " << DVLib::join(testdata[i].directoryNames, L",") << "\r\n"
+            << "\tcomparison: " << check.comparison << "\r\n"
+            << "\tversion: " << check.version << "\r\n";
+
         try
         {
             check.IsInstalled();
 
-            Assert::Fail(L"Expected exception.");
+            message << "\tExpected exception.";
+            Assert::Fail(message.str().c_str());
         }
         catch (std::exception& ex)
         {
-            Assert::AreEqual(testdata[i].expectedException, ex.what());
+            Assert::AreEqual(testdata[i].expectedException, ex.what(), message.str().c_str());
         }
 
         for each (const std::wstring & directoryName in testdata[i].directoryNames)

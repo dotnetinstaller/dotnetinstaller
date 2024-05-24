@@ -4,8 +4,8 @@
 #include "StringUtil.h"
 #include "FormatUtil.h"
 #include "LoggerManager.h"
-#include "semver200.h"
-#include "cpp-semver.hpp"
+#include <semver/semver.hpp>
+#include <semver/range.hpp>
 
 DVLib::Version DVLib::wstring2version(std::wstring version)
 {
@@ -67,8 +67,17 @@ int DVLib::CompareVersion(const std::wstring& l, const std::wstring& r)
 
 int DVLib::CompareSemanticVersion(const std::wstring& l, const std::wstring& r)
 {
-    version::Semver200_version l_v(DVLib::wstring2string(l));
-    version::Semver200_version r_v(DVLib::wstring2string(r));
+    semver::semver l_v(DVLib::wstring2string(l));
+    semver::semver r_v(DVLib::wstring2string(r));
+
+    if (!l_v.ok())
+    {
+        THROW_EX(L"Failed to parse semantic version: '" + l + L"'");
+    }
+    if (!r_v.ok())
+    {
+        THROW_EX(L"Failed to parse semantic version: '" + r + L"'");
+    }
 
     if (l_v < r_v)
         return -1;
@@ -80,10 +89,10 @@ int DVLib::CompareSemanticVersion(const std::wstring& l, const std::wstring& r)
 
 bool DVLib::CompareSemanticVersionRange(const std::wstring& version, const std::wstring& range)
 {
-    std::string l_v(DVLib::wstring2string(version));
-    std::string r_v(DVLib::wstring2string(range));
+    semver::semver l_v(DVLib::wstring2string(version));
+    semver::range r_v(DVLib::wstring2string(range));
 
-    return semver::satisfies(l_v, r_v);
+    return r_v.satisfies(l_v);
 }
 
 bool DVLib::CompareVersion(const std::wstring& comparison, const std::list<std::wstring>& valuesToCompare, const std::wstring& checkValue)

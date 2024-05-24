@@ -139,10 +139,10 @@
         <para>
           C++ library to parse and compare strings with Semantic Versioning 2.0.0.
           See <externalLink>
-            <linkText>https://github.com/zmarko/semver</linkText>
-            <linkUri>https://github.com/zmarko/semver</linkUri>
+            <linkText>https://gitlab.com/mariokonrad/semver</linkText>
+            <linkUri>https://gitlab.com/mariokonrad/semver</linkUri>
           </externalLink> for more information.
-          <code language="text" source="..\ThirdParty\semver\LICENSE" />
+          <code language="text" source="..\ThirdParty\semver\LICENSE.md" />
         </para>
       </content>
     </section>

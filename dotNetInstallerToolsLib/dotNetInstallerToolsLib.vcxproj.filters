@@ -60,19 +60,16 @@
     <ClCompile Include="VersionUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\semver\Semver200_comparator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ThirdParty\semver\Semver200_modifier.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ThirdParty\semver\Semver200_parser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LoggerManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WmiUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\semver\src\range.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\semver\src\semver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -143,22 +140,11 @@
     <ClInclude Include="LoggerManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ThirdParty\semver\semver200.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ThirdParty\semver\version.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WmiUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ComInitializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\ThirdParty\semver\version.inl">
-      <Filter>Header Files</Filter>
-    </None>
   </ItemGroup>
 </Project>

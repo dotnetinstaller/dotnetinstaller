@@ -159,9 +159,25 @@ void VersionUtilUnitTests::testCompareSemanticVersion()
 
     for (int i = 0; i < ARRAYSIZE(testdata); i++)
     {
-        int cmp = DVLib::CompareSemanticVersion(testdata[i].l, testdata[i].r);
-        std::wcout << std::endl << testdata[i].l << L" vs. " << testdata[i].r << L" => " << cmp;
-        Assert::IsTrue(cmp == testdata[i].cmp);
+        std::wstringstream message;
+        message << "\r\nIndex: " << DVLib::towstring(i) << "\r\n"
+            << "\tl: " << testdata[i].l << "\r\n"
+            << "\tr: " << testdata[i].r << "\r\n"
+            << "\tcmp: " << testdata[i].cmp << "\r\n";
+
+        int cmp = 0;
+        try
+        {
+            cmp = DVLib::CompareSemanticVersion(testdata[i].l, testdata[i].r);
+            std::wcout << std::endl << testdata[i].l << L" vs. " << testdata[i].r << L" => " << cmp;
+        }
+        catch (std::exception& ex)
+        {
+            message << "\terror: " << DVLib::string2wstring(ex.what());
+            Assert::Fail(message.str().c_str());
+        }
+
+        Assert::AreEqual(cmp, testdata[i].cmp, message.str().c_str());
     }
 }
 
@@ -175,7 +191,7 @@ void VersionUtilUnitTests::testCompareSemanticVersion_invalid()
     }
     catch (std::exception& ex)
     {
-        Assert::AreEqual("invalid character encountered: u", ex.what());
+        Assert::AreEqual("Failed to parse semantic version: 'unknown'", ex.what());
     }
 }
 
