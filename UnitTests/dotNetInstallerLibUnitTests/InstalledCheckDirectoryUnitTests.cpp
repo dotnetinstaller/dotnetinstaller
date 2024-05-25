@@ -149,13 +149,14 @@ void InstalledCheckDirectoryUnitTests::testIsInstalled_semver_with_non_existent_
 
     TestData testdata[] =
     {
-        // directoryNames, comparison, version, expected
-        { {}, L"semver", L"1.0.0", false },
-        { {}, L"semver_eq", L"1.0.0", false },
-        { {}, L"semver_lt", L"1.0.0", false },
-        { {}, L"semver_le", L"1.0.0", false },
-        { {}, L"semver_gt", L"1.0.0", false },
-        { {}, L"semver_ge", L"1.0.0", false },
+        // directoryNames,  comparison,         version,    expected
+        { {},               L"semver",          L"1.0.0",   false },
+        { {},               L"semver_eq",       L"1.0.0",   false },
+        { {},               L"semver_lt",       L"1.0.0",   false },
+        { {},               L"semver_le",       L"1.0.0",   false },
+        { {},               L"semver_gt",       L"1.0.0",   false },
+        { {},               L"semver_ge",       L"1.0.0",   false },
+        { {},               L"semver_range",    L"1.0.0",   false },
     };
 
     for (int i = 0; i < ARRAYSIZE(testdata); i++)
@@ -212,6 +213,18 @@ void InstalledCheckDirectoryUnitTests::testIsInstalled_semver()
         { {L"1.0.0-alpha"}, L"semver_ge", L"1.0.0", false },
         { {L"6.0.6", L"7.0.0-preview.5.22301.12"}, L"semver_ge", L"6.0.7", true },
         { {L"5.0.17", L"6.0.6"}, L"semver_ge", L"7.0.0-preview.5.22301.12", false },
+
+        { {L"1.0.0"}, L"semver_range", L"2.x", false},
+        { {L"2.0.0"}, L"semver_range", L"2.x", true},
+        { {L"3.0.0"}, L"semver_range", L"2.x", false},
+        { {L"1.0.0", L"3.0.0"}, L"semver_range", L"2.x", false},
+        { {L"2.0.1"}, L"semver_range", L"2.x", true},
+        { {L"2.1.0"}, L"semver_range", L"2.x", true},
+        { {L"2.5.0"}, L"semver_range", L">=2.0.0 <3.0.0", true},
+        { {L"1.2.3"}, L"semver_range", L"1.1.x", false},
+        { {L"1.2.3"}, L"semver_range", L"1.2.x", true},
+        { {L"1.0.0"}, L"semver_range", L"1.0.0 || 2.0.0", true},
+        { {L"1.5.0"}, L"semver_range", L"1.0.0 - 2.0.0", true},
     };
 
     for (int i = 0; i < ARRAYSIZE(testdata); i++)
@@ -224,7 +237,26 @@ void InstalledCheckDirectoryUnitTests::testIsInstalled_semver()
 
         check.comparison = testdata[i].comparison;
         check.version = testdata[i].version;
-        Assert::AreEqual(testdata[i].expected, check.IsInstalled());
+
+        std::wstringstream message;
+        message << "\r\nIndex: " << DVLib::towstring(i) << "\r\n"
+            << "\tdirectoryNames: " << DVLib::join(testdata[i].directoryNames, L",") << "\r\n"
+            << "\tcomparison: " << check.comparison << "\r\n"
+            << "\tversion: " << check.version << "\r\n";
+
+        bool isInstalled;
+
+        try
+        {
+            isInstalled = check.IsInstalled();
+        }
+        catch (std::exception& ex)
+        {
+            message << "\terror: " << DVLib::string2wstring(ex.what());
+            Assert::Fail(message.str().c_str());
+        }
+
+        Assert::AreEqual(testdata[i].expected, isInstalled, message.str().c_str());
 
         for each (const std::wstring & directoryName in testdata[i].directoryNames)
         {
@@ -247,13 +279,13 @@ void InstalledCheckDirectoryUnitTests::testIsInstalled_semver_invalid()
     TestDataException testdata[] =
     {
         // directoryNames, comparison, version, expectedException
-        { {L"invalid"}, L"semver", L"1.2.3", "invalid character encountered: i" },
-        { {L"unknown"}, L"semver", L"1.2.3", "invalid character encountered: u" },
-        { {L"_"}, L"semver_eq", L"1.2.3", "invalid character encountered: _" },
-        { {L"+"}, L"semver_lt", L"1.2.3", "invalid character encountered: +" },
-        { {L";"}, L"semver_le", L"1.2.3", "invalid character encountered: ;" },
-        { {L"-"}, L"semver_gt", L"1.2.3", "invalid character encountered: -" },
-        { {L"="}, L"semver_ge", L"1.2.3", "invalid character encountered: =" },
+        { {L"invalid"}, L"semver", L"1.2.3", "Failed to parse semantic version: 'invalid'" },
+        { {L"unknown"}, L"semver", L"1.2.3", "Failed to parse semantic version: 'unknown'" },
+        { {L"_"}, L"semver_eq", L"1.2.3", "Failed to parse semantic version: '_'" },
+        { {L"+"}, L"semver_lt", L"1.2.3", "Failed to parse semantic version: '+'" },
+        { {L";"}, L"semver_le", L"1.2.3", "Failed to parse semantic version: ';'" },
+        { {L"-"}, L"semver_gt", L"1.2.3", "Failed to parse semantic version: '-'" },
+        { {L"="}, L"semver_ge", L"1.2.3", "Failed to parse semantic version: '='" },
     };
 
     for (int i = 0; i < ARRAYSIZE(testdata); i++)
@@ -267,15 +299,22 @@ void InstalledCheckDirectoryUnitTests::testIsInstalled_semver_invalid()
         check.comparison = testdata[i].comparison;
         check.version = testdata[i].version;
 
+        std::wstringstream message;
+        message << "\r\nIndex: " << DVLib::towstring(i) << "\r\n"
+            << "\tdirectoryNames: " << DVLib::join(testdata[i].directoryNames, L",") << "\r\n"
+            << "\tcomparison: " << check.comparison << "\r\n"
+            << "\tversion: " << check.version << "\r\n";
+
         try
         {
             check.IsInstalled();
 
-            Assert::Fail(L"Expected exception.");
+            message << "\tExpected exception.";
+            Assert::Fail(message.str().c_str());
         }
         catch (std::exception& ex)
         {
-            Assert::AreEqual(testdata[i].expectedException, ex.what());
+            Assert::AreEqual(testdata[i].expectedException, ex.what(), message.str().c_str());
         }
 
         for each (const std::wstring & directoryName in testdata[i].directoryNames)

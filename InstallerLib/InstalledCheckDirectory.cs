@@ -20,6 +20,7 @@ namespace InstallerLib
         semver_le,
         semver_gt,
         semver_ge,
+        semver_range,
     }
 
     /// <summary>
