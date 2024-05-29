@@ -46,5 +46,14 @@
        AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)" />
     <TemplateFile Template="Version\Version.h.template" OutputFilename="Version.h" Tokens="@(AssemblyInfoTokens)"/>
     <TemplateFile Template="Version\Version.wxi.template" OutputFilename="Version.wxi" Tokens="@(AssemblyInfoTokens)"/>
+    <TemplateFile Template="Version\Directory.Build.props.template" OutputFilename="$(MSBuildThisFileDirectory)Directory.Build.props" Tokens="@(AssemblyInfoTokens)"/>
+    <WriteLinesToFile
+      File="Version\version.txt"
+      Lines=" $(Major).$(Minor).$(Build).$(Revision)"
+      Overwrite="true" />
+    <WriteLinesToFile
+      File="Version\nuget_version.txt"
+      Lines=" $(Major).$(Minor).$(Build)"
+      Overwrite="true" />
   </Target>
 </Project>

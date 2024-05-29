@@ -6,6 +6,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <NoWarn>1591</NoWarn>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Design" />
@@ -23,9 +24,12 @@
     <EmbeddedResource Include="templates\italian_template.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ThirdParty\CabLib\CabLib.vcxproj" />
+    <ProjectReference Include="..\ThirdParty\CabLib\CabLib.vcxproj" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Vestris.ResourceLib" Version="1.6.422" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(OutputPath)CabLib.dll" Pack="true" PackagePath="runtimes\win-x86\native" />
   </ItemGroup>
 </Project>

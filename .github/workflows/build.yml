@@ -15,6 +15,7 @@ env:
   # EXEC : warning : Error reading msbuild project information, ensure that your input solution or project file is valid. NETCore and UAP projects will be skipped, only packages.config files will be restored. [dni.proj]
   # dni.proj(130,5): error MSB3073: The command "ThirdParty\NuGet\NuGet.exe restore Dni.sln" exited with code -1.
   RestoreUseSkipNonexistentTargets: false
+  NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
 
 jobs:
   build:
@@ -25,10 +26,10 @@ jobs:
         Configuration: [Debug, Release]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v2
 
     - name: Download Win8.1 SDK
       shell: powershell
@@ -69,7 +70,19 @@ jobs:
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: msbuild /t:all /m /p:Configuration=${{ matrix.Configuration }} .\dni.proj
+      run: msbuild /t:all /binaryLogger /verbosity:diagnostic /m /p:Configuration=${{ matrix.Configuration }} .\dni.proj
+
+    - name: Read versions from files
+      run: |
+        $version = Get-Content -Path .\Version\version.txt
+        echo "VERSION=$version" >> $env:GITHUB_ENV
+        $nuget_version = Get-Content -Path .\Version\nuget_version.txt
+        echo "NUGET_VERSION=$nuget_version" >> $env:GITHUB_ENV
+
+    - name: Write versions to output
+      run: |
+        echo "The build version is ${{ env.VERSION }}"
+        echo "The NuGet version is ${{ env.NUGET_VERSION }}"
 
     - name: Dump environment variables
       if: always()
@@ -97,7 +110,7 @@ jobs:
 
     - name: Upload Test Result Files
       if: always()
-      uses: actions/upload-artifact@v2.3.1
+      uses: actions/upload-artifact@v4
       with:
         name: TestResults-${{ matrix.Configuration }}
         path: |
@@ -109,9 +122,9 @@ jobs:
       # Upload the temp files separately.
       # Otherwise the following error occurs:
       # The rootDirectory: "D:\a\dotnetinstaller\dotnetinstaller" is not a parent directory of the file: "C:\Users\runneradmin\AppData\Local\Temp\33fcd148-d0c7-46cd-8333-9b21a22d2d2c.xml"
-    - name: Upload Temp File
+    - name: Upload Temp Files
       if: failure()
-      uses: actions/upload-artifact@v2.3.1
+      uses: actions/upload-artifact@v4
       with:
         name: TempLogs-${{ matrix.Configuration }}
         path: |
@@ -120,11 +133,36 @@ jobs:
             C:\Users\runneradmin\AppData\Local\Temp\*.txt
             C:\Users\runneradmin\AppData\Local\Temp\*.xml
 
-    - name: Upload Build Artifacts
-      uses: actions/upload-artifact@v2.3.1
+    - name: Upload Build Artifact - MSBuild Log
+      uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.Configuration }}
-        path: |
-          .\target\${{ matrix.Configuration }}\dotNetInstaller.*.zip
-          .\target\${{ matrix.Configuration }}\dotNetInstaller.*.msi
+        name: msbuild.${{ env.VERSION }}.${{ matrix.Configuration }}.binlog
+        path: msbuild.binlog
         if-no-files-found: error
+
+    - name: Upload Build Artifact - Zip
+      uses: actions/upload-artifact@v4
+      with:
+        name: dotNetInstaller.${{ env.VERSION }}.${{ matrix.Configuration }}.zip
+        path: .\target\${{ matrix.Configuration }}\dotNetInstaller.${{ env.VERSION }}.zip
+        if-no-files-found: error
+
+    - name: Upload Build Artifact - Msi
+      uses: actions/upload-artifact@v4
+      with:
+        name: dotNetInstaller.${{ env.VERSION }}.${{ matrix.Configuration }}.msi
+        path: .\target\${{ matrix.Configuration }}\dotNetInstaller.${{ env.VERSION }}.msi
+        if-no-files-found: error
+
+    - name: Upload Build Artifact - NuGet Package
+      uses: actions/upload-artifact@v4
+      with:
+        name: dotNetInstaller.${{ env.NUGET_VERSION }}.${{ matrix.Configuration }}.nupkg
+        path: .\target\${{ matrix.Configuration }}\InstallerLib.${{ env.NUGET_VERSION }}.nupkg
+        if-no-files-found: error
+
+    - name:  Publish NuGet package
+      if: github.event_name != 'pull_request' && matrix.Configuration == 'Release' && env.NUGET_API_KEY != ''
+      shell: pwsh
+      run: |
+        dotnet nuget push .\target\${{ matrix.Configuration }}\InstallerLib.${{ env.NUGET_VERSION }}.nupkg -k ${{ env.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
