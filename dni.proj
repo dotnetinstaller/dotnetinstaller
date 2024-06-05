@@ -27,86 +27,8 @@
     <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'=='' And Exists('C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe')">C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
     <VsTestConsoleExeFilePath Condition="'$(VsTestConsoleExeFilePath)'==''">C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</VsTestConsoleExeFilePath>
   </PropertyGroup>
-  <ItemGroup>
-    <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.txt" />
-    <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.xml" />
-    <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.bmp" />
-    <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.txt" />
-    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.xml" />
-    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.bmp" />
-    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.ico" />
-    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.msi" />
-    <PackagedSetupSample Include="Samples/PackagedSetup/**/*.manifest" />
-  </ItemGroup>
-  <ItemGroup>
-    <CustomInputSetupSample Include="Samples/CustomInputSetup/**/*.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.txt" />
-    <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.xml" />
-    <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.bmp" />
-    <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <LicenseAgreementSample Include="Samples/LicenseAgreement/**/*.xml" />
-    <LicenseAgreementSample Include="Samples/LicenseAgreement/**/*.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <MultilingualSetupSample Include="Samples/MultilingualSetup/**/*.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <DownloadSetupSample Include="Samples/DownloadSetup/**/*.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ReferenceSetupSample Include="Samples/ReferenceSetup/**/*.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <InstallCheckProductSample Include="Samples/InstallCheckProduct/**/*.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <PatchSetupSample Include="Samples/PatchSetup/**/*.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Documentation Include="Documentation/$(Configuration)/dotNetInstaller.chm" />
-  </ItemGroup>
-  <ItemGroup>
-    <SupportFiles Include="Samples/SupportFiles/**/*.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ExeSetupSample Include="Samples/ExeSetup/**/*.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ReferenceSetupSample Include="Samples/ReferenceSetup/**/*.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <OsFiltersSetupSample Include="Samples/OsFilters/**/*.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <PAFilterSetupSample Include="Samples/PAFilter/**/*.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <OptionalComponentsSetupSample Include="Samples/OptionalComponents/**/*.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" />
-    <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.pdb" />
-    <Binaries Include="htmlInstaller\$(Configuration)\htmlInstaller.exe" />
-    <Binaries Include="htmlInstaller\$(Configuration)\htmlInstaller.pdb" />
-    <Binaries Include="InstallerEditor\bin\$(Configuration)\net40\InstallerEditor.exe" />
-    <Binaries Include="InstallerEditor\bin\$(Configuration)\net40\SourceLibrary.dll" />
-    <Binaries Include="InstallerEditor\bin\$(Configuration)\net40\SourceGrid2.dll" />
-    <Binaries Include="InstallerLinker\bin\$(Configuration)\net40\InstallerLinker.exe" />
-    <Binaries Include="InstallerLib\bin\$(Configuration)\net40\InstallerLib.dll" />
-    <Binaries Include="InstallerLib\bin\$(Configuration)\net40\Vestris.ResourceLib.dll" />
-    <Binaries Include="ThirdParty\CabLib\Win32\$(Configuration)\CabLib.dll" />
-    <Binaries64 Include="ThirdParty\CabLib\x64\$(Configuration)\CabLib.dll" />
-  </ItemGroup>
   <Target Name="all">
     <Message Importance="high" Text="Building project ..." />
-    <CallTarget Targets="clean" />
     <CallTarget Targets="version" />
     <CallTarget Targets="build" />
     <CallTarget Targets="doc" />
@@ -128,7 +50,6 @@
     <DeleteTree Directories="$(ReleaseDir)" />
     <DeleteTree Directories=".\**\obj" Recursive="true" ContinueOnError="true" />
     <DeleteTree Directories=".\*Installer*\$(Configuration)" Recursive="true" ContinueOnError="true" />
-    <Delete Files="Version\Version.h;Version\Version.wxi;Version\GlobalAssemblyInfo.cs" />
   </Target>
   <Target Name="restore">
     <MSBuild Projects="Dni.sln" Targets="Restore" />
@@ -139,10 +60,92 @@
   </Target>
   <Target Name="release" DependsOnTargets="version">
     <Message Importance="high" Text="Collecting release files ..." />
+
+    <ItemGroup>
+      <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.txt" />
+      <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.xml" />
+      <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.bmp" />
+      <StandaloneSetupSample Include="Samples/StandaloneSetup/**/*.ico" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackagedSetupSample Include="Samples/PackagedSetup/**/*.txt" />
+      <PackagedSetupSample Include="Samples/PackagedSetup/**/*.xml" />
+      <PackagedSetupSample Include="Samples/PackagedSetup/**/*.bmp" />
+      <PackagedSetupSample Include="Samples/PackagedSetup/**/*.ico" />
+      <PackagedSetupSample Include="Samples/PackagedSetup/**/*.msi" />
+      <PackagedSetupSample Include="Samples/PackagedSetup/**/*.manifest" />
+    </ItemGroup>
+    <ItemGroup>
+      <CustomInputSetupSample Include="Samples/CustomInputSetup/**/*.xml" />
+    </ItemGroup>
+    <ItemGroup>
+      <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.txt" />
+      <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.xml" />
+      <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.bmp" />
+      <InstallCheckOperatorsSample Include="Samples/InstallCheckOperators/**/*.ico" />
+    </ItemGroup>
+    <ItemGroup>
+      <LicenseAgreementSample Include="Samples/LicenseAgreement/**/*.xml" />
+      <LicenseAgreementSample Include="Samples/LicenseAgreement/**/*.txt" />
+    </ItemGroup>
+    <ItemGroup>
+      <MultilingualSetupSample Include="Samples/MultilingualSetup/**/*.xml" />
+    </ItemGroup>
+    <ItemGroup>
+      <DownloadSetupSample Include="Samples/DownloadSetup/**/*.xml" />
+    </ItemGroup>
+    <ItemGroup>
+      <ReferenceSetupSample Include="Samples/ReferenceSetup/**/*.xml" />
+    </ItemGroup>
+    <ItemGroup>
+      <InstallCheckProductSample Include="Samples/InstallCheckProduct/**/*.xml" />
+    </ItemGroup>
+    <ItemGroup>
+      <PatchSetupSample Include="Samples/PatchSetup/**/*.xml" />
+    </ItemGroup>
+    <ItemGroup>
+      <Documentation Include="Documentation/$(Configuration)/dotNetInstaller.chm" />
+    </ItemGroup>
+    <ItemGroup>
+      <SupportFiles Include="Samples/SupportFiles/**/*.txt" />
+    </ItemGroup>
+    <ItemGroup>
+      <ExeSetupSample Include="Samples/ExeSetup/**/*.xml" />
+    </ItemGroup>
+    <ItemGroup>
+      <ReferenceSetupSample Include="Samples/ReferenceSetup/**/*.xml" />
+    </ItemGroup>
+    <ItemGroup>
+      <OsFiltersSetupSample Include="Samples/OsFilters/**/*.xml" />
+    </ItemGroup>
+    <ItemGroup>
+      <PAFilterSetupSample Include="Samples/PAFilter/**/*.xml" />
+    </ItemGroup>
+    <ItemGroup>
+      <OptionalComponentsSetupSample Include="Samples/OptionalComponents/**/*.xml" />
+    </ItemGroup>
+    <ItemGroup>
+      <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.exe" />
+      <Binaries Include="dotNetInstaller\$(Configuration)\dotNetInstaller.pdb" />
+      <Binaries Include="htmlInstaller\$(Configuration)\htmlInstaller.exe" />
+      <Binaries Include="htmlInstaller\$(Configuration)\htmlInstaller.pdb" />
+      <Binaries Include="InstallerEditor\bin\$(Configuration)\net40\InstallerEditor.exe" />
+      <Binaries Include="InstallerEditor\bin\$(Configuration)\net40\SourceLibrary.dll" />
+      <Binaries Include="InstallerEditor\bin\$(Configuration)\net40\SourceGrid2.dll" />
+      <Binaries Include="InstallerLinker\bin\$(Configuration)\net40\InstallerLinker.exe" />
+      <Binaries Include="InstallerLib\bin\$(Configuration)\net40\InstallerLib.dll" />
+      <Binaries Include="InstallerLib\bin\$(Configuration)\net40\Vestris.ResourceLib.dll" />
+      <Binaries Include="ThirdParty\CabLib\Win32\$(Configuration)\CabLib.dll" />
+      <Binaries64 Include="ThirdParty\CabLib\x64\$(Configuration)\CabLib.dll" />
+      <NuGetPackages Include="InstallerLib\bin\$(Configuration)\InstallerLib.*.nupkg" />
+    </ItemGroup>
+
     <MakeDir Directories="$(ReleaseDir)" />
     <!-- Binaries -->
     <Copy SourceFiles="@(Binaries)" DestinationFolder="$(ReleaseDir)\Bin" />
     <Copy SourceFiles="@(Binaries64)" DestinationFolder="$(ReleaseDir)\Bin\x64" />
+    <!-- NuGet Packages -->
+    <Copy SourceFiles="@(NuGetPackages)" DestinationFolder="$(ReleaseDir)" />
     <!-- Documentation -->
     <Copy SourceFiles="@(Documentation)" DestinationFolder="$(ReleaseDir)\Doc" />
     <!-- Samples -->
@@ -264,7 +267,7 @@
     <CreateItem Include="$(ReleaseDir)\**\*" Exclude="$(ReleaseDir)\*.zip;$(ReleaseDir)\UnitTests.xml;$(ReleaseDir)\*.msi">
       <Output TaskParameter="Include" ItemName="PackageFiles" />
     </CreateItem>
-    <Zip WorkingDirectory="target\$(Configuration)" ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).$(Build).$(Revision).zip" Files="@(PackageFiles)" />
+    <Zip WorkingDirectory="$(ReleaseDir)" ZipFileName="$(ReleaseDir)\dotNetInstaller.$(Major).$(Minor).$(Build).$(Revision).zip" Files="@(PackageFiles)" />
   </Target>
   <Target Name="installer" DependsOnTargets="version">
     <MSBuild Projects="InstallerMsi\InstallerMsi.wixproj" Targets="Build" />

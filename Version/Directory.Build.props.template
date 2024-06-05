@@ -1,0 +1,5 @@
+﻿<Project>
+  <PropertyGroup>
+    <PackageVersion>${Major}.${Minor}.${Build}</PackageVersion>
+  </PropertyGroup>
+</Project>
