@@ -5,19 +5,21 @@
 #include "ExceptionMacros.h"
 #include <comdef.h>
 
-class ComInitializer
+namespace DVLib
 {
-public:
-    ComInitializer()
+    class ComInitializer
     {
-        // initialize COM
-        CHECK_HR(::CoInitializeEx(0, COINIT_APARTMENTTHREADED),
-            L"Failed to initialize COM library.");
-    }
+    public:
+        ComInitializer()
+        {
+            // initialize COM
+            CHECK_HR(::CoInitializeEx(0, COINIT_APARTMENTTHREADED),
+                L"Failed to initialize COM library.");
+        }
 
-    ~ComInitializer()
-    {
-        ::CoUninitialize();
-    }
-};
-
+        ~ComInitializer()
+        {
+            ::CoUninitialize();
+        }
+    };
+}
