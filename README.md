@@ -62,7 +62,7 @@ Several samples and dependency templates that can be reused as-is and that demon
 Project History
 ---------------
 
-This project began as a [CodeProject article](http://www.codeproject.com/KB/install/dotNetInstaller.aspx) and was maintained on the [DevAge website](http://www.devage.com/) and [SourceForge](https://sourceforge.net/projects/dotnetinstaller) by [Davide Icardi](https://github.com/davideicardi). It continued its journey through CodePlex and is now officially maintained on [Github](https://github.com/dotnetinstaller/dotnetinstaller).
+This project began as a [CodeProject article](https://www.codeproject.com/Articles/5116/dotNetInstaller-Setup-Bootstrapper-for-NET-Applica) and was maintained on the [DevAge website](http://www.devage.com/) and [SourceForge](https://sourceforge.net/projects/dotnetinstaller) by [Davide Icardi](https://github.com/davideicardi). It continued its journey through CodePlex and is now officially maintained on [Github](https://github.com/dotnetinstaller/dotnetinstaller).
 
 License and Copyright
 ---------------------
