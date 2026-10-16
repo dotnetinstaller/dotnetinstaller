@@ -28,6 +28,25 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install Visual Studio v141_xp toolset
+      # The C++ projects use the v141_xp platform toolset and the Windows 7.0 SDK, which are not included in the runner image.
+      # Microsoft.VisualStudio.Component.WinXP adds the v141_xp toolset and the Windows 7.1A SDK.
+      shell: pwsh
+      run: |
+        $installerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer"
+        $vsPath = & "$installerPath\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
+        $components = @(
+          "Microsoft.VisualStudio.Component.VC.v141.x86.x64",
+          "Microsoft.VisualStudio.Component.VC.v141.ATL",
+          "Microsoft.VisualStudio.Component.VC.v141.MFC",
+          "Microsoft.VisualStudio.Component.WinXP"
+        )
+        $arguments = @("modify", "--installPath", "`"$vsPath`"", "--quiet", "--norestart", "--nocache") + ($components | ForEach-Object { "--add", $_ })
+        $process = Start-Process -FilePath "$installerPath\vs_installer.exe" -ArgumentList $arguments -Wait -PassThru
+        if ($process.ExitCode -ne 0 -and $process.ExitCode -ne 3010) {
+          throw "vs_installer.exe exited with code $($process.ExitCode)"
+        }
+
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v2
 
