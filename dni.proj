@@ -52,7 +52,8 @@
     <DeleteTree Directories=".\*Installer*\$(Configuration)" Recursive="true" ContinueOnError="true" />
   </Target>
   <Target Name="restore">
-    <MSBuild Projects="Dni.sln" Targets="Restore" />
+    <!-- RestorePackagesConfig=true also restores packages.config, which C++/CLI projects targeting the .NET Framework use instead of PackageReference -->
+    <MSBuild Projects="Dni.sln" Targets="Restore" Properties="RestorePackagesConfig=true" />
   </Target>
   <Target Name="build" DependsOnTargets="version;restore">
     <MSBuild Projects="Dni.sln" Targets="Build" Properties="Configuration=$(Configuration);Platform=Win32" />
