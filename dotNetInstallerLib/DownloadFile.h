@@ -52,6 +52,10 @@ public:
 private:
 	void CopyFromSourcePath();
 	void DownloadFromSourceUrl();
+	// returns true if the source url is an https url
+	bool IsHttpsUrl() const;
+	// download the source url to a file without using the Internet Explorer cache
+	void DownloadWithWinINet(const std::wstring& filename);
 };
 
 typedef shared_any<DownloadFile *, close_delete> DownloadFilePtr;

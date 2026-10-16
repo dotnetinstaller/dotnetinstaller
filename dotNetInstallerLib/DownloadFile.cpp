@@ -4,6 +4,22 @@
 #include "InstallConfiguration.h"
 #include "InstallerLog.h"
 #include "InstallerSession.h"
+#include <wininet.h>
+
+#pragma comment(lib, "wininet.lib")
+
+namespace
+{
+    struct close_internet_handle
+    {
+        static void close(HINTERNET handle)
+        {
+            ::InternetCloseHandle(handle);
+        }
+    };
+
+    typedef auto_any<HINTERNET, close_internet_handle> auto_hinternet;
+}
 
 DownloadFile::DownloadFile()
 : callback(NULL)
@@ -158,13 +174,113 @@ void DownloadFile::DownloadFromSourceUrl()
 
     ClearCache();
 
-    CHECK_HR_DLL(URLDownloadToFile(NULL, sourceurl.GetValue().c_str(), destination_full_filename_tmp.c_str(), 0, this),
-        L"Error downloading \"" << sourceurl << L"\" to \"" << destination_full_filename_tmp << L"\"", L"urlmon.dll");
+    if (IsHttpsUrl())
+    {
+        // URLDownloadToFile downloads into the Internet Explorer cache and copies the file from there, which
+        // fails with INET_E_DOWNLOAD_FAILURE over https when "Do not save encrypted pages to disk" is enabled,
+        // so https downloads write the response directly to the destination file without the cache
+        DownloadWithWinINet(destination_full_filename_tmp);
+    }
+    else
+    {
+        CHECK_HR_DLL(URLDownloadToFile(NULL, sourceurl.GetValue().c_str(), destination_full_filename_tmp.c_str(), 0, this),
+            L"Error downloading \"" << sourceurl << L"\" to \"" << destination_full_filename_tmp << L"\"", L"urlmon.dll");
+    }
 
     DVLib::FileMove(destination_full_filename_tmp, destination_full_filename);
 
     LOG(L"Download '" << componentname << L"', size=" 
         << DVLib::FormatBytesW(DVLib::GetFileSize(destination_full_filename)) << L": OK");
+}
+
+bool DownloadFile::IsHttpsUrl() const
+{
+    return 0 == _wcsnicmp(sourceurl.GetValue().c_str(), L"https://", 8);
+}
+
+void DownloadFile::DownloadWithWinINet(const std::wstring& filename)
+{
+    std::wstring error_message = L"Error downloading \"" + sourceurl.GetValue() + L"\" to \"" + filename + L"\"";
+
+    // INTERNET_OPEN_TYPE_PRECONFIG uses the same proxy settings as URLDownloadToFile
+    auto_hinternet internet(::InternetOpenW(L"dotNetInstaller", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0));
+    if (! internet)
+    {
+        THROW_EX(DVLib::GetErrorStringW(::GetLastError(), error_message.c_str(), L"wininet.dll"));
+    }
+
+    if (callback != NULL)
+    {
+        callback->Connecting(sourceurl);
+    }
+
+    DWORD flags = INTERNET_FLAG_NO_CACHE_WRITE | INTERNET_FLAG_RELOAD | INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_NO_UI;
+    auto_hinternet request(::InternetOpenUrlW(get(internet), sourceurl.GetValue().c_str(), NULL, 0, flags, 0));
+    if (! request)
+    {
+        THROW_EX(DVLib::GetErrorStringW(::GetLastError(), error_message.c_str(), L"wininet.dll"));
+    }
+
+    if (callback != NULL)
+    {
+        callback->SendingRequest(sourceurl);
+    }
+
+    DWORD status_code = 0;
+    DWORD status_code_size = sizeof(status_code);
+    if (::HttpQueryInfoW(get(request), HTTP_QUERY_STATUS_CODE | HTTP_QUERY_FLAG_NUMBER, & status_code, & status_code_size, NULL)
+        && (status_code < 200 || status_code > 299))
+    {
+        THROW_EX(error_message << L": the server returned HTTP status code " << status_code);
+    }
+
+    // the content length is unknown when the server does not send it
+    DWORD content_length = 0;
+    DWORD content_length_size = sizeof(content_length);
+    if (! ::HttpQueryInfoW(get(request), HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER, & content_length, & content_length_size, NULL))
+    {
+        content_length = 0;
+    }
+
+    auto_hfile file(::CreateFileW(filename.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL));
+    if (! file)
+    {
+        THROW_EX(DVLib::GetLastErrorStringW((L"Error creating \"" + filename + L"\"").c_str()));
+    }
+
+    std::vector<char> buffer(64 * 1024);
+    DWORD total_read = 0;
+    while (true)
+    {
+        if (callback != NULL && callback->IsDownloadCancelled())
+        {
+            THROW_EX(DVLib::GetErrorStringW(E_ABORT, error_message.c_str()));
+        }
+
+        DWORD read = 0;
+        if (! ::InternetReadFile(get(request), & buffer[0], static_cast<DWORD>(buffer.size()), & read))
+        {
+            THROW_EX(DVLib::GetErrorStringW(::GetLastError(), error_message.c_str(), L"wininet.dll"));
+        }
+
+        if (read == 0)
+            break;
+
+        DWORD written = 0;
+        CHECK_WIN32_BOOL(::WriteFile(get(file), & buffer[0], read, & written, NULL),
+            L"Error writing \"" << filename << L"\"");
+
+        total_read += read;
+
+        if (callback != NULL)
+        {
+            std::wstring tmp = DVLib::FormatMessage(L"%s (%s of %s)",
+                componentname.GetValue().c_str(),
+                DVLib::FormatBytesW(total_read).c_str(),
+                DVLib::FormatBytesW(content_length).c_str());
+            callback->Status(total_read, content_length, tmp);
+        }
+    }
 }
 
 bool DownloadFile::ClearCache()
