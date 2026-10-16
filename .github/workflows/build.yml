@@ -19,7 +19,9 @@ env:
 
 jobs:
   build:
-    runs-on: windows-latest
+    # Visual Studio 2026 (windows-latest, windows-2025) no longer offers the Microsoft.VisualStudio.Component.WinXP component
+    # needed for the v141_xp platform toolset, so Visual Studio 2022 (windows-2022) is used
+    runs-on: windows-2022
 
     strategy:
       matrix:
@@ -45,6 +47,12 @@ jobs:
         $process = Start-Process -FilePath "$installerPath\vs_installer.exe" -ArgumentList $arguments -Wait -PassThru
         if ($process.ExitCode -ne 0 -and $process.ExitCode -ne 3010) {
           throw "vs_installer.exe exited with code $($process.ExitCode)"
+        }
+        # vs_installer.exe skips components that are not available and still succeeds, so check that the toolset was installed
+        $toolsetPath = "$vsPath\MSBuild\Microsoft\VC\v150\Platforms\Win32\PlatformToolsets\v141_xp"
+        if (-not (Test-Path $toolsetPath)) {
+          Get-ChildItem $env:TEMP -Filter "dd_*.log" | Sort-Object LastWriteTime | Select-Object -Last 3 | ForEach-Object { Write-Host "::group::$($_.Name)"; Get-Content $_.FullName -Tail 100; Write-Host "::endgroup::" }
+          throw "The v141_xp platform toolset was not installed: '$toolsetPath' does not exist"
         }
 
     - name: Add MSBuild to PATH
