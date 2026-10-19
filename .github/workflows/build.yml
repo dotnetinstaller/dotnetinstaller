@@ -19,17 +19,44 @@ env:
 
 jobs:
   build:
-    runs-on: windows-2019
+    # Visual Studio 2026 (windows-latest, windows-2025) no longer offers the Microsoft.VisualStudio.Component.WinXP component
+    # needed for the v141_xp platform toolset, so Visual Studio 2022 (windows-2022) is used
+    runs-on: windows-2022
 
     strategy:
       matrix:
         Configuration: [Debug, Release]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
+
+    - name: Install Visual Studio v141_xp toolset
+      # The C++ projects use the v141_xp platform toolset and the Windows 7.0 SDK, which are not included in the runner image.
+      # Microsoft.VisualStudio.Component.WinXP adds the v141_xp toolset and the Windows 7.1A SDK.
+      shell: pwsh
+      run: |
+        $installerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer"
+        $vsPath = & "$installerPath\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
+        $components = @(
+          "Microsoft.VisualStudio.Component.VC.v141.x86.x64",
+          "Microsoft.VisualStudio.Component.VC.v141.ATL",
+          "Microsoft.VisualStudio.Component.VC.v141.MFC",
+          "Microsoft.VisualStudio.Component.WinXP"
+        )
+        $arguments = @("modify", "--installPath", "`"$vsPath`"", "--quiet", "--norestart", "--nocache") + ($components | ForEach-Object { "--add", $_ })
+        $process = Start-Process -FilePath "$installerPath\vs_installer.exe" -ArgumentList $arguments -Wait -PassThru
+        if ($process.ExitCode -ne 0 -and $process.ExitCode -ne 3010) {
+          throw "vs_installer.exe exited with code $($process.ExitCode)"
+        }
+        # vs_installer.exe skips components that are not available and still succeeds, so check that the toolset was installed
+        $toolsetPath = "$vsPath\MSBuild\Microsoft\VC\v150\Platforms\Win32\PlatformToolsets\v141_xp"
+        if (-not (Test-Path $toolsetPath)) {
+          Get-ChildItem $env:TEMP -Filter "dd_*.log" | Sort-Object LastWriteTime | Select-Object -Last 3 | ForEach-Object { Write-Host "::group::$($_.Name)"; Get-Content $_.FullName -Tail 100; Write-Host "::endgroup::" }
+          throw "The v141_xp platform toolset was not installed: '$toolsetPath' does not exist"
+        }
 
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v2
+      uses: microsoft/setup-msbuild@v3
 
     - name: Download Win8.1 SDK
       shell: powershell
@@ -91,7 +118,7 @@ jobs:
 
     - name: Publish Failed Test Results Report
       if: github.event_name != 'pull_request'
-      uses: dorny/test-reporter@v1
+      uses: dorny/test-reporter@v3
       with:
         name: Tests
         path: TestResults/*.trx
@@ -110,7 +137,7 @@ jobs:
 
     - name: Upload Test Result Files
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: TestResults-${{ matrix.Configuration }}
         path: |
@@ -124,7 +151,7 @@ jobs:
       # The rootDirectory: "D:\a\dotnetinstaller\dotnetinstaller" is not a parent directory of the file: "C:\Users\runneradmin\AppData\Local\Temp\33fcd148-d0c7-46cd-8333-9b21a22d2d2c.xml"
     - name: Upload Temp Files
       if: failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: TempLogs-${{ matrix.Configuration }}
         path: |
@@ -134,28 +161,28 @@ jobs:
             C:\Users\runneradmin\AppData\Local\Temp\*.xml
 
     - name: Upload Build Artifact - MSBuild Log
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: msbuild.${{ env.VERSION }}.${{ matrix.Configuration }}.binlog
         path: msbuild.binlog
         if-no-files-found: error
 
     - name: Upload Build Artifact - Zip
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: dotNetInstaller.${{ env.VERSION }}.${{ matrix.Configuration }}.zip
         path: .\target\${{ matrix.Configuration }}\dotNetInstaller.${{ env.VERSION }}.zip
         if-no-files-found: error
 
     - name: Upload Build Artifact - Msi
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: dotNetInstaller.${{ env.VERSION }}.${{ matrix.Configuration }}.msi
         path: .\target\${{ matrix.Configuration }}\dotNetInstaller.${{ env.VERSION }}.msi
         if-no-files-found: error
 
     - name: Upload Build Artifact - NuGet Package
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: dotNetInstaller.${{ env.NUGET_VERSION }}.${{ matrix.Configuration }}.nupkg
         path: .\target\${{ matrix.Configuration }}\InstallerLib.${{ env.NUGET_VERSION }}.nupkg

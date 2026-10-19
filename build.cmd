@@ -7,20 +7,12 @@ if "%~1"=="" (
  goto :EOF
 )
 
-IF EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" (
-    set msbuild="%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe"
-) ELSE IF EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe" (
-    set msbuild="%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe"
-) ELSE IF EXIST "%programfiles(x86)%\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe" (
-    set msbuild="%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe"
-) ELSE IF EXIST "%programfiles(x86)%\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin\MSBuild.exe" (
-    set msbuild="%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin\MSBuild.exe"
-) ELSE IF EXIST "%programfiles(x86)%\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe" (
-    set msbuild="%ProgramFiles(x86)%\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe"
-) ELSE IF EXIST "%ProgramFiles(x86)%\MSBuild\14.0\Bin\msbuild.exe" (
-    set msbuild="%ProgramFiles(x86)%\MSBuild\14.0\Bin\msbuild.exe"
-) ELSE (
-    ECHO Error: You don't seem to have MSBuild installed!
+REM find the latest Visual Studio installation with MSBuild using vswhere, which is installed with Visual Studio 2017 version 15.2 and later
+set msbuild=
+set vswhere="%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
+if exist %vswhere% for /f "usebackq delims=" %%i in (`%vswhere% -latest -products * -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe`) do set msbuild="%%i"
+if not defined msbuild (
+    ECHO Error: MSBuild was not found. Visual Studio 2017 version 15.2 or later is required.
     goto :EOF
 )
 

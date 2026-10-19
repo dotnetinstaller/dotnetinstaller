@@ -21,6 +21,7 @@ namespace DVLib
 			TEST_METHOD( testCopyFromSource );
 			TEST_METHOD( testClearCache );
 			TEST_METHOD( testDownloadCache );
+			TEST_METHOD( testDownloadHttps );
 		};
 	}
 }

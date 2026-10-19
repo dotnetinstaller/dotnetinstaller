@@ -10,6 +10,11 @@ Features
 * [#157](https://github.com/dotnetinstaller/dotnetinstaller/issues/157) - Added Installed Check Type which queries WMI - [@icnocop](https://github.com/icnocop).
 * [#163](https://github.com/dotnetinstaller/dotnetinstaller/issues/163) - Added support for sub-directory installed check comparison using semantic versioning range - [@icnocop](https://github.com/icnocop).
 
+Bugs
+----
+
+* [#121](https://github.com/dotnetinstaller/dotnetinstaller/issues/121) - Fix: Error downloading resource over https when Internet Explorer's "Do not save encrypted pages to disk" setting is enabled - [@icnocop](https://github.com/icnocop).
+
 3.2.115 (1/15/2022)
 ===================
 

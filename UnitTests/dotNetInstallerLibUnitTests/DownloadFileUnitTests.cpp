@@ -82,3 +82,26 @@ void DownloadFileUnitTests::testDownloadCache()
     DVLib::FileDelete(fullpath);
     Assert::IsTrue(file->ClearCache());
 }
+
+void DownloadFileUnitTests::testDownloadHttps()
+{
+    // test can only run online, \todo: need a local web server
+    // https downloads must succeed whether or not Internet Options > Advanced > Security >
+    // "Do not save encrypted pages to disk" is enabled
+    DownloadFilePtr file(new DownloadFile());
+    file->alwaysdownload = true;
+    file->componentname = L"test download";
+    file->sourcepath = L"";
+    file->sourceurl = L"https://raw.githubusercontent.com/dotnetinstaller/dotnetinstaller/master/README.md";
+    file->destinationpath = DVLib::GetTemporaryDirectoryW();
+    file->destinationfilename = DVLib::GenerateGUIDStringW();
+    DownloadCallbackImpl callback;
+    Assert::IsTrue(! file->IsCopyRequired());
+    Assert::IsTrue(file->IsDownloadRequired());
+    file->Exec(& callback);
+    callback.DownloadComplete();
+    std::wstring fullpath = DVLib::DirectoryCombine(file->destinationpath, file->destinationfilename);
+    Assert::IsTrue(DVLib::FileExists(fullpath));
+    Assert::IsTrue(DVLib::GetFileSize(fullpath) > 0);
+    DVLib::FileDelete(fullpath);
+}
